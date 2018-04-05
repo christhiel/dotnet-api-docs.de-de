@@ -1,0 +1,1734 @@
+<Type Name="Matrix" FullName="System.Drawing.Drawing2D.Matrix">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="d7c894d909e48d1bcbd0f4c91190becad156464e" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public sealed class Matrix : MarshalByRefObject, IDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Matrix extends System.MarshalByRefObject implements class System.IDisposable" />
+  <TypeSignature Language="DocId" Value="T:System.Drawing.Drawing2D.Matrix" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class Matrix&#xA;Inherits MarshalByRefObject&#xA;Implements IDisposable" />
+  <TypeSignature Language="C++ CLI" Value="public ref class Matrix sealed : MarshalByRefObject, IDisposable" />
+  <AssemblyInfo>
+    <AssemblyName>System.Drawing</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.MarshalByRefObject</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>
+      <span data-ttu-id="1fda2-101">Kapselt eine affine 3 x 3-Matrix ein, die eine geometrische Transformation darstellt.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="1fda2-101">Encapsulates a 3-by-3 affine matrix that represents a geometric transform.</span>
+      </span>
+      <span data-ttu-id="1fda2-102">Diese Klasse kann nicht vererbt werden.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="1fda2-102">This class cannot be inherited.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-103">In [!INCLUDE[ndptecgdiplus](~/includes/ndptecgdiplus-md.md)] können Sie eine affine Transformation in Speichern einer <xref:System.Drawing.Drawing2D.Matrix> Objekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-103">In [!INCLUDE[ndptecgdiplus](~/includes/ndptecgdiplus-md.md)] you can store an affine transformation in a <xref:System.Drawing.Drawing2D.Matrix> object.</span></span> <span data-ttu-id="1fda2-104">Da immer die dritte Spalte einer Matrix, die eine affine Transformation darstellt ist (0, 0, 1), geben Sie nur die sechs Ziffern in den ersten beiden Spalten beim Erstellen einer <xref:System.Drawing.Drawing2D.Matrix> Objekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-104">Because the third column of a matrix that represents an affine transformation is always (0, 0, 1), you specify only the six numbers in the first two columns when you construct a <xref:System.Drawing.Drawing2D.Matrix> object.</span></span> <span data-ttu-id="1fda2-105">Die Anweisung `Matrix myMatrix = new Matrix(0, 1, -1, 0, 3, 4)` erstellt die Matrix, die in der folgenden Abbildung dargestellt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-105">The statement `Matrix myMatrix = new Matrix(0, 1, -1, 0, 3, 4)` constructs the matrix shown in the following figure.</span></span>  
+  
+ <span data-ttu-id="1fda2-106">![Transformationen](~/add/media/aboutgdip05-art10.gif "Transformationen")</span><span class="sxs-lookup"><span data-stu-id="1fda2-106">![Transformations](~/add/media/aboutgdip05-art10.gif "Transformations")</span></span>  
+  
+## <a name="composite-transformations"></a><span data-ttu-id="1fda2-107">Zusammengesetzte Transformationen</span><span class="sxs-lookup"><span data-stu-id="1fda2-107">Composite Transformations</span></span>  
+ <span data-ttu-id="1fda2-108">Eine zusammengesetzte Transformation ist eine Sequenz von Transformationen gefolgt von den anderen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-108">A composite transformation is a sequence of transformations, one followed by the other.</span></span> <span data-ttu-id="1fda2-109">Betrachten Sie die Matrizen und Transformationen in der folgenden Liste:</span><span class="sxs-lookup"><span data-stu-id="1fda2-109">Consider the matrices and transformations in the following list:</span></span>  
+  
+|||  
+|-|-|  
+|<span data-ttu-id="1fda2-110">Matrix A</span><span class="sxs-lookup"><span data-stu-id="1fda2-110">Matrix A</span></span>|<span data-ttu-id="1fda2-111">Um 90 Grad drehen</span><span class="sxs-lookup"><span data-stu-id="1fda2-111">Rotate 90 degrees</span></span>|  
+|<span data-ttu-id="1fda2-112">Matrix B</span><span class="sxs-lookup"><span data-stu-id="1fda2-112">Matrix B</span></span>|<span data-ttu-id="1fda2-113">Skalieren Sie, indem Sie einen Faktor von 2 entlang der x-Achse an</span><span class="sxs-lookup"><span data-stu-id="1fda2-113">Scale by a factor of 2 in the x direction</span></span>|  
+|<span data-ttu-id="1fda2-114">Matrix C</span><span class="sxs-lookup"><span data-stu-id="1fda2-114">Matrix C</span></span>|<span data-ttu-id="1fda2-115">Übersetzen von 3 Einheiten in der y-Richtung</span><span class="sxs-lookup"><span data-stu-id="1fda2-115">Translate 3 units in the y direction</span></span>|  
+  
+ <span data-ttu-id="1fda2-116">Wenn wir mit dem Punkt (2, 1 beginnen) – dargestellt durch die Matrix [2 1 1] – und Multiplizieren Sie mit ein, klicken Sie dann B dann C, die der Punkt (2, 1) die folgenden drei Transformationen in der aufgeführten Reihenfolge unterzogen wird.</span><span class="sxs-lookup"><span data-stu-id="1fda2-116">If we start with the point (2, 1) — represented by the matrix [2 1 1] — and multiply by A, then B, then C, the point (2, 1) will undergo the three transformations in the order listed.</span></span>  
+  
+ <span data-ttu-id="1fda2-117">[2 1 1]ABC = [-2 5 1]</span><span class="sxs-lookup"><span data-stu-id="1fda2-117">[2 1 1]ABC = [-2 5 1]</span></span>  
+  
+ <span data-ttu-id="1fda2-118">Stattdessen als die drei Teile der zusammengesetzten Transformation in drei separate Matrizen gespeichert werden, Sie können Multiplizieren A, B und C gemeinsam eine einzelne 3 x 3-Matrix abrufen, die die gesamte zusammengesetzte Transformation speichert.</span><span class="sxs-lookup"><span data-stu-id="1fda2-118">Rather than store the three parts of the composite transformation in three separate matrices, you can multiply A, B, and C together to get a single 3×3 matrix that stores the entire composite transformation.</span></span> <span data-ttu-id="1fda2-119">Nehmen wir an ABC = D. Erteilt anschließend ein Punkt D multipliziert zum gleiche Ergebnis wie einen Punkt, multipliziert mit ein, klicken Sie dann B dann C.</span><span class="sxs-lookup"><span data-stu-id="1fda2-119">Suppose ABC = D. Then a point multiplied by D gives the same result as a point multiplied by A, then B, then C.</span></span>  
+  
+ <span data-ttu-id="1fda2-120">[2 1 1]D = [-2 5 1]</span><span class="sxs-lookup"><span data-stu-id="1fda2-120">[2 1 1]D = [-2 5 1]</span></span>  
+  
+ <span data-ttu-id="1fda2-121">Die folgende Abbildung zeigt die Matrizen, A, B, C und D.</span><span class="sxs-lookup"><span data-stu-id="1fda2-121">The following illustration shows the matrices A, B, C, and D.</span></span>  
+  
+ <span data-ttu-id="1fda2-122">![Transformationen](~/add/media/aboutgdip05-art12.gif "Transformationen")</span><span class="sxs-lookup"><span data-stu-id="1fda2-122">![Transformations](~/add/media/aboutgdip05-art12.gif "Transformations")</span></span>  
+  
+ <span data-ttu-id="1fda2-123">Die Tatsache, dass die Matrix eine zusammengesetzte Transformation gebildet werden kann, durch die einzelnen Transformationsmatrizen Multiplikation bedeutet, dass es sich bei einer beliebigen Folge von affine Transformationen in einem einzelnen speicherbare <xref:System.Drawing.Drawing2D.Matrix> Objekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-123">The fact that the matrix of a composite transformation can be formed by multiplying the individual transformation matrices means that any sequence of affine transformations can be stored in a single <xref:System.Drawing.Drawing2D.Matrix> object.</span></span>  
+  
+> [!CAUTION]
+>  <span data-ttu-id="1fda2-124">Die Reihenfolge der eine zusammengesetzte Transformation ist wichtig.</span><span class="sxs-lookup"><span data-stu-id="1fda2-124">The order of a composite transformation is important.</span></span> <span data-ttu-id="1fda2-125">Im Allgemeinen drehen, skalieren dann übersetzen ist nicht identisch mit skalieren, drehen und anschließend zu übersetzen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-125">In general, rotate, then scale, then translate is not the same as scale, then rotate, then translate.</span></span> <span data-ttu-id="1fda2-126">Ebenso ist die Reihenfolge der Matrixmultiplikation wichtig.</span><span class="sxs-lookup"><span data-stu-id="1fda2-126">Similarly, the order of matrix multiplication is important.</span></span> <span data-ttu-id="1fda2-127">ABC ist im Allgemeinen nicht identisch mit PK.</span><span class="sxs-lookup"><span data-stu-id="1fda2-127">In general, ABC is not the same as BAC.</span></span>  
+  
+ <span data-ttu-id="1fda2-128">Die <xref:System.Drawing.Drawing2D.Matrix> -Klasse stellt mehrere Methoden zum Erstellen einer zusammengesetzten Transformations: <xref:System.Drawing.Drawing2D.Matrix.Multiply%2A>, <xref:System.Drawing.Drawing2D.Matrix.Rotate%2A>, <xref:System.Drawing.Drawing2D.Matrix.RotateAt%2A>, <xref:System.Drawing.Drawing2D.Matrix.Scale%2A>, <xref:System.Drawing.Drawing2D.Matrix.Shear%2A>, und <xref:System.Drawing.Drawing2D.Matrix.Translate%2A>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-128">The <xref:System.Drawing.Drawing2D.Matrix> class provides several methods for building a composite transformation: <xref:System.Drawing.Drawing2D.Matrix.Multiply%2A>, <xref:System.Drawing.Drawing2D.Matrix.Rotate%2A>, <xref:System.Drawing.Drawing2D.Matrix.RotateAt%2A>, <xref:System.Drawing.Drawing2D.Matrix.Scale%2A>, <xref:System.Drawing.Drawing2D.Matrix.Shear%2A>, and <xref:System.Drawing.Drawing2D.Matrix.Translate%2A>.</span></span> <span data-ttu-id="1fda2-129">Das folgende Beispiel erstellt die Matrix eine zusammengesetzte Transformation, die ersten 30 Grad gedreht und dann mit einem Faktor von 2 in Richtung der y-Achse skaliert und übersetzt dann 5 Einheiten entlang der x-Achse an:</span><span class="sxs-lookup"><span data-stu-id="1fda2-129">The following example creates the matrix of a composite transformation that first rotates 30 degrees, then scales by a factor of 2 in the y direction, and then translates 5 units in the x direction:</span></span>  
+  
+ [!code-csharp[System.Drawing.CoordinateSystems#11](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.CoordinateSystems/CS/Class1.cs#11)]
+ [!code-vb[System.Drawing.CoordinateSystems#11](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.CoordinateSystems/VB/Class1.vb#11)]  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-130">Initialisiert eine neue Instanz der <see cref="T:System.Drawing.Drawing2D.Matrix" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-130">Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Matrix ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-131">Initialisiert eine neue Instanz der <see cref="T:System.Drawing.Drawing2D.Matrix" />-Klasse als Identitätsmatrix.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-131">Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class as the identity matrix.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.Rectangle rect, System.Drawing.Point[] plgpts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.Drawing.Rectangle rect, valuetype System.Drawing.Point[] plgpts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.#ctor(System.Drawing.Rectangle,System.Drawing.Point[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As Rectangle, plgpts As Point())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::Rectangle rect, cli::array &lt;System::Drawing::Point&gt; ^ plgpts);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="rect" Type="System.Drawing.Rectangle" />
+        <Parameter Name="plgpts" Type="System.Drawing.Point[]" />
+      </Parameters>
+      <Docs>
+        <param name="rect">
+          <span data-ttu-id="1fda2-132">Eine <see cref="T:System.Drawing.Rectangle" />-Struktur, die das zu transformierende Rechteck darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-132">A <see cref="T:System.Drawing.Rectangle" /> structure that represents the rectangle to be transformed.</span>
+          </span>
+        </param>
+        <param name="plgpts">
+          <span data-ttu-id="1fda2-133">Ein aus drei <see cref="T:System.Drawing.Point" />-Strukturen bestehendes Array, das die Punkte eines Parallelogramms darstellt, in die die obere linke, obere rechte und untere linke Ecke des Rechtecks transformiert werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-133">An array of three <see cref="T:System.Drawing.Point" /> structures that represents the points of a parallelogram to which the upper-left, upper-right, and lower-left corners of the rectangle is to be transformed.</span>
+          </span>
+          <span data-ttu-id="1fda2-134">Die untere rechte Ecke des Parallelogramms ergibt sich aus den ersten drei Ecken.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-134">The lower-right corner of the parallelogram is implied by the first three corners.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-135">Initialisiert eine neue Instanz der <see cref="T:System.Drawing.Drawing2D.Matrix" />-Klasse für die geometrische Transformation, die durch das angegebene Rechteck und Punktearray definiert ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-135">Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class to the geometric transform defined by the specified rectangle and array of points.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-136">Diese Methode initialisiert die neue Matrix so, dass es die geometrische Transformation, die das Rechteck darstellt, angegeben durch ordnet die `rect` Parameter dem Parallelogramm definiert, die von den drei Punkten in der `plgpts` Parameter.</span><span class="sxs-lookup"><span data-stu-id="1fda2-136">This method initializes the new Matrix such that it represents the geometric transform that maps the rectangle specified by the `rect` parameter to the parallelogram defined by the three points in the `plgpts` parameter.</span></span> <span data-ttu-id="1fda2-137">Der erste Punkt in der oberen linken Ecke des Rechtecks zugeordnet ist die `plgpts` Array, die oberen rechten Ecke der zweite Punkt zugeordnet ist, und der unteren linken Ecke der dritte Punkt zugeordnet ist.</span><span class="sxs-lookup"><span data-stu-id="1fda2-137">The upper-left corner of the rectangle is mapped to the first point in the `plgpts` array, the upper-right corner is mapped to the second point, and the lower-left corner is mapped to the third point.</span></span> <span data-ttu-id="1fda2-138">Der unteren rechten Punkt des Parallelogramms ergibt, wird durch die ersten drei impliziert.</span><span class="sxs-lookup"><span data-stu-id="1fda2-138">The lower-right point of the parallelogram is implied by the first three.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.RectangleF rect, System.Drawing.PointF[] plgpts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.Drawing.RectangleF rect, valuetype System.Drawing.PointF[] plgpts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.#ctor(System.Drawing.RectangleF,System.Drawing.PointF[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As RectangleF, plgpts As PointF())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::RectangleF rect, cli::array &lt;System::Drawing::PointF&gt; ^ plgpts);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="rect" Type="System.Drawing.RectangleF" />
+        <Parameter Name="plgpts" Type="System.Drawing.PointF[]" />
+      </Parameters>
+      <Docs>
+        <param name="rect">
+          <span data-ttu-id="1fda2-139">Eine <see cref="T:System.Drawing.RectangleF" />-Struktur, die das zu transformierende Rechteck darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-139">A <see cref="T:System.Drawing.RectangleF" /> structure that represents the rectangle to be transformed.</span>
+          </span>
+        </param>
+        <param name="plgpts">
+          <span data-ttu-id="1fda2-140">Ein aus drei <see cref="T:System.Drawing.PointF" />-Strukturen bestehendes Array, das die Punkte eines Parallelogramms darstellt, in die die obere linke, obere rechte und untere linke Ecke des Rechtecks transformiert werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-140">An array of three <see cref="T:System.Drawing.PointF" /> structures that represents the points of a parallelogram to which the upper-left, upper-right, and lower-left corners of the rectangle is to be transformed.</span>
+          </span>
+          <span data-ttu-id="1fda2-141">Die untere rechte Ecke des Parallelogramms ergibt sich aus den ersten drei Ecken.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-141">The lower-right corner of the parallelogram is implied by the first three corners.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-142">Initialisiert eine neue Instanz der <see cref="T:System.Drawing.Drawing2D.Matrix" />-Klasse für die geometrische Transformation, die durch das angegebene Rechteck und Punktearray definiert ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-142">Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class to the geometric transform defined by the specified rectangle and array of points.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-143">Diese Methode initialisiert die neue <xref:System.Drawing.Drawing2D.Matrix> so, dass es die geometrische Transformation, die das Rechteck darstellt, angegeben durch ordnet die `rect` Parameter dem Parallelogramm definiert, die von den drei Punkten in der `plgpts` Parameter.</span><span class="sxs-lookup"><span data-stu-id="1fda2-143">This method initializes the new <xref:System.Drawing.Drawing2D.Matrix> such that it represents the geometric transform that maps the rectangle specified by the `rect` parameter to the parallelogram defined by the three points in the `plgpts` parameter.</span></span> <span data-ttu-id="1fda2-144">Der erste Punkt in der oberen linken Ecke des Rechtecks zugeordnet ist die `plgpts` Array, die oberen rechten Ecke der zweite Punkt zugeordnet ist, und der unteren linken Ecke der dritte Punkt zugeordnet ist.</span><span class="sxs-lookup"><span data-stu-id="1fda2-144">The upper-left corner of the rectangle is mapped to the first point in the `plgpts` array, the upper-right corner is mapped to the second point, and the lower-left corner is mapped to the third point.</span></span> <span data-ttu-id="1fda2-145">Der unteren rechten Punkt des Parallelogramms ergibt, wird durch die ersten drei impliziert.</span><span class="sxs-lookup"><span data-stu-id="1fda2-145">The lower-right point of the parallelogram is implied by the first three.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Matrix (float m11, float m12, float m21, float m22, float dx, float dy);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float32 m11, float32 m12, float32 m21, float32 m22, float32 dx, float32 dy) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (m11 As Single, m12 As Single, m21 As Single, m22 As Single, dx As Single, dy As Single)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(float m11, float m12, float m21, float m22, float dx, float dy);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="m11" Type="System.Single" />
+        <Parameter Name="m12" Type="System.Single" />
+        <Parameter Name="m21" Type="System.Single" />
+        <Parameter Name="m22" Type="System.Single" />
+        <Parameter Name="dx" Type="System.Single" />
+        <Parameter Name="dy" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="m11">
+          <span data-ttu-id="1fda2-146">Der Wert in der ersten Zeile und Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-146">The value in the first row and first column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="m12">
+          <span data-ttu-id="1fda2-147">Der Wert in der ersten Zeile und zweiten Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-147">The value in the first row and second column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="m21">
+          <span data-ttu-id="1fda2-148">Der Wert in der zweiten Zeile und ersten Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-148">The value in the second row and first column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="m22">
+          <span data-ttu-id="1fda2-149">Der Wert in der zweiten Zeile und zweiten Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-149">The value in the second row and second column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="dx">
+          <span data-ttu-id="1fda2-150">Der Wert in der dritten Zeile und ersten Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-150">The value in the third row and first column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="dy">
+          <span data-ttu-id="1fda2-151">Der Wert in der dritten Zeile und zweiten Spalte der neuen <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-151">The value in the third row and second column of the new <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-152">Initialisiert eine neue Instanz der <see cref="T:System.Drawing.Drawing2D.Matrix" />-Klasse mit den angegebenen Elementen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-152">Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class with the specified elements.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Clone">
+      <MemberSignature Language="C#" Value="public System.Drawing.Drawing2D.Matrix Clone ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Drawing.Drawing2D.Matrix Clone() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Clone" />
+      <MemberSignature Language="VB.NET" Value="Public Function Clone () As Matrix" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Drawing::Drawing2D::Matrix ^ Clone();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Drawing.Drawing2D.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-153">Erstellt eine genaue Kopie von dieser <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-153">Creates an exact copy of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="1fda2-154">Die <see cref="T:System.Drawing.Drawing2D.Matrix" />, die von dieser Methode erstellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-154">The <see cref="T:System.Drawing.Drawing2D.Matrix" /> that this method creates.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Dispose() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Dispose" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Dispose ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Dispose();" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.IDisposable.Dispose</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-155">Gibt alle von dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> verwendeten Ressourcen frei.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-155">Releases all resources used by this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-156">Aufrufen von `Dispose` können die von diesem verwendeten Ressourcen <xref:System.Drawing.Drawing2D.Matrix> Objekt für andere Zwecke neu reserviert werden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-156">Calling `Dispose` allows the resources used by this <xref:System.Drawing.Drawing2D.Matrix> object to be reallocated for other purposes.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Elements">
+      <MemberSignature Language="C#" Value="public float[] Elements { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32[] Elements" />
+      <MemberSignature Language="DocId" Value="P:System.Drawing.Drawing2D.Matrix.Elements" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Elements As Single()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property cli::array &lt;float&gt; ^ Elements { cli::array &lt;float&gt; ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-157">Ruft ein Array von Gleitkommawerten ab, das die Elemente dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-157">Gets an array of floating-point values that represents the elements of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="1fda2-158">Ein Array von Gleitkommawerten, das die Elemente dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-158">An array of floating-point values that represents the elements of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-159">Die Elemente m11, m12, m21, m22, Dx und dy von der <xref:System.Drawing.Drawing2D.Matrix> werden durch die Werte des Arrays in dieser Reihenfolge dargestellt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-159">The elements m11, m12, m21, m22, dx, and dy of the <xref:System.Drawing.Drawing2D.Matrix> are represented by the values in the array in that order.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Equals(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (obj As Object) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Equals(System::Object ^ obj);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">
+          <span data-ttu-id="1fda2-160">Das zu überprüfende Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-160">The object to test.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-161">Überprüft, ob das angegebene Objekt eine <see cref="T:System.Drawing.Drawing2D.Matrix" /> und mit dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> identisch ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-161">Tests whether the specified object is a <see cref="T:System.Drawing.Drawing2D.Matrix" /> and is identical to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="1fda2-162">Diese Methode gibt <see langword="true" /> zurück, wenn es sich bei <paramref name="obj" /> um die angegebene <see cref="T:System.Drawing.Drawing2D.Matrix" /> handelt, die mit dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> identisch ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-162">This method returns <see langword="true" /> if <paramref name="obj" /> is the specified <see cref="T:System.Drawing.Drawing2D.Matrix" /> identical to this <see cref="T:System.Drawing.Drawing2D.Matrix" />; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Finalize">
+      <MemberSignature Language="C#" Value="~Matrix ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Finalize" />
+      <MemberSignature Language="VB.NET" Value="Finalize ()" />
+      <MemberSignature Language="C++ CLI" Value="!Matrix ()" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-163">Gibt einem Objekt Gelegenheit zu dem Versuch, Ressourcen freizugeben und andere Bereinigungen durchzuführen, bevor es von der Garbage Collection freigegeben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-163">Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.GetHashCode" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetHashCode () As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetHashCode();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-164">Gibt einen Hashcode zurück.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-164">Returns a hash code.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="1fda2-165">Der Hashcode für diese <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-165">The hash code for this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Invert">
+      <MemberSignature Language="C#" Value="public void Invert ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Invert() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Invert" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Invert ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Invert();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-166">Invertiert diese <see cref="T:System.Drawing.Drawing2D.Matrix" />, sofern sie invertierbar ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-166">Inverts this <see cref="T:System.Drawing.Drawing2D.Matrix" />, if it is invertible.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-167">Das folgende Codebeispiel erstellt eine Matrix und invertiert:</span><span class="sxs-lookup"><span data-stu-id="1fda2-167">The following code example creates a matrix and inverts it:</span></span>  
+  
+```csharp  
+Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);  
+ myMatrix.Invert();  
+```  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsIdentity">
+      <MemberSignature Language="C#" Value="public bool IsIdentity { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsIdentity" />
+      <MemberSignature Language="DocId" Value="P:System.Drawing.Drawing2D.Matrix.IsIdentity" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsIdentity As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsIdentity { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-168">Ruft einen Wert ab, der angibt, ob es sich bei <see cref="T:System.Drawing.Drawing2D.Matrix" /> um die Identitätsmatrix handelt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-168">Gets a value indicating whether this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is the identity matrix.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="1fda2-169">Diese Eigenschaft ist <see langword="true" />, wenn es sich bei dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> um die Identitätsmatrix handelt, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-169">This property is <see langword="true" /> if this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is identity; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsInvertible">
+      <MemberSignature Language="C#" Value="public bool IsInvertible { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsInvertible" />
+      <MemberSignature Language="DocId" Value="P:System.Drawing.Drawing2D.Matrix.IsInvertible" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsInvertible As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsInvertible { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-170">Ruft einen Wert ab, der angibt, ob diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> invertierbar ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-170">Gets a value indicating whether this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is invertible.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="1fda2-171">Diese Eigenschaft ist <see langword="true" />, wenn die <see cref="T:System.Drawing.Drawing2D.Matrix" /> invertierbar ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-171">This property is <see langword="true" /> if this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is invertible; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Multiply">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-172">Multipliziert diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> mit der angegebenen <see cref="T:System.Drawing.Drawing2D.Matrix" />, wobei die angegebene <see cref="T:System.Drawing.Drawing2D.Matrix" /> vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-172">Multiplies this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by the specified <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the specified <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public void Multiply (System.Drawing.Drawing2D.Matrix matrix);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Multiply(class System.Drawing.Drawing2D.Matrix matrix) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Multiply(System.Drawing.Drawing2D.Matrix)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Multiply(System::Drawing::Drawing2D::Matrix ^ matrix);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="System.Drawing.Drawing2D.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">
+          <span data-ttu-id="1fda2-173">Die <see cref="T:System.Drawing.Drawing2D.Matrix" />, mit der diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> multipliziert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-173">The <see cref="T:System.Drawing.Drawing2D.Matrix" /> by which this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is to be multiplied.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-174">Multipliziert diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> mit der im <paramref name="matrix" />-Parameter angegebenen Matrix, wobei die angegebene <see cref="T:System.Drawing.Drawing2D.Matrix" /> vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-174">Multiplies this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by the matrix specified in the <paramref name="matrix" /> parameter, by prepending the specified <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-175">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.Multiply%2A>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-175">For an example, see <xref:System.Drawing.Drawing2D.Matrix.Multiply%2A>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public void Multiply (System.Drawing.Drawing2D.Matrix matrix, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Multiply(class System.Drawing.Drawing2D.Matrix matrix, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Multiply(System.Drawing.Drawing2D.Matrix,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Multiply(System::Drawing::Drawing2D::Matrix ^ matrix, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="System.Drawing.Drawing2D.Matrix" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">
+          <span data-ttu-id="1fda2-176">Die <see cref="T:System.Drawing.Drawing2D.Matrix" />, mit der diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> multipliziert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-176">The <see cref="T:System.Drawing.Drawing2D.Matrix" /> by which this <see cref="T:System.Drawing.Drawing2D.Matrix" /> is to be multiplied.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-177">Die <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge der Multiplikation darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-177">The <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that represents the order of the multiplication.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-178">Multipliziert diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> mit der im <paramref name="matrix" />-Parameter angegebenen Matrix in der im <paramref name="order" />-Parameter angegebenen Reihenfolge.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-178">Multiplies this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by the matrix specified in the <paramref name="matrix" /> parameter, and in the order specified in the <paramref name="order" /> parameter.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-179">Wenn die angegebene Reihenfolge <xref:System.Drawing.Drawing2D.MatrixOrder.Prepend>, gibt diese <xref:System.Drawing.Drawing2D.Matrix> die angegebene Matrix vorangestellt multipliziert wird.</span><span class="sxs-lookup"><span data-stu-id="1fda2-179">If the specified order is <xref:System.Drawing.Drawing2D.MatrixOrder.Prepend>, this <xref:System.Drawing.Drawing2D.Matrix> is multiplied by the specified matrix in a prepended order.</span></span> <span data-ttu-id="1fda2-180">Wenn die angegebene Reihenfolge <xref:System.Drawing.Drawing2D.MatrixOrder.Append>, gibt diese <xref:System.Drawing.Drawing2D.Matrix> die angegebene Matrix angefügt multipliziert wird.</span><span class="sxs-lookup"><span data-stu-id="1fda2-180">If the specified order is <xref:System.Drawing.Drawing2D.MatrixOrder.Append>, this <xref:System.Drawing.Drawing2D.Matrix> is multiplied by the specified matrix in an appended order.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="1fda2-181">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-181">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-182">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-182">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-183">Erstellt drei Matrizen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-183">Creates three matrices.</span></span>  
+  
+-   <span data-ttu-id="1fda2-184">Listet den Inhalt der Matrix 1 auf dem Bildschirm.</span><span class="sxs-lookup"><span data-stu-id="1fda2-184">Lists the contents of matrix 1 to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-185">Multipliziert Matrix 1 mit 2-Matrix ein, und speichert das Ergebnis in der Matrix 1.</span><span class="sxs-lookup"><span data-stu-id="1fda2-185">Multiplies matrix 1 by matrix 2 and stores the result in matrix 1.</span></span>  
+  
+-   <span data-ttu-id="1fda2-186">Listet den Inhalt der Matrix 1 auf dem Bildschirm.</span><span class="sxs-lookup"><span data-stu-id="1fda2-186">Lists the contents of matrix 1 to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-187">Das Ergebnis in der Matrix 1 von 3-Matrix gespeichert multipliziert und speichert das Ergebnis wieder in der Matrix 1.</span><span class="sxs-lookup"><span data-stu-id="1fda2-187">Multiplies the result stored in matrix 1 by matrix 3, and again stores the result in matrix 1.</span></span>  
+  
+-   <span data-ttu-id="1fda2-188">Listet den Inhalt der Matrix 1 auf dem Bildschirm.</span><span class="sxs-lookup"><span data-stu-id="1fda2-188">Lists the contents of matrix 1 to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-189">Zeichnet ein Rechteck auf dem Bildschirm vor dem Anwenden der Matrixtransformation für die 1 (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-189">Draws a rectangle to the screen prior to applying the matrix 1 transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-190">Wendet die Transformation in das Rechteck.</span><span class="sxs-lookup"><span data-stu-id="1fda2-190">Applies the transform to the rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-191">Zeichnet das transformierte Rechteck auf dem Bildschirm (das rote Rechteck) mit den Koordinaten des vorherigen Rechtecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-191">Draws the transformed rectangle to the screen (the red rectangle), using the same coordinates as the previous rectangle.</span></span>  
+  
+ <span data-ttu-id="1fda2-192">Beachten Sie, dass das rote Rechteck mit einem Faktor von zwei in horizontaler Richtung skaliert wurde dann um 90 Grad gedreht und dann in y-Richtung verschoben (übersetzte) 250 Punkte entlang der x-Achse an und 50 Punkt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-192">Notice that the red rectangle has been scaled by a factor of two in the horizontal direction, then rotated 90 degrees, and then moved (translated) 250 points in the x direction and 50 points in the y direction.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#1](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#1)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#1](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#1)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OffsetX">
+      <MemberSignature Language="C#" Value="public float OffsetX { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 OffsetX" />
+      <MemberSignature Language="DocId" Value="P:System.Drawing.Drawing2D.Matrix.OffsetX" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property OffsetX As Single" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property float OffsetX { float get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-193">Ruft den Wert der Verschiebung in x-Richtung (der dx-Wert bzw. das Element in der dritten Zeile und ersten Spalte) dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-193">Gets the x translation value (the dx value, or the element in the third row and first column) of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="1fda2-194">Der Wert der Verschiebung in x-Richtung für diese <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-194">The x translation value of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OffsetY">
+      <MemberSignature Language="C#" Value="public float OffsetY { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 OffsetY" />
+      <MemberSignature Language="DocId" Value="P:System.Drawing.Drawing2D.Matrix.OffsetY" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property OffsetY As Single" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property float OffsetY { float get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-195">Ruft den Wert der Verschiebung in y-Richtung (den dy-Wert bzw. das Element in der dritten Zeile und zweiten Spalte) der <see cref="T:System.Drawing.Drawing2D.Matrix" /> ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-195">Gets the y translation value (the dy value, or the element in the third row and second column) of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="1fda2-196">Der Wert der Verschiebung in y-Richtung für diese <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-196">The y translation value of this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Reset">
+      <MemberSignature Language="C#" Value="public void Reset ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Reset() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Reset" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Reset ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Reset();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-197">Setzt diese <see cref="T:System.Drawing.Drawing2D.Matrix" /> zurück, sodass sie die Elemente der Identitätsmatrix enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-197">Resets this <see cref="T:System.Drawing.Drawing2D.Matrix" /> to have the elements of the identity matrix.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-198">Die Elemente werden auf die wichtigsten Diagonale der Identitätsmatrix steht "1".</span><span class="sxs-lookup"><span data-stu-id="1fda2-198">The elements on the main diagonal of the identity matrix are 1.</span></span> <span data-ttu-id="1fda2-199">Alle anderen Elemente der Identitätsmatrix sind 0.</span><span class="sxs-lookup"><span data-stu-id="1fda2-199">All other elements of the identity matrix are 0.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="1fda2-200">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-200">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-201">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-201">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-202">Erstellt eine Skalierungsmatrix.</span><span class="sxs-lookup"><span data-stu-id="1fda2-202">Creates a scaling matrix.</span></span>  
+  
+-   <span data-ttu-id="1fda2-203">Listet die Matrixelemente auf dem Bildschirm.</span><span class="sxs-lookup"><span data-stu-id="1fda2-203">Lists the matrix elements to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-204">Setzt die Matrix auf Identität zurück.</span><span class="sxs-lookup"><span data-stu-id="1fda2-204">Resets the matrix to identity.</span></span>  
+  
+-   <span data-ttu-id="1fda2-205">Listet die Elemente auf dem Bildschirm an.</span><span class="sxs-lookup"><span data-stu-id="1fda2-205">Lists the elements to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-206">Übersetzt die Matrix von 50 Punkt auf der x-Achse und 40 Punkte auf der y-Achse an.</span><span class="sxs-lookup"><span data-stu-id="1fda2-206">Translates the matrix by 50 points in the x-axis and 40 points in the y-axis.</span></span>  
+  
+-   <span data-ttu-id="1fda2-207">Listet die Elemente der übersetzte Matrix auf dem Bildschirm an.</span><span class="sxs-lookup"><span data-stu-id="1fda2-207">Lists the elements of the translated matrix to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-208">Zeichnet ein Rechteck gezeichnet wird, auf dem Bildschirm vor dem Anwenden der Matrixtransformation (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-208">Draws a rectangle is drawn to the screen prior to applying the matrix transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-209">Wendet die Transformation in das Rechteck.</span><span class="sxs-lookup"><span data-stu-id="1fda2-209">Applies the transform to the rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-210">Zeichnet, die das transformierte Rechteck auf dem Bildschirm (das rote Rechteck) mit den Koordinaten des vorherigen Rechtecks gezeichnet wird.</span><span class="sxs-lookup"><span data-stu-id="1fda2-210">Draws the transformed rectangle is drawn to the screen (the red rectangle), using the same coordinates as the previous rectangle.</span></span>  
+  
+ <span data-ttu-id="1fda2-211">Beachten Sie, dass das rote Rechteck wurde (aufgrund der Reset) nicht skaliert, aber in der x- und y-Achse übersetzt wurde.</span><span class="sxs-lookup"><span data-stu-id="1fda2-211">Notice that the red rectangle was not scaled (because of the reset) but was translated in the x-axis and y-axis.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#2](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#2)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#2](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#2)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#2](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Rotate">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-212">Weist dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> eine Drehung im Uhrzeigersinn um den Ursprung mit dem angegebenen Drehwinkel zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-212">Applies a clockwise rotation of the specified angle about the origin to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Rotate">
+      <MemberSignature Language="C#" Value="public void Rotate (float angle);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Rotate(float32 angle) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Rotate(System.Single)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Rotate (angle As Single)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Rotate(float angle);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="angle" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="angle">
+          <span data-ttu-id="1fda2-213">Der Drehwinkel in Grad.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-213">The angle of the rotation, in degrees.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-214">Stellt dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> eine Drehung im Uhrzeigersinn um den Ursprung mit dem angegebenen Drehwinkel voran.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-214">Prepend to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> a clockwise rotation, around the origin and by the specified angle.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-215">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.Rotate%28System.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-215">For an example, see <xref:System.Drawing.Drawing2D.Matrix.Rotate%28System.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Rotate">
+      <MemberSignature Language="C#" Value="public void Rotate (float angle, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Rotate(float32 angle, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Rotate(System.Single,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Rotate (angle As Single, order As MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Rotate(float angle, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="angle" Type="System.Single" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="angle">
+          <span data-ttu-id="1fda2-216">Der Drehwinkel (Wertebereich) in Grad.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-216">The angle (extent) of the rotation, in degrees.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-217">Eine <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge angibt (angefügt oder vorangestellt), in der die Drehung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zugewiesen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-217">A <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that specifies the order (append or prepend) in which the rotation is applied to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-218">Weist dieser <paramref name="angle" /> eine Drehung im Uhrzeigersinn um den Ursprung (x- und y-Koordinate sind  0 (null)) mit einem im <see cref="T:System.Drawing.Drawing2D.Matrix" />-Parameter angegebenen Drehwinkel zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-218">Applies a clockwise rotation of an amount specified in the <paramref name="angle" /> parameter, around the origin (zero x and y coordinates) for this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-219">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-219">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-220">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-220">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-221">Zeichnet ein Rechteck auf dem Bildschirm, bevor Sie eine Rotationstransformation zugewiesen (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-221">Draws a rectangle to the screen prior to applying a rotation transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-222">Erstellt eine Matrix und um 45 Grad gedreht.</span><span class="sxs-lookup"><span data-stu-id="1fda2-222">Creates a matrix and rotates it 45 degrees.</span></span>  
+  
+-   <span data-ttu-id="1fda2-223">Weist diese Matrixtransformation in das Rechteck.</span><span class="sxs-lookup"><span data-stu-id="1fda2-223">Applies this matrix transform to the rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-224">Zeichnet das transformierte Rechteck auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-224">Draws the transformed rectangle to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-225">Beachten Sie, dass das rote Rechteck gedreht wurde um die 0 0 Bildschirmkoordinaten.</span><span class="sxs-lookup"><span data-stu-id="1fda2-225">Notice that the red rectangle has been rotated around the 0, 0 screen coordinates.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#3](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#3)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#3](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#3)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#3](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#3)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="RotateAt">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-226">Weist dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> eine Drehung im Uhrzeigersinn um den angegebenen Punkt zu, wobei die Drehung vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-226">Applies a clockwise rotation about the specified point to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the rotation.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="RotateAt">
+      <MemberSignature Language="C#" Value="public void RotateAt (float angle, System.Drawing.PointF point);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void RotateAt(float32 angle, valuetype System.Drawing.PointF point) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.RotateAt(System.Single,System.Drawing.PointF)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub RotateAt (angle As Single, point As PointF)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void RotateAt(float angle, System::Drawing::PointF point);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="angle" Type="System.Single" />
+        <Parameter Name="point" Type="System.Drawing.PointF" />
+      </Parameters>
+      <Docs>
+        <param name="angle">
+          <span data-ttu-id="1fda2-227">Der Drehwinkel (Wertebereich) in Grad.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-227">The angle (extent) of the rotation, in degrees.</span>
+          </span>
+        </param>
+        <param name="point">
+          <span data-ttu-id="1fda2-228">Eine <see cref="T:System.Drawing.PointF" />-Struktur, die den Mittelpunkt der Drehung darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-228">A <see cref="T:System.Drawing.PointF" /> that represents the center of the rotation.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-229">Weist dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> eine Drehung im Uhrzeigersinn um den im <paramref name="point" />-Parameter angegebenen Punkt zu, wobei die Drehung vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-229">Applies a clockwise rotation to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> around the point specified in the <paramref name="point" /> parameter, and by prepending the rotation.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-230">Das folgende Codebeispiel veranschaulicht die Verwendung einer <xref:System.Drawing.Drawing2D.Matrix> und die <xref:System.Drawing.Drawing2D.GraphicsPath.Transform%2A> Methode, um eine Zeichenfolge zu drehen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-230">The following code example demonstrates using a <xref:System.Drawing.Drawing2D.Matrix> and the <xref:System.Drawing.Drawing2D.GraphicsPath.Transform%2A> method to rotate a string.</span></span> <span data-ttu-id="1fda2-231">In diesem Beispiel dient, die mit Windows Forms verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-231">This example is designed to be used with Windows Forms.</span></span> <span data-ttu-id="1fda2-232">Erstellen Sie ein Formular, und fügen Sie den folgenden Code hinein.</span><span class="sxs-lookup"><span data-stu-id="1fda2-232">Create a form and paste the following code into it.</span></span> <span data-ttu-id="1fda2-233">Rufen Sie die `DrawVerticalStringFromBottomUp` Methode in der Form <xref:System.Windows.Forms.Control.Paint> -Ereignishandler übergeben `e` als <xref:System.Windows.Forms.PaintEventArgs>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-233">Call the `DrawVerticalStringFromBottomUp` method in the form's <xref:System.Windows.Forms.Control.Paint> event handler, passing `e` as <xref:System.Windows.Forms.PaintEventArgs>.</span></span>  
+  
+ [!code-cpp[System.Drawing.MiscExamples#5](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.MiscExamples/CPP/form1.cpp#5)]
+ [!code-csharp[System.Drawing.MiscExamples#5](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.MiscExamples/CS/form1.cs#5)]
+ [!code-vb[System.Drawing.MiscExamples#5](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.MiscExamples/VB/form1.vb#5)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RotateAt">
+      <MemberSignature Language="C#" Value="public void RotateAt (float angle, System.Drawing.PointF point, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void RotateAt(float32 angle, valuetype System.Drawing.PointF point, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.RotateAt(System.Single,System.Drawing.PointF,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub RotateAt (angle As Single, point As PointF, order As MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void RotateAt(float angle, System::Drawing::PointF point, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="angle" Type="System.Single" />
+        <Parameter Name="point" Type="System.Drawing.PointF" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="angle">
+          <span data-ttu-id="1fda2-234">Der Drehwinkel in Grad.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-234">The angle of the rotation, in degrees.</span>
+          </span>
+        </param>
+        <param name="point">
+          <span data-ttu-id="1fda2-235">Eine <see cref="T:System.Drawing.PointF" />-Struktur, die den Mittelpunkt der Drehung darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-235">A <see cref="T:System.Drawing.PointF" /> that represents the center of the rotation.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-236">Eine <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge (angefügt oder vorangestellt) angibt, in der die Drehung zugewiesen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-236">A <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that specifies the order (append or prepend) in which the rotation is applied.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-237">Weist dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> eine Drehung im Uhrzeigersinn um den angegebenen Punkt in der angegebenen Reihenfolge zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-237">Applies a clockwise rotation about the specified point to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the specified order.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-238">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-238">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-239">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-239">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-240">Zeichnet ein Rechteck auf dem Bildschirm, bevor Sie eine Rotationstransformation zugewiesen (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-240">Draws a rectangle to the screen prior to applying a rotation transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-241">Erstellt eine Matrix, und es um 45 Grad um einen angegebenen Punkt dreht.</span><span class="sxs-lookup"><span data-stu-id="1fda2-241">Creates a matrix and rotates it 45 degrees around a specified point.</span></span>  
+  
+-   <span data-ttu-id="1fda2-242">Weist dieser Matrix Transformation wird in das Rechteck.</span><span class="sxs-lookup"><span data-stu-id="1fda2-242">Applies this matrix transform is to the rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-243">Zeichnet das transformierte Rechteck auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-243">Draws the transformed rectangle to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-244">Beachten Sie, dass das rote Rechteck auf der linken oberen Ecke des Rechtecks gedreht wurde (die angegebene Drehung Punkt der <xref:System.Drawing.Drawing2D.Matrix.RotateAt%2A> Methode).</span><span class="sxs-lookup"><span data-stu-id="1fda2-244">Notice that the red rectangle has been rotated around the upper left-hand corner of the rectangle (the rotation point specified the <xref:System.Drawing.Drawing2D.Matrix.RotateAt%2A> method).</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#4](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#4)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#4](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#4)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#4](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#4)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Scale">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-245">Weist den angegebenen Skalierungsvektor dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei der Skalierungsvektor vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-245">Applies the specified scale vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the scale vector.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Scale">
+      <MemberSignature Language="C#" Value="public void Scale (float scaleX, float scaleY);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Scale(float32 scaleX, float32 scaleY) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Scale(System.Single,System.Single)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Scale (scaleX As Single, scaleY As Single)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Scale(float scaleX, float scaleY);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scaleX" Type="System.Single" />
+        <Parameter Name="scaleY" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="scaleX">
+          <span data-ttu-id="1fda2-246">Der Wert für die Skalierung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in Richtung der x-Achse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-246">The value by which to scale this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the x-axis direction.</span>
+          </span>
+        </param>
+        <param name="scaleY">
+          <span data-ttu-id="1fda2-247">Der Wert für die Skalierung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in Richtung der y-Achse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-247">The value by which to scale this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the y-axis direction.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-248">Weist den angegebenen Skalierungsvektor dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei der Skalierungsvektor vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-248">Applies the specified scale vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the scale vector.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-249">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.Scale%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-249">For an example, see <xref:System.Drawing.Drawing2D.Matrix.Scale%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Scale">
+      <MemberSignature Language="C#" Value="public void Scale (float scaleX, float scaleY, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Scale(float32 scaleX, float32 scaleY, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Scale(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Scale (scaleX As Single, scaleY As Single, order As MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Scale(float scaleX, float scaleY, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scaleX" Type="System.Single" />
+        <Parameter Name="scaleY" Type="System.Single" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="scaleX">
+          <span data-ttu-id="1fda2-250">Der Wert für die Skalierung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in Richtung der x-Achse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-250">The value by which to scale this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the x-axis direction.</span>
+          </span>
+        </param>
+        <param name="scaleY">
+          <span data-ttu-id="1fda2-251">Der Wert für die Skalierung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in Richtung der y-Achse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-251">The value by which to scale this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the y-axis direction.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-252">Eine <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge angibt (angefügt oder vorangestellt), in der der Skalierungsvektor der <see cref="T:System.Drawing.Drawing2D.Matrix" /> zugewiesen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-252">A <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that specifies the order (append or prepend) in which the scale vector is applied to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-253">Weist den angegebenen Skalierungsvektor (<paramref name="scaleX" /> und <paramref name="scaleY" />) der <see cref="T:System.Drawing.Drawing2D.Matrix" /> in der angegebenen Reihenfolge zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-253">Applies the specified scale vector (<paramref name="scaleX" /> and <paramref name="scaleY" />) to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> using the specified order.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-254">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-254">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-255">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-255">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-256">Zeichnet ein Rechteck auf dem Bildschirm vor dem Anwenden einer Skalierungstransformation (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-256">Draws a rectangle to the screen prior to applying a scaling transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-257">Erstellt eine Matrix, und er von 3 auf der x-Achse und 2 auf der y-Achse skaliert werden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-257">Creates a matrix and scales it by 3 in the x-axis and 2 in the y-axis.</span></span>  
+  
+-   <span data-ttu-id="1fda2-258">Weist diese Matrixtransformation in das Rechteck.</span><span class="sxs-lookup"><span data-stu-id="1fda2-258">Applies this matrix transform to the rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-259">Zeichnet das transformierte Rechteck auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-259">Draws the transformed rectangle to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-260">Beachten Sie, dass das rote Rechteck mit dem Faktor 3 auf der x-Achse und von 2 auf der y-Achse, einschließlich der oberen linken Ecke des Rechtecks (dem Anfangspunkt des Rechtecks) skaliert wurde.</span><span class="sxs-lookup"><span data-stu-id="1fda2-260">Notice that the red rectangle has been scaled by a factor of 3 in the x-axis and by 2 in the y-axis, including the upper left-hand corner of the rectangle (the beginning point of the rectangle).</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#5](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#5)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#5](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#5)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#5](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#5)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Shear">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-261">Weist den angegebenen Scherungsvektor der <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei der Scherungsvektor vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-261">Applies the specified shear vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the shear vector.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Shear">
+      <MemberSignature Language="C#" Value="public void Shear (float shearX, float shearY);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Shear(float32 shearX, float32 shearY) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Shear(System.Single,System.Single)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Shear (shearX As Single, shearY As Single)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Shear(float shearX, float shearY);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shearX" Type="System.Single" />
+        <Parameter Name="shearY" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="shearX">
+          <span data-ttu-id="1fda2-262">Der horizontale Scherungsfaktor.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-262">The horizontal shear factor.</span>
+          </span>
+        </param>
+        <param name="shearY">
+          <span data-ttu-id="1fda2-263">Der vertikale Scherungsfaktor.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-263">The vertical shear factor.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-264">Weist den angegebenen Scherungsvektor der <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei die Scherungstransformation vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-264">Applies the specified shear vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the shear transformation.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-265">Bei dieser Methode angewendeten Transformation ist eine reine Scherung nur, wenn einer der Parameter 0 ist.</span><span class="sxs-lookup"><span data-stu-id="1fda2-265">The transformation applied in this method is a pure shear only if one of the parameters is 0.</span></span> <span data-ttu-id="1fda2-266">Angewendet, um ein Rechteck am ursprünglichen Speicherort, wenn die `shearY` Faktor gleich 0 ist, die Transformation verschiebt am unteren Rand Horizontal von `shearX` Mal die Höhe des Rechtecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-266">Applied to a rectangle at the origin, when the `shearY` factor is 0, the transformation moves the bottom edge horizontally by `shearX` times the height of the rectangle.</span></span> <span data-ttu-id="1fda2-267">Wenn die `shearX` Faktor gleich 0 ist, verschiebt vertikal um die Rechte Kante `shearY` -fache Breite des Rechtecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-267">When the `shearX` factor is 0, it moves the right edge vertically by `shearY` times the width of the rectangle.</span></span> <span data-ttu-id="1fda2-268">Vorsicht ist in der Reihenfolge auf, wenn beide Parameter ungleich NULL ist, sind, da die Ergebnisse schwer vorherzusagen sind.</span><span class="sxs-lookup"><span data-stu-id="1fda2-268">Caution is in order when both parameters are nonzero, because the results are hard to predict.</span></span> <span data-ttu-id="1fda2-269">Angenommen, wenn beide Faktoren 1 sind, die Transformation ist (also nicht invertierbar), und die gesamte Fläche zu einer einzelnen Zeile.</span><span class="sxs-lookup"><span data-stu-id="1fda2-269">For example, if both factors are 1, the transformation is singular (hence noninvertible), squeezing the entire plane to a single line.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="1fda2-270">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-270">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-271">Der Code führt die folgende Aktion aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-271">The code performs the following action:</span></span>  
+  
+-   <span data-ttu-id="1fda2-272">Zeichnet ein Rechteck auf dem Bildschirm mit einem grünen Stift, bevor eine Skalierungstransformation zugewiesen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-272">Draws a rectangle to the screen, using a green pen, prior to applying a scaling transform.</span></span>  
+  
+-   <span data-ttu-id="1fda2-273">Erstellt eine <xref:System.Drawing.Drawing2D.Matrix> und verwendet, um einen globalen Koordinaten Transformation für das <xref:System.Drawing.Graphics>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-273">Creates a <xref:System.Drawing.Drawing2D.Matrix> and uses it to set a world-coordinate transform for the <xref:System.Drawing.Graphics>.</span></span>  
+  
+-   <span data-ttu-id="1fda2-274">Zeichnet einen anderen Rechteck mit einem roten Stift.</span><span class="sxs-lookup"><span data-stu-id="1fda2-274">Draws another rectangle using a red pen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-275">Zeichnet eine Ellipse, die mit einem blauen Stift.</span><span class="sxs-lookup"><span data-stu-id="1fda2-275">Draws an ellipse using a blue pen.</span></span>  
+  
+ <span data-ttu-id="1fda2-276">Das Ergebnis ist ein grünes Rechteck, ein rotes Parallelogramm und eine transformierte Ellipse Blau.</span><span class="sxs-lookup"><span data-stu-id="1fda2-276">The result is a green rectangle, a red parallelogram and a transformed, blue ellipse.</span></span> <span data-ttu-id="1fda2-277">Beachten Sie, dass das grüne Rechteck (vor dem Festlegen der Transformation gezeichnet) direkt mit den bereitgestellten Koordinaten verwendet die <xref:System.Drawing.Graphics.DrawRectangle%2A> aufrufen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-277">Notice that the green rectangle (drawn prior to setting the transform) directly uses the coordinates supplied in the <xref:System.Drawing.Graphics.DrawRectangle%2A> call.</span></span> <span data-ttu-id="1fda2-278">Die anderen beiden Abbildungen werden vor dem Zeichnen umgewandelt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-278">The other two figures are transformed prior to drawing.</span></span> <span data-ttu-id="1fda2-279">Das Rechteck ist ein Parallelogramm (Rot) transformiert, und die Ellipse (Blau) wird entsprechend in das transformierte Parallelogramm transformiert.</span><span class="sxs-lookup"><span data-stu-id="1fda2-279">The rectangle is transformed to a parallelogram (red), and the ellipse (blue) is transformed to fit into the transformed parallelogram.</span></span> <span data-ttu-id="1fda2-280">Beachten Sie, dass die Unterseite des Rechtecks auf der x-Achse mit dem Faktor zweimal die Höhe des Rechtecks bilden somit Parallelogramms ergibt (Schertransformation) verschoben werden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-280">Notice the bottom of the rectangle is moved (sheared) in the x-axis by a factor of two times the height of the rectangle, thus forming the parallelogram.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#6](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#6)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#6](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#6)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#6](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#6)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Shear">
+      <MemberSignature Language="C#" Value="public void Shear (float shearX, float shearY, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Shear(float32 shearX, float32 shearY, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Shear(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Shear (shearX As Single, shearY As Single, order As MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Shear(float shearX, float shearY, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shearX" Type="System.Single" />
+        <Parameter Name="shearY" Type="System.Single" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="shearX">
+          <span data-ttu-id="1fda2-281">Der horizontale Scherungsfaktor.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-281">The horizontal shear factor.</span>
+          </span>
+        </param>
+        <param name="shearY">
+          <span data-ttu-id="1fda2-282">Der vertikale Scherungsfaktor.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-282">The vertical shear factor.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-283">Eine <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge (angefügt oder vorangestellt) angibt, in der die Scherung zugewiesen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-283">A <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that specifies the order (append or prepend) in which the shear is applied.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-284">Weist den angegebenen Scherungsvektor dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in der angegebenen Reihenfolge zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-284">Applies the specified shear vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the specified order.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="1fda2-285">Bei dieser Methode angewendeten Transformation ist eine reine Scherung nur, wenn einer der Parameter 0 ist.</span><span class="sxs-lookup"><span data-stu-id="1fda2-285">The transformation applied in this method is a pure shear only if one of the parameters is 0.</span></span> <span data-ttu-id="1fda2-286">Angewendet, um ein Rechteck am ursprünglichen Speicherort, wenn die `shearY` Faktor gleich 0 ist, die Transformation verschiebt am unteren Rand Horizontal von `shearX` Mal die Höhe des Rechtecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-286">Applied to a rectangle at the origin, when the `shearY` factor is 0, the transformation moves the bottom edge horizontally by `shearX` times the height of the rectangle.</span></span> <span data-ttu-id="1fda2-287">Wenn die `shearX` Faktor gleich 0 ist, verschiebt vertikal um die Rechte Kante `shearY` -fache Breite des Rechtecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-287">When the `shearX` factor is 0, it moves the right edge vertically by `shearY` times the width of the rectangle.</span></span> <span data-ttu-id="1fda2-288">Vorsicht ist in der Reihenfolge auf, wenn beide Parameter ungleich NULL ist, sind, da die Ergebnisse schwer vorherzusagen sind.</span><span class="sxs-lookup"><span data-stu-id="1fda2-288">Caution is in order when both parameters are nonzero, because the results are hard to predict.</span></span> <span data-ttu-id="1fda2-289">Angenommen, wenn beide Faktoren 1 sind, die Transformation ist (also nicht invertierbar), und die gesamte Fläche zu einer einzelnen Zeile.</span><span class="sxs-lookup"><span data-stu-id="1fda2-289">For example, if both factors are 1, the transformation is singular (hence noninvertible), squeezing the entire plane to a single line.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="1fda2-290">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.Shear%28System.Single%2CSystem.Single%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-290">For an example, see <xref:System.Drawing.Drawing2D.Matrix.Shear%28System.Single%2CSystem.Single%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="TransformPoints">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-291">Weist die von dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> dargestellte geometrische Transformation einem Punktearray zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-291">Applies the geometric transform this <see cref="T:System.Drawing.Drawing2D.Matrix" /> represents to an array of points.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="TransformPoints">
+      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.Point[] pts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TransformPoints(valuetype System.Drawing.Point[] pts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.TransformPoints(System.Drawing.Point[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As Point())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pts" Type="System.Drawing.Point[]" />
+      </Parameters>
+      <Docs>
+        <param name="pts">
+          <span data-ttu-id="1fda2-292">Ein Array von <see cref="T:System.Drawing.Point" />-Strukturen, das die zu transformierenden Punkte darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-292">An array of <see cref="T:System.Drawing.Point" /> structures that represents the points to transform.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-293">Weist die von dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> dargestellte geometrische Transformation einem angegebenen Punktearray zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-293">Applies the geometric transform represented by this <see cref="T:System.Drawing.Drawing2D.Matrix" /> to a specified array of points.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-294">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-294">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-295">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-295">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-296">Erstellt ein Array von Punkten, die ein Rechteck bilden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-296">Creates an array of points that form a rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-297">Zeichnet dieses Array von Punkten (auf dem Bildschirm vor dem Anwenden einer Skalierungstransformation (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-297">Draws this array of points (to the screen prior to applying a scaling transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-298">Erstellt eine Matrix, und er von 3 auf der x-Achse und 2 auf der y-Achse skaliert werden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-298">Creates a matrix and scales it by 3 in the x-axis and 2 in the y-axis.</span></span>  
+  
+-   <span data-ttu-id="1fda2-299">Das Punktarray gilt diese Matrixtransformation.</span><span class="sxs-lookup"><span data-stu-id="1fda2-299">Applies this matrix transform to the array of points.</span></span>  
+  
+-   <span data-ttu-id="1fda2-300">Zeichnet das transformierte Array auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-300">Draws the transformed array to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-301">Beachten Sie, dass das rote Rechteck mit dem Faktor 3 auf der x-Achse und von 2 auf der y-Achse, einschließlich der oberen linken Ecke des Rechtecks (dem Anfangspunkt des Rechtecks) skaliert wurde.</span><span class="sxs-lookup"><span data-stu-id="1fda2-301">Notice that the red rectangle has been scaled by a factor of 3 in the x-axis and by 2 in the y-axis, including the upper left-hand corner of the rectangle (the beginning point of the rectangle).</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#7](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#7)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#7](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#7)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#7](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#7)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TransformPoints">
+      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.PointF[] pts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TransformPoints(valuetype System.Drawing.PointF[] pts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.TransformPoints(System.Drawing.PointF[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As PointF())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pts" Type="System.Drawing.PointF[]" />
+      </Parameters>
+      <Docs>
+        <param name="pts">
+          <span data-ttu-id="1fda2-302">Ein Array von <see cref="T:System.Drawing.PointF" />-Strukturen, das die zu transformierenden Punkte darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-302">An array of <see cref="T:System.Drawing.PointF" /> structures that represents the points to transform.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-303">Weist die von dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> dargestellte geometrische Transformation einem angegebenen Punktearray zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-303">Applies the geometric transform represented by this <see cref="T:System.Drawing.Drawing2D.Matrix" /> to a specified array of points.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-304">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.TransformPoints%28System.Drawing.Point%5B%5D%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-304">For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformPoints%28System.Drawing.Point%5B%5D%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="TransformVectors">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-305">Multipliziert jeden Vektor in einem Array mit der Matrix.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-305">Multiplies each vector in an array by the matrix.</span>
+          </span>
+          <span data-ttu-id="1fda2-306">Die zu verschiebenden Elemente dieser Matrix (dritte Zeile) werden ignoriert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-306">The translation elements of this matrix (third row) are ignored.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="TransformVectors">
+      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.Point[] pts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TransformVectors(valuetype System.Drawing.Point[] pts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.TransformVectors(System.Drawing.Point[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As Point())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::Point&gt; ^ pts);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pts" Type="System.Drawing.Point[]" />
+      </Parameters>
+      <Docs>
+        <param name="pts">
+          <span data-ttu-id="1fda2-307">Ein Array von <see cref="T:System.Drawing.Point" />-Strukturen, das die zu transformierenden Punkte darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-307">An array of <see cref="T:System.Drawing.Point" /> structures that represents the points to transform.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-308">Weist dem angegebenen Punktearray ausschließlich die Skalierungs- und Drehungskomponenten dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-308">Applies only the scale and rotate components of this <see cref="T:System.Drawing.Drawing2D.Matrix" /> to the specified array of points.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-309">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-309">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-310">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-310">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-311">Erstellt ein Array von Punkten, die ein Rechteck bilden.</span><span class="sxs-lookup"><span data-stu-id="1fda2-311">Creates an array of points that form a rectangle.</span></span>  
+  
+-   <span data-ttu-id="1fda2-312">Zeichnet dieses Array von Punkten auf dem Bildschirm vor dem Anwenden einer Skalierungstransformation (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-312">Draws this array of points to the screen prior to applying a scaling transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-313">Erstellt eine Matrix wird von 3 auf der x-Achse und 2 auf der y-Achse skaliert und verschiebt es um 100 in beiden Achsen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-313">Creates a matrix and scales it by 3 in the x-axis and 2 in the y-axis, and translates it by 100 in both axes.</span></span>  
+  
+-   <span data-ttu-id="1fda2-314">Listet die Matrixelemente auf dem Bildschirm.</span><span class="sxs-lookup"><span data-stu-id="1fda2-314">Lists the matrix elements to the screen.</span></span>  
+  
+-   <span data-ttu-id="1fda2-315">Das Punktarray gilt diese Matrixtransformation.</span><span class="sxs-lookup"><span data-stu-id="1fda2-315">Applies this matrix transform to the array of points.</span></span>  
+  
+-   <span data-ttu-id="1fda2-316">Zeichnet das transformierte Array auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-316">Draws the transformed array to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-317">Beachten Sie, dass das rote Rechteck mit dem Faktor 3 auf der x-Achse und von 2 auf der y-Achse, einschließlich der oberen linken Ecke des Rechtecks (dem Anfangspunkt des Rechtecks) skaliert wurde der Verschiebungsvektor (die letzten beiden Elemente der Matrix) wird jedoch ignoriert.</span><span class="sxs-lookup"><span data-stu-id="1fda2-317">Notice that the red rectangle has been scaled by a factor of 3 in the x-axis and by 2 in the y-axis, including the upper left-hand corner of the rectangle (the beginning point of the rectangle) but the translation vector (the last two elements of the matrix) is ignored.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#8](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#8)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#8](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#8)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#8](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#8)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TransformVectors">
+      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.PointF[] pts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TransformVectors(valuetype System.Drawing.PointF[] pts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.TransformVectors(System.Drawing.PointF[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As PointF())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pts" Type="System.Drawing.PointF[]" />
+      </Parameters>
+      <Docs>
+        <param name="pts">
+          <span data-ttu-id="1fda2-318">Ein Array von <see cref="T:System.Drawing.Point" />-Strukturen, das die zu transformierenden Punkte darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-318">An array of <see cref="T:System.Drawing.Point" /> structures that represents the points to transform.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-319">Multipliziert jeden Vektor in einem Array mit der Matrix.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-319">Multiplies each vector in an array by the matrix.</span>
+          </span>
+          <span data-ttu-id="1fda2-320">Die zu verschiebenden Elemente dieser Matrix (dritte Zeile) werden ignoriert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-320">The translation elements of this matrix (third row) are ignored.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-321">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.TransformVectors%28System.Drawing.Point%5B%5D%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-321">For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformVectors%28System.Drawing.Point%5B%5D%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Translate">
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="1fda2-322">Weist den angegebenen Verschiebungsvektor dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei der Verschiebungsvektor vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-322">Applies the specified translation vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the translation vector.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Translate">
+      <MemberSignature Language="C#" Value="public void Translate (float offsetX, float offsetY);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Translate(float32 offsetX, float32 offsetY) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Translate(System.Single,System.Single)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Translate (offsetX As Single, offsetY As Single)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Translate(float offsetX, float offsetY);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offsetX" Type="System.Single" />
+        <Parameter Name="offsetY" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="offsetX">
+          <span data-ttu-id="1fda2-323">Der x-Wert, um den die <see cref="T:System.Drawing.Drawing2D.Matrix" /> verschoben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-323">The x value by which to translate this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="offsetY">
+          <span data-ttu-id="1fda2-324">Der y-Wert, um den die <see cref="T:System.Drawing.Drawing2D.Matrix" /> verschoben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-324">The y value by which to translate this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-325">Weist den angegebenen Verschiebungsvektor (<paramref name="offsetX" /> und <paramref name="offsetY" />) dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zu, wobei der Vektor vorangestellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-325">Applies the specified translation vector (<paramref name="offsetX" /> and <paramref name="offsetY" />) to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the translation vector.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-326">Ein Beispiel finden Sie unter <xref:System.Drawing.Drawing2D.Matrix.Translate%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span><span class="sxs-lookup"><span data-stu-id="1fda2-326">For an example, see <xref:System.Drawing.Drawing2D.Matrix.Translate%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Translate">
+      <MemberSignature Language="C#" Value="public void Translate (float offsetX, float offsetY, System.Drawing.Drawing2D.MatrixOrder order);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Translate(float32 offsetX, float32 offsetY, valuetype System.Drawing.Drawing2D.MatrixOrder order) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.Translate(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Translate (offsetX As Single, offsetY As Single, order As MatrixOrder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Translate(float offsetX, float offsetY, System::Drawing::Drawing2D::MatrixOrder order);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offsetX" Type="System.Single" />
+        <Parameter Name="offsetY" Type="System.Single" />
+        <Parameter Name="order" Type="System.Drawing.Drawing2D.MatrixOrder" />
+      </Parameters>
+      <Docs>
+        <param name="offsetX">
+          <span data-ttu-id="1fda2-327">Der x-Wert, um den die <see cref="T:System.Drawing.Drawing2D.Matrix" /> verschoben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-327">The x value by which to translate this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="offsetY">
+          <span data-ttu-id="1fda2-328">Der y-Wert, um den die <see cref="T:System.Drawing.Drawing2D.Matrix" /> verschoben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-328">The y value by which to translate this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <param name="order">
+          <span data-ttu-id="1fda2-329">Eine <see cref="T:System.Drawing.Drawing2D.MatrixOrder" />, die die Reihenfolge angibt (angefügt oder vorangestellt), in der die Verschiebung dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> zugewiesen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-329">A <see cref="T:System.Drawing.Drawing2D.MatrixOrder" /> that specifies the order (append or prepend) in which the translation is applied to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-330">Weist den angegebenen Verschiebungsvektor dieser <see cref="T:System.Drawing.Drawing2D.Matrix" /> in der angegebenen Reihenfolge zu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-330">Applies the specified translation vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> in the specified order.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="1fda2-331">Im folgenden Codebeispiel wird für die Verwendung mit Windows Forms konzipiert und erfordert <xref:System.Windows.Forms.PaintEventArgs> `e`, einem <xref:System.Windows.Forms.Control.Paint> Ereignisobjekt.</span><span class="sxs-lookup"><span data-stu-id="1fda2-331">The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs>`e`, an <xref:System.Windows.Forms.Control.Paint> event object.</span></span> <span data-ttu-id="1fda2-332">Der Code führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="1fda2-332">The code performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="1fda2-333">Zeichnet ein Rechteck auf dem Bildschirm vor dem Anwenden einer übersetzen-Transformation (die blaue Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-333">Draws a rectangle to the screen prior to applying a translate transform (the blue rectangle).</span></span>  
+  
+-   <span data-ttu-id="1fda2-334">Erstellt eine Matrix und verschiebt es um 100 in beiden Achsen.</span><span class="sxs-lookup"><span data-stu-id="1fda2-334">Creates a matrix and translates it by 100 in both axes.</span></span>  
+  
+-   <span data-ttu-id="1fda2-335">Bezieht sich dieser Matrixtransformation auf das Rechteck</span><span class="sxs-lookup"><span data-stu-id="1fda2-335">Applies this matrix transform to the rectangle,</span></span>  
+  
+-   <span data-ttu-id="1fda2-336">Zeichnet das transformierte Rechteck auf dem Bildschirm (rotes Rechteck).</span><span class="sxs-lookup"><span data-stu-id="1fda2-336">Draws the transformed rectangle to the screen (the red rectangle).</span></span>  
+  
+ <span data-ttu-id="1fda2-337">Beachten Sie, dass das rote Rechteck Anfang 100 Punkte in beiden Achsen vom Anfang des blauen Dreiecks.</span><span class="sxs-lookup"><span data-stu-id="1fda2-337">Notice that the beginning of the red rectangle is located 100 points in both axes from the beginning of the blue triangle.</span></span>  
+  
+ [!code-cpp[System.Drawing.Drawing2D.ClassicMatrixExamples#9](~/samples/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp#9)]
+ [!code-csharp[System.Drawing.Drawing2D.ClassicMatrixExamples#9](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CS/form1.cs#9)]
+ [!code-vb[System.Drawing.Drawing2D.ClassicMatrixExamples#9](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/VB/form1.vb#9)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VectorTransformPoints">
+      <MemberSignature Language="C#" Value="public void VectorTransformPoints (System.Drawing.Point[] pts);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void VectorTransformPoints(valuetype System.Drawing.Point[] pts) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Drawing.Drawing2D.Matrix.VectorTransformPoints(System.Drawing.Point[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub VectorTransformPoints (pts As Point())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void VectorTransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Drawing</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pts" Type="System.Drawing.Point[]" />
+      </Parameters>
+      <Docs>
+        <param name="pts">
+          <span data-ttu-id="1fda2-338">Ein Array von <see cref="T:System.Drawing.Point" />-Strukturen, das die zu transformierenden Punkte darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-338">An array of <see cref="T:System.Drawing.Point" /> structures that represents the points to transform.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="1fda2-339">Multipliziert jeden Vektor in einem Array mit der Matrix.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-339">Multiplies each vector in an array by the matrix.</span>
+          </span>
+          <span data-ttu-id="1fda2-340">Die zu verschiebenden Elemente dieser Matrix (dritte Zeile) werden ignoriert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="1fda2-340">The translation elements of this matrix (third row) are ignored.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
