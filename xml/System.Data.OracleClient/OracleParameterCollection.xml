@@ -1,0 +1,1651 @@
+<Type Name="OracleParameterCollection" FullName="System.Data.OracleClient.OracleParameterCollection">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="dfa4e0bcd57ea7711b77491b25349757a3b62050" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public sealed class OracleParameterCollection : System.Data.Common.DbParameterCollection" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit OracleParameterCollection extends System.Data.Common.DbParameterCollection" />
+  <TypeSignature Language="DocId" Value="T:System.Data.OracleClient.OracleParameterCollection" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class OracleParameterCollection&#xA;Inherits DbParameterCollection" />
+  <TypeSignature Language="C++ CLI" Value="public ref class OracleParameterCollection sealed : System::Data::Common::DbParameterCollection" />
+  <AssemblyInfo>
+    <AssemblyName>System.Data.OracleClient</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Data.Common.DbParameterCollection</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.ComponentModel.Editor("Microsoft.VSDesigner.Data.Design.DBParametersEditor, Microsoft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>System.ComponentModel.ListBindable(false)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="d069c-101">Stellt eine Auflistung von Parametern dar, die für einen <see cref="T:System.Data.OracleClient.OracleCommand" /> relevant sind, sowie deren jeweilige Zuordnung zu Spalten in einem <see cref="T:System.Data.DataSet" />.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="d069c-101">Represents a collection of parameters relevant to an <see cref="T:System.Data.OracleClient.OracleCommand" /> as well as their respective mappings to columns in a <see cref="T:System.Data.DataSet" />.</span>
+      </span>
+      <span data-ttu-id="d069c-102">Diese Klasse kann nicht vererbt werden.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="d069c-102">This class cannot be inherited.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="d069c-103">Wenn Parameter verwenden benannte, muss die Anzahl von Parametern in der Auflistung gleich der Anzahl der benannten Parameter im Befehlstext oder die .NET Framework-Datenanbieter für Oracle löst einen Fehler aus.</span><span class="sxs-lookup"><span data-stu-id="d069c-103">When using named parameters, the number of parameters in the collection must be equal to the number of named parameters within the command text, or the .NET Framework Data Provider for Oracle raises an error.</span></span>  
+  
+ <span data-ttu-id="d069c-104">Die .NET Framework-Datenanbieter für Oracle unterstützt keine Fragezeichenplatzhalter (?), für die Übergabe von Parametern an eine SQL-Anweisung wird aufgerufen, indem ein <xref:System.Data.OracleClient.OracleCommand> von `CommandType.Text`.</span><span class="sxs-lookup"><span data-stu-id="d069c-104">The .NET Framework Data Provider for Oracle does not support the question mark (?) placeholder for passing parameters to an SQL statement called by an <xref:System.Data.OracleClient.OracleCommand> of `CommandType.Text`.</span></span> <span data-ttu-id="d069c-105">In diesem Fall müssen die benannten Parameter verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="d069c-105">In this case, named parameters must be used.</span></span> <span data-ttu-id="d069c-106">Zum Beispiel:</span><span class="sxs-lookup"><span data-stu-id="d069c-106">For example:</span></span>  
+  
+```  
+SELECT * FROM Customers WHERE CustomerID = :pCustomerID  
+```  
+  
+ <span data-ttu-id="d069c-107">Wenn die Verwendung von benannten Parametern einer SQL­Anweisung aufgerufen wird durch eine <xref:System.Data.OracleClient.OracleCommand> von `CommandType.Text`, müssen Sie den Namen des Parameters mit einem Doppelpunkt (:)) voranstellen.</span><span class="sxs-lookup"><span data-stu-id="d069c-107">When using named parameters in an SQL statement called by an <xref:System.Data.OracleClient.OracleCommand> of `CommandType.Text`, you must precede the parameter name with a colon (:).</span></span> <span data-ttu-id="d069c-108">Allerdings in einer gespeicherten Prozedur oder beim Verweisen auf einen benannten Parameter an anderer Stelle im Code (z. B. beim Hinzufügen von <xref:System.Data.OracleClient.OracleParameter> -Objekte und die <xref:System.Data.OracleClient.OracleCommand.Parameters%2A> Eigenschaft), vor den benannten Parameter mit einem Doppelpunkt (:).</span><span class="sxs-lookup"><span data-stu-id="d069c-108">However, in a stored procedure, or when referring to a named parameter elsewhere in your code (for example, when adding <xref:System.Data.OracleClient.OracleParameter> objects to the <xref:System.Data.OracleClient.OracleCommand.Parameters%2A> property), do not precede the named parameter with a colon (:).</span></span> <span data-ttu-id="d069c-109">Der Datenanbieter stellt den Doppelpunkt automatisch bereit.</span><span class="sxs-lookup"><span data-stu-id="d069c-109">The data provider supplies the colon automatically.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="d069c-110">Das folgende Beispiel erstellt mehrere Instanzen von <xref:System.Data.OracleClient.OracleParameter> über die <xref:System.Data.OracleClient.OracleParameterCollection> innerhalb der <xref:System.Data.OracleClient.OracleDataAdapter>.</span><span class="sxs-lookup"><span data-stu-id="d069c-110">The following example creates multiple instances of <xref:System.Data.OracleClient.OracleParameter> through the <xref:System.Data.OracleClient.OracleParameterCollection> within the <xref:System.Data.OracleClient.OracleDataAdapter>.</span></span> <span data-ttu-id="d069c-111">Diese Parameter werden verwendet, um Daten innerhalb der Datenbank auswählen, und legen Sie die Daten in der <xref:System.Data.DataSet>.</span><span class="sxs-lookup"><span data-stu-id="d069c-111">These parameters are used to select data within the database and then place the data in the <xref:System.Data.DataSet>.</span></span> <span data-ttu-id="d069c-112">In diesem Beispiel wird vorausgesetzt, dass ein <xref:System.Data.DataSet> und ein <xref:System.Data.OracleClient.OracleDataAdapter> mit dem entsprechenden Schema, die Befehle und die Verbindung bereits erstellt wurden.</span><span class="sxs-lookup"><span data-stu-id="d069c-112">This example assumes that a <xref:System.Data.DataSet> and an <xref:System.Data.OracleClient.OracleDataAdapter> have already been created with the appropriate schema, commands, and connection.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameter#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameter/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameter#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameter/VB/source.vb#1)]  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public OracleParameterCollection ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; OracleParameterCollection();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-113">Initialisiert eine neue Instanz der <see cref="T:System.Data.OracleClient.OracleParameterCollection" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-113">Initializes a new instance of the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> class.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Add">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-114">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> einen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-114">Adds a <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter Add (System.Data.OracleClient.OracleParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter Add(class System.Data.OracleClient.OracleParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.Data.OracleClient.OracleParameter)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (value As OracleParameter) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ Add(System::Data::OracleClient::OracleParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Data.OracleClient.OracleParameter" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-115">Der der Auflistung hinzuzufügende <see cref="T:System.Data.OracleClient.OracleParameter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-115">The <see cref="T:System.Data.OracleClient.OracleParameter" /> to add to the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-116">Fügt dem <see cref="T:System.Data.OracleClient.OracleParameter" /> die angegebene <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-116">Adds the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-117">Ein Verweis auf das neue <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-117">A reference to the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-118">Das folgende Beispiel erstellt eine <xref:System.Data.OracleClient.OracleParameterCollection>, zusätzlich Instanzen der <xref:System.Data.OracleClient.OracleParameter> auf die Auflistung und gibt einen Verweis auf das neue <xref:System.Data.OracleClient.OracleParameter>.</span><span class="sxs-lookup"><span data-stu-id="d069c-118">The following example creates an <xref:System.Data.OracleClient.OracleParameterCollection>, adds instances of <xref:System.Data.OracleClient.OracleParameter> to the collection, and returns a reference to the new <xref:System.Data.OracleClient.OracleParameter>.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.Add2#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add2/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.Add2#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add2/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="d069c-119">Der im <paramref name="value" />-Parameter angegebene <see cref="T:System.Data.OracleClient.OracleParameter" /> wurde bereits dieser oder einer anderen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzugefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-119">The <see cref="T:System.Data.OracleClient.OracleParameter" /> specified in the <paramref name="value" /> parameter is already added to this or another <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="d069c-120">Der <paramref name="value" />-Parameter ist null.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-120">The <paramref name="value" /> parameter is null.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public override int Add (object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Add(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Add (value As Object) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int Add(System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-121">Das <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt, das zur Auflistung hinzugefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-121">The <see cref="T:System.Data.OracleClient.OracleParameter" /> object to add to the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-122">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> das angegebene <see cref="T:System.Data.OracleClient.OracleParameterCollection" />-Objekt hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-122">Adds the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> object to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-123">Der Index des neuen <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekts in der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-123">The index of the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object in the collection.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter Add (string parameterName, System.Data.OracleClient.OracleType dataType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter Add(string parameterName, valuetype System.Data.OracleClient.OracleType dataType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.String,System.Data.OracleClient.OracleType)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (parameterName As String, dataType As OracleType) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ Add(System::String ^ parameterName, System::Data::OracleClient::OracleType dataType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="dataType" Type="System.Data.OracleClient.OracleType" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-124">Der Name des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-124">The name of the parameter.</span>
+          </span>
+        </param>
+        <param name="dataType">
+          <span data-ttu-id="d069c-125">Einer der <see cref="T:System.Data.OracleClient.OracleType" />-Werte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-125">One of the <see cref="T:System.Data.OracleClient.OracleType" /> values.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-126">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> einen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> mit dem angegebenen Parameternamen und Datentyp hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-126">Adds an <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> given the parameter name and data type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-127">Ein Verweis auf das neue <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-127">A reference to the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-128">Das folgende Beispiel erstellt eine <xref:System.Data.OracleClient.OracleParameterCollection>, zusätzlich Instanzen der <xref:System.Data.OracleClient.OracleParameter> auf die Auflistung und gibt einen Verweis auf das neue <xref:System.Data.OracleClient.OracleParameter>.</span><span class="sxs-lookup"><span data-stu-id="d069c-128">The following example creates an <xref:System.Data.OracleClient.OracleParameterCollection>, adds instances of <xref:System.Data.OracleClient.OracleParameter> to the collection, and returns a reference to the new <xref:System.Data.OracleClient.OracleParameter>.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.Add2#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add2/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.Add2#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add2/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter Add (string parameterName, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter Add(string parameterName, object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.String,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (parameterName As String, value As Object) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ Add(System::String ^ parameterName, System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Obsolete("Add(String parameterName, Object value) has been deprecated.  Use AddWithValue(String parameterName, Object value).  http://go.microsoft.com/fwlink/?linkid=14202", false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-129">Der Name des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-129">The name of the parameter.</span>
+          </span>
+        </param>
+        <param name="value">
+          <span data-ttu-id="d069c-130">Der <see cref="P:System.Data.OracleClient.OracleParameter.Value" /> des <see cref="T:System.Data.OracleClient.OracleParameter" />, der der Auflistung hinzugefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-130">The <see cref="P:System.Data.OracleClient.OracleParameter.Value" /> of the <see cref="T:System.Data.OracleClient.OracleParameter" /> to add to the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-131">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> einen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> mit dem angegebenen Parameternamen und -wert hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-131">Adds an <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> given the parameter name and value.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-132">Ein Verweis auf das neue <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-132">A reference to the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="d069c-133">Gehen Sie vorsichtig vor, wenn dieser Überladung von der <xref:System.Data.OracleClient.OracleParameterCollection.Add%2A> Methode, um Ganzzahlwerte für Parameter anzugeben.</span><span class="sxs-lookup"><span data-stu-id="d069c-133">Use caution when using this overload of the <xref:System.Data.OracleClient.OracleParameterCollection.Add%2A> method to specify integer parameter values.</span></span> <span data-ttu-id="d069c-134">Da diese Überladung einen `value` vom Typ <xref:System.Object> akzeptiert, müssen Sie den Ganzzahlwert in einen <xref:System.Object>-Typ konvertieren, wenn der der Wert 0 (null) ist. Dies wird im folgenden C#-Beispiel veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="d069c-134">Because this overload takes a `value` of type <xref:System.Object>, you must convert the integral value to an <xref:System.Object> type when the value is zero, as the following C# example demonstrates.</span></span>  
+  
+```  
+parameters.Add("pname", Convert.ToInt32(0));  
+```  
+  
+ <span data-ttu-id="d069c-135">Wenn Sie diese Konvertierung nicht ausführen, der Compiler geht davon aus Sie versuchen, rufen Sie die `OracleParameterCollection.Add` (`string`, `OracleType`) überladen.</span><span class="sxs-lookup"><span data-stu-id="d069c-135">If you do not perform this conversion, the compiler will assume you are attempting to call the `OracleParameterCollection.Add` (`string`, `OracleType`) overload.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidCastException">
+          <span data-ttu-id="d069c-136">Der <paramref name="value" />-Parameter ist kein <see cref="T:System.Data.OracleClient.OracleParameter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-136">The <paramref name="value" /> parameter is not an <see cref="T:System.Data.OracleClient.OracleParameter" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter Add (string parameterName, System.Data.OracleClient.OracleType dataType, int size);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter Add(string parameterName, valuetype System.Data.OracleClient.OracleType dataType, int32 size) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.String,System.Data.OracleClient.OracleType,System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (parameterName As String, dataType As OracleType, size As Integer) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ Add(System::String ^ parameterName, System::Data::OracleClient::OracleType dataType, int size);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="dataType" Type="System.Data.OracleClient.OracleType" />
+        <Parameter Name="size" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-137">Der Name des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-137">The name of the parameter.</span>
+          </span>
+        </param>
+        <param name="dataType">
+          <span data-ttu-id="d069c-138">Einer der <see cref="T:System.Data.OracleClient.OracleType" />-Werte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-138">One of the <see cref="T:System.Data.OracleClient.OracleType" /> values.</span>
+          </span>
+        </param>
+        <param name="size">
+          <span data-ttu-id="d069c-139">Die Länge der Spalte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-139">The length of the column.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-140">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> einen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> mit dem Parameternamen, dem Datentyp und der Spaltenlänge hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-140">Adds an <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> given the parameter name, data type, and column length.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-141">Ein Verweis auf das neue <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-141">A reference to the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-142">Das folgende Beispiel erstellt eine <xref:System.Data.OracleClient.OracleParameterCollection>, fügt eine Instanz des <xref:System.Data.OracleClient.OracleParameter> auf die Auflistung und gibt einen Verweis auf das neue <xref:System.Data.OracleClient.OracleParameter>.</span><span class="sxs-lookup"><span data-stu-id="d069c-142">The following example creates an <xref:System.Data.OracleClient.OracleParameterCollection>, adds an instance of <xref:System.Data.OracleClient.OracleParameter> to the collection, and returns a reference to the new <xref:System.Data.OracleClient.OracleParameter>.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.Add3#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add3/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.Add3#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add3/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter Add (string parameterName, System.Data.OracleClient.OracleType dataType, int size, string srcColumn);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter Add(string parameterName, valuetype System.Data.OracleClient.OracleType dataType, int32 size, string srcColumn) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Add(System.String,System.Data.OracleClient.OracleType,System.Int32,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (parameterName As String, dataType As OracleType, size As Integer, srcColumn As String) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ Add(System::String ^ parameterName, System::Data::OracleClient::OracleType dataType, int size, System::String ^ srcColumn);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="dataType" Type="System.Data.OracleClient.OracleType" />
+        <Parameter Name="size" Type="System.Int32" />
+        <Parameter Name="srcColumn" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-143">Der Name des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-143">The name of the parameter.</span>
+          </span>
+        </param>
+        <param name="dataType">
+          <span data-ttu-id="d069c-144">Einer der <see cref="T:System.Data.OracleClient.OracleType" />-Werte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-144">One of the <see cref="T:System.Data.OracleClient.OracleType" /> values.</span>
+          </span>
+        </param>
+        <param name="size">
+          <span data-ttu-id="d069c-145">Die Länge der Spalte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-145">The length of the column.</span>
+          </span>
+        </param>
+        <param name="srcColumn">
+          <span data-ttu-id="d069c-146">Der Name der Quellspalte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-146">The name of the source column.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-147">Fügt der <see cref="T:System.Data.OracleClient.OracleParameter" /> einen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> mit dem Parameternamen, dem Datentyp, der Spaltenlänge und dem Namen der Quellspalte hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-147">Adds an <see cref="T:System.Data.OracleClient.OracleParameter" /> to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> given the parameter name, data type, column length, and source column name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-148">Ein Verweis auf das neue <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-148">A reference to the new <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-149">Das folgende Beispiel erstellt eine <xref:System.Data.OracleClient.OracleParameterCollection>, fügt eine Instanz des <xref:System.Data.OracleClient.OracleParameter> auf die Auflistung und gibt einen Verweis auf das neue <xref:System.Data.OracleClient.OracleParameter>.</span><span class="sxs-lookup"><span data-stu-id="d069c-149">The following example creates an <xref:System.Data.OracleClient.OracleParameterCollection>, adds an instance of <xref:System.Data.OracleClient.OracleParameter> to the collection, and returns a reference to the new <xref:System.Data.OracleClient.OracleParameter>.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.Add4#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add4/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.Add4#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Add4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="AddRange">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-150">Fügt Elemente am Ende der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-150">Adds elements to the end of the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="AddRange">
+      <MemberSignature Language="C#" Value="public override void AddRange (Array values);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void AddRange(class System.Array values) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.AddRange(System.Array)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub AddRange (values As Array)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void AddRange(Array ^ values);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="values" Type="System.Array" />
+      </Parameters>
+      <Docs>
+        <param name="values">
+          <span data-ttu-id="d069c-151">Die hinzuzufügenden <see cref="T:System.Array" />-Werte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-151">The <see cref="T:System.Array" /> values to add.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-152">Fügt ein Array von Werten am Ende der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-152">Adds an array of values to the end of the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddRange">
+      <MemberSignature Language="C#" Value="public void AddRange (System.Data.OracleClient.OracleParameter[] values);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AddRange(class System.Data.OracleClient.OracleParameter[] values) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.AddRange(System.Data.OracleClient.OracleParameter[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub AddRange (values As OracleParameter())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AddRange(cli::array &lt;System::Data::OracleClient::OracleParameter ^&gt; ^ values);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="values" Type="System.Data.OracleClient.OracleParameter[]" />
+      </Parameters>
+      <Docs>
+        <param name="values">
+          <span data-ttu-id="d069c-153">Die hinzuzufügenden <see cref="T:System.Data.OracleClient.OracleParameter" />-Werte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-153">The <see cref="T:System.Data.OracleClient.OracleParameter" /> values to add.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-154">Fügt ein Array von <see cref="T:System.Data.OracleClient.OracleParameter" />-Werten am Ende der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-154">Adds an array of <see cref="T:System.Data.OracleClient.OracleParameter" /> values to the end of the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddWithValue">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter AddWithValue (string parameterName, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Data.OracleClient.OracleParameter AddWithValue(string parameterName, object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.AddWithValue(System.String,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Function AddWithValue (parameterName As String, value As Object) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Data::OracleClient::OracleParameter ^ AddWithValue(System::String ^ parameterName, System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-155">Der Name des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-155">The name of the parameter.</span>
+          </span>
+        </param>
+        <param name="value">
+          <span data-ttu-id="d069c-156">Der hinzuzufügende Wert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-156">The value to be added.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-157">Fügt am Ende der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> einen Wert hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-157">Adds a value to the end of the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-158">Ein <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-158">A <see cref="T:System.Data.OracleClient.OracleParameter" /> object.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Clear">
+      <MemberSignature Language="C#" Value="public override void Clear ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Clear() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Clear" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Clear ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Clear();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-159">Entfernt alle <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekte aus der <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-159">Removes all of the <see cref="T:System.Data.OracleClient.OracleParameter" /> objects from the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Contains">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-160">Gibt an, ob ein <see cref="T:System.Data.OracleClient.OracleParameter" /> mit dem angegebenen <see cref="P:System.Data.OracleClient.OracleParameter.Value" /> in der Auflistung enthalten ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-160">Indicates whether an <see cref="T:System.Data.OracleClient.OracleParameter" /> with the specified <see cref="P:System.Data.OracleClient.OracleParameter.Value" /> is contained in the collection.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (System.Data.OracleClient.OracleParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(class System.Data.OracleClient.OracleParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Contains(System.Data.OracleClient.OracleParameter)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Contains (value As OracleParameter) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool Contains(System::Data::OracleClient::OracleParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Data.OracleClient.OracleParameter" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-161">Der <see cref="T:System.Data.OracleClient.OracleParameter" />-Wert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-161">The <see cref="T:System.Data.OracleClient.OracleParameter" /> value.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-162">Bestimmt, ob der angegebene <see cref="T:System.Data.OracleClient.OracleParameter" /> in der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-162">Determines whether the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> is in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-163">
+            <see langword="true" />, wenn die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> den Wert enthält, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-163">
+              <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> contains the value, <see langword="false" /> otherwise.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public override bool Contains (object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Contains(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Contains(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Contains (value As Object) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Contains(System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-164">Der <see cref="T:System.Object" />-Wert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-164">The <see cref="T:System.Object" /> value.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-165">Bestimmt, ob das angegebene Objekt in der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-165">Determines whether the specified object is in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-166">
+            <see langword="true" />, wenn die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> den Wert enthält, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-166">
+              <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> contains the value, <see langword="false" /> otherwise.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public override bool Contains (string parameterName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Contains(string parameterName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Contains(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Contains (parameterName As String) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Contains(System::String ^ parameterName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-167">Der Name des <see cref="T:System.Data.OracleClient.OracleParameter" />, nach dem in der Auflistung gesucht werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-167">The name of the <see cref="T:System.Data.OracleClient.OracleParameter" /> to look for in the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-168">Gibt an, ob ein <see cref="T:System.Data.OracleClient.OracleParameter" /> mit dem angegebenen Namen in der Auflistung enthalten ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-168">Indicates whether an <see cref="T:System.Data.OracleClient.OracleParameter" /> with the specified name is contained in the collection.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-169">
+            <see langword="true" />, wenn sich der <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung befindet, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-169">
+              <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameter" /> is in the collection; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="CopyTo">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-170">Kopiert alle Elemente der aktuellen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> in das angegebene Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-170">Copies all the elements of the current <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> to the specified object.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="CopyTo">
+      <MemberSignature Language="C#" Value="public override void CopyTo (Array array, int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void CopyTo(class System.Array array, int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.CopyTo(System.Array,System.Int32)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void CopyTo(Array ^ array, int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Array" />
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="array">
+          <span data-ttu-id="d069c-171">Das eindimensionale <see cref="T:System.Array" />, das das Ziel der aus der aktuellen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> kopierten Elemente ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-171">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from the current <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </param>
+        <param name="index">
+          <span data-ttu-id="d069c-172">Eine 32-Bit-Ganzzahl, die den Index im <see cref="T:System.Array" /> angibt, ab dem kopiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-172">A 32-bit integer that represents the index in the <see cref="T:System.Array" /> at which copying begins.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-173">Kopiert alle Elemente der aktuellen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> in das angegebene eindimensionale <see cref="T:System.Array" />, beginnend am angegebenen Index des Ziel-<see cref="T:System.Array" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-173">Copies all the elements of the current <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> to the specified one-dimensional <see cref="T:System.Array" /> starting at the specified destination <see cref="T:System.Array" /> index.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CopyTo">
+      <MemberSignature Language="C#" Value="public void CopyTo (System.Data.OracleClient.OracleParameter[] array, int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo(class System.Data.OracleClient.OracleParameter[] array, int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.CopyTo(System.Data.OracleClient.OracleParameter[],System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (array As OracleParameter(), index As Integer)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(cli::array &lt;System::Data::OracleClient::OracleParameter ^&gt; ^ array, int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Data.OracleClient.OracleParameter[]" />
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="array">
+          <span data-ttu-id="d069c-174">Die <see cref="T:System.Data.OracleClient.OracleParameterCollection" />, die das Ziel der aus der aktuellen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> kopierten Elemente ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-174">The <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> that is the destination of the elements copied from the current <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </param>
+        <param name="index">
+          <span data-ttu-id="d069c-175">Eine 32-Bit-Ganzzahl, die den Index im <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> angibt, ab dem kopiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-175">A 32-bit integer that represents the index in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> at which copying begins.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-176">Kopiert alle Elemente der aktuellen <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> in die angegebene <see cref="T:System.Data.OracleClient.OracleParameterCollection" />, beginnend am angegebenen Zielindex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-176">Copies all the elements of the current <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> to the specified <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> starting at the specified destination index.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public override int Count { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Count" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.Count" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property Count As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int Count { int get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-177">Gibt eine ganze Zahl zurück, die die Anzahl der Elemente in der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-177">Returns an Integer containing the number of elements in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+          <span data-ttu-id="d069c-178">Schreibgeschützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-178">Read-only.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-179">Die Anzahl der Elemente in der <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> als ganze Zahl.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-179">The number of elements in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> as an Integer.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public override System.Collections.IEnumerator GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.IEnumerator GetEnumerator() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.GetEnumerator" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEnumerator () As IEnumerator" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Collections::IEnumerator ^ GetEnumerator();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-180">Gibt einen Enumerator zurück, der die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> durchläuft.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-180">Returns an enumerator that iterates through the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-181">Ein <see cref="T:System.Collections.IEnumerator" />, der zum Durchlaufen der Auflistung verwendet werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-181">An <see cref="T:System.Collections.IEnumerator" /> that can be used to iterate through the collection.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="d069c-182">Macht die <xref:System.Collections.IEnumerable.GetEnumerator%2A> Methode, die eine einfache Iteration durch eine Auflistung von einem .NET Framework-Datenanbieter unterstützt.</span><span class="sxs-lookup"><span data-stu-id="d069c-182">Exposes the <xref:System.Collections.IEnumerable.GetEnumerator%2A> method which supports a simple iteration over a collection by a .NET Framework data provider.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetParameter">
+      <MemberSignature Language="C#" Value="protected override System.Data.Common.DbParameter GetParameter (int index);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Data.Common.DbParameter GetParameter(int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.GetParameter(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function GetParameter (index As Integer) As DbParameter" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Data::Common::DbParameter ^ GetParameter(int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.Common.DbParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetParameter">
+      <MemberSignature Language="C#" Value="protected override System.Data.Common.DbParameter GetParameter (string parameterName);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Data.Common.DbParameter GetParameter(string parameterName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.GetParameter(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function GetParameter (parameterName As String) As DbParameter" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Data::Common::DbParameter ^ GetParameter(System::String ^ parameterName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.Common.DbParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="IndexOf">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-183">Ruft die Position der angegebenen <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-183">Gets the location of the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> within the collection.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="IndexOf">
+      <MemberSignature Language="C#" Value="public int IndexOf (System.Data.OracleClient.OracleParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 IndexOf(class System.Data.OracleClient.OracleParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.IndexOf(System.Data.OracleClient.OracleParameter)" />
+      <MemberSignature Language="VB.NET" Value="Public Function IndexOf (value As OracleParameter) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int IndexOf(System::Data::OracleClient::OracleParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Data.OracleClient.OracleParameter" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-184">Das zu suchende <see cref="T:System.Data.OracleClient.OracleParameter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-184">The <see cref="T:System.Data.OracleClient.OracleParameter" /> to find.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-185">Ruft die Position der angegebenen <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-185">Gets the location of the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> within the collection.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-186">Die nullbasierte Position des angegebenen <see cref="T:System.Data.OracleClient.OracleParameter" />, das ein <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-186">The zero-based location of the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> that is a <see cref="T:System.Data.OracleClient.OracleParameter" /> within the collection.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IndexOf">
+      <MemberSignature Language="C#" Value="public override int IndexOf (object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 IndexOf(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.IndexOf(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function IndexOf (value As Object) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int IndexOf(System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-187">Das zu suchende <see cref="T:System.Object" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-187">The <see cref="T:System.Object" /> to find.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-188">Ruft die Position der angegebenen <see cref="T:System.Object" /> in der Auflistung ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-188">Gets the location of the specified <see cref="T:System.Object" /> within the collection.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-189">Die nullbasierte Position des angegebenen <see cref="T:System.Object" />, das ein <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-189">The zero-based location of the specified <see cref="T:System.Object" /> that is a <see cref="T:System.Data.OracleClient.OracleParameter" /> within the collection.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IndexOf">
+      <MemberSignature Language="C#" Value="public override int IndexOf (string parameterName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 IndexOf(string parameterName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.IndexOf(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function IndexOf (parameterName As String) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int IndexOf(System::String ^ parameterName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-190">Der Name des zu suchenden <see cref="T:System.Data.OracleClient.OracleParameter" /> unter Berücksichtigung von Groß- und Kleinschreibung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-190">The case-sensitive name of the <see cref="T:System.Data.OracleClient.OracleParameter" /> to find.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-191">Ruft die Position des angegebenen <see cref="T:System.Data.OracleClient.OracleParameter" /> mit dem angegebenen Namen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-191">Gets the location of the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> with the specified name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="d069c-192">Die nullbasierte Position des angegebenen <see cref="T:System.Data.OracleClient.OracleParameter" />, das ein <see cref="T:System.Data.OracleClient.OracleParameter" /> in der Auflistung ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-192">The zero-based location of the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> that is a <see cref="T:System.Data.OracleClient.OracleParameter" /> within the collection.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Insert">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-193">Fügt ein <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt in die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> ein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-193">Inserts a <see cref="T:System.Data.OracleClient.OracleParameter" /> object into the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (int index, System.Data.OracleClient.OracleParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Insert(int32 index, class System.Data.OracleClient.OracleParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Insert(System.Int32,System.Data.OracleClient.OracleParameter)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Insert (index As Integer, value As OracleParameter)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Insert(int index, System::Data::OracleClient::OracleParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="value" Type="System.Data.OracleClient.OracleParameter" />
+      </Parameters>
+      <Docs>
+        <param name="index">
+          <span data-ttu-id="d069c-194">Der nullbasierte Index, an dem der Wert eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-194">The zero-based index at which value should be inserted.</span>
+          </span>
+        </param>
+        <param name="value">
+          <span data-ttu-id="d069c-195">Ein <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt, das in die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-195">A <see cref="T:System.Data.OracleClient.OracleParameter" /> object to be inserted in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-196">Fügt ein <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt am angegebenen Index in die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> ein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-196">Inserts a <see cref="T:System.Data.OracleClient.OracleParameter" /> object into the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> at the specified index.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public override void Insert (int index, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Insert(int32 index, object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Insert(System.Int32,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Insert (index As Integer, value As Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Insert(int index, System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="index">
+          <span data-ttu-id="d069c-197">Der nullbasierte Index, an dem der Wert eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-197">The zero-based index at which value should be inserted.</span>
+          </span>
+        </param>
+        <param name="value">
+          <span data-ttu-id="d069c-198">Ein <see cref="T:System.Object" />, das in die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-198">A <see cref="T:System.Object" /> to be inserted in the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-199">Fügt am angegebenen Index ein <see cref="T:System.Object" />-Element in die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> ein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-199">Inserts a <see cref="T:System.Object" /> into the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> at the specified index.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsFixedSize">
+      <MemberSignature Language="C#" Value="public override bool IsFixedSize { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsFixedSize" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.IsFixedSize" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property IsFixedSize As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool IsFixedSize { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-200">Ruft einen Wert ab, der angibt, ob die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> eine feste Größe hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-200">Gets a value that indicates whether the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> has a fixed size.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-201">Gibt <see langword="true" /> zurück, wenn die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> eine feste Größe hat, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-201">Returns <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> has a fixed size, <see langword="false" /> otherwise.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsReadOnly">
+      <MemberSignature Language="C#" Value="public override bool IsReadOnly { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsReadOnly" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.IsReadOnly" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property IsReadOnly As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool IsReadOnly { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-202">Ruft einen Wert ab, der angibt, ob die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> schreibgeschützt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-202">Gets a value that indicates whether the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> is read-only.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-203">Gibt <see langword="true" /> zurück, wenn die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> schreibgeschützt ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-203">Returns <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> is read only, <see langword="false" /> otherwise.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsSynchronized">
+      <MemberSignature Language="C#" Value="public override bool IsSynchronized { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsSynchronized" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.IsSynchronized" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property IsSynchronized As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool IsSynchronized { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-204">Ruft einen Wert ab, der angibt, ob die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> synchronisiert ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-204">Gets a value that indicates whether the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> is synchronized.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-205">Gibt <see langword="true" /> zurück, wenn die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> synchronisiert ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-205">Returns <see langword="true" /> if the <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> is synchronized, <see langword="false" /> otherwise.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Item">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-206">Ruft den <see cref="T:System.Data.OracleClient.OracleParameter" /> mit einem angegebenen Attribut ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-206">Gets or sets the <see cref="T:System.Data.OracleClient.OracleParameter" /> with a specified attribute.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter this[int index] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Data.OracleClient.OracleParameter Item(int32)" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.Item(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Default Public Property Item(index As Integer) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Data::OracleClient::OracleParameter ^ default[int] { System::Data::OracleClient::OracleParameter ^ get(int index); void set(int index, System::Data::OracleClient::OracleParameter ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">
+          <span data-ttu-id="d069c-207">Der nullbasierte Index des abzurufenden Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-207">The zero-based index of the parameter to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-208">Ruft die <see cref="T:System.Data.OracleClient.OracleParameter" />-Klasse am angegebenen Index ab oder legt diese fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-208">Gets or sets the <see cref="T:System.Data.OracleClient.OracleParameter" /> at the specified index.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-209">Der <see cref="T:System.Data.OracleClient.OracleParameter" /> am angegebenen Index.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-209">The <see cref="T:System.Data.OracleClient.OracleParameter" /> at the specified index.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-210">Das folgende Beispiel erstellt eine <xref:System.Data.OracleClient.OracleParameterCollection>, zusätzlich Instanzen der <xref:System.Data.OracleClient.OracleParameter> auf die Auflistung zeigt die Namen seiner <xref:System.Data.OracleClient.OracleParameter> Objekten zurück und löscht dann die Auflistung.</span><span class="sxs-lookup"><span data-stu-id="d069c-210">The following example creates an <xref:System.Data.OracleClient.OracleParameterCollection>, adds instances of <xref:System.Data.OracleClient.OracleParameter> to the collection, displays the names of its <xref:System.Data.OracleClient.OracleParameter> objects, and then clears the collection.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.Count#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Count/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.Count#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.Count/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <span data-ttu-id="d069c-211">Der angegebene Index ist nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-211">The index specified does not exist.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public System.Data.OracleClient.OracleParameter this[string parameterName] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Data.OracleClient.OracleParameter Item(string)" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.Item(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Default Public Property Item(parameterName As String) As OracleParameter" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Data::OracleClient::OracleParameter ^ default[System::String ^] { System::Data::OracleClient::OracleParameter ^ get(System::String ^ parameterName); void set(System::String ^ parameterName, System::Data::OracleClient::OracleParameter ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Data.OracleClient.OracleParameter</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-212">Der Name des abzurufenden Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-212">The name of the parameter to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-213">Ruft den <see cref="T:System.Data.OracleClient.OracleParameter" /> mit dem angegebenen Namen ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-213">Gets or sets the <see cref="T:System.Data.OracleClient.OracleParameter" /> with the specified name.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-214">Der <see cref="T:System.Data.OracleClient.OracleParameter" /> mit dem angegebenen Namen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-214">The <see cref="T:System.Data.OracleClient.OracleParameter" /> with the specified name.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="d069c-215">Das folgende Beispiel sucht nach einer <xref:System.Data.OracleClient.OracleParameter> mit einer angegebenen <xref:System.Data.OracleClient.OracleParameter.ParameterName%2A> innerhalb einer <xref:System.Data.OracleClient.OracleParameterCollection>.</span><span class="sxs-lookup"><span data-stu-id="d069c-215">The following example searches for an <xref:System.Data.OracleClient.OracleParameter> with a given <xref:System.Data.OracleClient.OracleParameter.ParameterName%2A> within an <xref:System.Data.OracleClient.OracleParameterCollection>.</span></span> <span data-ttu-id="d069c-216">Wenn der Parameter vorhanden ist, zeigt das Beispiel den Namen und den Index des Parameters.</span><span class="sxs-lookup"><span data-stu-id="d069c-216">If the parameter exists, the example displays the name and index of the parameter.</span></span> <span data-ttu-id="d069c-217">Wenn der Parameter nicht vorhanden ist, zeigt das Beispiel einen Fehler auf.</span><span class="sxs-lookup"><span data-stu-id="d069c-217">If the parameter does not exist, the example displays an error.</span></span> <span data-ttu-id="d069c-218">In diesem Beispiel wird vorausgesetzt, dass ein <xref:System.Data.OracleClient.OracleParameterCollection> bereits erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="d069c-218">This example assumes that an <xref:System.Data.OracleClient.OracleParameterCollection> has already been created.</span></span>  
+  
+ [!code-csharp[Classic WebData OracleParameterCollection.this1#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.this1/CS/source.cs#1)]
+ [!code-vb[Classic WebData OracleParameterCollection.this1#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/Classic WebData OracleParameterCollection.this1/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <span data-ttu-id="d069c-219">Der angegebene Name ist nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-219">The name specified does not exist.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Remove">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-220">Entfernt das angegebene <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-220">Removes the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> object from the collection.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Remove">
+      <MemberSignature Language="C#" Value="public void Remove (System.Data.OracleClient.OracleParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Remove(class System.Data.OracleClient.OracleParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Remove(System.Data.OracleClient.OracleParameter)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Remove (value As OracleParameter)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Remove(System::Data::OracleClient::OracleParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Data.OracleClient.OracleParameter" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-221">Ein <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt, das aus der Auflistung entfernt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-221">A <see cref="T:System.Data.OracleClient.OracleParameter" /> object to remove from the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-222">Entfernt das angegebene <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-222">Removes the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> object from the collection.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Remove">
+      <MemberSignature Language="C#" Value="public override void Remove (object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Remove(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.Remove(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Remove (value As Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Remove(System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="d069c-223">Ein <see cref="T:System.Object" />-Objekt, das aus der Auflistung entfernt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-223">A <see cref="T:System.Object" /> object to remove from the collection.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-224">Entfernt das angegebene <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-224">Removes the specified <see cref="T:System.Data.OracleClient.OracleParameter" /> object from the collection.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="RemoveAt">
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-225">Entfernt ein angegebenes <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-225">Removes a specified <see cref="T:System.Data.OracleClient.OracleParameter" /> object from the collection.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="RemoveAt">
+      <MemberSignature Language="C#" Value="public override void RemoveAt (int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void RemoveAt(int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.RemoveAt(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub RemoveAt (index As Integer)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void RemoveAt(int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">
+          <span data-ttu-id="d069c-226">Der nullbasierte Index des zu entfernenden <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-226">The zero-based index of the <see cref="T:System.Data.OracleClient.OracleParameter" /> object to remove.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-227">Entfernt das <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt am angegebenen Index aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-227">Removes the <see cref="T:System.Data.OracleClient.OracleParameter" /> object at the specified index from the collection.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveAt">
+      <MemberSignature Language="C#" Value="public override void RemoveAt (string parameterName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void RemoveAt(string parameterName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.RemoveAt(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub RemoveAt (parameterName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void RemoveAt(System::String ^ parameterName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">
+          <span data-ttu-id="d069c-228">Der Name des zu entfernenden <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-228">The name of the <see cref="T:System.Data.OracleClient.OracleParameter" /> object to remove.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d069c-229">Entfernt das <see cref="T:System.Data.OracleClient.OracleParameter" />-Objekt mit dem angegebenen Namen aus der Auflistung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-229">Removes the <see cref="T:System.Data.OracleClient.OracleParameter" /> object with the specified name from the collection.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetParameter">
+      <MemberSignature Language="C#" Value="protected override void SetParameter (int index, System.Data.Common.DbParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void SetParameter(int32 index, class System.Data.Common.DbParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.SetParameter(System.Int32,System.Data.Common.DbParameter)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub SetParameter (index As Integer, value As DbParameter)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void SetParameter(int index, System::Data::Common::DbParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="value" Type="System.Data.Common.DbParameter" />
+      </Parameters>
+      <Docs>
+        <param name="index">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetParameter">
+      <MemberSignature Language="C#" Value="protected override void SetParameter (string parameterName, System.Data.Common.DbParameter value);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void SetParameter(string parameterName, class System.Data.Common.DbParameter value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Data.OracleClient.OracleParameterCollection.SetParameter(System.String,System.Data.Common.DbParameter)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub SetParameter (parameterName As String, value As DbParameter)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void SetParameter(System::String ^ parameterName, System::Data::Common::DbParameter ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameterName" Type="System.String" />
+        <Parameter Name="value" Type="System.Data.Common.DbParameter" />
+      </Parameters>
+      <Docs>
+        <param name="parameterName">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SyncRoot">
+      <MemberSignature Language="C#" Value="public override object SyncRoot { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance object SyncRoot" />
+      <MemberSignature Language="DocId" Value="P:System.Data.OracleClient.OracleParameterCollection.SyncRoot" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property SyncRoot As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Object ^ SyncRoot { System::Object ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Data.OracleClient</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d069c-230">Ruft ein Objekt ab, mit dem der Zugriff auf <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> synchronisiert werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-230">Gets an object that can be used to synchronize access to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d069c-231">Ein Objekt, mit dem der Zugriff auf die <see cref="T:System.Data.OracleClient.OracleParameterCollection" /> synchronisiert werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d069c-231">An object that can be used to synchronize access to the <see cref="T:System.Data.OracleClient.OracleParameterCollection" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

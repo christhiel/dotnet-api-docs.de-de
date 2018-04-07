@@ -1,0 +1,431 @@
+<Type Name="ExportAttribute" FullName="System.Composition.ExportAttribute">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="a92660282f48e8f0607875fbc97af58c3934efa2" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class ExportAttribute : Attribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ExportAttribute extends System.Attribute" />
+  <TypeSignature Language="DocId" Value="T:System.Composition.ExportAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public Class ExportAttribute&#xA;Inherits Attribute" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ExportAttribute : Attribute" />
+  <AssemblyInfo>
+    <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+    <AssemblyVersion>1.0.31.0</AssemblyVersion>
+    <AssemblyVersion>1.0.32.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Property, AllowMultiple=true, Inherited=false)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="d6082-101">Gibt an, dass ein Typ, eine Eigenschaft, ein Feld oder eine Methode einen bestimmten Export bereitstellt.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="d6082-101">Specifies that a type, property, field, or method provides a particular export.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+<span data-ttu-id="d6082-102">Im Modell attributierten Programmierung ExportAttribute-Attribut deklariert, dass ein Teil wird exportiert oder liefert dem Kompositionscontainer ein Objekt, das einen bestimmten Vertrag erfüllt.</span><span class="sxs-lookup"><span data-stu-id="d6082-102">In the attributed programming model, the ExportAttribute attribute declares that a part exports, or provides to the composition container, an object that fulfills a particular contract.</span></span> <span data-ttu-id="d6082-103">Während der Komposition bestehen aus Teilen, Importen, die übereinstimmende Verträge solcher Abhängigkeiten, die durch das exportierte Objekt gefüllt.</span><span class="sxs-lookup"><span data-stu-id="d6082-103">During composition, parts with imports that have matching contracts have those dependencies filled by the exported object.</span></span>
+
+<span data-ttu-id="d6082-104">Das Attribut ExportAttribute kann entweder eine ganze Klasse oder eine Eigenschaft oder Methode einer Klasse anwenden.</span><span class="sxs-lookup"><span data-stu-id="d6082-104">The ExportAttribute attribute can apply to either an entire class, or a property, field, or method of a class.</span></span> <span data-ttu-id="d6082-105">Wenn sie auf die gesamte Klasse angewendet wird, wird eine Instanz der Klasse das exportierte Objekt.</span><span class="sxs-lookup"><span data-stu-id="d6082-105">If it's applied to the entire class, an instance of the class is the exported object.</span></span> <span data-ttu-id="d6082-106">Wenn sie auf einen Member einer Klasse angewendet wird, wird das exportierte Objekt der Wert dieses Elements sein.</span><span class="sxs-lookup"><span data-stu-id="d6082-106">If it's applied to a member of a class, the exported object will be the value of that member.</span></span>
+
+<span data-ttu-id="d6082-107">Gibt an, ob ein Vertrag übereinstimmt, wird in erster Linie durch die Vertragsnamen und Vertragstyp bestimmt.</span><span class="sxs-lookup"><span data-stu-id="d6082-107">Whether or not a contract matches is determined primarily by the contract name and the contract type.</span></span> <span data-ttu-id="d6082-108">Weitere Informationen finden Sie unter der <xref:System.Composition.ImportAttribute> Verweis.</span><span class="sxs-lookup"><span data-stu-id="d6082-108">For more information, see the <xref:System.Composition.ImportAttribute> reference.</span></span> 
+
+
+
+## Examples  
+ <span data-ttu-id="d6082-109">Das folgende Beispiel zeigt ExportAttribute auf drei Klassen und drei Importe, die sie entsprechen angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="d6082-109">The following example shows ExportAttribute being applied to three classes, and three imports that match them.</span></span>  
+
+```csharp
+//Default export infers type and contract name from the
+//exported type.  This is the preferred method.
+[Export]
+public class MyExport1
+{
+    public String data = "Test Data 1.";
+}
+
+public class MyImporter1
+{
+    [Import]
+    public MyExport1 importedMember { get; set; }
+}
+
+public interface MyInterface
+{
+
+}
+
+//Specifying the contract type may be important if
+//you want to export a type other then the base type,
+//such as an interface.
+[Export(typeof(MyInterface))]
+public class MyExport2 : MyInterface
+{
+    public String data = "Test Data 2.";
+}
+
+public class MyImporter2
+{
+    //The import must match the contract type!
+    [Import(typeof(MyInterface))]
+    public MyExport2 importedMember { get; set; }
+}
+
+//Specifying a contract name should only be 
+//needed in rare caes. Usually, using metadata
+//is a better approach.
+[Export("MyContractName", typeof(MyInterface))]
+public class MyExport3 : MyInterface
+{
+    public String data = "Test Data 3.";
+}
+
+public class MyImporter3
+{
+    //Both contract name and type must match!
+    [Import("MyContractName", typeof(MyInterface))]
+    public MyExport3 importedMember { get; set; }
+}
+
+class Program
+{      
+
+    static void Main(string[] args)
+    {
+        AggregateCatalog catalog = new AggregateCatalog();
+        catalog.Catalogs.Add(new AssemblyCatalog(typeof(MyExport1).Assembly));
+        CompositionContainer _container = new CompositionContainer(catalog);
+        MyImporter1 test1 = new MyImporter1();
+        MyImporter2 test2 = new MyImporter2();
+        MyImporter3 test3 = new MyImporter3();
+        _container.SatisfyImportsOnce(test1);
+        _container.SatisfyImportsOnce(test2);
+        _container.SatisfyImportsOnce(test3);
+        Console.WriteLine(test1.importedMember.data);
+        Console.WriteLine(test2.importedMember.data);
+        Console.WriteLine(test3.importedMember.data);
+        Console.ReadLine();
+
+    }
+}
+```
+
+```vb
+'Default export infers type and contract name from the
+'exported type.  This is the preferred method.
+<Export()>
+Public Class MyExport1
+    Public ReadOnly Property data As String
+        Get
+            Return "Test Data 1."
+        End Get
+    End Property
+End Class
+
+Public Class MyImporter1
+
+    <Import()>
+    Public Property ImportedMember As MyExport1
+
+End Class
+
+Public Interface MyInterface
+
+End Interface
+
+'Specifying the contract type may be important if
+'you want to export a type other then the base type,
+'such as an interface.
+<Export(GetType(MyInterface))>
+Public Class MyExport2
+    Implements MyInterface
+    Public ReadOnly Property data As String
+        Get
+            Return "Test Data 2."
+        End Get
+    End Property
+End Class
+
+Public Class MyImporter2
+    'The import must match the contract type!
+    <Import(GetType(MyInterface))>
+    Public Property ImportedMember As MyExport2
+End Class
+
+'Specifying a contract name should only be 
+'needed in rare caes. Usually, using metadata
+'is a better approach.
+<Export("MyContractName", GetType(MyInterface))>
+Public Class MyExport3
+    Implements MyInterface
+    Public ReadOnly Property data As String
+        Get
+            Return "Test Data 3."
+        End Get
+    End Property
+End Class
+
+Public Class MyImporter3
+    'Both contract name and type must match!
+    <Import("MyContractName", GetType(MyInterface))>
+    Public Property ImportedMember As MyExport3
+End Class
+
+
+
+Sub Main()
+    Dim catalog As AggregateCatalog = New AggregateCatalog()
+    catalog.Catalogs.Add(New AssemblyCatalog(GetType(MyExport1).Assembly))
+    Dim container As CompositionContainer = New CompositionContainer(catalog)
+    Dim test1 As MyImporter1 = New MyImporter1()
+    Dim test2 As MyImporter2 = New MyImporter2()
+    Dim test3 As MyImporter3 = New MyImporter3()
+    container.SatisfyImportsOnce(test1)
+    container.SatisfyImportsOnce(test2)
+    container.SatisfyImportsOnce(test3)
+    Console.WriteLine(test1.ImportedMember.data)
+    Console.WriteLine(test2.ImportedMember.data)
+    Console.WriteLine(test3.ImportedMember.data)
+    Console.ReadLine()
+End Sub
+```
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ExportAttribute ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Composition.ExportAttribute.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ExportAttribute();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="d6082-110">Initialisiert eine neue Instanz der <see cref="T:System.Composition.ExportAttribute" />-Klasse, wobei der unter dem Standardvertragsnamen mit diesem Attribut markierte Typ oder Member exportiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-110">Initializes a new instance of the <see cref="T:System.Composition.ExportAttribute" /> class, exporting the type or member marked with this attribute under the default contract name.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+<span data-ttu-id="d6082-111">Mit diesem Attribut markierte Methoden müssen einen Vertragsnamen oder einen Typ entweder Angeben der <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> oder <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> Methode.</span><span class="sxs-lookup"><span data-stu-id="d6082-111">Methods that are marked with this attribute must specify a contract name or a type by using either the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> or the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> method.</span></span>
+
+<span data-ttu-id="d6082-112">Der Name des Vertrags wird verglichen mit der <xref:System.StringComparer.Ordinal> Eigenschaft, um einen Groß-/Kleinschreibung beachtet, nicht linguistischen Vergleich auszuführen.</span><span class="sxs-lookup"><span data-stu-id="d6082-112">The contract name is compared by using the <xref:System.StringComparer.Ordinal> property to perform a case-sensitive, non-linguistic comparison.</span></span> 
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ExportAttribute (string contractName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string contractName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Composition.ExportAttribute.#ctor(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (contractName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ExportAttribute(System::String ^ contractName);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="contractName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="contractName">
+          <span data-ttu-id="d6082-113">Der Vertragsname, der verwendet wird, um den mit diesem Attribut markierten Typ oder Member zu exportieren, oder <see langword="null" /> oder eine leere Zeichenfolge (""), um den Standardvertragsnamen zu verwenden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-113">The contract name that is used to export the type or member marked with this attribute, or <see langword="null" /> or an empty string ("") to use the default contract name.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d6082-114">Initialisiert eine neue Instanz der <see cref="T:System.Composition.ExportAttribute" />-Klasse, wobei der unter dem angegebenen Vertragsnamen mit diesem Attribut markierte Typ oder Member exportiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-114">Initializes a new instance of the <see cref="T:System.Composition.ExportAttribute" /> class, exporting the type or member marked with this attribute under the specified contract name.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+<span data-ttu-id="d6082-115">Mit diesem Attribut markierte Methoden müssen einen Vertragsnamen oder einen Typ entweder Angeben der <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> oder <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> Methode.</span><span class="sxs-lookup"><span data-stu-id="d6082-115">Methods that are marked with this attribute must specify a contract name or a type by using either the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> or the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> method.</span></span>
+
+<span data-ttu-id="d6082-116">Der Name des Vertrags wird verglichen mit der <xref:System.StringComparer.Ordinal> Eigenschaft, um einen Groß-/Kleinschreibung beachtet, nicht linguistischen Vergleich auszuführen.</span><span class="sxs-lookup"><span data-stu-id="d6082-116">The contract name is compared by using the <xref:System.StringComparer.Ordinal> property to perform a case-sensitive, non-linguistic comparison.</span></span> 
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ExportAttribute (Type contractType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type contractType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Composition.ExportAttribute.#ctor(System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (contractType As Type)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ExportAttribute(Type ^ contractType);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="contractType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="contractType">
+          <span data-ttu-id="d6082-117">Ein Typ, aus dem der zum Exportieren des mit diesem Attribut markierten Typs oder Members verwendete Vertragsname abgeleitet werden soll, oder <see langword="null" />, um den Standardvertragsnamen zu verwenden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-117">A type from which to derive the contract name that is used to export the type or member marked with this attribute, or <see langword="null" /> to use the default contract name.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d6082-118">Initialisiert eine neue Instanz der <see cref="T:System.Composition.ExportAttribute" />-Klasse, wobei der unter einem aus dem angegebenen Typ abgeleiteten Vertragsnamen mit diesem Attribut markierte Typ oder Member exportiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-118">Initializes a new instance of the <see cref="T:System.Composition.ExportAttribute" /> class, exporting the type or member marked with this attribute under a contract name derived from the specified type.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+<span data-ttu-id="d6082-119">Mit diesem Attribut markierte Methoden müssen einen Vertragsnamen oder einen Typ entweder Angeben der <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> oder <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> Methode.</span><span class="sxs-lookup"><span data-stu-id="d6082-119">Methods that are marked with this attribute must specify a contract name or a type by using either the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.String)> or the <xref:System.ComponentModel.Composition.ExportAttribute.%23ctor(System.Type)> method.</span></span>
+
+<span data-ttu-id="d6082-120">Der Name des Vertrags wird verglichen mit der <xref:System.StringComparer.Ordinal> Eigenschaft, um einen Groß-/Kleinschreibung beachtet, nicht linguistischen Vergleich auszuführen.</span><span class="sxs-lookup"><span data-stu-id="d6082-120">The contract name is compared by using the <xref:System.StringComparer.Ordinal> property to perform a case-sensitive, non-linguistic comparison.</span></span> 
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ExportAttribute (string contractName, Type contractType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string contractName, class System.Type contractType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Composition.ExportAttribute.#ctor(System.String,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (contractName As String, contractType As Type)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ExportAttribute(System::String ^ contractName, Type ^ contractType);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="contractName" Type="System.String" />
+        <Parameter Name="contractType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="contractName">
+          <span data-ttu-id="d6082-121">Der Vertragsname, der verwendet wird, um den mit diesem Attribut markierten Typ oder Member zu exportieren, oder <see langword="null" /> oder eine leere Zeichenfolge (""), um den Standardvertragsnamen zu verwenden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-121">The contract name that is used to export the type or member marked with this attribute, or <see langword="null" /> or an empty string ("") to use the default contract name.</span>
+          </span>
+        </param>
+        <param name="contractType">
+          <span data-ttu-id="d6082-122">Der Typ, der exportiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-122">The type to export.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="d6082-123">Initialisiert eine neue Instanz der <see cref="T:System.Composition.ExportAttribute" />-Klasse, wobei der angegebene Typ unter dem angegebenen Vertragsnamen exportiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-123">Initializes a new instance of the <see cref="T:System.Composition.ExportAttribute" /> class, exporting the specified type under the specified contract name.</span>
+          </span>
+        </summary>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ContractName">
+      <MemberSignature Language="C#" Value="public string ContractName { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ContractName" />
+      <MemberSignature Language="DocId" Value="P:System.Composition.ExportAttribute.ContractName" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ContractName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ ContractName { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d6082-124">Ruft den Vertragsnamen ab, der verwendet wird, um den mit diesem Attribut markierten Typ oder Member zu exportieren.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-124">Gets the contract name that is used to export the type or member marked with this attribute.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d6082-125">Der Vertragsname, der verwendet wird, um den mit diesem Attribut markierten Typ oder Member zu exportieren.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-125">The contract name that is used to export the type or member marked with this attribute.</span>
+          </span>
+          <span data-ttu-id="d6082-126">Der Standardwert ist eine leere Zeichenfolge („“).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-126">The default value is an empty string ("").</span>
+          </span>
+        </value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ContractType">
+      <MemberSignature Language="C#" Value="public Type ContractType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type ContractType" />
+      <MemberSignature Language="DocId" Value="P:System.Composition.ExportAttribute.ContractType" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ContractType As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Type ^ ContractType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Composition.AttributedModel</AssemblyName>
+        <AssemblyVersion>1.0.31.0</AssemblyVersion>
+        <AssemblyVersion>1.0.32.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="d6082-127">Ruft den Vertragstyp ab, der von dem Member exportiert wird, der von diesem Attribut markiert ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-127">Gets the contract type that is exported by the member that is marked by this attribute.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="d6082-128">Der Typ des Exports, der bereitgestellt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-128">The type of export to be provided.</span>
+          </span>
+          <span data-ttu-id="d6082-129">Der Standardwert ist <see langword="null" /> und bedeutet, dass der Typ durch Abrufen des Typs für den Member erhalten wird, an den dieser Export angefügt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="d6082-129">The default value is <see langword="null" />, which means that the type will be obtained by looking at the type on the member that this export is attached to.</span>
+          </span>
+        </value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
