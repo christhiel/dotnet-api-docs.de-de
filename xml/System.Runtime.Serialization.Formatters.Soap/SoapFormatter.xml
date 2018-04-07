@@ -1,0 +1,751 @@
+<Type Name="SoapFormatter" FullName="System.Runtime.Serialization.Formatters.Soap.SoapFormatter">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="cbb414823df5cf2426498725f42c83d10e81d6de" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public sealed class SoapFormatter : System.Runtime.Remoting.Messaging.IRemotingFormatter, System.Runtime.Serialization.IFormatter" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit SoapFormatter extends System.Object implements class System.Runtime.Remoting.Messaging.IRemotingFormatter, class System.Runtime.Serialization.IFormatter" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class SoapFormatter&#xA;Implements IFormatter, IRemotingFormatter" />
+  <TypeSignature Language="C++ CLI" Value="public ref class SoapFormatter sealed : System::Runtime::Remoting::Messaging::IRemotingFormatter, System::Runtime::Serialization::IFormatter" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Runtime.Remoting.Messaging.IRemotingFormatter</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.Runtime.Serialization.IFormatter</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>
+      <span data-ttu-id="b547f-101">Serialisiert und deserialisiert ein Objekt oder ein vollständiges Diagramm verbundener Objekte im SOAP-Format.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="b547f-101">Serializes and deserializes an object, or an entire graph of connected objects, in SOAP format.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+> [!NOTE]
+>  <span data-ttu-id="b547f-102">Ab .NET Framework 2.0 können ist diese Klasse veraltet.</span><span class="sxs-lookup"><span data-stu-id="b547f-102">Beginning with the .NET Framework 2.0, this class is obsolete.</span></span> <span data-ttu-id="b547f-103">Verwenden Sie stattdessen <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>.</span><span class="sxs-lookup"><span data-stu-id="b547f-103">Use <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> instead.</span></span>  
+  
+ <span data-ttu-id="b547f-104">Die <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> und <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> Klassen implementieren die <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> -Schnittstelle zur Unterstützung von Remoteprozeduraufrufen (RPCs), und die <xref:System.Runtime.Serialization.IFormatter> Schnittstelle (geerbt von der <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter>) zur Unterstützung der Serialisierung eines Diagramms von Objekten.</span><span class="sxs-lookup"><span data-stu-id="b547f-104">The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> and <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> classes implement the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface to support remote procedure calls (RPCs), and the <xref:System.Runtime.Serialization.IFormatter> interface (inherited by the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter>) to support serialization of a graph of objects.</span></span> <span data-ttu-id="b547f-105">Die <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> -Klasse unterstützt auch RPCs mit <xref:System.Runtime.Serialization.Formatters.ISoapMessage> Objekte, ohne die <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> Funktionalität.</span><span class="sxs-lookup"><span data-stu-id="b547f-105">The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> class also supports RPCs with <xref:System.Runtime.Serialization.Formatters.ISoapMessage> objects, without using the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> functionality.</span></span>  
+  
+ <span data-ttu-id="b547f-106">Bei RPCs die <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> Schnittstelle ermöglicht die Angabe von zwei separaten Objektdiagrammen: das Diagramm von zu serialisierenden Objekten sowie ein weiteres Diagramm, das ein Array von Headerobjekten enthält, die Informationen zu den remote-Funktionsaufruf (für vermitteln b. Transaktions-ID oder Signatur einer Methode).</span><span class="sxs-lookup"><span data-stu-id="b547f-106">During RPCs, the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface allows the specification of two separate object graphs: the graph of objects to serialize, and an additional graph that contains an array of header objects that convey information about the remote function call (for example, transaction ID or a method signature).</span></span> <span data-ttu-id="b547f-107">Für die ordnungsgemäße Serialisierung muss das Stammobjekt des ersten Diagramms ein Objekt, das die <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> Schnittstelle oder die <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="b547f-107">For proper serialization, the root object of the first graph must be an object that implements either the <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> interface or the <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> interface.</span></span>  
+  
+ <span data-ttu-id="b547f-108">Während der Deserialisierung eines RPC eine <xref:System.Runtime.Remoting.Messaging.HeaderHandler> Delegat angegeben wird, um die <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize%2A> Methode des Formatierungsprogramms.</span><span class="sxs-lookup"><span data-stu-id="b547f-108">During deserialization of an RPC, a <xref:System.Runtime.Remoting.Messaging.HeaderHandler> delegate is specified to the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize%2A> method of the formatter.</span></span> <span data-ttu-id="b547f-109">Infrastruktur für den Remotezugriff verwendet die <xref:System.Runtime.Remoting.Messaging.HeaderHandler> Delegaten, der auf ein Objekt zu erstellen, die unterstützt die <xref:System.Runtime.Serialization.ISerializable> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="b547f-109">The remoting infrastructure uses the <xref:System.Runtime.Remoting.Messaging.HeaderHandler> delegate to produce an object that supports the <xref:System.Runtime.Serialization.ISerializable> interface.</span></span> <span data-ttu-id="b547f-110">Dieses Objekt enthält die Informationen im Header gespeicherten und den Stamm des Diagramms vom Deserialisierungsprogramm zurückgegeben wird.</span><span class="sxs-lookup"><span data-stu-id="b547f-110">This object contains the information stored in the headers, and becomes the root of the graph returned by the deserializer.</span></span>  
+  
+ <span data-ttu-id="b547f-111">Die <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> können auch RPCs behandeln, die mit Objekten erstellt werden, implementieren die <xref:System.Runtime.Serialization.Formatters.ISoapMessage> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="b547f-111">The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> can also handle RPCs that are produced with objects that implement the <xref:System.Runtime.Serialization.Formatters.ISoapMessage> interface.</span></span> <span data-ttu-id="b547f-112">So erstellen einen RPC ohne Verwendung der <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> Funktionalität, Ort, ein Objekt, das unterstützt die <xref:System.Runtime.Serialization.Formatters.ISoapMessage> Schnittstelle im Stammverzeichnis eines Diagramms, das serialisiert wird.</span><span class="sxs-lookup"><span data-stu-id="b547f-112">To create an RPC without using the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> functionality, place an object that supports the <xref:System.Runtime.Serialization.Formatters.ISoapMessage> interface at the root of a graph being serialized.</span></span> <span data-ttu-id="b547f-113">Deserialisieren Sie RPC auf diese Weise erstellt die <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TopObject%2A> Eigenschaft muss festgelegt werden, auf ein anderes Objekt, das unterstützt die <xref:System.Runtime.Serialization.Formatters.ISoapMessage> Schnittstelle, und die relevanten Remoteaufruf Informationen enthält.</span><span class="sxs-lookup"><span data-stu-id="b547f-113">To deserialize an RPC created in this manner the <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TopObject%2A> property must be set to another object that supports the <xref:System.Runtime.Serialization.Formatters.ISoapMessage> interface, and contains the relevant remote call information.</span></span>  
+  
+## <a name="timespan-serialization"></a><span data-ttu-id="b547f-114">TimeSpan-Serialisierung</span><span class="sxs-lookup"><span data-stu-id="b547f-114">TimeSpan Serialization</span></span>  
+ <span data-ttu-id="b547f-115">TimeSpan-Objekten werden gemäß dem ISO 8601:1998 Abschnitt 5.5.3.2.1 "Alternative" Standard serialisiert.</span><span class="sxs-lookup"><span data-stu-id="b547f-115">TimeSpan objects are serialized according to the ISO 8601: 1998 section 5.5.3.2.1 "Alternative" standard.</span></span>  
+  
+## <a name="version-information"></a><span data-ttu-id="b547f-116">Versionsinformationen</span><span class="sxs-lookup"><span data-stu-id="b547f-116">Version Information</span></span>  
+ <span data-ttu-id="b547f-117">Die <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> Serialisierung Kompatibilität zwischen Versionen von .NET Framework nicht unterstützt.</span><span class="sxs-lookup"><span data-stu-id="b547f-117">The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> does not support serialization compatibility between versions of the .NET Framework.</span></span> <span data-ttu-id="b547f-118">Serialisierung zwischen Versionen 1.1 und 2.0-Typen in oft Framework schlägt fehl.</span><span class="sxs-lookup"><span data-stu-id="b547f-118">Serialization between versions 1.1 and 2.0 types in the Framework often fails.</span></span> <span data-ttu-id="b547f-119">Die folgenden Aktionen können ausgeführt werden, um dieses Problem zu beheben:</span><span class="sxs-lookup"><span data-stu-id="b547f-119">The following actions can be taken to remedy this issue:</span></span>  
+  
+-   <span data-ttu-id="b547f-120">Verwenden Sie stattdessen die <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>, die gewährleistet die Kompatibilität zwischen 1.1 und 2.0.</span><span class="sxs-lookup"><span data-stu-id="b547f-120">Convert to use the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>, which provides compatibility between 1.1 and 2.0.</span></span>  
+  
+-   <span data-ttu-id="b547f-121">Konvertieren Sie vorhandene persistente Daten in das neue Format.</span><span class="sxs-lookup"><span data-stu-id="b547f-121">Convert existing persisted data to the new format.</span></span>  
+  
+-   <span data-ttu-id="b547f-122">Konvertieren Sie alle Producer und Consumer von serialisierten Daten in Version 2.0.</span><span class="sxs-lookup"><span data-stu-id="b547f-122">Convert all producers and consumers of serialized data to version 2.0.</span></span>  
+  
+-   <span data-ttu-id="b547f-123">Vermeiden Sie die Verwendung von Typen, die von 1.1 und 2.0 geändert haben.</span><span class="sxs-lookup"><span data-stu-id="b547f-123">Avoid using types that changed from 1.1 to 2.0.</span></span>  
+  
+   
+  
+## Examples  
+ [!code-cpp[SoapFormatter Example#1](~/samples/snippets/cpp/VS_Snippets_Remoting/SoapFormatter Example/CPP/soapformatter.cpp#1)]
+ [!code-csharp[SoapFormatter Example#1](~/samples/snippets/csharp/VS_Snippets_Remoting/SoapFormatter Example/CS/soapformatter.cs#1)]
+ [!code-vb[SoapFormatter Example#1](~/samples/snippets/visualbasic/VS_Snippets_Remoting/SoapFormatter Example/VB/soapformatter.vb#1)]  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-124">Initialisiert eine neue Instanz der <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-124">Initializes a new instance of the <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" /> class.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SoapFormatter ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; SoapFormatter();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-125">Initialisiert eine neue Instanz der <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />-Klasse mit Standardeigenschaftswerten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-125">Initializes a new instance of the <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" /> class with default property values.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-126">In der folgenden Tabelle werden die anfänglichen Eigenschaftenwerte für eine <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter>-Instanz aufgeführt.</span><span class="sxs-lookup"><span data-stu-id="b547f-126">The following table shows the initial property values for an instance of <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter>.</span></span>  
+  
+|<span data-ttu-id="b547f-127">Eigenschaft</span><span class="sxs-lookup"><span data-stu-id="b547f-127">Property</span></span>|<span data-ttu-id="b547f-128">Wert</span><span class="sxs-lookup"><span data-stu-id="b547f-128">Value</span></span>|  
+|--------------|-----------|  
+|<xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.SurrogateSelector%2A>|`null`|  
+|<xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Context%2A>|<span data-ttu-id="b547f-129">Ein neues <xref:System.Runtime.Serialization.StreamingContext> initialisiert, um anzugeben, dass die serialisierten Daten übertragen oder von einem beliebigen anderen Kontexte empfangen werden können</span><span class="sxs-lookup"><span data-stu-id="b547f-129">A new <xref:System.Runtime.Serialization.StreamingContext> initialized to specify that the serialized data can be transmitted to or received from any of the other contexts</span></span>|  
+  
+   
+  
+## Examples  
+ [!code-cpp[SoapFormatter Example#1](~/samples/snippets/cpp/VS_Snippets_Remoting/SoapFormatter Example/CPP/soapformatter.cpp#1)]
+ [!code-csharp[SoapFormatter Example#1](~/samples/snippets/csharp/VS_Snippets_Remoting/SoapFormatter Example/CS/soapformatter.cs#1)]
+ [!code-vb[SoapFormatter Example#1](~/samples/snippets/visualbasic/VS_Snippets_Remoting/SoapFormatter Example/VB/soapformatter.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SoapFormatter (System.Runtime.Serialization.ISurrogateSelector selector, System.Runtime.Serialization.StreamingContext context);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Runtime.Serialization.ISurrogateSelector selector, valuetype System.Runtime.Serialization.StreamingContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.#ctor(System.Runtime.Serialization.ISurrogateSelector,System.Runtime.Serialization.StreamingContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (selector As ISurrogateSelector, context As StreamingContext)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; SoapFormatter(System::Runtime::Serialization::ISurrogateSelector ^ selector, System::Runtime::Serialization::StreamingContext context);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="selector" Type="System.Runtime.Serialization.ISurrogateSelector" />
+        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" />
+      </Parameters>
+      <Docs>
+        <param name="selector">
+          <span data-ttu-id="b547f-130">Der <see cref="T:System.Runtime.Serialization.ISurrogateSelector" />, der mit der neuen Instanz von <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" /> verwendet werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-130">The <see cref="T:System.Runtime.Serialization.ISurrogateSelector" /> to use with the new instance of <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          </span>
+          <span data-ttu-id="b547f-131">Kann <see langword="null" /> sein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-131">Can be <see langword="null" />.</span>
+          </span>
+        </param>
+        <param name="context">
+          <span data-ttu-id="b547f-132">Der <see cref="T:System.Runtime.Serialization.StreamingContext" />, der die Quelle und das Ziel der Serialisierung enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-132">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that holds the source and destination of the serialization.</span>
+          </span>
+          <span data-ttu-id="b547f-133">Wenn der <c>context</c>-Parameter <see langword="null" /> ist, wird der <see cref="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Context" /> standardmäßig auf <see cref="F:System.Runtime.Serialization.StreamingContextStates.CrossMachine" /> festgelegt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-133">If the <c>context</c> parameter is <see langword="null" />, then the <see cref="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Context" /> defaults to <see cref="F:System.Runtime.Serialization.StreamingContextStates.CrossMachine" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="b547f-134">Initialisiert eine neue Instanz der <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />-Klasse mit den angegebenen <see cref="T:System.Runtime.Serialization.ISurrogateSelector" /> und dem angegebenen <see cref="T:System.Runtime.Serialization.StreamingContext" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-134">Initializes a new instance of the <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" /> class with the specified <see cref="T:System.Runtime.Serialization.ISurrogateSelector" /> and <see cref="T:System.Runtime.Serialization.StreamingContext" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-135">Objekte werden in serialisiert oder deserialisiert wird, aus dem angegebenen <xref:System.IO.Stream>.</span><span class="sxs-lookup"><span data-stu-id="b547f-135">Objects are serialized to, or deserialized from, the specified <xref:System.IO.Stream>.</span></span>  
+  
+ <span data-ttu-id="b547f-136">Die Serialisierung oder Deserialisierung verwendet den angegebenen <xref:System.Runtime.Serialization.ISurrogateSelector> für die Suche nach Ersatzzeichen, die registriert sind, für die Objekttypen deserialisiert werden soll.</span><span class="sxs-lookup"><span data-stu-id="b547f-136">The serialization or deserialization process uses the specified <xref:System.Runtime.Serialization.ISurrogateSelector> to search for surrogates that are registered for the object types you want to deserialize.</span></span> <span data-ttu-id="b547f-137">Ersatzzeichen sind beim Serialisieren und Deserialisieren von Objekten bestimmter Klassen.</span><span class="sxs-lookup"><span data-stu-id="b547f-137">Surrogates are helpers that serialize and deserialize objects of specific classes.</span></span> <span data-ttu-id="b547f-138">Die Standardeinstellung <xref:System.Runtime.Serialization.ISurrogateSelector> kann nicht verarbeitet die Serialisierung von Objekten, die Ableitung der <xref:System.MarshalByRefObject> Remoting Zwecken.</span><span class="sxs-lookup"><span data-stu-id="b547f-138">The default <xref:System.Runtime.Serialization.ISurrogateSelector> cannot handle the serialization of objects that derive from the <xref:System.MarshalByRefObject> for remoting purposes.</span></span> <span data-ttu-id="b547f-139">In einer angegebenen Remoting-Situation <xref:System.Runtime.Serialization.ISurrogateSelector> ersetzt das Objekt abgeleitet wurde. <xref:System.MarshalByRefObject> mit einem <xref:System.Runtime.Remoting.ObjRef> -Objekt, das durch den angegebenen Ersatzselektor serialisiert wird.</span><span class="sxs-lookup"><span data-stu-id="b547f-139">In a remoting situation the specified <xref:System.Runtime.Serialization.ISurrogateSelector> replaces the object derived from <xref:System.MarshalByRefObject> with a <xref:System.Runtime.Remoting.ObjRef> object that is serialized by the specified surrogate selector.</span></span> <span data-ttu-id="b547f-140">Legen Sie daher, wenn Sie Remoteobjekte verwenden möchten, die `selector` Parameter mit einer Instanz von <xref:System.Runtime.Remoting.Messaging.RemotingSurrogateSelector>.</span><span class="sxs-lookup"><span data-stu-id="b547f-140">Therefore, if you want to use remote objects, set the `selector` parameter to an instance of <xref:System.Runtime.Remoting.Messaging.RemotingSurrogateSelector>.</span></span> <span data-ttu-id="b547f-141">Wenn Sie keine Surrogate benötigen, legen Sie die `selector` Parameter `null`.</span><span class="sxs-lookup"><span data-stu-id="b547f-141">If you do not need surrogates, set the `selector` parameter to be `null`.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Runtime.Serialization.StreamingContext" />
+      </Docs>
+    </Member>
+    <Member MemberName="AssemblyFormat">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.Formatters.FormatterAssemblyStyle AssemblyFormat { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Runtime.Serialization.Formatters.FormatterAssemblyStyle AssemblyFormat" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.AssemblyFormat" />
+      <MemberSignature Language="VB.NET" Value="Public Property AssemblyFormat As FormatterAssemblyStyle" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::Formatters::FormatterAssemblyStyle AssemblyFormat { System::Runtime::Serialization::Formatters::FormatterAssemblyStyle get(); void set(System::Runtime::Serialization::Formatters::FormatterAssemblyStyle value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.Formatters.FormatterAssemblyStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-142">Ruft das Verhalten des Deserialisierungsprogramms bezüglich des Suchens und Ladens von Assemblys ab oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-142">Gets or sets the behavior of the deserializer with regards to finding and loading assemblies.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-143">Einer der <see cref="T:System.Runtime.Serialization.Formatters.FormatterAssemblyStyle" />-Werte, der das Deserialisierungsverhalten angibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-143">One of the <see cref="T:System.Runtime.Serialization.Formatters.FormatterAssemblyStyle" /> values that specifies the deserializer behavior.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="T:System.Runtime.Serialization.Formatters.FormatterAssemblyStyle" />
+      </Docs>
+    </Member>
+    <Member MemberName="Binder">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.SerializationBinder Binder { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Runtime.Serialization.SerializationBinder Binder" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Binder" />
+      <MemberSignature Language="VB.NET" Value="Public Property Binder As SerializationBinder" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::SerializationBinder ^ Binder { System::Runtime::Serialization::SerializationBinder ^ get(); void set(System::Runtime::Serialization::SerializationBinder ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.SerializationBinder</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-144">Ruft den <see cref="T:System.Runtime.Serialization.SerializationBinder" /> ab, der die Bindung eines serialisierten Objekts an einen Typ steuert, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-144">Gets or sets the <see cref="T:System.Runtime.Serialization.SerializationBinder" /> that controls the binding of a serialized object to a type.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-145">Der mit diesem <see cref="T:System.Runtime.Serialization.SerializationBinder" /> verwendete <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-145">The <see cref="T:System.Runtime.Serialization.SerializationBinder" /> used with this <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="T:System.Runtime.Serialization.SerializationBinder" />
+      </Docs>
+    </Member>
+    <Member MemberName="Context">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.StreamingContext Context { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Runtime.Serialization.StreamingContext Context" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Context" />
+      <MemberSignature Language="VB.NET" Value="Public Property Context As StreamingContext" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::StreamingContext Context { System::Runtime::Serialization::StreamingContext get(); void set(System::Runtime::Serialization::StreamingContext value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.StreamingContext</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-146">Ruft den <see cref="T:System.Runtime.Serialization.StreamingContext" /> ab, der mit diesem <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" /> verwendet wird, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-146">Gets or sets the <see cref="T:System.Runtime.Serialization.StreamingContext" /> used with this <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-147">Der mit diesem <see cref="T:System.Runtime.Serialization.StreamingContext" /> verwendete <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-147">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> used with this <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-148">Die <xref:System.Runtime.Serialization.StreamingContext> stellt eine Enumeration, beschreibt die Quelle und das Ziel eines angegebenen serialisierten Streams sowie eine Möglichkeit für die Serialisierung dieser Kontext und einen zusätzlichen aufruferdefinierten Kontext beizubehalten.</span><span class="sxs-lookup"><span data-stu-id="b547f-148">The <xref:System.Runtime.Serialization.StreamingContext> provides an enumeration that describes the source and the destination for a given serialized stream, as well as a way for serialization to retain that context and an additional caller-defined context.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Runtime.Serialization.StreamingContext" />
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Deserialize">
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-149">Deserialisiert einen Stream in ein Objektdiagramm.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-149">Deserializes a stream into an object graph.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="b547f-150">Beim Aufrufen dieser Methode mit nicht vertrauenswürdigen Daten stellt ein Sicherheitsrisiko dar.</span><span class="sxs-lookup"><span data-stu-id="b547f-150">Calling this method with untrusted data is a security risk.</span></span> <span data-ttu-id="b547f-151">Rufen Sie diese Methode nur mit vertrauenswürdigen Daten.</span><span class="sxs-lookup"><span data-stu-id="b547f-151">Call this method only with trusted data.</span></span> <span data-ttu-id="b547f-152">Weitere Informationen finden Sie unter [Datenvalidierung](https://www.owasp.org/index.php/Data_Validation).</span><span class="sxs-lookup"><span data-stu-id="b547f-152">For more information, see [Data Validation](https://www.owasp.org/index.php/Data_Validation).</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Deserialize">
+      <MemberSignature Language="C#" Value="public object Deserialize (System.IO.Stream serializationStream);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object Deserialize(class System.IO.Stream serializationStream) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Deserialize(System.IO.Stream)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Deserialize (serializationStream As Stream) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ Deserialize(System::IO::Stream ^ serializationStream);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serializationStream" Type="System.IO.Stream" />
+      </Parameters>
+      <Docs>
+        <param name="serializationStream">
+          <span data-ttu-id="b547f-153">Der Stream, der die zu deserialisierenden Daten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-153">The stream that contains the data to deserialize.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="b547f-154">Deserialisiert die Daten im bereitgestellten Stream und stellt das Diagramm von Objekten wieder her.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-154">Deserializes the data on the provided stream and reconstitutes the graph of objects.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="b547f-155">Das oberste Objekt des deserialisierten Diagramms (Stammobjekt).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-155">The top object of the deserialized graph (root).</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-156">Für eine erfolgreiche Deserialisierung muss die aktuelle Position im Stream am Anfang des Objektdiagramms sein.</span><span class="sxs-lookup"><span data-stu-id="b547f-156">For successful deserialization, the current position in the stream must be at the beginning of the object graph.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="b547f-157">Beim Aufrufen dieser Methode mit nicht vertrauenswürdigen Daten stellt ein Sicherheitsrisiko dar.</span><span class="sxs-lookup"><span data-stu-id="b547f-157">Calling this method with untrusted data is a security risk.</span></span> <span data-ttu-id="b547f-158">Rufen Sie diese Methode nur mit vertrauenswürdigen Daten.</span><span class="sxs-lookup"><span data-stu-id="b547f-158">Call this method only with trusted data.</span></span> <span data-ttu-id="b547f-159">Weitere Informationen finden Sie unter [Datenvalidierung](https://www.owasp.org/index.php/Data_Validation).</span><span class="sxs-lookup"><span data-stu-id="b547f-159">For more information, see [Data Validation](https://www.owasp.org/index.php/Data_Validation).</span></span>  
+  
+   
+  
+## Examples  
+ [!code-cpp[SoapFormatter Example#1](~/samples/snippets/cpp/VS_Snippets_Remoting/SoapFormatter Example/CPP/soapformatter.cpp#1)]
+ [!code-csharp[SoapFormatter Example#1](~/samples/snippets/csharp/VS_Snippets_Remoting/SoapFormatter Example/CS/soapformatter.cs#1)]
+ [!code-vb[SoapFormatter Example#1](~/samples/snippets/visualbasic/VS_Snippets_Remoting/SoapFormatter Example/VB/soapformatter.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="b547f-160">
+            <paramref name="serializationStream" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-160">
+              <paramref name="serializationStream" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Deserialize">
+      <MemberSignature Language="C#" Value="public object Deserialize (System.IO.Stream serializationStream, System.Runtime.Remoting.Messaging.HeaderHandler handler);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object Deserialize(class System.IO.Stream serializationStream, class System.Runtime.Remoting.Messaging.HeaderHandler handler) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Deserialize(System.IO.Stream,System.Runtime.Remoting.Messaging.HeaderHandler)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Deserialize (serializationStream As Stream, handler As HeaderHandler) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ Deserialize(System::IO::Stream ^ serializationStream, System::Runtime::Remoting::Messaging::HeaderHandler ^ handler);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serializationStream" Type="System.IO.Stream" />
+        <Parameter Name="handler" Type="System.Runtime.Remoting.Messaging.HeaderHandler" />
+      </Parameters>
+      <Docs>
+        <param name="serializationStream">
+          <span data-ttu-id="b547f-161">Der Stream, der die zu deserialisierenden Daten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-161">The stream that contains the data to deserialize.</span>
+          </span>
+        </param>
+        <param name="handler">
+          <span data-ttu-id="b547f-162">Delegat zum Behandeln aller im Stream gefundenen Header.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-162">Delegate to handle any headers found on the stream.</span>
+          </span>
+          <span data-ttu-id="b547f-163">Kann <see langword="null" /> sein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-163">Can be <see langword="null" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="b547f-164">Deserialisiert den Stream in ein Objektdiagramm, wobei sämtliche Header im betreffenden Stream durch den angegebenen <see cref="T:System.Runtime.Remoting.Messaging.HeaderHandler" /> behandelt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-164">Deserializes the stream into an object graph with any headers in that stream being handled by the given <see cref="T:System.Runtime.Remoting.Messaging.HeaderHandler" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="b547f-165">Das oberste Objekt des deserialisierten Diagramms (Stammobjekt).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-165">The top object of the deserialized graph (root).</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-166">Header werden nur für bestimmte Remoteanwendungen verwendet.</span><span class="sxs-lookup"><span data-stu-id="b547f-166">Headers are used only for specific remoting applications.</span></span> <span data-ttu-id="b547f-167">Die <xref:System.Runtime.Remoting.Messaging.HeaderHandler> Parameter ist auf zwei Arten Header aus einem Stream in SOAP-Remoteprozeduraufruf (RPC) Format zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="b547f-167">The <xref:System.Runtime.Remoting.Messaging.HeaderHandler> parameter is one of two ways to return headers from a stream in SOAP Remote Procedure Call (RPC) format.</span></span> <span data-ttu-id="b547f-168">Eine andere Möglichkeit ist die Verwendung der <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TopObject%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="b547f-168">The other way is to use the <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TopObject%2A> property.</span></span>  
+  
+ <span data-ttu-id="b547f-169">Für eine erfolgreiche Deserialisierung muss die aktuelle Position im Stream am Anfang des Objektdiagramms sein.</span><span class="sxs-lookup"><span data-stu-id="b547f-169">For successful deserialization, the current position in the stream must be at the beginning of the object graph.</span></span>  
+  
+## <a name="timespan-serialization"></a><span data-ttu-id="b547f-170">TimeSpan-Serialisierung</span><span class="sxs-lookup"><span data-stu-id="b547f-170">TimeSpan Serialization</span></span>  
+ <span data-ttu-id="b547f-171">TimeSpan-Objekten werden gemäß dem ISO 8601:1998 Abschnitt 5.5.3.2.1 "Alternative" Standard serialisiert.</span><span class="sxs-lookup"><span data-stu-id="b547f-171">TimeSpan objects are serialized according to the ISO 8601: 1998 section 5.5.3.2.1 "Alternative" standard.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="b547f-172">Beim Aufrufen dieser Methode mit nicht vertrauenswürdigen Daten stellt ein Sicherheitsrisiko dar.</span><span class="sxs-lookup"><span data-stu-id="b547f-172">Calling this method with untrusted data is a security risk.</span></span> <span data-ttu-id="b547f-173">Rufen Sie diese Methode nur mit vertrauenswürdigen Daten.</span><span class="sxs-lookup"><span data-stu-id="b547f-173">Call this method only with trusted data.</span></span> <span data-ttu-id="b547f-174">Weitere Informationen finden Sie unter [Datenvalidierung](https://www.owasp.org/index.php/Data_Validation).</span><span class="sxs-lookup"><span data-stu-id="b547f-174">For more information, see [Data Validation](https://www.owasp.org/index.php/Data_Validation).</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="b547f-175">
+            <paramref name="serializationStream" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-175">
+              <paramref name="serializationStream" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Runtime.Serialization.SerializationException">
+          <span data-ttu-id="b547f-176">
+            <paramref name="serializationStream" /> unterstützt die Suche. Seine Länge ist 0.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-176">
+              <paramref name="serializationStream" /> supports seeking, and its length is 0.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="FilterLevel">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.Formatters.TypeFilterLevel FilterLevel { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Runtime.Serialization.Formatters.TypeFilterLevel FilterLevel" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.FilterLevel" />
+      <MemberSignature Language="VB.NET" Value="Public Property FilterLevel As TypeFilterLevel" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::Formatters::TypeFilterLevel FilterLevel { System::Runtime::Serialization::Formatters::TypeFilterLevel get(); void set(System::Runtime::Serialization::Formatters::TypeFilterLevel value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.Formatters.TypeFilterLevel</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-177">Ruft das <see cref="T:System.Runtime.Serialization.Formatters.TypeFilterLevel" /> der automatischen Deserialisierung für .NET Framework Remoting ab oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-177">Gets or sets the <see cref="T:System.Runtime.Serialization.Formatters.TypeFilterLevel" /> of automatic deserialization for .NET Framework remoting.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-178">Das <see cref="T:System.Runtime.Serialization.Formatters.TypeFilterLevel" />, das die aktuelle Ebene der automatischen Deserialisierung darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-178">The <see cref="T:System.Runtime.Serialization.Formatters.TypeFilterLevel" /> that represents the current automatic deserialization level.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-179">Unterstützte Werte sind <xref:System.Runtime.Serialization.Formatters.TypeFilterLevel.Low> und <xref:System.Runtime.Serialization.Formatters.TypeFilterLevel.Full> (Standard).</span><span class="sxs-lookup"><span data-stu-id="b547f-179">Supported values are <xref:System.Runtime.Serialization.Formatters.TypeFilterLevel.Low> and <xref:System.Runtime.Serialization.Formatters.TypeFilterLevel.Full> (the default).</span></span> <span data-ttu-id="b547f-180">Einzelheiten zur Deserialisierungsebenen finden Sie unter [automatische Deserialisierung in .NET Remoting](http://msdn.microsoft.com/library/313a0e88-5b2b-4a17-8391-0ddf9f7a787b).</span><span class="sxs-lookup"><span data-stu-id="b547f-180">For details about deserialization levels, see [Automatic Deserialization in .NET Remoting](http://msdn.microsoft.com/library/313a0e88-5b2b-4a17-8391-0ddf9f7a787b).</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="Serialize">
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-181">Serialisiert ein Objekt oder ein Diagramm verbundener Objekte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-181">Serializes an object or graph of connected objects.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="Serialize">
+      <MemberSignature Language="C#" Value="public void Serialize (System.IO.Stream serializationStream, object graph);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Serialize(class System.IO.Stream serializationStream, object graph) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Serialize(System.IO.Stream,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Serialize (serializationStream As Stream, graph As Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Serialize(System::IO::Stream ^ serializationStream, System::Object ^ graph);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serializationStream" Type="System.IO.Stream" />
+        <Parameter Name="graph" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="serializationStream">
+          <span data-ttu-id="b547f-182">Der Stream, in den das Formatierungsprogramm die zu serialisierenden Daten schreibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-182">The stream onto which the formatter puts the data to serialize.</span>
+          </span>
+        </param>
+        <param name="graph">
+          <span data-ttu-id="b547f-183">Das Objekt oder der Stamm des Objektdiagramms, das serialisiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-183">The object, or root of the object graph, to serialize.</span>
+          </span>
+          <span data-ttu-id="b547f-184">Alle untergeordneten Objekte dieses Stammobjekts werden automatisch serialisiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-184">All child objects of this root object are automatically serialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="b547f-185">Serialisiert ein Objekt oder ein Objektdiagramm mit dem angegebenen Stamm in den angegebenen <see cref="T:System.IO.Stream" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-185">Serializes an object or graph of objects with the specified root to the given <see cref="T:System.IO.Stream" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-186">TimeSpan-Objekten werden gemäß dem ISO 8601:1998 Abschnitt 5.5.3.2.1 "Alternative" Standard serialisiert.</span><span class="sxs-lookup"><span data-stu-id="b547f-186">TimeSpan objects are serialized according to the ISO 8601: 1998 section 5.5.3.2.1 "Alternative" standard.</span></span>  
+  
+   
+  
+## Examples  
+ [!code-cpp[SoapFormatter Example#1](~/samples/snippets/cpp/VS_Snippets_Remoting/SoapFormatter Example/CPP/soapformatter.cpp#1)]
+ [!code-csharp[SoapFormatter Example#1](~/samples/snippets/csharp/VS_Snippets_Remoting/SoapFormatter Example/CS/soapformatter.cs#1)]
+ [!code-vb[SoapFormatter Example#1](~/samples/snippets/visualbasic/VS_Snippets_Remoting/SoapFormatter Example/VB/soapformatter.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="b547f-187">
+            <paramref name="serializationStream" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-187">
+              <paramref name="serializationStream" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Serialize">
+      <MemberSignature Language="C#" Value="public void Serialize (System.IO.Stream serializationStream, object graph, System.Runtime.Remoting.Messaging.Header[] headers);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Serialize(class System.IO.Stream serializationStream, object graph, class System.Runtime.Remoting.Messaging.Header[] headers) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.Serialize(System.IO.Stream,System.Object,System.Runtime.Remoting.Messaging.Header[])" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Serialize (serializationStream As Stream, graph As Object, headers As Header())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Serialize(System::IO::Stream ^ serializationStream, System::Object ^ graph, cli::array &lt;System::Runtime::Remoting::Messaging::Header ^&gt; ^ headers);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serializationStream" Type="System.IO.Stream" />
+        <Parameter Name="graph" Type="System.Object" />
+        <Parameter Name="headers" Type="System.Runtime.Remoting.Messaging.Header[]" />
+      </Parameters>
+      <Docs>
+        <param name="serializationStream">
+          <span data-ttu-id="b547f-188">Der Stream, in den das Formatierungsprogramm die zu serialisierenden Daten schreibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-188">The stream onto which the formatter puts the data to serialize.</span>
+          </span>
+        </param>
+        <param name="graph">
+          <span data-ttu-id="b547f-189">Das Objekt oder der Stamm des Objektdiagramms, das serialisiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-189">The object or root of the object graph to serialize.</span>
+          </span>
+          <span data-ttu-id="b547f-190">Alle untergeordneten Objekte dieses Stammobjekts werden automatisch serialisiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-190">All child objects of this root object are automatically serialized.</span>
+          </span>
+        </param>
+        <param name="headers">
+          <span data-ttu-id="b547f-191">Remoteheader, die in die Serialisierung eingeschlossen werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-191">Remoting headers to include in the serialization.</span>
+          </span>
+          <span data-ttu-id="b547f-192">Kann <see langword="null" /> sein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-192">Can be <see langword="null" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="b547f-193">Serialisiert ein Objekt oder ein Objektdiagramm mit dem angegeben Stammobjekt im SOAP-RPC-Format (Remote Procedure Call, Remoteprozeduraufruf) in den angegebenen <see cref="T:System.IO.Stream" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-193">Serializes an object or graph of objects with the specified root to the given <see cref="T:System.IO.Stream" /> in the SOAP Remote Procedure Call (RPC) format.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-194">Header werden nur für bestimmte Remoteanwendungen verwendet.</span><span class="sxs-lookup"><span data-stu-id="b547f-194">Headers are used only for specific remoting applications.</span></span>  
+  
+ <span data-ttu-id="b547f-195">TimeSpan-Objekten werden gemäß dem ISO 8601:1998 Abschnitt 5.5.3.2.1 "Alternative" Standard serialisiert.</span><span class="sxs-lookup"><span data-stu-id="b547f-195">TimeSpan objects are serialized according to the ISO 8601: 1998 section 5.5.3.2.1 "Alternative" standard.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="b547f-196">
+            <paramref name="serializationStream" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-196">
+              <paramref name="serializationStream" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SurrogateSelector">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.ISurrogateSelector SurrogateSelector { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Runtime.Serialization.ISurrogateSelector SurrogateSelector" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.SurrogateSelector" />
+      <MemberSignature Language="VB.NET" Value="Public Property SurrogateSelector As ISurrogateSelector" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::ISurrogateSelector ^ SurrogateSelector { System::Runtime::Serialization::ISurrogateSelector ^ get(); void set(System::Runtime::Serialization::ISurrogateSelector ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.ISurrogateSelector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-197">Ruft den <see cref="T:System.Runtime.Serialization.SurrogateSelector" /> ab, der die Typersetzung während der Serialisierung und Deserialisierung steuert, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-197">Gets or sets the <see cref="T:System.Runtime.Serialization.SurrogateSelector" /> that controls type substitution during serialization and deserialization.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-198">Der mit diesem <see cref="T:System.Runtime.Serialization.SurrogateSelector" /> verwendete <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-198">The <see cref="T:System.Runtime.Serialization.SurrogateSelector" /> used with this <see cref="T:System.Runtime.Serialization.Formatters.Soap.SoapFormatter" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-199">Verwendet von <xref:System.Runtime.Remoting> generieren <xref:System.Runtime.Remoting.ObjRef> für Instanzen <xref:System.MarshalByRefObject> Objekte.</span><span class="sxs-lookup"><span data-stu-id="b547f-199">Used by <xref:System.Runtime.Remoting> to generate <xref:System.Runtime.Remoting.ObjRef> instances for <xref:System.MarshalByRefObject> objects.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TopObject">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.Formatters.ISoapMessage TopObject { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Runtime.Serialization.Formatters.ISoapMessage TopObject" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TopObject" />
+      <MemberSignature Language="VB.NET" Value="Public Property TopObject As ISoapMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::Formatters::ISoapMessage ^ TopObject { System::Runtime::Serialization::Formatters::ISoapMessage ^ get(); void set(System::Runtime::Serialization::Formatters::ISoapMessage ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.Formatters.ISoapMessage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-200">Ruft die <see cref="T:System.Runtime.Serialization.Formatters.ISoapMessage" /> ab, in die das oberste SOAP-Objekt deserialisiert wird, oder legt diese fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-200">Gets or sets the <see cref="T:System.Runtime.Serialization.Formatters.ISoapMessage" /> into which the SOAP top object is deserialized.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-201">Die <see cref="T:System.Runtime.Serialization.Formatters.ISoapMessage" />, in die das oberste SOAP-Objekt deserialisiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-201">The <see cref="T:System.Runtime.Serialization.Formatters.ISoapMessage" /> into which the SOAP top object is deserialized.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="b547f-202">Diese Eigenschaft wird zum Format von SOAP-remote Procedure Call (RPC) und gibt an, dass die SOAP-oberste Datensatz eine Methode namens Remote nicht Datentyp common Language Runtime-Objekt.</span><span class="sxs-lookup"><span data-stu-id="b547f-202">This property is used for SOAP remote procedure call (RPC) format and specifies that the SOAP top record is a method called remotely, not a common language runtime object type.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TypeFormat">
+      <MemberSignature Language="C#" Value="public System.Runtime.Serialization.Formatters.FormatterTypeStyle TypeFormat { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Runtime.Serialization.Formatters.FormatterTypeStyle TypeFormat" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Serialization.Formatters.Soap.SoapFormatter.TypeFormat" />
+      <MemberSignature Language="VB.NET" Value="Public Property TypeFormat As FormatterTypeStyle" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Serialization::Formatters::FormatterTypeStyle TypeFormat { System::Runtime::Serialization::Formatters::FormatterTypeStyle get(); void set(System::Runtime::Serialization::Formatters::FormatterTypeStyle value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Serialization.Formatters.Soap</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Serialization.Formatters.FormatterTypeStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="b547f-203">Ruft das Format für das Layout von Typbeschreibungen im serialisierten Stream ab oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-203">Gets or sets the format in which type descriptions are laid out in the serialized stream.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="b547f-204">Das Format, in dem Typbeschreibungen im serialisierten Stream dargestellt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="b547f-204">The format in which type descriptions are laid out in the serialized stream.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="T:System.Runtime.Serialization.Formatters.FormatterTypeStyle" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

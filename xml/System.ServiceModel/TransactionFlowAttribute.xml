@@ -1,0 +1,413 @@
+<Type Name="TransactionFlowAttribute" FullName="System.ServiceModel.TransactionFlowAttribute">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="155368e3ce8af49fb298ecbba47573bccfa2a96b" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public sealed class TransactionFlowAttribute : Attribute, System.ServiceModel.Description.IOperationBehavior" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit TransactionFlowAttribute extends System.Attribute implements class System.ServiceModel.Description.IOperationBehavior" />
+  <TypeSignature Language="DocId" Value="T:System.ServiceModel.TransactionFlowAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class TransactionFlowAttribute&#xA;Inherits Attribute&#xA;Implements IOperationBehavior" />
+  <TypeSignature Language="C++ CLI" Value="public ref class TransactionFlowAttribute sealed : Attribute, System::ServiceModel::Description::IOperationBehavior" />
+  <AssemblyInfo>
+    <AssemblyName>System.ServiceModel</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.ServiceModel.Description.IOperationBehavior</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.AttributeUsage(System.AttributeTargets.Method)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="4c173-101">Legt fest, ob ein Dienstvorgang die vom Client eingehenden Transaktionen annimmt.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="4c173-101">Specifies whether a service operation accepts incoming transactions from a client.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="4c173-102"><xref:System.ServiceModel.TransactionFlowAttribute> ist ein Attribut, das deklarativ verwendet wird, um eine bestimmte Transaktionsflussrichtlinie mit einem Dienstvorgang zu verknüpfen.</span><span class="sxs-lookup"><span data-stu-id="4c173-102">The <xref:System.ServiceModel.TransactionFlowAttribute> is an attribute used declaratively to associate a specific transaction flow policy with a service operation.</span></span> <span data-ttu-id="4c173-103">Die <xref:System.ServiceModel.TransactionFlowOption>-Eigenschaft dieses Attributs gibt an, ob der entsprechende Vorgang eine vom Client übertragene Transaktion annimmt, oder ob der Vorgang erfordert, dass der Client immer eine Transaktion überträgt.</span><span class="sxs-lookup"><span data-stu-id="4c173-103">The <xref:System.ServiceModel.TransactionFlowOption> property of this attribute specifies whether the respective operation accepts a transaction flowed from the client, or if the operation requires the client to always flow a transaction.</span></span> <span data-ttu-id="4c173-104">Das <xref:System.ServiceModel.TransactionFlowAttribute> kann auch als Vorgangsverhalten verwendet werden, um eine Transaktionsflussrichtlinie programmgesteuert mit einem bestimmten Vorgang zu verknüpfen.</span><span class="sxs-lookup"><span data-stu-id="4c173-104">The <xref:System.ServiceModel.TransactionFlowAttribute> can also be used as an operation behavior to programmatically associate a transaction flow policy with a specific operation.</span></span> <span data-ttu-id="4c173-105">In diesem Fall sollte das Attribut zur `Behaviors`-Auflistung in der Vorgangsbeschreibung hinzugefügt werden.</span><span class="sxs-lookup"><span data-stu-id="4c173-105">In this case, it should be added to the `Behaviors` collection on the operation’s description.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="4c173-106">Der `OperationContract` jeder Methode, die das <xref:System.ServiceModel.TransactionFlowAttribute> verwendet, muss eine vollständig qualifizierte `Action`-Zeichenfolge bereitstellen.</span><span class="sxs-lookup"><span data-stu-id="4c173-106">The `OperationContract` for each method that uses the <xref:System.ServiceModel.TransactionFlowAttribute> must provide a fully-qualified `Action` string.</span></span> <span data-ttu-id="4c173-107">Der Wert "\*" wird nicht unterstützt.</span><span class="sxs-lookup"><span data-stu-id="4c173-107">A value of "\*" is not supported.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="4c173-108">Im folgenden Codebeispiel wird die Verwendung dieser Enumeration in Verbindung mit der <xref:System.ServiceModel.TransactionFlowOption>-Klasse auf Betriebsebene dargestellt.</span><span class="sxs-lookup"><span data-stu-id="4c173-108">The following code example shows the use of this enumeration together with the <xref:System.ServiceModel.TransactionFlowOption> class at the operation level.</span></span>  
+  
+```  
+using System;  
+using System.ServiceModel;  
+using System.Transactions;  
+  
+namespace Microsoft.WCF.Documentation  
+{  
+  [ServiceContract(  
+    Namespace="http://microsoft.wcf.documentation",   
+    SessionMode=SessionMode.Required  
+  )]  
+  public interface IBehaviorService  
+  {  
+    [OperationContract]  
+    [TransactionFlow(TransactionFlowOption.Mandatory)]  
+    string TxWork(string message);  
+  }  
+  
+  // Note: To use the TransactionIsolationLevel property, you   
+  // must add a reference to the System.Transactions.dll assembly.  
+  /* The following service implementation:  
+   *   -- Processes messages on one thread at a time  
+   *   -- Creates one service object per session  
+   *   -- Releases the service object when the transaction commits  
+   */  
+  [ServiceBehavior(  
+    ConcurrencyMode=ConcurrencyMode.Single,  
+    InstanceContextMode=InstanceContextMode.PerSession,  
+    ReleaseServiceInstanceOnTransactionComplete=true  
+  )]  
+  public class BehaviorService : IBehaviorService, IDisposable  
+  {  
+    Guid myID;  
+  
+    public BehaviorService()  
+    {  
+      myID = Guid.NewGuid();  
+      Console.WriteLine(  
+        "Object "  
+        + myID.ToString()  
+        + " created.");  
+    }  
+  
+    /*  
+    / * The following operation-level behaviors are specified:  
+    / * Always executes under a transaction scope.  
+    / * The transaction scope is completed when the operation  
+    / * terminates without an unhandled exception.  
+    /*  
+    [OperationBehavior(  
+      TransactionAutoComplete = true,  
+      TransactionScopeRequired = true  
+    )]  
+    public string TxWork(string message)  
+    {  
+      // Do some transactable work.  
+      Console.WriteLine("TxWork called with: " + message);  
+      // Display transaction information.  
+  
+      TransactionInformation info = Transaction.Current.TransactionInformation;  
+      Console.WriteLine("The distributed tx ID: {0}.", info.DistributedIdentifier);  
+      Console.WriteLine("The tx status: {0}.", info.Status);  
+      return String.Format("Hello. This was object {0}.",myID.ToString()) ;  
+    }  
+  
+    public void Dispose()  
+    {  
+      Console.WriteLine(  
+        "Service "  
+        + myID.ToString()  
+        + " is being recycled."  
+      );  
+    }  
+  }  
+}  
+```  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TransactionFlowAttribute (System.ServiceModel.TransactionFlowOption transactions);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.ServiceModel.TransactionFlowOption transactions) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.TransactionFlowAttribute.#ctor(System.ServiceModel.TransactionFlowOption)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (transactions As TransactionFlowOption)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; TransactionFlowAttribute(System::ServiceModel::TransactionFlowOption transactions);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="transactions" Type="System.ServiceModel.TransactionFlowOption" />
+      </Parameters>
+      <Docs>
+        <param name="transactions">
+          <span data-ttu-id="4c173-109">Ein <see cref="T:System.ServiceModel.TransactionFlowOption" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-109">A <see cref="T:System.ServiceModel.TransactionFlowOption" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="4c173-110">Initialisiert eine neue Instanz der <see cref="T:System.ServiceModel.TransactionFlowAttribute" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-110">Initializes a new instance of the <see cref="T:System.ServiceModel.TransactionFlowAttribute" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="4c173-111">Im folgenden Codebeispiel wird die Verwendung dieser Enumeration in Verbindung mit der <xref:System.ServiceModel.TransactionFlowOption>-Klasse auf Betriebsebene dargestellt.</span><span class="sxs-lookup"><span data-stu-id="4c173-111">The following code example shows the use of this enumeration together with the <xref:System.ServiceModel.TransactionFlowOption> class at the operation level.</span></span>  
+  
+ [!code-csharp[OperationBehaviorAttribute1#2](~/samples/snippets/csharp/VS_Snippets_CFX/operationbehaviorattribute1/cs/services.cs#2)]
+ [!code-vb[OperationBehaviorAttribute1#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationbehaviorattribute1/vb/services.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ServiceModel.Description.IOperationBehavior.AddBindingParameters">
+      <MemberSignature Language="C#" Value="void IOperationBehavior.AddBindingParameters (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Channels.BindingParameterCollection parameters);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(class System.ServiceModel.Description.OperationDescription description, class System.ServiceModel.Channels.BindingParameterCollection parameters) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)" />
+      <MemberSignature Language="VB.NET" Value="Sub AddBindingParameters (description As OperationDescription, parameters As BindingParameterCollection) Implements IOperationBehavior.AddBindingParameters" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System::ServiceModel::Description::OperationDescription ^ description, System::ServiceModel::Channels::BindingParameterCollection ^ parameters) = System::ServiceModel::Description::IOperationBehavior::AddBindingParameters;" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="description" Type="System.ServiceModel.Description.OperationDescription" />
+        <Parameter Name="parameters" Type="System.ServiceModel.Channels.BindingParameterCollection" />
+      </Parameters>
+      <Docs>
+        <param name="description">
+          <span data-ttu-id="4c173-112">Die Vorgangsbeschreibung, der das Attribut zusätzliche Funktionalität hinzufügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-112">The operation description for which the attribute adds extra functionality.</span>
+          </span>
+        </param>
+        <param name="parameters">
+          <span data-ttu-id="4c173-113">Die Auflistung von Parameterobjekten im Bindungskontext.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-113">The collection of parameter objects on the binding context.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="4c173-114">Fügt dem Bindungskontext zusätzliche Parameter (Einstellungen) hinzu, um das Verhalten dieses Vorgangs zu unterstützen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-114">Adds extra parameters (settings) to the binding context to support this operation’s behavior.</span>
+          </span>
+          <span data-ttu-id="4c173-115">Diese Methode kann nicht vererbt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-115">This method cannot be inherited.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="4c173-116">Diese Methode stellt einen Bindungskontext mit zusätzlichen Parametern (Einstellungen) bereit, um das für diesen Vorgang erforderliche Verhalten zu unterstützen.</span><span class="sxs-lookup"><span data-stu-id="4c173-116">This method provides a binding context with the extra parameters (settings) to support the required behavior for this operation.</span></span> <span data-ttu-id="4c173-117">Sie wird intern von der Infrastruktur aufgerufen, wenn ein Dienst erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="4c173-117">It is called internally by the infrastructure when a service is created.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior">
+      <MemberSignature Language="C#" Value="void IOperationBehavior.ApplyClientBehavior (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Dispatcher.ClientOperation proxy);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(class System.ServiceModel.Description.OperationDescription description, class System.ServiceModel.Dispatcher.ClientOperation proxy) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)" />
+      <MemberSignature Language="VB.NET" Value="Sub ApplyClientBehavior (description As OperationDescription, proxy As ClientOperation) Implements IOperationBehavior.ApplyClientBehavior" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System::ServiceModel::Description::OperationDescription ^ description, System::ServiceModel::Dispatcher::ClientOperation ^ proxy) = System::ServiceModel::Description::IOperationBehavior::ApplyClientBehavior;" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="description" Type="System.ServiceModel.Description.OperationDescription" />
+        <Parameter Name="proxy" Type="System.ServiceModel.Dispatcher.ClientOperation" />
+      </Parameters>
+      <Docs>
+        <param name="description">
+          <span data-ttu-id="4c173-118">Der Vorgang, dem das Attribut Funktionalität hinzufügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-118">The operation to which the attribute attaches functionality.</span>
+          </span>
+        </param>
+        <param name="proxy">
+          <span data-ttu-id="4c173-119">Das <see cref="T:System.ServiceModel.Dispatcher.ClientOperation" />-Objekt, das den aktuellen Vorgang darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-119">The <see cref="T:System.ServiceModel.Dispatcher.ClientOperation" /> object that represents the current operation.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="4c173-120">Fügt die Attributfunktionalität an das <see langword="ProxyOperation" />-Objekt für die Methode an, die vom Attribut markiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-120">Attaches the attribute functionality to the <see langword="ProxyOperation" /> object for the method that the attribute marks.</span>
+          </span>
+          <span data-ttu-id="4c173-121">Diese Methode kann nicht vererbt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-121">This method cannot be inherited.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="4c173-122">Diese Methode ermöglicht Ihnen, benutzerdefinierte Erweiterungen der Clientlaufzeit für alle Nachrichten oder für einen bestimmten Vorgang anzuzeigen, zu ändern oder hinzuzufügen.</span><span class="sxs-lookup"><span data-stu-id="4c173-122">This method allows you to view, modify, or add custom extensions to the client runtime across all messages, or for a specific operation.</span></span> <span data-ttu-id="4c173-123">Beachten Sie, dass bei <xref:System.ServiceModel.TransactionFlowAttribute> die Implementierung dieser Methode leer ist.</span><span class="sxs-lookup"><span data-stu-id="4c173-123">Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty.</span></span> <span data-ttu-id="4c173-124">Diese Methode wird intern von der Infrastruktur aufgerufen, wenn ein Dienstproxy erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="4c173-124">This method is called internally by the infrastructure when a service proxy is created.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior">
+      <MemberSignature Language="C#" Value="void IOperationBehavior.ApplyDispatchBehavior (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Dispatcher.DispatchOperation dispatch);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(class System.ServiceModel.Description.OperationDescription description, class System.ServiceModel.Dispatcher.DispatchOperation dispatch) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)" />
+      <MemberSignature Language="VB.NET" Value="Sub ApplyDispatchBehavior (description As OperationDescription, dispatch As DispatchOperation) Implements IOperationBehavior.ApplyDispatchBehavior" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System::ServiceModel::Description::OperationDescription ^ description, System::ServiceModel::Dispatcher::DispatchOperation ^ dispatch) = System::ServiceModel::Description::IOperationBehavior::ApplyDispatchBehavior;" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="description" Type="System.ServiceModel.Description.OperationDescription" />
+        <Parameter Name="dispatch" Type="System.ServiceModel.Dispatcher.DispatchOperation" />
+      </Parameters>
+      <Docs>
+        <param name="description">
+          <span data-ttu-id="4c173-125">Eine Beschreibung dieses Vorgangs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-125">The description for this operation.</span>
+          </span>
+        </param>
+        <param name="dispatch">
+          <span data-ttu-id="4c173-126">Das <see cref="T:System.ServiceModel.Dispatcher.DispatchOperation" />-Objekt für diesen Vorgang.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-126">The <see cref="T:System.ServiceModel.Dispatcher.DispatchOperation" /> object for this operation.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="4c173-127">Fügt die Attributfunktionalität an das <see cref="T:System.ServiceModel.Dispatcher.DispatchOperation" />-Objekt für die Methode an, die vom Attribut markiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-127">Attaches the attribute functionality to the <see cref="T:System.ServiceModel.Dispatcher.DispatchOperation" /> object for the method that the attribute marks.</span>
+          </span>
+          <span data-ttu-id="4c173-128">Diese Methode kann nicht vererbt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-128">This method cannot be inherited.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="4c173-129">Diese Methode ermöglicht Ihnen, benutzerdefinierte Erweiterungen der Clientlaufzeit für alle Nachrichten oder für einen bestimmten Vorgang anzuzeigen, zu ändern oder hinzuzufügen.</span><span class="sxs-lookup"><span data-stu-id="4c173-129">This method allows you to view, modify, or add custom extensions to the client runtime across all messages, or for a specific operation.</span></span> <span data-ttu-id="4c173-130">Beachten Sie, dass bei <xref:System.ServiceModel.TransactionFlowAttribute> die Implementierung dieser Methode leer ist.</span><span class="sxs-lookup"><span data-stu-id="4c173-130">Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty.</span></span> <span data-ttu-id="4c173-131">Diese Methode wird intern von der Infrastruktur aufgerufen, wenn ein Dienst erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="4c173-131">This method is called internally by the infrastructure when a service is created.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ServiceModel.Description.IOperationBehavior.Validate">
+      <MemberSignature Language="C#" Value="void IOperationBehavior.Validate (System.ServiceModel.Description.OperationDescription description);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ServiceModel.Description.IOperationBehavior.Validate(class System.ServiceModel.Description.OperationDescription description) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)" />
+      <MemberSignature Language="VB.NET" Value="Sub Validate (description As OperationDescription) Implements IOperationBehavior.Validate" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ServiceModel.Description.IOperationBehavior.Validate(System::ServiceModel::Description::OperationDescription ^ description) = System::ServiceModel::Description::IOperationBehavior::Validate;" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.ServiceModel.Description.IOperationBehavior.Validate(System.ServiceModel.Description.OperationDescription)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="description" Type="System.ServiceModel.Description.OperationDescription" />
+      </Parameters>
+      <Docs>
+        <param name="description">
+          <span data-ttu-id="4c173-132">Der zu prüfende Vorgang.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-132">The operation to validate.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="4c173-133">Überprüft, dass der Vorgang dieses Verhalten unterstützen kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-133">Verifies that the operation can support this behavior.</span>
+          </span>
+          <span data-ttu-id="4c173-134">Diese Methode kann nicht vererbt werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-134">This method cannot be inherited.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="4c173-135">Diese Methode überprüft, ob die Vorgangsbeschreibung ausreicht, um das Transaktionsflussverhalten zu unterstützen.</span><span class="sxs-lookup"><span data-stu-id="4c173-135">This method verifies whether the operation description is sufficient to support the transaction flow behavior.</span></span> <span data-ttu-id="4c173-136">Beachten Sie, dass bei <xref:System.ServiceModel.TransactionFlowAttribute> die Implementierung dieser Methode leer ist.</span><span class="sxs-lookup"><span data-stu-id="4c173-136">Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty.</span></span> <span data-ttu-id="4c173-137">Diese Methode wird intern von der Infrastruktur aufgerufen, wenn ein Dienst erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="4c173-137">This method is called internally by the infrastructure when a service is created.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Transactions">
+      <MemberSignature Language="C#" Value="public System.ServiceModel.TransactionFlowOption Transactions { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.ServiceModel.TransactionFlowOption Transactions" />
+      <MemberSignature Language="DocId" Value="P:System.ServiceModel.TransactionFlowAttribute.Transactions" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Transactions As TransactionFlowOption" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::ServiceModel::TransactionFlowOption Transactions { System::ServiceModel::TransactionFlowOption get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ServiceModel.TransactionFlowOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="4c173-138">Ruft einen Wert ab, der angibt, ob die eingehende Transaktion unterstützt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-138">Gets a value that indicates whether the incoming transaction is supported.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="4c173-139">Eine <see cref="T:System.ServiceModel.TransactionFlowOption" />, die angibt, ob die eingehende Transaktion unterstützt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="4c173-139">A <see cref="T:System.ServiceModel.TransactionFlowOption" /> that indicates whether the incoming transaction is supported.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
