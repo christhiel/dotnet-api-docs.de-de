@@ -1,0 +1,1428 @@
+<Type Name="Mutex" FullName="System.Threading.Mutex">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="6bce0feaf14f66f8608164cfa777620d7f3b329f" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public sealed class Mutex : System.Threading.WaitHandle" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Mutex extends System.Threading.WaitHandle" />
+  <TypeSignature Language="DocId" Value="T:System.Threading.Mutex" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class Mutex&#xA;Inherits WaitHandle" />
+  <TypeSignature Language="C++ CLI" Value="public ref class Mutex sealed : System::Threading::WaitHandle" />
+  <AssemblyInfo>
+    <AssemblyName>System.Threading</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Threading.WaitHandle</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.ComVisible(true)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="9bd03-101">Ein Synchronisierungsprimitiver, der auch für die prozessübergreifende Synchronisierung verwendet werden kann.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="9bd03-101">A synchronization primitive that can also be used for interprocess synchronization.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-102">Wenn zwei oder mehr Threads zur gleichen Zeit eine freigegebene Ressource zugreifen müssen, benötigt das System einen Synchronisierungsmechanismus, um sicherzustellen, dass jeweils nur ein Thread auf die Ressource verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-102">When two or more threads need to access a shared resource at the same time, the system needs a synchronization mechanism to ensure that only one thread at a time uses the resource.</span></span> <span data-ttu-id="9bd03-103"><xref:System.Threading.Mutex> ist ein Synchronisierungsprimitiver, der exklusiven Zugriff auf die freigegebene Ressource nur einem Thread gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-103"><xref:System.Threading.Mutex> is a synchronization primitive that grants exclusive access to the shared resource to only one thread.</span></span> <span data-ttu-id="9bd03-104">Wenn ein Thread einen Mutex verwendet wird, wird vom zweite Thread, der an dieser Mutex abrufen möchte angehalten, bis der erste Thread das Mutex freigibt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-104">If a thread acquires a mutex, the second thread that wants to acquire that mutex is suspended until the first thread releases the mutex.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="9bd03-105">Dieser Typ implementiert die <xref:System.IDisposable> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="9bd03-105">This type implements the <xref:System.IDisposable> interface.</span></span> <span data-ttu-id="9bd03-106">Wenn Sie mithilfe des Typs abgeschlossen haben, sollten Sie es entweder direkt oder indirekt freigeben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-106">When you have finished using the type, you should dispose of it either directly or indirectly.</span></span> <span data-ttu-id="9bd03-107">Aufrufen, um den Typ direkt zu verwerfen, dessen <xref:System.IDisposable.Dispose%2A> Methode in einer `try` / `catch` Block.</span><span class="sxs-lookup"><span data-stu-id="9bd03-107">To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block.</span></span> <span data-ttu-id="9bd03-108">Um es indirekt freizugeben, verwenden Sie ein Sprachkonstrukt z. B. `using` (in c#) oder `Using` (in Visual Basic).</span><span class="sxs-lookup"><span data-stu-id="9bd03-108">To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic).</span></span> <span data-ttu-id="9bd03-109">Weitere Informationen finden Sie im Abschnitt "Verwenden eines Objekts, implementiert IDisposable" in der <xref:System.IDisposable> Thema zur Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="9bd03-109">For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.</span></span>  
+  
+ <span data-ttu-id="9bd03-110">Sie können die <xref:System.Threading.WaitHandle.WaitOne%2A?displayProperty=nameWithType> Methode, um den Besitz des Mutex anfordert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-110">You can use the <xref:System.Threading.WaitHandle.WaitOne%2A?displayProperty=nameWithType> method to request ownership of a mutex.</span></span> <span data-ttu-id="9bd03-111">Der aufrufende Thread blockiert, bis eines der folgenden Ereignisse eintritt:</span><span class="sxs-lookup"><span data-stu-id="9bd03-111">The calling thread blocks until one of the following occurs:</span></span>  
+  
+-   <span data-ttu-id="9bd03-112">Mutex wird signalisiert, um anzugeben, dass er nicht Besitzer ist.</span><span class="sxs-lookup"><span data-stu-id="9bd03-112">The mutex is signaled to indicate that it is not owned.</span></span> <span data-ttu-id="9bd03-113">In diesem Fall die <xref:System.Threading.WaitHandle.WaitOne%2A> -Methode zurückkehrt `true`, und der aufrufende Thread übernimmt den Besitz des Mutex und auf die vom Mutex geschützte Ressource zugreift.</span><span class="sxs-lookup"><span data-stu-id="9bd03-113">When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `true`, and the calling thread assumes ownership of the mutex and accesses the resource protected by the mutex.</span></span> <span data-ttu-id="9bd03-114">Beim Zugriff auf die Ressource abgeschlossen wurde, muss der Thread Aufrufen der <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode, um den Besitz des Mutex freizugeben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-114">When it has finished accessing the resource, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex.</span></span> <span data-ttu-id="9bd03-115">Im erste Beispiel im Abschnitt "Beispiele" zeigt dieses Muster.</span><span class="sxs-lookup"><span data-stu-id="9bd03-115">The first example in the Examples section illustrates this pattern.</span></span>  
+  
+-   <span data-ttu-id="9bd03-116">Das Timeoutintervall, die im Aufruf angegebenen eine <xref:System.Threading.WaitHandle.WaitOne%2A> Methode, die eine `millisecondsTimeout` oder `timeout` Parameter ist abgelaufen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-116">The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne%2A> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed.</span></span> <span data-ttu-id="9bd03-117">In diesem Fall die <xref:System.Threading.WaitHandle.WaitOne%2A> -Methode zurückkehrt `false`, und der aufrufende Thread unternimmt keinen weiteren Versuch, den Besitz des Mutex abzurufen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-117">When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex.</span></span> <span data-ttu-id="9bd03-118">In diesem Fall sollten Sie den Code so strukturieren, dass an den aufrufenden Thread den Zugriff auf die vom Mutex geschützte Ressource verweigert wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-118">In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread.</span></span> <span data-ttu-id="9bd03-119">Da der Thread nie Besitz des Mutex zugewiesen wurde, müssen sie nicht Aufrufen der <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-119">Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.</span></span> <span data-ttu-id="9bd03-120">Das zweite Beispiel im Abschnitt "Beispiele" zeigt dieses Muster.</span><span class="sxs-lookup"><span data-stu-id="9bd03-120">The second example in the Examples section illustrates this pattern.</span></span>  
+  
+ <span data-ttu-id="9bd03-121">Die <xref:System.Threading.Mutex> Klasse erzwingt Threadidentität, sodass ein Mutex nur von dem Thread freigegeben werden kann, die er abgerufen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-121">The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it.</span></span> <span data-ttu-id="9bd03-122">Im Gegensatz dazu, die <xref:System.Threading.Semaphore> Klasse erzwingen keine Threadidentität.</span><span class="sxs-lookup"><span data-stu-id="9bd03-122">By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity.</span></span> <span data-ttu-id="9bd03-123">Ein Mutex kann auch über Anwendungsdomänen hinweg übergeben werden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-123">A mutex can also be passed across application domain boundaries.</span></span>  
+  
+ <span data-ttu-id="9bd03-124">Der Thread, der einen Mutex besitzt denselben Mutex in wiederholte Aufrufe kann anfordern, <xref:System.Threading.WaitHandle.WaitOne%2A> ohne Blockierung seiner Ausführung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-124">The thread that owns a mutex can request the same mutex in repeated calls to <xref:System.Threading.WaitHandle.WaitOne%2A> without blocking its execution.</span></span> <span data-ttu-id="9bd03-125">Allerdings muss der Thread Aufrufen der <xref:System.Threading.Mutex.ReleaseMutex%2A> -Methode die gleiche Anzahl der Wiederholungsversuche im Besitz des Mutex freizugeben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-125">However, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method the same number of times to release ownership of the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-126">Da die <xref:System.Threading.Mutex> Klasse erbt von <xref:System.Threading.WaitHandle>, rufen Sie außerdem die statische <xref:System.Threading.WaitHandle.WaitAll%2A?displayProperty=nameWithType> und <xref:System.Threading.WaitHandle.WaitAny%2A?displayProperty=nameWithType> Methoden zum Synchronisieren des Zugriffs auf eine geschützte Ressource.</span><span class="sxs-lookup"><span data-stu-id="9bd03-126">Because the <xref:System.Threading.Mutex> class inherits from <xref:System.Threading.WaitHandle>, you can also call the static <xref:System.Threading.WaitHandle.WaitAll%2A?displayProperty=nameWithType> and <xref:System.Threading.WaitHandle.WaitAny%2A?displayProperty=nameWithType> methods to synchronize access to a protected resource.</span></span>  
+  
+ <span data-ttu-id="9bd03-127">Wenn ein Thread beendet wird, während einen Mutex besitzt, wird der Mutex abgebrochen wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-127">If a thread terminates while owning a mutex, the mutex is said to be abandoned.</span></span> <span data-ttu-id="9bd03-128">Auf der Zustand des Mutex festgelegt ist, signalisiert, und der nächste wartende Thread Ruft die Inhaberschaft ab.</span><span class="sxs-lookup"><span data-stu-id="9bd03-128">The state of the mutex is set to signaled, and the next waiting thread gets ownership.</span></span> <span data-ttu-id="9bd03-129">Ab Version 2.0 von .NET Framework eine <xref:System.Threading.AbandonedMutexException> wird ausgelöst, in der nächste Thread, der den abgebrochenen Mutex erhält.</span><span class="sxs-lookup"><span data-stu-id="9bd03-129">Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex.</span></span> <span data-ttu-id="9bd03-130">Vor Version 2.0 von .NET Framework wurde keine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9bd03-130">Before version 2.0 of the .NET Framework, no exception was thrown.</span></span>  
+  
+> [!CAUTION]
+>  <span data-ttu-id="9bd03-131">Ein abgebrochenes Mutex weist häufig einen schwerwiegenden Fehler im Code.</span><span class="sxs-lookup"><span data-stu-id="9bd03-131">An abandoned mutex often indicates a serious error in the code.</span></span> <span data-ttu-id="9bd03-132">Wenn ein Thread beendet, ohne das Mutex, möglicherweise nicht die vom Mutex geschützte Datenstruktur in einem konsistenten Zustand.</span><span class="sxs-lookup"><span data-stu-id="9bd03-132">When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state.</span></span> <span data-ttu-id="9bd03-133">Der nächste Thread, der Besitz des Mutex anfordert, kann diese Ausnahme behandeln und fortgesetzt werden, wenn die Integrität der Datenstruktur überprüft werden kann.</span><span class="sxs-lookup"><span data-stu-id="9bd03-133">The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.</span></span>  
+  
+ <span data-ttu-id="9bd03-134">Wenn es sich um einen systemweiten Mutex handelt, kann ein abgebrochener Mutex darauf hinweisen, dass eine Anwendung plötzlich beendet wurde (z.B. über den Windows Task-Manager).</span><span class="sxs-lookup"><span data-stu-id="9bd03-134">In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).</span></span>  
+  
+ <span data-ttu-id="9bd03-135">Es gibt zwei Typen: Lokale Mutexe stammen, die unbenannte und benannte Systemmutexe werden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-135">Mutexes are of two types: local mutexes, which are unnamed, and named system mutexes.</span></span> <span data-ttu-id="9bd03-136">Ein lokaler Mutex ist nur innerhalb des Prozesses vorhanden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-136">A local mutex exists only within your process.</span></span> <span data-ttu-id="9bd03-137">Hiermit können von jedem Thread innerhalb des Prozesses, der einen Verweis auf die <xref:System.Threading.Mutex> -Objekt, das den Mutex darstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-137">It can be used by any thread in your process that has a reference to the <xref:System.Threading.Mutex> object that represents the mutex.</span></span> <span data-ttu-id="9bd03-138">Jedes unbenannte <xref:System.Threading.Mutex> -Objekt stellt einen separaten lokalen Mutex dar.</span><span class="sxs-lookup"><span data-stu-id="9bd03-138">Each unnamed <xref:System.Threading.Mutex> object represents a separate local mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-139">Benannte Mutexe sind im gesamten Betriebssystem sichtbar und können verwendet werden, um die Aktivitäten von Prozessen zu synchronisieren.</span><span class="sxs-lookup"><span data-stu-id="9bd03-139">Named system mutexes are visible throughout the operating system, and can be used to synchronize the activities of processes.</span></span> <span data-ttu-id="9bd03-140">Sie erstellen eine <xref:System.Threading.Mutex> Objekt, das einen benannten Systemmutex darstellt, über einen Konstruktor, der einen Namen akzeptiert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-140">You can create a <xref:System.Threading.Mutex> object that represents a named system mutex by using a constructor that accepts a name.</span></span> <span data-ttu-id="9bd03-141">Das Betriebssystemobjekt kann zur gleichen Zeit erstellt werden oder es kann vorhanden sein, bevor die Erstellung von der <xref:System.Threading.Mutex> Objekt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-141">The operating-system object can be created at the same time, or it can exist before the creation of the <xref:System.Threading.Mutex> object.</span></span> <span data-ttu-id="9bd03-142">Sie können mehrere <xref:System.Threading.Mutex>-Objekte erstellen, die denselben benannten Systemmutex darstellen, und Sie können mithilfe der <xref:System.Threading.Mutex.OpenExisting%2A>-Methode einen vorhandenen benannten Systemmutex öffnen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-142">You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex, and you can use the <xref:System.Threading.Mutex.OpenExisting%2A> method to open an existing named system mutex.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="9bd03-143">Auf einem Server, auf der Terminaldienste ausgeführt wird, kann ein benannten Systemmutex zwei Sichtbarkeitsebenen haben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-143">On a server that is running Terminal Services, a named system mutex can have two levels of visibility.</span></span> <span data-ttu-id="9bd03-144">Wenn der Name mit dem Präfix beginnt "Global\\", Mutex ist in allen Terminalserver Sitzungen sichtbar.</span><span class="sxs-lookup"><span data-stu-id="9bd03-144">If its name begins with the prefix "Global\\", the mutex is visible in all terminal server sessions.</span></span> <span data-ttu-id="9bd03-145">Wenn der Name mit dem Präfix beginnt "lokale\\", der Mutex aufgehoben ist nur in der Terminalserver-Sitzung sichtbar, in dem es erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-145">If its name begins with the prefix "Local\\", the mutex is visible only in the terminal server session where it was created.</span></span> <span data-ttu-id="9bd03-146">In diesem Fall kann ein separater Mutex mit dem gleichen Namen in jeder von den anderen Terminalserver-Sitzungen auf dem Server vorhanden sein.</span><span class="sxs-lookup"><span data-stu-id="9bd03-146">In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server.</span></span> <span data-ttu-id="9bd03-147">Wenn Sie ein Präfix nicht angeben, wenn Sie einen benannten Mutex erstellen, dauert das Präfix "lokale\\".</span><span class="sxs-lookup"><span data-stu-id="9bd03-147">If you do not specify a prefix when you create a named mutex, it takes the prefix "Local\\".</span></span> <span data-ttu-id="9bd03-148">Innerhalb einer Sitzung Terminalserver zwei Mutexe, deren Namen sich nur durch ihre Präfixe unterscheiden, sind separate Mutexe, und beide sind für alle Prozesse sichtbar, in der Terminalserver-Sitzung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-148">Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session.</span></span> <span data-ttu-id="9bd03-149">D. h. den Präfixnamen "Global\\" und "lokale\\" beschreiben den Gültigkeitsbereich des Namens Mutex relativ zum Terminalserver-Sitzungen, nicht relativ zur Prozesse.</span><span class="sxs-lookup"><span data-stu-id="9bd03-149">That is, the prefix names "Global\\" and "Local\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes.</span></span>  
+  
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
+
+  
+## Examples  
+ <span data-ttu-id="9bd03-150">In diesem Beispiel wird gezeigt, wie mithilfe eines lokalen <xref:System.Threading.Mutex> Objekt wird zum Synchronisieren des Zugriffs auf eine geschützte Ressource verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-150">This example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource.</span></span> <span data-ttu-id="9bd03-151">Da jeder aufrufenden Thread blockiert wird, bis er den Besitz des Mutex erhält, rufen sie die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode, um den Besitz des Threads freigibt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-151">Because each calling thread is blocked until it acquires ownership of the mutex, it must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the thread.</span></span>  
+  
+ [!code-csharp[System.Threading.Mutex.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example1.cs#1)]
+ [!code-vb[System.Threading.Mutex.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example1.vb#1)]  
+  
+ <span data-ttu-id="9bd03-152">Im folgenden Beispiel jeder Thread Ruft die <xref:System.Threading.WaitHandle.WaitOne%28System.Int32%29> Methode, um den Mutex abrufen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-152">In the following example, each thread calls the <xref:System.Threading.WaitHandle.WaitOne%28System.Int32%29> method to acquire the mutex.</span></span> <span data-ttu-id="9bd03-153">Wenn das Timeoutintervall abläuft, gibt die Methode `false`, und der Thread Mutex erhält weder erhält Zugriff auf die Ressource Mutex schützt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-153">If the time-out interval elapses, the method returns `false`, and the thread neither acquires the mutex nor gains access to the resource the mutex protects.</span></span> <span data-ttu-id="9bd03-154">Die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode wird aufgerufen, nur durch den Thread, der den Mutex verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-154">The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is called only by the thread that acquires the mutex.</span></span>  
+  
+ [!code-csharp[System.Threading.Mutex.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example2.cs#2)]
+ [!code-vb[System.Threading.Mutex.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb#2)]  
+  
+ ]]></format>
+    </remarks>
+    <threadsafe>
+      <span data-ttu-id="9bd03-155">Dieser Typ ist threadsicher.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="9bd03-155">This type is thread safe.</span>
+      </span>
+    </threadsafe>
+    <altmember cref="T:System.Threading.WaitHandle" />
+    <altmember cref="T:System.Threading.Thread" />
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-156">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-156">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-157">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse mit Standardeigenschaften.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-157">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with default properties.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-158">Aufrufen dieser Überladung des Konstruktors ist der gleiche wie das Aufrufen der <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> Konstruktorüberladung und Angeben von `false` für den anfänglichen Besitz des Mutex.</span><span class="sxs-lookup"><span data-stu-id="9bd03-158">Calling this constructor overload is the same as calling the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor overload and specifying `false` for initial ownership of the mutex.</span></span> <span data-ttu-id="9bd03-159">D. h. besitzt der aufrufende Thread das Mutex nicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-159">That is, the calling thread does not own the mutex.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-160">Das folgende Codebeispiel zeigt, wie mithilfe eines lokalen <xref:System.Threading.Mutex> Objekt wird zum Synchronisieren des Zugriffs auf eine geschützte Ressource verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-160">The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource.</span></span> <span data-ttu-id="9bd03-161">Der Thread, der den Mutex erstellt besitzt er ursprünglich nicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-161">The thread that creates the mutex does not own it initially.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp#1)]
+ [!code-csharp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CS/class1.cs#1)]
+ [!code-vb[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned">
+          <span data-ttu-id="9bd03-162">
+            <see langword="true" />, um dem aufrufenden Thread den anfänglichen Besitz des Mutex zuzuweisen, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-162">
+              <see langword="true" /> to give the calling thread initial ownership of the mutex; otherwise, <see langword="false" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-163">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse mit einem booleschen Wert, der angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex zugewiesen werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-163">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="9bd03-164">Das folgende Codebeispiel zeigt, wie mithilfe eines lokalen <xref:System.Threading.Mutex> Objekt wird zum Synchronisieren des Zugriffs auf eine geschützte Ressource verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-164">The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource.</span></span> <span data-ttu-id="9bd03-165">Der Thread, erstellt die <xref:System.Threading.Mutex> besitzt es anfänglich.</span><span class="sxs-lookup"><span data-stu-id="9bd03-165">The thread that creates the <xref:System.Threading.Mutex> owns it initially.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/CPP/class1.cpp#1)]
+ [!code-csharp[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/CS/class1.cs#1)]
+ [!code-vb[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/VB/class1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned, string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" />
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned">
+          <span data-ttu-id="9bd03-166">
+            <see langword="true" />, um dem aufrufenden Thread den anfänglichen Besitz des benannten Systemmutex zuzuweisen, wenn der benannte Systemmutex als Ergebnis dieses Aufrufs erstellt wird, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-166">
+              <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="9bd03-167">Der Name des <see cref="T:System.Threading.Mutex" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-167">The name of the <see cref="T:System.Threading.Mutex" />.</span>
+          </span>
+          <span data-ttu-id="9bd03-168">Bei einem Wert von <see langword="null" /> ist das <see cref="T:System.Threading.Mutex" /> unbenannt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-168">If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-169">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse mit einem booleschen Wert, der angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex zugewiesen werden soll, sowie mit einer Zeichenfolge, die den Namen des Mutex darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-169">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, and a string that is the name of the mutex.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-170">Wenn `name` nicht `null` und `initiallyOwned` ist `true`, besitzt der aufrufende Thread das Mutex nur, wenn der benannte Systemmutex als Ergebnis dieses Aufrufs erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-170">If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call.</span></span> <span data-ttu-id="9bd03-171">Da es keinen Mechanismus gibt für die Bestimmung, ob der benannte Systemmutex erstellt wurde, ist es besser, geben Sie `false` für `initiallyOwned` beim Aufrufen dieser Überladung des Konstruktors.</span><span class="sxs-lookup"><span data-stu-id="9bd03-171">Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload.</span></span> <span data-ttu-id="9bd03-172">Sie können die <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> Konstruktor, wenn Sie den anfänglichen Besitz ermitteln müssen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-172">You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.</span></span>  
+  
+ <span data-ttu-id="9bd03-173">Dieser Konstruktor initialisiert ein <xref:System.Threading.Mutex> Objekt, das einen benannten Systemmutex darstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-173">This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex.</span></span> <span data-ttu-id="9bd03-174">Sie können mehrere erstellen <xref:System.Threading.Mutex> benannte Systemmutex Objekte, die die gleiche darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-174">You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-175">Wenn der benannte Mutex wurde bereits mit zugriffssteuerungssicherheit erstellt, und der Aufrufer verfügt nicht über <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, wird eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9bd03-175">If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown.</span></span> <span data-ttu-id="9bd03-176">Zum Öffnen einer vorhandenen benannten Mutex mit nur den Berechtigungen, die zum Synchronisieren von Threadaktivitäten erforderlich sind, finden Sie unter der <xref:System.Threading.Mutex.OpenExisting%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-176">To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-177">Bei Angabe von `null` oder eine leere Zeichenfolge für `name`, ein lokaler Mutex erstellt, wie bei einem Aufruf der <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="9bd03-177">If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.</span></span> <span data-ttu-id="9bd03-178">In diesem Fall `createdNew` ist immer `true`.</span><span class="sxs-lookup"><span data-stu-id="9bd03-178">In this case, `createdNew` is always `true`.</span></span>  
+  
+ <span data-ttu-id="9bd03-179">Da es sich um eine systemweite sind, können benannte Mutexe bezeichnet zum Koordinieren der Ressourcenverwendung über Prozessgrenzen hinweg verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-179">Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="9bd03-180">Auf einem Server, auf der Terminaldienste ausgeführt wird, kann ein benannten Systemmutex zwei Sichtbarkeitsebenen haben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-180">On a server that is running Terminal Services, a named system mutex can have two levels of visibility.</span></span> <span data-ttu-id="9bd03-181">Wenn der Name mit dem Präfix beginnt "Global\\", Mutex ist in allen Terminalserver Sitzungen sichtbar.</span><span class="sxs-lookup"><span data-stu-id="9bd03-181">If its name begins with the prefix "Global\\", the mutex is visible in all terminal server sessions.</span></span> <span data-ttu-id="9bd03-182">Wenn der Name mit dem Präfix beginnt "lokale\\", der Mutex aufgehoben ist nur in der Terminalserver-Sitzung sichtbar, in dem es erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-182">If its name begins with the prefix "Local\\", the mutex is visible only in the terminal server session where it was created.</span></span> <span data-ttu-id="9bd03-183">In diesem Fall kann ein separater Mutex mit dem gleichen Namen in jeder von den anderen Terminalserver-Sitzungen auf dem Server vorhanden sein.</span><span class="sxs-lookup"><span data-stu-id="9bd03-183">In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server.</span></span> <span data-ttu-id="9bd03-184">Wenn Sie ein Präfix nicht angeben, wenn Sie einen benannten Mutex erstellen, dauert das Präfix "lokale\\".</span><span class="sxs-lookup"><span data-stu-id="9bd03-184">If you do not specify a prefix when you create a named mutex, it takes the prefix "Local\\".</span></span> <span data-ttu-id="9bd03-185">Innerhalb einer Sitzung Terminalserver zwei Mutexe, deren Namen sich nur durch ihre Präfixe unterscheiden, sind separate Mutexe, und beide sind für alle Prozesse sichtbar, in der Terminalserver-Sitzung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-185">Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session.</span></span> <span data-ttu-id="9bd03-186">D. h. den Präfixnamen "Global\\" und "lokale\\" beschreiben den Gültigkeitsbereich des Namens Mutex relativ zum Terminalserver-Sitzungen, nicht relativ zur Prozesse.</span><span class="sxs-lookup"><span data-stu-id="9bd03-186">That is, the prefix names "Global\\" and "Local\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes.</span></span>  
+  
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
+
+## Examples  
+ <span data-ttu-id="9bd03-187">Das folgende Beispiel zeigt, wie ein benannter Mutex verwendet wird, zu signalisieren zwischen Threads, die in zwei separate Vorgänge ausführen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-187">The following example shows how a named mutex is used to signal between threads running in two separate processes.</span></span>  
+  
+ <span data-ttu-id="9bd03-188">Dieses Programm wird aus mindestens zwei Befehlsfenstern ausführen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-188">Run this program from two or more command windows.</span></span> <span data-ttu-id="9bd03-189">Jeder Prozess erstellt ein <xref:System.Threading.Mutex> Objekt, das den benannten Mutex darstellt `MyMutex`.</span><span class="sxs-lookup"><span data-stu-id="9bd03-189">Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex `MyMutex`.</span></span> <span data-ttu-id="9bd03-190">Der benannte Mutex ist ein Systemobjekt ist, deren Lebensdauer durch die Lebensdauer der begrenzt die <xref:System.Threading.Mutex> Objekte, die sie darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-190">The named mutex is a system object whose lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it.</span></span> <span data-ttu-id="9bd03-191">Der benannte Mutex wird erstellt, wenn der erste Prozess erstellt seine <xref:System.Threading.Mutex> Objekt; in diesem Beispiel wird der benannte Mutex ist im Besitz des ersten Prozesses, der das Programm ausgeführt wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-191">The named mutex is created when the first process creates its <xref:System.Threading.Mutex> object; in this example, the named mutex is owned by the first process that runs the program.</span></span> <span data-ttu-id="9bd03-192">Der benannte Mutex wird zerstört, wenn alle der <xref:System.Threading.Mutex> Objekte, die diese darstellen veröffentlicht wurden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-192">The named mutex is destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released.</span></span>  
+  
+ <span data-ttu-id="9bd03-193">Die Konstruktorüberladung, die in diesem Beispiel verwendet feststellen nicht den aufrufenden Thread, ob der anfängliche Besitz des benannten Mutex gewährt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-193">The constructor overload used in this example cannot tell the calling thread whether initial ownership of the named mutex was granted.</span></span> <span data-ttu-id="9bd03-194">Dieser Konstruktor sollte nicht verwendet werden, um den anfänglichen Besitz anzufordern, es sei denn, Sie sicher sein können, dass der Thread den benannten Mutex erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-194">You should not use this constructor to request initial ownership unless you can be certain that the thread will create the named mutex.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/CPP/class1.cpp#1)]
+ [!code-csharp[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/CS/class1.cs#1)]
+ [!code-vb[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/VB/class1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-195">Das benannte Mutex ist vorhanden und verfügt über Zugriffssteuerungssicherheit, aber der Benutzer verfügt nicht über <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-195">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-196">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-196">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">
+          <span data-ttu-id="9bd03-197">Das benannte Mutex kann nicht erstellt werden, möglicherweise weil ein Wait-Handle eines anderen Typs denselben Namen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-197">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-198">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-198">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-199">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-199">Requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-200">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-200">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string name, out bool createdNew);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned, string name, [out] bool&amp; createdNew) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String, ByRef createdNew As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name, [Runtime::InteropServices::Out] bool % createdNew);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="createdNew" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned">
+          <span data-ttu-id="9bd03-201">
+            <see langword="true" />, um dem aufrufenden Thread den anfänglichen Besitz des benannten Systemmutex zuzuweisen, wenn der benannte Systemmutex als Ergebnis dieses Aufrufs erstellt wird, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-201">
+              <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="9bd03-202">Der Name des <see cref="T:System.Threading.Mutex" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-202">The name of the <see cref="T:System.Threading.Mutex" />.</span>
+          </span>
+          <span data-ttu-id="9bd03-203">Bei einem Wert von <see langword="null" /> ist das <see cref="T:System.Threading.Mutex" /> unbenannt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-203">If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</span>
+          </span>
+        </param>
+        <param name="createdNew">
+          <span data-ttu-id="9bd03-204">Enthält nach dem Beenden dieser Methode einen booleschen Wert, der <see langword="true" /> ist, wenn ein lokaler Mutex erstellt wurde (d. h. wenn <c>name</c> gleich <see langword="null" /> oder eine leere Zeichenfolge ist) oder wenn der angegebene benannte Systemmutex erstellt wurde. Der Wert ist <see langword="false" />, wenn der angegebene benannte Systemmutex bereits vorhanden war.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-204">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <c>name</c> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; <see langword="false" /> if the specified named system mutex already existed.</span>
+          </span>
+          <span data-ttu-id="9bd03-205">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-205">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-206">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse mit einem booleschen Wert, der angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex zugewiesen werden soll, mit einer Zeichenfolge mit dem Namen des Mutex sowie mit einem booleschen Wert, der beim Beenden der Methode angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex gewährt wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-206">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, and a Boolean value that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-207">Wenn `name` nicht `null` und `initiallyOwned` ist `true`, besitzt der aufrufende Thread den benannten Mutex nur, wenn `createdNew` ist `true` nach dem Aufruf.</span><span class="sxs-lookup"><span data-stu-id="9bd03-207">If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call.</span></span> <span data-ttu-id="9bd03-208">Andernfalls kann der Thread das Mutex anfordern, durch Aufrufen der <xref:System.Threading.WaitHandle.WaitOne%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-208">Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-209">Dieser Konstruktor initialisiert ein <xref:System.Threading.Mutex> Objekt, das einen benannten Systemmutex darstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-209">This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex.</span></span> <span data-ttu-id="9bd03-210">Sie können mehrere erstellen <xref:System.Threading.Mutex> benannte Systemmutex Objekte, die die gleiche darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-210">You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-211">Wenn der benannte Mutex wurde bereits mit zugriffssteuerungssicherheit erstellt, und der Aufrufer verfügt nicht über <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType> verfügt, wird eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9bd03-211">If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType> rights, an exception is thrown.</span></span> <span data-ttu-id="9bd03-212">Zum Öffnen einer vorhandenen benannten Mutex mit nur den Berechtigungen, die zum Synchronisieren von Threadaktivitäten erforderlich sind, finden Sie unter der <xref:System.Threading.Mutex.OpenExisting%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-212">To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-213">Bei Angabe von `null` oder eine leere Zeichenfolge für `name`, ein lokaler Mutex erstellt, wie bei einem Aufruf der <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="9bd03-213">If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.</span></span> <span data-ttu-id="9bd03-214">In diesem Fall `createdNew` ist immer `true`.</span><span class="sxs-lookup"><span data-stu-id="9bd03-214">In this case, `createdNew` is always `true`.</span></span>  
+  
+ <span data-ttu-id="9bd03-215">Da es sich um eine systemweite sind, können benannte Mutexe bezeichnet zum Koordinieren der Ressourcenverwendung über Prozessgrenzen hinweg verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-215">Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="9bd03-216">Auf einem Server, auf der Terminaldienste ausgeführt wird, kann ein benannten Systemmutex zwei Sichtbarkeitsebenen haben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-216">On a server that is running Terminal Services, a named system mutex can have two levels of visibility.</span></span> <span data-ttu-id="9bd03-217">Wenn der Name mit dem Präfix beginnt "Global\\", Mutex ist in allen Terminalserver Sitzungen sichtbar.</span><span class="sxs-lookup"><span data-stu-id="9bd03-217">If its name begins with the prefix "Global\\", the mutex is visible in all terminal server sessions.</span></span> <span data-ttu-id="9bd03-218">Wenn der Name mit dem Präfix beginnt "lokale\\", der Mutex aufgehoben ist nur in der Terminalserver-Sitzung sichtbar, in dem es erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-218">If its name begins with the prefix "Local\\", the mutex is visible only in the terminal server session where it was created.</span></span> <span data-ttu-id="9bd03-219">In diesem Fall kann ein separater Mutex mit dem gleichen Namen in jeder von den anderen Terminalserver-Sitzungen auf dem Server vorhanden sein.</span><span class="sxs-lookup"><span data-stu-id="9bd03-219">In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server.</span></span> <span data-ttu-id="9bd03-220">Wenn Sie ein Präfix nicht angeben, wenn Sie einen benannten Mutex erstellen, dauert das Präfix "lokale\\".</span><span class="sxs-lookup"><span data-stu-id="9bd03-220">If you do not specify a prefix when you create a named mutex, it takes the prefix "Local\\".</span></span> <span data-ttu-id="9bd03-221">Innerhalb einer Sitzung Terminalserver zwei Mutexe, deren Namen sich nur durch ihre Präfixe unterscheiden, sind separate Mutexe, und beide sind für alle Prozesse sichtbar, in der Terminalserver-Sitzung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-221">Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session.</span></span> <span data-ttu-id="9bd03-222">D. h. den Präfixnamen "Global\\" und "lokale\\" beschreiben den Gültigkeitsbereich des Namens Mutex relativ zum Terminalserver-Sitzungen, nicht relativ zur Prozesse.</span><span class="sxs-lookup"><span data-stu-id="9bd03-222">That is, the prefix names "Global\\" and "Local\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes.</span></span>  
+
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]   
+  
+## Examples  
+ <span data-ttu-id="9bd03-223">Im folgenden Codebeispiel wird veranschaulicht, wie ein benannter Mutex verwendet wird, um zwischen Prozesse oder Threads zu signalisieren.</span><span class="sxs-lookup"><span data-stu-id="9bd03-223">The following code example shows how a named mutex is used to signal between processes or threads.</span></span> <span data-ttu-id="9bd03-224">Dieses Programm wird aus mindestens zwei Befehlsfenstern ausführen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-224">Run this program from two or more command windows.</span></span> <span data-ttu-id="9bd03-225">Jeder Prozess erstellt ein <xref:System.Threading.Mutex> Objekt, das den benannten Mutex "MyMutex" darstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-225">Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex "MyMutex".</span></span> <span data-ttu-id="9bd03-226">Der benannte Mutex ist ein Systemobjekt ist.</span><span class="sxs-lookup"><span data-stu-id="9bd03-226">The named mutex is a system object.</span></span> <span data-ttu-id="9bd03-227">In diesem Beispiel wird seine Lebensdauer durch die Lebensdauer der begrenzt die <xref:System.Threading.Mutex> Objekte, die sie darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-227">In this example, its lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it.</span></span> <span data-ttu-id="9bd03-228">Der benannte Mutex wird erstellt, wenn der erste Prozess den lokalen erstellt <xref:System.Threading.Mutex> Objekt, und zerstört, wenn alle der <xref:System.Threading.Mutex> Objekte, die diese darstellen veröffentlicht wurden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-228">The named mutex is created when the first process creates its local <xref:System.Threading.Mutex> object, and destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released.</span></span> <span data-ttu-id="9bd03-229">Der benannte Mutex ist anfänglich im Besitz des ersten Prozesses.</span><span class="sxs-lookup"><span data-stu-id="9bd03-229">The named mutex is initially owned by the first process.</span></span> <span data-ttu-id="9bd03-230">Der zweite und alle nachfolgenden Prozesse warten von früheren Prozesse, um den benannten Mutex freizugeben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-230">The second process and any subsequent processes wait for earlier processes to release the named mutex.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/CPP/class1.cpp#1)]
+ [!code-csharp[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/CS/class1.cs#1)]
+ [!code-vb[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/VB/class1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-231">Das benannte Mutex ist vorhanden und verfügt über Zugriffssteuerungssicherheit, aber der Benutzer verfügt nicht über <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-231">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-232">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-232">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">
+          <span data-ttu-id="9bd03-233">Das benannte Mutex kann nicht erstellt werden, möglicherweise weil ein Wait-Handle eines anderen Typs denselben Namen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-233">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-234">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-234">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-235">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-235">Requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-236">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-236">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string name, out bool createdNew, System.Security.AccessControl.MutexSecurity mutexSecurity);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned, string name, [out] bool&amp; createdNew, class System.Security.AccessControl.MutexSecurity mutexSecurity) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name, [Runtime::InteropServices::Out] bool % createdNew, System::Security::AccessControl::MutexSecurity ^ mutexSecurity);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="createdNew" Type="System.Boolean&amp;" RefType="out" />
+        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned">
+          <span data-ttu-id="9bd03-237">
+            <see langword="true" />, um dem aufrufenden Thread den anfänglichen Besitz des benannten Systemmutex zuzuweisen, wenn der benannte Systemmutex als Ergebnis dieses Aufrufs erstellt wird, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-237">
+              <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="9bd03-238">Der Name des Systemmutex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-238">The name of the system mutex.</span>
+          </span>
+          <span data-ttu-id="9bd03-239">Bei einem Wert von <see langword="null" /> ist das <see cref="T:System.Threading.Mutex" /> unbenannt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-239">If the value is <see langword="null" />, the <see cref="T:System.Threading.Mutex" /> is unnamed.</span>
+          </span>
+        </param>
+        <param name="createdNew">
+          <span data-ttu-id="9bd03-240">Enthält nach dem Beenden dieser Methode einen booleschen Wert, der <see langword="true" /> ist, wenn ein lokaler Mutex erstellt wurde (d. h. wenn <c>name</c> gleich <see langword="null" /> oder eine leere Zeichenfolge ist) oder wenn der angegebene benannte Systemmutex erstellt wurde. Der Wert ist <see langword="false" />, wenn der angegebene benannte Systemmutex bereits vorhanden war.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-240">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <c>name</c> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; <see langword="false" /> if the specified named system mutex already existed.</span>
+          </span>
+          <span data-ttu-id="9bd03-241">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-241">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <param name="mutexSecurity">
+          <span data-ttu-id="9bd03-242">Ein <see cref="T:System.Security.AccessControl.MutexSecurity" />-Objekt, das die Zugriffssteuerungssicherheit darstellt, die auf den benannten Systemmutex angewendet werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-242">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security to be applied to the named system mutex.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-243">Initialisiert eine neue Instanz der <see cref="T:System.Threading.Mutex" />-Klasse mit einem booleschen Wert, der angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex zugewiesen werden soll, mit einer Zeichenfolge mit dem Namen des Mutex, mit einer booleschen Variable, die beim Beenden der Methode angibt, ob dem aufrufenden Thread der anfängliche Besitz des Mutex gewährt wurde, und mit der Zugriffssteuerungssicherheit, die auf den benannten Mutex angewendet werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-243">Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, a Boolean variable that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex, and the access control security to be applied to the named mutex.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-244">Wenn `name` nicht `null` und `initiallyOwned` ist `true`, besitzt der aufrufende Thread den benannten Mutex nur, wenn `createdNew` ist `true` nach dem Aufruf.</span><span class="sxs-lookup"><span data-stu-id="9bd03-244">If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call.</span></span> <span data-ttu-id="9bd03-245">Andernfalls kann der Thread das Mutex anfordern, durch Aufrufen der <xref:System.Threading.WaitHandle.WaitOne%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-245">Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-246">Verwenden Sie diesen Konstruktor, bei der Erstellung wird verhindert, dass anderer Code Kontrolle über die Mutex zugriffssteuerungssicherheit auf einen benannten Systemmutex anzuwenden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-246">Use this constructor to apply access control security to a named system mutex when it is created, preventing other code from taking control of the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-247">Dieser Konstruktor initialisiert ein <xref:System.Threading.Mutex> Objekt, das einen benannten Systemmutex darstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-247">This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex.</span></span> <span data-ttu-id="9bd03-248">Sie können mehrere erstellen <xref:System.Threading.Mutex> benannte Systemmutex Objekte, die die gleiche darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-248">You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-249">Wenn der benannte Systemmutex nicht vorhanden ist, wird er mit dem angegebenen zugriffssteuerungssicherheit erstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-249">If the named system mutex does not exist, it is created with the specified access control security.</span></span> <span data-ttu-id="9bd03-250">Wenn der benannte Mutex ist vorhanden, wird die angegebene zugriffssteuerungssicherheit ignoriert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-250">If the named mutex exists, the specified access control security is ignored.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="9bd03-251">Der Aufrufer hat Vollzugriff auf das neu erstellte <xref:System.Threading.Mutex> Objekt erstellen, selbst wenn `mutexSecurity` verweigert oder einige über die Zugriffsrechte für den aktuellen Benutzer zu erteilen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-251">The caller has full control over the newly created <xref:System.Threading.Mutex> object even if `mutexSecurity` denies or fails to grant some access rights to the current user.</span></span> <span data-ttu-id="9bd03-252">Jedoch wenn der aktuelle Benutzer versucht, erhalten eine andere <xref:System.Threading.Mutex> Objekt zur Darstellung der gleiche benannten Mutex, entweder einen Konstruktor oder die <xref:System.Threading.Mutex.OpenExisting%2A> -Methode, Windows-zugriffssteuerungssicherheit angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-252">However, if the current user attempts to get another <xref:System.Threading.Mutex> object to represent the same named mutex, using either a constructor or the <xref:System.Threading.Mutex.OpenExisting%2A> method, Windows access control security is applied.</span></span>  
+  
+ <span data-ttu-id="9bd03-253">Wenn der benannte Mutex wurde bereits mit zugriffssteuerungssicherheit erstellt, und der Aufrufer verfügt nicht über <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, wird eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9bd03-253">If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown.</span></span> <span data-ttu-id="9bd03-254">Zum Öffnen einer vorhandenen benannten Mutex mit nur den Berechtigungen, die zum Synchronisieren von Threadaktivitäten erforderlich sind, finden Sie unter der <xref:System.Threading.Mutex.OpenExisting%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-254">To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-255">Bei Angabe von `null` oder eine leere Zeichenfolge für `name`, ein lokaler Mutex erstellt, wie bei einem Aufruf der <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="9bd03-255">If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.</span></span> <span data-ttu-id="9bd03-256">In diesem Fall `createdNew` ist immer `true`.</span><span class="sxs-lookup"><span data-stu-id="9bd03-256">In this case, `createdNew` is always `true`.</span></span>  
+  
+ <span data-ttu-id="9bd03-257">Da es sich um eine systemweite sind, können benannte Mutexe bezeichnet zum Koordinieren der Ressourcenverwendung über Prozessgrenzen hinweg verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-257">Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="9bd03-258">Auf einem Server, auf der Terminaldienste ausgeführt wird, kann ein benannten Systemmutex zwei Sichtbarkeitsebenen haben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-258">On a server that is running Terminal Services, a named system mutex can have two levels of visibility.</span></span> <span data-ttu-id="9bd03-259">Wenn der Name mit dem Präfix beginnt "Global\\", Mutex ist in allen Terminalserver Sitzungen sichtbar.</span><span class="sxs-lookup"><span data-stu-id="9bd03-259">If its name begins with the prefix "Global\\", the mutex is visible in all terminal server sessions.</span></span> <span data-ttu-id="9bd03-260">Wenn der Name mit dem Präfix beginnt "lokale\\", der Mutex aufgehoben ist nur in der Terminalserver-Sitzung sichtbar, in dem es erstellt wurde.</span><span class="sxs-lookup"><span data-stu-id="9bd03-260">If its name begins with the prefix "Local\\", the mutex is visible only in the terminal server session where it was created.</span></span> <span data-ttu-id="9bd03-261">In diesem Fall kann ein separater Mutex mit dem gleichen Namen in jeder von den anderen Terminalserver-Sitzungen auf dem Server vorhanden sein.</span><span class="sxs-lookup"><span data-stu-id="9bd03-261">In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server.</span></span> <span data-ttu-id="9bd03-262">Wenn Sie ein Präfix nicht angeben, wenn Sie einen benannten Mutex erstellen, dauert das Präfix "lokale\\".</span><span class="sxs-lookup"><span data-stu-id="9bd03-262">If you do not specify a prefix when you create a named mutex, it takes the prefix "Local\\".</span></span> <span data-ttu-id="9bd03-263">Innerhalb einer Sitzung Terminalserver zwei Mutexe, deren Namen sich nur durch ihre Präfixe unterscheiden, sind separate Mutexe, und beide sind für alle Prozesse sichtbar, in der Terminalserver-Sitzung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-263">Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session.</span></span> <span data-ttu-id="9bd03-264">D. h. den Präfixnamen "Global\\" und "lokale\\" beschreiben den Gültigkeitsbereich des Namens Mutex relativ zum Terminalserver-Sitzungen, nicht relativ zur Prozesse.</span><span class="sxs-lookup"><span data-stu-id="9bd03-264">That is, the prefix names "Global\\" and "Local\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes.</span></span>  
+
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-265">Im folgenden Codebeispiel wird das Verhalten prozessübergreifend einen benannten Mutex mit zugriffssteuerungssicherheit veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-265">The following code example demonstrates the cross-process behavior of a named mutex with access control security.</span></span> <span data-ttu-id="9bd03-266">Im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%29> -methodenüberladung, um das Vorhandensein einer benannten Mutex zu testen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-266">The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-267">Wenn das Mutex nicht vorhanden ist, wird es erstellt, mit den anfänglichen Besitz und zugriffssteuerungssicherheit, die verweigert des aktuellen Benutzers des Rechts zum Verwenden der Mutex aufgehoben, aber das Recht zum Lesen und Ändern von Berechtigungen für den Mutex gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-267">If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-268">Wenn Sie das kompilierte Beispiel aus zwei Befehlsfenstern ausführen, löst die zweite Kopie eine Zugriffsverletzungsausnahme beim Aufruf von <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-268">If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span></span> <span data-ttu-id="9bd03-269">Die Ausnahme abgefangen wird, und im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> -methodenüberladung Mutex mit den Berechtigungen zum Lesen und ändern Sie die Berechtigungen zu öffnen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-269">The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.</span></span>  
+  
+ <span data-ttu-id="9bd03-270">Nachdem die Berechtigungen geändert werden, wird der Mutex mit den erforderlichen Benutzerrechten zum eingeben und freigegeben werden, geöffnet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-270">After the permissions are changed, the mutex is opened with the rights required to enter and release it.</span></span> <span data-ttu-id="9bd03-271">Wenn Sie das kompilierte Beispiel in einem dritten Befehlsfenster ausführen, wird die Verwendung der neuen Berechtigungen ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-271">If you run the compiled example from a third command window, it runs using the new permissions.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]
+ [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]
+ [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-272">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-272">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-273">Das benannte Mutex ist vorhanden und verfügt über Zugriffssteuerungssicherheit, aber der Benutzer verfügt nicht über <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-273">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">
+          <span data-ttu-id="9bd03-274">Das benannte Mutex kann nicht erstellt werden, möglicherweise weil ein Wait-Handle eines anderen Typs denselben Namen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-274">The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-275">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-275">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-276">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-276">Requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-277">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-277">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAccessControl">
+      <MemberSignature Language="C#" Value="public System.Security.AccessControl.MutexSecurity GetAccessControl ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Security.AccessControl.MutexSecurity GetAccessControl() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.GetAccessControl" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetAccessControl () As MutexSecurity" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Security::AccessControl::MutexSecurity ^ GetAccessControl();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Security.AccessControl.MutexSecurity</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-278">Ruft ein <see cref="T:System.Security.AccessControl.MutexSecurity" />-Objekt ab, das die Zugriffssteuerungssicherheit für den benannten Mutex darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-278">Gets a <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security for the named mutex.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9bd03-279">Ein <see cref="T:System.Security.AccessControl.MutexSecurity" />-Objekt, das die Zugriffssteuerungssicherheit für den benannten Mutex darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-279">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security for the named mutex.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-280">Die <xref:System.Threading.Mutex.GetAccessControl%2A> Methode verwendet die folgende Kombination von Flags, die (mit dem bitweisen OR-Operation kombiniert) zu suchende Berechtigungen: <xref:System.Security.AccessControl.AccessControlSections.Access?displayProperty=nameWithType>, <xref:System.Security.AccessControl.AccessControlSections.Owner?displayProperty=nameWithType>, und <xref:System.Security.AccessControl.AccessControlSections.Group?displayProperty=nameWithType>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-280">The <xref:System.Threading.Mutex.GetAccessControl%2A> method uses the following combination of flags (combined using the bitwise OR operation) to search for permissions: <xref:System.Security.AccessControl.AccessControlSections.Access?displayProperty=nameWithType>, <xref:System.Security.AccessControl.AccessControlSections.Owner?displayProperty=nameWithType>, and <xref:System.Security.AccessControl.AccessControlSections.Group?displayProperty=nameWithType>.</span></span>  
+  
+ <span data-ttu-id="9bd03-281">Der Benutzer benötigt <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType> zum Aufrufen dieser Methode und der Mutex müssen geöffnet wurden mit <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-281">The user must have <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType> to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType>.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-282">Im folgenden Codebeispiel wird das Verhalten prozessübergreifend einen benannten Mutex mit zugriffssteuerungssicherheit veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-282">The following code example demonstrates the cross-process behavior of a named mutex with access control security.</span></span> <span data-ttu-id="9bd03-283">Im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%29> -methodenüberladung, um das Vorhandensein einer benannten Mutex zu testen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-283">The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-284">Wenn das Mutex nicht vorhanden ist, wird es erstellt, mit den anfänglichen Besitz und zugriffssteuerungssicherheit, die verweigert des aktuellen Benutzers des Rechts zum Verwenden der Mutex aufgehoben, aber das Recht zum Lesen und Ändern von Berechtigungen für den Mutex gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-284">If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-285">Wenn Sie das kompilierte Beispiel aus zwei Befehlsfenstern ausführen, löst die zweite Kopie eine Zugriffsverletzungsausnahme beim Aufruf von <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-285">If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span></span> <span data-ttu-id="9bd03-286">Die Ausnahme abgefangen wird, und im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> -methodenüberladung Mutex zu öffnen, mit den Berechtigungen zum Lesen und ändern Sie die Berechtigungen, die mit der <xref:System.Threading.Mutex.GetAccessControl%2A> und <xref:System.Threading.Mutex.SetAccessControl%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-286">The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.</span></span>  
+  
+ <span data-ttu-id="9bd03-287">Nachdem die Berechtigungen geändert werden, wird der Mutex mit den erforderlichen Benutzerrechten zum eingeben und freigegeben werden, geöffnet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-287">After the permissions are changed, the mutex is opened with the rights required to enter and release it.</span></span> <span data-ttu-id="9bd03-288">Wenn Sie das kompilierte Beispiel in einem dritten Befehlsfenster ausführen, wird die Verwendung der neuen Berechtigungen ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-288">If you run the compiled example from a third command window, it runs using the new permissions.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]
+ [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]
+ [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-289">Das aktuelle <see cref="T:System.Threading.Mutex" />-Objekt stellt einen benannten Systemmutex dar. Der Benutzer verfügt jedoch nicht über <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-289">The current <see cref="T:System.Threading.Mutex" /> object represents a named system mutex, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.</span>
+          </span>
+          <span data-ttu-id="9bd03-290">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-290">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-291">Das aktuelle <see cref="T:System.Threading.Mutex" />-Objekt stellt einen benannten Systemmutex dar und wurde nicht mit <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" /> geöffnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-291">The current <see cref="T:System.Threading.Mutex" /> object represents a named system mutex, and was not opened with <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <span data-ttu-id="9bd03-292">Wird nicht für Windows 98 oder Windows Millennium Edition unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-292">Not supported for Windows 98 or Windows Millennium Edition.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="OpenExisting">
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-293">Öffnet einen bestimmten benannten Mutex, wenn er bereits vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-293">Opens a specified named mutex, if it already exists.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="OpenExisting">
+      <MemberSignature Language="C#" Value="public static System.Threading.Mutex OpenExisting (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Mutex OpenExisting(string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.OpenExisting(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function OpenExisting (name As String) As Mutex" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Threading::Mutex ^ OpenExisting(System::String ^ name);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Mutex</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="9bd03-294">Der Name des zu öffnenden Systemmutex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-294">The name of the system mutex to open.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-295">Öffnet den bestimmten benannten Mutex, wenn er bereits vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-295">Opens the specified named mutex, if it already exists.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9bd03-296">Ein Objekt, das den benannten Systemmutex darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-296">An object that represents the named system mutex.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-297">Die <xref:System.Threading.Mutex.OpenExisting%2A> Methode versucht werden, öffnen Sie das angegebene benannte Systemmutex.</span><span class="sxs-lookup"><span data-stu-id="9bd03-297">The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex.</span></span> <span data-ttu-id="9bd03-298">Wenn das Systemmutex nicht vorhanden ist, löst diese Methode eine Ausnahme aus, anstatt das Systemobjekt erstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-298">If the system mutex does not exist, this method throws an exception instead of creating the system object.</span></span> <span data-ttu-id="9bd03-299">Systemmutex erstellt, wenn sie nicht bereits vorhanden ist, gehen Sie die <xref:System.Threading.Mutex.%23ctor%2A> Konstruktoren, die verfügt über eine `name` Parameter.</span><span class="sxs-lookup"><span data-stu-id="9bd03-299">To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.</span></span>  
+  
+ <span data-ttu-id="9bd03-300">Mehrere Aufrufe dieser Methode, die den gleichen Wert für `name` nicht unbedingt zurück, die gleiche <xref:System.Threading.Mutex> -Objekt, auch wenn die Objekte, die zurückgegeben werden die gleichen benannten Systemmutex darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-300">Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-301">Überladung dieser Methode entspricht dem Aufrufen der <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> methodenüberladung und Angeben von <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> und <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> Rechte, die mit dem bitweisen OR-Operation kombiniert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-301">This method overload is equivalent to calling the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation.</span></span>  
+  
+ <span data-ttu-id="9bd03-302">Angeben der <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> Flag ermöglicht, dass einen Thread das Mutex warten und Angeben der <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> Flag ermöglicht, dass einen Thread aufrufen, die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-302">Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-303">Diese Methode ist keine Besitz des Mutex anfordert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-303">This method does not request ownership of the mutex.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-304">Im folgenden Codebeispiel wird das Verhalten prozessübergreifend einen benannten Mutex mit zugriffssteuerungssicherheit veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-304">The following code example demonstrates the cross-process behavior of a named mutex with access control security.</span></span> <span data-ttu-id="9bd03-305">Im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%29> -methodenüberladung, um das Vorhandensein einer benannten Mutex zu testen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-305">The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-306">Wenn das Mutex nicht vorhanden ist, wird es erstellt, mit den anfänglichen Besitz und zugriffssteuerungssicherheit, die verweigert des aktuellen Benutzers des Rechts zum Verwenden der Mutex aufgehoben, aber das Recht zum Lesen und Ändern von Berechtigungen für den Mutex gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-306">If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-307">Wenn Sie das kompilierte Beispiel aus zwei Befehlsfenstern ausführen, löst die zweite Kopie eine Zugriffsverletzungsausnahme beim Aufruf von <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-307">If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span></span> <span data-ttu-id="9bd03-308">Die Ausnahme abgefangen wird, und im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> -methodenüberladung Mutex mit den Berechtigungen zum Lesen und ändern Sie die Berechtigungen zu öffnen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-308">The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.</span></span>  
+  
+ <span data-ttu-id="9bd03-309">Nachdem die Berechtigungen geändert werden, wird der Mutex mit den erforderlichen Benutzerrechten zum eingeben und freigegeben werden, geöffnet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-309">After the permissions are changed, the mutex is opened with the rights required to enter and release it.</span></span> <span data-ttu-id="9bd03-310">Wenn Sie das kompilierte Beispiel in einem dritten Befehlsfenster ausführen, wird die Verwendung der neuen Berechtigungen ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-310">If you run the compiled example from a third command window, it runs using the new permissions.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]
+ [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]
+ [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-311">
+            <paramref name="name" /> ist eine leere Zeichenfolge.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-311">
+              <paramref name="name" /> is an empty string.</span>
+          </span>
+          <span data-ttu-id="9bd03-312">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-312">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-313">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-313">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="9bd03-314">
+            <paramref name="name" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-314">
+              <paramref name="name" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">
+          <span data-ttu-id="9bd03-315">Der benannte Mutex ist nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-315">The named mutex does not exist.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-316">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-316">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-317">Das benannte Mutex ist vorhanden, aber der Benutzer verfügt nicht über den Sicherheitszugriff, der für die Verwendung erforderlich ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-317">The named mutex exists, but the user does not have the security access required to use it.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-318">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-318">Requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-319">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-319">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="OpenExisting">
+      <MemberSignature Language="C#" Value="public static System.Threading.Mutex OpenExisting (string name, System.Security.AccessControl.MutexRights rights);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Mutex OpenExisting(string name, valuetype System.Security.AccessControl.MutexRights rights) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.OpenExisting(System.String,System.Security.AccessControl.MutexRights)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function OpenExisting (name As String, rights As MutexRights) As Mutex" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Threading::Mutex ^ OpenExisting(System::String ^ name, System::Security::AccessControl::MutexRights rights);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Mutex</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="9bd03-320">Der Name des zu öffnenden Systemmutex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-320">The name of the system mutex to open.</span>
+          </span>
+        </param>
+        <param name="rights">
+          <span data-ttu-id="9bd03-321">Eine bitweise Kombination von Enumerationswerten, die die gewünschten Sicherheitszugriffsrechte darstellen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-321">A bitwise combination of the enumeration values that represent the desired security access.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-322">Öffnet den angegebenen benannten Mutex, wenn er bereits vorhanden ist, mit dem gewünschten Sicherheitszugriff.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-322">Opens the specified named mutex, if it already exists, with the desired security access.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9bd03-323">Ein Objekt, das den benannten Systemmutex darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-323">An object that represents the named system mutex.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-324">Die `rights` -Parameter enthalten muss die <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> Threads ermöglichen, warten Sie auf den Mutex-Flag und der <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> -Kennzeichen an die Threads ermöglichen, rufen Sie die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-324">The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-325">Die <xref:System.Threading.Mutex.OpenExisting%2A> Methode versucht, öffnen Sie eine vorhandene benannte Mutex.</span><span class="sxs-lookup"><span data-stu-id="9bd03-325">The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex.</span></span> <span data-ttu-id="9bd03-326">Wenn das Systemmutex nicht vorhanden ist, löst diese Methode eine Ausnahme aus, anstatt das Systemobjekt erstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-326">If the system mutex does not exist, this method throws an exception instead of creating the system object.</span></span> <span data-ttu-id="9bd03-327">Systemmutex erstellt, wenn sie nicht bereits vorhanden ist, gehen Sie die <xref:System.Threading.Mutex.%23ctor%2A> Konstruktoren, die verfügt über eine `name` Parameter.</span><span class="sxs-lookup"><span data-stu-id="9bd03-327">To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.</span></span>  
+  
+ <span data-ttu-id="9bd03-328">Mehrere Aufrufe dieser Methode, die den gleichen Wert für `name` nicht unbedingt zurück, die gleiche <xref:System.Threading.Mutex> -Objekt, auch wenn die Objekte, die zurückgegeben werden die gleichen benannten Systemmutex darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-328">Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-329">Diese Methode ist keine Besitz des Mutex anfordert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-329">This method does not request ownership of the mutex.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-330">Im folgenden Codebeispiel wird das Verhalten prozessübergreifend einen benannten Mutex mit zugriffssteuerungssicherheit veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-330">The following code example demonstrates the cross-process behavior of a named mutex with access control security.</span></span> <span data-ttu-id="9bd03-331">Im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%29> -methodenüberladung, um das Vorhandensein einer benannten Mutex zu testen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-331">The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-332">Wenn das Mutex nicht vorhanden ist, wird es erstellt, mit den anfänglichen Besitz und zugriffssteuerungssicherheit, die verweigert des aktuellen Benutzers des Rechts zum Verwenden der Mutex aufgehoben, aber das Recht zum Lesen und Ändern von Berechtigungen für den Mutex gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-332">If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-333">Wenn Sie das kompilierte Beispiel aus zwei Befehlsfenstern ausführen, löst die zweite Kopie eine Zugriffsverletzungsausnahme beim Aufruf von <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-333">If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span></span> <span data-ttu-id="9bd03-334">Die Ausnahme abgefangen wird, und im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> -methodenüberladung Mutex mit den Berechtigungen zum Lesen und ändern Sie die Berechtigungen zu öffnen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-334">The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.</span></span>  
+  
+ <span data-ttu-id="9bd03-335">Nachdem die Berechtigungen geändert werden, wird der Mutex mit den erforderlichen Benutzerrechten zum eingeben und freigegeben werden, geöffnet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-335">After the permissions are changed, the mutex is opened with the rights required to enter and release it.</span></span> <span data-ttu-id="9bd03-336">Wenn Sie das kompilierte Beispiel in einem dritten Befehlsfenster ausführen, wird die Verwendung der neuen Berechtigungen ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-336">If you run the compiled example from a third command window, it runs using the new permissions.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]
+ [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]
+ [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-337">
+            <paramref name="name" /> ist eine leere Zeichenfolge.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-337">
+              <paramref name="name" /> is an empty string.</span>
+          </span>
+          <span data-ttu-id="9bd03-338">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-338">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-339">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-339">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="9bd03-340">
+            <paramref name="name" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-340">
+              <paramref name="name" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">
+          <span data-ttu-id="9bd03-341">Der benannte Mutex ist nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-341">The named mutex does not exist.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-342">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-342">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-343">Der benannte Mutex ist vorhanden aber der Benutzer verfügt nicht über den gewünschten Sicherheitszugriff.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-343">The named mutex exists, but the user does not have the desired security access.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-344">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-344">Requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-345">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-345">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="ReleaseMutex">
+      <MemberSignature Language="C#" Value="public void ReleaseMutex ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ReleaseMutex() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.ReleaseMutex" />
+      <MemberSignature Language="VB.NET" Value="Public Sub ReleaseMutex ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ReleaseMutex();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-346">Gibt das <see cref="T:System.Threading.Mutex" /> einmal frei.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-346">Releases the <see cref="T:System.Threading.Mutex" /> once.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-347">Wenn ein Thread einen Mutex erhält (z. B. durch Aufrufen seiner <xref:System.Threading.WaitHandle.WaitOne%2A> Methode), anschließend aufgerufen werden muss <xref:System.Threading.Mutex.ReleaseMutex%2A> abgeben Besitz des Mutex und Entsperren von anderen Threads, die versuchen, den Besitz von Mutex zu erhalten.</span><span class="sxs-lookup"><span data-stu-id="9bd03-347">Whenever a thread acquires a mutex (for example, by calling its <xref:System.Threading.WaitHandle.WaitOne%2A> method), it must subsequently call <xref:System.Threading.Mutex.ReleaseMutex%2A> to relinquish ownership of the mutex and unblock other threads that are trying to gain ownership of the mutex.</span></span> <span data-ttu-id="9bd03-348">Schlägt der Versuch zum Abrufen der Besitz des Mutex (z. B. bei einem Aufruf von der <xref:System.Threading.WaitHandle.WaitOne%2A> Methode mit einer `millisecondsTimeout` oder ein `timeout` gibt Parameter `false` , da die Anforderung ein Timeout eintritt), darf nicht der Thread Aufrufen <xref:System.Threading.Mutex.ReleaseMutex%2A>, In diesem Fall sollte der Thread ebenfalls nicht zulässig sein Zugriff auf die Ressource, die durch den Mutex geschützt werden, wie im folgenden Beispiel gezeigt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-348">If the attempt to get ownership of the mutex fails (for example, when a call to the <xref:System.Threading.WaitHandle.WaitOne%2A> method with a `millisecondsTimeout` or a `timeout` parameter returns `false` because the request times out), the thread shouldn't call <xref:System.Threading.Mutex.ReleaseMutex%2A>, In this case, the thread should also not be allowed to access the resource protected by the mutex, as the following example shows.</span></span>  
+  
+ [!code-csharp[System.Threading.Mutex.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example2.cs#2)]
+ [!code-vb[System.Threading.Mutex.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb#2)]  
+  
+ <span data-ttu-id="9bd03-349">Ein Thread, der einen Mutex besitzt kann denselben Mutex in Funktionsaufrufen wiederholte Wait angeben, ohne Blockierung seiner Ausführung.</span><span class="sxs-lookup"><span data-stu-id="9bd03-349">A thread that owns a mutex can specify the same mutex in repeated wait function calls without blocking its execution.</span></span> <span data-ttu-id="9bd03-350">Die Anzahl der Aufrufe wird durch die common Language Runtime beibehalten.</span><span class="sxs-lookup"><span data-stu-id="9bd03-350">The number of calls is kept by the common language runtime.</span></span> <span data-ttu-id="9bd03-351">Der Thread aufrufen, muss <xref:System.Threading.Mutex.ReleaseMutex%2A> die gleiche Anzahl der Wiederholungsversuche im Besitz des Mutex freizugeben.</span><span class="sxs-lookup"><span data-stu-id="9bd03-351">The thread must call <xref:System.Threading.Mutex.ReleaseMutex%2A> the same number of times to release ownership of the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-352">Wenn ein Thread beendet wird, während einen Mutex besitzt, wird der Mutex abgebrochen wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-352">If a thread terminates while owning a mutex, the mutex is said to be abandoned.</span></span> <span data-ttu-id="9bd03-353">Der Status des Mutex auf signalisiert festgelegt ist, und der nächste wartende Thread Ruft die Inhaberschaft ab.</span><span class="sxs-lookup"><span data-stu-id="9bd03-353">The state of the mutex is set to signaled and the next waiting thread gets ownership.</span></span> <span data-ttu-id="9bd03-354">Wenn niemand Mutex besitzt, wird der Zustand des Mutex signalisiert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-354">If no one owns the mutex, the state of the mutex is signaled.</span></span> <span data-ttu-id="9bd03-355">Ab Version 2.0 von .NET Framework eine <xref:System.Threading.AbandonedMutexException> wird ausgelöst, in der nächste Thread, der den Mutex verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-355">Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex.</span></span> <span data-ttu-id="9bd03-356">Vor Version 2.0 von .NET Framework wurde keine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9bd03-356">Prior to version 2.0 of the .NET Framework, no exception was thrown.</span></span>  
+  
+> [!CAUTION]
+>  <span data-ttu-id="9bd03-357">Ein abgebrochenes Mutex weist häufig einen schwerwiegenden Fehler im Code.</span><span class="sxs-lookup"><span data-stu-id="9bd03-357">An abandoned mutex often indicates a serious error in the code.</span></span> <span data-ttu-id="9bd03-358">Wenn ein Thread beendet, ohne das Mutex, möglicherweise nicht die vom Mutex geschützte Datenstruktur in einem konsistenten Zustand.</span><span class="sxs-lookup"><span data-stu-id="9bd03-358">When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state.</span></span> <span data-ttu-id="9bd03-359">Der nächste Thread, der Besitz des Mutex anfordert, kann diese Ausnahme behandeln und fortgesetzt werden, wenn die Integrität der Datenstruktur überprüft werden kann.</span><span class="sxs-lookup"><span data-stu-id="9bd03-359">The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.</span></span>  
+  
+ <span data-ttu-id="9bd03-360">Wenn es sich um einen systemweiten Mutex handelt, kann ein abgebrochener Mutex darauf hinweisen, dass eine Anwendung plötzlich beendet wurde (z.B. über den Windows Task-Manager).</span><span class="sxs-lookup"><span data-stu-id="9bd03-360">In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-361">Das folgende Beispiel zeigt, wie mithilfe eines lokalen <xref:System.Threading.Mutex> Objekt wird zum Synchronisieren des Zugriffs auf eine geschützte Ressource verwendet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-361">The following example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource.</span></span> <span data-ttu-id="9bd03-362">Der Thread, der den Mutex erstellt besitzt er ursprünglich nicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-362">The thread that creates the mutex does not own it initially.</span></span> <span data-ttu-id="9bd03-363">Die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode wird verwendet, um das Mutex freizugeben, wenn er nicht mehr benötigt wird.</span><span class="sxs-lookup"><span data-stu-id="9bd03-363">The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is used to release the mutex when it is no longer needed.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp#1)]
+ [!code-csharp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CS/class1.cs#1)]
+ [!code-vb[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ApplicationException">
+          <span data-ttu-id="9bd03-364">Der aufrufende Thread besitzt den Mutex nicht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-364">The calling thread does not own the mutex.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">
+          <span data-ttu-id="9bd03-365">Die aktuelle Instanz wurde bereits verworfen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-365">The current instance has already been disposed.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SetAccessControl">
+      <MemberSignature Language="C#" Value="public void SetAccessControl (System.Security.AccessControl.MutexSecurity mutexSecurity);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetAccessControl(class System.Security.AccessControl.MutexSecurity mutexSecurity) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.SetAccessControl(System.Security.AccessControl.MutexSecurity)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void SetAccessControl(System::Security::AccessControl::MutexSecurity ^ mutexSecurity);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" />
+      </Parameters>
+      <Docs>
+        <param name="mutexSecurity">
+          <span data-ttu-id="9bd03-366">Ein <see cref="T:System.Security.AccessControl.MutexSecurity" />-Objekt, das die Zugriffssteuerungssicherheit darstellt, die auf den benannten Systemmutex angewendet werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-366">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security to be applied to the named system mutex.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-367">Legt die Zugriffssteuerungssicherheit für einen benannten Systemmutex fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-367">Sets the access control security for a named system mutex.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-368">Der Benutzer benötigt <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType> Rechte für einen Aufruf dieser Methode und Mutex wurde müssen geöffnet <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-368">The user must have <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType> rights to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType>.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="9bd03-369">Im folgenden Codebeispiel wird das Verhalten prozessübergreifend einen benannten Mutex mit zugriffssteuerungssicherheit veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="9bd03-369">The following code example demonstrates the cross-process behavior of a named mutex with access control security.</span></span> <span data-ttu-id="9bd03-370">Im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%29> -methodenüberladung, um das Vorhandensein einer benannten Mutex zu testen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-370">The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-371">Wenn das Mutex nicht vorhanden ist, wird es erstellt, mit den anfänglichen Besitz und zugriffssteuerungssicherheit, die verweigert des aktuellen Benutzers des Rechts zum Verwenden der Mutex aufgehoben, aber das Recht zum Lesen und Ändern von Berechtigungen für den Mutex gewährt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-371">If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-372">Wenn Sie das kompilierte Beispiel aus zwei Befehlsfenstern ausführen, löst die zweite Kopie eine Zugriffsverletzungsausnahme beim Aufruf von <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span><span class="sxs-lookup"><span data-stu-id="9bd03-372">If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>.</span></span> <span data-ttu-id="9bd03-373">Die Ausnahme abgefangen wird, und im Beispiel wird die <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> -methodenüberladung Mutex zu öffnen, mit den Berechtigungen zum Lesen und ändern Sie die Berechtigungen, die mit der <xref:System.Threading.Mutex.GetAccessControl%2A> und <xref:System.Threading.Mutex.SetAccessControl%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="9bd03-373">The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.</span></span>  
+  
+ <span data-ttu-id="9bd03-374">Nachdem die Berechtigungen geändert werden, wird der Mutex mit den erforderlichen Benutzerrechten zum eingeben und freigegeben werden, geöffnet.</span><span class="sxs-lookup"><span data-stu-id="9bd03-374">After the permissions are changed, the mutex is opened with the rights required to enter and release it.</span></span> <span data-ttu-id="9bd03-375">Wenn Sie das kompilierte Beispiel in einem dritten Befehlsfenster ausführen, wird die Verwendung der neuen Berechtigungen ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-375">If you run the compiled example from a third command window, it runs using the new permissions.</span></span>  
+  
+ [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]
+ [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]
+ [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="9bd03-376">
+            <paramref name="mutexSecurity" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-376">
+              <paramref name="mutexSecurity" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-377">Der Benutzer verfügt nicht über <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-377">The user does not have <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.</span>
+          </span>
+          <span data-ttu-id="9bd03-378">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-378">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-379">Der Mutex wurde nicht mit <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" /> geöffnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-379">The mutex was not opened with <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.SystemException">
+          <span data-ttu-id="9bd03-380">Das aktuelle <see cref="T:System.Threading.Mutex" />-Objekt stellt keinen benannten Systemmutex dar.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-380">The current <see cref="T:System.Threading.Mutex" /> object does not represent a named system mutex.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="TryOpenExisting">
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9bd03-381">Öffnet einen bestimmten benannten Mutex, wenn er bereits vorhanden ist, und gibt einen Wert zurück, der angibt, ob der Vorgang erfolgreich war.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-381">Opens a specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="TryOpenExisting">
+      <MemberSignature Language="C#" Value="public static bool TryOpenExisting (string name, out System.Threading.Mutex result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryOpenExisting(string name, [out] class System.Threading.Mutex&amp; result) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.Mutex@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function TryOpenExisting (name As String, ByRef result As Mutex) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryOpenExisting(System::String ^ name, [Runtime::InteropServices::Out] System::Threading::Mutex ^ % result);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="result" Type="System.Threading.Mutex&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="9bd03-382">Der Name des zu öffnenden Systemmutex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-382">The name of the system mutex to open.</span>
+          </span>
+        </param>
+        <param name="result">
+          <span data-ttu-id="9bd03-383">Enthält nach Beenden der Methode ein <see cref="T:System.Threading.Mutex" />-Objekt, das das benannte Mutex darstellt, wenn der Aufruf erfolgreich ausgeführt wurde, oder <see langword="null" />, wenn der Aufruf fehlgeschlagen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-383">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed.</span>
+          </span>
+          <span data-ttu-id="9bd03-384">Dieser Parameter wird nicht initialisiert behandelt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-384">This parameter is treated as uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-385">Öffnet den bestimmten benannten Mutex, wenn er bereits vorhanden ist, und gibt einen Wert zurück, der angibt, ob der Vorgang erfolgreich war.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-385">Opens the specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9bd03-386">
+            <see langword="true" />, wenn der benannte Mutex erfolgreich geöffnet wurde; andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-386">
+              <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-387">Wenn der benannte Mutex nicht vorhanden ist, wird es von dieser Methode nicht erstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-387">If the named mutex does not exist, this method does not create it.</span></span> <span data-ttu-id="9bd03-388">Systemmutex erstellt, wenn sie nicht bereits vorhanden ist, gehen Sie die <xref:System.Threading.Mutex.%23ctor%2A> Konstruktoren, die verfügt über eine `name` Parameter.</span><span class="sxs-lookup"><span data-stu-id="9bd03-388">To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.</span></span>  
+  
+ <span data-ttu-id="9bd03-389">Wenn Sie unsicher sind, ob ein benannter Mutex vorhanden ist, verwenden Sie die Überladung dieser Methode anstelle von der <xref:System.Threading.Mutex.OpenExisting%28System.String%29> methodenüberladung, die eine Ausnahme auslöst, wenn das Mutex nicht vorhanden ist.</span><span class="sxs-lookup"><span data-stu-id="9bd03-389">If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.</span></span>  
+  
+ <span data-ttu-id="9bd03-390">Mehrere Aufrufe dieser Methode, die den gleichen Wert für `name` nicht unbedingt zurück, die gleiche <xref:System.Threading.Mutex> -Objekt, auch wenn die Objekte, die zurückgegeben werden die gleichen benannten Systemmutex darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-390">Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-391">Überladung dieser Methode entspricht dem Aufrufen der <xref:System.Threading.Mutex.TryOpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%2CSystem.Threading.Mutex%40%29> methodenüberladung und Angeben von <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> und <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> Rechte, die mit dem bitweisen OR-Operation kombiniert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-391">This method overload is equivalent to calling the <xref:System.Threading.Mutex.TryOpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%2CSystem.Threading.Mutex%40%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation.</span></span> <span data-ttu-id="9bd03-392">Angeben der <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> Flag ermöglicht, dass einen Thread das Mutex warten und Angeben der <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> Flag ermöglicht, dass einen Thread aufrufen, die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-392">Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-393">Diese Methode ist keine Besitz des Mutex anfordert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-393">This method does not request ownership of the mutex.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-394">
+            <paramref name="name" /> ist eine leere Zeichenfolge.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-394">
+              <paramref name="name" /> is an empty string.</span>
+          </span>
+          <span data-ttu-id="9bd03-395">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-395">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-396">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-396">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="9bd03-397">
+            <paramref name="name" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-397">
+              <paramref name="name" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-398">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-398">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-399">Das benannte Mutex ist vorhanden, aber der Benutzer verfügt nicht über den Sicherheitszugriff, der für die Verwendung erforderlich ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-399">The named mutex exists, but the user does not have the security access required to use it.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-400">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-400">requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-401">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-401">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="TryOpenExisting">
+      <MemberSignature Language="C#" Value="public static bool TryOpenExisting (string name, System.Security.AccessControl.MutexRights rights, out System.Threading.Mutex result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryOpenExisting(string name, valuetype System.Security.AccessControl.MutexRights rights, [out] class System.Threading.Mutex&amp; result) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function TryOpenExisting (name As String, rights As MutexRights, ByRef result As Mutex) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryOpenExisting(System::String ^ name, System::Security::AccessControl::MutexRights rights, [Runtime::InteropServices::Out] System::Threading::Mutex ^ % result);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" />
+        <Parameter Name="result" Type="System.Threading.Mutex&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="9bd03-402">Der Name des zu öffnenden Systemmutex.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-402">The name of the system mutex to open.</span>
+          </span>
+        </param>
+        <param name="rights">
+          <span data-ttu-id="9bd03-403">Eine bitweise Kombination von Enumerationswerten, die die gewünschten Sicherheitszugriffsrechte darstellen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-403">A bitwise combination of the enumeration values that represent the desired security access.</span>
+          </span>
+        </param>
+        <param name="result">
+          <span data-ttu-id="9bd03-404">Enthält nach Beenden der Methode ein <see cref="T:System.Threading.Mutex" />-Objekt, das das benannte Mutex darstellt, wenn der Aufruf erfolgreich ausgeführt wurde, oder <see langword="null" />, wenn der Aufruf fehlgeschlagen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-404">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed.</span>
+          </span>
+          <span data-ttu-id="9bd03-405">Dieser Parameter wird nicht initialisiert behandelt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-405">This parameter is treated as uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9bd03-406">Öffnet den angegebenen benannten Mutex, wenn er bereits mit dem gewünschten Sicherheitszugriff vorhanden ist und gibt einen Wert zurück, der angibt, ob der Vorgang erfolgreich war.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-406">Opens the specified named mutex, if it already exists, with the desired security access, and returns a value that indicates whether the operation succeeded.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9bd03-407">
+            <see langword="true" />, wenn der benannte Mutex erfolgreich geöffnet wurde; andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-407">
+              <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9bd03-408">Wenn der benannte Mutex nicht vorhanden ist, wird es von dieser Methode nicht erstellt.</span><span class="sxs-lookup"><span data-stu-id="9bd03-408">If the named mutex does not exist, this method does not create it.</span></span> <span data-ttu-id="9bd03-409">Systemmutex erstellt, wenn sie nicht bereits vorhanden ist, gehen Sie die <xref:System.Threading.Mutex.%23ctor%2A> Konstruktoren, die verfügt über eine `name` Parameter.</span><span class="sxs-lookup"><span data-stu-id="9bd03-409">To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.</span></span>  
+  
+ <span data-ttu-id="9bd03-410">Wenn Sie unsicher sind, ob ein benannter Mutex vorhanden ist, verwenden Sie die Überladung dieser Methode anstelle von der <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> methodenüberladung, die eine Ausnahme auslöst, wenn das Mutex nicht vorhanden ist.</span><span class="sxs-lookup"><span data-stu-id="9bd03-410">If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload, which throws an exception if the mutex does not exist.</span></span>  
+  
+ <span data-ttu-id="9bd03-411">Die `rights` -Parameter enthalten muss die <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> Threads ermöglichen, warten Sie auf den Mutex-Flag und der <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> -Kennzeichen an die Threads ermöglichen, rufen Sie die <xref:System.Threading.Mutex.ReleaseMutex%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="9bd03-411">The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.</span></span>  
+  
+ <span data-ttu-id="9bd03-412">Mehrere Aufrufe dieser Methode, die den gleichen Wert für `name` nicht unbedingt zurück, die gleiche <xref:System.Threading.Mutex> -Objekt, auch wenn die Objekte, die zurückgegeben werden die gleichen benannten Systemmutex darstellen.</span><span class="sxs-lookup"><span data-stu-id="9bd03-412">Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.</span></span>  
+  
+ <span data-ttu-id="9bd03-413">Diese Methode ist keine Besitz des Mutex anfordert.</span><span class="sxs-lookup"><span data-stu-id="9bd03-413">This method does not request ownership of the mutex.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9bd03-414">
+            <paramref name="name" /> ist eine leere Zeichenfolge.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-414">
+              <paramref name="name" /> is an empty string.</span>
+          </span>
+          <span data-ttu-id="9bd03-415">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-415">-or-</span>
+          </span>
+          <span data-ttu-id="9bd03-416">
+            <paramref name="name" /> ist länger als 260 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-416">
+              <paramref name="name" /> is longer than 260 characters.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="9bd03-417">
+            <paramref name="name" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-417">
+              <paramref name="name" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <span data-ttu-id="9bd03-418">Win32-Fehler.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-418">A Win32 error occurred.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <span data-ttu-id="9bd03-419">Das benannte Mutex ist vorhanden, aber der Benutzer verfügt nicht über den Sicherheitszugriff, der für die Verwendung erforderlich ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-419">The named mutex exists, but the user does not have the security access required to use it.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.SecurityCriticalAttribute">
+          <span data-ttu-id="9bd03-420">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-420">requires full trust for the immediate caller.</span>
+          </span>
+          <span data-ttu-id="9bd03-421">Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9bd03-421">This member cannot be used by partially trusted or transparent code.</span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

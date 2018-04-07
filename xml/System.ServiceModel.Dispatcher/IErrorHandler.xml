@@ -1,0 +1,230 @@
+<Type Name="IErrorHandler" FullName="System.ServiceModel.Dispatcher.IErrorHandler">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="2f4c525f8c28ef846dc25e8b65ba94dc1081f6d2" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public interface IErrorHandler" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IErrorHandler" />
+  <TypeSignature Language="DocId" Value="T:System.ServiceModel.Dispatcher.IErrorHandler" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IErrorHandler" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IErrorHandler" />
+  <AssemblyInfo>
+    <AssemblyName>System.ServiceModel</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>
+      <span data-ttu-id="37645-101">Ermöglicht bei der Implementierung die Steuerung der Fehlermeldung, die an den Aufrufer zurückgegeben wird, und optional die Durchführung von benutzerdefinierter Verarbeitung, wie z.&amp;#160;B. Protokollierung.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="37645-101">Allows an implementer to control the fault message returned to the caller and optionally perform custom error processing such as logging.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="37645-102">Um explizit steuern das Verhalten der Anwendung auf, wenn eine Ausnahme ausgelöst wird, implementieren die <xref:System.ServiceModel.Dispatcher.IErrorHandler> Schnittstelle, und fügen Sie diese der <xref:System.ServiceModel.Dispatcher.ChannelDispatcher>des <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="37645-102">To explicitly control the behavior of the application when an exception is thrown, implement the <xref:System.ServiceModel.Dispatcher.IErrorHandler> interface and add it to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher>’s <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property.</span></span> <span data-ttu-id="37645-103"><xref:System.ServiceModel.Dispatcher.IErrorHandler> ermöglicht es Ihnen, explizit zu steuern, welcher SOAP-Fehler generiert wird, und zu entscheiden, ob der Fehler zurück zum Client geschickt und zugehörige Aufgaben ausgeführt werden sollen, z. B. Protokollieren.</span><span class="sxs-lookup"><span data-stu-id="37645-103"><xref:System.ServiceModel.Dispatcher.IErrorHandler> enables you to explicitly control the SOAP fault generated, decide whether to send it back to the client, and perform associated tasks, such as logging.</span></span> <span data-ttu-id="37645-104">Fehlerhandler werden in der gleichen Reihenfolge aufgerufen, in der sie der <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A>-Eigenschaft hinzugefügt wurden.</span><span class="sxs-lookup"><span data-stu-id="37645-104">Error handlers are called in the order in which they were added to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property.</span></span>  
+  
+ <span data-ttu-id="37645-105">Implementieren Sie die <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Methode, um die Fehlermeldung zu steuern, die dem Client zurückgegeben wird.</span><span class="sxs-lookup"><span data-stu-id="37645-105">Implement the <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> method to control the fault message that is returned to the client.</span></span>  
+  
+ <span data-ttu-id="37645-106">Implementieren Sie die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode, um fehlerbezogenes Verhalten, wie die Fehlerprotokollierung, die Sicherstellung eines Failfast, das Beenden der Anwendung und Ähnliches, zu ermöglichen.</span><span class="sxs-lookup"><span data-stu-id="37645-106">Implement the <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method to ensure error-related behaviors, including error logging, assuring a fail fast, shutting down the application, and so on.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="37645-107">Da die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode von vielen verschiedenen Quellen aus aufgerufen werden kann, kann nicht garantiert werden, über welchen Thread die Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-107">Because the <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method can be called from many different places there are no guarantees made about which thread the method is called on.</span></span> <span data-ttu-id="37645-108">Verlassen Sie sich nicht darauf, dass die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode vom Vorgangsthread aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-108">Do not depend on <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method being called on the operation thread.</span></span>  
+  
+ <span data-ttu-id="37645-109">Alle <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Implementierungen werden schon vor dem Senden einer Antwortnachricht aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="37645-109">All <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> implementations are called first, prior to sending a response message.</span></span> <span data-ttu-id="37645-110">Wenn alle <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Implementierungen aufgerufen und zurückgegeben wurden und wenn `fault` nicht `null` ist, wird sie gemäß dem Vorgangsvertrag an den Client zurückgesendet.</span><span class="sxs-lookup"><span data-stu-id="37645-110">When all <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> implementations have been called and return, and if `fault` is non-`null`, it is sent back to the client according to the operation contract.</span></span> <span data-ttu-id="37645-111">Wenn `fault``null` ist, nachdem alle Implementierungen aufgerufen wurden, wird die Antwortnachricht vom <xref:System.ServiceModel.ServiceBehaviorAttribute.IncludeExceptionDetailInFaults%2A?displayProperty=nameWithType>-Eigenschaftswert gesteuert.</span><span class="sxs-lookup"><span data-stu-id="37645-111">If `fault` is `null` after all implementations have been called, the response message is controlled by the <xref:System.ServiceModel.ServiceBehaviorAttribute.IncludeExceptionDetailInFaults%2A?displayProperty=nameWithType> property value.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="37645-112">Ausnahmen können auftreten, nachdem alle <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Implementierungen aufgerufen wurden und eine Antwortnachricht an den Kanal weitergegeben wurde.</span><span class="sxs-lookup"><span data-stu-id="37645-112">Exceptions can occur after all <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> implementations are called and a response message is handed to the channel.</span></span> <span data-ttu-id="37645-113">Wenn eine Kanal-Ausnahme tritt auf (z. B. Probleme beim Serialisieren der Nachricht), <xref:System.ServiceModel.Dispatcher.IErrorHandler> Objekte benachrichtigt werden sollen.</span><span class="sxs-lookup"><span data-stu-id="37645-113">If a channel exception occurs (for example, difficulty serializing the message) <xref:System.ServiceModel.Dispatcher.IErrorHandler> objects are notified.</span></span> <span data-ttu-id="37645-114">In diesem Fall sollten Sie dennoch sicherstellen, dass Ihre Entwicklungsumgebung abfängt und Sie solche Ausnahmen angezeigt oder binärencoder der Ablaufverfolgung, um das Problem zu ermitteln.</span><span class="sxs-lookup"><span data-stu-id="37645-114">In this case, you should still make sure that your development environment catches and displays such exceptions to you or makes use of tracing to discover the problem.</span></span> <span data-ttu-id="37645-115">Weitere Informationen zur Ablaufverfolgung finden Sie unter [mithilfe-Ablaufverfolgung zum Beheben der Anwendung](~/docs/framework/wcf/diagnostics/tracing/using-tracing-to-troubleshoot-your-application.md).</span><span class="sxs-lookup"><span data-stu-id="37645-115">For more information about tracing, see [Using Tracing to Troubleshoot Your Application](~/docs/framework/wcf/diagnostics/tracing/using-tracing-to-troubleshoot-your-application.md).</span></span>  
+  
+ <span data-ttu-id="37645-116">Nachdem die Antwortnachricht gesendet wurde, werden alle <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Implementierungen in der gleichen Reihenfolge aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="37645-116">After the response message has been sent, all <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> implementations are called in the same order.</span></span>  
+  
+ <span data-ttu-id="37645-117">In der Regel wird eine <xref:System.ServiceModel.Dispatcher.IErrorHandler>-Implementierung der <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A>-Eigenschaft für den Dienst hinzugefügt (und im Fall von Duplexkommunikation für den Client).</span><span class="sxs-lookup"><span data-stu-id="37645-117">Typically, an <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementation is added to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property on the service (and the client in the case of duplex communication).</span></span>  
+  
+ <span data-ttu-id="37645-118">Sie können <xref:System.ServiceModel.Dispatcher.IErrorHandler> der Laufzeit hinzufügen, indem Sie Verhalten implementieren (entweder ein <xref:System.ServiceModel.Description.IServiceBehavior?displayProperty=nameWithType>-Objekt, ein <xref:System.ServiceModel.Description.IEndpointBehavior?displayProperty=nameWithType>-Objekt, ein <xref:System.ServiceModel.Description.IContractBehavior?displayProperty=nameWithType>-Objekt oder ein <xref:System.ServiceModel.Description.IOperationBehavior?displayProperty=nameWithType>-Objekt) und das Verhalten programmgesteuert, von einer Konfigurationsdatei oder mit einem benutzerdefinierten Attribut zum Anfügen von <xref:System.ServiceModel.Dispatcher.IErrorHandler> verwenden.</span><span class="sxs-lookup"><span data-stu-id="37645-118">You can add the <xref:System.ServiceModel.Dispatcher.IErrorHandler> to the runtime by implementing a behavior (either an <xref:System.ServiceModel.Description.IServiceBehavior?displayProperty=nameWithType>, <xref:System.ServiceModel.Description.IEndpointBehavior?displayProperty=nameWithType>, <xref:System.ServiceModel.Description.IContractBehavior?displayProperty=nameWithType>, or <xref:System.ServiceModel.Description.IOperationBehavior?displayProperty=nameWithType> object) and use the behavior programmatically, from a configuration file or with a custom attribute to attach your <xref:System.ServiceModel.Dispatcher.IErrorHandler>.</span></span>  
+  
+ <span data-ttu-id="37645-119">Weitere Informationen zum Verwenden von Verhaltensweisen zum Ändern der Laufzeit finden Sie unter [konfigurieren und Erweitern der Laufzeit mit Verhalten](~/docs/framework/wcf/extending/configuring-and-extending-the-runtime-with-behaviors.md).</span><span class="sxs-lookup"><span data-stu-id="37645-119">For more information about using behaviors to modify the runtime, see [Configuring and Extending the Runtime with Behaviors](~/docs/framework/wcf/extending/configuring-and-extending-the-runtime-with-behaviors.md).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="37645-120">Das folgende Codebeispiel veranschaulicht einen Dienst, der <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementiert, wodurch nur <xref:System.ServiceModel.FaultException%601> des Typs `GreetingFault` zurückgegeben wird, wenn eine Dienstmethode eine verwaltete Ausnahme auslöst.</span><span class="sxs-lookup"><span data-stu-id="37645-120">The following code example demonstrates a service that implements <xref:System.ServiceModel.Dispatcher.IErrorHandler> that returns only <xref:System.ServiceModel.FaultException%601> of type `GreetingFault` when a service method throws a managed exception.</span></span>  
+  
+ [!code-csharp[IErrorHandler#6](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#6)]
+ [!code-vb[IErrorHandler#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#6)]  
+  
+ <span data-ttu-id="37645-121">Im folgenden Codebeispiel wird veranschaulicht, wie ein Dienstverhalten verwendet wird, um die <xref:System.ServiceModel.Dispatcher.IErrorHandler>-Implementierung zur <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A>-Eigenschaft hinzuzufügen.</span><span class="sxs-lookup"><span data-stu-id="37645-121">The following code example shows how to use a service behavior to add the <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementation to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property.</span></span>  
+  
+ [!code-csharp[IErrorHandler#7](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#7)]
+ [!code-vb[IErrorHandler#7](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#7)]  
+  
+ <span data-ttu-id="37645-122">Im folgenden Codebeispiel wird die Konfiguration des Diensts zum Laden des Dienstverhaltens mit der Anwendungskonfigurationsdatei veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="37645-122">The following code example shows how to configure the service to load the service behavior using an application configuration file.</span></span> <span data-ttu-id="37645-123">Weitere Informationen zur Verfügbarmachung eines Dienstverhaltens in einer Konfigurationsdatei finden Sie unter <xref:System.ServiceModel.Description.IServiceBehavior>.</span><span class="sxs-lookup"><span data-stu-id="37645-123">For more details about how to expose a service behavior in a configuration file, see <xref:System.ServiceModel.Description.IServiceBehavior>.</span></span>  
+
+ [!code-xml[IErrorHandler#4](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/hostapplication.exe.config#4)]   
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="HandleError">
+      <MemberSignature Language="C#" Value="public bool HandleError (Exception error);" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool HandleError(class System.Exception error) cil managed" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="VB.NET" Value="Public Function HandleError (error As Exception) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool HandleError(Exception ^ error);" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="C#" Value="public bool HandleError (Exception exception);" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool HandleError(class System.Exception exception) cil managed" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.IErrorHandler.HandleError(System.Exception)" FrameworkAlternate="xamarinmac-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool HandleError(Exception ^ exception);" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="error" Type="System.Exception" Index="0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+        <Parameter Name="exception" Type="System.Exception" Index="0" FrameworkAlternate="xamarinmac-3.0" />
+      </Parameters>
+      <Docs>
+        <param name="exception">To be added.</param>
+        <summary>
+          <span data-ttu-id="37645-124">Aktiviert fehlerbezogene Verarbeitung und gibt einen Wert zurück, der angibt, ob der Verteiler die Sitzung und den Instanzkontext in bestimmten Fällen abbricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-124">Enables error-related processing and returns a value that indicates whether the dispatcher aborts the session and the instance context in certain cases.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="37645-125">
+            <see langword="true" />, falls [!INCLUDE[indigo1](~/includes/indigo1-md.md)] die Sitzung (sofern vorhanden) und den Instanzkontext nicht abbrechen soll, falls der Instanzkontext nicht <see cref="F:System.ServiceModel.InstanceContextMode.Single" /> lautet; andernfalls , <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-125">
+              <see langword="true" /> if [!INCLUDE[indigo1](~/includes/indigo1-md.md)] should not abort the session (if there is one) and instance context if the instance context is not <see cref="F:System.ServiceModel.InstanceContextMode.Single" />; otherwise, <see langword="false" />.</span>
+          </span>
+          <span data-ttu-id="37645-126">Der Standardwert ist <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-126">The default is <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="37645-127">Verwenden Sie die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode zum Implementieren von fehlerbezogenem Verhalten wie Fehlerprotokollierung, Systembenachrichtigungen, Herunterfahren der Anwendung und Ähnliches, und geben Sie einen Wert zurück, der angibt, ob die Ausnahme ordnungsgemäß behandelt wurde.</span><span class="sxs-lookup"><span data-stu-id="37645-127">Use the <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method to implement error-related behaviors such as error logging, system notifications, shutting down the application, and so on, and return a value that specifies whether the exception has been handled appropriately.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="37645-128">Da die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode von vielen verschiedenen Quellen aus aufgerufen werden kann, kann nicht garantiert werden, über welchen Thread die Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-128">Because the <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method can be called from many different places there are no guarantees made about which thread the method is called on.</span></span> <span data-ttu-id="37645-129">Verlassen Sie sich nicht darauf, dass die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode vom Vorgangsthread aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-129">Do not depend on <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method being called on the operation thread.</span></span>  
+  
+ <span data-ttu-id="37645-130">Alle <xref:System.ServiceModel.Dispatcher.IErrorHandler>-Implementierungen werden aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="37645-130">All <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementations are called.</span></span> <span data-ttu-id="37645-131">Standardmäßig (wenn der Rückgabewert `false` lautet) bricht der Verteiler bei Ausnahmen alle Sitzungen ab und bricht auch den <xref:System.ServiceModel.InstanceContext> ab, falls der <xref:System.ServiceModel.InstanceContextMode><xref:System.ServiceModel.InstanceContextMode.Single> nicht entspricht.</span><span class="sxs-lookup"><span data-stu-id="37645-131">By default (when the return value is `false`), if there is an exception, the dispatcher aborts any session and aborts the <xref:System.ServiceModel.InstanceContext> if the <xref:System.ServiceModel.InstanceContextMode> is anything other than <xref:System.ServiceModel.InstanceContextMode.Single>.</span></span>  <span data-ttu-id="37645-132">Die Ausnahme gilt in diesem Fall als nicht behandelt, alle Zustände gelten als beschädigt.</span><span class="sxs-lookup"><span data-stu-id="37645-132">The exception is then considered unhandled and any state is considered corrupt.</span></span>  
+  
+ <span data-ttu-id="37645-133">Geben Sie `true` von <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> zurück, um dieses Standardverhalten zu verhindern.</span><span class="sxs-lookup"><span data-stu-id="37645-133">Return `true` from <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> to prevent this default behavior.</span></span> <span data-ttu-id="37645-134">Falls ein Fehlerhandler `true` zurückgibt, wird [!INCLUDE[indigo2](~/includes/indigo2-md.md)] angewiesen, dass mithilfe der fehlgeschlagenen Anforderung fortgefahren werden kann.</span><span class="sxs-lookup"><span data-stu-id="37645-134">If any error handler returns `true` it instructs [!INCLUDE[indigo2](~/includes/indigo2-md.md)] that it is safe to continue using state associated with the failed request.</span></span>  
+  
+ <span data-ttu-id="37645-135">Falls kein Fehlerhandler `true` für die <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A>-Methode zurückgibt, gilt die Ausnahme als nicht behandelt. Die Standardantwort wird übernommen, was bei der Kommunikation über einen Sitzungskanal oder wenn die <xref:System.ServiceModel.InstanceContext?displayProperty=nameWithType>-Eigenschaft nicht auf <xref:System.ServiceModel.ServiceBehaviorAttribute.InstanceContextMode%2A?displayProperty=nameWithType> festgelegt ist, möglicherweise zu einem abgebrochenen <xref:System.ServiceModel.InstanceContextMode.Single?displayProperty=nameWithType> und Channel führt.</span><span class="sxs-lookup"><span data-stu-id="37645-135">If no error handler returns `true` from the <xref:System.ServiceModel.Dispatcher.IErrorHandler.HandleError%2A> method the exception is considered unhandled and the default response applies, potentially resulting in an aborted <xref:System.ServiceModel.InstanceContext?displayProperty=nameWithType> and channel when communicating on a session channel or the <xref:System.ServiceModel.ServiceBehaviorAttribute.InstanceContextMode%2A?displayProperty=nameWithType> property is not set to <xref:System.ServiceModel.InstanceContextMode.Single?displayProperty=nameWithType>.</span></span>  
+  
+ <span data-ttu-id="37645-136">Der `error`-Parameter ist nie `null` und enthält das Ausnahmeobjekt, das ausgelöst wurde.</span><span class="sxs-lookup"><span data-stu-id="37645-136">The `error` parameter is never `null` and contains the exception object that was thrown.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="37645-137">Das folgende Codebeispiel veranschaulicht einen Dienst, der <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementiert, wodurch nur <xref:System.ServiceModel.FaultException%601> des Typs `GreetingFault` zurückgegeben wird, wenn eine Dienstmethode eine verwaltete Ausnahme auslöst.</span><span class="sxs-lookup"><span data-stu-id="37645-137">The following code example demonstrates a service that implements <xref:System.ServiceModel.Dispatcher.IErrorHandler> that returns only <xref:System.ServiceModel.FaultException%601> of type `GreetingFault` when a service method throws a managed exception.</span></span>  
+  
+ [!code-csharp[IErrorHandler#6](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#6)]
+ [!code-vb[IErrorHandler#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#6)]  
+  
+ <span data-ttu-id="37645-138">Im folgenden Codebeispiel wird veranschaulicht, wie ein Dienstverhalten verwendet wird, um die <xref:System.ServiceModel.Dispatcher.IErrorHandler>-Implementierung zur <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A>-Eigenschaft hinzuzufügen.</span><span class="sxs-lookup"><span data-stu-id="37645-138">The following code example shows how to use a service behavior to add the <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementation to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property.</span></span>  
+  
+ [!code-csharp[IErrorHandler#7](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#7)]
+ [!code-vb[IErrorHandler#7](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#7)]  
+  
+ <span data-ttu-id="37645-139">Im folgenden Codebeispiel wird die Konfiguration des Diensts zum Laden des Dienstverhaltens mit der Anwendungskonfigurationsdatei veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="37645-139">The following code example shows how to configure the service to load the service behavior using an application configuration file.</span></span> <span data-ttu-id="37645-140">Weitere Informationen zur Verfügbarmachung eines Dienstverhaltens in einer Konfigurationsdatei finden Sie unter <xref:System.ServiceModel.Description.IServiceBehavior>.</span><span class="sxs-lookup"><span data-stu-id="37645-140">For more details about how to expose a service behavior in a configuration file, see <xref:System.ServiceModel.Description.IServiceBehavior>.</span></span>  
+  
+ [!code-xml[IErrorHandler#4](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/hostapplication.exe.config#4)]   
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ProvideFault">
+      <MemberSignature Language="C#" Value="public void ProvideFault (Exception error, System.ServiceModel.Channels.MessageVersion version, ref System.ServiceModel.Channels.Message fault);" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ProvideFault(class System.Exception error, class System.ServiceModel.Channels.MessageVersion version, class System.ServiceModel.Channels.Message&amp; fault) cil managed" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="VB.NET" Value="Public Sub ProvideFault (error As Exception, version As MessageVersion, ByRef fault As Message)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ProvideFault(Exception ^ error, System::ServiceModel::Channels::MessageVersion ^ version, System::ServiceModel::Channels::Message ^ % fault);" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="C#" Value="public void ProvideFault (Exception exception, System.ServiceModel.Channels.MessageVersion version, ref System.ServiceModel.Channels.Message fault);" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ProvideFault(class System.Exception exception, class System.ServiceModel.Channels.MessageVersion version, class System.ServiceModel.Channels.Message&amp; fault) cil managed" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault(System.Exception,System.ServiceModel.Channels.MessageVersion,System.ServiceModel.Channels.Message@)" FrameworkAlternate="xamarinmac-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void ProvideFault(Exception ^ exception, System::ServiceModel::Channels::MessageVersion ^ version, System::ServiceModel::Channels::Message ^ % fault);" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="error" Type="System.Exception" Index="0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+        <Parameter Name="exception" Type="System.Exception" Index="0" FrameworkAlternate="xamarinmac-3.0" />
+        <Parameter Name="version" Type="System.ServiceModel.Channels.MessageVersion" Index="1" />
+        <Parameter Name="fault" Type="System.ServiceModel.Channels.Message&amp;" RefType="ref" Index="2" />
+      </Parameters>
+      <Docs>
+        <param name="error">To be added.</param>
+        <param name="exception">To be added.</param>
+        <param name="version">
+          <span data-ttu-id="37645-141">Die SOAP-Version der Nachricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-141">The SOAP version of the message.</span>
+          </span>
+        </param>
+        <param name="fault">
+          <span data-ttu-id="37645-142">Das <see cref="T:System.ServiceModel.Channels.Message" />-Objekt, das dem Client oder bei Duplexkommunikation dem Dienst zurückgegeben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-142">The <see cref="T:System.ServiceModel.Channels.Message" /> object that is returned to the client, or service, in the duplex case.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="37645-143">Aktiviert die Erstellung einer benutzerdefinierten <see cref="T:System.ServiceModel.FaultException`1" />, die während einer Dienstmethode von einer Ausnahme zurückgegeben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="37645-143">Enables the creation of a custom <see cref="T:System.ServiceModel.FaultException`1" /> that is returned from an exception in the course of a service method.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="37645-144">Implementieren Sie die <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Methode, um eine benutzerdefinierte Fehlermeldung zu erstellen, die dem Client zurückgegeben wird.</span><span class="sxs-lookup"><span data-stu-id="37645-144">Implement the <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> method to create a custom fault message that is returned to the client.</span></span>  <span data-ttu-id="37645-145">Die <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> Methode wird immer aufgerufen werden, für die Ausnahmen, die Vorgänge, außer wenn die WCF-Laufzeit die Ausnahme als besonders Schwerwiegender erkennt und löst die Ausnahme selbst verlassen.</span><span class="sxs-lookup"><span data-stu-id="37645-145">The <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> method will always be called for exceptions that leave operations, except when the WCF runtime recognizes the exception as especially fatal and rethrows the exception itself.</span></span> <span data-ttu-id="37645-146">Wenn alle <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Implementierungen aufgerufen wurden, wird die Fehlermeldung zurück an den Client gesendet (sofern `fault` nicht `null` ist).</span><span class="sxs-lookup"><span data-stu-id="37645-146">When all <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> implementations have been called, the fault message is sent back to the client (if `fault` is non-`null`).</span></span> <span data-ttu-id="37645-147">Wenn die `fault` Parameter ist `null` der Standard-Fehler an den Client gesendet wird.</span><span class="sxs-lookup"><span data-stu-id="37645-147">If the `fault` parameter is `null` the default fault is sent to the client.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="37645-148">Die eingehende Nachricht, die den Verarbeitungsfehler verursacht hat, ist während dieser Methode über die <xref:System.ServiceModel.OperationContext.RequestContext%2A?displayProperty=nameWithType>-Eigenschaft verfügbar.</span><span class="sxs-lookup"><span data-stu-id="37645-148">The inbound message that caused the processing error is available during this method from the <xref:System.ServiceModel.OperationContext.RequestContext%2A?displayProperty=nameWithType> property.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="37645-149">Da die <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Methode von vielen verschiedenen Quellen aus aufgerufen werden kann, kann nicht garantiert werden, über welchen Thread die Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-149">Because the <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> method can be called from many different places there are no guarantees made about which thread the method is called on.</span></span> <span data-ttu-id="37645-150">Verlassen Sie sich nicht darauf, dass die <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A>-Methode vom Vorgangsthread aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="37645-150">Do not depend on <xref:System.ServiceModel.Dispatcher.IErrorHandler.ProvideFault%2A> method being called on the operation thread.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="37645-151">Das folgende Codebeispiel veranschaulicht einen Dienst, der <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementiert, wodurch nur <xref:System.ServiceModel.FaultException%601> des Typs `GreetingFault` zurückgegeben wird, wenn eine Dienstmethode eine verwaltete Ausnahme auslöst.</span><span class="sxs-lookup"><span data-stu-id="37645-151">The following code example demonstrates a service that implements <xref:System.ServiceModel.Dispatcher.IErrorHandler> that returns only <xref:System.ServiceModel.FaultException%601> of type `GreetingFault` when a service method throws a managed exception.</span></span>  
+  
+ [!code-csharp[IErrorHandler#6](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#6)]
+ [!code-vb[IErrorHandler#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#6)]  
+  
+ <span data-ttu-id="37645-152">Im folgenden Codebeispiel wird veranschaulicht, wie ein Dienstverhalten verwendet wird, um die <xref:System.ServiceModel.Dispatcher.IErrorHandler>-Implementierung zur <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A>-Eigenschaft hinzuzufügen.</span><span class="sxs-lookup"><span data-stu-id="37645-152">The following code example shows how to use a service behavior to add the <xref:System.ServiceModel.Dispatcher.IErrorHandler> implementation to the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> property.</span></span>  
+  
+ [!code-csharp[IErrorHandler#7](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/ierrorhandler.cs#7)]
+ [!code-vb[IErrorHandler#7](~/samples/snippets/visualbasic/VS_Snippets_CFX/ierrorhandler/vb/ierrorhandler.vb#7)]  
+  
+ <span data-ttu-id="37645-153">Im folgenden Codebeispiel wird die Konfiguration des Diensts zum Laden des Dienstverhaltens mit der Anwendungskonfigurationsdatei veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="37645-153">The following code example shows how to configure the service to load the service behavior using an application configuration file.</span></span> <span data-ttu-id="37645-154">Weitere Informationen zur Verfügbarmachung eines Dienstverhaltens in einer Konfigurationsdatei finden Sie unter <xref:System.ServiceModel.Description.IServiceBehavior>.</span><span class="sxs-lookup"><span data-stu-id="37645-154">For more details about how to expose a service behavior in a configuration file, see <xref:System.ServiceModel.Description.IServiceBehavior>.</span></span>  
+  
+ [!code-xml[IErrorHandler#4](~/samples/snippets/csharp/VS_Snippets_CFX/ierrorhandler/cs/hostapplication.exe.config#4)]   
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

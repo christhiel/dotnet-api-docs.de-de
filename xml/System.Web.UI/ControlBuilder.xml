@@ -1,0 +1,1791 @@
+<Type Name="ControlBuilder" FullName="System.Web.UI.ControlBuilder">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="f9f189e34352a9bc82c2ac71e575d4e05ef76238" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class ControlBuilder" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ControlBuilder extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Web.UI.ControlBuilder" />
+  <TypeSignature Language="VB.NET" Value="Public Class ControlBuilder" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ControlBuilder" />
+  <AssemblyInfo>
+    <AssemblyName>System.Web</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+      <span data-ttu-id="3b920-101">Unterstützt den Seitenparser beim Erstellen eines Steuerelements und der darin enthaltenen untergeordneten Steuerelemente.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="3b920-101">Supports the page parser in building a control and the child controls it contains.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-102">Standardmäßig ist jedes Steuerelement auf einer Seite zugeordnet ist, hat den Standardwert <xref:System.Web.UI.ControlBuilder> Klasse.</span><span class="sxs-lookup"><span data-stu-id="3b920-102">By default, every control on a page is associated with a default <xref:System.Web.UI.ControlBuilder> class.</span></span> <span data-ttu-id="3b920-103">Bei der Analyse erstellt das ASP.NET-Seitenframework eine Struktur von <xref:System.Web.UI.ControlBuilder> Objekte, die die Struktur von Steuerelementen für die Seite.</span><span class="sxs-lookup"><span data-stu-id="3b920-103">During parsing, the ASP.NET page framework builds a tree of <xref:System.Web.UI.ControlBuilder> objects corresponding to the tree of controls for the page.</span></span> <span data-ttu-id="3b920-104">Die <xref:System.Web.UI.ControlBuilder> Struktur wird anschließend verwendet, um die Seitencode zum Erstellen der Struktur des Steuerelements zu generieren.</span><span class="sxs-lookup"><span data-stu-id="3b920-104">The <xref:System.Web.UI.ControlBuilder> tree is then used to generate page code to create the control tree.</span></span> <span data-ttu-id="3b920-105">Zusätzlich zu den untergeordneten Steuerelementen die <xref:System.Web.UI.ControlBuilder> definiert das Verhalten wie der Inhalt innerhalb der Steuerelementtags analysiert wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-105">In addition to child controls, the <xref:System.Web.UI.ControlBuilder> defines the behavior of how the content within control tags is parsed.</span></span> <span data-ttu-id="3b920-106">Sie können dieses Standardverhalten überschreiben, indem Sie eine eigene benutzerdefinierte Steuerelement-Generator-Klasse definieren.</span><span class="sxs-lookup"><span data-stu-id="3b920-106">You can override this default behavior by defining your own custom control builder class.</span></span> <span data-ttu-id="3b920-107">Dies erfolgt durch Anwenden einer <xref:System.Web.UI.ControlBuilderAttribute> -Attribut auf die Steuerelement-Generator-Klasse wie folgt:</span><span class="sxs-lookup"><span data-stu-id="3b920-107">This is done by applying a <xref:System.Web.UI.ControlBuilderAttribute> attribute to your control builder class as follows:</span></span>  
+  
+ `[ControlBuilderAttribute(typeof(ControlBuilderType))]`  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="3b920-108">Das folgende Codebeispiel erstellt eine <xref:System.Web.UI.WebControls.Table> Steuerelement, deren Attribute und Inhalt werden definiert, die zum Zeitpunkt die Tabelle basiert.</span><span class="sxs-lookup"><span data-stu-id="3b920-108">The following code example creates a <xref:System.Web.UI.WebControls.Table> control whose attributes and content are defined at the time the table is built.</span></span> <span data-ttu-id="3b920-109">Im folgenden finden die Befehlszeile verwenden, um die ausführbare Datei erstellt.</span><span class="sxs-lookup"><span data-stu-id="3b920-109">The following is the command line to use to build the executable.</span></span>  
+  
+```vb  
+vbc /r:System.dll /r:System.Web.dll /r:System.Drawing.dll /t:library /out:myWebAppPath/Bin/vb_mycontrolbuilder.dll myControlBuilder.vb  
+```  
+  
+```csharp  
+csc /t:library /out:myWebAppPath/Bin/cs_mycontrolbuilder.dll myControlBuilder.cs  
+```  
+  
+ [!code-csharp[SystemWebUI_ControlBuilder_2#1](~/samples/snippets/csharp/VS_Snippets_WebNet/SystemWebUI_ControlBuilder_2/CS/controlbuilder.cs#1)]
+ [!code-vb[SystemWebUI_ControlBuilder_2#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/SystemWebUI_ControlBuilder_2/VB/controlbuilder.vb#1)]  
+  
+ <span data-ttu-id="3b920-110">Das folgende Codebeispiel verwendet das vorherige benutzerdefinierte Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="3b920-110">The following code example uses the previous custom control.</span></span> <span data-ttu-id="3b920-111">Insbesondere erstellt einer Tabelle, deren Attribute und Inhalt zur Laufzeit definiert werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-111">In particular, it builds a table whose attributes and content are defined at run time.</span></span> <span data-ttu-id="3b920-112">Beachten Sie, dass die Werte in der Richtlinie die vorherige Befehlszeile widerspiegeln.</span><span class="sxs-lookup"><span data-stu-id="3b920-112">Notice that the values shown in the  directive reflect the previous command line.</span></span>  
+  
+ [!code-aspx-csharp[SystemWebUI_ControlBuilder_2#2](~/samples/snippets/csharp/VS_Snippets_WebNet/SystemWebUI_ControlBuilder_2/CS/controlbuilder.aspx#2)]
+ [!code-aspx-vb[SystemWebUI_ControlBuilder_2#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/SystemWebUI_ControlBuilder_2/VB/controlbuilder.aspx#2)]  
+  
+ ]]></format>
+    </remarks>
+    <altmember cref="T:System.Web.UI.Control" />
+    <altmember cref="T:System.Web.UI.WebControls.WebControl" />
+    <altmember cref="T:System.Web.UI.Page" />
+    <altmember cref="T:System.Web.UI.ControlBuilderAttribute" />
+    <altmember cref="T:System.Web.UI.ParseChildrenAttribute" />
+    <altmember cref="T:System.Web.UI.PersistChildrenAttribute" />
+    <altmember cref="M:System.Web.UI.Control.AddParsedSubObject(System.Object)" />
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ControlBuilder ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ControlBuilder();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-113">Initialisiert eine neue Instanz der <see cref="T:System.Web.UI.ControlBuilder" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-113">Initializes a new instance of the <see cref="T:System.Web.UI.ControlBuilder" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-114">Verwenden Sie diesen Konstruktor zum Erstellen einer neuen Instanz der <xref:System.Web.UI.ControlBuilder> Klasse.</span><span class="sxs-lookup"><span data-stu-id="3b920-114">Use this constructor to create a new instance the <xref:System.Web.UI.ControlBuilder> class.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="3b920-115">Dieser Konstruktor wird von ASP.NET in der Regel verwendet, bei der Analyse der Seite und der Hierarchie zu erstellen.</span><span class="sxs-lookup"><span data-stu-id="3b920-115">This constructor is generally used by ASP.NET when parsing the page and creating the control hierarchy.</span></span> <span data-ttu-id="3b920-116">Es ist nicht für die Verwendung im Code vorgesehen.</span><span class="sxs-lookup"><span data-stu-id="3b920-116">It is not intended for use in your code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AllowWhitespaceLiterals">
+      <MemberSignature Language="C#" Value="public virtual bool AllowWhitespaceLiterals ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool AllowWhitespaceLiterals() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.AllowWhitespaceLiterals" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function AllowWhitespaceLiterals () As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool AllowWhitespaceLiterals();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-117">Bestimmt, ob im Inhalt zwischen dem Start- und dem Endtag eines Steuerelements Leerstellenliterale zulässig sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-117">Determines whether white space literals are permitted in the content between a control's opening and closing tags.</span>
+          </span>
+          <span data-ttu-id="3b920-118">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-118">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-119">Gibt immer <see langword="true" /> zurück.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-119">Always returns <see langword="true" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-120">Die <xref:System.Web.UI.ControlBuilder.AllowWhitespaceLiterals%2A> Methode wird verwendet, um zu bestimmen, ob Leerraum im Inhalt zwischen die Start- und Endtag eines Steuerelements zulässig sind.</span><span class="sxs-lookup"><span data-stu-id="3b920-120">The <xref:System.Web.UI.ControlBuilder.AllowWhitespaceLiterals%2A> method is used to determine whether white space literals are permitted in the content between the opening and closing tags of a control.</span></span> <span data-ttu-id="3b920-121">Diese Methode gibt `false`, bevor der Inhalt vom Seitenparser verarbeitet wird, werden die leerzeichenliterale aus dem Inhalt abgeschnitten.</span><span class="sxs-lookup"><span data-stu-id="3b920-121">When this method returns `false`, the white space literals are trimmed from the content before the content is processed by the page parser.</span></span> <span data-ttu-id="3b920-122">Diese Methode gibt `true`, die leerzeichenliterale nicht entfernt.</span><span class="sxs-lookup"><span data-stu-id="3b920-122">When this method returns `true`, the white space literals not removed.</span></span>  
+  
+ <span data-ttu-id="3b920-123">Diese Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-123">This method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+   
+  
+## Examples  
+ [!code-csharp[ControlBuilderSamples_1#4](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_1/CS/ctrlbuilder_1.cs#4)]
+ [!code-vb[ControlBuilderSamples_1#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_1/VB/ctrlbuilder_1.vb#4)]  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="3b920-124">Sie können diese Methode überschreiben, in die abgeleitete Klasse, um anzugeben, ob leerzeichenliterale, in das benutzerdefinierte Steuerelement zulässig sind.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="3b920-124">You can override this method in your derived class to indicate whether white space literals are permitted in your custom control.</span>
+            </span>
+          </para>
+        </block>
+      </Docs>
+    </Member>
+    <Member MemberName="AppendLiteralString">
+      <MemberSignature Language="C#" Value="public virtual void AppendLiteralString (string s);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void AppendLiteralString(string s) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.AppendLiteralString(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub AppendLiteralString (s As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void AppendLiteralString(System::String ^ s);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="s" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="s">
+          <span data-ttu-id="3b920-125">Der dem Steuerelement hinzuzufügende Inhalt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-125">The content to add to the control.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-126">Fügt den angegebenen literalen Inhalt einem Steuerelement hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-126">Adds the specified literal content to a control.</span>
+          </span>
+          <span data-ttu-id="3b920-127">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-127">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-128">Überschreiben Sie die <xref:System.Web.UI.ControlBuilder.AppendLiteralString%2A> Methode, um zu steuern, wie literalen Inhalt zwischen die Start- und Endtag des Steuerelements wird verarbeitet.</span><span class="sxs-lookup"><span data-stu-id="3b920-128">Override the <xref:System.Web.UI.ControlBuilder.AppendLiteralString%2A> method to control how literal content between the control's opening and closing tags is processed.</span></span> <span data-ttu-id="3b920-129">Literalen Inhalt kann beliebiger Text sein, die vom Browser an das Steuerelement übergeben wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-129">Literal content can be any text that is passed by the browser to the server control.</span></span> <span data-ttu-id="3b920-130">Beispielsweise sind alle HTML-Elemente und der Text zwischen die Start- und Endtags, literalen Inhalt.</span><span class="sxs-lookup"><span data-stu-id="3b920-130">For example, any HTML elements and text, between their opening and closing tags, are literal content.</span></span>  
+  
+   
+  
+## Examples  
+ [!code-csharp[ControlBuilderSamples_1#3](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_1/CS/ctrlbuilder_1.cs#3)]
+ [!code-vb[ControlBuilderSamples_1#3](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_1/VB/ctrlbuilder_1.vb#3)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Web.HttpException">
+          <span data-ttu-id="3b920-131">Das Zeichenfolgenliteral ist nicht wohlgeformt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-131">The string literal is not well formed.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="AppendSubBuilder">
+      <MemberSignature Language="C#" Value="public virtual void AppendSubBuilder (System.Web.UI.ControlBuilder subBuilder);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void AppendSubBuilder(class System.Web.UI.ControlBuilder subBuilder) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.AppendSubBuilder(System.Web.UI.ControlBuilder)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub AppendSubBuilder (subBuilder As ControlBuilder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void AppendSubBuilder(System::Web::UI::ControlBuilder ^ subBuilder);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="subBuilder" Type="System.Web.UI.ControlBuilder" />
+      </Parameters>
+      <Docs>
+        <param name="subBuilder">
+          <span data-ttu-id="3b920-132">Das dem untergeordneten Steuerelement zugeordnete <see cref="T:System.Web.UI.ControlBuilder" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-132">The <see cref="T:System.Web.UI.ControlBuilder" /> object assigned to the child control.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-133">Fügt dem <see cref="T:System.Web.UI.ControlBuilder" />-Objekt Generatoren für alle untergeordneten Steuerelemente hinzu, die zu dem Containersteuerelement gehören.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-133">Adds builders to the <see cref="T:System.Web.UI.ControlBuilder" /> object for any child controls that belong to the container control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="3b920-134">Im folgende Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.AppendSubBuilder%2A> -Methode auslöst ein <xref:System.Exception> , wenn das Steuerelement, das diesem Steuerelementgenerator angewendet wird versucht, um die Steuerelemente in einer Instanz von <xref:System.Web.UI.ControlCollection> Klasse.</span><span class="sxs-lookup"><span data-stu-id="3b920-134">The following example overrides the <xref:System.Web.UI.ControlBuilder.AppendSubBuilder%2A> method to throw an <xref:System.Exception> if the control this control builder is applied to tries to include controls in its instance of <xref:System.Web.UI.ControlCollection> class.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_2#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_2/cs/ctrlbuilder1.cs#1)]
+ [!code-vb[ControlBuilderSamples_2#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_2/VB/ctrlbuilder1.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.ControlBuilder" />
+      </Docs>
+    </Member>
+    <Member MemberName="BindingContainerBuilder">
+      <MemberSignature Language="C#" Value="public virtual System.Web.UI.ControlBuilder BindingContainerBuilder { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Web.UI.ControlBuilder BindingContainerBuilder" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.BindingContainerBuilder" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property BindingContainerBuilder As ControlBuilder" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Web::UI::ControlBuilder ^ BindingContainerBuilder { System::Web::UI::ControlBuilder ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.ControlBuilder</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-135">Ruft den Steuerelement-Generator ab, der sich auf den Bindungscontainer für das Steuerelement bezieht, das dieser Generator erstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-135">Gets the control builder that corresponds to the binding container for the control that this builder creates.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-136">Der Steuerelement-Generator, der dem Bindungscontainer für das Steuerelement entspricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-136">The control builder that corresponds to the binding container for the control.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BindingContainerType">
+      <MemberSignature Language="C#" Value="public virtual Type BindingContainerType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type BindingContainerType" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.BindingContainerType" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property BindingContainerType As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property Type ^ BindingContainerType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-137">Ruft den Typ des Bindungscontainers für das Steuerelement ab, das dieser Generator erstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-137">Gets the type of the binding container for the control that this builder creates.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-138">Ein <see cref="T:System.Type" />, der den Typ des Bindungscontainers für das Steuerelement darstellt, das dieser Generator erstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-138">A <see cref="T:System.Type" /> that represent the type of the binding container for the control that this builder creates.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="P:System.Web.UI.Control.BindingContainer" />
+      </Docs>
+    </Member>
+    <Member MemberName="BuildObject">
+      <MemberSignature Language="C#" Value="public virtual object BuildObject ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object BuildObject() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.BuildObject" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function BuildObject () As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ BuildObject();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-139">Erstellt eine Entwurfszeitinstanz des Steuerelements, auf das das <see cref="T:System.Web.UI.ControlBuilder" />-Objekt verweist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-139">Builds a design-time instance of the control that is referred to by this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-140">Das resultierende erstellte Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-140">The resulting built control.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseControl">
+      <MemberSignature Language="C#" Value="public virtual void CloseControl ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void CloseControl() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.CloseControl" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub CloseControl ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void CloseControl();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-141">Wird vom Parser aufgerufen, um den Generator zu benachrichtigen, dass die Analyse des Start- und Endtags des Steuerelements abgeschlossen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-141">Called by the parser to inform the builder that the parsing of the control's opening and closing tags is complete.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-142">Die <xref:System.Web.UI.ControlBuilder.CloseControl%2A> Methode wird vom Parser verwendet, der Generator an, dass das Analysieren des Steuerelements abgeschlossen wurde.</span><span class="sxs-lookup"><span data-stu-id="3b920-142">The <xref:System.Web.UI.ControlBuilder.CloseControl%2A> method is used by the parser to indicate to the builder that it has finished parsing the control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ComplexPropertyEntries">
+      <MemberSignature Language="C#" Value="public System.Collections.ICollection ComplexPropertyEntries { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.ICollection ComplexPropertyEntries" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ComplexPropertyEntries" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ComplexPropertyEntries As ICollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::ICollection ^ ComplexPropertyEntries { System::Collections::ICollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.ICollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-143">Ruft eine Sammlung von komplexen Eigenschafteneinträgen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-143">Gets a collection of complex property entries.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-144">Eine Sammlung von komplexen Eigenschafteneinträgen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-144">A collection of complex property entries.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-145">Wenn keine Einträge vorhanden sind, wird eine statische leere Auflistung zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="3b920-145">If there are no entries, a static empty collection is returned.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ControlType">
+      <MemberSignature Language="C#" Value="public Type ControlType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type ControlType" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ControlType" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ControlType As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Type ^ ControlType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-146">Ruft den <see cref="T:System.Type" /> für das zu erstellende Steuerelement ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-146">Gets the <see cref="T:System.Type" /> for the control to be created.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-147">Der <see cref="T:System.Type" /> für das zu erstellende Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-147">The <see cref="T:System.Type" /> for the control to be created.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="3b920-148">In diesem Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> -Methode überprüft die <xref:System.Web.UI.ControlBuilder.ControlType%2A> auf die Eigenschaft, um zu bestimmen, welche Art von Steuerelement diesem Generator angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-148">This example overrides the <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> method to check the <xref:System.Web.UI.ControlBuilder.ControlType%2A> property to determine what type of control this builder is applied to.</span></span> <span data-ttu-id="3b920-149">Wird jedoch eine `CustomTextBox`, überprüft der Generator, ob der Wert der <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> Eigenschaft im Steuerelement enthalten ist.</span><span class="sxs-lookup"><span data-stu-id="3b920-149">If it is a `CustomTextBox`, the builder checks whether the value of the <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> property is included in the control.</span></span> <span data-ttu-id="3b920-150">Wenn also eine Ausnahme ausgelöst, wenn nicht wird die <xref:System.Web.UI.ControlBuilder.HasBody%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-150">If so, an exception is thrown, if not the <xref:System.Web.UI.ControlBuilder.HasBody%2A> method is called.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_4#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_4/cs/controlbuilder_4.cs#1)]
+ [!code-vb[ControlBuilderSamples_4#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_4/VB/controlbuilder_4.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Type" />
+      </Docs>
+    </Member>
+    <Member MemberName="CreateBuilderFromType">
+      <MemberSignature Language="C#" Value="public static System.Web.UI.ControlBuilder CreateBuilderFromType (System.Web.UI.TemplateParser parser, System.Web.UI.ControlBuilder parentBuilder, Type type, string tagName, string id, System.Collections.IDictionary attribs, int line, string sourceFileName);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Web.UI.ControlBuilder CreateBuilderFromType(class System.Web.UI.TemplateParser parser, class System.Web.UI.ControlBuilder parentBuilder, class System.Type type, string tagName, string id, class System.Collections.IDictionary attribs, int32 line, string sourceFileName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.CreateBuilderFromType(System.Web.UI.TemplateParser,System.Web.UI.ControlBuilder,System.Type,System.String,System.String,System.Collections.IDictionary,System.Int32,System.String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Web::UI::ControlBuilder ^ CreateBuilderFromType(System::Web::UI::TemplateParser ^ parser, System::Web::UI::ControlBuilder ^ parentBuilder, Type ^ type, System::String ^ tagName, System::String ^ id, System::Collections::IDictionary ^ attribs, int line, System::String ^ sourceFileName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.ControlBuilder</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parser" Type="System.Web.UI.TemplateParser" />
+        <Parameter Name="parentBuilder" Type="System.Web.UI.ControlBuilder" />
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="tagName" Type="System.String" />
+        <Parameter Name="id" Type="System.String" />
+        <Parameter Name="attribs" Type="System.Collections.IDictionary" />
+        <Parameter Name="line" Type="System.Int32" />
+        <Parameter Name="sourceFileName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="parser">
+          <span data-ttu-id="3b920-151">Das für das Analysieren des Steuerelements zuständige <see cref="T:System.Web.UI.TemplateParser" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-151">The <see cref="T:System.Web.UI.TemplateParser" /> object responsible for parsing the control.</span>
+          </span>
+        </param>
+        <param name="parentBuilder">
+          <span data-ttu-id="3b920-152">Das für das Erstellen des übergeordneten Steuerelements zuständige <see cref="T:System.Web.UI.ControlBuilder" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-152">The <see cref="T:System.Web.UI.ControlBuilder" /> object responsible for building the parent control.</span>
+          </span>
+        </param>
+        <param name="type">
+          <span data-ttu-id="3b920-153">Der <see cref="T:System.Type" /> des Objekts, das der Generator erstellen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-153">The <see cref="T:System.Type" /> of the object that the builder will create.</span>
+          </span>
+        </param>
+        <param name="tagName">
+          <span data-ttu-id="3b920-154">Der Name des zu erstellenden Tags.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-154">The name of the tag to be built.</span>
+          </span>
+          <span data-ttu-id="3b920-155">Der Generator kann auf diese Weise mehrere Tagtypen unterstützen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-155">This allows the builder to support multiple tag types.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="3b920-156">Das dem Steuerelement zugewiesene <see cref="P:System.Web.UI.ControlBuilder.ID" />-Attribut.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-156">The <see cref="P:System.Web.UI.ControlBuilder.ID" /> attribute assigned to the control.</span>
+          </span>
+        </param>
+        <param name="attribs">
+          <span data-ttu-id="3b920-157">Das <see cref="T:System.Collections.IDictionary" />-Objekt, das alle angegebenen Tagattribute enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-157">The <see cref="T:System.Collections.IDictionary" /> object that holds all the specified tag attributes.</span>
+          </span>
+        </param>
+        <param name="line">
+          <span data-ttu-id="3b920-158">Die Zeilennummer der Quelldatei für das angegebene Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-158">The source file line number for the specified control.</span>
+          </span>
+        </param>
+        <param name="sourceFileName">
+          <span data-ttu-id="3b920-159">Der Name der Quelldatei, aus der das Steuerelement erstellt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-159">The name of the source file from which the control is to be created.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-160">Erstellt ein <see cref="T:System.Web.UI.ControlBuilder" />-Objekt aus dem angegebenen Tagnamen und Objekttyp sowie anderen Parametern, mit denen der Generator definiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-160">Creates a <see cref="T:System.Web.UI.ControlBuilder" /> object from the specified tag name and object type, as well as other parameters defining the builder.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-161">Der für das Erstellen des Steuerelements zuständige Generator.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-161">The builder that is responsible for creating the control.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CurrentFilterResolutionService">
+      <MemberSignature Language="C#" Value="public System.Web.UI.IFilterResolutionService CurrentFilterResolutionService { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Web.UI.IFilterResolutionService CurrentFilterResolutionService" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.CurrentFilterResolutionService" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property CurrentFilterResolutionService As IFilterResolutionService" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Web::UI::IFilterResolutionService ^ CurrentFilterResolutionService { System::Web::UI::IFilterResolutionService ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.IFilterResolutionService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-162">Ruft ein <see cref="T:System.Web.UI.IFilterResolutionService" />-Objekt ab, das für die Verwaltung von Diensten im Zusammenhang mit Gerätefiltern verwendet wird, wenn Steuerelemente im Designer analysiert und beibehalten werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-162">Gets an <see cref="T:System.Web.UI.IFilterResolutionService" /> object that is used to manage device-filter related services when parsing and persisting controls in the designer.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-163">Ein <see cref="T:System.Web.UI.IFilterResolutionService" />-Objekt, das für die Verwaltung von Diensten im Zusammenhang mit Gerätefiltern verwendet wird, wenn Steuerelemente im Designer analysiert und beibehalten werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-163">An <see cref="T:System.Web.UI.IFilterResolutionService" /> object that is used to manage device filter related services when parsing and persisting controls in the designer.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-164">Die <xref:System.Web.UI.IFilterResolutionService> Schnittstelle ist eine Schnittstelle, die wie ein Steuerelement Gerätefilter in einem Designer spezifisch ist.</span><span class="sxs-lookup"><span data-stu-id="3b920-164">The <xref:System.Web.UI.IFilterResolutionService> interface is an interface that is specific to how a control uses device filters in a designer.</span></span> <span data-ttu-id="3b920-165">Wenn Steuerelemente im Designer außerhalb des Kontexts einer Browseranforderung beibehalten oder analysiert die <xref:System.Web.UI.IFilterResolutionService> bietet eine Möglichkeit, um zu bestimmen, ob das aktuelle Steuerelement ein benannter Filter betroffen ist, und gibt an, ob ein benannter Filter Teil einer bestimmten Gerätefilter ist Hierarchie.</span><span class="sxs-lookup"><span data-stu-id="3b920-165">When controls are parsed or persisted in the designer outside the context of a browser request, the <xref:System.Web.UI.IFilterResolutionService> provides a way to determine whether the current control is affected by a named filter and whether a named filter is part of a specific device-filter hierarchy.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.IFilterResolutionService" />
+      </Docs>
+    </Member>
+    <Member MemberName="DeclareType">
+      <MemberSignature Language="C#" Value="public virtual Type DeclareType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type DeclareType" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.DeclareType" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property DeclareType As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property Type ^ DeclareType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-166">Ruft den Typ ab, der von der Codegenerierung verwendet wird, um das Steuerelement zu deklarieren.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-166">Gets the type that will be used by code generation to declare the control.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-167">Der <see cref="T:System.Type" /> des Steuerelements, der von der Codegenerierung verwendet wird, um das Steuerelement zu deklarieren.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-167">The <see cref="T:System.Type" /> of the control used by code generation to declare the control.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DesignerFilter">
+      <MemberSignature Language="C#" Value="public static readonly string DesignerFilter;" />
+      <MemberSignature Language="ILAsm" Value=".field public static initonly string DesignerFilter" />
+      <MemberSignature Language="DocId" Value="F:System.Web.UI.ControlBuilder.DesignerFilter" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly DesignerFilter As String " />
+      <MemberSignature Language="C++ CLI" Value="public: static initonly System::String ^ DesignerFilter;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-168">Stellt das <c>„__designer“</c>-Zeichenfolgenliteral dar.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-168">Represents the <c>"__designer"</c> literal string.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FChildrenAsProperties">
+      <MemberSignature Language="C#" Value="protected bool FChildrenAsProperties { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool FChildrenAsProperties" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.FChildrenAsProperties" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property FChildrenAsProperties As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool FChildrenAsProperties { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-169">Ruft einen Wert ab, der bestimmt, ob das Steuerelement ein <see cref="T:System.Web.UI.ParseChildrenAttribute" />-Element enthält, für das <see cref="P:System.Web.UI.ParseChildrenAttribute.ChildrenAsProperties" /> auf <see langword="true" /> festgelegt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-169">Gets a value that determines whether the control has a <see cref="T:System.Web.UI.ParseChildrenAttribute" /> with <see cref="P:System.Web.UI.ParseChildrenAttribute.ChildrenAsProperties" /> set to <see langword="true" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-170">
+            <see langword="true" />, wenn das Steuerelement ein <see cref="T:System.Web.UI.ParseChildrenAttribute" /> besitzt, dessen <see cref="P:System.Web.UI.ParseChildrenAttribute.ChildrenAsProperties" /> auf <see langword="true" /> festgelegt ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-170">
+              <see langword="true" /> if the control has a <see cref="T:System.Web.UI.ParseChildrenAttribute" /> with <see cref="P:System.Web.UI.ParseChildrenAttribute.ChildrenAsProperties" /> set to <see langword="true" />, otherwise <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FIsNonParserAccessor">
+      <MemberSignature Language="C#" Value="protected bool FIsNonParserAccessor { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool FIsNonParserAccessor" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.FIsNonParserAccessor" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property FIsNonParserAccessor As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool FIsNonParserAccessor { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-171">Ruft einen Wert ab, der bestimmt, ob das Steuerelement die <see cref="T:System.Web.UI.IParserAccessor" />-Schnittstelle implementiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-171">Gets a value that determines whether the control implements the <see cref="T:System.Web.UI.IParserAccessor" /> interface.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-172">
+            <see langword="false" />, wenn das Steuerelement die <see cref="T:System.Web.UI.IParserAccessor" />-Schnittstelle implementiert, andernfalls <see langword="true" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-172">
+              <see langword="false" /> if the control implements the <see cref="T:System.Web.UI.IParserAccessor" /> interface, otherwise <see langword="true" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetChildControlType">
+      <MemberSignature Language="C#" Value="public virtual Type GetChildControlType (string tagName, System.Collections.IDictionary attribs);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Type GetChildControlType(string tagName, class System.Collections.IDictionary attribs) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.GetChildControlType(System.String,System.Collections.IDictionary)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetChildControlType (tagName As String, attribs As IDictionary) As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual Type ^ GetChildControlType(System::String ^ tagName, System::Collections::IDictionary ^ attribs);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tagName" Type="System.String" />
+        <Parameter Name="attribs" Type="System.Collections.IDictionary" />
+      </Parameters>
+      <Docs>
+        <param name="tagName">
+          <span data-ttu-id="3b920-173">Der Tagname des untergeordneten Elements.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-173">The tag name of the child.</span>
+          </span>
+        </param>
+        <param name="attribs">
+          <span data-ttu-id="3b920-174">Ein Array von Attributen im untergeordneten Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-174">An array of attributes contained in the child control.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-175">Ruft den <see cref="T:System.Type" /> des Steuerelementtyps ab, der einem untergeordneten Tag entspricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-175">Obtains the <see cref="T:System.Type" /> of the control type corresponding to a child tag.</span>
+          </span>
+          <span data-ttu-id="3b920-176">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-176">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-177">Der <see cref="T:System.Type" /> des untergeordneten Elements des angegebenen Steuerelements.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-177">The <see cref="T:System.Type" /> of the specified control's child.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-178">Diese Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-178">This method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+   
+  
+## Examples  
+ [!code-csharp[ControlBuilderSamples_1#2](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_1/CS/ctrlbuilder_1.cs#2)]
+ [!code-vb[ControlBuilderSamples_1#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_1/VB/ctrlbuilder_1.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetObjectPersistData">
+      <MemberSignature Language="C#" Value="public System.Web.UI.ObjectPersistData GetObjectPersistData ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Web.UI.ObjectPersistData GetObjectPersistData() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.GetObjectPersistData" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetObjectPersistData () As ObjectPersistData" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Web::UI::ObjectPersistData ^ GetObjectPersistData();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.ObjectPersistData</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-179">Erstellt das <see cref="T:System.Web.UI.ObjectPersistData" />-Objekt für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-179">Creates the <see cref="T:System.Web.UI.ObjectPersistData" /> object for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-180">Das <see cref="T:System.Web.UI.ObjectPersistData" /> für dieses <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-180">The <see cref="T:System.Web.UI.ObjectPersistData" /> for this <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <altmember cref="T:System.Web.UI.ObjectPersistData" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetResourceKey">
+      <MemberSignature Language="C#" Value="public string GetResourceKey ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string GetResourceKey() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.GetResourceKey" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetResourceKey () As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ GetResourceKey();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-181">Ruft den Ressourcenschlüssel für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-181">Retrieves the resource key for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-182">Der Ressourcenschlüssel für diesen <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-182">The resource key for this <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <altmember cref="M:System.Web.UI.ControlBuilder.SetResourceKey(System.String)" />
+      </Docs>
+    </Member>
+    <Member MemberName="HasAspCode">
+      <MemberSignature Language="C#" Value="public virtual bool HasAspCode { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasAspCode" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.HasAspCode" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property HasAspCode As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool HasAspCode { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-183">Ruft einen Wert ab, der angibt, ob das Steuerelement Codeblöcke enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-183">Gets a value indicating whether the control contains any code blocks.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-184">
+            <see langword="true" />, wenn das Steuerelement mindestens einen Codeblock enthält, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-184">
+              <see langword="true" /> if the control contains at least one code block; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="3b920-185">In diesem Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> -Methode überprüft die <xref:System.Web.UI.ControlBuilder.ControlType%2A> auf die Eigenschaft, um zu bestimmen, welche Art von Steuerelement diesem Generator angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-185">This example overrides the <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> method to check the <xref:System.Web.UI.ControlBuilder.ControlType%2A> property to determine what type of control this builder is applied to.</span></span> <span data-ttu-id="3b920-186">Wird jedoch eine `CustomTextBox`, überprüft der Generator, ob der Wert der <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> Eigenschaft im Steuerelement enthalten ist.</span><span class="sxs-lookup"><span data-stu-id="3b920-186">If it is a `CustomTextBox`, the builder checks whether the value of the <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> property is included in the control.</span></span> <span data-ttu-id="3b920-187">Wenn also eine Ausnahme ausgelöst, wenn nicht wird die <xref:System.Web.UI.ControlBuilder.HasBody%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-187">If so, an exception is thrown, if not the <xref:System.Web.UI.ControlBuilder.HasBody%2A> method is called.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_4#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_4/cs/controlbuilder_4.cs#1)]
+ [!code-vb[ControlBuilderSamples_4#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_4/VB/controlbuilder_4.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HasBody">
+      <MemberSignature Language="C#" Value="public virtual bool HasBody ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool HasBody() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.HasBody" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function HasBody () As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool HasBody();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-188">Bestimmt, ob ein Steuerelement sowohl ein öffnendes als auch ein schließendes Tag besitzt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-188">Determines if a control has both an opening and closing tag.</span>
+          </span>
+          <span data-ttu-id="3b920-189">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-189">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-190">
+            <see langword="true" />, wenn das Steuerelement ein Start- und ein Endtag besitzt, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-190">
+              <see langword="true" /> if the control has an opening and closing tag; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-191">Diese Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-191">This method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="3b920-192">In diesem Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> -Methode überprüft die <xref:System.Web.UI.ControlBuilder.ControlType%2A> auf die Eigenschaft, um zu bestimmen, welche Art von Steuerelement diesem Generator angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-192">This example overrides the <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> method to check the <xref:System.Web.UI.ControlBuilder.ControlType%2A> property to determine what type of control this builder is applied to.</span></span> <span data-ttu-id="3b920-193">Wird jedoch eine `CustomTextBox`, überprüft der Generator, ob der Wert der <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> Eigenschaft im Steuerelement enthalten ist.</span><span class="sxs-lookup"><span data-stu-id="3b920-193">If it is a `CustomTextBox`, the builder checks whether the value of the <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> property is included in the control.</span></span> <span data-ttu-id="3b920-194">Wenn also eine Ausnahme ausgelöst, wenn nicht wird die <xref:System.Web.UI.ControlBuilder.HasBody%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-194">If so, an exception is thrown, if not the <xref:System.Web.UI.ControlBuilder.HasBody%2A> method is called.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_4#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_4/cs/controlbuilder_4.cs#1)]
+ [!code-vb[ControlBuilderSamples_4#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_4/VB/controlbuilder_4.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HtmlDecodeLiterals">
+      <MemberSignature Language="C#" Value="public virtual bool HtmlDecodeLiterals ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool HtmlDecodeLiterals() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.HtmlDecodeLiterals" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function HtmlDecodeLiterals () As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool HtmlDecodeLiterals();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-195">Bestimmt, ob das Zeichenfolgenliteral eines HTML-Steuerelements HTML-decodiert werden muss.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-195">Determines whether the literal string of an HTML control must be HTML decoded.</span>
+          </span>
+          <span data-ttu-id="3b920-196">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-196">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-197">
+            <see langword="true" />, wenn das Zeichenfolgenliteral des HTML-Steuerelements decodiert werden muss, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-197">
+              <see langword="true" /> if the HTML control literal string is to be decoded; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-198">Eine Literalzeichenfolge bezieht sich auf den Text zwischen dem Start- und Endtag des HTML-Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="3b920-198">A literal string refers to the text between the opening and closing tag of an HTML control.</span></span> <span data-ttu-id="3b920-199">HTML-Codierung ist, wenn der Text in eine Zeichenfolgendarstellung konvertiert wird, die der Browser wird anzuzeigen anstatt als HTML zu interpretieren.</span><span class="sxs-lookup"><span data-stu-id="3b920-199">HTML encoding is when text is converted into a string representation that the browser will display rather than interpret as HTML.</span></span> <span data-ttu-id="3b920-200">Zeichen, z. B. die Frage markieren (?), kaufmännisches und-Zeichen (&), Schrägstrich (/) zu markieren und Leerzeichen werden möglicherweise abgeschnitten oder von einigen Browsern beschädigt werden, damit diese Zeichen codiert werden müssen, wenn sie in angezeigt werden `a` Tags oder in Abfragezeichenfolgen.</span><span class="sxs-lookup"><span data-stu-id="3b920-200">Characters such as the question mark (?), ampersand (&), slash mark (/), and spaces might be truncated or corrupted by some browsers, so those characters must be encoded when they appear in `a` tags or in query strings.</span></span>  
+  
+ <span data-ttu-id="3b920-201">Die <xref:System.Web.UI.ControlBuilder.HtmlDecodeLiterals%2A> Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-201">The <xref:System.Web.UI.ControlBuilder.HtmlDecodeLiterals%2A> method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="3b920-202">Im folgende Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.HtmlDecodeLiterals%2A> Methode, um zuzulassen, HTML-Decodierung von Literalzeichenfolgen in jedes Steuerelement, das diesem Generator angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-202">The following example overrides the <xref:System.Web.UI.ControlBuilder.HtmlDecodeLiterals%2A> method to allow HTML decoding of literal strings in any control this builder is applied to.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_2#2](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_2/cs/ctrlbuilder1.cs#2)]
+ [!code-vb[ControlBuilderSamples_2#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_2/VB/ctrlbuilder1.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ID">
+      <MemberSignature Language="C#" Value="public string ID { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ID" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ID" />
+      <MemberSignature Language="VB.NET" Value="Public Property ID As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ ID { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-203">Ruft die Bezeichnereigenschaft für das zu erstellende Steuerelement ab oder legt diese fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-203">Gets or sets the identifier property for the control to be built.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-204">Die Bezeichnereigenschaft für das Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-204">The identifier property for the control.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InDesigner">
+      <MemberSignature Language="C#" Value="protected bool InDesigner { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool InDesigner" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.InDesigner" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property InDesigner As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool InDesigner { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-205">Gibt zurück, ob der <see cref="T:System.Web.UI.ControlBuilder" /> im Designer ausgeführt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-205">Returns whether the <see cref="T:System.Web.UI.ControlBuilder" /> is running in the designer.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-206">
+            <see langword="true" />, wenn der <see cref="T:System.Web.UI.ControlBuilder" /> im Designer ausgeführt wird, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-206">
+              <see langword="true" /> if the <see cref="T:System.Web.UI.ControlBuilder" /> is running in the designer; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="3b920-207">Im folgenden Beispiel wird die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> Eigenschaft bei der <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-207">The following example uses the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property when the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-208">Wenn ein Steuerelement mit diesem Generator angefügt ist, verfügt über die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> Methode bestimmt, ob das Steuerelement zur Entwurfszeit über einen Designer zugegriffen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-208">When a control has this builder attached to it, the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> method determines whether the control is being accessed at design-time through a designer.</span></span> <span data-ttu-id="3b920-209">Die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> gibt den Wert der die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaft, und klicken Sie dann die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> Methode wird aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-209">The <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> returns the value of the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property, and then the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-210">Wenn die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaftensatz auf `false`, wird eine <xref:System.Exception> ausgelöst wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-210">If the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property is set to `false`, an <xref:System.Exception> is thrown.</span></span> <span data-ttu-id="3b920-211">Andernfalls wird der innere Text des Steuerelements zurückgegeben, auf die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> aufrufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-211">Otherwise, the inner text of the control is returned on the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> call.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_3#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_3/cs/controlbuilder_samples3.cs#1)]
+ [!code-vb[ControlBuilderSamples_3#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_3/VB/controlbuilder_samples3.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Init">
+      <MemberSignature Language="C#" Value="public virtual void Init (System.Web.UI.TemplateParser parser, System.Web.UI.ControlBuilder parentBuilder, Type type, string tagName, string id, System.Collections.IDictionary attribs);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Init(class System.Web.UI.TemplateParser parser, class System.Web.UI.ControlBuilder parentBuilder, class System.Type type, string tagName, string id, class System.Collections.IDictionary attribs) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.Init(System.Web.UI.TemplateParser,System.Web.UI.ControlBuilder,System.Type,System.String,System.String,System.Collections.IDictionary)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Init(System::Web::UI::TemplateParser ^ parser, System::Web::UI::ControlBuilder ^ parentBuilder, Type ^ type, System::String ^ tagName, System::String ^ id, System::Collections::IDictionary ^ attribs);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parser" Type="System.Web.UI.TemplateParser" />
+        <Parameter Name="parentBuilder" Type="System.Web.UI.ControlBuilder" />
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="tagName" Type="System.String" />
+        <Parameter Name="id" Type="System.String" />
+        <Parameter Name="attribs" Type="System.Collections.IDictionary" />
+      </Parameters>
+      <Docs>
+        <param name="parser">
+          <span data-ttu-id="3b920-212">Das für das Analysieren des Steuerelements zuständige <see cref="T:System.Web.UI.TemplateParser" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-212">The <see cref="T:System.Web.UI.TemplateParser" /> object responsible for parsing the control.</span>
+          </span>
+        </param>
+        <param name="parentBuilder">
+          <span data-ttu-id="3b920-213">Das für das Erstellen des übergeordneten Steuerelements zuständige <see cref="T:System.Web.UI.ControlBuilder" />-Objekt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-213">The <see cref="T:System.Web.UI.ControlBuilder" /> object responsible for building the parent control.</span>
+          </span>
+        </param>
+        <param name="type">
+          <span data-ttu-id="3b920-214">Der <see cref="T:System.Type" />, der dem Steuerelement zugewiesen ist, das vom Generator erstellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-214">The <see cref="T:System.Type" /> assigned to the control that the builder will create.</span>
+          </span>
+        </param>
+        <param name="tagName">
+          <span data-ttu-id="3b920-215">Der Name des zu erstellenden Tags.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-215">The name of the tag to be built.</span>
+          </span>
+          <span data-ttu-id="3b920-216">Der Generator kann auf diese Weise mehrere Tagtypen unterstützen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-216">This allows the builder to support multiple tag types.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="3b920-217">Das dem Steuerelement zugewiesene <see cref="P:System.Web.UI.ControlBuilder.ID" />-Attribut.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-217">The <see cref="P:System.Web.UI.ControlBuilder.ID" /> attribute assigned to the control.</span>
+          </span>
+        </param>
+        <param name="attribs">
+          <span data-ttu-id="3b920-218">Das <see cref="T:System.Collections.IDictionary" />-Objekt, das alle angegebenen Tagattribute enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-218">The <see cref="T:System.Collections.IDictionary" /> object that holds all the specified tag attributes.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-219">Initialisiert den <see cref="T:System.Web.UI.ControlBuilder" /> zur Verwendung nach dessen Instanziierung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-219">Initializes the <see cref="T:System.Web.UI.ControlBuilder" /> for use after it is instantiated.</span>
+          </span>
+          <span data-ttu-id="3b920-220">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-220">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-221">Diese Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-221">This method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InPageTheme">
+      <MemberSignature Language="C#" Value="protected bool InPageTheme { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool InPageTheme" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.InPageTheme" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property InPageTheme As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool InPageTheme { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-222">Ruft einen booleschen Wert ab, der angibt, ob dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt zur Generierung von Seitendesigns verwendet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-222">Gets a Boolean value indicating whether this <see cref="T:System.Web.UI.ControlBuilder" /> object is used to generate page themes.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-223">
+            <see langword="true" />, um diesen <see cref="T:System.Web.UI.ControlBuilder" /> zur Generierung von Seitendesigns zu verwenden, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-223">
+              <see langword="true" /> to use this <see cref="T:System.Web.UI.ControlBuilder" /> to generate page themes; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ItemType">
+      <MemberSignature Language="C#" Value="public virtual string ItemType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ItemType" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ItemType" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property ItemType As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ItemType { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-224">Ruft den Satztyp für den bindenden Container ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-224">Gets the type set on the binding container.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-225">Der Typ, der für den bindenden Container festgelegt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-225">The type set on the binding container.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Localize">
+      <MemberSignature Language="C#" Value="public bool Localize { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool Localize" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.Localize" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Localize As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool Localize { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-226">Ruft einen booleschen Wert ab, der angibt, ob das von diesem <see cref="T:System.Web.UI.ControlBuilder" />-Objekt erstellte Steuerelement lokalisiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-226">Gets a Boolean value indicating whether the control that is created by this <see cref="T:System.Web.UI.ControlBuilder" /> object is localized.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-227">
+            <see langword="true" /> bedeutet, dass das von diesem <see cref="T:System.Web.UI.ControlBuilder" />-Objekt erstellte Steuerelement lokalisiert wird, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-227">
+              <see langword="true" /> to indicate that the control created by this <see cref="T:System.Web.UI.ControlBuilder" /> object is localized; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NamingContainerType">
+      <MemberSignature Language="C#" Value="public Type NamingContainerType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type NamingContainerType" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.NamingContainerType" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property NamingContainerType As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Type ^ NamingContainerType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-228">Ruft den Typ des Benennungscontainers für das von diesem Generator erstellte Steuerelement ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-228">Gets the type of the naming container for the control that this builder creates.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-229">Ein <see cref="T:System.Type" />, der den Typ des Benennungscontainers für das von diesem Generator erstellte Steuerelement darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-229">A <see cref="T:System.Type" /> that represent the type of the naming container for the control that this builder creates.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="P:System.Web.UI.ControlBuilder.ControlType" />
+      </Docs>
+    </Member>
+    <Member MemberName="NeedsTagInnerText">
+      <MemberSignature Language="C#" Value="public virtual bool NeedsTagInnerText ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool NeedsTagInnerText() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.NeedsTagInnerText" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function NeedsTagInnerText () As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool NeedsTagInnerText();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-230">Bestimmt, ob der Steuerelementgenerator seinen inneren Text abrufen muss.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-230">Determines if the control builder needs to get its inner text.</span>
+          </span>
+          <span data-ttu-id="3b920-231">Wenn das der Fall ist, muss die <see cref="M:System.Web.UI.ControlBuilder.SetTagInnerText(System.String)" />-Methode aufgerufen werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-231">If so, the <see cref="M:System.Web.UI.ControlBuilder.SetTagInnerText(System.String)" /> method must be called.</span>
+          </span>
+          <span data-ttu-id="3b920-232">Diese Methode wird durch das ASP.NET-Seitenframework aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-232">This method is called by the ASP.NET page framework.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="3b920-233">
+            <see langword="true" />, wenn der Steuerelementgenerator seinen inneren Text abrufen muss.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-233">
+              <see langword="true" /> if the control builder needs to get its inner text.</span>
+          </span>
+          <span data-ttu-id="3b920-234">Der Standardwert ist <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-234">The default is <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-235">Der innere Text ist der Text zwischen den Start- und Endtag des Steuerelements.</span><span class="sxs-lookup"><span data-stu-id="3b920-235">The inner text is the text between the opening and closing tags of the control.</span></span>  
+  
+ <span data-ttu-id="3b920-236">Diese Methode wird während der Analyse durch das ASP.NET-Seitenframework aufgerufen und sollte nicht direkt im code aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-236">This method is called by the ASP.NET page framework during parsing and is not intended to be called directly in you code.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="3b920-237">Im folgenden Beispiel wird die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> Eigenschaft bei der <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-237">The following example uses the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property when the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-238">Wenn ein Steuerelement mit diesem Generator angefügt ist, verfügt über die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> bestimmt, ob das Steuerelement zur Entwurfszeit über einen Designer zugegriffen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-238">When a control has this builder attached to it, the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> determines whether the control is being accessed at design-time through a designer.</span></span> <span data-ttu-id="3b920-239">Die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> gibt den Wert der die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaft, und klicken Sie dann die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> Methode wird aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-239">The <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> returns the value of the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property, and then the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-240">Wenn die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaftensatz auf `false`, wird eine <xref:System.Exception> ausgelöst wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-240">If the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property is set to `false`, an <xref:System.Exception> is thrown.</span></span> <span data-ttu-id="3b920-241">Andernfalls wird der innere Text des Steuerelements zurückgegeben, auf die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> aufrufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-241">Otherwise, the inner text of the control is returned on the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> call.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_3#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_3/cs/controlbuilder_samples3.cs#1)]
+ [!code-vb[ControlBuilderSamples_3#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_3/VB/controlbuilder_samples3.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnAppendToParentBuilder">
+      <MemberSignature Language="C#" Value="public virtual void OnAppendToParentBuilder (System.Web.UI.ControlBuilder parentBuilder);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void OnAppendToParentBuilder(class System.Web.UI.ControlBuilder parentBuilder) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.OnAppendToParentBuilder(System.Web.UI.ControlBuilder)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub OnAppendToParentBuilder (parentBuilder As ControlBuilder)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void OnAppendToParentBuilder(System::Web::UI::ControlBuilder ^ parentBuilder);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parentBuilder" Type="System.Web.UI.ControlBuilder" />
+      </Parameters>
+      <Docs>
+        <param name="parentBuilder">
+          <span data-ttu-id="3b920-242">Das <see cref="T:System.Web.UI.ControlBuilder" />-Objekt, dem der aktuelle Generator hinzugefügt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-242">The <see cref="T:System.Web.UI.ControlBuilder" /> object to which the current builder is added.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-243">Benachrichtigt den <see cref="T:System.Web.UI.ControlBuilder" />, dass er dem übergeordneten Steuerelementgenerator hinzugefügt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-243">Notifies the <see cref="T:System.Web.UI.ControlBuilder" /> that it is being added to a parent control builder.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="3b920-244">In diesem Beispiel überschreibt die <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> -Methode überprüft die <xref:System.Web.UI.ControlBuilder.ControlType%2A> auf die Eigenschaft, um zu bestimmen, welche Art von Steuerelement diesem Generator angewendet wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-244">This example overrides the <xref:System.Web.UI.ControlBuilder.OnAppendToParentBuilder%2A> method to check the <xref:System.Web.UI.ControlBuilder.ControlType%2A> property to determine what type of control this builder is applied to.</span></span> <span data-ttu-id="3b920-245">Wird jedoch eine `CustomTextBox`, überprüft der Generator, ob der Wert der <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> Eigenschaft im Steuerelement enthalten ist.</span><span class="sxs-lookup"><span data-stu-id="3b920-245">If it is a `CustomTextBox`, the builder checks whether the value of the <xref:System.Web.UI.ControlBuilder.HasAspCode%2A> property is included in the control.</span></span> <span data-ttu-id="3b920-246">Wenn also eine Ausnahme ausgelöst, wenn nicht wird die <xref:System.Web.UI.ControlBuilder.HasBody%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-246">If so, an exception is thrown, if not the <xref:System.Web.UI.ControlBuilder.HasBody%2A> method is called.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_4#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_4/cs/controlbuilder_4.cs#1)]
+ [!code-vb[ControlBuilderSamples_4#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_4/VB/controlbuilder_4.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PageVirtualPath">
+      <MemberSignature Language="C#" Value="public string PageVirtualPath { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string PageVirtualPath" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.PageVirtualPath" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property PageVirtualPath As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ PageVirtualPath { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-247">Ruft den virtuellen Pfad einer Seite ab, die mit dieser <see cref="T:System.Web.UI.ControlBuilder" />-Instanz erstellt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-247">Gets the virtual path of a page to be built by this <see cref="T:System.Web.UI.ControlBuilder" /> instance.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-248">Der virtuelle Pfad der zu erstellenden Seite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-248">The virtual path of the page to be built.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Parser">
+      <MemberSignature Language="C#" Value="protected internal System.Web.UI.TemplateParser Parser { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Web.UI.TemplateParser Parser" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.Parser" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend ReadOnly Property Parser As TemplateParser" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; property System::Web::UI::TemplateParser ^ Parser { System::Web::UI::TemplateParser ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.TemplateParser</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-249">Ruft den für das Analysieren des Steuerelements zuständigen <see cref="T:System.Web.UI.TemplateParser" /> ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-249">Gets the <see cref="T:System.Web.UI.TemplateParser" /> responsible for parsing the control.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-250">Der zum Analysieren des Steuerelements verwendete <see cref="T:System.Web.UI.TemplateParser" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-250">The <see cref="T:System.Web.UI.TemplateParser" /> used to parse the control.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-251">Diese Eigenschaft ruft die <xref:System.Web.UI.TemplateParser> verantwortlich für die Analyse des Steuerelements.</span><span class="sxs-lookup"><span data-stu-id="3b920-251">This property retrieves the <xref:System.Web.UI.TemplateParser> responsible for parsing the control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.TemplateParser" />
+      </Docs>
+    </Member>
+    <Member MemberName="ProcessGeneratedCode">
+      <MemberSignature Language="C#" Value="public virtual void ProcessGeneratedCode (System.CodeDom.CodeCompileUnit codeCompileUnit, System.CodeDom.CodeTypeDeclaration baseType, System.CodeDom.CodeTypeDeclaration derivedType, System.CodeDom.CodeMemberMethod buildMethod, System.CodeDom.CodeMemberMethod dataBindingMethod);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ProcessGeneratedCode(class System.CodeDom.CodeCompileUnit codeCompileUnit, class System.CodeDom.CodeTypeDeclaration baseType, class System.CodeDom.CodeTypeDeclaration derivedType, class System.CodeDom.CodeMemberMethod buildMethod, class System.CodeDom.CodeMemberMethod dataBindingMethod) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.ProcessGeneratedCode(System.CodeDom.CodeCompileUnit,System.CodeDom.CodeTypeDeclaration,System.CodeDom.CodeTypeDeclaration,System.CodeDom.CodeMemberMethod,System.CodeDom.CodeMemberMethod)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void ProcessGeneratedCode(System::CodeDom::CodeCompileUnit ^ codeCompileUnit, System::CodeDom::CodeTypeDeclaration ^ baseType, System::CodeDom::CodeTypeDeclaration ^ derivedType, System::CodeDom::CodeMemberMethod ^ buildMethod, System::CodeDom::CodeMemberMethod ^ dataBindingMethod);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="codeCompileUnit" Type="System.CodeDom.CodeCompileUnit" />
+        <Parameter Name="baseType" Type="System.CodeDom.CodeTypeDeclaration" />
+        <Parameter Name="derivedType" Type="System.CodeDom.CodeTypeDeclaration" />
+        <Parameter Name="buildMethod" Type="System.CodeDom.CodeMemberMethod" />
+        <Parameter Name="dataBindingMethod" Type="System.CodeDom.CodeMemberMethod" />
+      </Parameters>
+      <Docs>
+        <param name="codeCompileUnit">
+          <span data-ttu-id="3b920-252">Der Stammcontainer eines CodeDOM-Diagramms des Steuerelements, das erstellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-252">The root container of a CodeDOM graph of the control that is being built.</span>
+          </span>
+        </param>
+        <param name="baseType">
+          <span data-ttu-id="3b920-253">Der Basistyp der Seite oder des Benutzersteuerelements mit dem Steuerelement, das erstellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-253">The base type of the page or user control that contains the control that is being built.</span>
+          </span>
+        </param>
+        <param name="derivedType">
+          <span data-ttu-id="3b920-254">Der abgeleitete Typ der Seite oder des Benutzersteuerelements mit dem Steuerelement, das erstellt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-254">The derived type of the page or user control that contains the control that is being built.</span>
+          </span>
+        </param>
+        <param name="buildMethod">
+          <span data-ttu-id="3b920-255">Der Code, der zum Erstellen des Steuerelements verwendet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-255">The code that is used to build the control.</span>
+          </span>
+        </param>
+        <param name="dataBindingMethod">
+          <span data-ttu-id="3b920-256">Der Code, der zum Erstellen der Datenbindungsmethode des Steuerelements verwendet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-256">The code that is used to build the data-binding method of the control.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-257">Ermöglicht einem benutzerdefinierten Steuerelement-Generator den Zugriff auf das generierte CodeDom (Code Document Object Model) sowie das Einfügen und Ändern von Code während der Analyse und der Erstellung von Steuerelementen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-257">Enables custom control builders to access the generated Code Document Object Model (CodeDom) and insert and modify code during the process of parsing and building controls.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-258">Im Modell Einzeldateiseite der `baseType` und `derivedType` Parameter sind dieselben <xref:System.CodeDom.CodeTypeDeclaration> -Typ, der in der Regel von abgeleitet ist die <xref:System.Web.UI.Page> Klasse.</span><span class="sxs-lookup"><span data-stu-id="3b920-258">In the single-file page model, the `baseType` and `derivedType` parameters are the same <xref:System.CodeDom.CodeTypeDeclaration> type, which typically derives from the <xref:System.Web.UI.Page> class.</span></span>  
+  
+ <span data-ttu-id="3b920-259">In der Code-Behind-Seitenmodell `baseType` ist die <xref:System.CodeDom.CodeTypeDeclaration> Typ, der die CodeBehind-Klasse darstellt, das in der Regel von abgeleitet ist die <xref:System.Web.UI.Page> Klasse.</span><span class="sxs-lookup"><span data-stu-id="3b920-259">In the code-behind page model, `baseType` is the <xref:System.CodeDom.CodeTypeDeclaration> type that represents the partial code-behind class, which is typically derived from the <xref:System.Web.UI.Page> class.</span></span> <span data-ttu-id="3b920-260">Die `derivedType` Parameter ist die Klasse, die von der partiellen Klasse abgeleitet wird, die das Markup enthält.</span><span class="sxs-lookup"><span data-stu-id="3b920-260">The `derivedType` parameter is the class that derives from the partial class that contains the markup.</span></span>  
+  
+ <span data-ttu-id="3b920-261">Weitere Informationen zu ASP.NET Web-Seite-Modellen finden Sie unter [ASP.NET Web Forms-Seite Syntaxübersicht](http://msdn.microsoft.com/library/09074b20-ece9-46fa-bc8f-ab2595ed2c02).</span><span class="sxs-lookup"><span data-stu-id="3b920-261">For more information about ASP.NET Web page models, see [ASP.NET Web Forms Page Syntax Overview](http://msdn.microsoft.com/library/09074b20-ece9-46fa-bc8f-ab2595ed2c02).</span></span>  
+  
+ <span data-ttu-id="3b920-262">Weitere Informationen zum Verwenden von CodeDOM zum darstellen und Generieren von Quellcode, finden Sie unter [dynamische Quelle generieren und Kompilieren von](~/docs/framework/reflection-and-codedom/dynamic-source-code-generation-and-compilation.md).</span><span class="sxs-lookup"><span data-stu-id="3b920-262">For more information about how to use the CodeDOM to represent and generate source code, see [Dynamic Source Code Generation and Compilation](~/docs/framework/reflection-and-codedom/dynamic-source-code-generation-and-compilation.md).</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ServiceProvider">
+      <MemberSignature Language="C#" Value="public IServiceProvider ServiceProvider { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.IServiceProvider ServiceProvider" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ServiceProvider" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ServiceProvider As IServiceProvider" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property IServiceProvider ^ ServiceProvider { IServiceProvider ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IServiceProvider</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-263">Ruft das Dienstobjekt für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-263">Gets the service object for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-264">Ein <see cref="T:System.IServiceProvider" />, der das Dienstobjekt für diesen <see cref="T:System.Web.UI.ControlBuilder" /> darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-264">An <see cref="T:System.IServiceProvider" /> that represents the service object for this <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <altmember cref="M:System.Web.UI.ControlBuilder.SetServiceProvider(System.IServiceProvider)" />
+      </Docs>
+    </Member>
+    <Member MemberName="SetResourceKey">
+      <MemberSignature Language="C#" Value="public void SetResourceKey (string resourceKey);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetResourceKey(string resourceKey) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.SetResourceKey(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub SetResourceKey (resourceKey As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void SetResourceKey(System::String ^ resourceKey);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="resourceKey" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="resourceKey">
+          <span data-ttu-id="3b920-265">Der Ressourcenschlüssel für diesen <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-265">The resource key for this <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-266">Legt den Ressourcenschlüssel für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-266">Sets the resource key for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+        <altmember cref="M:System.Web.UI.ControlBuilder.GetResourceKey" />
+      </Docs>
+    </Member>
+    <Member MemberName="SetServiceProvider">
+      <MemberSignature Language="C#" Value="public void SetServiceProvider (IServiceProvider serviceProvider);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetServiceProvider(class System.IServiceProvider serviceProvider) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.SetServiceProvider(System.IServiceProvider)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub SetServiceProvider (serviceProvider As IServiceProvider)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void SetServiceProvider(IServiceProvider ^ serviceProvider);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serviceProvider" Type="System.IServiceProvider" />
+      </Parameters>
+      <Docs>
+        <param name="serviceProvider">
+          <span data-ttu-id="3b920-267">Ein <see cref="T:System.IServiceProvider" />, der das Dienstobjekt für den <see cref="T:System.Web.UI.ControlBuilder" /> darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-267">An <see cref="T:System.IServiceProvider" /> that represents the service object for the <see cref="T:System.Web.UI.ControlBuilder" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-268">Legt das Dienstobjekt für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-268">Sets the service object for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+        <altmember cref="T:System.IServiceProvider" />
+      </Docs>
+    </Member>
+    <Member MemberName="SetTagInnerText">
+      <MemberSignature Language="C#" Value="public virtual void SetTagInnerText (string text);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void SetTagInnerText(string text) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.ControlBuilder.SetTagInnerText(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub SetTagInnerText (text As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void SetTagInnerText(System::String ^ text);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="text" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="text">
+          <span data-ttu-id="3b920-269">Der bereitzustellende Text.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-269">The text to be provided.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="3b920-270">Stellt den inneren Text des Steuerelementtags für den <see cref="T:System.Web.UI.ControlBuilder" /> bereit.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-270">Provides the <see cref="T:System.Web.UI.ControlBuilder" /> with the inner text of the control tag.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-271">Diese Methode wird aufgerufen, wenn nur <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> zuvor zurückgegeben `true`.</span><span class="sxs-lookup"><span data-stu-id="3b920-271">This method is called only if <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> previously returned `true`.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="3b920-272">Im folgenden Beispiel wird die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> Eigenschaft bei der <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-272">The following example uses the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property when the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-273">Wenn ein Steuerelement mit diesem Generator angefügt ist, verfügt über die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> bestimmt, ob das Steuerelement zur Entwurfszeit über einen Designer zugegriffen wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-273">When a control has this builder attached to it, the <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> determines whether the control is being accessed at design-time through a designer.</span></span> <span data-ttu-id="3b920-274">Die <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> gibt den Wert der die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaft, und klicken Sie dann die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> Methode wird aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-274">The <xref:System.Web.UI.ControlBuilder.NeedsTagInnerText%2A> returns the value of the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property, and then the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> method is called.</span></span> <span data-ttu-id="3b920-275">Wenn die <xref:System.Web.UI.ControlBuilder.InDesigner%2A> -Eigenschaftensatz auf `false`, wird eine <xref:System.Exception> ausgelöst wird.</span><span class="sxs-lookup"><span data-stu-id="3b920-275">If the <xref:System.Web.UI.ControlBuilder.InDesigner%2A> property is set to `false`, an <xref:System.Exception> is thrown.</span></span> <span data-ttu-id="3b920-276">Andernfalls wird der innere Text des Steuerelements zurückgegeben, auf die <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> aufrufen.</span><span class="sxs-lookup"><span data-stu-id="3b920-276">Otherwise, the inner text of the control is returned on the <xref:System.Web.UI.ControlBuilder.SetTagInnerText%2A> call.</span></span>  
+  
+ [!code-csharp[ControlBuilderSamples_3#1](~/samples/snippets/csharp/VS_Snippets_WebNet/ControlBuilderSamples_3/cs/controlbuilder_samples3.cs#1)]
+ [!code-vb[ControlBuilderSamples_3#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/ControlBuilderSamples_3/VB/controlbuilder_samples3.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SubBuilders">
+      <MemberSignature Language="C#" Value="public System.Collections.ArrayList SubBuilders { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.ArrayList SubBuilders" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.SubBuilders" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property SubBuilders As ArrayList" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::ArrayList ^ SubBuilders { System::Collections::ArrayList ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.ArrayList</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-277">Ruft eine Liste von untergeordneten <see cref="T:System.Web.UI.ControlBuilder" />-Objekten für dieses <see cref="T:System.Web.UI.ControlBuilder" />-Objekt ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-277">Gets a list of child <see cref="T:System.Web.UI.ControlBuilder" /> objects for this <see cref="T:System.Web.UI.ControlBuilder" /> object.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-278">Eine Liste von untergeordneten <see cref="T:System.Web.UI.ControlBuilder" />-Objekten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-278">A list of child <see cref="T:System.Web.UI.ControlBuilder" /> objects.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TagName">
+      <MemberSignature Language="C#" Value="public string TagName { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string TagName" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.TagName" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property TagName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ TagName { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-279">Ruft den Tagnamen für das zu erstellende Steuerelement ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-279">Gets the tag name for the control to be built.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-280">Der Tagname des Steuerelements.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-280">The tag name for the control.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TemplatePropertyEntries">
+      <MemberSignature Language="C#" Value="public System.Collections.ICollection TemplatePropertyEntries { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.ICollection TemplatePropertyEntries" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.TemplatePropertyEntries" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property TemplatePropertyEntries As ICollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::ICollection ^ TemplatePropertyEntries { System::Collections::ICollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.ICollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-281">Ruft eine Sammlung von Vorlageneigenschaftseinträgen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-281">Gets a collection of template property entries.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-282">Eine Sammlung von Vorlageneigenschaftseinträgen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-282">A collection of template property entries.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-283">Wenn keine Einträge vorhanden sind, wird eine statische leere Auflistung zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="3b920-283">If there are no entries, a static empty collection is returned.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ThemeResolutionService">
+      <MemberSignature Language="C#" Value="public System.Web.UI.IThemeResolutionService ThemeResolutionService { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Web.UI.IThemeResolutionService ThemeResolutionService" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.ControlBuilder.ThemeResolutionService" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ThemeResolutionService As IThemeResolutionService" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Web::UI::IThemeResolutionService ^ ThemeResolutionService { System::Web::UI::IThemeResolutionService ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.IThemeResolutionService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="3b920-284">Ruft ein <see cref="T:System.Web.UI.IThemeResolutionService" />-Objekt ab, das zur Entwurfszeit zur Verwaltung von Steuerelementdesigns und -skins verwendet wird</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-284">Gets an <see cref="T:System.Web.UI.IThemeResolutionService" /> object that is used in design time to manage control themes and skins.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="3b920-285">Ein <see cref="T:System.Web.UI.IThemeResolutionService" />-Objekt, das zur Entwurfszeit zur Verwaltung von Steuerelementdesigns und -skins verwendet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="3b920-285">An <see cref="T:System.Web.UI.IThemeResolutionService" /> object that is used in design time to manage control themes and skins.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="3b920-286">Die <xref:System.Web.UI.IThemeResolutionService> Schnittstelle ist ein Container für eine oder mehrere <xref:System.Web.UI.ThemeProvider> Objekte, die wiederum geben die <xref:System.Web.UI.SkinBuilder> Objekte, Anwenden von Designs und Skins auf Steuerelemente zu steuern, wenn sie in einem Designer erstellt werden.</span><span class="sxs-lookup"><span data-stu-id="3b920-286">The <xref:System.Web.UI.IThemeResolutionService> interface is a container for one or more <xref:System.Web.UI.ThemeProvider> objects, which in turn supply the <xref:System.Web.UI.SkinBuilder> objects that apply themes and control skins to controls when they are created in a designer.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.IThemeResolutionService" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

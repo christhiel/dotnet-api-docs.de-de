@@ -1,0 +1,1288 @@
+<Type Name="SqlProfileProvider" FullName="System.Web.Profile.SqlProfileProvider">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="3f91af7f95a00d1681cf47bee47643208639444e" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class SqlProfileProvider : System.Web.Profile.ProfileProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit SqlProfileProvider extends System.Web.Profile.ProfileProvider" />
+  <TypeSignature Language="DocId" Value="T:System.Web.Profile.SqlProfileProvider" />
+  <TypeSignature Language="VB.NET" Value="Public Class SqlProfileProvider&#xA;Inherits ProfileProvider" />
+  <TypeSignature Language="C++ CLI" Value="public ref class SqlProfileProvider : System::Web::Profile::ProfileProvider" />
+  <AssemblyInfo>
+    <AssemblyName>System.Web</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Web.Profile.ProfileProvider</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+      <span data-ttu-id="27369-101">Verwaltet Speicher der Profilinformationen für eine ASP.NET-Anwendung in einer SQL Server-Datenbank.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="27369-101">Manages storage of profile information for an ASP.NET application in a SQL Server database.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-102">Das ASP.NET-Profil wird zum Speichern und Abrufen von benutzereinstellungen in einer Datenquelle, z. B. eine Datenbank verwendet.</span><span class="sxs-lookup"><span data-stu-id="27369-102">The ASP.NET profile is used to store and retrieve user settings in a data source such as a database.</span></span> <span data-ttu-id="27369-103">Das Benutzerprofil erfolgt mithilfe der <xref:System.Web.HttpContext.Profile%2A> Eigenschaft des aktuellen <xref:System.Web.HttpContext>.</span><span class="sxs-lookup"><span data-stu-id="27369-103">The user profile is accessed using the <xref:System.Web.HttpContext.Profile%2A> property of the current <xref:System.Web.HttpContext>.</span></span> <span data-ttu-id="27369-104">Profil und die Eigenschaftswerte werden mit einem Profilanbieter verwaltet.</span><span class="sxs-lookup"><span data-stu-id="27369-104">Profile information and property values are managed using a profile provider.</span></span>  
+  
+ <span data-ttu-id="27369-105">Die <xref:System.Web.Profile.SqlProfileProvider> Klasse wird von ASP.NET verwendet, zum Speichern und Abrufen von Einstellungen für Profil für eine ASP.NET-Anwendung, die SQL Server-Datenbank verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="27369-105">The <xref:System.Web.Profile.SqlProfileProvider> class is used by ASP.NET to store and retrieve profile settings for an ASP.NET application that is using a SQL Server database.</span></span> <span data-ttu-id="27369-106">Verwenden einer <xref:System.Web.Profile.SqlProfileProvider>, Sie müssen zuerst SQL Server-Datenbank verwendet werden, indem Sie erstellen die <xref:System.Web.Profile.SqlProfileProvider>.</span><span class="sxs-lookup"><span data-stu-id="27369-106">To use a <xref:System.Web.Profile.SqlProfileProvider>, you must first create the SQL Server database used by the <xref:System.Web.Profile.SqlProfileProvider>.</span></span> <span data-ttu-id="27369-107">Zum Erstellen der Datenbank verwendet werden, indem Sie die <xref:System.Web.Profile.SqlProfileProvider>, führen Sie das Tool aspnet_regsql.exe, die im ist die [*Laufwerk*:] \WINDOWS\Microsoft.NET\Framework\\ `2.0versionNumber` Ordner, und geben Sie die **-p ** Option.</span><span class="sxs-lookup"><span data-stu-id="27369-107">To create the database used by the <xref:System.Web.Profile.SqlProfileProvider>, run the aspnet_regsql.exe tool, which is found in the [*drive*:]\WINDOWS\Microsoft.NET\Framework\\`2.0versionNumber` folder, and specify the **-A p** option.</span></span> <span data-ttu-id="27369-108">Der folgende Befehl wird veranschaulicht, wie Sie die ausführbare Datei aspnet_regsql.exe verwenden können:</span><span class="sxs-lookup"><span data-stu-id="27369-108">The following command demonstrates how you might use the aspnet_regsql.exe executable:</span></span>  
+  
+```  
+aspnet_regsql.exe -A p  
+```  
+  
+ <span data-ttu-id="27369-109">Im obigen Beispiel gibt keinen Namen für die Datenbank, die erstellt wird, damit der Standardname verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="27369-109">The example above does not specify a name for the database that is created, so the default name will be used.</span></span> <span data-ttu-id="27369-110">Der Standarddatenbankname ist Aspnetdb.</span><span class="sxs-lookup"><span data-stu-id="27369-110">The default database name is Aspnetdb.</span></span>  
+  
+ <span data-ttu-id="27369-111">Die Konfiguration des Computers enthält eine standardmäßige <xref:System.Web.Profile.SqlProfileProvider> -Instanz AspNetSqlProvider, die mit dem SQL Server auf dem lokalen Computer verbindet.</span><span class="sxs-lookup"><span data-stu-id="27369-111">The machine configuration contains a default <xref:System.Web.Profile.SqlProfileProvider> instance named AspNetSqlProvider that connects to the SQL Server on the local machine.</span></span> <span data-ttu-id="27369-112">Sie können dieser Instanz des Anbieters verwenden oder geben Sie eine eigene in der Datei "Web.config" für Ihre ASP.NET-Anwendung.</span><span class="sxs-lookup"><span data-stu-id="27369-112">You can use this instance of the provider, or specify your own in the Web.config file for your ASP.NET application.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="27369-113">Wenn der Anbieter mit einer Verbindungszeichenfolge, die die integrierte Sicherheit verwendet konfiguriert ist, muss das Prozesskonto der ASP.NET-Anwendung Rechte zum Verbinden mit SQL Server-Datenbank besitzen.</span><span class="sxs-lookup"><span data-stu-id="27369-113">If the profile provider is configured with a connection string that uses integrated security, the process account of the ASP.NET application must have rights to connect to the SQL Server database.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-114">Im folgenden Codebeispiel wird veranschaulicht, die Datei "Web.config" für eine ASP.NET-Anwendung für die Verwendung konfiguriert eine <xref:System.Web.Profile.SqlProfileProvider>.</span><span class="sxs-lookup"><span data-stu-id="27369-114">The following code example shows the Web.config file for an ASP.NET application configured to use a <xref:System.Web.Profile.SqlProfileProvider>.</span></span>  
+  
+```  
+<configuration>  
+  <connectionStrings>  
+    <add name="SqlServices" connectionString=  
+      "Data Source=localhost;Integrated Security=SSPI;Initial Catalog=aspnetdb;" />  
+  </connectionStrings>  
+  
+  <system.web>  
+    <authentication mode="Forms" >  
+      <forms loginUrl="login.aspx" name=".ASPXFORMSAUTH" />  
+    </authentication>  
+    <authorization>  
+      <deny users="?" />  
+    </authorization>  
+    <membership defaultProvider="SqlProvider"   
+      userIsOnlineTimeWindow="15">  
+      <providers>  
+        <clear/>  
+        <add name="SqlProvider"   
+          type="System.Web.Security.SqlMembershipProvider"   
+          connectionStringName="SqlServices"  
+          applicationName="SampleApplication"  
+          enablePasswordRetrieval="true"  
+          enablePasswordReset="true"  
+          passwordFormat="Encrypted"  
+          requiresQuestionAndAnswer="true" />  
+      </providers>  
+    </membership>  
+  
+    <profile defaultProvider="SqlProvider">  
+      <providers>  
+        <clear />  
+        <add name="SqlProvider"  
+          type="System.Web.Profile.SqlProfileProvider"  
+          connectionStringName="SqlServices"  
+          applicationName="SampleApplication"  
+          description="SqlProfileProvider for SampleApplication" />  
+      </providers>  
+  
+      <properties>  
+        <add name="ZipCode" />  
+        <add name="CityAndState" />  
+      </properties>  
+    </profile>  
+  </system.web>  
+</configuration>  
+```  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SqlProfileProvider ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; SqlProfileProvider();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="27369-115">Erstellt eine Instanz der <see cref="T:System.Web.Profile.SqlProfileProvider" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-115">Creates an instance of the <see cref="T:System.Web.Profile.SqlProfileProvider" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-116">ASP.NET ruft die <xref:System.Web.Profile.SqlProfileProvider.%23ctor%2A> Konstruktor zum Erstellen einer Instanz von der <xref:System.Web.Profile.SqlProfileProvider> -Klasse unter Verwendung der Werte in der Konfigurationsdatei für die Anwendung angegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-116">ASP.NET calls the <xref:System.Web.Profile.SqlProfileProvider.%23ctor%2A> constructor to create an instance of the <xref:System.Web.Profile.SqlProfileProvider> class using the values specified in the configuration file for the application.</span></span> <span data-ttu-id="27369-117">Dieser Konstruktor ist nicht für die Verwendung aus dem Code vorgesehen.</span><span class="sxs-lookup"><span data-stu-id="27369-117">This constructor is not intended to be used from your code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ApplicationName">
+      <MemberSignature Language="C#" Value="public override string ApplicationName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ApplicationName" />
+      <MemberSignature Language="DocId" Value="P:System.Web.Profile.SqlProfileProvider.ApplicationName" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Property ApplicationName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ApplicationName { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="27369-118">Ruft den Namen der Anwendung ab, für die Profilinformationen gespeichert und abgerufen werden sollen, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-118">Gets or sets the name of the application for which to store and retrieve profile information.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="27369-119">Der Name der Anwendung, für die Profilinformationen gespeichert und abgerufen werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-119">The name of the application for which to store and retrieve profile information.</span>
+          </span>
+          <span data-ttu-id="27369-120">Der Standardwert ist der <see cref="P:System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath" />-Wert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-120">The default is the <see cref="P:System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath" /> value.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-121">Die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft wird verwendet, durch die <xref:System.Web.Profile.SqlProfileProvider> , verschiedene Anwendungen Profilinformationen zugeordnet werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-121">The <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property is used by the <xref:System.Web.Profile.SqlProfileProvider> to associate profile information with different applications.</span></span> <span data-ttu-id="27369-122">Hierdurch können mehrere Anwendungen auf die gleiche Datenbank verwendet, um Benutzerinformationen zu speichern, ohne dass Konflikte zwischen doppelten Benutzer.</span><span class="sxs-lookup"><span data-stu-id="27369-122">This enables multiple applications to use the same database to store user information without running into conflicts between duplicate users.</span></span> <span data-ttu-id="27369-123">Mehrere ASP.NET-Anwendungen können dieselbe Benutzerdatenbank durch Angabe des gleichen Werts in der <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="27369-123">Multiple ASP.NET applications can use the same user database by specifying the same value in the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property.</span></span> <span data-ttu-id="27369-124">Die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft programmgesteuert festgelegt werden kann oder deklarativ in der Konfigurationsdatei für die Web-Anwendung mit festgelegt werden die `applicationName` Attribut.</span><span class="sxs-lookup"><span data-stu-id="27369-124">The <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property can be set programmatically, or it can be set declaratively in the configuration file for the Web application using the `applicationName` attribute.</span></span>  
+  
+ <span data-ttu-id="27369-125">Wenn kein Wert für angegeben wird die `applicationName` Attribut in der Konfigurationsdatei für die Webanwendung die <xref:System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath%2A> Wert für ASP.NET-Anwendungen verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="27369-125">If a value is not specified for the `applicationName` attribute in the configuration file for the Web application, then the <xref:System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath%2A> value is used for ASP.NET applications.</span></span> <span data-ttu-id="27369-126">Für nicht-ASP.NET-Anwendungen, der Standardwert ist die <xref:System.Diagnostics.ProcessModule.ModuleName%2A> Wert ohne Dateierweiterung.</span><span class="sxs-lookup"><span data-stu-id="27369-126">For non-ASP.NET applications, the default value is the <xref:System.Diagnostics.ProcessModule.ModuleName%2A> value without the file extension.</span></span>  
+  
+> [!CAUTION]
+>  <span data-ttu-id="27369-127">Da eine einzelne Standardinstanz Profil Anbieter für alle vom übermittelten Anforderungen verwendet wird ein <xref:System.Web.HttpApplication> -Objekt können mehrere Anforderungen gleichzeitig ausgeführt und versucht, legen Sie die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaftswert.</span><span class="sxs-lookup"><span data-stu-id="27369-127">Because a single default profile provider instance is used for all of the requests served by an <xref:System.Web.HttpApplication> object, you can have multiple requests executing concurrently and attempting to set the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property value.</span></span> <span data-ttu-id="27369-128">Die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft ist nicht für mehrere Schreibvorgänge threadsicher sind, und ändern die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaftswert kann zu unerwartetem Verhalten für mehrere Benutzer einer Anwendung führen.</span><span class="sxs-lookup"><span data-stu-id="27369-128">The <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property is not thread safe for multiple writes, and changing the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property value can result in unexpected behavior for multiple users of an application.</span></span> <span data-ttu-id="27369-129">Es wird empfohlen, dass Sie keinen Code schreiben, der Benutzern ermöglicht, legen Sie die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft es sei denn, Sie müssen.</span><span class="sxs-lookup"><span data-stu-id="27369-129">It is recommended that you avoid writing code that allows users to set the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property unless you must.</span></span> <span data-ttu-id="27369-130">Ein Beispiel für eine Anwendung in dem das Festlegen der <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaft kann erforderlich sein, sollte eine verwaltende Anwendung, die Profildaten für mehrere Anwendungen verwaltet wird.</span><span class="sxs-lookup"><span data-stu-id="27369-130">An example of an application where setting the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property may be required is an administrative application that manages profile data for multiple applications.</span></span> <span data-ttu-id="27369-131">Eine solche Anwendung sollte einen Einzelbenutzer-Anwendung und nicht um eine Webanwendung.</span><span class="sxs-lookup"><span data-stu-id="27369-131">Such an application should be a single-user application and not a Web application.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-132">Das folgende Codebeispiel zeigt das Element in der `system.web` Abschnitt der Datei "Web.config" für eine ASP.NET-Anwendung.</span><span class="sxs-lookup"><span data-stu-id="27369-132">The following code example shows the  element in the `system.web` section of the Web.config file for an ASP.NET application.</span></span> <span data-ttu-id="27369-133">Es gibt an, der Anwendungsverzeichnis <xref:System.Web.Profile.SqlProfileProvider> Instanz und legt die <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> Eigenschaftswert an `MyApplication`.</span><span class="sxs-lookup"><span data-stu-id="27369-133">It specifies the application's <xref:System.Web.Profile.SqlProfileProvider> instance and sets the <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A> property value to `MyApplication`.</span></span>  
+  
+```  
+<profile defaultProvider="SqlProvider">  
+  <providers>  
+    <add name="SqlProvider"  
+      type="System.Web.Profile.SqlProfileProvider"  
+      connectionStringName="SqlServices"  
+      applicationName="MyApplication" />  
+   </providers>  
+</profile>  
+```  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Web.HttpException">
+          <span data-ttu-id="27369-134">Ein Aufrufer, der nicht über die Berechtigung <see cref="P:System.Web.Profile.SqlProfileProvider.ApplicationName" /> zum Hosten von ASP.NET verfügt, hat versucht, die <see cref="F:System.Web.AspNetHostingPermissionLevel.High" />-Eigenschaft festzulegen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-134">An attempt was made to set the <see cref="P:System.Web.Profile.SqlProfileProvider.ApplicationName" /> property by a caller that does not have <see cref="F:System.Web.AspNetHostingPermissionLevel.High" /> ASP.NET hosting permission.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="27369-135">Es wurde versucht, die <see cref="P:System.Web.Profile.SqlProfileProvider.ApplicationName" />-Eigenschaft auf eine Zeichenfolge festzulegen, die länger als 256 Zeichen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-135">An attempt was made to set the <see cref="P:System.Web.Profile.SqlProfileProvider.ApplicationName" /> property to a string that is longer than 256 characters.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteInactiveProfiles">
+      <MemberSignature Language="C#" Value="public override int DeleteInactiveProfiles (System.Web.Profile.ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 DeleteInactiveProfiles(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, valuetype System.DateTime userInactiveSinceDate) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.DeleteInactiveProfiles(System.Web.Profile.ProfileAuthenticationOption,System.DateTime)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DeleteInactiveProfiles (authenticationOption As ProfileAuthenticationOption, userInactiveSinceDate As DateTime) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int DeleteInactiveProfiles(System::Web::Profile::ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="userInactiveSinceDate" Type="System.DateTime" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-136">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten gelöscht werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-136">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are deleted.</span>
+          </span>
+        </param>
+        <param name="userInactiveSinceDate">
+          <span data-ttu-id="27369-137">Ein <see cref="T:System.DateTime" />, der festlegt, welche Benutzerprofile als inaktiv betrachtet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-137">A <see cref="T:System.DateTime" /> that identifies which user profiles are considered inactive.</span>
+          </span>
+          <span data-ttu-id="27369-138">Wenn das <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> eines Benutzerprofils zu oder vor diesem Zeitpunkt (Datum und Uhrzeit) auftritt, gilt das Profil als inaktiv.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-138">If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> of a user profile occurs on or before this date and time, the profile is considered inactive.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-139">Löscht Benutzerprofildaten für Profile, bei denen das Datum der letzten Aktivität vor dem angegebenen Datum und der angegeben Uhrzeit liegt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-139">Deletes user profile data for profiles in which the last activity date occurred before the specified date and time.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-140">Die Anzahl der aus der Datenquelle gelöschten Profile.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-140">The number of profiles deleted from the data source.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-141">Die <xref:System.Web.Profile.SqlProfileProvider.DeleteInactiveProfiles%2A> Methode wird verwendet, um nicht verwendete Profildaten aus der Datenquelle für die Anwendung durch Entfernen der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-141">The <xref:System.Web.Profile.SqlProfileProvider.DeleteInactiveProfiles%2A> method is used to remove unused profile data from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-142">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-142">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span> <span data-ttu-id="27369-143">Von den durchsuchten Profilen wird jedes Profil mit einem <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> Dies tritt am oder vor dem angegebenen `userInactiveSinceDate` Parameterwert wird gelöscht.</span><span class="sxs-lookup"><span data-stu-id="27369-143">Of the searched profiles, any profile with a <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> that occurs on or before the specified `userInactiveSinceDate` parameter value is deleted.</span></span>  
+  
+ <span data-ttu-id="27369-144">Die Datenbankupdates, die während des Aufrufs ausgeführt werden die <xref:System.Web.Profile.SqlProfileProvider.DeleteInactiveProfiles%2A> Methode innerhalb einer Transaktion erfolgen.</span><span class="sxs-lookup"><span data-stu-id="27369-144">The database updates that are performed during the call to the <xref:System.Web.Profile.SqlProfileProvider.DeleteInactiveProfiles%2A> method are made within a transaction.</span></span> <span data-ttu-id="27369-145">Wenn ein Fehler aufgetreten ist, wird ein Rollback für die Transaktion, und keine Updates ausgeführt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-145">If an error is encountered, the transaction is rolled back and no updates are performed.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-146">Im folgenden Codebeispiel wird veranschaulicht, eine ASP.NET-Seite auf, die inaktiven Profile verwaltet.</span><span class="sxs-lookup"><span data-stu-id="27369-146">The following code example shows an ASP.NET page that manages inactive profiles.</span></span> <span data-ttu-id="27369-147">Eine Schaltfläche wird bereitgestellt, um alle Profile löschen, die seit dem angegebenen Datum für ein Profil als inaktiv betrachtet nicht zugegriffen wurde.</span><span class="sxs-lookup"><span data-stu-id="27369-147">A button is provided to delete all profiles that have not been accessed since the date specified for considering a profile to be inactive.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/DeleteInactiveProfilescs.aspx#4)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/DeleteInactiveProfilesvb.aspx#4)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="DeleteProfiles">
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="27369-148">Löscht Profileigenschaften und Informationen aus der Datenquelle.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-148">Deletes profile properties and information from the data source.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="DeleteProfiles">
+      <MemberSignature Language="C#" Value="public override int DeleteProfiles (string[] usernames);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 DeleteProfiles(string[] usernames) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.DeleteProfiles(System.String[])" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DeleteProfiles (usernames As String()) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int DeleteProfiles(cli::array &lt;System::String ^&gt; ^ usernames);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="usernames" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="usernames">
+          <span data-ttu-id="27369-149">Ein Zeichenfolgenarray der Benutzernamen für Profile, die gelöscht werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-149">A string array of user names for profiles to be deleted.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-150">Löscht Profileigenschaften und Informationen aus der Datenquelle für die angegebene Liste mit Benutzernamen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-150">Deletes profile properties and information from the data source for the supplied list of user names.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-151">Die Anzahl der aus der Datenquelle gelöschten Profile.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-151">The number of profiles deleted from the data source.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-152">Die <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> -Methode löscht alle Profilinformationen und Eigenschaften für die angegebenen Profile aus der Datenquelle für die Anwendung gemäß der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-152">The <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method deletes all profile information and properties for the specified profiles from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-153">Die Liste der zu löschenden Profile wird als ein Zeichenfolgenarray mit Benutzernamen angegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-153">The list of profiles to delete is specified as a string array of user names.</span></span> <span data-ttu-id="27369-154">Wenn Profileigenschaften und Informationen, in der Datenquelle für einen Benutzernamen in vorhanden der `usernames` -Parameter werden gelöscht.</span><span class="sxs-lookup"><span data-stu-id="27369-154">If profile properties and information exist in the data source for a user name in the `usernames` parameter, they are deleted.</span></span>  
+  
+ <span data-ttu-id="27369-155">Der zurückgegebene Wert unterscheidet sich von der Länge des angegebenen Arrays von `usernames`.</span><span class="sxs-lookup"><span data-stu-id="27369-155">The return value may differ from the length of the specified array of `usernames`.</span></span> <span data-ttu-id="27369-156">Dies bedeutet, dass einige der Profile im angegebenen Array von `usernames` wurden bereits aus dem Datenspeicher gelöscht.</span><span class="sxs-lookup"><span data-stu-id="27369-156">This indicates that some of the profiles in the specified array of `usernames` were already deleted from the data store.</span></span>  
+  
+ <span data-ttu-id="27369-157">Die Datenbankupdates, die während des Aufrufs ausgeführt werden die <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> Methode innerhalb einer Transaktion erfolgen.</span><span class="sxs-lookup"><span data-stu-id="27369-157">The database updates that are performed during the call to the <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method are made within a transaction.</span></span> <span data-ttu-id="27369-158">Wenn ein Fehler aufgetreten ist, wird ein Rollback für die Transaktion, und keine Updates ausgeführt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-158">If an error is encountered, the transaction is rolled back and no updates are performed.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-159">Im folgenden Codebeispiel wird veranschaulicht, eine ASP.NET-Seite auf, die inaktiven Profile verwaltet.</span><span class="sxs-lookup"><span data-stu-id="27369-159">The following code example shows an ASP.NET page that manages inactive profiles.</span></span> <span data-ttu-id="27369-160">Ein <xref:System.Web.UI.WebControls.GridView> -Steuerelement zeigt die inaktiven Profile zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-160">A <xref:System.Web.UI.WebControls.GridView> control displays the inactive profiles returned.</span></span> <span data-ttu-id="27369-161">Jede Zeile der <xref:System.Web.UI.WebControls.GridView> Steuerelement enthält eine Schaltfläche, die das Profil für diese Zeile aus der Datenquelle mit einem Aufruf von löscht die <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="27369-161">Each row of the <xref:System.Web.UI.WebControls.GridView> control includes a button that deletes the profile for that row from the data source with a call to the <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/DeleteInactiveProfilescs.aspx#4)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/DeleteInactiveProfilesvb.aspx#4)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-162">Die Länge von <paramref name="usernames" /> ist 0 (null).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-162">The length of <paramref name="usernames" /> is zero.</span>
+          </span>
+          <span data-ttu-id="27369-163">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-163">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-164">Eines der Elemente in <paramref name="usernames" /> ist eine leere Zeichenfolge (""), überschreitet eine Länge von 256 Zeichen oder enthält ein Komma.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-164">One of the items in <paramref name="usernames" /> is an empty string (""), exceeds a length of 256 characters, or contains a comma.</span>
+          </span>
+          <span data-ttu-id="27369-165">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-165">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-166">Zwei oder mehr Elemente in <paramref name="usernames" /> verfügen über den gleichen Wert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-166">Two or more items in <paramref name="usernames" /> have the same value.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="27369-167">
+            <paramref name="usernames" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-167">
+              <paramref name="usernames" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="27369-168">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-168">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-169">Eines der Elemente in <paramref name="usernames" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-169">One of the items in <paramref name="usernames" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteProfiles">
+      <MemberSignature Language="C#" Value="public override int DeleteProfiles (System.Web.Profile.ProfileInfoCollection profiles);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 DeleteProfiles(class System.Web.Profile.ProfileInfoCollection profiles) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.DeleteProfiles(System.Web.Profile.ProfileInfoCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DeleteProfiles (profiles As ProfileInfoCollection) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int DeleteProfiles(System::Web::Profile::ProfileInfoCollection ^ profiles);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="profiles" Type="System.Web.Profile.ProfileInfoCollection" />
+      </Parameters>
+      <Docs>
+        <param name="profiles">
+          <span data-ttu-id="27369-170">Eine <see cref="T:System.Web.Profile.ProfileInfoCollection" />, die Profilinformationen für Profile enthält, die gelöscht werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-170">A <see cref="T:System.Web.Profile.ProfileInfoCollection" /> that contains profile information for profiles to be deleted.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-171">Löscht Profileigenschaften und Informationen für die angegebene Liste mit Profilen aus der Datenquelle.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-171">Deletes profile properties and information for the supplied list of profiles from the data source.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-172">Die Anzahl der aus der Datenquelle gelöschten Profile.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-172">The number of profiles deleted from the data source.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-173">Die <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> -Methode löscht alle Profilinformationen und Eigenschaften für die angegebenen Profile aus der Datenquelle für die Anwendung gemäß der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-173">The <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method deletes all profile information and properties for the specified profiles from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-174">Die Liste der zu löschenden Profile wird angegeben, mit einer <xref:System.Web.Profile.ProfileInfoCollection> als übergeben der `profiles` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-174">The list of profiles to delete is specified using a <xref:System.Web.Profile.ProfileInfoCollection> that is passed as the `profiles` parameter.</span></span> <span data-ttu-id="27369-175">Ein <xref:System.Web.Profile.ProfileInfoCollection> zurückgegeben werden kann, aus der <xref:System.Web.Profile.SqlProfileProvider.GetAllProfiles%2A>, <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A>, <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A>, und <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="27369-175">A <xref:System.Web.Profile.ProfileInfoCollection> can be returned from the <xref:System.Web.Profile.SqlProfileProvider.GetAllProfiles%2A>, <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A>, <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A>, and <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> methods.</span></span>  
+  
+ <span data-ttu-id="27369-176">Der Rückgabewert kann unterscheiden sich von der <xref:System.Web.Profile.ProfileInfoCollection.Count%2A> Wert für die angegebene <xref:System.Web.Profile.ProfileInfoCollection>.</span><span class="sxs-lookup"><span data-stu-id="27369-176">The return value may differ from the <xref:System.Web.Profile.ProfileInfoCollection.Count%2A> value for the supplied <xref:System.Web.Profile.ProfileInfoCollection>.</span></span> <span data-ttu-id="27369-177">Dies bedeutet, dass einige der Profile im angegebenen <xref:System.Web.Profile.ProfileInfoCollection> nicht mehr im Datenspeicher gefunden wurden.</span><span class="sxs-lookup"><span data-stu-id="27369-177">This indicates that some of the profiles in the specified <xref:System.Web.Profile.ProfileInfoCollection> were no longer found in the data store.</span></span>  
+  
+ <span data-ttu-id="27369-178">Die Datenbankupdates, die während des Aufrufs ausgeführt werden die <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> Methode innerhalb einer Transaktion erfolgen.</span><span class="sxs-lookup"><span data-stu-id="27369-178">The database updates that are performed during the call to the <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method are made within a transaction.</span></span> <span data-ttu-id="27369-179">Wenn ein Fehler aufgetreten ist, wird ein Rollback für die Transaktion, und keine Updates ausgeführt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-179">If an error is encountered, the transaction is rolled back and no updates are performed.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-180">Im folgenden Codebeispiel wird ermöglicht einem Benutzer zu suchende Profile mithilfe der <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> und <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="27369-180">The following code example allows a user to search for profiles using the <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> and <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> methods.</span></span> <span data-ttu-id="27369-181">Der Benutzer kann dann die zurückgegebenen Profile mit einem Aufruf von Löschen der <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="27369-181">The user can then delete the returned profiles with a call to the <xref:System.Web.Profile.SqlProfileProvider.DeleteProfiles%2A> method.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/FindProfilesByUserNamecs.aspx#5)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/FindProfilesByUserNamevb.aspx#5)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-182">
+            <paramref name="profiles" /> verfügt über einen <see cref="P:System.Web.Profile.ProfileInfoCollection.Count" />-Wert von 0 (null).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-182">
+              <paramref name="profiles" /> has a <see cref="P:System.Web.Profile.ProfileInfoCollection.Count" /> value of zero.</span>
+          </span>
+          <span data-ttu-id="27369-183">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-183">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-184">Eines der <see cref="T:System.Web.Profile.ProfileInfo" />-Objekte in <paramref name="profiles" /> weist einen <see cref="P:System.Web.Profile.ProfileInfo.UserName" /> auf, der eine leere Zeichenfolge ("") ist, eine Länge von 256 Zeichen überschreitet oder ein Komma enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-184">One of the <see cref="T:System.Web.Profile.ProfileInfo" /> objects in <paramref name="profiles" /> has a <see cref="P:System.Web.Profile.ProfileInfo.UserName" /> that is an empty string (""), exceeds a length of 256 characters, or contains a comma.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="27369-185">
+            <paramref name="profiles" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-185">
+              <paramref name="profiles" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="27369-186">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-186">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-187">Eines der <see cref="T:System.Web.Profile.ProfileInfo" />-Objekte in <paramref name="profiles" /> hat einen <see cref="P:System.Web.Profile.ProfileInfo.UserName" />, der <see langword="null" /> ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-187">One of the <see cref="T:System.Web.Profile.ProfileInfo" /> objects in <paramref name="profiles" /> has a <see cref="P:System.Web.Profile.ProfileInfo.UserName" /> that is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="FindInactiveProfilesByUserName">
+      <MemberSignature Language="C#" Value="public override System.Web.Profile.ProfileInfoCollection FindInactiveProfilesByUserName (System.Web.Profile.ProfileAuthenticationOption authenticationOption, string usernameToMatch, DateTime userInactiveSinceDate, int pageIndex, int pageSize, out int totalRecords);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Web.Profile.ProfileInfoCollection FindInactiveProfilesByUserName(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, string usernameToMatch, valuetype System.DateTime userInactiveSinceDate, int32 pageIndex, int32 pageSize, [out] int32&amp; totalRecords) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName(System.Web.Profile.ProfileAuthenticationOption,System.String,System.DateTime,System.Int32,System.Int32,System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function FindInactiveProfilesByUserName (authenticationOption As ProfileAuthenticationOption, usernameToMatch As String, userInactiveSinceDate As DateTime, pageIndex As Integer, pageSize As Integer, ByRef totalRecords As Integer) As ProfileInfoCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Web::Profile::ProfileInfoCollection ^ FindInactiveProfilesByUserName(System::Web::Profile::ProfileAuthenticationOption authenticationOption, System::String ^ usernameToMatch, DateTime userInactiveSinceDate, int pageIndex, int pageSize, [Runtime::InteropServices::Out] int % totalRecords);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.Profile.ProfileInfoCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="usernameToMatch" Type="System.String" />
+        <Parameter Name="userInactiveSinceDate" Type="System.DateTime" />
+        <Parameter Name="pageIndex" Type="System.Int32" />
+        <Parameter Name="pageSize" Type="System.Int32" />
+        <Parameter Name="totalRecords" Type="System.Int32&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-188">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten zurückgegeben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-188">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</span>
+          </span>
+        </param>
+        <param name="usernameToMatch">
+          <span data-ttu-id="27369-189">Der zu suchende Benutzername.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-189">The user name for which to search.</span>
+          </span>
+        </param>
+        <param name="userInactiveSinceDate">
+          <span data-ttu-id="27369-190">Ein <see cref="T:System.DateTime" />, der festlegt, welche Benutzerprofile als inaktiv betrachtet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-190">A <see cref="T:System.DateTime" /> that identifies which user profiles are considered inactive.</span>
+          </span>
+          <span data-ttu-id="27369-191">Wenn das <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> eines Benutzerprofils zu oder vor diesem Zeitpunkt (Datum und Uhrzeit) auftritt, gilt das Profil als inaktiv.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-191">If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> of a user profile occurs on or before this date and time, the profile is considered inactive.</span>
+          </span>
+        </param>
+        <param name="pageIndex">
+          <span data-ttu-id="27369-192">Der Index der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-192">The index of the page of results to return.</span>
+          </span>
+          <span data-ttu-id="27369-193">
+            <c>pageIndex</c> ist nullbasiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-193">
+              <c>pageIndex</c> is zero-based.</span>
+          </span>
+        </param>
+        <param name="pageSize">
+          <span data-ttu-id="27369-194">Die Größe der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-194">The size of the page of results to return.</span>
+          </span>
+        </param>
+        <param name="totalRecords">
+          <span data-ttu-id="27369-195">Diese Methode enthält bei der Rückgabe eine ganze Zahl, die die Gesamtanzahl von Profilen bezeichnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-195">When this method returns, contains an integer that identifies the total number of profiles.</span>
+          </span>
+          <span data-ttu-id="27369-196">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-196">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-197">Ruft Profilinformationen für Profile ab, bei denen das Datum der letzten Aktivität am oder vor dem angegebenen Datum und der angegebenen Uhrzeit liegt und bei denen der Benutzername des Profils dem angegebenen Namen entspricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-197">Retrieves profile information for profiles in which the last activity date occurred on or before the specified date and time and the user name for the profile matches the specified name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-198">Eine <see cref="T:System.Web.Profile.ProfileInfoCollection" />, die Benutzerprofilinformationen für inaktive Profile enthält, in denen der Benutzername dem angegebenen <paramref name="usernameToMatch" />-Parameter entspricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-198">A <see cref="T:System.Web.Profile.ProfileInfoCollection" /> containing user profile information for inactive profiles where the user name matches the supplied <paramref name="usernameToMatch" /> parameter.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-199">Die <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methode dient zum Abrufen von Profilinformationen für nicht verwendete Benutzerprofile für die angegebene Anwendung der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-199">The <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> method is used to retrieve profile information for unused user profiles for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-200">Diese Methode werden nur abgerufen, der Benutzername für das Profil für die angegebenen entspricht, Profile `usernameToMatch` Parameterwert.</span><span class="sxs-lookup"><span data-stu-id="27369-200">This method will only retrieve profiles for which the user name for the profile matches the supplied `usernameToMatch` parameter value.</span></span> <span data-ttu-id="27369-201">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-201">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span> <span data-ttu-id="27369-202">Von den durchsuchten Profilen wird jedes Profil mit einem <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> in diesem Fall vor dem angegebenen `userInactiveSinceDate` Parameterwert wird zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-202">Of the searched profiles, any profile with a <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> that occurs before the specified `userInactiveSinceDate` parameter value is returned.</span></span>  
+  
+ <span data-ttu-id="27369-203">Die <xref:System.Web.Profile.SqlProfileProvider> sucht eine Übereinstimmung mit der `usernameToMatch` Parameter den Wert unter Verwendung der `LIKE` -Schlüsselwort und die Unterstützung von Platzhalterzeichen, wie z. B. das Prozentzeichen (%).</span><span class="sxs-lookup"><span data-stu-id="27369-203">The <xref:System.Web.Profile.SqlProfileProvider> searches for a match of the `usernameToMatch` parameter value using the `LIKE` keyword and supports wildcard characters, such as the percent (%) sign.</span></span> <span data-ttu-id="27369-204">Beispielsweise, wenn die `usernameToMatch` Parameter auf "Benutzer1" festgelegt ist, und klicken Sie dann Profilinformationen für das Profil mit dem Benutzernamen "Benutzer1" zurückgegeben, falls vorhanden.</span><span class="sxs-lookup"><span data-stu-id="27369-204">For example, if the `usernameToMatch` parameter is set to "user1", then profile information for the profile with the user name of "user1" is returned, if it exists.</span></span> <span data-ttu-id="27369-205">Wenn die `usernameToMatch` Parameter auf "Benutzer%" festgelegt ist, dann werden Informationen zum Eigenschaftsprofil für Profile mit dem Benutzernamen "Benutzer1", "Benutzer2", "benutzer_admin" usw. zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-205">If the `usernameToMatch` parameter is set to "user%", then profile information for profiles with the user name of "user1", "user2", "user_admin", and so on are returned.</span></span> <span data-ttu-id="27369-206">Benutzer werden in der Reihenfolge zurückgegeben, deren Profile mit dem Datenspeicher hinzugefügt wurden.</span><span class="sxs-lookup"><span data-stu-id="27369-206">Users are returned in the order that their profiles were added to the data store.</span></span>  
+  
+ <span data-ttu-id="27369-207">Von der zurückgegebenen Ergebnisse <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> werden eingeschränkt, indem Sie die `pageIndex` und `pageSize` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-207">The results returned by <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> are constrained by the `pageIndex` and `pageSize` parameters.</span></span> <span data-ttu-id="27369-208">Die `pageSize` Parameter gibt die maximale Anzahl von <xref:System.Web.Profile.ProfileInfo> Objekte zurückzugebenden in der <xref:System.Web.Profile.ProfileInfoCollection>.</span><span class="sxs-lookup"><span data-stu-id="27369-208">The `pageSize` parameter identifies the maximum number of <xref:System.Web.Profile.ProfileInfo> objects to return in the <xref:System.Web.Profile.ProfileInfoCollection>.</span></span> <span data-ttu-id="27369-209">Die `pageIndex` Parameter identifiziert, welche Seite der zurückzugebenden Ergebnisseite; 0 die erste Seite identifiziert.</span><span class="sxs-lookup"><span data-stu-id="27369-209">The `pageIndex` parameter identifies which page of results to return; 0 identifies the first page.</span></span> <span data-ttu-id="27369-210">Die `totalRecords` Parameter ist ein `out` Parameter, der die Gesamtzahl der inaktiven Profile für die konfigurierte festgelegt ist `applicationName`auf der Grundlage der `authenticationOption` und `userInactiveSinceDate` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-210">The `totalRecords` parameter is an `out` parameter that is set to the total number of inactive user profiles for the configured `applicationName`, based on the `authenticationOption` and `userInactiveSinceDate` parameters.</span></span> <span data-ttu-id="27369-211">Z. B. 13 Benutzer für die konfigurierte vorhanden sind `applicationName`, und die `pageIndex` ist der Wert 1 mit einem `pageSize` 5. Dies ist die <xref:System.Web.Profile.ProfileInfoCollection> zurückgegeben wird das sechste bis die zehnte inaktiven Profile enthalten.</span><span class="sxs-lookup"><span data-stu-id="27369-211">For example, if there are 13 users for the configured `applicationName`, and the `pageIndex` value is 1 with a `pageSize` of 5, the <xref:System.Web.Profile.ProfileInfoCollection> returned will contain the sixth through the tenth inactive profiles.</span></span> <span data-ttu-id="27369-212">Die `totalRecords` -Parameter wird auf 13 festgelegt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-212">The `totalRecords` parameter will be set to 13.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-213">Im folgenden Codebeispiel kann Benutzer zur bereitstellen, eine `usernameToMatch` Wert und eine <xref:System.Web.Profile.ProfileAuthenticationOption> und Ruft Profilinformationen für alle übereinstimmenden Profile.</span><span class="sxs-lookup"><span data-stu-id="27369-213">The following code example allows a user to supply a `usernameToMatch` value and a <xref:System.Web.Profile.ProfileAuthenticationOption> and retrieves profile information for any matching profiles.</span></span> <span data-ttu-id="27369-214">Im Beispiel kann auch der Benutzer anzugeben, ob ausschließlich inaktive Profile zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-214">The example also allows the user to specify whether to return inactive profiles exclusively.</span></span> <span data-ttu-id="27369-215">Wenn der Benutzer nur inaktive Profile angibt der <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methode wird aufgerufen, und andernfalls die <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="27369-215">If the user specifies only inactive profiles, the <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> method is called; otherwise, the <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> method is called.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/FindProfilesByUserNamecs.aspx#5)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/FindProfilesByUserNamevb.aspx#5)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="27369-216">
+            <paramref name="usernameToMatch" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-216">
+              <paramref name="usernameToMatch" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-217">
+            <paramref name="usernameToMatch" /> ist eine leere Zeichenfolge ("") oder überschreitet eine Länge von 256 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-217">
+              <paramref name="usernameToMatch" /> is an empty string ("") or exceeds 256 characters.</span>
+          </span>
+          <span data-ttu-id="27369-218">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-218">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-219">
+            <paramref name="pageIndex" /> ist kleiner als Null.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-219">
+              <paramref name="pageIndex" /> is less than zero.</span>
+          </span>
+          <span data-ttu-id="27369-220">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-220">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-221">
+            <paramref name="pageSize" /> ist kleiner als 1.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-221">
+              <paramref name="pageSize" /> is less than one.</span>
+          </span>
+          <span data-ttu-id="27369-222">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-222">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-223">
+            <paramref name="pageIndex" /> multipliziert mit <paramref name="pageSize" /> ist größer als<see cref="F:System.Int32.MaxValue" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-223">
+              <paramref name="pageIndex" /> multiplied by <paramref name="pageSize" /> is larger than <see cref="F:System.Int32.MaxValue" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="FindProfilesByUserName">
+      <MemberSignature Language="C#" Value="public override System.Web.Profile.ProfileInfoCollection FindProfilesByUserName (System.Web.Profile.ProfileAuthenticationOption authenticationOption, string usernameToMatch, int pageIndex, int pageSize, out int totalRecords);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Web.Profile.ProfileInfoCollection FindProfilesByUserName(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, string usernameToMatch, int32 pageIndex, int32 pageSize, [out] int32&amp; totalRecords) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName(System.Web.Profile.ProfileAuthenticationOption,System.String,System.Int32,System.Int32,System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function FindProfilesByUserName (authenticationOption As ProfileAuthenticationOption, usernameToMatch As String, pageIndex As Integer, pageSize As Integer, ByRef totalRecords As Integer) As ProfileInfoCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Web::Profile::ProfileInfoCollection ^ FindProfilesByUserName(System::Web::Profile::ProfileAuthenticationOption authenticationOption, System::String ^ usernameToMatch, int pageIndex, int pageSize, [Runtime::InteropServices::Out] int % totalRecords);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.Profile.ProfileInfoCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="usernameToMatch" Type="System.String" />
+        <Parameter Name="pageIndex" Type="System.Int32" />
+        <Parameter Name="pageSize" Type="System.Int32" />
+        <Parameter Name="totalRecords" Type="System.Int32&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-224">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten zurückgegeben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-224">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</span>
+          </span>
+        </param>
+        <param name="usernameToMatch">
+          <span data-ttu-id="27369-225">Der zu suchende Benutzername.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-225">The user name for which to search.</span>
+          </span>
+        </param>
+        <param name="pageIndex">
+          <span data-ttu-id="27369-226">Der Index der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-226">The index of the page of results to return.</span>
+          </span>
+          <span data-ttu-id="27369-227">
+            <c>pageIndex</c> ist nullbasiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-227">
+              <c>pageIndex</c> is zero-based.</span>
+          </span>
+        </param>
+        <param name="pageSize">
+          <span data-ttu-id="27369-228">Die Größe der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-228">The size of the page of results to return.</span>
+          </span>
+        </param>
+        <param name="totalRecords">
+          <span data-ttu-id="27369-229">Diese Methode enthält bei der Rückgabe eine ganze Zahl, die die Gesamtanzahl von Profilen bezeichnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-229">When this method returns, contains an integer that identifies the total number of profiles.</span>
+          </span>
+          <span data-ttu-id="27369-230">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-230">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-231">Ruft Profilinformationen für Profile ab, bei denen der Benutzername mit dem angegebenen Namen übereinstimmt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-231">Retrieves profile information for profiles in which the user name matches the specified name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-232">Eine <see cref="T:System.Web.Profile.ProfileInfoCollection" />, die Benutzerprofilinformationen für Profile enthält, in denen der Benutzername dem angegebenen <paramref name="usernameToMatch" />-Parameter entspricht.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-232">A <see cref="T:System.Web.Profile.ProfileInfoCollection" /> containing user profile information for profiles where the user name matches the supplied <paramref name="usernameToMatch" /> parameter.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-233">Die <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methode gibt eine Liste von Profilinformationen für die der Benutzername für das Profil dem angegebenen entspricht `usernameToMatch` Parameterwert für die konfigurierte <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A>.</span><span class="sxs-lookup"><span data-stu-id="27369-233">The <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> method returns a list of profile information for which the user name for the profile matches the supplied `usernameToMatch` parameter value for the configured <xref:System.Web.Profile.SqlProfileProvider.ApplicationName%2A>.</span></span> <span data-ttu-id="27369-234">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-234">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span>  
+  
+ <span data-ttu-id="27369-235">Die <xref:System.Web.Profile.SqlProfileProvider> sucht eine Übereinstimmung mit der `usernameToMatch` Parameter den Wert unter Verwendung der `LIKE` -Schlüsselwort und die Unterstützung von Platzhalterzeichen, wie z. B. das Prozentzeichen (%).</span><span class="sxs-lookup"><span data-stu-id="27369-235">The <xref:System.Web.Profile.SqlProfileProvider> searches for a match of the `usernameToMatch` parameter value using the `LIKE` keyword and supports wildcard characters, such as the percent (%) sign.</span></span> <span data-ttu-id="27369-236">Beispielsweise, wenn die `usernameToMatch` Parameter auf "Benutzer1" festgelegt ist, und klicken Sie dann Profilinformationen für das Profil mit dem Benutzernamen "Benutzer1" zurückgegeben, falls vorhanden.</span><span class="sxs-lookup"><span data-stu-id="27369-236">For example, if the `usernameToMatch` parameter is set to "user1", then profile information for the profile with the user name of "user1" is returned, if it exists.</span></span> <span data-ttu-id="27369-237">Wenn die `usernameToMatch` Parameter auf "Benutzer%" festgelegt ist, dann werden Informationen zum Eigenschaftsprofil für Profile mit dem Benutzernamen "Benutzer1", "Benutzer2", "benutzer_admin" usw. zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-237">If the `usernameToMatch` parameter is set to "user%", then profile information for profiles with the user name of "user1", "user2", "user_admin", and so on are returned.</span></span> <span data-ttu-id="27369-238">Benutzer werden in der Reihenfolge zurückgegeben, deren Profile mit dem Datenspeicher hinzugefügt wurden.</span><span class="sxs-lookup"><span data-stu-id="27369-238">Users are returned in the order that their profiles were added to the data store.</span></span>  
+  
+ <span data-ttu-id="27369-239">Von der zurückgegebenen Ergebnisse <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> werden eingeschränkt, indem Sie die `pageIndex` und `pageSize` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-239">The results returned by <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> are constrained by the `pageIndex` and `pageSize` parameters.</span></span> <span data-ttu-id="27369-240">Die `pageSize` Parameter gibt die maximale Anzahl von <xref:System.Web.Profile.ProfileInfo> Objekte zurückzugebenden in der <xref:System.Web.Profile.ProfileInfoCollection>.</span><span class="sxs-lookup"><span data-stu-id="27369-240">The `pageSize` parameter identifies the maximum number of <xref:System.Web.Profile.ProfileInfo> objects to return in the <xref:System.Web.Profile.ProfileInfoCollection>.</span></span> <span data-ttu-id="27369-241">Die `pageIndex` Parameter identifiziert, welche Seite der zurückzugebenden Ergebnisseite; 0 die erste Seite identifiziert.</span><span class="sxs-lookup"><span data-stu-id="27369-241">The `pageIndex` parameter identifies which page of results to return; 0 identifies the first page.</span></span> <span data-ttu-id="27369-242">Die `totalRecords` Parameter ist ein `out` Parameter, der die Gesamtzahl der inaktiven Profile für die angegebene Anwendung festgelegt ist die `applicationName` Attribut in der Konfigurationsdatei auf Grundlage der `authenticationOption` und `userInactiveSinceDate` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-242">The `totalRecords` parameter is an `out` parameter that is set to the total number of inactive user profiles for the application specified by the `applicationName` attribute in the configuration file, based on the `authenticationOption` and `userInactiveSinceDate` parameters.</span></span> <span data-ttu-id="27369-243">Z. B. 13 Benutzer für die konfigurierte vorhanden sind `applicationName`, und die `pageIndex` ist der Wert 1 mit einem `pageSize` 5. Dies ist die <xref:System.Web.Profile.ProfileInfoCollection> zurückgegeben wird das sechste bis zehnte Profile enthalten.</span><span class="sxs-lookup"><span data-stu-id="27369-243">For example, if there are 13 users for the configured `applicationName`, and the `pageIndex` value is 1 with a `pageSize` of 5, the <xref:System.Web.Profile.ProfileInfoCollection> returned will contain the sixth through the tenth profiles.</span></span> <span data-ttu-id="27369-244">Die `totalRecords` -Parameter wird auf 13 festgelegt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-244">The `totalRecords` parameter will be set to 13.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-245">Im folgenden Codebeispiel kann Benutzer zur bereitstellen, eine `usernameToMatch` Wert und eine <xref:System.Web.Profile.ProfileAuthenticationOption> und Ruft Profilinformationen für alle übereinstimmenden Profile.</span><span class="sxs-lookup"><span data-stu-id="27369-245">The following code example allows a user to supply a `usernameToMatch` value and a <xref:System.Web.Profile.ProfileAuthenticationOption> and retrieves profile information for any matching profiles.</span></span> <span data-ttu-id="27369-246">Im Beispiel kann auch der Benutzer anzugeben, ob ausschließlich inaktive Profile zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-246">The example also allows the user to specify whether to return inactive profiles exclusively.</span></span> <span data-ttu-id="27369-247">Wenn der Benutzer nur inaktive Profile angibt der <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> Methode wird aufgerufen, und andernfalls die <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="27369-247">If the user specifies only inactive profiles, the <xref:System.Web.Profile.SqlProfileProvider.FindInactiveProfilesByUserName%2A> method is called; otherwise, the <xref:System.Web.Profile.SqlProfileProvider.FindProfilesByUserName%2A> method is called.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/FindProfilesByUserNamecs.aspx#5)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/FindProfilesByUserNamevb.aspx#5)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="27369-248">
+            <paramref name="usernameToMatch" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-248">
+              <paramref name="usernameToMatch" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-249">
+            <paramref name="usernameToMatch" /> ist eine leere Zeichenfolge ("") oder überschreitet eine Länge von 256 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-249">
+              <paramref name="usernameToMatch" /> is an empty string ("") or exceeds 256 characters.</span>
+          </span>
+          <span data-ttu-id="27369-250">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-250">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-251">
+            <paramref name="pageIndex" /> ist kleiner als Null.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-251">
+              <paramref name="pageIndex" /> is less than zero.</span>
+          </span>
+          <span data-ttu-id="27369-252">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-252">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-253">
+            <paramref name="pageSize" /> ist kleiner als 1.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-253">
+              <paramref name="pageSize" /> is less than one.</span>
+          </span>
+          <span data-ttu-id="27369-254">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-254">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-255">
+            <paramref name="pageIndex" /> multipliziert mit <paramref name="pageSize" /> ist größer als<see cref="F:System.Int32.MaxValue" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-255">
+              <paramref name="pageIndex" /> multiplied by <paramref name="pageSize" /> is larger than <see cref="F:System.Int32.MaxValue" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAllInactiveProfiles">
+      <MemberSignature Language="C#" Value="public override System.Web.Profile.ProfileInfoCollection GetAllInactiveProfiles (System.Web.Profile.ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate, int pageIndex, int pageSize, out int totalRecords);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Web.Profile.ProfileInfoCollection GetAllInactiveProfiles(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, valuetype System.DateTime userInactiveSinceDate, int32 pageIndex, int32 pageSize, [out] int32&amp; totalRecords) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles(System.Web.Profile.ProfileAuthenticationOption,System.DateTime,System.Int32,System.Int32,System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetAllInactiveProfiles (authenticationOption As ProfileAuthenticationOption, userInactiveSinceDate As DateTime, pageIndex As Integer, pageSize As Integer, ByRef totalRecords As Integer) As ProfileInfoCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Web::Profile::ProfileInfoCollection ^ GetAllInactiveProfiles(System::Web::Profile::ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate, int pageIndex, int pageSize, [Runtime::InteropServices::Out] int % totalRecords);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.Profile.ProfileInfoCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="userInactiveSinceDate" Type="System.DateTime" />
+        <Parameter Name="pageIndex" Type="System.Int32" />
+        <Parameter Name="pageSize" Type="System.Int32" />
+        <Parameter Name="totalRecords" Type="System.Int32&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-256">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten zurückgegeben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-256">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</span>
+          </span>
+        </param>
+        <param name="userInactiveSinceDate">
+          <span data-ttu-id="27369-257">Ein <see cref="T:System.DateTime" />, der festlegt, welche Benutzerprofile als inaktiv betrachtet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-257">A <see cref="T:System.DateTime" /> that identifies which user profiles are considered inactive.</span>
+          </span>
+          <span data-ttu-id="27369-258">Wenn das <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> eines Benutzerprofils zu oder vor diesem Zeitpunkt (Datum und Uhrzeit) auftritt, gilt das Profil als inaktiv.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-258">If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> of a user profile occurs on or before this date and time, the profile is considered inactive.</span>
+          </span>
+        </param>
+        <param name="pageIndex">
+          <span data-ttu-id="27369-259">Der Index der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-259">The index of the page of results to return.</span>
+          </span>
+          <span data-ttu-id="27369-260">
+            <c>pageIndex</c> ist nullbasiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-260">
+              <c>pageIndex</c> is zero-based.</span>
+          </span>
+        </param>
+        <param name="pageSize">
+          <span data-ttu-id="27369-261">Die Größe der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-261">The size of the page of results to return.</span>
+          </span>
+        </param>
+        <param name="totalRecords">
+          <span data-ttu-id="27369-262">Diese Methode enthält bei der Rückgabe eine ganze Zahl, die die Gesamtanzahl von Profilen bezeichnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-262">When this method returns, contains an integer that identifies the total number of profiles.</span>
+          </span>
+          <span data-ttu-id="27369-263">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-263">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-264">Ruft Benutzerprofildaten für Profile ab, bei denen das Datum der letzten Aktivität am oder vor dem angegebenen Datum und der angegeben Uhrzeit liegt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-264">Retrieves user profile data for profiles in which the last activity date occurred on or before the specified date and time.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-265">Eine <see cref="T:System.Web.Profile.ProfileInfoCollection" />, die Benutzerprofilinformationen zu den inaktiven Profilen enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-265">A <see cref="T:System.Web.Profile.ProfileInfoCollection" /> containing user profile information about the inactive profiles.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-266">Die <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> Methode dient zum Abrufen von Profilinformationen aus der Datenquelle für nicht verwendete Benutzerprofile für die angegebene Anwendung der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-266">The <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> method is used to retrieve profile information from the data source for unused user profiles for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-267">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-267">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span> <span data-ttu-id="27369-268">Von den durchsuchten Profilen wird jedes Profil mit einem <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> in diesem Fall vor dem angegebenen `userInactiveSinceDate` Parameterwert wird zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-268">Of the searched profiles, any profile with a <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> that occurs before the specified `userInactiveSinceDate` parameter value is returned.</span></span>  
+  
+ <span data-ttu-id="27369-269">Von der zurückgegebenen Ergebnisse <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> werden eingeschränkt, indem Sie die `pageIndex` und `pageSize` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-269">The results returned by <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> are constrained by the `pageIndex` and `pageSize` parameters.</span></span> <span data-ttu-id="27369-270">Die `pageSize` Parameter gibt die maximale Anzahl von <xref:System.Web.Profile.ProfileInfo> Objekte zurückzugebenden in der <xref:System.Web.Profile.ProfileInfoCollection>.</span><span class="sxs-lookup"><span data-stu-id="27369-270">The `pageSize` parameter identifies the maximum number of <xref:System.Web.Profile.ProfileInfo> objects to return in the <xref:System.Web.Profile.ProfileInfoCollection>.</span></span> <span data-ttu-id="27369-271">Die `pageIndex` Parameter identifiziert, welche Seite der zurückzugebenden Ergebnisseite; 0 die erste Seite identifiziert.</span><span class="sxs-lookup"><span data-stu-id="27369-271">The `pageIndex` parameter identifies which page of results to return; 0 identifies the first page.</span></span> <span data-ttu-id="27369-272">Die `totalRecords` Parameter ist ein `out` Parameter, der die Gesamtzahl der inaktiven Profile für die konfigurierte festgelegt ist `applicationName`auf der Grundlage der `authenticationOption` und `userInactiveSinceDate` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-272">The `totalRecords` parameter is an `out` parameter that is set to the total number of inactive user profiles for the configured `applicationName`, based on the `authenticationOption` and `userInactiveSinceDate` parameters.</span></span> <span data-ttu-id="27369-273">Z. B. 13 Benutzer für die konfigurierte vorhanden sind `applicationName`, und die `pageIndex` ist der Wert 1 mit einem `pageSize` 5. Dies ist die <xref:System.Web.Profile.ProfileInfoCollection> zurückgegeben wird das sechste bis die zehnte inaktiven Profile enthalten.</span><span class="sxs-lookup"><span data-stu-id="27369-273">For example, if there are 13 users for the configured `applicationName`, and the `pageIndex` value is 1 with a `pageSize` of 5, the <xref:System.Web.Profile.ProfileInfoCollection> returned will contain the sixth through the tenth inactive profiles.</span></span> <span data-ttu-id="27369-274">Die `totalRecords` -Parameter wird auf 13 festgelegt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-274">The `totalRecords` parameter will be set to 13.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-275">Im folgenden Codebeispiel wird veranschaulicht, eine ASP.NET-Seite auf, die inaktiven Profile verwaltet.</span><span class="sxs-lookup"><span data-stu-id="27369-275">The following code example shows an ASP.NET page that manages inactive profiles.</span></span> <span data-ttu-id="27369-276">So löschen Sie alle inaktiven Profile wird eine Schaltfläche bereitgestellt.</span><span class="sxs-lookup"><span data-stu-id="27369-276">A button is provided to delete all inactive profiles.</span></span> <span data-ttu-id="27369-277">Gibt an, ob ein Profil als inaktiv betrachtet wird basiert auf dem Datum für die `userInactiveSinceDate` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-277">Whether a profile is considered inactive is based on the date specified for the `userInactiveSinceDate` parameter.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/DeleteInactiveProfilescs.aspx#4)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/DeleteInactiveProfilesvb.aspx#4)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-278">
+            <paramref name="pageIndex" /> ist kleiner als Null.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-278">
+              <paramref name="pageIndex" /> is less than zero.</span>
+          </span>
+          <span data-ttu-id="27369-279">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-279">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-280">
+            <paramref name="pageSize" /> ist kleiner als 1.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-280">
+              <paramref name="pageSize" /> is less than one.</span>
+          </span>
+          <span data-ttu-id="27369-281">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-281">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-282">
+            <paramref name="pageIndex" /> multipliziert mit <paramref name="pageSize" /> ist größer als<see cref="F:System.Int32.MaxValue" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-282">
+              <paramref name="pageIndex" /> multiplied by <paramref name="pageSize" /> is larger than <see cref="F:System.Int32.MaxValue" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAllProfiles">
+      <MemberSignature Language="C#" Value="public override System.Web.Profile.ProfileInfoCollection GetAllProfiles (System.Web.Profile.ProfileAuthenticationOption authenticationOption, int pageIndex, int pageSize, out int totalRecords);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Web.Profile.ProfileInfoCollection GetAllProfiles(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, int32 pageIndex, int32 pageSize, [out] int32&amp; totalRecords) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.GetAllProfiles(System.Web.Profile.ProfileAuthenticationOption,System.Int32,System.Int32,System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetAllProfiles (authenticationOption As ProfileAuthenticationOption, pageIndex As Integer, pageSize As Integer, ByRef totalRecords As Integer) As ProfileInfoCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Web::Profile::ProfileInfoCollection ^ GetAllProfiles(System::Web::Profile::ProfileAuthenticationOption authenticationOption, int pageIndex, int pageSize, [Runtime::InteropServices::Out] int % totalRecords);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.Profile.ProfileInfoCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="pageIndex" Type="System.Int32" />
+        <Parameter Name="pageSize" Type="System.Int32" />
+        <Parameter Name="totalRecords" Type="System.Int32&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-283">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten zurückgegeben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-283">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</span>
+          </span>
+        </param>
+        <param name="pageIndex">
+          <span data-ttu-id="27369-284">Der Index der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-284">The index of the page of results to return.</span>
+          </span>
+          <span data-ttu-id="27369-285">
+            <c>pageIndex</c> ist nullbasiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-285">
+              <c>pageIndex</c> is zero-based.</span>
+          </span>
+        </param>
+        <param name="pageSize">
+          <span data-ttu-id="27369-286">Die Größe der zurückzugebenden Ergebnisseite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-286">The size of the page of results to return.</span>
+          </span>
+        </param>
+        <param name="totalRecords">
+          <span data-ttu-id="27369-287">Diese Methode enthält bei der Rückgabe eine ganze Zahl, die die Gesamtanzahl von Profilen bezeichnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-287">When this method returns, contains an integer that identifies the total number of profiles.</span>
+          </span>
+          <span data-ttu-id="27369-288">Dieser Parameter wird nicht initialisiert übergeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-288">This parameter is passed uninitialized.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-289">Ruft Benutzerprofildaten für Profile in der Datenquelle ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-289">Retrieves user profile data for profiles in the data source.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-290">Eine <see cref="T:System.Web.Profile.ProfileInfoCollection" />, die Benutzerprofilinformationen für alle Profile in der Datenquelle enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-290">A <see cref="T:System.Web.Profile.ProfileInfoCollection" /> containing user profile information for all of the profiles in the data source.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-291">Die <xref:System.Web.Profile.SqlProfileProvider.GetAllProfiles%2A> Methode dient zum Abrufen von Profilinformationen für Profile aus der Datenquelle für die angegebene Anwendung der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-291">The <xref:System.Web.Profile.SqlProfileProvider.GetAllProfiles%2A> method is used to retrieve profile information for profiles from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-292">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-292">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span>  
+  
+ <span data-ttu-id="27369-293">Von der zurückgegebenen Ergebnisse <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> werden eingeschränkt, indem Sie die `pageIndex` und `pageSize` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-293">The results returned by <xref:System.Web.Profile.SqlProfileProvider.GetAllInactiveProfiles%2A> are constrained by the `pageIndex` and `pageSize` parameters.</span></span> <span data-ttu-id="27369-294">Die `pageSize` Parameter gibt die maximale Anzahl von <xref:System.Web.Profile.ProfileInfo> Objekte zurückzugebenden in der <xref:System.Web.Profile.ProfileInfoCollection>.</span><span class="sxs-lookup"><span data-stu-id="27369-294">The `pageSize` parameter identifies the maximum number of <xref:System.Web.Profile.ProfileInfo> objects to return in the <xref:System.Web.Profile.ProfileInfoCollection>.</span></span> <span data-ttu-id="27369-295">Die `pageIndex` Parameter identifiziert, welche Seite der zurückzugebenden Ergebnisseite; 0 die erste Seite identifiziert.</span><span class="sxs-lookup"><span data-stu-id="27369-295">The `pageIndex` parameter identifies which page of results to return; 0 identifies the first page.</span></span> <span data-ttu-id="27369-296">Die `totalRecords` Parameter ist ein `out` Parameter, der die Gesamtzahl der inaktiven Profile für die konfigurierte festgelegt ist `applicationName`auf der Grundlage der `authenticationOption` und `userInactiveSinceDate` Parameter.</span><span class="sxs-lookup"><span data-stu-id="27369-296">The `totalRecords` parameter is an `out` parameter that is set to the total number of inactive user profiles for the configured `applicationName`, based on the `authenticationOption` and `userInactiveSinceDate` parameters.</span></span> <span data-ttu-id="27369-297">Z. B. 13 Benutzer für die konfigurierte vorhanden sind `applicationName`, und die `pageIndex` ist der Wert 1 mit einem `pageSize` 5. Dies ist die <xref:System.Web.Profile.ProfileInfoCollection> zurückgegeben wird das sechste bis zehnte Profile enthalten.</span><span class="sxs-lookup"><span data-stu-id="27369-297">For example, if there are 13 users for the configured `applicationName`, and the `pageIndex` value is 1 with a `pageSize` of 5, the <xref:System.Web.Profile.ProfileInfoCollection> returned will contain the sixth through the tenth profiles.</span></span> <span data-ttu-id="27369-298">Die `totalRecords` -Parameter wird auf 13 festgelegt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-298">The `totalRecords` parameter will be set to 13.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-299">Das folgende Codebeispiel zeigt die Profilinformationen für alle Profile für die konfigurierte `applicationName` in Datenseiten.</span><span class="sxs-lookup"><span data-stu-id="27369-299">The following code example displays profile information for all of the profiles for the configured `applicationName` in pages of data.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#3](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/ShowProfilescs.aspx#3)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#3](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/ShowProfilesvb.aspx#3)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="27369-300">
+            <paramref name="pageIndex" /> ist kleiner als Null.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-300">
+              <paramref name="pageIndex" /> is less than zero.</span>
+          </span>
+          <span data-ttu-id="27369-301">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-301">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-302">
+            <paramref name="pageSize" /> ist kleiner als 1.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-302">
+              <paramref name="pageSize" /> is less than one.</span>
+          </span>
+          <span data-ttu-id="27369-303">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-303">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-304">
+            <paramref name="pageIndex" /> multipliziert mit <paramref name="pageSize" /> ist größer als<see cref="F:System.Int32.MaxValue" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-304">
+              <paramref name="pageIndex" /> multiplied by <paramref name="pageSize" /> is larger than <see cref="F:System.Int32.MaxValue" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetNumberOfInactiveProfiles">
+      <MemberSignature Language="C#" Value="public override int GetNumberOfInactiveProfiles (System.Web.Profile.ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetNumberOfInactiveProfiles(valuetype System.Web.Profile.ProfileAuthenticationOption authenticationOption, valuetype System.DateTime userInactiveSinceDate) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.GetNumberOfInactiveProfiles(System.Web.Profile.ProfileAuthenticationOption,System.DateTime)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetNumberOfInactiveProfiles (authenticationOption As ProfileAuthenticationOption, userInactiveSinceDate As DateTime) As Integer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetNumberOfInactiveProfiles(System::Web::Profile::ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="authenticationOption" Type="System.Web.Profile.ProfileAuthenticationOption" />
+        <Parameter Name="userInactiveSinceDate" Type="System.DateTime" />
+      </Parameters>
+      <Docs>
+        <param name="authenticationOption">
+          <span data-ttu-id="27369-305">Einer der <see cref="T:System.Web.Profile.ProfileAuthenticationOption" />-Werte, der angibt, ob anonyme Profile, authentifizierte Profile oder beide Profilarten zurückgegeben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-305">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption" /> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</span>
+          </span>
+        </param>
+        <param name="userInactiveSinceDate">
+          <span data-ttu-id="27369-306">Ein <see cref="T:System.DateTime" />, der festlegt, welche Benutzerprofile als inaktiv betrachtet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-306">A <see cref="T:System.DateTime" /> that identifies which user profiles are considered inactive.</span>
+          </span>
+          <span data-ttu-id="27369-307">Wenn das <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> eines Benutzerprofils zu oder vor diesem Zeitpunkt (Datum und Uhrzeit) auftritt, gilt das Profil als inaktiv.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-307">If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate" /> of a user profile occurs on or before this date and time, the profile is considered inactive.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-308">Ruft die Anzahl der Profile in der Datenquelle ab, bei denen das Datum der letzten Aktivität am oder vor dem angegebenen <paramref name="userInactiveSinceDate" /> liegt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-308">Gets the number of profiles in the data source where the last activity date occurred on or before the specified <paramref name="userInactiveSinceDate" />.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-309">Die Anzahl der Profile in der Datenquelle, bei denen das Datum der letzten Aktivität vor dem angegebenen Datum und der angegeben Uhrzeit liegt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-309">The number of profiles in the data source for which the last activity date occurred before the specified date and time.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-310">Die <xref:System.Web.Profile.SqlProfileProvider.GetNumberOfInactiveProfiles%2A> Methode wird verwendet, um alle nicht verwendeten Benutzerprofile aus der Datenquelle für die angegebene Anwendung Abrufen der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-310">The <xref:System.Web.Profile.SqlProfileProvider.GetNumberOfInactiveProfiles%2A> method is used to retrieve a count of all of the unused user profiles from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-311">Verwenden der `authenticationOption` Parameter, um anzugeben, ob nur anonyme Profile soll nur authentifizierte Profile oder alle Profile gesucht werden soll.</span><span class="sxs-lookup"><span data-stu-id="27369-311">Use the `authenticationOption` parameter to specify whether you want only anonymous profiles, only authenticated profiles, or all profiles to be searched.</span></span> <span data-ttu-id="27369-312">Gesuchte Profil, alle Profile mit einem <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> Dies tritt am oder vor dem angegebenen `userInactiveSinceDate` Parameterwert gezählt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-312">Of the searched profiles, all profiles with a <xref:System.Web.Profile.ProfileInfo.LastActivityDate%2A> that occurs on or before the specified `userInactiveSinceDate` parameter value are counted.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-313">Im folgenden Codebeispiel kann Benutzer anzeigen und aktive und inaktive Profilinformationen basierend auf Suchkriterien gelöscht.</span><span class="sxs-lookup"><span data-stu-id="27369-313">The following code example allows a user to view and delete active and inactive profiles information based on search criteria.</span></span> <span data-ttu-id="27369-314">Anzahl der inaktiven Profile wird angezeigt, mit den Ergebnissen der <xref:System.Web.Profile.SqlProfileProvider.GetNumberOfInactiveProfiles%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="27369-314">A count of inactive profiles is displayed using the results of the <xref:System.Web.Profile.SqlProfileProvider.GetNumberOfInactiveProfiles%2A> method.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/FindProfilesByUserNamecs.aspx#5)]
+ [!code-aspx-vb[System.Web.Profile.SqlProfileProvider#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/FindProfilesByUserNamevb.aspx#5)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPropertyValues">
+      <MemberSignature Language="C#" Value="public override System.Configuration.SettingsPropertyValueCollection GetPropertyValues (System.Configuration.SettingsContext sc, System.Configuration.SettingsPropertyCollection properties);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Configuration.SettingsPropertyValueCollection GetPropertyValues(class System.Configuration.SettingsContext sc, class System.Configuration.SettingsPropertyCollection properties) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.GetPropertyValues(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetPropertyValues (sc As SettingsContext, properties As SettingsPropertyCollection) As SettingsPropertyValueCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Configuration::SettingsPropertyValueCollection ^ GetPropertyValues(System::Configuration::SettingsContext ^ sc, System::Configuration::SettingsPropertyCollection ^ properties);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsPropertyValueCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sc" Type="System.Configuration.SettingsContext" />
+        <Parameter Name="properties" Type="System.Configuration.SettingsPropertyCollection" />
+      </Parameters>
+      <Docs>
+        <param name="sc">
+          <span data-ttu-id="27369-315">Der <see cref="T:System.Configuration.SettingsContext" />, der Benutzerprofilinformationen enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-315">The <see cref="T:System.Configuration.SettingsContext" /> that contains user profile information.</span>
+          </span>
+        </param>
+        <param name="properties">
+          <span data-ttu-id="27369-316">Eine <see cref="T:System.Configuration.SettingsPropertyCollection" />, die Profilinformationen für die Eigenschaften enthält, die abgerufen werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-316">A <see cref="T:System.Configuration.SettingsPropertyCollection" /> containing profile information for the properties to be retrieved.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-317">Ruft Profileigenschafteninformationen und Werte aus einer SQL Server-Profildatenbank ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-317">Retrieves profile property information and values from a SQL Server profile database.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="27369-318">Eine <see cref="T:System.Configuration.SettingsPropertyValueCollection" />, die Profileigenschafteninformationen und Werte enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-318">A <see cref="T:System.Configuration.SettingsPropertyValueCollection" /> containing profile property information and values.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-319">Die <xref:System.Web.Profile.SqlProfileProvider.GetPropertyValues%2A> Methode wird verwendet, durch die <xref:System.Web.Profile.ProfileBase> Klasse zum Abrufen von Eigenschaften des Profils für die aktuelle Anforderung, die von verwaltet werden die <xref:System.Web.Profile.SqlProfileProvider>.</span><span class="sxs-lookup"><span data-stu-id="27369-319">The <xref:System.Web.Profile.SqlProfileProvider.GetPropertyValues%2A> method is used by the <xref:System.Web.Profile.ProfileBase> class to retrieve profile properties for the current request that are managed by the <xref:System.Web.Profile.SqlProfileProvider>.</span></span> <span data-ttu-id="27369-320">Eigenschaftswerte werden zurückgegeben, aus der Datenquelle für die Anwendung gemäß der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-320">Property values are returned from the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-321">Eigenschaftswerte und zusätzliche Informationen werden zurückgegeben, als eine Auflistung von <xref:System.Configuration.SettingsPropertyValue> Objekte.</span><span class="sxs-lookup"><span data-stu-id="27369-321">Property values and additional property information are returned as a collection of <xref:System.Configuration.SettingsPropertyValue> objects.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-322">Das folgende Codebeispiel listet die Profileigenschaften und Werte, die in das aktuelle Profil identifiziert.</span><span class="sxs-lookup"><span data-stu-id="27369-322">The following code example lists the profile properties and values identified in the current profile.</span></span>  
+  
+ [!code-csharp[System.Web.Profile.SqlProfileProvider#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/getpropertyvaluescs.aspx#1)]
+ [!code-vb[System.Web.Profile.SqlProfileProvider#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/getpropertyvaluesvb.aspx#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Initialize">
+      <MemberSignature Language="C#" Value="public override void Initialize (string name, System.Collections.Specialized.NameValueCollection config);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Initialize(string name, class System.Collections.Specialized.NameValueCollection config) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.Initialize(System.String,System.Collections.Specialized.NameValueCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Initialize (name As String, config As NameValueCollection)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(System::String ^ name, System::Collections::Specialized::NameValueCollection ^ config);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="config" Type="System.Collections.Specialized.NameValueCollection" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="27369-323">Der Name der zu initialisierenden <see cref="T:System.Web.Profile.SqlProfileProvider" />-Instanz.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-323">The name of the <see cref="T:System.Web.Profile.SqlProfileProvider" /> instance to initialize.</span>
+          </span>
+        </param>
+        <param name="config">
+          <span data-ttu-id="27369-324">Eine <see cref="T:System.Collections.Specialized.NameValueCollection" />, die die Namen und Werte der Konfigurationsoptionen für den Profilanbieter enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-324">A <see cref="T:System.Collections.Specialized.NameValueCollection" /> that contains the names and values of configuration options for the profile provider.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-325">Initialisiert den SQL Server-Profilanbieter mit den Eigenschaftswerten, die in der Konfigurationsdatei der ASP.NET-Anwendung angegeben sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-325">Initializes the SQL Server profile provider with the property values specified in the ASP.NET application's configuration file.</span>
+          </span>
+          <span data-ttu-id="27369-326">Diese Methode ist nicht für die direkte Verwendung im Code vorgesehen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-326">This method is not intended to be used directly from your code.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-327">ASP.NET verwendet diese Methode zum Initialisieren der <xref:System.Web.Profile.SqlProfileProvider> mit den Eigenschaftswerten, die in der Anwendungskonfigurationsdatei (Web.config) für das ASP.NET angegeben.</span><span class="sxs-lookup"><span data-stu-id="27369-327">ASP.NET uses this method to initialize the <xref:System.Web.Profile.SqlProfileProvider> with the property values specified in the ASP.NET application configuration file (Web.config).</span></span> <span data-ttu-id="27369-328">Diese Methode ist nicht für die direkte Verwendung im Code vorgesehen.</span><span class="sxs-lookup"><span data-stu-id="27369-328">This method is not intended to be used directly from your code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="27369-329">Das <see langword="connectionStringName" />-Attribut ist eine leere Zeichenfolge ("") oder wurde in der Anwendungskonfigurationsdatei für diese <see cref="T:System.Web.Profile.SqlProfileProvider" />-Instanz nicht angegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-329">The <see langword="connectionStringName" /> attribute is an empty string ("") or is not specified in the application configuration file for this <see cref="T:System.Web.Profile.SqlProfileProvider" /> instance.</span>
+          </span>
+          <span data-ttu-id="27369-330">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-330">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-331">Der im <see langword="connectionStringName" />-Attributwert angegebene Wert der Verbindungszeichenfolge ist leer, oder der angegebene <see langword="connectionStringName" />-Wert ist in der Anwendungskonfigurationsdatei für diese <see cref="T:System.Web.Profile.SqlProfileProvider" />-Instanz nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-331">The value of the connection string specified in the <see langword="connectionStringName" /> attribute value is empty or the specified <see langword="connectionStringName" /> value does not exist in the application configuration file for this <see cref="T:System.Web.Profile.SqlProfileProvider" /> instance.</span>
+          </span>
+          <span data-ttu-id="27369-332">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-332">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-333">Der <see langword="applicationName" />-Attributwert übersteigt 256 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-333">The <see langword="applicationName" /> attribute value exceeds 256 characters.</span>
+          </span>
+          <span data-ttu-id="27369-334">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-334">\- or -</span>
+          </span>
+          <span data-ttu-id="27369-335">Die Anwendungskonfigurationsdatei dieser <see cref="T:System.Web.Profile.SqlProfileProvider" />-Instanz enthält ein unbekanntes Attribut.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-335">The application configuration file for this <see cref="T:System.Web.Profile.SqlProfileProvider" /> instance contains an unrecognized attribute.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="27369-336">
+            <paramref name="config" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-336">
+              <paramref name="config" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Web.HttpException">
+          <span data-ttu-id="27369-337">Die aktuelle Vertrauensebene ist niedriger als <see cref="F:System.Web.AspNetHostingPermissionLevel.Low" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-337">The current trust level is less than <see cref="F:System.Web.AspNetHostingPermissionLevel.Low" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SetPropertyValues">
+      <MemberSignature Language="C#" Value="public override void SetPropertyValues (System.Configuration.SettingsContext sc, System.Configuration.SettingsPropertyValueCollection properties);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void SetPropertyValues(class System.Configuration.SettingsContext sc, class System.Configuration.SettingsPropertyValueCollection properties) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Profile.SqlProfileProvider.SetPropertyValues(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyValueCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub SetPropertyValues (sc As SettingsContext, properties As SettingsPropertyValueCollection)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void SetPropertyValues(System::Configuration::SettingsContext ^ sc, System::Configuration::SettingsPropertyValueCollection ^ properties);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sc" Type="System.Configuration.SettingsContext" />
+        <Parameter Name="properties" Type="System.Configuration.SettingsPropertyValueCollection" />
+      </Parameters>
+      <Docs>
+        <param name="sc">
+          <span data-ttu-id="27369-338">Der <see cref="T:System.Configuration.SettingsContext" />, der Benutzerprofilinformationen enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-338">The <see cref="T:System.Configuration.SettingsContext" /> that contains user profile information.</span>
+          </span>
+        </param>
+        <param name="properties">
+          <span data-ttu-id="27369-339">Eine <see cref="T:System.Configuration.SettingsPropertyValueCollection" />, die Profilinformationen und Werte für die Eigenschaften enthält, die aktualisiert werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-339">A <see cref="T:System.Configuration.SettingsPropertyValueCollection" /> containing profile information and values for the properties to be updated.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="27369-340">Aktualisiert die SQL Server-Profildatenbank mit den angegebenen Eigenschaftswerten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="27369-340">Updates the SQL Server profile database with the specified property values.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="27369-341">Die <xref:System.Web.Profile.SqlProfileProvider.SetPropertyValues%2A> Methode wird von ASP.NET Profildienste verwendet, die SQL Server-Profil-Datenbank zu aktualisieren, wenn Eigenschaftswerte für die aktuelle Anforderung festgelegt werden.</span><span class="sxs-lookup"><span data-stu-id="27369-341">The <xref:System.Web.Profile.SqlProfileProvider.SetPropertyValues%2A> method is used by ASP.NET profile services to update the SQL Server profile database when property values are set for the current request.</span></span> <span data-ttu-id="27369-342">Eigenschaftswerte werden in der Datenquelle für die angegebene Anwendung Festlegen der `applicationName` Attribut in der Konfigurationsdatei.</span><span class="sxs-lookup"><span data-stu-id="27369-342">Property values are set at the data source for the application specified by the `applicationName` attribute in the configuration file.</span></span> <span data-ttu-id="27369-343">Profil Eigenschaftsinformationen und Werten aktualisiert werden die <xref:System.Web.Profile.SqlProfileProvider> angegeben sind, als eine Auflistung von <xref:System.Configuration.SettingsPropertyValue> Objekte.</span><span class="sxs-lookup"><span data-stu-id="27369-343">Profile property information and values to be updated by the <xref:System.Web.Profile.SqlProfileProvider> are specified as a collection of <xref:System.Configuration.SettingsPropertyValue> objects.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="27369-344">Im folgenden Codebeispiel wird mit der <xref:System.Web.Profile.SqlProfileProvider.SetPropertyValues%2A> Methode, um Profileigenschaftswerte zu ändern.</span><span class="sxs-lookup"><span data-stu-id="27369-344">The following code example uses the <xref:System.Web.Profile.SqlProfileProvider.SetPropertyValues%2A> method to modify profile property values.</span></span>  
+  
+ [!code-csharp[System.Web.Profile.SqlProfileProvider#2](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/CS/setpropertyvaluescs.aspx#2)]
+ [!code-vb[System.Web.Profile.SqlProfileProvider#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Profile.SqlProfileProvider/VB/setpropertyvaluesvb.aspx#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,960 @@
+<Type Name="WindowsTokenRoleProvider" FullName="System.Web.Security.WindowsTokenRoleProvider">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="2de8fcdf949a82aee1ba0f5624e37b55b68693ad" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class WindowsTokenRoleProvider : System.Web.Security.RoleProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit WindowsTokenRoleProvider extends System.Web.Security.RoleProvider" />
+  <TypeSignature Language="DocId" Value="T:System.Web.Security.WindowsTokenRoleProvider" />
+  <TypeSignature Language="VB.NET" Value="Public Class WindowsTokenRoleProvider&#xA;Inherits RoleProvider" />
+  <TypeSignature Language="C++ CLI" Value="public ref class WindowsTokenRoleProvider : System::Web::Security::RoleProvider" />
+  <AssemblyInfo>
+    <AssemblyName>System.Web</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Web.Security.RoleProvider</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+      <span data-ttu-id="dcf7c-101">Ruft Rolleninformationen für eine ASP.NET-Anwendung von der Windows-Gruppenmitgliedschaft ab.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="dcf7c-101">Gets role information for an ASP.NET application from Windows group membership.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-102">Die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse wird als nur-Lese Rollenmitgliedschaft-Anbieter, der Rolleninformationen für eine Windows-Benutzer, die basierend auf Windows-Sicherheitsgruppen abruft.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-102">The <xref:System.Web.Security.WindowsTokenRoleProvider> class is a read-only role-membership provider that retrieves role information for a Windows user based on Windows security groups.</span></span> <span data-ttu-id="dcf7c-103">Es eignet sich am besten mit ASP.NET-Anwendungen, die Windows-Authentifizierungsmodus verwenden, in dem Einstellungen für die IIS-Authentifizierung anonyme Authentifizierung deaktivieren.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-103">It is most useful with ASP.NET applications that use Windows authentication mode where the IIS authentication settings disable anonymous authentication.</span></span> <span data-ttu-id="dcf7c-104">Sie können konfigurieren, dass ASP.NET-Anwendungen gewähren oder Verweigern von Zugriff auf die Mitgliedschaft eines Benutzers in einer bestimmten Windows-Gruppe basieren.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-104">You can configure ASP.NET applications to allow or deny access based on a user's membership in a particular Windows group.</span></span>  
+  
+ <span data-ttu-id="dcf7c-105">Sie können keine der <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse zum Erstellen oder Löschen von Rollen oder ändert die Mitgliedschaft einer Rolle, die auf Windows-Gruppenmitgliedschaft basieren.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-105">You cannot use the <xref:System.Web.Security.WindowsTokenRoleProvider> class to create or delete roles or modify the membership of a role that is based on Windows group membership.</span></span> <span data-ttu-id="dcf7c-106">Diese Funktionalität wird vom Windows-Betriebssystem verwaltet.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-106">This functionality is managed by the Windows operating system.</span></span> <span data-ttu-id="dcf7c-107">Die <xref:System.Web.Security.WindowsTokenRoleProvider> -Klasse unterstützt nur die <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> und <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> Methoden die <xref:System.Web.Security.RoleProvider> abstrakte Klasse.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-107">The <xref:System.Web.Security.WindowsTokenRoleProvider> class supports only the <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> and <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> methods of the <xref:System.Web.Security.RoleProvider> abstract class.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="dcf7c-108">Das folgende Beispiel zeigt die Datei "Web.config" für eine ASP.NET-Anwendung.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-108">The following example shows the Web.config file for an ASP.NET application.</span></span> <span data-ttu-id="dcf7c-109">Es gibt an, dass die Anwendung sowohl Windows-Authentifizierung verwendet und die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse, um Rolleninformationen für Windows-Benutzer abzurufen.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-109">It specifies that the application uses both Windows authentication and the <xref:System.Web.Security.WindowsTokenRoleProvider> class to retrieve role information for Windows users.</span></span> <span data-ttu-id="dcf7c-110">Das Element gibt an, dass nur Benutzer in der Gruppe "BUILTIN\Administrators" Zugriff auf die Anwendung zulässig sind.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-110">The  element specifies that only users in the BUILTIN\Administrators group are allowed access to the application.</span></span>  
+  
+```  
+<configuration>  
+  <system.web>  
+    <authentication mode="Windows" />  
+  
+    <authorization>  
+      <allow roles="BUILTIN\Administrators" />  
+        <deny users="*" />  
+      </authorization>  
+  
+    <roleManager defaultProvider="WindowsProvider"   
+      enabled="true"  
+      cacheRolesInCookie="false">  
+      <providers>  
+        <add  
+          name="WindowsProvider"  
+          type="System.Web.Security.WindowsTokenRoleProvider" />  
+      </providers>  
+    </roleManager>  
+  
+  </system.web>  
+</configuration>  
+```  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WindowsTokenRoleProvider ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; WindowsTokenRoleProvider();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="dcf7c-111">Erstellt eine Instanz der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-111">Creates an instance of the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-112">Die <xref:System.Web.Security.WindowsTokenRoleProvider.%23ctor%2A> Konstruktor wird aufgerufen, von ASP.NET zum Erstellen einer Instanz von der <xref:System.Web.Security.WindowsTokenRoleProvider> -Klasse entsprechend den Angaben in der Konfiguration für die Anwendung.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-112">The <xref:System.Web.Security.WindowsTokenRoleProvider.%23ctor%2A> constructor is called by ASP.NET to create an instance of the <xref:System.Web.Security.WindowsTokenRoleProvider> class as specified in the configuration for the application.</span></span> <span data-ttu-id="dcf7c-113">Dieser Konstruktor ist nicht für die Verwendung aus dem Code vorgesehen.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-113">This constructor is not intended to be used from your code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddUsersToRoles">
+      <MemberSignature Language="C#" Value="public override void AddUsersToRoles (string[] usernames, string[] roleNames);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void AddUsersToRoles(string[] usernames, string[] roleNames) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.AddUsersToRoles(System.String[],System.String[])" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub AddUsersToRoles (usernames As String(), roleNames As String())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void AddUsersToRoles(cli::array &lt;System::String ^&gt; ^ usernames, cli::array &lt;System::String ^&gt; ^ roleNames);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="usernames" Type="System.String[]" />
+        <Parameter Name="roleNames" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="usernames">
+          <span data-ttu-id="dcf7c-114">Ein Zeichenfolgenarray mit Benutzernamen, die den angegebenen Rollen hinzugefügt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-114">A string array of user names to be added to the specified roles.</span>
+          </span>
+        </param>
+        <param name="roleNames">
+          <span data-ttu-id="dcf7c-115">Ein Zeichenfolgenarray mit Rollennamen, denen die angegebenen Benutzernamen hinzugefügt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-115">A string array of role names to add the specified user names to.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-116">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-116">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-117">Diese Methode wird nicht unterstützt, indem Sie die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse und löst immer eine <xref:System.Configuration.Provider.ProviderException>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-117">This method is not supported by the <xref:System.Web.Security.WindowsTokenRoleProvider> class and always throws a <xref:System.Configuration.Provider.ProviderException>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-118">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-118">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ApplicationName">
+      <MemberSignature Language="C#" Value="public override string ApplicationName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ApplicationName" />
+      <MemberSignature Language="DocId" Value="P:System.Web.Security.WindowsTokenRoleProvider.ApplicationName" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Property ApplicationName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ApplicationName { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="dcf7c-119">Ruft den Namen der Anwendung ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-119">Gets or sets the name of the application.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="dcf7c-120">Der Name der Anwendung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-120">The name of the application.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-121">Im Gegensatz zu anderen Rollenanbieter wie z. B. die <xref:System.Web.Security.SqlRoleProvider>, die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse ist nicht die Rolleninformationen mit einer Anwendung zuzuordnen.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-121">Unlike other role providers such as the <xref:System.Web.Security.SqlRoleProvider>, the <xref:System.Web.Security.WindowsTokenRoleProvider> class does not associate role information with an application.</span></span> <span data-ttu-id="dcf7c-122">Stattdessen werden die Rolleninformationen aus den Windows-Gruppen auf dem lokalen Computer verwendet.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-122">Instead, the role information is taken from the Windows groups on the local computer.</span></span> <span data-ttu-id="dcf7c-123">Mehrere Anwendungen auf dem gleichen Server, mit denen die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse immer die gleiche Rolleninformationen freigeben.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-123">Multiple applications on the same server that use the <xref:System.Web.Security.WindowsTokenRoleProvider> class always share the same role information.</span></span> <span data-ttu-id="dcf7c-124">Obwohl die `applicationName` kann konfiguriert werden, in der Datei "Web.config" für die Anwendung die <xref:System.Web.Security.WindowsTokenRoleProvider.ApplicationName%2A> Eigenschaft wird nicht verwendet, um Rolleninformationen abzurufen.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-124">Although the `applicationName` can be configured in the Web.config file for the application, the <xref:System.Web.Security.WindowsTokenRoleProvider.ApplicationName%2A> property is not used to retrieve role information.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="dcf7c-125">Das folgende Beispiel zeigt das Element in der `system.web` Abschnitt der Datei "Web.config" für eine ASP.NET-Anwendung.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-125">The following example shows the  element in the `system.web` section of the Web.config file for an ASP.NET application.</span></span> <span data-ttu-id="dcf7c-126">Es gibt an, der Anwendungsverzeichnis <xref:System.Web.Security.WindowsTokenRoleProvider> Instanz und legt die <xref:System.Web.Security.WindowsTokenRoleProvider.ApplicationName%2A> Eigenschaft `MyApplication`.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-126">It specifies the application's <xref:System.Web.Security.WindowsTokenRoleProvider> instance and sets the <xref:System.Web.Security.WindowsTokenRoleProvider.ApplicationName%2A> property to `MyApplication`.</span></span>  
+  
+```  
+<roleManager defaultProvider="WindowsProvider"   
+  enabled="true"  
+  cacheRolesInCookie="false">  
+  <providers>  
+    <add  
+      name="WindowsProvider"  
+      type="System.Web.Security.WindowsTokenRoleProvider"   
+      applicationName="MyApplication" />  
+  </providers>  
+</roleManager>  
+```  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Web.HttpException">
+          <span data-ttu-id="dcf7c-127">Ein Aufrufer, der nicht über die Berechtigung <see cref="P:System.Web.Security.WindowsTokenRoleProvider.ApplicationName" /> zum Hosten von ASP.NET verfügt, hat versucht, die <see cref="F:System.Web.AspNetHostingPermissionLevel.High" />-Eigenschaft festzulegen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-127">An attempt was made to set the <see cref="P:System.Web.Security.WindowsTokenRoleProvider.ApplicationName" /> property by a caller that does not have <see cref="F:System.Web.AspNetHostingPermissionLevel.High" /> ASP.NET hosting permission.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-128">
+            <see cref="P:System.Web.Security.WindowsTokenRoleProvider.ApplicationName" /> wurde auf eine Zeichenfolge festzulegen versucht, die länger als 256 Zeichen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-128">An attempt was made to set the <see cref="P:System.Web.Security.WindowsTokenRoleProvider.ApplicationName" /> to a string that is longer than 256 characters.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRole">
+      <MemberSignature Language="C#" Value="public override void CreateRole (string roleName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void CreateRole(string roleName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.CreateRole(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub CreateRole (roleName As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void CreateRole(System::String ^ roleName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="roleName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-129">Der Name der zu erstellenden Rolle.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-129">The name of the role to create.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-130">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-130">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-131">Diese Methode wird nicht unterstützt, indem Sie die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse und löst immer eine <xref:System.Configuration.Provider.ProviderException>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-131">This method is not supported by the <xref:System.Web.Security.WindowsTokenRoleProvider> class and always throws a <xref:System.Configuration.Provider.ProviderException>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-132">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-132">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteRole">
+      <MemberSignature Language="C#" Value="public override bool DeleteRole (string roleName, bool throwOnPopulatedRole);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool DeleteRole(string roleName, bool throwOnPopulatedRole) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.DeleteRole(System.String,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DeleteRole (roleName As String, throwOnPopulatedRole As Boolean) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool DeleteRole(System::String ^ roleName, bool throwOnPopulatedRole);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="roleName" Type="System.String" />
+        <Parameter Name="throwOnPopulatedRole" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-133">Der Name der zu löschenden Rolle.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-133">The name of the role to delete.</span>
+          </span>
+        </param>
+        <param name="throwOnPopulatedRole">
+          <span data-ttu-id="dcf7c-134">Wenn der Wert <see langword="true" /> ist, wird beim Versuch, eine Rolle zu löschen, die mehrere Mitglieder enthält, eine Ausnahme ausgelöst.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-134">If <see langword="true" />, an exception will be thrown on an attempt to delete a role that contains one or more members.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-135">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-135">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-136">Keine</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-136">None.</span>
+          </span>
+          <span data-ttu-id="dcf7c-137">Die Methode wird von der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse nicht unterstützt und löst immer eine <see cref="T:System.Configuration.Provider.ProviderException" /> aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-137">The method is not supported by the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class and always throws a <see cref="T:System.Configuration.Provider.ProviderException" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-138">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-138">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="FindUsersInRole">
+      <MemberSignature Language="C#" Value="public override string[] FindUsersInRole (string roleName, string usernameToMatch);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string[] FindUsersInRole(string roleName, string usernameToMatch) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.FindUsersInRole(System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function FindUsersInRole (roleName As String, usernameToMatch As String) As String()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override cli::array &lt;System::String ^&gt; ^ FindUsersInRole(System::String ^ roleName, System::String ^ usernameToMatch);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="roleName" Type="System.String" />
+        <Parameter Name="usernameToMatch" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-139">Die Rolle, in der gesucht werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-139">The role to search in.</span>
+          </span>
+        </param>
+        <param name="usernameToMatch">
+          <span data-ttu-id="dcf7c-140">Der Benutzername, der in der Rolle gesucht werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-140">The user name to find in the role.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-141">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-141">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-142">Keine</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-142">None.</span>
+          </span>
+          <span data-ttu-id="dcf7c-143">Die Methode wird von der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse nicht unterstützt und löst immer eine <see cref="T:System.Configuration.Provider.ProviderException" /> aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-143">The method is not supported by the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class and always throws a <see cref="T:System.Configuration.Provider.ProviderException" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-144">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-144">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAllRoles">
+      <MemberSignature Language="C#" Value="public override string[] GetAllRoles ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string[] GetAllRoles() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.GetAllRoles" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetAllRoles () As String()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override cli::array &lt;System::String ^&gt; ^ GetAllRoles();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="dcf7c-145">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-145">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-146">Keine</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-146">None.</span>
+          </span>
+          <span data-ttu-id="dcf7c-147">Die Methode wird von der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse nicht unterstützt und löst immer eine <see cref="T:System.Configuration.Provider.ProviderException" /> aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-147">The method is not supported by the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class and always throws a <see cref="T:System.Configuration.Provider.ProviderException" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-148">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-148">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRolesForUser">
+      <MemberSignature Language="C#" Value="public override string[] GetRolesForUser (string username);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string[] GetRolesForUser(string username) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetRolesForUser (username As String) As String()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override cli::array &lt;System::String ^&gt; ^ GetRolesForUser(System::String ^ username);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="username" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="username">
+          <span data-ttu-id="dcf7c-149">Der Benutzer, für den die Liste der Windowsgruppen im Format DOMAIN\Benutzername zurückgegeben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-149">The user to return the list of Windows groups for in the form DOMAIN\username.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-150">Ruft eine Liste der Windows-Gruppen ab, denen ein Benutzer angehört.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-150">Gets a list of the Windows groups that a user is in.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-151">Ein Zeichenfolgenarray, das die Namen aller Windows-Gruppen enthält, denen der angegebene Benutzer angehört.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-151">A string array containing the names of all the Windows groups that the specified user is in.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-152">Diese Methode wird aufgerufen, indem die <xref:System.Web.Security.Roles> Klasse, um eine Liste der Windows-Gruppen aus dem Windows-Betriebssystem abzurufen, die in der angegebene Benutzer ist.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-152">This method is called by the <xref:System.Web.Security.Roles> class to retrieve from the Windows operating system a list of the Windows groups that the specified user is in.</span></span> <span data-ttu-id="dcf7c-153">Die <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> Methode kann nur für den gegenwärtig angemeldeten Benutzer aufgerufen werden, da durch die Servervariable LOGON_USER identifiziert.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-153">The <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> method can be called only for the currently logged-on user, as identified by the LOGON_USER server variable.</span></span> <span data-ttu-id="dcf7c-154">Wenn der Wert, in angegeben der `username` Parameter ist nicht der Name des aktuell angemeldeten Benutzers eine <xref:System.Configuration.Provider.ProviderException?displayProperty=nameWithType> ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-154">If the value supplied in the `username` parameter is not the name of the currently logged-on user, a <xref:System.Configuration.Provider.ProviderException?displayProperty=nameWithType> is thrown.</span></span>  
+  
+ <span data-ttu-id="dcf7c-155">Weitere Informationen über ASP.NET und Windows-Authentifizierung finden Sie unter [ASP.NET-Authentifizierung](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span><span class="sxs-lookup"><span data-stu-id="dcf7c-155">For more information an ASP.NET and Windows authentication, see [ASP.NET Authentication](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="dcf7c-156">Im folgenden Codebeispiel wird mit der <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> Methode zum Abrufen einer Liste der Rollen für einen angegebenen Benutzer und bindet die Liste der Rollen zu einem <xref:System.Web.UI.WebControls.GridView> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-156">The following code example uses the <xref:System.Web.Security.WindowsTokenRoleProvider.GetRolesForUser%2A> method to retrieve a list of roles for a specified user and binds the list of roles to a <xref:System.Web.UI.WebControls.GridView> control.</span></span> <span data-ttu-id="dcf7c-157">Ein Beispiel der Datei "Web.config", die mit der Rollenverwaltung kann, finden Sie unter <xref:System.Web.Security.WindowsTokenRoleProvider>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-157">For an example of a Web.config file that enables role management, see <xref:System.Web.Security.WindowsTokenRoleProvider>.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Security.WindowsTokenRoleProvider#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/CS/viewrolescs.aspx#1)]
+ [!code-aspx-vb[System.Web.Security.WindowsTokenRoleProvider#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/VB/viewrolesvb.aspx#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-158">Für den gegenwärtig ausgeführten Benutzer ist keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Web.UI.Page.User" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-158">The currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Web.UI.Page.User" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-159">In anderen Szenarien als HTTP-Szenarien ist für den gegenwärtig ausgeführten Benutzer keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Threading.Thread.CurrentPrincipal" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-159">For non-HTTP scenarios, the currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Threading.Thread.CurrentPrincipal" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-160">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-160">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-161">
+            <paramref name="username" /> stimmt nicht mit dem <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> der aktuellen <see cref="T:System.Security.Principal.WindowsIdentity" /> überein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-161">
+              <paramref name="username" /> does not match the <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> of the current <see cref="T:System.Security.Principal.WindowsIdentity" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-162">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-162">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-163">Beim Abrufen der Windows-Gruppeninformationen des Benutzers ist ein Fehler aufgetreten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-163">A failure occurred while retrieving the user's Windows group information.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="dcf7c-164">
+            <paramref name="username" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-164">
+              <paramref name="username" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Web.HttpException">
+          <span data-ttu-id="dcf7c-165">Die Vertrauensebene ist niedriger als <see cref="F:System.Web.AspNetHostingPermissionLevel.Low" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-165">The trust level is less than <see cref="F:System.Web.AspNetHostingPermissionLevel.Low" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetUsersInRole">
+      <MemberSignature Language="C#" Value="public override string[] GetUsersInRole (string roleName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string[] GetUsersInRole(string roleName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.GetUsersInRole(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetUsersInRole (roleName As String) As String()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override cli::array &lt;System::String ^&gt; ^ GetUsersInRole(System::String ^ roleName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="roleName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-166">Der Name der Rolle, für die die Liste der Benutzer abgerufen werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-166">The name of the role to get the list of users for.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-167">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-167">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-168">Keine</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-168">None.</span>
+          </span>
+          <span data-ttu-id="dcf7c-169">Die Methode wird von der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse nicht unterstützt und löst immer eine <see cref="T:System.Configuration.Provider.ProviderException" /> aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-169">The method is not supported by the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class and always throws a <see cref="T:System.Configuration.Provider.ProviderException" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-170">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-170">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Initialize">
+      <MemberSignature Language="C#" Value="public override void Initialize (string name, System.Collections.Specialized.NameValueCollection config);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Initialize(string name, class System.Collections.Specialized.NameValueCollection config) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.Initialize(System.String,System.Collections.Specialized.NameValueCollection)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Initialize (name As String, config As NameValueCollection)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Initialize(System::String ^ name, System::Collections::Specialized::NameValueCollection ^ config);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="config" Type="System.Collections.Specialized.NameValueCollection" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="dcf7c-171">Der Name der zu initialisierenden <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Instanz.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-171">The name of the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> instance to initialize.</span>
+          </span>
+        </param>
+        <param name="config">
+          <span data-ttu-id="dcf7c-172">Ein <see cref="T:System.Collections.Specialized.NameValueCollection" />-Konstruktor, der die Namen und Werte der Konfigurationsoptionen für die <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-172">A <see cref="T:System.Collections.Specialized.NameValueCollection" /> constructor that contains the names and values of configuration options for the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-173">Initialisiert den Windows-Tokenrollenanbieter mit den Eigenschaftswerten, die in der Konfigurationsdatei der ASP.NET-Anwendung angegeben sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-173">Initializes the Windows token role provider with the property values specified in the configuration file for the ASP.NET application.</span>
+          </span>
+          <span data-ttu-id="dcf7c-174">Diese Methode ist nicht für die direkte Verwendung im Code vorgesehen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-174">This method is not intended to be used directly from your code.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-175">Die <xref:System.Web.Security.WindowsTokenRoleProvider.Initialize%2A> Methode initialisiert die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse mit den Eigenschaftswerten in der Anwendungskonfigurationsdatei (Web.config) für das ASP.NET angegeben und nicht direkt aus Ihrem Code verwendet werden soll.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-175">The <xref:System.Web.Security.WindowsTokenRoleProvider.Initialize%2A> method initializes the <xref:System.Web.Security.WindowsTokenRoleProvider> class with the property values specified in the ASP.NET application configuration file (Web.config) and is not intended to be used directly from your code.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="dcf7c-176">
+            <paramref name="config" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-176">
+              <paramref name="config" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-177">Das <see langword="applicationName" />-Attribut in der Konfiguration ist länger als 256 Zeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-177">The <see langword="applicationName" /> attribute in the configuration is longer than 256 characters.</span>
+          </span>
+          <span data-ttu-id="dcf7c-178">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-178">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-179">Die Anwendungskonfigurationsdatei dieser <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Instanz enthält ein unbekanntes Attribut.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-179">The application configuration file for this <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> instance contains an unrecognized attribute.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="IsUserInRole">
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="dcf7c-180">Ruft einen Wert ab, der angibt, ob der angegebene Benutzer die angegebene integrierte Windows-Rolle innehat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-180">Gets a value indicating whether the specified user is in the specified built-in Windows role.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="IsUserInRole">
+      <MemberSignature Language="C#" Value="public bool IsUserInRole (string username, System.Security.Principal.WindowsBuiltInRole role);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool IsUserInRole(string username, valuetype System.Security.Principal.WindowsBuiltInRole role) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole(System.String,System.Security.Principal.WindowsBuiltInRole)" />
+      <MemberSignature Language="VB.NET" Value="Public Function IsUserInRole (username As String, role As WindowsBuiltInRole) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool IsUserInRole(System::String ^ username, System::Security::Principal::WindowsBuiltInRole role);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="username" Type="System.String" />
+        <Parameter Name="role" Type="System.Security.Principal.WindowsBuiltInRole" />
+      </Parameters>
+      <Docs>
+        <param name="username">
+          <span data-ttu-id="dcf7c-181">Der zu suchende Benutzername im Format DOMAIN\Benutzername.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-181">The user name to search for in the form DOMAIN\username.</span>
+          </span>
+        </param>
+        <param name="role">
+          <span data-ttu-id="dcf7c-182">Die Windows-Rolle, in der gesucht werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-182">The Windows role to search in.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-183">Ruft einen Wert ab, der angibt, ob der angegebene Benutzer die angegebene integrierte Windows-Rolle innehat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-183">Gets a value indicating whether the specified user is in the specified built-in Windows role.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-184">
+            <see langword="true" />, wenn der angegebene Benutzer die angegebene Windows-Rolle innehat, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-184">
+              <see langword="true" /> if the specified user is in the specified Windows role; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-185">Die <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode können Sie prüfen, ob ein Benutzer in einem allgemeinen Windows-Rollen beschrieben, die durch die <xref:System.Security.Principal.WindowsBuiltInRole> Enumeration.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-185">The <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method enables you to check whether a user is in one of the common Windows roles described by the <xref:System.Security.Principal.WindowsBuiltInRole> enumeration.</span></span> <span data-ttu-id="dcf7c-186">Diese Methode ist nützlich für Anwendungen, die in mehrere Sprachen lokalisiert werden.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-186">This method is useful for applications that are localized into multiple languages.</span></span> <span data-ttu-id="dcf7c-187">Diese Überladung der der <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode ist nicht Teil der <xref:System.Web.Security.RoleProvider> Basisklasse und kann nur durch Umwandlung zugegriffen werden die <xref:System.Web.Security.Roles.Provider%2A> Eigenschaft von der <xref:System.Web.Security.Roles> der Klasse die <xref:System.Web.Security.WindowsTokenRoleProvider> Typ.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-187">This overload of the <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method is not part of the <xref:System.Web.Security.RoleProvider> base class and can only be accessed by casting the <xref:System.Web.Security.Roles.Provider%2A> property of the <xref:System.Web.Security.Roles> class as the <xref:System.Web.Security.WindowsTokenRoleProvider> type.</span></span>  
+  
+ <span data-ttu-id="dcf7c-188">Sie erreichen die <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode nur für den aktuell angemeldeten Benutzer als durch die Servervariable LOGON_USER identifiziert.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-188">You can call the <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method only for the currently logged-on user, as identified by the LOGON_USER server variable.</span></span> <span data-ttu-id="dcf7c-189">Wenn der Wert, in angegeben der `username` Parameter ist nicht der Name des aktuell angemeldeten Benutzers ein <xref:System.Web.HttpException> ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-189">If the value supplied in the `username` parameter is not the name of the currently logged-on user, an <xref:System.Web.HttpException> is thrown.</span></span>  
+  
+ <span data-ttu-id="dcf7c-190"><xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode kann nur für den gegenwärtig angemeldeten Benutzer durch die Servervariable LOGON_USER identifiziert aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-190"><xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method can only be called for the currently logged-on user identified by the LOGON_USER server variable.</span></span> <span data-ttu-id="dcf7c-191">Der aktuell angemeldete Benutzer muss einen authentifizierten Windows-Benutzer sein.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-191">The current logged on user must be a Windows authenticated user.</span></span> <span data-ttu-id="dcf7c-192">Weitere Informationen über ASP.NET und Windows-Authentifizierung finden Sie unter [ASP.NET-Authentifizierung](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span><span class="sxs-lookup"><span data-stu-id="dcf7c-192">For more information on ASP.NET and Windows authentication, see [ASP.NET Authentication](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="dcf7c-193">Im folgenden Codebeispiel werden, ob der gegenwärtig angemeldete Benutzer in der "Administratoren" ist, bevor der Benutzer zum Anzeigen von Rolleninformationen für die Anwendung programmgesteuert überprüft.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-193">The following code example programmatically checks whether the currently logged-on user is in the Administrators role before allowing the user to view roles information for the application.</span></span> <span data-ttu-id="dcf7c-194">Ein Beispiel der Datei "Web.config", die mit der Rollenverwaltung kann, finden Sie unter <xref:System.Web.Security.WindowsTokenRoleProvider>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-194">For an example of a Web.config file that enables role management, see <xref:System.Web.Security.WindowsTokenRoleProvider>.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Security.WindowsTokenRoleProvider#2](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/CS/ViewRoles2cs.aspx#2)]
+ [!code-aspx-vb[System.Web.Security.WindowsTokenRoleProvider#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/VB/ViewRoles2vb.aspx#2)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="dcf7c-195">
+            <paramref name="username" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-195">
+              <paramref name="username" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-196">Für den gegenwärtig ausgeführten Benutzer ist keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Web.UI.Page.User" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-196">The currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Web.UI.Page.User" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-197">In anderen Szenarien als HTTP-Szenarien ist für den gegenwärtig ausgeführten Benutzer keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Threading.Thread.CurrentPrincipal" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-197">For non-HTTP scenarios, the currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Threading.Thread.CurrentPrincipal" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-198">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-198">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-199">
+            <paramref name="username" /> stimmt nicht mit dem <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> der aktuellen <see cref="T:System.Security.Principal.WindowsIdentity" /> überein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-199">
+              <paramref name="username" /> does not match the <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> of the current <see cref="T:System.Security.Principal.WindowsIdentity" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsUserInRole">
+      <MemberSignature Language="C#" Value="public override bool IsUserInRole (string username, string roleName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool IsUserInRole(string username, string roleName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole(System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function IsUserInRole (username As String, roleName As String) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool IsUserInRole(System::String ^ username, System::String ^ roleName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="username" Type="System.String" />
+        <Parameter Name="roleName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="username">
+          <span data-ttu-id="dcf7c-200">Der zu suchende Benutzername im Format DOMAIN\Benutzername.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-200">The user name to search for in the form DOMAIN\username.</span>
+          </span>
+        </param>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-201">Die zu suchende Windows-Gruppe im Format DOMAIN\Rollenname.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-201">The Windows group to search in the form DOMAIN\rolename.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-202">Ruft einen Wert ab, der angibt, ob der angegebene Benutzer der angegebenen Windows-Gruppe angehört.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-202">Gets a value indicating whether the specified user is in the specified Windows group.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-203">
+            <see langword="true" />, wenn der angegebene Benutzer der angegebenen Windows-Gruppe angehört, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-203">
+              <see langword="true" /> if the specified user name is in the specified Windows group; otherwise, <see langword="false" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-204">Die <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode wird aufgerufen, indem Sie die <xref:System.Web.Security.Roles> Klasse und die <xref:System.Security.Principal.IPrincipal.IsInRole%2A> Methode der <xref:System.Web.UI.Page.User%2A> Eigenschaft, um zu bestimmen, ob ein Benutzer in einer Windows-Gruppe ist.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-204">The <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method is called by the <xref:System.Web.Security.Roles> class and the <xref:System.Security.Principal.IPrincipal.IsInRole%2A> method of the <xref:System.Web.UI.Page.User%2A> property to determine whether a user is in a Windows group.</span></span> <span data-ttu-id="dcf7c-205">Sie erreichen die <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> Methode nur für den aktuell angemeldeten Benutzer als durch die Servervariable LOGON_USER identifiziert.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-205">You can call the <xref:System.Web.Security.WindowsTokenRoleProvider.IsUserInRole%2A> method only for the currently logged-on user, as identified by the LOGON_USER server variable.</span></span> <span data-ttu-id="dcf7c-206">Der aktuelle angemeldete Benutzer muss einen authentifizierten Windows-Benutzer sein.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-206">The current logged-on user must be a Windows authenticated user.</span></span> <span data-ttu-id="dcf7c-207">Weitere Informationen über ASP.NET und Windows-Authentifizierung finden Sie unter [ASP.NET-Authentifizierung](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span><span class="sxs-lookup"><span data-stu-id="dcf7c-207">For more information on ASP.NET and Windows authentication, see [ASP.NET Authentication](http://msdn.microsoft.com/library/fc10b0ef-4ce4-4a7f-9174-886325221ee1).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="dcf7c-208">Im folgenden Codebeispiel werden, ob der gegenwärtig angemeldete Benutzer in der "Administratoren" ist, bevor der Benutzer zum Anzeigen von Rolleninformationen für die Anwendung programmgesteuert überprüft.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-208">The following code example programmatically checks whether the currently logged-on user is in the Administrators role before allowing the user to view roles information for the application.</span></span> <span data-ttu-id="dcf7c-209">Ein Beispiel der Datei "Web.config", die mit der Rollenverwaltung kann, finden Sie unter <xref:System.Web.Security.WindowsTokenRoleProvider>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-209">For an example of a Web.config file that enables role management, see <xref:System.Web.Security.WindowsTokenRoleProvider>.</span></span>  
+  
+ [!code-aspx-csharp[System.Web.Security.WindowsTokenRoleProvider#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/CS/viewrolescs.aspx#1)]
+ [!code-aspx-vb[System.Web.Security.WindowsTokenRoleProvider#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.WindowsTokenRoleProvider/VB/viewrolesvb.aspx#1)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="dcf7c-210">
+            <paramref name="username" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-210">
+              <paramref name="username" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-211">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-211">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-212">
+            <paramref name="roleName" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-212">
+              <paramref name="roleName" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-213">Für den gegenwärtig ausgeführten Benutzer ist keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Web.UI.Page.User" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-213">The currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Web.UI.Page.User" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-214">In anderen Szenarien als HTTP-Szenarien ist für den gegenwärtig ausgeführten Benutzer keine authentifizierte <see cref="T:System.Security.Principal.WindowsIdentity" /> an <see cref="P:System.Threading.Thread.CurrentPrincipal" /> angefügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-214">For non-HTTP scenarios, the currently executing user does not have an authenticated <see cref="T:System.Security.Principal.WindowsIdentity" /> attached to <see cref="P:System.Threading.Thread.CurrentPrincipal" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-215">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-215">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-216">
+            <paramref name="username" /> stimmt nicht mit dem <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> der aktuellen <see cref="T:System.Security.Principal.WindowsIdentity" /> überein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-216">
+              <paramref name="username" /> does not match the <see cref="P:System.Security.Principal.WindowsIdentity.Name" /> of the current <see cref="T:System.Security.Principal.WindowsIdentity" />.</span>
+          </span>
+          <span data-ttu-id="dcf7c-217">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-217">-or-</span>
+          </span>
+          <span data-ttu-id="dcf7c-218">Beim Abrufen der Windows-Gruppeninformationen des Benutzers ist ein Fehler aufgetreten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-218">A failure occurred while retrieving the user's Windows group information.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveUsersFromRoles">
+      <MemberSignature Language="C#" Value="public override void RemoveUsersFromRoles (string[] usernames, string[] roleNames);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void RemoveUsersFromRoles(string[] usernames, string[] roleNames) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.RemoveUsersFromRoles(System.String[],System.String[])" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub RemoveUsersFromRoles (usernames As String(), roleNames As String())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void RemoveUsersFromRoles(cli::array &lt;System::String ^&gt; ^ usernames, cli::array &lt;System::String ^&gt; ^ roleNames);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="usernames" Type="System.String[]" />
+        <Parameter Name="roleNames" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="usernames">
+          <span data-ttu-id="dcf7c-219">Ein Zeichenfolgenarray mit Benutzernamen, die den angegebenen Rollen hinzugefügt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-219">A string array of user names to be added to the specified roles.</span>
+          </span>
+        </param>
+        <param name="roleNames">
+          <span data-ttu-id="dcf7c-220">Ein Zeichenfolgenarray mit Rollennamen, denen die angegebenen Benutzernamen hinzugefügt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-220">A string array of role names to add the specified user names to.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-221">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-221">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="dcf7c-222">Diese Methode wird nicht unterstützt, indem Sie die <xref:System.Web.Security.WindowsTokenRoleProvider> Klasse und löst immer eine <xref:System.Configuration.Provider.ProviderException>.</span><span class="sxs-lookup"><span data-stu-id="dcf7c-222">This method is not supported by the <xref:System.Web.Security.WindowsTokenRoleProvider> class and always throws a <xref:System.Configuration.Provider.ProviderException>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-223">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-223">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="RoleExists">
+      <MemberSignature Language="C#" Value="public override bool RoleExists (string roleName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool RoleExists(string roleName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.Security.WindowsTokenRoleProvider.RoleExists(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function RoleExists (roleName As String) As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool RoleExists(System::String ^ roleName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="roleName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="roleName">
+          <span data-ttu-id="dcf7c-224">Der Name der Rolle, die in der Datenquelle gesucht werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-224">The name of the role to search for in the data source.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="dcf7c-225">Diese Methode wird vom Windows-Tokenrollenanbieter nicht unterstützt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-225">This method is not supported by the Windows token role provider.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="dcf7c-226">Keine</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-226">None.</span>
+          </span>
+          <span data-ttu-id="dcf7c-227">Die Methode wird von der <see cref="T:System.Web.Security.WindowsTokenRoleProvider" />-Klasse nicht unterstützt und löst immer eine <see cref="T:System.Configuration.Provider.ProviderException" /> aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-227">The method is not supported by the <see cref="T:System.Web.Security.WindowsTokenRoleProvider" /> class and always throws a <see cref="T:System.Configuration.Provider.ProviderException" />.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="dcf7c-228">Eine nicht unterstützte Methode wurde aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="dcf7c-228">An unsupported method was called.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

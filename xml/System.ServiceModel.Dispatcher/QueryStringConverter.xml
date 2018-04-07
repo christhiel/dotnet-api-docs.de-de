@@ -1,0 +1,322 @@
+<Type Name="QueryStringConverter" FullName="System.ServiceModel.Dispatcher.QueryStringConverter">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="7ea9608edf41e92aec57ce8252d63bad10809b2f" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class QueryStringConverter" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit QueryStringConverter extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.ServiceModel.Dispatcher.QueryStringConverter" />
+  <TypeSignature Language="VB.NET" Value="Public Class QueryStringConverter" />
+  <TypeSignature Language="C++ CLI" Value="public ref class QueryStringConverter" />
+  <AssemblyInfo>
+    <AssemblyName>System.ServiceModel.Web</AssemblyName>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+      <span data-ttu-id="fb3a1-101">Diese Klasse konvertiert einen Parameter in einer Abfragezeichenfolge in ein Objekt des entsprechenden Typs.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="fb3a1-101">This class converts a parameter in a query string to an object of the appropriate type.</span>
+      </span>
+      <span data-ttu-id="fb3a1-102">Außerdem kann diese Klasse einen Parameter von einem Objekt in seine Abfragezeichenfolgendarstellung konvertieren.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="fb3a1-102">It can also convert a parameter from an object to its query string representation.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="fb3a1-103">Parameter können in einer Abfragezeichenfolge in einem URL angegeben werden.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-103">Parameters can be specified in a query string within a URL.</span></span> <span data-ttu-id="fb3a1-104">Diese Klasse konvertiert die in einer Zeichenfolge angegebenen Parameter in Objekte.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-104">This class takes those parameters specified in a string and converts them into objects.</span></span> <span data-ttu-id="fb3a1-105">Beispielsweise kann der folgende Vertrag definiert werden.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-105">For example, the following contract is defined.</span></span>  
+  
+```  
+[ServiceContract]  
+interface Calculator  
+{  
+   [WebGet(UriTemplate="Add?n1={n1}&n2={n2}")]  
+   [OperationContract]  
+   long Add(long n1, long n2);  
+}  
+```  
+  
+ <span data-ttu-id="fb3a1-106">Ein [!INCLUDE[indigo1](~/includes/indigo1-md.md)] Dienst implementiert diese Schnittstelle und macht sie an einem Endpunkt mit der <xref:System.ServiceModel.Description.WebHttpBehavior> am http://localhost:8000/MyCalcService.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-106">A [!INCLUDE[indigo1](~/includes/indigo1-md.md)] service implements this interface and exposes it on an endpoint with the <xref:System.ServiceModel.Description.WebHttpBehavior> at http://localhost:8000/MyCalcService.</span></span> <span data-ttu-id="fb3a1-107">Die `Add` Dienstvorgang kann aufgerufen werden, durch Senden einer HTTP GET auf http://localhost:8000/MyCalcService/Add?n1=10&n2=5.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-107">The `Add` service operation can be called by sending an HTTP GET to http://localhost:8000/MyCalcService/Add?n1=10&n2=5.</span></span> <span data-ttu-id="fb3a1-108">Der <xref:System.ServiceModel.Dispatcher.QueryStringConverter> erhält diese URL und konvertiert die beiden darin angegebenen Parameter (n1 und n2) in zwei `long`-Objekte mit den entsprechenden Werten.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-108">The <xref:System.ServiceModel.Dispatcher.QueryStringConverter> receives this URL and converts the two parameters (n1 and n2) specified in the URL into two `long` objects with the appropriate values.</span></span>  
+  
+ <span data-ttu-id="fb3a1-109">Sie können eine Klasse von <xref:System.ServiceModel.Dispatcher.QueryStringConverter> ableiten, um zu steuern, wie Abfragezeichenfolgenparameter den Parametern eines Dienstvorgangs zugeordnet werden.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-109">You can derive a class from <xref:System.ServiceModel.Dispatcher.QueryStringConverter> to control how query string parameters are mapped into a service operation's parameters.</span></span>  
+  
+ <span data-ttu-id="fb3a1-110">Der <xref:System.ServiceModel.Dispatcher.QueryStringConverter> unterstützt standardmäßig die folgenden Typen:</span><span class="sxs-lookup"><span data-stu-id="fb3a1-110">The <xref:System.ServiceModel.Dispatcher.QueryStringConverter> supports the following types by default:</span></span>  
+  
+-   <xref:System.Byte>  
+  
+-   <xref:System.SByte>  
+  
+-   <xref:System.Int16>  
+  
+-   <xref:System.Int32>  
+  
+-   <xref:System.Int64>  
+  
+-   <xref:System.UInt16>  
+  
+-   <xref:System.UInt32>  
+  
+-   <xref:System.UInt64>  
+  
+-   <xref:System.Single>  
+  
+-   <xref:System.Double>  
+  
+-   <xref:System.Char>  
+  
+-   <xref:System.Decimal>  
+  
+-   <xref:System.Boolean>  
+  
+-   <xref:System.String>  
+  
+-   <xref:System.DateTime>  
+  
+-   <xref:System.TimeSpan>  
+  
+-   <xref:System.Guid>  
+  
+-   <span data-ttu-id="fb3a1-111"><xref:System.Byte>-Array</span><span class="sxs-lookup"><span data-stu-id="fb3a1-111"><xref:System.Byte> array</span></span>  
+  
+-   <xref:System.Uri>  
+  
+-   <xref:System.Object>  
+  
+-   <xref:System.DateTimeOffset>  
+  
+-   <span data-ttu-id="fb3a1-112">Enumerationen</span><span class="sxs-lookup"><span data-stu-id="fb3a1-112">Enums</span></span>  
+  
+-   <span data-ttu-id="fb3a1-113">Typen, die über ein `TypeConverterAttribute` verfügen, mit dem der Typ in eine Zeichenfolgendarstellung bzw. aus einer Zeichenfolgendarstellung konvertiert werden kann.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-113">Types that have a `TypeConverterAttribute` that can convert the type to and from a string representation.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="fb3a1-114">Im folgenden Codebeispiel wird die Verwendung der <xref:System.ServiceModel.Dispatcher.QueryStringConverter>-Klasse zum Konvertieren zwischen einer Zeichenfolge und einer 32-Bit-Ganzzahl veranschaulicht.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-114">The following code shows how to use the <xref:System.ServiceModel.Dispatcher.QueryStringConverter> class to convert between a string and a 32-bit integer.</span></span>  
+  
+ [!code-csharp[QueryStringConverter#0](~/samples/snippets/csharp/VS_Snippets_CFX/querystringconverter/cs/program.cs#0)]
+ [!code-vb[QueryStringConverter#0](~/samples/snippets/visualbasic/VS_Snippets_CFX/querystringconverter/vb/program.vb#0)]  
+  
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public QueryStringConverter ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.QueryStringConverter.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; QueryStringConverter();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Web</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="fb3a1-115">Initialisiert eine neue Instanz der <see cref="T:System.ServiceModel.Dispatcher.QueryStringConverter" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-115">Initializes a new instance of the <see cref="T:System.ServiceModel.Dispatcher.QueryStringConverter" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="fb3a1-116">Im folgenden Codebeispiel wird veranschaulicht, wie eine Instanz der <xref:System.ServiceModel.Dispatcher.QueryStringConverter>-Klasse erstellt wird.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-116">The following code shows how to create an instance of the <xref:System.ServiceModel.Dispatcher.QueryStringConverter> class.</span></span>  
+  
+ [!code-csharp[QueryStringConverter#1](~/samples/snippets/csharp/VS_Snippets_CFX/querystringconverter/cs/program.cs#1)]
+ [!code-vb[QueryStringConverter#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/querystringconverter/vb/program.vb#1)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CanConvert">
+      <MemberSignature Language="C#" Value="public virtual bool CanConvert (Type type);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool CanConvert(class System.Type type) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.QueryStringConverter.CanConvert(System.Type)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool CanConvert(Type ^ type);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Web</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">
+          <span data-ttu-id="fb3a1-117">Die zu konvertierende <see cref="T:System.Type" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-117">The <see cref="T:System.Type" /> to convert.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="fb3a1-118">Ermittelt, ob der angegebene Typ in eine bzw. aus einer Zeichenfolgendarstellung konvertiert werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-118">Determines whether the specified type can be converted to and from a string representation.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="fb3a1-119">Ein Wert, der angibt, ob der Typ konvertiert werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-119">A value that specifies whether the type can be converted.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="fb3a1-120">Im folgenden Code wird veranschaulicht, wie bestimmt wird, ob der <xref:System.ServiceModel.Dispatcher.QueryStringConverter> in den und aus dem angegebenen Typ konvertieren kann.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-120">The following code shows how to determine whether the <xref:System.ServiceModel.Dispatcher.QueryStringConverter> can convert to and from the specified type.</span></span>  
+  
+ [!code-csharp[QueryStringConverter#2](~/samples/snippets/csharp/VS_Snippets_CFX/querystringconverter/cs/program.cs#2)]
+ [!code-vb[QueryStringConverter#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/querystringconverter/vb/program.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConvertStringToValue">
+      <MemberSignature Language="C#" Value="public virtual object ConvertStringToValue (string parameter, Type parameterType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object ConvertStringToValue(string parameter, class System.Type parameterType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.QueryStringConverter.ConvertStringToValue(System.String,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function ConvertStringToValue (parameter As String, parameterType As Type) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ ConvertStringToValue(System::String ^ parameter, Type ^ parameterType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Web</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameter" Type="System.String" />
+        <Parameter Name="parameterType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="parameter">
+          <span data-ttu-id="fb3a1-121">Die Zeichenfolgenform des Parameters und Werts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-121">The string form of the parameter and value.</span>
+          </span>
+        </param>
+        <param name="parameterType">
+          <span data-ttu-id="fb3a1-122">Der <see cref="T:System.Type" />, in den der Parameter konvertiert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-122">The <see cref="T:System.Type" /> to convert the parameter to.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="fb3a1-123">Konvertiert einen Abfragezeichenfolgenparameter in den angegebenen Typ.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-123">Converts a query string parameter to the specified type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="fb3a1-124">Der konvertierte Parameter.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-124">The converted parameter.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="fb3a1-125">Wenn der `parameterType` ein Werttyp und der Parameter `null` ist, wird der Standardwert von `parameterType` zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-125">If the `parameterType` is a value type and the parameter is `null`, then the default value of the `parameterType` is returned.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="fb3a1-126">Im folgenden Code wird gezeigt, wie eine Zeichenfolge in den angegebenen Typ konvertiert wird.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-126">The following code shows how to convert a string to the specified type.</span></span>  
+  
+ [!code-csharp[QueryStringConverter#2](~/samples/snippets/csharp/VS_Snippets_CFX/querystringconverter/cs/program.cs#2)]
+ [!code-vb[QueryStringConverter#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/querystringconverter/vb/program.vb#2)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.FormatException">
+          <span data-ttu-id="fb3a1-127">Das Format der bereitgestellten Zeichenfolge ist ungültig.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-127">The provided string does not have the correct format.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ConvertValueToString">
+      <MemberSignature Language="C#" Value="public virtual string ConvertValueToString (object parameter, Type parameterType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance string ConvertValueToString(object parameter, class System.Type parameterType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.Dispatcher.QueryStringConverter.ConvertValueToString(System.Object,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function ConvertValueToString (parameter As Object, parameterType As Type) As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::String ^ ConvertValueToString(System::Object ^ parameter, Type ^ parameterType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Web</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="parameter" Type="System.Object" />
+        <Parameter Name="parameterType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="parameter">
+          <span data-ttu-id="fb3a1-128">Der zu konvertierende Parameter.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-128">The parameter to convert.</span>
+          </span>
+        </param>
+        <param name="parameterType">
+          <span data-ttu-id="fb3a1-129">Der <see cref="T:System.Type" /> des zu konvertierenden Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-129">The <see cref="T:System.Type" /> of the parameter to convert.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="fb3a1-130">Konvertiert einen Parameter in eine Abfragezeichenfolgendarstellung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-130">Converts a parameter to a query string representation.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="fb3a1-131">Name und Wert des Parameters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="fb3a1-131">The parameter name and value.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Examples  
+ <span data-ttu-id="fb3a1-132">Im folgenden Code wird gezeigt, wie ein eingegebener Wert in eine Zeichenfolgendarstellung des Werts konvertiert wird.</span><span class="sxs-lookup"><span data-stu-id="fb3a1-132">The following code shows how to convert a typed value into a string representation of the value.</span></span>  
+  
+ [!code-csharp[QueryStringConverter#3](~/samples/snippets/csharp/VS_Snippets_CFX/querystringconverter/cs/program.cs#3)]
+ [!code-vb[QueryStringConverter#3](~/samples/snippets/visualbasic/VS_Snippets_CFX/querystringconverter/vb/program.vb#3)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
