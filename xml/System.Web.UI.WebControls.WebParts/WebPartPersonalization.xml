@@ -1,0 +1,1857 @@
+<Type Name="WebPartPersonalization" FullName="System.Web.UI.WebControls.WebParts.WebPartPersonalization">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="b9225a4065a107241a4ecf7792267fabc5642a03" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class WebPartPersonalization" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit WebPartPersonalization extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+  <TypeSignature Language="VB.NET" Value="Public Class WebPartPersonalization" />
+  <TypeSignature Language="C++ CLI" Value="public ref class WebPartPersonalization" />
+  <AssemblyInfo>
+    <AssemblyName>System.Web</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.ComponentModel.TypeConverter(typeof(System.Web.UI.WebControls.EmptyStringExpandableObjectConverter))</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="65058-101">Implementiert Personalisierungsoperationen auf niedriger Ebene.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="65058-101">Implements low-level personalization operations.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-102">Diese Klasse implementiert die Logik zum auf niedrigerer Ebene Personalisierung Vorgänge auszuführen.</span><span class="sxs-lookup"><span data-stu-id="65058-102">This class implements the logic required to carry out lower-level personalization operations.</span></span> <span data-ttu-id="65058-103">Obwohl die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Klasse verwaltet die allgemeine Lebenszyklus der Personalisierung ist, wird die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse, die für die eigentliche Implementierung der physischen Schritte erforderlich, um bestimmte Personalisierung Aktionen durchzuführen zuständig ist.</span><span class="sxs-lookup"><span data-stu-id="65058-103">Although the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> class manages the high-level life cycle of personalization, it is the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class that is responsible for actually implementing the physical steps necessary to carry out specific personalization actions.</span></span> <span data-ttu-id="65058-104">Die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse wiederum verwendet, bei der Implementierung der <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider> für die Kommunikation mit den zugrunde liegenden Datenspeicher für die Personalisierungsinformationen.</span><span class="sxs-lookup"><span data-stu-id="65058-104">The <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class in turn relies on an implementation of <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider> to communicate with the underlying data store for personalization information.</span></span>  
+  
+ <span data-ttu-id="65058-105">Bei Verwendung von die standardmäßige Implementierung des der <xref:System.Web.UI.WebControls.WebParts.WebPartManager>, erstellt er eine Instanz von der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse, die Sie verwenden können, durch Verweisen auf die <xref:System.Web.UI.WebControls.WebParts.WebPartManager.Personalization%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-105">If you use the default implementation of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager>, it creates an instance of the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class that you can use by referencing the <xref:System.Web.UI.WebControls.WebParts.WebPartManager.Personalization%2A> property.</span></span> <span data-ttu-id="65058-106">Angenommen, für den Zugriff auf die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> -Eigenschaft, geben Sie `WebPartManager.Personalization.InitialScope`.</span><span class="sxs-lookup"><span data-stu-id="65058-106">For example, to access the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> property, you would specify `WebPartManager.Personalization.InitialScope`.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="65058-107">Im folgenden Codebeispiel wird veranschaulicht wie die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Klasse verwendet wird, sowie ein Beispiel für die Auswirkungen der Personalisierungsbereich die Ergebnisse der personalisierten Eigenschaften bereitstellen.</span><span class="sxs-lookup"><span data-stu-id="65058-107">The following code example shows how the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class is used, as well as providing an example of how personalization scope affects the results of personalized properties.</span></span> <span data-ttu-id="65058-108">Dieses Beispiel umfasst fünf Dateien:</span><span class="sxs-lookup"><span data-stu-id="65058-108">This example has five files:</span></span>  
+  
+-   <span data-ttu-id="65058-109">Eine ASPX-Seite, die zwei Webparts-Zonen, deklarativ erstellt jede mit einem Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-109">An .aspx page that declaratively creates two Web Part zones, each with a control.</span></span>  
+  
+-   <span data-ttu-id="65058-110">Wird aufgerufen, ein benutzerdefiniertes Steuerelement `Color.ascx` , mit dessen Hilfe eines Benutzers eine personalisierte Eigenschaft zu ändern, die auf die Rechte des Benutzers Autorisierung Zustandsinformationen zu ändern und Eingeben der freigegebene Bereich Hintergrundfarbe eines Text bezieht.</span><span class="sxs-lookup"><span data-stu-id="65058-110">A user control called `Color.ascx` that allows a user to change a personalized property that applies a text box background color based on the user's authorization rights to modify state information and to enter shared scope.</span></span>  
+  
+-   <span data-ttu-id="65058-111">Wird aufgerufen, ein benutzerdefiniertes Steuerelement `Persmode.ascx` , der angibt, was der aktuellen Seitenbereich ist und welche Rechte, dass den aktuellen Benutzer verfügt über freigegebene Bereich einzugeben oder um Daten zu ändern; sie bietet außerdem zwei Schaltflächen; zur Durchführung von bereichsänderungen und aktuelle Benutzerinformationen Personalisierung zurückgesetzt.</span><span class="sxs-lookup"><span data-stu-id="65058-111">A user control called `Persmode.ascx` that indicates what the current page scope is and what rights the current user has to enter shared scope or to modify data; it also provides two buttons; one to change scope and one to reset current user personalization information.</span></span>  
+  
+-   <span data-ttu-id="65058-112">Ein Login-Steuerelement, die zum Autorisieren von Benutzern verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="65058-112">A login control that is used to authorize users.</span></span>  
+  
+-   <span data-ttu-id="65058-113">Eine Datei "Web.config" mit einem Abschnitt, der ein Beispiel für die Autorisierung eines Benutzers zum Ändern des Personalisierungszustands und gemeinsam genutzten Bereich eingeben bereitstellt.</span><span class="sxs-lookup"><span data-stu-id="65058-113">A Web.config file with a section that provides an example of authorizing a user to modify personalization state and to enter shared scope.</span></span>  
+  
+ <span data-ttu-id="65058-114">Der folgende Code erstellt eine Aspx-Seite mit einem <xref:System.Web.UI.WebControls.WebParts.WebPartManager> und zwei Webparts-Zonen und zeigt die `Color.ascx` und `Persmode.ascx` Steuerelemente.</span><span class="sxs-lookup"><span data-stu-id="65058-114">The following code creates an aspx page  with a <xref:System.Web.UI.WebControls.WebParts.WebPartManager> and two Web Part zones and displays the `Color.ascx` and `Persmode.ascx` controls.</span></span> <span data-ttu-id="65058-115">Die Seite lädt eine Anmeldeseite ab, das die aktuellen Benutzerinformationen zu erhalten.</span><span class="sxs-lookup"><span data-stu-id="65058-115">The page loads a login page that is used to get the current user information.</span></span> <span data-ttu-id="65058-116">Verwenden Sie das ASP.NET Websiteverwaltungs-Tool in [!INCLUDE[vsprvsext](~/includes/vsprvsext-md.md)] zum Erstellen von Benutzern für den Zugriff auf die Seite.</span><span class="sxs-lookup"><span data-stu-id="65058-116">Use the ASP.NET Web Site Administration Tool in [!INCLUDE[vsprvsext](~/includes/vsprvsext-md.md)] to create users to access the page.</span></span> <span data-ttu-id="65058-117">Finden Sie in der Datei "Web.config" für ein Beispiel für einen Benutzer erteilt Autorisierung in der Konfigurationsdatei Zustandsinformationen zu Bereich ändern.</span><span class="sxs-lookup"><span data-stu-id="65058-117">See the Web.config file for an example of a user granted authorization in the configuration file to change scope and modify state information.</span></span>  
+  
+ [!code-aspx-csharp[WebParts_WebPartPersonalization#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/Defaultcs.aspx#1)]
+ [!code-aspx-vb[WebParts_WebPartPersonalization#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/Defaultvb.aspx#1)]  
+  
+ <span data-ttu-id="65058-118">Im folgenden Codebeispiel wird eine Anmeldeseite erstellt.</span><span class="sxs-lookup"><span data-stu-id="65058-118">The following example code creates a login page.</span></span> <span data-ttu-id="65058-119">Nach einer erfolgreichen Anmeldung wird er auf die wichtigsten Aspx-Seite umgeleitet.</span><span class="sxs-lookup"><span data-stu-id="65058-119">After a successful login, it redirects to the main aspx page.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="65058-120">Dieses Beispiel umfasst ein Textfeld, das Benutzereingaben akzeptiert, die ein potenzielles Sicherheitsrisiko darstellen.</span><span class="sxs-lookup"><span data-stu-id="65058-120">This example has a text box that accepts user input, which is a potential security threat.</span></span> <span data-ttu-id="65058-121">Standardmäßig stellen ASP.NET-Webseiten sicher, dass Benutzereingaben keine Skript- oder HTML-Elemente enthalten.</span><span class="sxs-lookup"><span data-stu-id="65058-121">By default, ASP.NET Web pages validate that user input does not include script or HTML elements.</span></span> <span data-ttu-id="65058-122">Weitere Informationen finden Sie unter [Übersicht über Skriptangriffe](http://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).</span><span class="sxs-lookup"><span data-stu-id="65058-122">For more information, see [Script Exploits Overview](http://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).</span></span>  
+  
+ [!code-aspx-csharp[WebParts_WebPartPersonalization#5](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/login.aspx#5)]
+ [!code-aspx-vb[WebParts_WebPartPersonalization#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/login.aspx#5)]  
+  
+ <span data-ttu-id="65058-123">Im folgenden Codebeispiel wird ein Teil der Datei "Web.config" für diese Anwendung.</span><span class="sxs-lookup"><span data-stu-id="65058-123">The following example code is a portion of the Web.config file for this application.</span></span> <span data-ttu-id="65058-124">In diesem Abschnitt veranschaulicht, wie festzulegende Autorisierung für einen Benutzer in diesem Fall "Benutzer2", freigegebene Personalisierungsbereich eingeben und Personalisierungszustandsinformationen zu ändern.</span><span class="sxs-lookup"><span data-stu-id="65058-124">This section shows how to set authorization for a user, in this case "user2", to enter shared personalization scope and to modify personalization state information.</span></span> <span data-ttu-id="65058-125">Es zeigt auch ein Beispiel für eine Rolle in diesem Fall "Admin", die verwendet werden kann, um Benutzern zu ermöglichen, in der Rolle "Admin" freigegebene Personalisierungsbereich eingeben und Personalisierungszustandsinformationen zu ändern.</span><span class="sxs-lookup"><span data-stu-id="65058-125">It also shows an example of a role, in this case "admin", that can be used to allow users in the "admin" role to enter shared personalization scope and to modify personalization state information.</span></span>  
+  
+ [!code-aspx-csharp[WebParts_WebPartPersonalization#2](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/web.config#2)]
+ [!code-aspx-vb[WebParts_WebPartPersonalization#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/web.config#2)]
+  
+ <span data-ttu-id="65058-126">Der folgende Beispielcode erstellt ein Benutzersteuerelement, das aufgerufen `Color.ascx`, ermöglicht dem Benutzer, eine personalisierte Eigenschaft ändern die Hintergrundfarbe der zwei Textfelder, basierend auf den aktuellen Personalisierungsbereich und die Autorisierungsrechte des Benutzers .</span><span class="sxs-lookup"><span data-stu-id="65058-126">The following example code creates a user control, called `Color.ascx`, that allows the user to change a personalized property, in this case the background color of two text boxes, based on the current personalization scope and the authorization rights of the user.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="65058-127">Dieses Beispiel umfasst ein Textfeld, das Benutzereingaben akzeptiert, die ein potenzielles Sicherheitsrisiko darstellen.</span><span class="sxs-lookup"><span data-stu-id="65058-127">This example has a text box that accepts user input, which is a potential security threat.</span></span> <span data-ttu-id="65058-128">Standardmäßig stellen ASP.NET-Webseiten sicher, dass Benutzereingaben keine Skript- oder HTML-Elemente enthalten.</span><span class="sxs-lookup"><span data-stu-id="65058-128">By default, ASP.NET Web pages validate that user input does not include script or HTML elements.</span></span> <span data-ttu-id="65058-129">Weitere Informationen finden Sie unter [Übersicht über Skriptangriffe](http://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).</span><span class="sxs-lookup"><span data-stu-id="65058-129">For more information, see [Script Exploits Overview](http://msdn.microsoft.com/library/772c7312-211a-4eb3-8d6e-eec0aa1dcc07).</span></span>  
+  
+ [!code-aspx-csharp[WebParts_WebPartPersonalization#3](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/color.ascx#3)]
+ [!code-aspx-vb[WebParts_WebPartPersonalization#3](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/color.ascx#3)]  
+  
+ <span data-ttu-id="65058-130">Der folgende Beispielcode erstellt ein Benutzersteuerelement, das aufgerufen `Persmode.ascx`, zeigt, dass die aktuellen Personalisierungsbereich und der Benutzerrechte zum Ändern der Status und zum freigegebenen Bereich.</span><span class="sxs-lookup"><span data-stu-id="65058-130">The following example code creates a user control, called `Persmode.ascx`, that shows the current personalization scope and the user rights to modify state and to enter shared scope.</span></span> <span data-ttu-id="65058-131">Sie hat auch eine Schaltfläche "Zurücksetzen" für das Zurücksetzen des aktuellen Personalisierungszustands.</span><span class="sxs-lookup"><span data-stu-id="65058-131">It also has a reset button for resetting the current personalization state.</span></span>  
+  
+ [!code-aspx-csharp[WebParts_WebPartPersonalization#4](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/persMode.ascx#4)]
+ [!code-aspx-vb[WebParts_WebPartPersonalization#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/persMode.ascx#4)]  
+  
+ ]]></format>
+    </remarks>
+    <block subset="none" type="overrides">
+      <para>
+        <span data-ttu-id="65058-132">Die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> Klasse arbeitet eng mit einem <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> -Steuerelement und dem Rest der Personalisierungsinfrastruktur.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-132">The <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> class works closely with a <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control and the rest of the personalization infrastructure.</span>
+        </span>
+        <span data-ttu-id="65058-133">Die standardmäßige Implementierung des Personalisierung ist ein sehr robuste Subsystem, das Ihren Personalisierung Bedürfnissen sollten.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-133">The default implementation of personalization is a very robust subsystem that should meet your personalization needs.</span>
+        </span>
+        <span data-ttu-id="65058-134">In den meisten Fällen, wenn Personalisierung, angepasst werden soll können Sie erstellen einen Datenanbieter für die Verwendung als ein Personalisierungsanbieter durch Erstellen einer Klasse, die erbt <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationProvider" />.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-134">In most cases, if you want to customize personalization, you can create a data provider for use as a personalization provider by creating a class that inherits from <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationProvider" />.</span>
+        </span>
+        <span data-ttu-id="65058-135">Wenn Sie ein Personalisierungssubsystem erheblich unterscheiden, die von bereitgestellte erstellen möchten die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> und <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> Klassen, erstellen Sie eine benutzerdefinierte <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> Implementierung durch Ableiten von <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> und fügen Sie Ihre eigene benutzerdefinierte Logik.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-135">If you want to create a personalization subsystem significantly different from that provided by the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> and the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> classes, you should create a custom <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> implementation by deriving from <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> and add your own custom logic.</span>
+        </span>
+        <span data-ttu-id="65058-136">Erstellen Sie einen benutzerdefinierten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> Implementierung durch Ableiten von <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />, Ihre eigene Logik hinzufügen, und überschreiben die <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.CreatePersonalization" /> Methode, um die benutzerdefinierte zurückzugeben <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> Implementierung.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-136">Then create a custom <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> implementation by deriving from <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />, add your own custom logic, and override the <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.CreatePersonalization" /> method to return your custom <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> implementation.</span>
+        </span>
+        <span data-ttu-id="65058-137">Da eine <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> Steuerelement stellt Anforderungen an die Personalisierungsinfrastruktur mithilfe von einer <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> -Instanz, die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> Steuerelement nicht direkt interagieren oder die Verweise auf enthalten <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationProvider" /> Implementierungen.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="65058-137">Because a <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control makes requests to the personalization infrastructure by way of a <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance, the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control does not directly interact with or hold references to <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationProvider" /> implementations.</span>
+        </span>
+      </para>
+    </block>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WebPartPersonalization (System.Web.UI.WebControls.WebParts.WebPartManager owner);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Web.UI.WebControls.WebParts.WebPartManager owner) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.#ctor(System.Web.UI.WebControls.WebParts.WebPartManager)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (owner As WebPartManager)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; WebPartPersonalization(System::Web::UI::WebControls::WebParts::WebPartManager ^ owner);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="owner" Type="System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Parameters>
+      <Docs>
+        <param name="owner">
+          <span data-ttu-id="65058-138">Die Verwaltung der Personalisierungsinformationen erfolgte bislang mithilfe des <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-138">The <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> used to manage the personalization information</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-139">Initialisiert eine neue Instanz der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-139">Initializes a new instance of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-140">Dieser Konstruktor initialisiert eine Instanz dieser Klasse und ordnet sie der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelements in dessen Auftrag der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz wird Personalisierung Vorgänge ausführen.</span><span class="sxs-lookup"><span data-stu-id="65058-140">This constructor initializes an instance of this class and associates it with the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control on whose behalf the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance will carry out personalization operations.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="65058-141">
+            <paramref name="owner" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-141">
+              <paramref name="owner" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="ApplyPersonalizationState">
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-142">Wendet Personalisierungsdaten entweder auf ein der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Instanz zugeordnetes<see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Steuerelement oder auf eine spezifische <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" />-Instanz an.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-142">Applies personalization data to either a <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control associated with the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance, or to a specific <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" /> instance.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="ApplyPersonalizationState">
+      <MemberSignature Language="C#" Value="protected internal virtual void ApplyPersonalizationState ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void ApplyPersonalizationState() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ApplyPersonalizationState" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub ApplyPersonalizationState ()" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void ApplyPersonalizationState();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-143">Wendet Personalisierungsdaten auf das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement an.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-143">Applies personalization data to the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-144">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, diese Methode ruft die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ApplyWebPartPersonalization%2A> Methode auf die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> Instanz Personalisierungszustand auf die bereitgestellten Webparts-Steuerelemente anwenden.</span><span class="sxs-lookup"><span data-stu-id="65058-144">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, this method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ApplyWebPartPersonalization%2A> method on the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> instance to apply personalization state to the supplied Web Parts control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-145">Es wurde der Versuch unternommen, einen Personalisierungszustand anzuwenden, bevor der Zustand aus dem zugrunde liegenden Datenspeicher geladen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-145">An attempt was made to apply personalization state prior to the state being loaded from the underlying data store.</span>
+          </span>
+          <span data-ttu-id="65058-146">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-146">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-147">Vom Datenspeicher wurde ein Personalisierungszustand von <see langword="null" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-147">The personalization state returned from the data store was <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="ApplyPersonalizationState">
+      <MemberSignature Language="C#" Value="protected internal virtual void ApplyPersonalizationState (System.Web.UI.WebControls.WebParts.WebPart webPart);" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void ApplyPersonalizationState(class System.Web.UI.WebControls.WebParts.WebPart webPart) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ApplyPersonalizationState(System.Web.UI.WebControls.WebParts.WebPart)" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void ApplyPersonalizationState(System::Web::UI::WebControls::WebParts::WebPart ^ webPart);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="webPart" Type="System.Web.UI.WebControls.WebParts.WebPart" />
+      </Parameters>
+      <Docs>
+        <param name="webPart">
+          <span data-ttu-id="65058-148">Das Webparts-Steuerelement, auf das Personalisierungsdaten angewendet werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-148">The Web Parts control to which personalization data is to be applied.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-149">Wendet Personalisierungsdaten auf das angegebene <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" />-Steuerelement an, wenn eine entsprechende Anforderung durch das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement gestellt wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-149">Applies personalization data to the specified <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" /> control when requested to do so by the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-150">Diese Methode wird aufgerufen, um ein einzelnes Personalisierungsdaten zuzuweisen <xref:System.Web.UI.WebControls.WebParts.WebPart>-abgeleitete Klasse, wenn Sie dazu vom übergeordneten <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-150">This method is called to apply personalization data to an individual <xref:System.Web.UI.WebControls.WebParts.WebPart>-derived class when requested to do so by the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span>  
+  
+ <span data-ttu-id="65058-151">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, diese Methode ruft die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ApplyWebPartPersonalization%2A> Methode auf die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> Instanz Personalisierungszustand auf die bereitgestellten Webparts-Steuerelemente anwenden.</span><span class="sxs-lookup"><span data-stu-id="65058-151">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, this method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ApplyWebPartPersonalization%2A> method on the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> instance to apply personalization state to the supplied Web Parts control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-152">Es wurde der Versuch unternommen, einen Personalisierungszustand auf ein Webparts-Steuerelement anzuwenden, das nicht durch den übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> verwaltet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-152">An attempt was made to apply personalization state to a Web Parts control that is not managed by the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="65058-153">
+            <paramref name="webPart" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-153">
+              <paramref name="webPart" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-154">Es wurde der Versuch unternommen, einen Personalisierungszustand anzuwenden, bevor der Zustand aus dem zugrunde liegenden Datenspeicher geladen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-154">An attempt was made to apply personalization state prior to the state being loaded from the underlying data store.</span>
+          </span>
+          <span data-ttu-id="65058-155">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-155">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-156">Vom Datenspeicher wurde ein Personalisierungszustand von <see langword="null" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-156">The personalization state returned from the data store was <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="65058-157">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-157">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-158">Es wurde der Versuch unternommen, Personalisierungsdaten mehr als einmal auf dasselbe Webparts-Steuerelement anzuwenden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-158">An attempt was made to apply personalization data more than once to the same Web Parts control.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="CanEnterSharedScope">
+      <MemberSignature Language="C#" Value="public bool CanEnterSharedScope { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool CanEnterSharedScope" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CanEnterSharedScope" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property CanEnterSharedScope As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool CanEnterSharedScope { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-159">Gibt einen Wert zurück, der angibt, ob der Benutzer befugt ist, auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich zuzugreifen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-159">Returns a value indicating whether the user is authorized to enter <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-160">
+            <see langword="true" />, wenn der Benutzer befugt ist, auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich zuzugreifen, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-160">
+              <see langword="true" /> if the user is authorized to enter <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-161">Diese Eigenschaft gibt `true` , wenn der Benutzer, in autorisiert ist der <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> eingeben <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared> Bereich.</span><span class="sxs-lookup"><span data-stu-id="65058-161">This property returns `true` if the user is authorized in the <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> to enter <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared> scope.</span></span>  
+  
+ <span data-ttu-id="65058-162">Zum ersten Mal die Eigenschaft wird aufgerufen, Rechte zur Eingabe des Benutzers bestimmt <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared> Bereich und werden die Informationen zwischengespeichert.</span><span class="sxs-lookup"><span data-stu-id="65058-162">The first time the property is called, it determines the user's right to enter <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared> scope and caches the information.</span></span> <span data-ttu-id="65058-163">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.UserCapabilities%2A> Wörterbuch geändert wird nach dem ersten Mal diese Eigenschaft aufgerufen wird, ändert sich bei nachfolgenden Aufrufen dieser Eigenschaft nicht angezeigt werden.</span><span class="sxs-lookup"><span data-stu-id="65058-163">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.UserCapabilities%2A> dictionary is modified after the first time this property is called, changes are not shown on subsequent calls to this property.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="65058-164">Der folgende Code veranschaulicht die Verwendung der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CanEnterSharedScope%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-164">The following code demonstrates using the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CanEnterSharedScope%2A> property.</span></span> <span data-ttu-id="65058-165">Dieser Code ist Teil einer größeren Codebeispiel finden der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse Beschreibung.</span><span class="sxs-lookup"><span data-stu-id="65058-165">This code is part of a larger code sample found in the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class description.</span></span>  
+  
+ [!code-csharp[WebParts_WebPartPersonalization#7](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/persMode.ascx#7)]
+ [!code-vb[WebParts_WebPartPersonalization#7](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/persMode.ascx#7)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ChangeScope">
+      <MemberSignature Language="C#" Value="protected virtual void ChangeScope (System.Web.UI.WebControls.WebParts.PersonalizationScope scope);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void ChangeScope(valuetype System.Web.UI.WebControls.WebParts.PersonalizationScope scope) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ChangeScope(System.Web.UI.WebControls.WebParts.PersonalizationScope)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub ChangeScope (scope As PersonalizationScope)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void ChangeScope(System::Web::UI::WebControls::WebParts::PersonalizationScope scope);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scope" Type="System.Web.UI.WebControls.WebParts.PersonalizationScope" />
+      </Parameters>
+      <Docs>
+        <param name="scope">
+          <span data-ttu-id="65058-166">Der neue Personalisierungsbereich für die aktuelle Seite.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-166">The new personalization scope for the current page.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-167">Ändert die <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Instanz der aktuellen Seite auf den angegebenen Bereich.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-167">Changes the current page's <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> instance to the scope specified.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-168">Diese Methode ändert die aktuell ausgeführte Seite Personalisierungsbereich in den neuen Bereich gemäß der `newScope` Parameter.</span><span class="sxs-lookup"><span data-stu-id="65058-168">This method changes the currently executing page's personalization scope to the new scope specified by the `newScope` parameter.</span></span> <span data-ttu-id="65058-169">Diese Methode ist die geschützte Hilfsmethode, die von den öffentlichen aufgerufen wird <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-169">This method is the protected helper method that is called by the public <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> method.</span></span> <span data-ttu-id="65058-170">Diese geschützte Methode vorhanden ist, um zukünftige Erweiterungen zu behandeln, wenn mehr als zwei mögliche Bereiche Wechsel zwischen vorhanden sind.</span><span class="sxs-lookup"><span data-stu-id="65058-170">This protected method exists to handle future extensibility if there are more than two possible scopes to switch between.</span></span>  
+  
+ <span data-ttu-id="65058-171">Wenn der aktuelle Bereich und `newScope` der gleiche Wert sind, dann wird diese Methode führt keine Operation.</span><span class="sxs-lookup"><span data-stu-id="65058-171">If the current scope and `newScope` are the same value, then this method performs no operation.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-172">Beim Versuch vom <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" />-Bereich auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich umzuschalten besitzt der aktuelle Benutzer nicht die Berechtigung für den Zugriff auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-172">If attempting to switch from <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" /> scope to <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope, the current user does not have the user capability to enter <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <span data-ttu-id="65058-173">
+            <paramref name="scope" /> ist kein gültiger Member der <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Enumeration.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-173">
+              <paramref name="scope" /> is not a valid member of the <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> enumeration.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="CopyPersonalizationState">
+      <MemberSignature Language="C#" Value="protected internal virtual void CopyPersonalizationState (System.Web.UI.WebControls.WebParts.WebPart webPartA, System.Web.UI.WebControls.WebParts.WebPart webPartB);" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void CopyPersonalizationState(class System.Web.UI.WebControls.WebParts.WebPart webPartA, class System.Web.UI.WebControls.WebParts.WebPart webPartB) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CopyPersonalizationState(System.Web.UI.WebControls.WebParts.WebPart,System.Web.UI.WebControls.WebParts.WebPart)" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub CopyPersonalizationState (webPartA As WebPart, webPartB As WebPart)" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void CopyPersonalizationState(System::Web::UI::WebControls::WebParts::WebPart ^ webPartA, System::Web::UI::WebControls::WebParts::WebPart ^ webPartB);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="webPartA" Type="System.Web.UI.WebControls.WebParts.WebPart" />
+        <Parameter Name="webPartB" Type="System.Web.UI.WebControls.WebParts.WebPart" />
+      </Parameters>
+      <Docs>
+        <param name="webPartA">
+          <span data-ttu-id="65058-174">Das Webparts-Steuerelement, das die Personalisierungsdaten bereitstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-174">The Web Parts control supplying the personalization data.</span>
+          </span>
+        </param>
+        <param name="webPartB">
+          <span data-ttu-id="65058-175">Das Webparts-Steuerelement, das die Personalisierungsdaten empfängt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-175">The Web Parts control receiving the personalization data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-176">Extrahiert den Personalisierungszustand aus einem Webparts-Steuerelement und wendet diesen auf ein zweites Webparts-Steuerelement an.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-176">Extracts the personalization state from one Web Parts control and applies it to a second Web Parts control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-177">Diese Methode extrahiert den Personalisierungszustand wird von `webPartA` und wendet ihn auf `webPartB`.</span><span class="sxs-lookup"><span data-stu-id="65058-177">This method extracts the personalization state from `webPartA` and applies it to `webPartB`.</span></span> <span data-ttu-id="65058-178">Diese Methode setzt voraus, dass `webPartA` und `webPartB` denselben Typ aufweisen.</span><span class="sxs-lookup"><span data-stu-id="65058-178">This method assumes that `webPartA` and `webPartB` are the same type.</span></span> <span data-ttu-id="65058-179">Wenn die Webparts-Steuerelemente sind <xref:System.Web.UI.WebControls.WebParts.GenericWebPart> -Steuerelemente, die Methode kopiert die Personalisierung Status anhand des untergeordneten Steuerelements umschlossen `webPartA` umschlossen, das untergeordnete Steuerelement `webPartB`.</span><span class="sxs-lookup"><span data-stu-id="65058-179">If the Web Parts controls are <xref:System.Web.UI.WebControls.WebParts.GenericWebPart> controls, the method copies the personalization state from the child control wrapped in `webPartA` to the child control wrapped in `webPartB`.</span></span>  
+  
+ <span data-ttu-id="65058-180">Im Rahmen des Kopiervorgangs `webPartB` als "fehlerhaft" markiert ist.</span><span class="sxs-lookup"><span data-stu-id="65058-180">As part of the copy operation, `webPartB` is marked as "dirty".</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="65058-181">Entweder <paramref name="webPartA" /> oder <paramref name="webPartB" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-181">Either <paramref name="webPartA" /> or <paramref name="webPartB" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-182">
+            <paramref name="webPartA" /> und <paramref name="webPartB" /> sind nicht vom gleichen <see cref="T:System.Type" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-182">
+              <paramref name="webPartA" /> and <paramref name="webPartB" /> are not of the same <see cref="T:System.Type" />.</span>
+          </span>
+          <span data-ttu-id="65058-183">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-183">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-184">
+            <paramref name="webPartA" /> und <paramref name="webPartB" /> sind <see cref="T:System.Web.UI.WebControls.WebParts.GenericWebPart" />-Steuerelemente, bei einem oder beiden fehlt jedoch ein untergeordnetes Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-184">
+              <paramref name="webPartA" /> and <paramref name="webPartB" /> are <see cref="T:System.Web.UI.WebControls.WebParts.GenericWebPart" /> controls but one or both lack a child control.</span>
+          </span>
+          <span data-ttu-id="65058-185">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-185">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-186">
+            <paramref name="webPartA" /> und <paramref name="webPartB" /> sind <see cref="T:System.Web.UI.WebControls.WebParts.GenericWebPart" />-Steuerelemente, ihre untergeordneten Steuerelemente sind jedoch nicht vom gleichen <see cref="T:System.Type" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-186">
+              <paramref name="webPartA" /> and <paramref name="webPartB" /> are <see cref="T:System.Web.UI.WebControls.WebParts.GenericWebPart" /> controls, but their child controls are not of the same <see cref="T:System.Type" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="Enabled">
+      <MemberSignature Language="C#" Value="public virtual bool Enabled { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool Enabled" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Property Enabled As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool Enabled { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DefaultValue(true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.NotifyParentProperty(true)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-187">Gibt einen Wert zurück, der angibt, ob die Personalisierung für das zugeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement aktiviert werden muss.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-187">Returns a value indicating whether personalization is requested to be enabled for the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-188">
+            <see langword="true" />, wenn die Personalisierung aktiviert ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-188">
+              <see langword="true" /> if personalization is enabled; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-189">Diese Eigenschaft gibt an, ob die Personalisierung aktiviert sein, damit die übergeordneten <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-189">This property indicates whether personalization is requested to be enabled for the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span> <span data-ttu-id="65058-190">Beachten Sie, dass dies eine feinen, aber wichtigen Unterschied aus die Absicht der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> und <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsInitialized%2A>.</span><span class="sxs-lookup"><span data-stu-id="65058-190">Note that this is a subtle but important distinction from the intent of <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> and <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsInitialized%2A>.</span></span>  
+  
+ <span data-ttu-id="65058-191">Diese Eigenschaft kann nur festgelegt werden, vor dem Abschluss der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-191">This property can only be set prior to the completion of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method.</span></span> <span data-ttu-id="65058-192">In der Praxis bedeutet dies, dass die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled%2A> Eigenschaft muss im Markup Seite festgelegt werden, auf die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Element, sofern die Personalisierung deaktiviert werden soll.</span><span class="sxs-lookup"><span data-stu-id="65058-192">In practice, this means that the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled%2A> property must be set in the page markup on the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> element if personalization should be disabled.</span></span> <span data-ttu-id="65058-193">Alternativ kann diese Eigenschaft festgelegt werden, während die `PreInit` Phase der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-193">Alternatively, this property can be set during the `PreInit` phase of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-194">Es wurde versucht, diesen Eigenschaftswert festzulegen, nachdem die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Methode des zugeordneten <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" />-Steuerelements abgeschlossen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-194">An attempt was made to set this property value after the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" /> method had completed.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="EnsureEnabled">
+      <MemberSignature Language="C#" Value="public void EnsureEnabled (bool ensureModifiable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void EnsureEnabled(bool ensureModifiable) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.EnsureEnabled(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub EnsureEnabled (ensureModifiable As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void EnsureEnabled(bool ensureModifiable);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ensureModifiable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="ensureModifiable">
+          <span data-ttu-id="65058-195">Ein boolescher Wert, der angibt, welche Art der Prüfung erfolgen soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-195">A Boolean value indicating which type of check should be made.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-196">Stellt sicher, dass die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz die Initialisierung abgeschlossen hat, oder dass der aktuelle Benutzer die erforderliche Berechtigung zum Bearbeiten von Personalisierungszuständen besitzt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-196">Ensures that the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance has completed initialization or that the current user has rights to modify personalization state.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-197">Diese Methode ist eine Hilfsmethode, die in mehreren <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Methoden, um sicherzustellen, dass zwei Dinge:</span><span class="sxs-lookup"><span data-stu-id="65058-197">This method is a helper method used in several <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> methods to ensure one of two things:</span></span>  
+  
+-   <span data-ttu-id="65058-198">Die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz die Initialisierung abgeschlossen hat (z. B. die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> Methode aufgerufen und erfolgreich abgeschlossen wurde).</span><span class="sxs-lookup"><span data-stu-id="65058-198">The <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance has completed initialization (for example, the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> method was called and successfully completed).</span></span> <span data-ttu-id="65058-199">Diese Überprüfung wird durchgeführt, wenn die `ensureModifiable` entspricht `false`.</span><span class="sxs-lookup"><span data-stu-id="65058-199">This check is made if the `ensureModifiable` parameter equals `false`.</span></span>  
+  
+     <span data-ttu-id="65058-200">\- oder –</span><span class="sxs-lookup"><span data-stu-id="65058-200">\- or -</span></span>  
+  
+-   <span data-ttu-id="65058-201">Der aktuelle Benutzer besitzt Rechte zum Ändern der Personalisierungszustand.</span><span class="sxs-lookup"><span data-stu-id="65058-201">The current user has rights to modify personalization state.</span></span> <span data-ttu-id="65058-202">Diese Überprüfung wird durchgeführt, wenn `ensureModifiable` gleich `true`.</span><span class="sxs-lookup"><span data-stu-id="65058-202">This check is made if `ensureModifiable` equals `true`.</span></span>  
+  
+ <span data-ttu-id="65058-203">Die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement ruft diese Methode auch in eine Anzahl von Fällen:</span><span class="sxs-lookup"><span data-stu-id="65058-203">The <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control also calls this method in a number of cases:</span></span>  
+  
+-   <span data-ttu-id="65058-204">Um den Anzeigemodus auf einen anderen Wert als Normal zu ändern.</span><span class="sxs-lookup"><span data-stu-id="65058-204">To switch the display mode to something other than normal.</span></span> <span data-ttu-id="65058-205">Der aktuelle Benutzer benötigen die Rechte zum Ändern der Personalisierungszustand.</span><span class="sxs-lookup"><span data-stu-id="65058-205">The current user must have rights to modify personalization state.</span></span>  
+  
+-   <span data-ttu-id="65058-206">Klicken Sie zum Hinzufügen, löschen oder Verschieben von Webparts-Steuerelemente.</span><span class="sxs-lookup"><span data-stu-id="65058-206">To add, delete, or move Web Parts controls.</span></span> <span data-ttu-id="65058-207">Der aktuelle Benutzer benötigen die Rechte zum Ändern der Personalisierungszustand.</span><span class="sxs-lookup"><span data-stu-id="65058-207">The current user must have rights to modify personalization state.</span></span>  
+  
+-   <span data-ttu-id="65058-208">Um eine Verbindung herzustellen, trennen und Bearbeiten von Webparts-Steuerelemente.</span><span class="sxs-lookup"><span data-stu-id="65058-208">To connect, disconnect, and edit Web Parts controls.</span></span> <span data-ttu-id="65058-209">Der aktuelle Benutzer benötigen die Rechte zum Ändern der Personalisierungszustand.</span><span class="sxs-lookup"><span data-stu-id="65058-209">The current user must have rights to modify personalization state.</span></span>  
+  
+-   <span data-ttu-id="65058-210">So exportieren Sie die Webparts-Steuerelemente auf einer Seite</span><span class="sxs-lookup"><span data-stu-id="65058-210">To export the Web Parts controls on a page.</span></span> <span data-ttu-id="65058-211">Die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz muss die Initialisierung abgeschlossen haben.</span><span class="sxs-lookup"><span data-stu-id="65058-211">The <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance must have completed initialization.</span></span>  
+  
+-   <span data-ttu-id="65058-212">So importieren Sie die Webparts-Steuerelemente.</span><span class="sxs-lookup"><span data-stu-id="65058-212">To import Web Parts controls.</span></span> <span data-ttu-id="65058-213">Der aktuelle Benutzer benötigen die Rechte zum Ändern der Personalisierungszustand.</span><span class="sxs-lookup"><span data-stu-id="65058-213">The current user must have rights to modify personalization state.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-214">Der aktuelle Benutzer besitzt nicht die erforderliche Berechtigung zum Ändern von Personalisierungsinformationen, oder andere Prüfungen sind fehlgeschlagen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-214">The current user does not have rights to modify personalization information, or other checks failed.</span>
+          </span>
+          <span data-ttu-id="65058-215">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-215">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-216">
+            <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled" /> hat <see langword="false" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-216">
+              <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled" /> returned <see langword="false" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="EnterSharedScopeUserCapability">
+      <MemberSignature Language="C#" Value="public static readonly System.Web.UI.WebControls.WebParts.WebPartUserCapability EnterSharedScopeUserCapability;" />
+      <MemberSignature Language="ILAsm" Value=".field public static initonly class System.Web.UI.WebControls.WebParts.WebPartUserCapability EnterSharedScopeUserCapability" />
+      <MemberSignature Language="DocId" Value="F:System.Web.UI.WebControls.WebParts.WebPartPersonalization.EnterSharedScopeUserCapability" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly EnterSharedScopeUserCapability As WebPartUserCapability " />
+      <MemberSignature Language="C++ CLI" Value="public: static initonly System::Web::UI::WebControls::WebParts::WebPartUserCapability ^ EnterSharedScopeUserCapability;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.WebPartUserCapability</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-217">Stellt die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" />-Instanz der Autorisierung eines Benutzers für den Zugriff auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich dar.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-217">Represents the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" /> instance of a user's authorization to enter <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-218">Die Benutzerberechtigung wird durch die Zeichenfolge "EnterSharedScope" dargestellt, der <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> Instanz.</span><span class="sxs-lookup"><span data-stu-id="65058-218">The user right is represented by the string "enterSharedScope" in the <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> instance.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="ExtractPersonalizationState">
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-219">Extrahiert Personalisierungsdaten aus dem übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-219">Extracts personalization data from the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="ExtractPersonalizationState">
+      <MemberSignature Language="C#" Value="protected internal virtual void ExtractPersonalizationState ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void ExtractPersonalizationState() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ExtractPersonalizationState" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub ExtractPersonalizationState ()" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void ExtractPersonalizationState();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-220">Extrahiert Personalisierungsdaten aus dem übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-220">Extracts personalization data from the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-221">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, und Personalisierung Status wird während der Seitenanforderung nicht zurückgesetzt werden (z. B. wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> Eigenschaft ist `false`), und klicken Sie dann diese Methode aus dem übergeordneten Personalisierungsdatenextrahiert<xref:System.Web.UI.WebControls.WebParts.WebPartManager>kontrollieren während seiner <xref:System.Web.UI.Page.SaveStateComplete> Ereignis.</span><span class="sxs-lookup"><span data-stu-id="65058-221">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, and personalization state is not being reset during the page request (such as when the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> property is `false`), then this method extracts personalization data from the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control during its <xref:System.Web.UI.Page.SaveStateComplete> event.</span></span>  
+  
+ <span data-ttu-id="65058-222">Diese Methode ruft die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ExtractWebPartManagerPersonalization%2A> Methode für die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> zum Extrahieren von Personalisierung Status aus der übergeordneten Instanz <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-222">This method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ExtractWebPartManagerPersonalization%2A> method on the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> instance to extract personalization state from the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-223">Es wurde der Versuch unternommen, einen Personalisierungszustand zu extrahieren, bevor der Zustand aus dem zugrunde liegenden Datenspeicher geladen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-223">An attempt was made to extract personalization state prior to the state being loaded from the underlying data store.</span>
+          </span>
+          <span data-ttu-id="65058-224">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-224">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-225">Der Personalisierungszustand wurde noch nicht angewendet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-225">Personalization state has not been applied yet.</span>
+          </span>
+          <span data-ttu-id="65058-226">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-226">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-227">Die <see cref="P:System.Web.UI.Control.ID" /> des <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> hat sich geändert, seit Personalisierungsdaten angewendet wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-227">The <see cref="P:System.Web.UI.Control.ID" /> of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> has changed since personalization data was applied.</span>
+          </span>
+          <span data-ttu-id="65058-228">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-228">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-229">Vom Datenspeicher wurde ein Personalisierungszustand von <see langword="null" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-229">The personalization state returned from the data store was <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="ExtractPersonalizationState">
+      <MemberSignature Language="C#" Value="protected internal virtual void ExtractPersonalizationState (System.Web.UI.WebControls.WebParts.WebPart webPart);" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void ExtractPersonalizationState(class System.Web.UI.WebControls.WebParts.WebPart webPart) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ExtractPersonalizationState(System.Web.UI.WebControls.WebParts.WebPart)" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void ExtractPersonalizationState(System::Web::UI::WebControls::WebParts::WebPart ^ webPart);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="webPart" Type="System.Web.UI.WebControls.WebParts.WebPart" />
+      </Parameters>
+      <Docs>
+        <param name="webPart">
+          <span data-ttu-id="65058-230">Das Webparts-Steuerelement, das die zu extrahierenden Personalisierungsdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-230">The Web Parts control containing personalization data to be extracted.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-231">Extrahiert Personalisierungsdaten aus einem Webparts-Steuerelement, wenn eine entsprechende Anforderung durch das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement gestellt wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-231">Extracts personalization data from a Web Parts control when requested to do so by the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-232">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, und Personalisierung Status wird während der Seitenanforderung nicht zurückgesetzt werden (z. B. wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> Eigenschaft ist `false`), und klicken Sie dann diese Methode aus dem Webparts-Steuerelementsatz Personalisierungsdaten extrahiert vom angegebenen `webPart`.</span><span class="sxs-lookup"><span data-stu-id="65058-232">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, and personalization state is not being reset during the page request (such as when the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> property is `false`), then this method extracts personalization data from the Web Parts control specified by `webPart`.</span></span> <span data-ttu-id="65058-233">Diese Methode ruft die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ExtractWebPartPersonalization%2A> Methode für die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> Instanz Personalisierungszustand aus dem angegebenen Webparts-Steuerelement zu extrahieren.</span><span class="sxs-lookup"><span data-stu-id="65058-233">This method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.ExtractWebPartPersonalization%2A> method on the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState> instance to extract personalization state from the supplied Web Parts control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-234">Es wurde der Versuch unternommen, einen Personalisierungszustand aus einem Webparts-Steuerelement zu extrahieren, das nicht durch den übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> verwaltet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-234">An attempt was made to extract personalization state from a Web Parts control that is not managed by the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-235">Es wurde der Versuch unternommen, einen Personalisierungszustand zu extrahieren, bevor der Zustand aus dem zugrunde liegenden Datenspeicher geladen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-235">An attempt was made to extract personalization state prior to the state being loaded from the underlying data store.</span>
+          </span>
+          <span data-ttu-id="65058-236">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-236">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-237">Der Personalisierungszustand wurde noch nicht angewendet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-237">Personalization state has not been applied yet.</span>
+          </span>
+          <span data-ttu-id="65058-238">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-238">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-239">Die <see cref="P:System.Web.UI.Control.ID" /> des <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" /> hat sich geändert, seit Personalisierungsdaten angewendet wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-239">The <see cref="P:System.Web.UI.Control.ID" /> of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPart" /> has changed since personalization data was applied.</span>
+          </span>
+          <span data-ttu-id="65058-240">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-240">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-241">Vom Datenspeicher wurde ein Personalisierungszustand von <see langword="null" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-241">The personalization state returned from the data store was <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetAuthorizationFilter">
+      <MemberSignature Language="C#" Value="protected internal virtual string GetAuthorizationFilter (string webPartID);" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance string GetAuthorizationFilter(string webPartID) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.GetAuthorizationFilter(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Function GetAuthorizationFilter (webPartID As String) As String" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual System::String ^ GetAuthorizationFilter(System::String ^ webPartID);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="webPartID" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="webPartID">
+          <span data-ttu-id="65058-242">Die ID des Webparts-Steuerelements, das dem abzurufenden Filter zugeordnet ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-242">The ID of the Web Parts control associated with the filter to be retrieved.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-243">Ruft gegebenenfalls den Autorisierungsfilter ab, der dem angegebenen Webparts-Steuerelement zugeordnet ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-243">Retrieves the authorization filter, if any, associated with the specified Web Parts control.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="65058-244">Der Autorisierungsfilter für das angegebene Webparts-Steuerelement.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-244">The authorization filter for the specified Web Parts control.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-245">Diese Methode ruft den Autorisierungsfilter ab, wenn vorhanden, mit dem Webparts-Steuerelement, das identifizierte verknüpfte `webPartID`.</span><span class="sxs-lookup"><span data-stu-id="65058-245">This method retrieves the authorization filter, if any, associated with the Web Parts control identified by `webPartID`.</span></span> <span data-ttu-id="65058-246">Webparts-Steuerelemente, die serialisiert und durch die Personalisierung verwaltete zugeordnet ist eine `webPartID` Parameter.</span><span class="sxs-lookup"><span data-stu-id="65058-246">Each Web Parts control that is serialized and managed by personalization is associated with a `webPartID` parameter.</span></span> <span data-ttu-id="65058-247">Zur Laufzeit eine Seite des <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement kann filtern, die Steuerelemente auf einer Seite angezeigt wird, wird festgestellt, ob die einzelnen Webparts-Steuerelemente autorisiert ist.</span><span class="sxs-lookup"><span data-stu-id="65058-247">At run time, a page's <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control can filter the controls displayed on a page by determining whether each Web Parts control is authorized.</span></span> <span data-ttu-id="65058-248">Diese Autorisierungsinformationen wird als Zeichenfolge in den einzelnen Webparts-Steuerelement zugeordneten Daten gespeichert.</span><span class="sxs-lookup"><span data-stu-id="65058-248">This authorization information is stored as a string in the data associated with each Web Parts control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-249">Es wurde der Versuch unternommen, einen Autorisierungsfilter abzurufen, wobei <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled" /> den Wert <see langword="false" /> hat. Diese Methode wurde zu früh im Lebenszyklus der Seite aufgerufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-249">An attempt was made to retrieve an authorization filter when <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled" /> is <see langword="false" /> by calling this method too early in the page life cycle.</span>
+          </span>
+          <span data-ttu-id="65058-250">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-250">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-251">Es wurde der Versuch unternommen, einen Autorisierungsfilter abzurufen, und es wurde kein Personalisierungszustand geladen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-251">An attempt was made to retrieve an authorization filter and no personalization state has been loaded.</span>
+          </span>
+          <span data-ttu-id="65058-252">\- oder</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-252">\- or</span>
+          </span>
+          <span data-ttu-id="65058-253">Vom Datenspeicher wurde ein Personalisierungszustand von <see langword="null" /> zurückgegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-253">The personalization state returned from the data store was <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-254">
+            <paramref name="webPartID" /> ist <see langword="null" /> oder eine leere Zeichenfolge ("").</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-254">
+              <paramref name="webPartID" /> is <see langword="null" /> or an empty string ("").</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="HasPersonalizationState">
+      <MemberSignature Language="C#" Value="public virtual bool HasPersonalizationState { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasPersonalizationState" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.HasPersonalizationState" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property HasPersonalizationState As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool HasPersonalizationState { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-255">Gibt einen Wert zurück, der angibt, ob der aktuellen Seite und dem Personalisierungsbereich Personalisierungsdaten zugeordnet sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-255">Returns a value indicating whether the current page and personalization scope have associated personalization data.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-256">
+            <see langword="true" />, wenn der Seite Personalisierungsdaten zugeordnet sind, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-256">
+              <see langword="true" /> if the page has personalization data associated with it; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-257">Dies ist eine bequeme Methode zum bestimmen, ob die aktuelle Seite und Bereich Kombination Personalisierungsdaten zugeordnet wurde.</span><span class="sxs-lookup"><span data-stu-id="65058-257">This is a convenient method for determining whether the current page and scope combination has personalization data associated with it.</span></span> <span data-ttu-id="65058-258">Intern können die Methodenaufrufe <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.GetCountOfState%2A> auf den Anbieter, um zu bestimmen, ob Daten vorhanden sind.</span><span class="sxs-lookup"><span data-stu-id="65058-258">Internally, the method calls <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.GetCountOfState%2A> on the provider to determine whether data exists.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-259">Es gibt keinen der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz zugeordneten Personalisierungsanbieter.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-259">There is no personalization provider associated with the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance.</span>
+          </span>
+          <span data-ttu-id="65058-260">Dies kann geschehen, wenn der Zugriff auf die Eigenschaft vor dem Abschluss der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Methode des zugeordneten <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" />-Steuerelements erfolgt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-260">This can occur if the property is accessed prior to the completion of the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" /> method.</span>
+          </span>
+          <span data-ttu-id="65058-261">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-261">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-262">Der Wert der <see cref="P:System.Web.UI.Control.Page" />-Eigenschaft für den zugeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-262">The value of the <see cref="P:System.Web.UI.Control.Page" /> property for the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="65058-263">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-263">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-264">Der Wert der <see cref="P:System.Web.UI.Page.Request" />-Eigenschaft für die dem <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement zugeordnete <see cref="T:System.Web.UI.Page" />-Instanz ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-264">The value of the <see cref="P:System.Web.UI.Page.Request" /> property on the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's associated <see cref="T:System.Web.UI.Page" /> instance is <see langword="null" />.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="InitialScope">
+      <MemberSignature Language="C#" Value="public virtual System.Web.UI.WebControls.WebParts.PersonalizationScope InitialScope { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Web.UI.WebControls.WebParts.PersonalizationScope InitialScope" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Property InitialScope As PersonalizationScope" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Web::UI::WebControls::WebParts::PersonalizationScope InitialScope { System::Web::UI::WebControls::WebParts::PersonalizationScope get(); void set(System::Web::UI::WebControls::WebParts::PersonalizationScope value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DefaultValue(Mono.Cecil.CustomAttributeArgument)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.NotifyParentProperty(true)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.PersonalizationScope</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-265">Ruft den aktuellen Standardpersonalisierungsbereich ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-265">Gets or sets the default personalization scope.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-266">Der <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> gibt den Standardpersonalisierungsbereich des zugeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> an.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-266">The <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> indicating the default personalization scope of the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-267">Diese Eigenschaft stellt den Standardbereich für die Personalisierung, die für das übergeordnete Element verwendet werden soll <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement bisherigen Kenntnisse zu den richtigen Bereich vorhanden.</span><span class="sxs-lookup"><span data-stu-id="65058-267">This property represents the default personalization scope that should be used for the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control in the absence of previous knowledge about the proper scope.</span></span> <span data-ttu-id="65058-268">Wenn diese Eigenschaft nicht explizit festgelegt ist, wird standardmäßig zum Zurückgeben von <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.User> Bereich.</span><span class="sxs-lookup"><span data-stu-id="65058-268">If this property is not explicitly set, it defaults to returning <xref:System.Web.UI.WebControls.WebParts.PersonalizationScope.User> scope.</span></span>  
+  
+ <span data-ttu-id="65058-269">Diese Eigenschaft kann nur festgelegt werden, vor dem Abschluss der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-269">This property can only be set prior to the completion of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method.</span></span> <span data-ttu-id="65058-270">In der Praxis bedeutet dies, dass <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> muss im Markup Seite festgelegt werden, auf die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Element.</span><span class="sxs-lookup"><span data-stu-id="65058-270">In practice, this means <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> must be set in the page markup on the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> element.</span></span> <span data-ttu-id="65058-271">Alternativ kann diese Eigenschaft festgelegt werden, während die `PreInit` Phase der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-271">Alternatively, this property can be set during the `PreInit` phase of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-272">Es wurde versucht, diese Eigenschaft auf einen anderen als den aktuellen Wert festzulegen, nachdem die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Methode des zugeordneten <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" />-Steuerelements abgeschlossen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-272">An attempt was made to set this property to a value other than its current value after the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" /> method had completed.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <span data-ttu-id="65058-273">Es wurde versucht, einen Wert von <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope" /> festzulegen, der kein Member der <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Enumeration ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-273">An attempt was made to set a value of <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope" /> that is not a member of the <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> enumeration.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsEnabled">
+      <MemberSignature Language="C#" Value="public bool IsEnabled { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsEnabled" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsEnabled As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsEnabled { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-274">Ruft einen Wert ab, der angibt, ob die Personalisierung aktiviert ist und ob Personalisierungsdaten für diese Instanz der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Klasse erfolgreich geladen wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-274">Gets a value that indicates whether personalization is enabled and has successfully loaded personalization data for this instance of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> class.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-275">
+            <see langword="true" />, wenn die Personalisierung für die aktuelle <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz aktiviert ist und Personalisierungsdaten erfolgreich geladen wurden, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-275">
+              <see langword="true" /> if personalization is enabled for the current <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance and personalization data has successfully loaded; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-276">Vor dem Laden der Personalisierungsdaten diese Eigenschaft gibt stets `false`.</span><span class="sxs-lookup"><span data-stu-id="65058-276">Prior to loading personalization data, this property will always return `false`.</span></span> <span data-ttu-id="65058-277">Diese Eigenschaft gibt zurück, z. B. `false` während der `PreInit` Phase.</span><span class="sxs-lookup"><span data-stu-id="65058-277">For example, this property will return `false` during the `PreInit` phase.</span></span> <span data-ttu-id="65058-278">Nach der zugeordneten <xref:System.Web.UI.WebControls.WebParts.WebPartManager>des <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode wurde erfolgreich abgeschlossen (währenddessen die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> -Methode aufgerufen wird), gibt diese Eigenschaft zurück `true`.</span><span class="sxs-lookup"><span data-stu-id="65058-278">After the associated <xref:System.Web.UI.WebControls.WebParts.WebPartManager>'s <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method has successfully completed (during which the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> method is called), this property will then return `true`.</span></span>  
+  
+ <span data-ttu-id="65058-279">Diese Eigenschaft ist ein öffentlich zugreifbares Alias für den geschützten <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsInitialized%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-279">This property is a publicly accessible alias for the protected <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsInitialized%2A> property.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsInitialized">
+      <MemberSignature Language="C#" Value="protected bool IsInitialized { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsInitialized" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsInitialized" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property IsInitialized As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool IsInitialized { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-280">Ruft einen Wert ab, der angibt, ob die Personalisierung aktiviert ist und ob Personalisierungsdaten für diese Instanz der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Klasse erfolgreich geladen wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-280">Gets a value that indicates whether personalization is enabled and has successfully loaded personalization data for this instance of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> class.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-281">
+            <see langword="true" />, wenn die Personalisierung für diese Instanz initialisiert ist, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-281">
+              <see langword="true" /> if personalization is initialized for this instance; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-282">Wenn die Personalisierung-Funktion aktiviert ist (wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled%2A> -Eigenschaftensatz auf `true`), wird die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz wird unmittelbar nach der zugeordneten initialisiert betrachtet <xref:System.Web.UI.WebControls.WebParts.WebPartManager>des <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode wurde erfolgreich abgeschlossen ( Währenddessen die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> -Methode aufgerufen wird).</span><span class="sxs-lookup"><span data-stu-id="65058-282">If the personalization feature is enabled (if the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled%2A> property is set to `true`), the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance is considered initialized immediately after the associated <xref:System.Web.UI.WebControls.WebParts.WebPartManager>'s <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method has successfully completed (during which the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> method is called).</span></span> <span data-ttu-id="65058-283">Vor dem Laden der Personalisierungsdaten gibt diese Eigenschaft immer `false`.</span><span class="sxs-lookup"><span data-stu-id="65058-283">Prior to loading personalization data, this property always returns `false`.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsModifiable">
+      <MemberSignature Language="C#" Value="public bool IsModifiable { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsModifiable" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsModifiable" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsModifiable As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsModifiable { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-284">Ruft einen Wert ab, der angibt, ob der aktuelle Benutzer befugt ist, Zustandsinformationen zu ändern.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-284">Gets a value that indicates whether the current user is authorized to modify state information.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-285">
+            <see langword="true" />, wenn der Benutzer befugt ist, Zustandsinformationen zu ändern, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-285">
+              <see langword="true" /> if the user is authorized to modify state information; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-286">Diese Eigenschaft aufgerufen wird, das zum ersten Mal zwischengespeichert das Ergebnis der Bestimmung des Benutzers rechts Personalisierung Status ändern.</span><span class="sxs-lookup"><span data-stu-id="65058-286">The first time this property is called, it caches the result of determining the user’s right to modify personalization state.</span></span> <span data-ttu-id="65058-287">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.UserCapabilities%2A> Wörterbuch nach dem ersten Mal diese Eigenschaft heißt geändert wird, werden nicht Änderungen bei nachfolgenden Aufrufen dieser Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-287">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.UserCapabilities%2A> dictionary is modified after the first time this property is called, changes are not reflected in subsequent calls to this property.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="65058-288">Der folgende Code veranschaulicht die Verwendung der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsModifiable%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-288">The following code demonstrates using the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsModifiable%2A> property.</span></span> <span data-ttu-id="65058-289">Dieser Code ist Teil einer größeren Codebeispiel finden der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse Beschreibung.</span><span class="sxs-lookup"><span data-stu-id="65058-289">This code is part of a larger code sample found in the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class description.</span></span>  
+  
+ [!code-csharp[WebParts_WebPartPersonalization#6](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/persMode.ascx#6)]
+ [!code-vb[WebParts_WebPartPersonalization#6](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/persMode.ascx#6)]  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="protected virtual System.Web.UI.WebControls.WebParts.PersonalizationScope Load ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance valuetype System.Web.UI.WebControls.WebParts.PersonalizationScope Load() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function Load () As PersonalizationScope" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Web::UI::WebControls::WebParts::PersonalizationScope Load();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.PersonalizationScope</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-290">Initialisiert die Personalisierung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-290">Initializes personalization.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="65058-291">Eine <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Instanz für den übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-291">A <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> instance for the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-292">Dies ist der Haupteinstiegspunkt für die Initialisierung von Personalisierungsinformationen für das übergeordnete Element <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement.</span><span class="sxs-lookup"><span data-stu-id="65058-292">This is the main entry point for initializing personalization information on behalf of the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control.</span></span> <span data-ttu-id="65058-293">Diese Methode wird aufgerufen, während das übergeordnete Element <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-293">This method is called during the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method.</span></span> <span data-ttu-id="65058-294">Normalerweise, wenn für die übergeordnete Personalisierung deaktiviert wurde <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement diese Methode wird nie aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="65058-294">Normally, if personalization has been disabled on the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control, this method will never be called.</span></span>  
+  
+ <span data-ttu-id="65058-295">Im Verlauf dieser Methode auftreten, wie die folgenden:</span><span class="sxs-lookup"><span data-stu-id="65058-295">During the course of this method, the following initializations occur:</span></span>  
+  
+-   <span data-ttu-id="65058-296">Ein Verweis auf den Standardanbieter für die Personalisierung oder benutzerdefinierten Anbieter angegeben, der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Seitenmarkup oder <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName%2A> Eigenschaft abgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="65058-296">A reference to either the default personalization provider, or the custom provider indicated in the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> page markup or the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName%2A> property, is obtained.</span></span>  
+  
+-   <span data-ttu-id="65058-297">Der Anbieter aufgerufen wird, um zu bestimmen, die Benutzeroptionen (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.DetermineUserCapabilities%2A>) für den aktuell ausgeführten Benutzer.</span><span class="sxs-lookup"><span data-stu-id="65058-297">The provider is called to determine the user capabilities (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.DetermineUserCapabilities%2A>) for the currently executing user.</span></span>  
+  
+-   <span data-ttu-id="65058-298">Der Personalisierung-Status für die aktuelle Seite/Benutzerbereich Kombination wird aus dem zugrunde liegenden Datenspeicher geladen, vom Anbieter (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.LoadPersonalizationState%2A>) und gespeicherte innerhalb der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz.</span><span class="sxs-lookup"><span data-stu-id="65058-298">The personalization state for the current page/user/scope combination is loaded from the underlying data store by the provider (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.LoadPersonalizationState%2A>) and stored within the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance.</span></span>  
+  
+-   <span data-ttu-id="65058-299">Der Personalisierungsbereich für die aktuelle Seite/Benutzer/Bereich wird vom Anbieter bestimmt (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.DetermineInitialScope%2A>).</span><span class="sxs-lookup"><span data-stu-id="65058-299">The personalization scope for the current page/user/scope is determined by the provider (<xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.DetermineInitialScope%2A>).</span></span> <span data-ttu-id="65058-300">Beachten Sie, dass das Ergebnis dieser Bestimmung als der Wert der verschiedenen möglicherweise die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-300">Note that the result of this determination might be different than the value of the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> property.</span></span>  
+  
+ <span data-ttu-id="65058-301">Der von dieser Methode zurückgegebene Bereichswert dient als Wert für die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Scope%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="65058-301">The scope value returned from this method is used as the value for the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Scope%2A> property.</span></span>  
+  
+> [!NOTE]
+>  <span data-ttu-id="65058-302">Ein <xref:System.InvalidOperationException> Ausnahme aufgrund Personalisierung nicht aktiviert werden nur auftreten, wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> -Methode direkt aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="65058-302">An <xref:System.InvalidOperationException> exception due to personalization not being enabled will occur only if the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> method is called directly.</span></span> <span data-ttu-id="65058-303">In der Implementierung der ASP.NET eine interne Hilfsmethode tatsächlich aufgerufen, um die Last vorzunehmen und Helper im Hintergrund bei Rückgabe dieser Methode Personalisierung für die Seite nicht aktiviert wurde.</span><span class="sxs-lookup"><span data-stu-id="65058-303">In the ASP.NET implementation, an internal helper method is actually called to perform the load, and this helper method silently returns if personalization has not been enabled for the page.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-304">Diese Methode wird aufgerufen, wenn die Personalisierung nicht aktiviert ist (<see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled" /> entspricht <see langword="false" />).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-304">This method is called when personalization is not enabled (<see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Enabled" /> equals <see langword="false" />).</span>
+          </span>
+          <span data-ttu-id="65058-305">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-305">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-306">Der Wert der <see cref="P:System.Web.UI.Control.Page" />-Eigenschaft für den zugeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-306">The value of the <see cref="P:System.Web.UI.Control.Page" /> property for the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="65058-307">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-307">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-308">Der Wert der <see cref="P:System.Web.UI.Page.Request" />-Eigenschaft für die dem <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement zugeordnete <see cref="T:System.Web.UI.Page" />-Instanz ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-308">The value of the <see cref="P:System.Web.UI.Page.Request" /> property on the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's associated <see cref="T:System.Web.UI.Page" /> instance is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.Provider.ProviderException">
+          <span data-ttu-id="65058-309">Ein entweder im Markup der Seite oder mit der <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName" />-Eigenschaft explizit festgelegter Anbieter konnte nicht gefunden werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-309">A provider was explicitly set in either the page markup or the <see cref="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName" /> property and the provider could not be found.</span>
+          </span>
+          <span data-ttu-id="65058-310">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-310">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-311">Das Objekt, das die Personalisierungszustandsdaten enthält, ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-311">The object containing the personalization state data is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-312">Beim Laden und Deserialisieren von Daten ist ein Problem aufgetreten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-312">A problem occurred while loading and deserializing data.</span>
+          </span>
+          <span data-ttu-id="65058-313">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-313">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-314">Bei der Definition eines Personalisierungsanbieters in der Konfigurationsdatei ist ein Fehler aufgetreten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-314">An error occurred in the definition of a personalization provider in the configuration file.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.ConfigurationErrorsException">
+          <span data-ttu-id="65058-315">Die Initialisierung durch die zugrunde liegenden Personalisierungsanbieter ist fehlgeschlagen, da kein Standardanbieter gefunden werden konnte, oder weil beim Versuch der Initialisierung eines Personalisierungsanbieters ein Fehler aufgetreten ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-315">The underlying personalization providers failed to initialize because a default provider could not be found or because a failure occurred while attempting to initialize a personalization provider.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="ModifyStateUserCapability">
+      <MemberSignature Language="C#" Value="public static readonly System.Web.UI.WebControls.WebParts.WebPartUserCapability ModifyStateUserCapability;" />
+      <MemberSignature Language="ILAsm" Value=".field public static initonly class System.Web.UI.WebControls.WebParts.WebPartUserCapability ModifyStateUserCapability" />
+      <MemberSignature Language="DocId" Value="F:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ModifyStateUserCapability" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly ModifyStateUserCapability As WebPartUserCapability " />
+      <MemberSignature Language="C++ CLI" Value="public: static initonly System::Web::UI::WebControls::WebParts::WebPartUserCapability ^ ModifyStateUserCapability;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.WebPartUserCapability</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-316">Stellt die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" />-Instanz der Autorisierung eines Benutzers zum Ändern des Personalisierungszustands dar.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-316">Represents the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" /> instance of a user's authorization to modify personalization state.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-317">Die Benutzerberechtigung wird durch die Zeichenfolge "modifiyState" dargestellt, der <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> Instanz.</span><span class="sxs-lookup"><span data-stu-id="65058-317">The user right is represented by the string "modifyState" in the <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> instance.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="ProviderName">
+      <MemberSignature Language="C#" Value="public virtual string ProviderName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ProviderName" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Property ProviderName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ProviderName { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DefaultValue("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.NotifyParentProperty(true)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-318">Ruft den Anbieternamen für die Personalisierung ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-318">Gets or sets the provider name for personalization.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-319">Der Name des Personalisierungsanbieters.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-319">The name of the personalization provider.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-320">Diese Eigenschaft gibt den Wert für diese Eigenschaft in der Seitendeklaration zurück.</span><span class="sxs-lookup"><span data-stu-id="65058-320">This property returns the value set for this property in the page declaration.</span></span> <span data-ttu-id="65058-321">Wenn diese Eigenschaft nicht festgelegt wurde, gibt es <xref:System.String.Empty>.</span><span class="sxs-lookup"><span data-stu-id="65058-321">If this property was not set, it returns <xref:System.String.Empty>.</span></span> <span data-ttu-id="65058-322">In diesem Fall verwendet die Seite die Personalisierung-Standardanbieter, die in der Konfigurationsdatei angegeben.</span><span class="sxs-lookup"><span data-stu-id="65058-322">In this case, the page uses the default personalization provider specified in the configuration file.</span></span>  
+  
+ <span data-ttu-id="65058-323">Diese Eigenschaft kann nur festgelegt werden, vor dem Abschluss der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-323">This property can only be set prior to the completion of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit%2A> method.</span></span> <span data-ttu-id="65058-324">Dies bedeutet, dass die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName%2A> Eigenschaft muss in der Seitendeklaration festgelegt werden, auf die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Element.</span><span class="sxs-lookup"><span data-stu-id="65058-324">This means the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ProviderName%2A> property must be set in the page declaration on the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> element.</span></span>  <span data-ttu-id="65058-325">Alternativ kann diese Eigenschaft festgelegt werden, während die `PreInit` Phase.</span><span class="sxs-lookup"><span data-stu-id="65058-325">Alternatively, this property can be set during the `PreInit` phase.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-326">Es wurde versucht, diese Eigenschaft auf einen anderen als den aktuellen Wert festzulegen, nachdem die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Methode des <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" />-Steuerelements abgeschlossen wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-326">An attempt was made to set this property to a value other than its current value after the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's <see cref="M:System.Web.UI.WebControls.WebParts.WebPartManager.OnInit(System.EventArgs)" /> method has completed.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ResetPersonalizationState">
+      <MemberSignature Language="C#" Value="public virtual void ResetPersonalizationState ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ResetPersonalizationState() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ResetPersonalizationState" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub ResetPersonalizationState ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void ResetPersonalizationState();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-327">Setzt Personalisierungsdaten für die aktuelle Seite, den aktuellen Bereich und den aktuellen Benutzer im zugrunde liegenden Datenspeicher zurück.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-327">Resets personalization data for the current page, scope, and user in the underlying data store.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-328">Diese Methode setzt Personalisierungsdaten für die aktuelle Seite, Bereich und Benutzer in den zugrunde liegenden Datenspeicher.</span><span class="sxs-lookup"><span data-stu-id="65058-328">This method resets personalization data for the current page, scope, and user in the underlying data store.</span></span> <span data-ttu-id="65058-329">Als Nebeneffekt beim Zurücksetzen der aktuell ausgeführte Seite wird erneut ausgeführt, indem eine <xref:System.Web.HttpServerUtility.Transfer%2A> aufrufen.</span><span class="sxs-lookup"><span data-stu-id="65058-329">As a side effect of the reset, the currently executing page is re-executed by a <xref:System.Web.HttpServerUtility.Transfer%2A> call.</span></span> <span data-ttu-id="65058-330">Beachten Sie, dass dieser Übertragung als die aktuelle Seite erneut führt eine `GET` Anforderung unabhängig davon, wie die Seite ursprünglich angefordert wurde.</span><span class="sxs-lookup"><span data-stu-id="65058-330">Note that this transfer re-executes the current page as a `GET` request regardless of how the page was originally requested.</span></span>  
+  
+ <span data-ttu-id="65058-331">Diese Methode kann jederzeit aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="65058-331">This method can be called at any time.</span></span> <span data-ttu-id="65058-332">Intern ruft diese Methode die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ResetPersonalizationState%2A> Methode beim Anbieter.</span><span class="sxs-lookup"><span data-stu-id="65058-332">Internally, this method calls the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ResetPersonalizationState%2A> method on the provider.</span></span> <span data-ttu-id="65058-333">Nachdem die Daten erfolgreich zurückgesetzt werden, die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> -Eigenschaftensatz auf `true`.</span><span class="sxs-lookup"><span data-stu-id="65058-333">After data is successfully reset, the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState%2A> property is set to `true`.</span></span> <span data-ttu-id="65058-334">Diese Eigenschaft wird an anderer Stelle verwendet, durch die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Instanz zum Extrahieren von Personalisierungsdaten aus Steuerelementeigenschaften zu umgehen, und speichern, sofern die Daten bereits zurückgesetzt wurde.</span><span class="sxs-lookup"><span data-stu-id="65058-334">This property is used elsewhere by the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> instance to bypass extracting personalization data from control properties and saving it if data has already been reset.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-335">Die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz kann auf keinen gültigen Personalisierungsanbieter verweisen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-335">The <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance cannot reference a valid personalization provider.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="protected virtual void Save ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void Save() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Save" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub Save ()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void Save();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-336">Speichert Personalisierungsdaten für die aktuelle Seite, den aktuellen Bereich und den aktuellen Benutzer im zugrunde liegenden Datenspeicher.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-336">Saves personalization data for the current page, scope, and user to the underlying data store.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-337">Diese Methode wird aufgerufen, während die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.Page.SaveStateComplete> Ereignis.</span><span class="sxs-lookup"><span data-stu-id="65058-337">This method is called during the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.Page.SaveStateComplete> event.</span></span> <span data-ttu-id="65058-338">Intern ruft die Methode die <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.SavePersonalizationState%2A> Methode beim Anbieter.</span><span class="sxs-lookup"><span data-stu-id="65058-338">Internally, the method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationProvider.SavePersonalizationState%2A> method on the provider.</span></span>  
+  
+ <span data-ttu-id="65058-339">Bei dem Versuch, Personalisierungsdaten zu speichern, wenn der aktuell ausgeführte Benutzer nicht über die Funktion mit dem Namen verfügt <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ModifyStateUserCapability> (in der aktuellen <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> Instanz) führt zu einer <xref:System.InvalidOperationException> Ausnahme.</span><span class="sxs-lookup"><span data-stu-id="65058-339">Attempting to save personalization data when the currently executing user does not have the capability called <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ModifyStateUserCapability> (within the current <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> instance) results in an <xref:System.InvalidOperationException> exception.</span></span> <span data-ttu-id="65058-340">Beachten Sie, dass dies wäre nur "true" Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement aufgerufen, die geschützte <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Save%2A> -Methode direkt.</span><span class="sxs-lookup"><span data-stu-id="65058-340">Note that this would only be true if the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control called the protected <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Save%2A> method directly.</span></span> <span data-ttu-id="65058-341">In der Implementierung der ASP.NET eine interne Hilfsmethode wird tatsächlich aufgerufen, um den Speichervorgang auszuführen, und diese Hilfsmethode im Hintergrund gibt zurück, wenn der aktuell ausgeführte Benutzer keine Rechte zum Ändern der Daten.</span><span class="sxs-lookup"><span data-stu-id="65058-341">In the ASP.NET implementation, an internal helper method is actually called to perform the save, and this helper method silently returns if the currently executing user does not have rights to modify data.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-342">Die Funktion mit dem Namen <see cref="F:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ModifyStateUserCapability" /> steht dem aktuellen Benutzer nicht zur Verfügung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-342">The current user does not have the capability called <see cref="F:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ModifyStateUserCapability" />.</span>
+          </span>
+          <span data-ttu-id="65058-343">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-343">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-344">Die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz kann auf keinen gültigen Personalisierungsanbieter verweisen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-344">The <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance cannot reference a valid personalization provider.</span>
+          </span>
+          <span data-ttu-id="65058-345">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-345">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-346">Der <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz ist aktuelle kein Personalisierungsanbieter zugeordnet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-346">No personalization provider is currently associated with the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance.</span>
+          </span>
+          <span data-ttu-id="65058-347">Dies kann geschehen, wenn diese Methode vor <see cref="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load" /> aufgerufen wird (der Verweis auf den Personalisierungsanbieter wird während des <see cref="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load" />-Aufrufs abgerufen).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-347">This can occur if this method is called prior to calling <see cref="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load" /> (the personalization provider reference is obtained during the call to <see cref="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load" />.</span>
+          </span>
+          <span data-ttu-id="65058-348">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-348">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-349">Es wurde kein Personalisierungszustand geladen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-349">No personalization state has been loaded.</span>
+          </span>
+          <span data-ttu-id="65058-350">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-350">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-351">Die <see cref="T:System.Web.UI.Page" />-Instanz für den zugeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-351">The <see cref="T:System.Web.UI.Page" /> instance for the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="65058-352">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-352">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-353">Der Wert der <see cref="P:System.Web.UI.Page.Request" />-Eigenschaft für die dem <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement zugeordnete <see cref="T:System.Web.UI.Page" />-Instanz ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-353">The value of the <see cref="P:System.Web.UI.Page.Request" /> property on the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's associated <see cref="T:System.Web.UI.Page" /> instance is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="Scope">
+      <MemberSignature Language="C#" Value="public System.Web.UI.WebControls.WebParts.PersonalizationScope Scope { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Web.UI.WebControls.WebParts.PersonalizationScope Scope" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Scope" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Scope As PersonalizationScope" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Web::UI::WebControls::WebParts::PersonalizationScope Scope { System::Web::UI::WebControls::WebParts::PersonalizationScope get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.ComponentModel.DesignerSerializationVisibility</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.PersonalizationScope</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-354">Ruft den aktuellen Personalisierungsbereich für das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-354">Gets the current personalization scope for the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-355">Eine <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Instanz, die den <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Bereich angibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-355">A <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> instance indicating the scope of the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-356">Dieser Wert wird anfangs festgelegt basierend auf den Rückgabewert aus dem <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-356">This value is initially set based on the value returned from the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.Load%2A> method.</span></span> <span data-ttu-id="65058-357">Dieser Wert kann geändert werden, durch Aufrufen der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-357">This value can be modified by calling the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> method.</span></span>  
+  
+ <span data-ttu-id="65058-358">Beachten Sie, dass dies zum Anwenden und Extrahieren von Personalisierungsinformationen Bereich darstellt.</span><span class="sxs-lookup"><span data-stu-id="65058-358">Note that this represents the scope used for applying and extracting personalization information.</span></span> <span data-ttu-id="65058-359">Der Wert dieser Eigenschaft unterscheiden sich von der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> Eigenschaft oder die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ChangeScope%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-359">The value of this property might differ from the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.InitialScope%2A> property or the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ChangeScope%2A> method.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="SetDirty">
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-360">Markiert das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement und gibt dadurch an, dass Personalisierungsdaten "geändert" wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-360">Marks the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control as having personalization data that has changed (is "dirty").</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="SetDirty">
+      <MemberSignature Language="C#" Value="protected internal virtual void SetDirty ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void SetDirty() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.SetDirty" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub SetDirty ()" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void SetDirty();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-361">Markiert das übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement und gibt dadurch an, dass Personalisierungsdaten "geändert" wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-361">Marks the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control as having personalization data that has changed (is "dirty").</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-362">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, diese Methode markiert das übergeordnete Element <xref:System.Web.UI.WebControls.WebParts.WebPartManager> als "unsaubere" steuern.</span><span class="sxs-lookup"><span data-stu-id="65058-362">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, this method marks the parent <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control as "dirty".</span></span> <span data-ttu-id="65058-363">Abhängig von den Implementierungsdetails der der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelementinstanz von <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization>, diese Methode möglicherweise sicherheitsüberprüfungen aufrufen und code Access Security-Berechtigung überprüft.</span><span class="sxs-lookup"><span data-stu-id="65058-363">Depending on the implementation details of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's instance of <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization>, this method might invoke security checks and code access security permission checks.</span></span> <span data-ttu-id="65058-364">Intern ruft diese Methode die <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.SetWebPartManagerDirty%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-364">Internally, this method calls the <xref:System.Web.UI.WebControls.WebParts.PersonalizationState.SetWebPartManagerDirty%2A> method.</span></span>  
+  
+ <span data-ttu-id="65058-365">Beachten Sie, dass die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelement "unsaubere" Zustand intern verfolgt und macht die "Dirtiness" des Managers über die <xref:System.Web.UI.WebControls.WebParts.IPersonalizable.IsDirty%2A> Eigenschaft anstatt über diese Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-365">Note that the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control tracks "dirty" state internally and exposes the "dirtiness" of the manager through the <xref:System.Web.UI.WebControls.WebParts.IPersonalizable.IsDirty%2A> property rather than through this method.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-366">Es wurden keine Personalisierungsdaten geladen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-366">No personalization data has been loaded.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="SetDirty">
+      <MemberSignature Language="C#" Value="protected internal virtual void SetDirty (System.Web.UI.WebControls.WebParts.WebPart webPart);" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void SetDirty(class System.Web.UI.WebControls.WebParts.WebPart webPart) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.SetDirty(System.Web.UI.WebControls.WebParts.WebPart)" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void SetDirty(System::Web::UI::WebControls::WebParts::WebPart ^ webPart);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="webPart" Type="System.Web.UI.WebControls.WebParts.WebPart" />
+      </Parameters>
+      <Docs>
+        <param name="webPart">
+          <span data-ttu-id="65058-367">Das Webparts-Steuerelement, das als "geändert" markiert werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-367">The Web Parts control to be marked "dirty".</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="65058-368">Markiert das übergeordnete Webparts-Steuerelement und gibt dadurch an, dass Personalisierungsdaten "geändert" wurden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-368">Marks the specified Web Parts control as having personalization data that has changed (is "dirty").</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-369">Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> -Eigenschaftensatz auf `true`, diese Methode markiert das angegebene Webparts-Steuerelement als "fehlerhaft".</span><span class="sxs-lookup"><span data-stu-id="65058-369">If the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsEnabled%2A> property is set to `true`, this method marks the specified Web Parts control as "dirty".</span></span> <span data-ttu-id="65058-370">Abhängig von den Implementierungsdetails der der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> Steuerelementinstanz von <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization>, diese Methode möglicherweise sicherheitsüberprüfungen aufrufen und code Access Security-Berechtigung überprüft.</span><span class="sxs-lookup"><span data-stu-id="65058-370">Depending on the implementation details of the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's instance of <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization>, this method may invoke security checks and code access security permission checks.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="65058-371">Es wurde der Versuch unternommen, ein Webparts-Steuerelement als "geändert" zu markieren, das nicht durch den übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> verwaltet wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-371">Attempted to mark as "dirty" a Web Parts control that is not managed by the parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-372">Es wurden keine Personalisierungsdaten geladen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-372">No personalization data has been loaded.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="ShouldResetPersonalizationState">
+      <MemberSignature Language="C#" Value="protected bool ShouldResetPersonalizationState { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool ShouldResetPersonalizationState" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ShouldResetPersonalizationState" />
+      <MemberSignature Language="VB.NET" Value="Protected Property ShouldResetPersonalizationState As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property bool ShouldResetPersonalizationState { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-373">Ruft einen Wert ab, der angibt, ob die Personalisierungsdaten der aktuellen Seite zurückgesetzt wurden, oder legt diesen fest (wenn beispielsweise eine Anforderung zum Löschen der Personalisierungsdaten aus dem zugrunde liegenden Datenspeicher gestellt wurde).</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-373">Gets or sets a value that indicates whether the personalization data of the current page has been reset (for example, a request was made to delete the personalization data from the underlying data store).</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-374">
+            <see langword="true" />, wenn der Personalisierungszustand für die aktuelle Seite zurückgesetzt wurde, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-374">
+              <see langword="true" /> if the personalization state for the current page has been reset; otherwise, <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-375">Wenn diese Eigenschaft, um festgelegt wird `true`, bedeutet dies, dass der Personalisierung Status für die aktuelle Seite zurückgesetzt wurde, und Extrahieren von Personalisierungsdaten aus Steuerelementen und nachfolgenden Vorgänge speichern übersprungen werden sollen.</span><span class="sxs-lookup"><span data-stu-id="65058-375">If this property is set to `true`, it indicates that the personalization state for the current page has been reset and that extraction of personalization data from controls and subsequent save operations should be skipped.</span></span> <span data-ttu-id="65058-376">Diese Eigenschaft wird derzeit automatisch festgelegt, um `true` von der Personalisierungsinfrastruktur Wenn die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ResetPersonalizationState%2A> -Methode aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="65058-376">Currently, this property is automatically set to `true` by the personalization infrastructure if the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ResetPersonalizationState%2A> method is called.</span></span>  
+  
+ <span data-ttu-id="65058-377">Beachten Sie, dass es gibt, zwar keine Einschränkungen auf, wenn diese Eigenschaft festgelegt werden kann die Eigenschaft festgelegt werden muss `true` vor der <xref:System.Web.UI.WebControls.WebParts.WebPartManager> des Steuerelements <xref:System.Web.UI.Page.SaveStateComplete> Ereignis wirkt sich nur.</span><span class="sxs-lookup"><span data-stu-id="65058-377">Note that although there are no restrictions on when this property can be set, the property must be set to `true` prior to the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control's <xref:System.Web.UI.Page.SaveStateComplete> event to have any effect.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToggleScope">
+      <MemberSignature Language="C#" Value="public virtual void ToggleScope ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ToggleScope() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub ToggleScope ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void ToggleScope();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-378">Schaltet den Personalisierungsbereich der aktuellen Seite von <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" /> auf <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> oder von <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> auf <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" /> um.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-378">Switches the current page's personalization scope from <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" /> to <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> or from <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> to <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" />.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-379">Diese Methode wird der aktuell ausgeführten Seite Personalisierungsbereich umgeschaltet.</span><span class="sxs-lookup"><span data-stu-id="65058-379">This method toggles the currently executing page's personalization scope.</span></span> <span data-ttu-id="65058-380">Umschalten des Bereichs führt zu einem <xref:System.Web.HttpServerUtility.Transfer%2A> wieder an die aktuelle ausgeführten Seite.</span><span class="sxs-lookup"><span data-stu-id="65058-380">Toggling the scope results in a <xref:System.Web.HttpServerUtility.Transfer%2A> back to the current executing page.</span></span>  
+  
+ <span data-ttu-id="65058-381">Diese Methode führt keine Operation, wenn sie, während ein Export aufgerufen wird oder Import eines Webparts-Steuerelements erfolgt.</span><span class="sxs-lookup"><span data-stu-id="65058-381">This method performs no operation if it is called while an export or import of a Web Parts control is occurring.</span></span>  
+  
+ <span data-ttu-id="65058-382">Wenn eine Scope-Anforderung zum ein-/ausschalten für eine Seite ausgeführt wird, die über übermittelt wurde eine `POST` Anforderung, und klicken Sie dann auf eine beliebige Abfragezeichenfolgen-Werte werden während der Übertragung beibehalten; Abfragezeichenfolgen-Parameter werden nicht beibehalten, wenn die Seite, über übermittelt wurde eine `GET` Anforderung.</span><span class="sxs-lookup"><span data-stu-id="65058-382">If a toggle scope request occurs for a page that was submitted via a `POST` request, then any query string values will be preserved during the transfer; query string parameters are not preserved if the page was submitted via a `GET` request.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="65058-383">Der folgende Code veranschaulicht die Verwendung der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="65058-383">The following code demonstrates using the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.ToggleScope%2A> method.</span></span> <span data-ttu-id="65058-384">Dieser Code ist Teil einer größeren Codebeispiel finden der <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> -Klasse Beschreibung.</span><span class="sxs-lookup"><span data-stu-id="65058-384">This code is part of a larger code sample found in the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class description.</span></span>  
+  
+ [!code-csharp[WebParts_WebPartPersonalization#7](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_WebPartPersonalization/CS/persMode.ascx#7)]
+ [!code-vb[WebParts_WebPartPersonalization#7](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_WebPartPersonalization/VB/persMode.ascx#7)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="65058-385">Beim Versuch, vom <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" />-Bereich umzuschalten, besitzt der aktuelle Benutzer nicht die erforderliche Berechtigung für den Zugriff auf den <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" />-Bereich.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-385">The current user does not have the user capability to enter <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope when attempting to switch from <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.User" /> scope to <see cref="F:System.Web.UI.WebControls.WebParts.PersonalizationScope.Shared" /> scope.</span>
+          </span>
+          <span data-ttu-id="65058-386">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-386">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-387">Die <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz hat die Initialisierung nicht abgeschlossen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-387">The <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance has not completed initialization.</span>
+          </span>
+          <span data-ttu-id="65058-388">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-388">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-389">Die <see cref="T:System.Web.UI.Page" />-Instanz für den zugeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-389">The <see cref="T:System.Web.UI.Page" /> instance for the associated <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> is <see langword="null" />.</span>
+          </span>
+          <span data-ttu-id="65058-390">\- oder –</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-390">\- or -</span>
+          </span>
+          <span data-ttu-id="65058-391">Der Wert der <see cref="P:System.Web.UI.Page.Request" />-Eigenschaft für die dem <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelement zugeordnete <see cref="T:System.Web.UI.Page" />-Instanz ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-391">The value of the <see cref="P:System.Web.UI.Page.Request" /> property on the <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control's associated <see cref="T:System.Web.UI.Page" /> instance is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <span data-ttu-id="65058-392">Es wurde der Versuch unternommen, auf einen Bereich umzuschalten, der nicht in der <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" />-Enumeration definiert ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-392">An attempt was made to toggle to a scope that is not defined in the <see cref="T:System.Web.UI.WebControls.WebParts.PersonalizationScope" /> enumeration.</span>
+          </span>
+          <span data-ttu-id="65058-393">Technisch betrachtet, dürfte diese Situation eigentlich nie auftreten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-393">Technically, this situation should never occur.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />
+      </Docs>
+    </Member>
+    <Member MemberName="UserCapabilities">
+      <MemberSignature Language="C#" Value="protected virtual System.Collections.IDictionary UserCapabilities { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.IDictionary UserCapabilities" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.UserCapabilities" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable ReadOnly Property UserCapabilities As IDictionary" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual property System::Collections::IDictionary ^ UserCapabilities { System::Collections::IDictionary ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.IDictionary</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-394">Ruft den Satz der für den aktuellen Benutzer verfügbaren Benutzerfunktionen aus <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" /> ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-394">Gets the set of user capabilities from <see cref="T:System.Web.UI.WebControls.WebParts.WebPartUserCapability" /> granted to the current user.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-395">Ein <see cref="T:System.Collections.IDictionary" /> mit dem Satz der für den aktuellen Benutzer verfügbaren Benutzerfunktionen, oder ein leeres <see cref="T:System.Collections.Specialized.HybridDictionary" />, wenn es sich um einen anonymen Benutzer handelt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-395">An <see cref="T:System.Collections.IDictionary" /> containing the set of user capabilities granted to the current user, or an empty <see cref="T:System.Collections.Specialized.HybridDictionary" /> if the user is anonymous.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-396">Derzeit die <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> Klasse enthält zwei Werte zur Angabe eines Benutzers Funktionen: `modifyState` und `enterSharedScope`.</span><span class="sxs-lookup"><span data-stu-id="65058-396">Currently the <xref:System.Web.UI.WebControls.WebParts.WebPartUserCapability> class contains two values indicating a user's capabilities: `modifyState` and `enterSharedScope`.</span></span> <span data-ttu-id="65058-397">Zu vereinfachen, die im Wörterbuch enthaltenen Funktionen können mit den Eigenschaften des Hilfsprogramm-überprüft werden, <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsModifiable%2A> und <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CanEnterSharedScope%2A>.</span><span class="sxs-lookup"><span data-stu-id="65058-397">For ease of use, the capabilities contained within the dictionary can be checked with the helper properties <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.IsModifiable%2A> and <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization.CanEnterSharedScope%2A>.</span></span> <span data-ttu-id="65058-398">Beachten Sie die Einschränkungen für Funktionen ändern, nachdem Sie eine dieser Eigenschaften zugegriffen wurde. Weitere Informationen finden Sie unter den Beschreibungsabschnitt der einzelnen Eigenschaften.</span><span class="sxs-lookup"><span data-stu-id="65058-398">Note the restrictions on changing capabilities after either of these properties have been accessed; for details, see the description section of each property.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+    <Member MemberName="WebPartManager">
+      <MemberSignature Language="C#" Value="protected System.Web.UI.WebControls.WebParts.WebPartManager WebPartManager { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Web.UI.WebControls.WebParts.WebPartManager WebPartManager" />
+      <MemberSignature Language="DocId" Value="P:System.Web.UI.WebControls.WebParts.WebPartPersonalization.WebPartManager" />
+      <MemberSignature Language="VB.NET" Value="Protected ReadOnly Property WebPartManager As WebPartManager" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; property System::Web::UI::WebControls::WebParts::WebPartManager ^ WebPartManager { System::Web::UI::WebControls::WebParts::WebPartManager ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Web.UI.WebControls.WebParts.WebPartManager</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="65058-399">Ruft eine Instanz des aktuellen übergeordneten <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />-Steuerelements ab, das dieser <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" />-Instanz zugeordnet ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-399">Gets an instance of the current parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" /> control associated with this <see cref="T:System.Web.UI.WebControls.WebParts.WebPartPersonalization" /> instance.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="65058-400">Der aktuelle übergeordnete <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="65058-400">The current parent <see cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="65058-401">Verwenden Sie diese Eigenschaft, um zu bestimmen, die <xref:System.Web.UI.WebControls.WebParts.WebPartManager> dieser Instanz des zugeordneten Steuerelements die <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> Klasse.</span><span class="sxs-lookup"><span data-stu-id="65058-401">Use this property to determine the <xref:System.Web.UI.WebControls.WebParts.WebPartManager> control associated with this instance of the <xref:System.Web.UI.WebControls.WebParts.WebPartPersonalization> class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Web.UI.WebControls.WebParts.WebPartManager" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>
