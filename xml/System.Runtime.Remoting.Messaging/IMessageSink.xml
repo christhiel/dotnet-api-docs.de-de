@@ -1,0 +1,250 @@
+<Type Name="IMessageSink" FullName="System.Runtime.Remoting.Messaging.IMessageSink">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="8b414cab42951a8dbae4b137382c350d328bc2fb" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public interface IMessageSink" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IMessageSink" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.Remoting.Messaging.IMessageSink" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IMessageSink" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IMessageSink" />
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.ComVisible(true)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="53980-101">Definiert die Schnittstelle für eine Meldungssenke.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="53980-101">Defines the interface for a message sink.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="53980-102">Beim Aufruf einer Methode auf dem Proxy vorgenommen wird, die Remotinginfrastruktur enthält die erforderliche Unterstützung und das Argument übergeben wird, um das eigentliche Objekt Remotegrenzen hinweg, Aufrufen der tatsächliche Objektmethode mit den Argumenten und Zurückgeben der Ergebnisse zurück an der Client von der Proxy-Objekt.</span><span class="sxs-lookup"><span data-stu-id="53980-102">When a method call is made on the proxy, the remoting infrastructure provides the necessary support for passing the arguments to the actual object across the remoting boundaries, calling the actual object method with the arguments, and returning the results back to the client of the proxy object.</span></span>  
+  
+ <span data-ttu-id="53980-103">Ein remote-Methodenaufruf wird eine Meldung, die vom Client an den Server wechselt und möglicherweise wieder zurück.</span><span class="sxs-lookup"><span data-stu-id="53980-103">A remote method call is a message that goes from the client end to the server end and possibly back again.</span></span> <span data-ttu-id="53980-104">Wie sie die Möglichkeit überschreitet, durchläuft der remote-Methodenaufruf eine Kette von `IMessageSink` Objekte.</span><span class="sxs-lookup"><span data-stu-id="53980-104">As it crosses remoting boundaries on the way, the remote method call passes through a chain of `IMessageSink` objects.</span></span> <span data-ttu-id="53980-105">Jede Senke in der Kette empfängt das Nachrichtenobjekt, führt eine bestimmte Operation und delegiert an den nächsten Empfänger in der Kette.</span><span class="sxs-lookup"><span data-stu-id="53980-105">Each sink in the chain receives the message object, performs a specific operation, and delegates to the next sink in the chain.</span></span> <span data-ttu-id="53980-106">Das Proxyobjekt enthält einen Verweis auf das erste `IMessageSink` zum Starten der Kette verwenden muss.</span><span class="sxs-lookup"><span data-stu-id="53980-106">The proxy object contains a reference to the first `IMessageSink` it needs to use to start off the chain.</span></span>  
+  
+ <span data-ttu-id="53980-107">Bei asynchronen Aufrufen werden zum Zeitpunkt der Delegierung Antwortempfänger jede Senke enthält (einen anderen `IMessageSink`), wird von der nächsten Senke aufgerufen werden, wenn die Antwort auf dem Rückweg ist.</span><span class="sxs-lookup"><span data-stu-id="53980-107">For asynchronous calls, at the time of delegation, each sink provides a reply sink (another `IMessageSink`) that will be called by the next sink when the reply is on its way back.</span></span>  
+  
+ <span data-ttu-id="53980-108">Verschiedene Typen von senken führen verschiedene Vorgänge, je nach Typ des empfangenen Message-Objekt.</span><span class="sxs-lookup"><span data-stu-id="53980-108">Different types of sinks perform different operations, depending on the type of message object received.</span></span> <span data-ttu-id="53980-109">Z. B. eine Senke kann bewirken, dass eine Sperre, die ausgeführt werden, konnte einen anderen Aufruf Sicherheit erzwingen konnte einen anderen Datenfluss Aufruf Kontrolle und Zuverlässigkeit Services ausgeführt werden und noch einen anderen Aufruf auf einen anderen transport konnte <xref:System.AppDomain>, Prozess- oder Computerinformationen.</span><span class="sxs-lookup"><span data-stu-id="53980-109">For example, one sink could cause a lock to be taken, another could enforce call security, another could perform flow call control and reliability services, and yet another could transport the call to a different <xref:System.AppDomain>, process, or computer.</span></span> <span data-ttu-id="53980-110">Zwei oder mehr Nachrichten senken in der Kette können hinsichtlich jeder bestimmten Aktion miteinander interagieren.</span><span class="sxs-lookup"><span data-stu-id="53980-110">Two or more message sinks in the chain can interact with each other in regard to each specific action.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="53980-111">Das folgende Codebeispiel zeigt die Implementierung von der <xref:System.Runtime.Remoting.Messaging.IMessageSink> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="53980-111">The following code example shows the implementation of the <xref:System.Runtime.Remoting.Messaging.IMessageSink> interface.</span></span> <span data-ttu-id="53980-112">Beachten Sie, dass im Beispiel wird davon ausgegangen, Typdefinitionen und Assemblyverweise, die für das Beispiel kompiliert bereitgestellt werden müssen.</span><span class="sxs-lookup"><span data-stu-id="53980-112">Note that the sample assumes type definitions and assembly references that must be provided for the sample to compile.</span></span>  
+  
+ [!code-cpp[IMessageSink_Client#3](~/samples/snippets/cpp/VS_Snippets_Remoting/IMessageSink_Client/CPP/imessagesink_client.cpp#3)]
+ [!code-csharp[IMessageSink_Client#3](~/samples/snippets/csharp/VS_Snippets_Remoting/IMessageSink_Client/CS/imessagesink_client.cs#3)]
+ [!code-vb[IMessageSink_Client#3](~/samples/snippets/visualbasic/VS_Snippets_Remoting/IMessageSink_Client/VB/imessagesink_client.vb#3)]  
+  
+ ]]></format>
+    </remarks>
+    <block subset="none" type="overrides">
+      <para>
+        <span data-ttu-id="53980-113">Es ist wichtig zu beachten, dass der Code die aktuelle Schnittstelle implementieren für beide Implementierungen bereitstellen muss <see cref="M:System.Runtime.Remoting.Messaging.IMessageSink.SyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage)" /> und <see cref="M:System.Runtime.Remoting.Messaging.IMessageSink.AsyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage,System.Runtime.Remoting.Messaging.IMessageSink)" />, da die synchrone Aufrufe in asynchrone Aufrufe und umgekehrt konvertiert werden können.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="53980-113">It is important to note that code implementing the current interface must provide implementations for both <see cref="M:System.Runtime.Remoting.Messaging.IMessageSink.SyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage)" /> and <see cref="M:System.Runtime.Remoting.Messaging.IMessageSink.AsyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage,System.Runtime.Remoting.Messaging.IMessageSink)" />, since synchronous calls can be converted to asynchronous calls and vice versa.</span>
+        </span>
+        <span data-ttu-id="53980-114">Beide Methoden müssen implementiert werden, auch wenn die Senke keine asynchronen Verarbeitung unterstützt.</span>
+        <span class="sxs-lookup">
+          <span data-stu-id="53980-114">Both methods must be implemented, even if the sink does not support asynchronous processing.</span>
+        </span>
+      </para>
+    </block>
+  </Docs>
+  <Members>
+    <Member MemberName="AsyncProcessMessage">
+      <MemberSignature Language="C#" Value="public System.Runtime.Remoting.Messaging.IMessageCtrl AsyncProcessMessage (System.Runtime.Remoting.Messaging.IMessage msg, System.Runtime.Remoting.Messaging.IMessageSink replySink);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Runtime.Remoting.Messaging.IMessageCtrl AsyncProcessMessage(class System.Runtime.Remoting.Messaging.IMessage msg, class System.Runtime.Remoting.Messaging.IMessageSink replySink) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Remoting.Messaging.IMessageSink.AsyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage,System.Runtime.Remoting.Messaging.IMessageSink)" />
+      <MemberSignature Language="VB.NET" Value="Public Function AsyncProcessMessage (msg As IMessage, replySink As IMessageSink) As IMessageCtrl" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Runtime::Remoting::Messaging::IMessageCtrl ^ AsyncProcessMessage(System::Runtime::Remoting::Messaging::IMessage ^ msg, System::Runtime::Remoting::Messaging::IMessageSink ^ replySink);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Remoting.Messaging.IMessageCtrl</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="msg" Type="System.Runtime.Remoting.Messaging.IMessage" />
+        <Parameter Name="replySink" Type="System.Runtime.Remoting.Messaging.IMessageSink" />
+      </Parameters>
+      <Docs>
+        <param name="msg">
+          <span data-ttu-id="53980-115">Die zu verarbeitende Meldung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-115">The message to process.</span>
+          </span>
+        </param>
+        <param name="replySink">
+          <span data-ttu-id="53980-116">Die Antwortsenke für die Antwortmeldung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-116">The reply sink for the reply message.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="53980-117">Verarbeitet die angegebene Meldung asynchron.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-117">Asynchronously processes the given message.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="53980-118">Gibt eine <see cref="T:System.Runtime.Remoting.Messaging.IMessageCtrl" />-Schnittstelle zurück, die eine Möglichkeit bereitstellt, die asynchronen Meldungen nach der Meldungsverteilung zu steuern.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-118">Returns an <see cref="T:System.Runtime.Remoting.Messaging.IMessageCtrl" /> interface that provides a way to control asynchronous messages after they have been dispatched.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="53980-119">Diese Methode wird von der Remotinginfrastruktur oder von einer vorherigen Senke für asynchrone Nachrichten für den Empfänger der Nachricht aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="53980-119">This method is invoked on the message sink by the remoting infrastructure or by a previous sink for asynchronous messages.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.SecurityException">
+          <span data-ttu-id="53980-120">Der direkte Aufrufer führt den Aufruf über einen Verweis auf die Schnittstelle durch und hat keine Berechtigung für die Infrastruktur.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-120">The immediate caller makes the call through a reference to the interface and does not have infrastructure permission.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.Permissions.SecurityPermission">
+          <span data-ttu-id="53980-121">für den Betrieb mit Infrastrukturcode.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-121">for operating with infrastructure code.</span>
+          </span>
+          <span data-ttu-id="53980-122">"Demand"-Wert: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Berechtigungswert: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-122">Demand value: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Permission value: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="NextSink">
+      <MemberSignature Language="C#" Value="public System.Runtime.Remoting.Messaging.IMessageSink NextSink { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Runtime.Remoting.Messaging.IMessageSink NextSink" />
+      <MemberSignature Language="DocId" Value="P:System.Runtime.Remoting.Messaging.IMessageSink.NextSink" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property NextSink As IMessageSink" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Runtime::Remoting::Messaging::IMessageSink ^ NextSink { System::Runtime::Remoting::Messaging::IMessageSink ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Remoting.Messaging.IMessageSink</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="53980-123">Ruft die nächste Meldungssenke in der Senkenkette ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-123">Gets the next message sink in the sink chain.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="53980-124">Die nächste Meldungssenke in der Senkenkette.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-124">The next message sink in the sink chain.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.SecurityException">
+          <span data-ttu-id="53980-125">Der direkte Aufrufer führt den Aufruf über einen Verweis auf die Schnittstelle durch und hat keine Berechtigung für die Infrastruktur.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-125">The immediate caller makes the call through a reference to the interface and does not have infrastructure permission.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.Permissions.SecurityPermission">
+          <span data-ttu-id="53980-126">für den Betrieb mit Infrastrukturcode.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-126">for operating with infrastructure code.</span>
+          </span>
+          <span data-ttu-id="53980-127">"Demand"-Wert: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Berechtigungswert: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-127">Demand value: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Permission value: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+    <Member MemberName="SyncProcessMessage">
+      <MemberSignature Language="C#" Value="public System.Runtime.Remoting.Messaging.IMessage SyncProcessMessage (System.Runtime.Remoting.Messaging.IMessage msg);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Runtime.Remoting.Messaging.IMessage SyncProcessMessage(class System.Runtime.Remoting.Messaging.IMessage msg) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.Remoting.Messaging.IMessageSink.SyncProcessMessage(System.Runtime.Remoting.Messaging.IMessage)" />
+      <MemberSignature Language="VB.NET" Value="Public Function SyncProcessMessage (msg As IMessage) As IMessage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Runtime::Remoting::Messaging::IMessage ^ SyncProcessMessage(System::Runtime::Remoting::Messaging::IMessage ^ msg);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Runtime.Remoting.Messaging.IMessage</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="msg" Type="System.Runtime.Remoting.Messaging.IMessage" />
+      </Parameters>
+      <Docs>
+        <param name="msg">
+          <span data-ttu-id="53980-128">Die zu verarbeitende Meldung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-128">The message to process.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="53980-129">Verarbeitet die angegebene Meldung synchron.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-129">Synchronously processes the given message.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="53980-130">Eine Antwortmeldung als Reaktion auf die Anforderung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-130">A reply message in response to the request.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="53980-131">Die <xref:System.Runtime.Remoting.Messaging.IMessageSink.SyncProcessMessage%2A> Methode für die Senke Nachricht aufgerufen wird, von der Remotinginfrastruktur oder von einer vorherigen Senke für synchrone Nachrichten.</span><span class="sxs-lookup"><span data-stu-id="53980-131">The <xref:System.Runtime.Remoting.Messaging.IMessageSink.SyncProcessMessage%2A> method is invoked on the message sink by the remoting infrastructure or by a previous sink for synchronous messages.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Security.SecurityException">
+          <span data-ttu-id="53980-132">Der direkte Aufrufer führt den Aufruf über einen Verweis auf die Schnittstelle durch und hat keine Berechtigung für die Infrastruktur.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-132">The immediate caller makes the call through a reference to the interface and does not have infrastructure permission.</span>
+          </span>
+        </exception>
+        <permission cref="T:System.Security.Permissions.SecurityPermission">
+          <span data-ttu-id="53980-133">für den Betrieb mit Infrastrukturcode.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-133">for operating with infrastructure code.</span>
+          </span>
+          <span data-ttu-id="53980-134">"Demand"-Wert: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Berechtigungswert: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          <span class="sxs-lookup">
+            <span data-stu-id="53980-134">Demand value: <see cref="F:System.Security.Permissions.SecurityAction.LinkDemand" />; Permission value: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></span>
+          </span>
+        </permission>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
