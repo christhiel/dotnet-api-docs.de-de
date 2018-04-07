@@ -1,0 +1,1409 @@
+<Type Name="ApplicationSettingsBase" FullName="System.Configuration.ApplicationSettingsBase">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="28fd80da70acde483fb97eb88b3d396c8d4e31ba" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public abstract class ApplicationSettingsBase : System.Configuration.SettingsBase, System.ComponentModel.INotifyPropertyChanged" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ApplicationSettingsBase extends System.Configuration.SettingsBase implements class System.ComponentModel.INotifyPropertyChanged" />
+  <TypeSignature Language="DocId" Value="T:System.Configuration.ApplicationSettingsBase" />
+  <TypeSignature Language="VB.NET" Value="Public MustInherit Class ApplicationSettingsBase&#xA;Inherits SettingsBase&#xA;Implements INotifyPropertyChanged" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ApplicationSettingsBase abstract : System::Configuration::SettingsBase, System::ComponentModel::INotifyPropertyChanged" />
+  <AssemblyInfo>
+    <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Configuration.SettingsBase</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.ComponentModel.INotifyPropertyChanged</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>
+      <span data-ttu-id="c4b6d-101">Fungiert als Basisklasse für das Ableiten konkreter Wrapperklassen, um das Anwendungseinstellungsfeature in Windows Forms-Anwendungen zu implementieren.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="c4b6d-101">Acts as a base class for deriving concrete wrapper classes to implement the application settings feature in Window Forms applications.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-102"><xref:System.Configuration.ApplicationSettingsBase> Fügt die folgende Funktionen, die <xref:System.Configuration.SettingsBase> -Klasse, die von webbasierten Anwendungen verwendet wird:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-102"><xref:System.Configuration.ApplicationSettingsBase> adds the following functionality to the <xref:System.Configuration.SettingsBase> class, which is used by Web-based applications:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-103">Die Fähigkeit zum Erkennen der Attribute in einer abgeleiteten Wrapperklasse für Anwendungseinstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-103">The ability to detect attributes on a derived, settings wrapper class.</span></span> <span data-ttu-id="c4b6d-104"><xref:System.Configuration.ApplicationSettingsBase> unterstützt die deklarative Modell für die Wrapperklasseneigenschaften verwendet, wie weiter unten beschrieben.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-104"><xref:System.Configuration.ApplicationSettingsBase> supports the declarative model used for wrapper class properties, as described later.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-105">Auf höherer Ebene <xref:System.Configuration.ApplicationSettingsBase.Save%2A> und <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-105">Higher-level <xref:System.Configuration.ApplicationSettingsBase.Save%2A> and <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> methods.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-106">Zusätzliche Validierung-Ereignisse, die Sie behandeln können, um die Richtigkeit der einzelnen Einstellungen sicherzustellen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-106">Additional validation events that you can handle to ensure the correctness of individual settings.</span></span>  
+  
+ <span data-ttu-id="c4b6d-107">In der Architektur der Anwendungseinstellungen, auf eine Gruppe von Eigenschaften müssen Sie eine konkrete Wrapperklasse aus ableiten <xref:System.Configuration.ApplicationSettingsBase>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-107">In the application settings architecture, to access a group of settings properties you need to derive a concrete wrapper class from <xref:System.Configuration.ApplicationSettingsBase>.</span></span> <span data-ttu-id="c4b6d-108">Die Wrapperklasse passt <xref:System.Configuration.ApplicationSettingsBase> auf folgende Weise:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-108">The wrapper class customizes <xref:System.Configuration.ApplicationSettingsBase> in the following ways:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-109">Für jede Eigenschaft zugegriffen werden wird die Wrapperklasse eine entsprechende stark typisierte öffentliche Eigenschaft hinzugefügt.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-109">For every settings property to be accessed, a corresponding strongly typed public property is added to the wrapper class.</span></span> <span data-ttu-id="c4b6d-110">Diese Eigenschaft hat `get` und `set` Accessoren für Lese-/Schreibzugriff-Anwendungseinstellungen, jedoch nur eine `get` -Accessor für nur-Lese Einstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-110">This property has `get` and `set` accessors for read/write application settings, but only a `get` accessor for read-only settings.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-111">Gruppenkonten Attribute müssen angewendet werden, um die Wrapperklasse öffentlichen Eigenschaften, Merkmale der Settings-Eigenschaft, z. B. das Festlegen des Gültigkeitsbereichs (Anwendung oder Benutzer), um anzugeben, ob die Einstellung roaming unterstützen soll, des Standardwerts für die Einstellung den Einstellungsanbieter verwendet werden, und so weiter.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-111">Appropriated attributes must be applied to the wrapper class's public properties to indicate characteristics of the settings property, such as the setting's scope (application or user), whether the setting should support roaming, the default value for the setting, the settings provider to be used, and so on.</span></span> <span data-ttu-id="c4b6d-112">Jede Eigenschaft ist erforderlich, um ihren Bereich entweder angeben <xref:System.Configuration.ApplicationScopedSettingAttribute> oder <xref:System.Configuration.UserScopedSettingAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-112">Each property is required to specify its scope, using either <xref:System.Configuration.ApplicationScopedSettingAttribute> or <xref:System.Configuration.UserScopedSettingAttribute>.</span></span> <span data-ttu-id="c4b6d-113">Anwendungsspezifische Einstellungen sind schreibgeschützt sind und wenn die Standardeinstellung <xref:System.Configuration.LocalFileSettingsProvider> wird verwendet.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-113">Application-scoped settings are read-only if the default <xref:System.Configuration.LocalFileSettingsProvider> is used.</span></span>  
+  
+ <span data-ttu-id="c4b6d-114">Die <xref:System.Configuration.ApplicationSettingsBase> Klasse verwendet Reflektion, um diese Attribute zur Laufzeit zu erkennen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-114">The <xref:System.Configuration.ApplicationSettingsBase> class uses reflection to detect these attributes at run time.</span></span> <span data-ttu-id="c4b6d-115">Die meisten dieser Informationen weitergegeben wird, um Einstellungen für Anbieter der Ebene der für den Speicher, Persistenzformat usw. verantwortlich ist.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-115">Most of this information gets passed to the settings provider layer, which is responsible for storage, persistence format, and so on.</span></span>  
+  
+ <span data-ttu-id="c4b6d-116">Wenn eine Anwendung verfügt über mehrere Einstellungswrapperklassen, jeder Klasse definiert ein *Einstellungsgruppe*.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-116">When an application has multiple settings wrapper classes, each class defines a *settings group*.</span></span> <span data-ttu-id="c4b6d-117">Jede Gruppe verfügt über die folgenden Eigenschaften:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-117">Each group has the following characteristics:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-118">Eine Gruppe kann eine beliebige Zahl oder den Typ der eigenschafteneinstellungen enthalten.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-118">A group can contain any number or type of property settings.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-119">Wenn der Gruppenname nicht explizit von der Wrapperklasse mit ergänzenden festgelegt ist eine <xref:System.Configuration.SettingsGroupNameAttribute>, und klicken Sie dann automatisch ein Name generiert wird.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-119">If the group name is not explicitly set by the decorating the wrapper class with a <xref:System.Configuration.SettingsGroupNameAttribute>, then a name is automatically generated.</span></span>  
+  
+ <span data-ttu-id="c4b6d-120">Standardmäßig verwenden alle Client-basierten Anwendungen die <xref:System.Configuration.LocalFileSettingsProvider> zum Bereitstellen von Speicher.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-120">By default, all client-based applications use the <xref:System.Configuration.LocalFileSettingsProvider> to provide storage.</span></span> <span data-ttu-id="c4b6d-121">Wenn ein anderer Einstellungsanbieter gewünscht ist, die Wrapperklasse oder die Eigenschaft mit einem entsprechenden ergänzt werden muss <xref:System.Configuration.SettingsProviderAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-121">If an alternate settings provider is desired, then the wrapper class or property must be decorated with a corresponding <xref:System.Configuration.SettingsProviderAttribute>.</span></span>  
+  
+ <span data-ttu-id="c4b6d-122">Weitere Informationen zum Verwenden von Anwendungseinstellungen finden Sie unter [Anwendung Einstellungen für Windows Forms](~/docs/framework/winforms/advanced/application-settings-for-windows-forms.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-122">For more information about using application settings, see [Application Settings for Windows Forms](~/docs/framework/winforms/advanced/application-settings-for-windows-forms.md).</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-123">Das folgende Codebeispiel veranschaulicht die Verwendung von Anwendungseinstellungen, um die folgenden Attribute des Hauptformulars beibehalten: Speicherort, Größe, Hintergrundfarbe und Text der Titelleiste.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-123">The following code example demonstrates the use of application settings to persist the following attributes of the main form: location, size, background color, and title bar text.</span></span> <span data-ttu-id="c4b6d-124">Alle diese Attribute werden als einzelne Anwendungseinstellungseigenschaften im beibehalten der `FormSettings` Klasse, mit dem Namen `FormLocation`, `FormSize`, `FormBackColor` und `FormText`zugeordnet.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-124">All of these attributes are persisted as single application settings properties in the `FormSettings` class, named `FormLocation`, `FormSize`, `FormBackColor` and `FormText`, respectively.</span></span> <span data-ttu-id="c4b6d-125">Alle mit Ausnahme von `FormText` und `Size` werden Daten an die zugeordneten Formulareigenschaften gebunden und haben einen Standardwert angewendet, mit der Einstellungswert <xref:System.Configuration.DefaultSettingValueAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-125">All except for `FormText` and `Size` are data bound to their associated form properties and have a default setting value applied using <xref:System.Configuration.DefaultSettingValueAttribute>.</span></span>  
+  
+ <span data-ttu-id="c4b6d-126">Das Formular enthält vier untergeordnete Steuerelemente, die die folgenden Namen und Funktionen:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-126">The form contains four child controls that have the following names and functions:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-127">Eine Schaltfläche mit dem Namen `btnBackColor` verwendet, um die Anzeige der **Farbe** Standarddialogfeld.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-127">A button named `btnBackColor` used to display the **Color** common dialog box.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-128">Eine Schaltfläche mit dem Namen `btnReload` verwendet, um <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> die Anwendungseinstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-128">A button named `btnReload` used to <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> the application settings.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-129">Eine Schaltfläche mit dem Namen `btnReset` verwendet, um <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> die Anwendungseinstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-129">A button named `btnReset` used to <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> the application settings.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-130">Ein Textfeld mit dem Namen `tbStatus` verwendet, um Statusinformationen über das Programm anzuzeigen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-130">A textbox named `tbStatus` used to display status information about the program.</span></span>  
+  
+ <span data-ttu-id="c4b6d-131">Beachten Sie, dass nach jeder Ausführung der Anwendung, eine zusätzliche Punktzeichen, um den Titeltext des Formulars angefügt wird.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-131">Notice that after every execution of the application, an additional period character is appended to the title text of the form.</span></span>  
+  
+ <span data-ttu-id="c4b6d-132">Dieses Codebeispiel benötigen Sie ein Formular mit einer <xref:System.Windows.Forms.ColorDialog> Klasse mit dem Namen `colorDialog1`, und ein <xref:System.Windows.Forms.StatusStrip> -Steuerelement mit einer <xref:System.Windows.Forms.ToolStripStatusLabel> mit dem Namen `tbStatus`.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-132">This code example requires a Form with a <xref:System.Windows.Forms.ColorDialog> class named `colorDialog1`, and a <xref:System.Windows.Forms.StatusStrip> control with a <xref:System.Windows.Forms.ToolStripStatusLabel> named `tbStatus`.</span></span> <span data-ttu-id="c4b6d-133">Darüber hinaus erfordert drei <xref:System.Windows.Forms.Button> Objekte, die mit dem Namen `btnReload`, `btnReset`, und `btnBackColor`.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-133">Additionally, it requires three <xref:System.Windows.Forms.Button> objects named `btnReload`, `btnReset`, and `btnBackColor`.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#1](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#1)]
+ [!code-csharp[AppSettingsSample#1](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#1)]
+ [!code-vb[AppSettingsSample#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#1)]  
+  
+ ]]></format>
+    </remarks>
+    <altmember cref="T:System.Configuration.LocalFileSettingsProvider" />
+    <altmember cref="T:System.Configuration.ApplicationScopedSettingAttribute" />
+    <altmember cref="T:System.Configuration.UserScopedSettingAttribute" />
+    <altmember cref="T:System.Configuration.SettingsGroupNameAttribute" />
+    <altmember cref="T:System.Configuration.SettingsProviderAttribute" />
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-134">Initialisiert eine Instanz der <see cref="T:System.Configuration.ApplicationSettingsBase" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-134">Initializes an instance of the <see cref="T:System.Configuration.ApplicationSettingsBase" /> class.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ApplicationSettingsBase ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ApplicationSettingsBase();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-135">Initialisiert eine Instanz der <see cref="T:System.Configuration.ApplicationSettingsBase" />-Klasse mit ihrem Standardzustand.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-135">Initializes an instance of the <see cref="T:System.Configuration.ApplicationSettingsBase" /> class to its default state.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-136">Der Standardkonstruktor wurde entworfen, um unter der Annahme zu arbeiten, die es keine Komponente, die die aktuellen Einstellungen-Wrapperklasse, abgeleitet gibt von zugeordneten <xref:System.Configuration.ApplicationSettingsBase>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-136">The default constructor was designed to work under the assumption that there is no component associated with the current settings wrapper class, which derives from <xref:System.Configuration.ApplicationSettingsBase>.</span></span>  
+  
+ <span data-ttu-id="c4b6d-137">Wenn eine Instanz einer Klasse Wrapper erstellt wird, werden geerbte Code automatisch die folgenden Aktionen ausgeführt:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-137">When an instance of a wrapper class is created, inherited code will automatically perform the following actions:</span></span>  
+  
+1.  <span data-ttu-id="c4b6d-138">Reflektieren Sie über die Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-138">Reflect over the class.</span></span>  
+  
+2.  <span data-ttu-id="c4b6d-139">Für jede Eigenschaft auf den Wrapper mit entweder markiert `[UserScopedSettingAttribute]` oder `[ApplicationScopedSettingAttribute]`, ein entsprechendes <xref:System.Configuration.SettingsProperty> wird erstellt.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-139">For each property on the wrapper marked with either `[UserScopedSettingAttribute]` or `[ApplicationScopedSettingAttribute]`, a corresponding <xref:System.Configuration.SettingsProperty> is created.</span></span>  
+  
+3.  <span data-ttu-id="c4b6d-140">Jede <xref:System.Configuration.SettingsProperty> weist einige der festgelegten Eigenschaften basierend auf anderen Attributen, die auf den Wrapper-Eigenschaften, z. B. der Standardwert oder der Einstellungsanbieter optional vorhanden sind.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-140">Each <xref:System.Configuration.SettingsProperty> has some of its properties set based on other attributes that are optionally present on the wrapper's properties, such as the default value or the settings provider.</span></span>  
+  
+4.  <span data-ttu-id="c4b6d-141">Alle anderen Attribute sind in einer Attributsammlung einfach gesagt die <xref:System.Configuration.SettingsProperty.Attributes%2A> Eigenschaft von der <xref:System.Configuration.SettingsProperty> Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-141">All other attributes are simply put into an attribute bag, the <xref:System.Configuration.SettingsProperty.Attributes%2A> property of the <xref:System.Configuration.SettingsProperty> class.</span></span>  
+  
+5.  <span data-ttu-id="c4b6d-142">Alle <xref:System.Configuration.SettingsProperty> Objekte werden hinzugefügt, um eine <xref:System.Configuration.SettingsPropertyCollection> dargestellte der <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> Eigenschaft von der <xref:System.Configuration.ApplicationSettingsBase> Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-142">All <xref:System.Configuration.SettingsProperty> objects are added to a <xref:System.Configuration.SettingsPropertyCollection> represented by the <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> property of the <xref:System.Configuration.ApplicationSettingsBase> class.</span></span> <span data-ttu-id="c4b6d-143">Diese Auflistung wird dann zum Übergeben der <xref:System.Configuration.SettingsBase.Initialize%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-143">This collection is then passed to the <xref:System.Configuration.SettingsBase.Initialize%2A> method.</span></span>  
+  
+ <span data-ttu-id="c4b6d-144">Schritt 3 erwähnten, wie nahe legen <xref:System.Configuration.ApplicationSettingsBase> systemintern arbeitet mit verschiedenen Eigenschaftenattributen, insbesondere: <xref:System.Configuration.SettingsProviderAttribute>, <xref:System.Configuration.DefaultSettingValueAttribute>, und <xref:System.Configuration.SettingsSerializeAsAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-144">As implied by step 3 mentioned previously, <xref:System.Configuration.ApplicationSettingsBase> natively works with several property attributes, specifically the following: <xref:System.Configuration.SettingsProviderAttribute>, <xref:System.Configuration.DefaultSettingValueAttribute>, and <xref:System.Configuration.SettingsSerializeAsAttribute>.</span></span> <span data-ttu-id="c4b6d-145">Alle anderen Einstellungsattribute sind einfach über den entsprechenden zugrunde liegenden Anbieter übergeben.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-145">All other settings attributes are simply passed through to the appropriate underlying provider.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Configuration.SettingsProperty" />
+        <altmember cref="T:System.Configuration.SettingsPropertyCollection" />
+        <altmember cref="M:System.Configuration.SettingsBase.Initialize(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyCollection,System.Configuration.SettingsProviderCollection)" />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ApplicationSettingsBase (System.ComponentModel.IComponent owner);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(class System.ComponentModel.IComponent owner) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.#ctor(System.ComponentModel.IComponent)" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (owner As IComponent)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ApplicationSettingsBase(System::ComponentModel::IComponent ^ owner);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="owner" Type="System.ComponentModel.IComponent" />
+      </Parameters>
+      <Docs>
+        <param name="owner">
+          <span data-ttu-id="c4b6d-146">Die Komponente, die als Besitzer des Anwendungseinstellungsobjekts fungiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-146">The component that will act as the owner of the application settings object.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-147">Initialisiert mithilfe der angegebenen Besitzerkomponente eine Instanz der <see cref="T:System.Configuration.ApplicationSettingsBase" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-147">Initializes an instance of the <see cref="T:System.Configuration.ApplicationSettingsBase" /> class using the supplied owner component.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-148">Dieser Konstruktor entspricht genau der <xref:System.Configuration.ApplicationSettingsBase.%23ctor%28System.ComponentModel.IComponent%2CSystem.String%29> Konstruktor mithilfe des Aufrufs:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-148">This constructor is exactly equivalent to the <xref:System.Configuration.ApplicationSettingsBase.%23ctor%28System.ComponentModel.IComponent%2CSystem.String%29> constructor using the invocation:</span></span>  
+  
+ `ApplicationSettingsBase(owner, String.Empty)`  
+  
+ <span data-ttu-id="c4b6d-149">Informationen, wie Reflektion, während der Instanziierung des eine Wrapperklasse verwendet wird, finden Sie unter der Standard <xref:System.Configuration.ApplicationSettingsBase.%23ctor> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-149">For information about how reflection is used during the instantiation of a wrapper class, see the default <xref:System.Configuration.ApplicationSettingsBase.%23ctor> constructor.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="c4b6d-150">
+            <paramref name="owner" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-150">
+              <paramref name="owner" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Configuration.SettingsProviderAttribute" />
+        <altmember cref="P:System.ComponentModel.Component.Site" />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ApplicationSettingsBase (string settingsKey);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string settingsKey) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.#ctor(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (settingsKey As String)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ApplicationSettingsBase(System::String ^ settingsKey);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="settingsKey" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="settingsKey">
+          <span data-ttu-id="c4b6d-151">Ein <see cref="T:System.String" />, der separate Instanzen der Wrapperklasse eindeutig identifiziert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-151">A <see cref="T:System.String" /> that uniquely identifies separate instances of the wrapper class.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-152">Initialisiert mithilfe des angegebenen Einstellungsschlüssels eine Instanz der <see cref="T:System.Configuration.ApplicationSettingsBase" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-152">Initializes an instance of the <see cref="T:System.Configuration.ApplicationSettingsBase" /> class using the supplied settings key.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-153">Dieser Konstruktor initialisiert die <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> auf den Wert der Eigenschaft der `settingsKey` Parameter.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-153">This constructor initializes the <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> property to the value of the `settingsKey` parameter.</span></span> <span data-ttu-id="c4b6d-154">Diese Eigenschaft ist nützlich in eindeutig gemacht verschiedene Instanzen von der Einstellungswrapperklasse in der gleichen Anwendungsdomäne.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-154">This property is useful in disambiguating different instances of the settings wrapper class in the same application domain.</span></span>  
+  
+ <span data-ttu-id="c4b6d-155">Informationen, wie Reflektion, während der Instanziierung des eine Wrapperklasse verwendet wird, finden Sie unter der Standard <xref:System.Configuration.ApplicationSettingsBase.%23ctor> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-155">For information about how reflection is used during the instantiation of a wrapper class, see the default <xref:System.Configuration.ApplicationSettingsBase.%23ctor> constructor.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.SettingsKey" />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ApplicationSettingsBase (System.ComponentModel.IComponent owner, string settingsKey);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(class System.ComponentModel.IComponent owner, string settingsKey) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.#ctor(System.ComponentModel.IComponent,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (owner As IComponent, settingsKey As String)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ApplicationSettingsBase(System::ComponentModel::IComponent ^ owner, System::String ^ settingsKey);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="owner" Type="System.ComponentModel.IComponent" />
+        <Parameter Name="settingsKey" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="owner">
+          <span data-ttu-id="c4b6d-156">Die Komponente, die als Besitzer des Anwendungseinstellungsobjekts fungiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-156">The component that will act as the owner of the application settings object.</span>
+          </span>
+        </param>
+        <param name="settingsKey">
+          <span data-ttu-id="c4b6d-157">Ein <see cref="T:System.String" />, der separate Instanzen der Wrapperklasse eindeutig identifiziert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-157">A <see cref="T:System.String" /> that uniquely identifies separate instances of the wrapper class.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-158">Initialisiert mithilfe der angegebenen Besitzerkomponente und des Einstellungsschlüssels eine Instanz der <see cref="T:System.Configuration.ApplicationSettingsBase" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-158">Initializes an instance of the <see cref="T:System.Configuration.ApplicationSettingsBase" /> class using the supplied owner component and settings key.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-159">Die <xref:System.ComponentModel.IComponent> Objekt gemäß der `owner` Parameter fungiert als Besitzer der aktuellen Instanz dieser Anwendungen Settings-Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-159">The <xref:System.ComponentModel.IComponent> object specified by the `owner` parameter acts as the owner of the current instance of this applications settings class.</span></span> <span data-ttu-id="c4b6d-160">Während der Initialisierung der Wrapperklasse abgeleitet Einstellungen <xref:System.Configuration.ApplicationSettingsBase>, des Besitzers der Standort wird abgefragt, für eine <xref:System.Configuration.ISettingsProviderService>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-160">During the initialization of the settings wrapper class derived from <xref:System.Configuration.ApplicationSettingsBase>, the owner's site is queried for a <xref:System.Configuration.ISettingsProviderService>.</span></span> <span data-ttu-id="c4b6d-161">Wenn eines vorhanden ist, wird es verwendet aufrufanweisung native Einstellungsanbieter für alle Eigenschaften der Wrapperklasse, entsprechend den Angaben von der <xref:System.Configuration.SettingsProviderAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-161">If one exists, it is used in preference to native settings provider for all the properties of the wrapper class, as specified by the <xref:System.Configuration.SettingsProviderAttribute>.</span></span>  
+  
+ <span data-ttu-id="c4b6d-162">Dieser Konstruktor initialisiert die <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> auf den Wert der Eigenschaft der `settingsKey` Parameter.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-162">This constructor initializes the <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> property to the value of the `settingsKey` parameter.</span></span> <span data-ttu-id="c4b6d-163">Diese Eigenschaft ist nützlich in eindeutig gemacht verschiedene Instanzen von der Wrapperklasse in dieselbe Anwendungsdomäne.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-163">This property is useful in disambiguating different instances of the wrapper class in the same application domain.</span></span>  
+  
+ <span data-ttu-id="c4b6d-164">Informationen, wie Reflektion, während der Instanziierung des eine Wrapperklasse verwendet wird, finden Sie unter der Standard <xref:System.Configuration.ApplicationSettingsBase.%23ctor> Konstruktor.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-164">For information about how reflection is used during the instantiation of a wrapper class, see the default <xref:System.Configuration.ApplicationSettingsBase.%23ctor> constructor.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="c4b6d-165">
+            <paramref name="owner" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-165">
+              <paramref name="owner" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Configuration.ISettingsProviderService" />
+        <altmember cref="T:System.Configuration.SettingsProviderAttribute" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.SettingsKey" />
+      </Docs>
+    </Member>
+    <Member MemberName="Context">
+      <MemberSignature Language="C#" Value="public override System.Configuration.SettingsContext Context { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Configuration.SettingsContext Context" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.Context" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property Context As SettingsContext" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Configuration::SettingsContext ^ Context { System::Configuration::SettingsContext ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsContext</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-166">Ruft den der Einstellungsgruppe zugeordneten Anwendungseinstellungskontext ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-166">Gets the application settings context associated with the settings group.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-167">Ein der Einstellungsgruppe zugeordneter <see cref="T:System.Configuration.SettingsContext" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-167">A <see cref="T:System.Configuration.SettingsContext" /> associated with the settings group.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-168">Jede Wrapperklasse für Anwendungseinstellungen abgeleitet <xref:System.Configuration.ApplicationSettingsBase> hat einen Kontext zugeordnet.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-168">Each settings wrapper class derived from <xref:System.Configuration.ApplicationSettingsBase> has a context associated with it.</span></span> <span data-ttu-id="c4b6d-169">Der Kontext übergeben wird, an den Einstellungsanbieter für jede Eigenschaft, um zu identifizieren, wie die Eigenschaft verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-169">The context is passed to the settings provider for each property to identify how the property is used.</span></span> <span data-ttu-id="c4b6d-170">Der Kontext fungiert daher als Hinweis auf den Einstellungsanbieter ermitteln, wie sich die zugehörige Anwendung Einstellungswerte beibehalten werden können.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-170">Context therefore acts as a hint to help the settings provider determine how best to persist the associated application settings values.</span></span>  
+  
+ <span data-ttu-id="c4b6d-171">Im Gegensatz dazu die <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> Eigenschaft ermöglicht den Einstellungsanbieter, um mehrere Instanzen derselben Wrapperklasse zu unterscheiden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-171">In contrast, the <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> property enables the settings provider to disambiguate multiple instances of the same wrapper class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.SettingsKey" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Providers" />
+        <altmember cref="T:System.Configuration.SettingsContext" />
+        <altmember cref="T:System.Configuration.SettingsProvider" />
+        <altmember cref="T:System.Configuration.ApplicationSettingsGroup" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetPreviousVersion">
+      <MemberSignature Language="C#" Value="public object GetPreviousVersion (string propertyName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetPreviousVersion(string propertyName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.GetPreviousVersion(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetPreviousVersion (propertyName As String) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetPreviousVersion(System::String ^ propertyName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">
+          <span data-ttu-id="c4b6d-172">Ein <see cref="T:System.String" />, der den Namen der Einstellungseigenschaft enthält, deren Wert zurückgegeben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-172">A <see cref="T:System.String" /> containing the name of the settings property whose value is to be returned.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-173">Gibt den Wert der benannten Einstellungseigenschaft für die vorherige Version derselben Anwendung zurück.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-173">Returns the value of the named settings property for the previous version of the same application.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="c4b6d-174">Ein <see cref="T:System.Object" /> mit dem Wert der angegebenen <see cref="T:System.Configuration.SettingsProperty" />, sofern gefunden; andernfalls <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-174">An <see cref="T:System.Object" /> containing the value of the specified <see cref="T:System.Configuration.SettingsProperty" /> if found; otherwise, <see langword="null" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-175">Die <xref:System.Configuration.ApplicationSettingsBase.GetPreviousVersion%2A> -Methode werden häufig in Verbindung mit der <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> Methode, wenn die Anwendungseinstellungen für die während der Installations einer neuen Version einer Anwendung zu migrieren.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-175">The <xref:System.Configuration.ApplicationSettingsBase.GetPreviousVersion%2A> method is often used in conjunction with the <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> method when migrating application settings during the installation of a new version of an application.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.SettingsPropertyNotFoundException">
+          <span data-ttu-id="c4b6d-176">Die Eigenschaft ist nicht vorhanden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-176">The property does not exist.</span>
+          </span>
+          <span data-ttu-id="c4b6d-177">Die Eigenschaftenanzahl ist 0 (null) oder die Eigenschaft kann nicht im Datenspeicher gefunden werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-177">The property count is zero or the property cannot be found in the data store.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.Configuration.SettingsProperty" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Properties" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Upgrade" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reset" />
+        <altmember cref="M:System.Configuration.IApplicationSettingsProvider.GetPreviousVersion(System.Configuration.SettingsContext,System.Configuration.SettingsProperty)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public override object this[string propertyName] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance object Item(string)" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.Item(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Default Public Overrides Property Item(propertyName As String) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Object ^ default[System::String ^] { System::Object ^ get(System::String ^ propertyName); void set(System::String ^ propertyName, System::Object ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.MonoTODO</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">
+          <span data-ttu-id="c4b6d-178">Ein <see cref="T:System.String" />, der den Namen der aufzurufenden Eigenschaft enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-178">A <see cref="T:System.String" /> containing the name of the property to access.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-179">Ruft den Wert der angegebenen Anwendungseinstellungseigenschaft ab oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-179">Gets or sets the value of the specified application settings property.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-180">Wenn gefunden, der Wert der genannten Einstellungseigenschaft; andernfalls, <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-180">If found, the value of the named settings property; otherwise, <see langword="null" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-181">Die <xref:System.Configuration.ApplicationSettingsBase.Item%2A> -Eigenschaft, auch bekannt als Indexer wird üblicherweise verwendet, in den Einstellungen, die Wrapperklasse abgeleitet <xref:System.Configuration.ApplicationSettingsBase>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-181">The <xref:System.Configuration.ApplicationSettingsBase.Item%2A> property, also known as the indexer, is routinely used in the settings wrapper class derived from <xref:System.Configuration.ApplicationSettingsBase>.</span></span> <span data-ttu-id="c4b6d-182"><xref:System.Configuration.ApplicationSettingsBase.Item%2A> Bindet die öffentliche Eigenschaft von der Wrapperklasse an die entsprechende Einstellungen an.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-182"><xref:System.Configuration.ApplicationSettingsBase.Item%2A> binds the public property of the wrapper class to the corresponding settings property.</span></span>  
+  
+ <span data-ttu-id="c4b6d-183"><xref:System.Configuration.ApplicationSettingsBase.Item%2A> Löst verschiedene Ereignisse abhängig vom Vorgang ausgeführt wird:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-183"><xref:System.Configuration.ApplicationSettingsBase.Item%2A> raises several events depending on the operation being performed:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-184">Die ersten Mal eine Eigenschaft abgerufen wird, die <xref:System.Configuration.ApplicationSettingsBase.SettingsLoaded> Ereignis wird ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-184">The first time a property is retrieved, the <xref:System.Configuration.ApplicationSettingsBase.SettingsLoaded> event is raised.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-185">Wenn eine Eigenschaft festgelegt ist, die <xref:System.Configuration.ApplicationSettingsBase.OnSettingChanging%2A> Ereignis wird ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-185">When a property is set, the <xref:System.Configuration.ApplicationSettingsBase.OnSettingChanging%2A> event is raised.</span></span> <span data-ttu-id="c4b6d-186">Wenn der Ereignishandler das Ereignis nicht abgebrochen, und klicken Sie dann den Wert der Eigenschaft festgelegt ist und die <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> Ereignis wird ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-186">If the handler does not cancel the event, then the property value is set and the <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> event is raised.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.SettingsPropertyNotFoundException">
+          <span data-ttu-id="c4b6d-187">Es gibt keine dem aktuellen Wrapper zugeordnete Eigenschaften, oder die angegebene Eigenschaft konnte nicht gefunden werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-187">There are no properties associated with the current wrapper or the specified property could not be found.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.SettingsPropertyIsReadOnlyException">
+          <span data-ttu-id="c4b6d-188">Es wurde versucht, eine schreibgeschützte Eigenschaft festzulegen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-188">An attempt was made to set a read-only property.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.SettingsPropertyWrongTypeException">
+          <span data-ttu-id="c4b6d-189">Der angegebene Wert ist von einem Typ, der mit der Einstellungseigenschaft während einer Set-Operation nicht kompatibel ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-189">The value supplied is of a type incompatible with the settings property, during a set operation.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.Configuration.ConfigurationErrorsException">
+          <span data-ttu-id="c4b6d-190">Die Konfigurationsdatei konnte nicht analysiert werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-190">The configuration file could not be parsed.</span>
+          </span>
+        </exception>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Properties" />
+        <altmember cref="P:System.Configuration.SettingsProperty.IsReadOnly" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnPropertyChanged">
+      <MemberSignature Language="C#" Value="protected virtual void OnPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnPropertyChanged(object sender, class System.ComponentModel.PropertyChangedEventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnPropertyChanged (sender As Object, e As PropertyChangedEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnPropertyChanged(System::Object ^ sender, System::ComponentModel::PropertyChangedEventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sender" Type="System.Object" />
+        <Parameter Name="e" Type="System.ComponentModel.PropertyChangedEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="sender">
+          <span data-ttu-id="c4b6d-191">Die Quelle des Ereignisses.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-191">The source of the event.</span>
+          </span>
+        </param>
+        <param name="e">
+          <span data-ttu-id="c4b6d-192">Ein <see cref="T:System.ComponentModel.PropertyChangedEventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-192">A <see cref="T:System.ComponentModel.PropertyChangedEventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-193">Löst das <see cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-193">Raises the <see cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-194">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-194">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="c4b6d-195">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-195">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="c4b6d-196">Mit der <xref:System.Configuration.ApplicationSettingsBase.OnPropertyChanged%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-196">The <xref:System.Configuration.ApplicationSettingsBase.OnPropertyChanged%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="c4b6d-197">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-197">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="c4b6d-198">Wenn Sie <see cref="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" /> in einer abgeleiteten Klasse überschreiben, müssen Sie die <see cref="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" />-Methode der Basisklasse aufrufen, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="c4b6d-198">When overriding <see cref="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" /> in a derived class, be sure to call the base class's <see cref="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnSettingChanging">
+      <MemberSignature Language="C#" Value="protected virtual void OnSettingChanging (object sender, System.Configuration.SettingChangingEventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSettingChanging(object sender, class System.Configuration.SettingChangingEventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSettingChanging (sender As Object, e As SettingChangingEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSettingChanging(System::Object ^ sender, System::Configuration::SettingChangingEventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sender" Type="System.Object" />
+        <Parameter Name="e" Type="System.Configuration.SettingChangingEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="sender">
+          <span data-ttu-id="c4b6d-199">Die Quelle des Ereignisses.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-199">The source of the event.</span>
+          </span>
+        </param>
+        <param name="e">
+          <span data-ttu-id="c4b6d-200">Ein <see cref="T:System.Configuration.SettingChangingEventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-200">A <see cref="T:System.Configuration.SettingChangingEventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-201">Löst das <see cref="E:System.Configuration.ApplicationSettingsBase.SettingChanging" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-201">Raises the <see cref="E:System.Configuration.ApplicationSettingsBase.SettingChanging" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-202">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-202">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="c4b6d-203">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-203">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="c4b6d-204">Mit der <xref:System.Configuration.ApplicationSettingsBase.OnSettingChanging%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-204">The <xref:System.Configuration.ApplicationSettingsBase.OnSettingChanging%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="c4b6d-205">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-205">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="c4b6d-206">Wenn Sie <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" /> in einer abgeleiteten Klasse überschreiben, müssen Sie die <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" />-Methode der Basisklasse aufrufen, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="c4b6d-206">When overriding <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" /> in a derived class, be sure to call the base class's <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingChanging" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnSettingsLoaded">
+      <MemberSignature Language="C#" Value="protected virtual void OnSettingsLoaded (object sender, System.Configuration.SettingsLoadedEventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSettingsLoaded(object sender, class System.Configuration.SettingsLoadedEventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSettingsLoaded (sender As Object, e As SettingsLoadedEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSettingsLoaded(System::Object ^ sender, System::Configuration::SettingsLoadedEventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sender" Type="System.Object" />
+        <Parameter Name="e" Type="System.Configuration.SettingsLoadedEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="sender">
+          <span data-ttu-id="c4b6d-207">Die Quelle des Ereignisses.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-207">The source of the event.</span>
+          </span>
+        </param>
+        <param name="e">
+          <span data-ttu-id="c4b6d-208">Ein <see cref="T:System.Configuration.SettingsLoadedEventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-208">A <see cref="T:System.Configuration.SettingsLoadedEventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-209">Löst das <see cref="E:System.Configuration.ApplicationSettingsBase.SettingsLoaded" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-209">Raises the <see cref="E:System.Configuration.ApplicationSettingsBase.SettingsLoaded" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-210">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-210">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="c4b6d-211">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-211">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="c4b6d-212">Mit der <xref:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-212">The <xref:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="c4b6d-213">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-213">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="c4b6d-214">Wenn Sie <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" /> in einer abgeleiteten Klasse überschreiben, müssen Sie die <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" />-Methode der Basisklasse aufrufen, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="c4b6d-214">When overriding <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" /> in a derived class, be sure to call the base class's <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingsLoaded" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnSettingsSaving">
+      <MemberSignature Language="C#" Value="protected virtual void OnSettingsSaving (object sender, System.ComponentModel.CancelEventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSettingsSaving(object sender, class System.ComponentModel.CancelEventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSettingsSaving (sender As Object, e As CancelEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSettingsSaving(System::Object ^ sender, System::ComponentModel::CancelEventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sender" Type="System.Object" />
+        <Parameter Name="e" Type="System.ComponentModel.CancelEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="sender">
+          <span data-ttu-id="c4b6d-215">Die Quelle des Ereignisses.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-215">The source of the event.</span>
+          </span>
+        </param>
+        <param name="e">
+          <span data-ttu-id="c4b6d-216">Ein <see cref="T:System.ComponentModel.CancelEventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-216">A <see cref="T:System.ComponentModel.CancelEventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="c4b6d-217">Löst das <see cref="E:System.Configuration.ApplicationSettingsBase.SettingsSaving" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-217">Raises the <see cref="E:System.Configuration.ApplicationSettingsBase.SettingsSaving" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-218">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-218">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="c4b6d-219">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-219">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="c4b6d-220">Mit der <xref:System.Configuration.ApplicationSettingsBase.OnSettingsSaving%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-220">The <xref:System.Configuration.ApplicationSettingsBase.OnSettingsSaving%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="c4b6d-221">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-221">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="c4b6d-222">Wenn Sie <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" /> in einer abgeleiteten Klasse überschreiben, müssen Sie die <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" />-Methode der Basisklasse aufrufen, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="c4b6d-222">When overriding <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" /> in a derived class, be sure to call the base class's <see cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingsSaving" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Properties">
+      <MemberSignature Language="C#" Value="public override System.Configuration.SettingsPropertyCollection Properties { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Configuration.SettingsPropertyCollection Properties" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.Properties" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property Properties As SettingsPropertyCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Configuration::SettingsPropertyCollection ^ Properties { System::Configuration::SettingsPropertyCollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsPropertyCollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-223">Ruft die Auflistung der Einstellungseigenschaften im Wrapper ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-223">Gets the collection of settings properties in the wrapper.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-224">Eine <see cref="T:System.Configuration.SettingsPropertyCollection" />, die alle im aktuellen Wrapper verwendeten <see cref="T:System.Configuration.SettingsProperty" />-Objekte enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-224">A <see cref="T:System.Configuration.SettingsPropertyCollection" /> containing all the <see cref="T:System.Configuration.SettingsProperty" /> objects used in the current wrapper.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-225">Die `get` Accessor, der die <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> -Eigenschaft reflektiert wird, über die Metadaten der Settings-Wrapper-Klasse, das von abgeleitet ist <xref:System.Configuration.ApplicationSettingsBase>, um die verfügbaren Einstellungseigenschaften dynamisch bestimmen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-225">The `get` accessor of the <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> property reflects over the metadata of the settings wrapper class, which is derived from <xref:System.Configuration.ApplicationSettingsBase>, to dynamically determine the set of available application settings properties.</span></span>  
+  
+ <span data-ttu-id="c4b6d-226">Die <xref:System.Configuration.ApplicationSettingsBase> Klasse erkennt bestimmte Eigenschaften für eine anwendungseinstellung fest, wie ihre Namen Eigenschaftentyp, Einstellungsanbieter, Standardwert, lesen Sie nur die Status und eine Einstellung für die Serialisierung.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-226">The <xref:System.Configuration.ApplicationSettingsBase> class natively recognizes certain characteristics of an application setting, such as its name, property type, settings provider, default value, read only status, and a serialization preference.</span></span> <span data-ttu-id="c4b6d-227">Diese Eigenschaften werden als Eigenschaften in gespiegelt der <xref:System.Configuration.SettingsProperty> Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-227">These characteristics are mirrored as properties in the <xref:System.Configuration.SettingsProperty> class.</span></span> <span data-ttu-id="c4b6d-228">Alle anderen Attribute der Einstellungseigenschaft sind nur über den zugeordneten Einstellungsanbieter übergeben.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-228">All other attributes of the settings property are just passed through to its associated settings provider.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.ConfigurationErrorsException">
+          <span data-ttu-id="c4b6d-229">Der zugeordnete Einstellungsanbieter konnte nicht gefunden werden, oder seine Instanziierung schlug fehl.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-229">The associated settings provider could not be found or its instantiation failed.</span>
+          </span>
+        </exception>
+        <altmember cref="P:System.Configuration.SettingsBase.PropertyValues" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Item(System.String)" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Providers" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />
+        <altmember cref="T:System.Configuration.SettingsProperty" />
+      </Docs>
+    </Member>
+    <Member MemberName="PropertyChanged">
+      <MemberSignature Language="C#" Value="public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.ComponentModel.PropertyChangedEventHandler PropertyChanged" />
+      <MemberSignature Language="DocId" Value="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event PropertyChanged As PropertyChangedEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual event System::ComponentModel::PropertyChangedEventHandler ^ PropertyChanged;" />
+      <MemberType>Event</MemberType>
+      <Implements>
+        <InterfaceMember>E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ComponentModel.PropertyChangedEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-230">Tritt ein, nachdem der Wert einer Anwendungseinstellungseigenschaft geändert wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-230">Occurs after the value of an application settings property is changed.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-231">Der <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> Ereignis wird ausgelöst, wenn eine Eigenschaft, über geändert wird die `set` Accessor, der die <xref:System.Configuration.ApplicationSettingsBase.Item%2A> -Methode, oder für jede Eigenschaft, die wiederhergestellt wird, wenn ein Aufruf der <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> oder <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-231">The <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> event is raised when a settings property is changed through the `set` accessor of the <xref:System.Configuration.ApplicationSettingsBase.Item%2A> method, or for every property that is restored when a call is made to the <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> or <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> methods.</span></span>  
+  
+ <span data-ttu-id="c4b6d-232">Es ist kein entsprechendes `PropertyChanging` Ereignis für diese Klasse; stattdessen finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> Ereignis.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-232">There is no corresponding `PropertyChanging` event for this class; instead, see the <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> event.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)" />
+        <altmember cref="T:System.ComponentModel.PropertyChangedEventArgs" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingChanging" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Item(System.String)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reset" />
+      </Docs>
+    </Member>
+    <Member MemberName="PropertyValues">
+      <MemberSignature Language="C#" Value="public override System.Configuration.SettingsPropertyValueCollection PropertyValues { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Configuration.SettingsPropertyValueCollection PropertyValues" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.PropertyValues" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property PropertyValues As SettingsPropertyValueCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Configuration::SettingsPropertyValueCollection ^ PropertyValues { System::Configuration::SettingsPropertyValueCollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsPropertyValueCollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-233">Ruft eine Auflistung von Eigenschaftswerten ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-233">Gets a collection of property values.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-234">Eine <see cref="T:System.Configuration.SettingsPropertyValueCollection" /> von Eigenschaftswerten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-234">A <see cref="T:System.Configuration.SettingsPropertyValueCollection" /> of property values.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Providers">
+      <MemberSignature Language="C#" Value="public override System.Configuration.SettingsProviderCollection Providers { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Configuration.SettingsProviderCollection Providers" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.Providers" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property Providers As SettingsProviderCollection" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Configuration::SettingsProviderCollection ^ Providers { System::Configuration::SettingsProviderCollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsProviderCollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-235">Ruft die Auflistung der vom Wrapper verwendeten Anwendungseinstellungsanbieter ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-235">Gets the collection of application settings providers used by the wrapper.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-236">Eine <see cref="T:System.Configuration.SettingsProviderCollection" />, die alle <see cref="T:System.Configuration.SettingsProvider" />-Objekte enthält, die von den Einstellungseigenschaften des aktuellen Einstellungswrappers verwendet werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-236">A <see cref="T:System.Configuration.SettingsProviderCollection" /> containing all the <see cref="T:System.Configuration.SettingsProvider" /> objects used by the settings properties of the current settings wrapper.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-237">Die <xref:System.Configuration.SettingsProviderAttribute> bestimmt, welche Einstellungsanbieter durch eine Wrapperklasse für Anwendungseinstellungen oder eine einzelne Einstellungseigenschaft verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-237">The <xref:System.Configuration.SettingsProviderAttribute> determines what setting provider is used by a settings wrapper class or an individual setting property.</span></span> <span data-ttu-id="c4b6d-238">Wenn dieses Attribut nicht angegeben wird, mithilfe einer Clientanwendung die <xref:System.Configuration.LocalFileSettingsProvider>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-238">If this attribute is not specified, a client application will use the <xref:System.Configuration.LocalFileSettingsProvider>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Properties" />
+        <altmember cref="T:System.Configuration.SettingsProviderAttribute" />
+        <altmember cref="M:System.Configuration.SettingsBase.Initialize(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyCollection,System.Configuration.SettingsProviderCollection)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Reload">
+      <MemberSignature Language="C#" Value="public void Reload ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Reload() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.Reload" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Reload ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Reload();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-239">Aktualisiert die Werte der Anwendungseinstellungseigenschaft aus dem permanenten Speicher.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-239">Refreshes the application settings property values from persistent storage.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-240">Die <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> Methode löscht die aktuell zwischengespeicherten Eigenschaftswerte erneut der folgenden Werte aus dem permanenten Speicher verursacht werden, wenn anschließend darauf zugegriffen werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-240">The <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> method clears the currently cached property values, causing a reload of these values from persistent storage when they are subsequently accessed.</span></span> <span data-ttu-id="c4b6d-241">Diese Methode führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-241">This method performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-242">Löscht die derzeit zwischengespeicherten Eigenschaften durch Deaktivieren der Auflistung dargestellte der <xref:System.Configuration.SettingsBase.PropertyValues%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-242">It clears the currently cached properties by clearing the collection represented by the <xref:System.Configuration.SettingsBase.PropertyValues%2A> property.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-243">Es wird ausgelöst, die <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> -Ereignis für jedes Mitglied der <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> Auflistung.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-243">It raises the <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> event for every member of the <xref:System.Configuration.ApplicationSettingsBase.Properties%2A> collection.</span></span>  
+  
+ <span data-ttu-id="c4b6d-244"><xref:System.Configuration.ApplicationSettingsBase.Reload%2A> steht im Gegensatz zu <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> insofern, dass die erste den letzten Satz von gespeicherten Einstellungswerte geladen werden, während der zweite Wert die gespeicherten Standardwerte geladen werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-244"><xref:System.Configuration.ApplicationSettingsBase.Reload%2A> contrasts with <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> in that the former will load the last set of saved application settings values, whereas the latter will load the saved default values.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-245">Das folgende Codebeispiel zeigt die <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> im Text der aufgerufenen Methode der <xref:System.Windows.Forms.Control.Click> -Ereignishandler für eine Schaltfläche mit dem Namen `btnReload`.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-245">The following code example shows the <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> method being invoked in the body of the <xref:System.Windows.Forms.Control.Click> event handler for a button named `btnReload`.</span></span> <span data-ttu-id="c4b6d-246">Als Ergebnis dieses Aufrufs werden die aktuell gespeicherten Werte für die Anwendungseinstellungen in ihren entsprechenden Eigenschaften neu geladen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-246">As a result of this call, the currently stored values for the application settings are reloaded into their corresponding properties.</span></span> <span data-ttu-id="c4b6d-247">Das vollständige Codebeispiel, finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase> -Klassenübersicht.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-247">The full code example is listed in the <xref:System.Configuration.ApplicationSettingsBase> class overview.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#6](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#6)]
+ [!code-csharp[AppSettingsSample#6](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#6)]
+ [!code-vb[AppSettingsSample#6](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#6)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reset" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Save" />
+        <altmember cref="P:System.Configuration.SettingsBase.PropertyValues" />
+        <altmember cref="M:System.Configuration.SettingsPropertyValueCollection.Clear" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingsLoaded" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Properties" />
+      </Docs>
+    </Member>
+    <Member MemberName="Reset">
+      <MemberSignature Language="C#" Value="public void Reset ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Reset() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.Reset" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Reset ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Reset();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-248">Stellt die beibehaltenen Anwendungseinstellungswerte mit den entsprechenden Standardeigenschaften wieder her.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-248">Restores the persisted application settings values to their corresponding default properties.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-249">Die <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> Methode überschreibt die benutzerspezifische Einstellungseigenschaften durch das Wiederherstellen des derzeit persistenten Wert der einzelnen Anwendungseinstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-249">The <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> method overwrites the user-scoped settings properties by restoring the currently persisted value of each application settings.</span></span> <span data-ttu-id="c4b6d-250">Diese Methode führt die folgenden Aktionen aus:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-250">This method performs the following actions:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-251">Ruft die <xref:System.Configuration.IApplicationSettingsProvider.Reset%2A?displayProperty=nameWithType> -Methode für jede Einstellungsanbieter, die diese optionale Methode unterstützt.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-251">It calls the <xref:System.Configuration.IApplicationSettingsProvider.Reset%2A?displayProperty=nameWithType> method on every settings provider that supports this optional method.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-252">Ruft die <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> Methode zum Erzwingen der Aktualisierung der Einstellungseigenschaftswerte.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-252">It calls the <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> method to force a refresh of the settings property values.</span></span>  
+  
+ <span data-ttu-id="c4b6d-253"><xref:System.Configuration.ApplicationSettingsBase.Reload%2A> steht im Gegensatz zu <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> insofern, dass die erste den letzten Satz von gespeicherten Einstellungswerte geladen werden, während der zweite Wert die gespeicherten Standardwerte geladen werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-253"><xref:System.Configuration.ApplicationSettingsBase.Reload%2A> contrasts with <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> in that the former will load the last set of saved application settings values, whereas the latter will load the saved default values.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-254">Das folgende Codebeispiel zeigt die <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> im Text der aufgerufenen Methode der <xref:System.Windows.Forms.Control.Click> -Ereignishandler für eine Schaltfläche mit dem Namen `btnReset`.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-254">The following code example shows the <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> method being invoked in the body of the <xref:System.Windows.Forms.Control.Click> event handler for a button named `btnReset`.</span></span> <span data-ttu-id="c4b6d-255">Als Ergebnis dieses Aufrufs werden die gespeicherten Standardwerte für die Anwendungseinstellungen in ihren entsprechenden Eigenschaften neu geladen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-255">As a result of this call, the stored default values for the application settings are reloaded into their corresponding properties.</span></span> <span data-ttu-id="c4b6d-256">Das vollständige Codebeispiel, finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase> -Klassenübersicht.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-256">The full code example is listed in the <xref:System.Configuration.ApplicationSettingsBase> class overview.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#5](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#5)]
+ [!code-csharp[AppSettingsSample#5](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#5)]
+ [!code-vb[AppSettingsSample#5](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#5)]  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.ConfigurationErrorsException">
+          <span data-ttu-id="c4b6d-257">Die Konfigurationsdatei konnte nicht analysiert werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-257">The configuration file could not be parsed.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Save" />
+        <altmember cref="M:System.Configuration.IApplicationSettingsProvider.Reset(System.Configuration.SettingsContext)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="public override void Save ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Save() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.Save" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Save ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Save();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-258">Speichert die aktuellen Werte der Anwendungseinstellungseigenschaften.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-258">Stores the current values of the application settings properties.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-259">Die <xref:System.Configuration.ApplicationSettingsBase.Save%2A> -Methode schreibt den aktuellen Wert der einzelnen Einstellungseigenschaft in seinen zugeordneten Datenspeicher.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-259">The <xref:System.Configuration.ApplicationSettingsBase.Save%2A> method writes the current value of each settings property to its associated data store.</span></span> <span data-ttu-id="c4b6d-260">Für jede Eigenschaft, die diese Methode ruft die <xref:System.Configuration.SettingsProvider.SetPropertyValues%2A> Methode auf dem zugeordneten Einstellungsanbieter.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-260">For each property, this method calls the <xref:System.Configuration.SettingsProvider.SetPropertyValues%2A> method on the associated settings provider.</span></span>  
+  
+ <span data-ttu-id="c4b6d-261">Diese Methode unterscheidet sich von der Implementierung der Basisklasse löst es das <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> Ereignis, bevor die Werte geschrieben werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-261">This method differs from the base class implementation in that it raises the <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> event before the values are written.</span></span>  
+  
+ <span data-ttu-id="c4b6d-262">Wenn die einzigen Einstellungen definiert anwendungsspezifische Einstellungen sind <xref:System.Configuration.ApplicationSettingsBase.Save%2A> hat keine Auswirkung und keine Fehler zurück, wenn mit dem Standardnamen bezeichnet <xref:System.Configuration.LocalFileSettingsProvider>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-262">If the only settings defined are application-scoped settings, <xref:System.Configuration.ApplicationSettingsBase.Save%2A> will have no effect and return no error if called with the default <xref:System.Configuration.LocalFileSettingsProvider>.</span></span> <span data-ttu-id="c4b6d-263"><xref:System.Configuration.LocalFileSettingsProvider> nur speichert benutzerspezifische Einstellungen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-263"><xref:System.Configuration.LocalFileSettingsProvider> only saves user-scoped settings.</span></span>  
+  
+> [!IMPORTANT]
+>  <span data-ttu-id="c4b6d-264">Es gibt keine entsprechenden Load-Methode auf, da die Werte der Anwendungseinstellungen automatisch während der Initialisierung der Wrapper-Klasse geladen werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-264">There is no corresponding Load method because the values of application settings are automatically loaded during wrapper class initialization.</span></span> <span data-ttu-id="c4b6d-265">Im Gegensatz dazu werden diese Werte werden nicht automatisch gespeichert, wenn eine Anwendung beendet.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-265">In contrast, these values are not automatically saved when an application ends.</span></span> <span data-ttu-id="c4b6d-266">Aus diesem Grund müssen Sie explizit aufrufen der <xref:System.Configuration.ApplicationSettingsBase.Save%2A> Methode, um die aktuellen Werte von den Anwendungseinstellungen beizubehalten.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-266">Therefore, you must explicitly call the <xref:System.Configuration.ApplicationSettingsBase.Save%2A> method to persist the current values of the application settings.</span></span> <span data-ttu-id="c4b6d-267">Dies erfolgt in der Regel in der <xref:System.Windows.Forms.Form.Closing> -Ereignishandler des primären oder enthaltenden <xref:System.Windows.Forms.Form>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-267">This is typically performed in the <xref:System.Windows.Forms.Form.Closing> event handler of the primary or containing <xref:System.Windows.Forms.Form>.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-268">Das folgende Codebeispiel zeigt die <xref:System.Configuration.ApplicationSettingsBase.Save%2A> vom aufgerufenen Methode der <xref:System.Windows.Forms.Form.Closing> -Ereignishandler für das primäre Formular.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-268">The following code example shows the <xref:System.Configuration.ApplicationSettingsBase.Save%2A> method being called from the <xref:System.Windows.Forms.Form.Closing> event handler for the primary form.</span></span> <span data-ttu-id="c4b6d-269">Diese Methode fügt auch einen zusätzlichen Zeitraum an der Eigenschaft, die mit des Formulars anfallen <xref:System.Windows.Forms.Control.Text%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-269">This method also appends an extra period to the settings property that is associated with the form's <xref:System.Windows.Forms.Control.Text%2A> property.</span></span>  
+  
+ <span data-ttu-id="c4b6d-270">Das vollständige Codebeispiel, finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase> -Klassenübersicht.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-270">The full code example is listed in the <xref:System.Configuration.ApplicationSettingsBase> class overview.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#3](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#3)]
+ [!code-csharp[AppSettingsSample#3](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#3)]
+ [!code-vb[AppSettingsSample#3](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#3)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reset" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.SettingsSaving" />
+        <altmember cref="M:System.Configuration.SettingsProvider.SetPropertyValues(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyValueCollection)" />
+        <altmember cref="T:System.Configuration.SettingsProviderAttribute" />
+      </Docs>
+    </Member>
+    <Member MemberName="SettingChanging">
+      <MemberSignature Language="C#" Value="public event System.Configuration.SettingChangingEventHandler SettingChanging;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.Configuration.SettingChangingEventHandler SettingChanging" />
+      <MemberSignature Language="DocId" Value="E:System.Configuration.ApplicationSettingsBase.SettingChanging" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event SettingChanging As SettingChangingEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Configuration::SettingChangingEventHandler ^ SettingChanging;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingChangingEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-271">Tritt ein, bevor der Wert einer Anwendungseinstellungseigenschaft geändert wurde.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-271">Occurs before the value of an application settings property is changed.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-272">Die <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> Ereignis tritt auf, bevor eine Anwendung Einstellung Value-Eigenschaft, über geändert wird die <xref:System.Configuration.ApplicationSettingsBase.Item%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-272">The <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> event occurs before an application setting value property is changed through the <xref:System.Configuration.ApplicationSettingsBase.Item%2A> method.</span></span> <span data-ttu-id="c4b6d-273">Dieses Ereignis wird nicht ausgelöst, wenn die <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> oder <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> Methoden aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-273">This event is not raised when the <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> or <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> methods are called.</span></span> <span data-ttu-id="c4b6d-274"><xref:System.Configuration.ApplicationSettingsBase.SettingChanging> kann abgebrochen werden, über die <xref:System.Configuration.SettingChangingEventArgs> Ereignisdatenklasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-274"><xref:System.Configuration.ApplicationSettingsBase.SettingChanging> can be canceled through the <xref:System.Configuration.SettingChangingEventArgs> event data class.</span></span>  
+  
+ <span data-ttu-id="c4b6d-275">In der Regel die <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> Ereignis, um die sofortige Überprüfung einer Eigenschaft für die einzelnen Einstellungen behandeln.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-275">You typically use the <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> event to handle immediate validation of an individual settings property.</span></span> <span data-ttu-id="c4b6d-276">Weitere Informationen zur Validierung finden Sie unter [Vorgehensweise: Überprüfen von Anwendungseinstellungen](~/docs/framework/winforms/advanced/how-to-validate-application-settings.md).</span><span class="sxs-lookup"><span data-stu-id="c4b6d-276">For more information about validation, see [How to: Validate Application Settings](~/docs/framework/winforms/advanced/how-to-validate-application-settings.md).</span></span>  
+  
+ <span data-ttu-id="c4b6d-277">Es ist kein entsprechendes `SettingChanged` Ereignis für diese Klasse; stattdessen finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> Ereignis.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-277">There is no corresponding `SettingChanged` event for this class; instead, see the <xref:System.Configuration.ApplicationSettingsBase.PropertyChanged> event.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-278">Das folgende Codebeispiel zeigt die <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> -Ereignishandler für das Objekt vom Typ `FormSettings`, eine Wrapperklasse abgeleitet aus <xref:System.Configuration.ApplicationSettingsBase>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-278">The following code example shows the <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> event handler for object of type `FormSettings`, which is a wrapper class derived from <xref:System.Configuration.ApplicationSettingsBase>.</span></span> <span data-ttu-id="c4b6d-279">Der Ereignishandler zeigt die Ereignisinformationen in ein Textfeld mit dem Namen `tbStatus`.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-279">The handler displays the event information in a textbox named `tbStatus`.</span></span> <span data-ttu-id="c4b6d-280">Das vollständige Codebeispiel, finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase> -Klassenübersicht.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-280">The full code example is listed in the <xref:System.Configuration.ApplicationSettingsBase> class overview.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#7](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#7)]
+ [!code-csharp[AppSettingsSample#7](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#7)]
+ [!code-vb[AppSettingsSample#7](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#7)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingChanging(System.Object,System.Configuration.SettingChangingEventArgs)" />
+        <altmember cref="T:System.Configuration.SettingChangingEventArgs" />
+        <altmember cref="E:System.Configuration.ApplicationSettingsBase.PropertyChanged" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Item(System.String)" />
+      </Docs>
+    </Member>
+    <Member MemberName="SettingsKey">
+      <MemberSignature Language="C#" Value="public string SettingsKey { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string SettingsKey" />
+      <MemberSignature Language="DocId" Value="P:System.Configuration.ApplicationSettingsBase.SettingsKey" />
+      <MemberSignature Language="VB.NET" Value="Public Property SettingsKey As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ SettingsKey { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.ComponentModel.Browsable(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-281">Ruft den Einstellungsschlüssel für die Anwendungseinstellungsgruppe ab oder legt ihn fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-281">Gets or sets the settings key for the application settings group.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="c4b6d-282">Ein <see cref="T:System.String" />, der den Einstellungsschlüssel für die aktuelle Einstellungsgruppe enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-282">A <see cref="T:System.String" /> containing the settings key for the current settings group.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-283">Die <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> Eigenschaft wird bereitgestellt, um die Aktivierung von Clientcode und insbesondere den Einstellungsanbieter, um zwischen mehreren Instanzen der gleichen Anwendung Settings-Klasse zu unterscheiden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-283">The <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> property is provided to enable client code, and in particular the settings provider, to disambiguate between multiple instances of the same application settings class.</span></span>  
+  
+ <span data-ttu-id="c4b6d-284">Wenn die Wrapperklasse für Anwendungseinstellungen unter Verwendung der Singleton-Muster entworfen wurde, können mehrere Instanzen der gleichen Anwendung Settings-Klasse in einer einzigen Anwendung sein.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-284">Unless the settings wrapper class is designed using the singleton pattern, there can be multiple instances of the same application settings class in a single application.</span></span> <span data-ttu-id="c4b6d-285">Der Wert des <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> sollte festgelegt werden, gemäß wie die Eigenschaftswerte freigegeben werden sollen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-285">The value of <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> should be set according to how the property values are intended to be shared.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-286">Wenn die Eigenschaften des Wrappers für alle Instanzen des Wrappers in derselben Anwendung, klicken Sie dann freigegeben sein sollen <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> müssen den gleichen Wert in allen Instanzen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-286">If the settings properties of the wrapper are intended to be shared across all instances of the wrapper in the same application, then <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> should have the same value in all of the instances.</span></span> <span data-ttu-id="c4b6d-287">Dies ist das Standardverhalten der <xref:System.Configuration.ApplicationSettingsBase> Klasse.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-287">This is the default behavior of the <xref:System.Configuration.ApplicationSettingsBase> class.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-288">Falls die Eigenschaften des Wrappers pro Instanz, dann werden dienen <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> sollte einen eindeutigen Wert für jede Instanz aufweisen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-288">If the settings properties of the wrapper are intended to be per instance, then <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> should have a unique value for every instance.</span></span> <span data-ttu-id="c4b6d-289">Die <xref:System.Configuration.ApplicationSettingsBase.%23ctor%28System.String%29> Version des Konstruktors können Sie initialisieren <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> an eine eindeutige Zeichenfolge.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-289">The <xref:System.Configuration.ApplicationSettingsBase.%23ctor%28System.String%29> version of the constructor enables you to initialize <xref:System.Configuration.ApplicationSettingsBase.SettingsKey%2A> to a unique string.</span></span>  
+  
+ <span data-ttu-id="c4b6d-290">Im Gegensatz dazu die <xref:System.Configuration.ApplicationSettingsBase.Context%2A> Eigenschaft bietet Hinweise auf den Einstellungsanbieter auf Werte in einer Weise effizient und systematisch beibehalten werden können.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-290">In contrast, the <xref:System.Configuration.ApplicationSettingsBase.Context%2A> property provides hints to the settings provider to enable it to persist values in an efficient and orderly manner.</span></span>  
+  
+ <span data-ttu-id="c4b6d-291">Die <xref:System.Configuration.SettingChangingEventArgs> Klasse enthält ein ähnliches <xref:System.Configuration.SettingChangingEventArgs.SettingKey%2A> Eigenschaft, die die Quelle der Identifizierung erleichtert die <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> Ereignis.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-291">The <xref:System.Configuration.SettingChangingEventArgs> class contains a similar <xref:System.Configuration.SettingChangingEventArgs.SettingKey%2A> property that helps identify the source of the <xref:System.Configuration.ApplicationSettingsBase.SettingChanging> event.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Context" />
+        <altmember cref="T:System.Configuration.SettingChangingEventArgs" />
+      </Docs>
+    </Member>
+    <Member MemberName="SettingsLoaded">
+      <MemberSignature Language="C#" Value="public event System.Configuration.SettingsLoadedEventHandler SettingsLoaded;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.Configuration.SettingsLoadedEventHandler SettingsLoaded" />
+      <MemberSignature Language="DocId" Value="E:System.Configuration.ApplicationSettingsBase.SettingsLoaded" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event SettingsLoaded As SettingsLoadedEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Configuration::SettingsLoadedEventHandler ^ SettingsLoaded;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsLoadedEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-292">Tritt ein, nachdem die Anwendungseinstellungen vom Speicher abgerufen worden sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-292">Occurs after the application settings are retrieved from storage.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-293">Die <xref:System.Configuration.ApplicationSettingsBase.SettingsLoaded> Ereignis tritt auf, nur nach der Erstkonfiguration `get` Zugriff auf die erste Konfigurationseigenschaft verwendet, in der Regel über die <xref:System.Configuration.ApplicationSettingsBase.Item%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-293">The <xref:System.Configuration.ApplicationSettingsBase.SettingsLoaded> event occurs only after the initial `get` access of the first configuration property used, typically through the <xref:System.Configuration.ApplicationSettingsBase.Item%2A> method.</span></span> <span data-ttu-id="c4b6d-294">Nachfolgende Zugriffe verwenden Werte für die Settings-Eigenschaft, die lokal zwischengespeichert werden.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-294">Subsequent accesses use values for the settings property that are cached locally.</span></span> <span data-ttu-id="c4b6d-295">Die <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> und <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> Methoden werden alle zwischengespeicherten Werte löschen, damit dieses Ereignis bei nachfolgenden Eigenschaftenzugriff erneut ausgelöst wird.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-295">The <xref:System.Configuration.ApplicationSettingsBase.Reset%2A> and <xref:System.Configuration.ApplicationSettingsBase.Reload%2A> methods will clear all cached values so this event will be raised again upon subsequent property access.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsLoaded(System.Object,System.Configuration.SettingsLoadedEventArgs)" />
+        <altmember cref="T:System.Configuration.SettingsLoadedEventArgs" />
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Item(System.String)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reset" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+      </Docs>
+    </Member>
+    <Member MemberName="SettingsSaving">
+      <MemberSignature Language="C#" Value="public event System.Configuration.SettingsSavingEventHandler SettingsSaving;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.Configuration.SettingsSavingEventHandler SettingsSaving" />
+      <MemberSignature Language="DocId" Value="E:System.Configuration.ApplicationSettingsBase.SettingsSaving" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event SettingsSaving As SettingsSavingEventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::Configuration::SettingsSavingEventHandler ^ SettingsSaving;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Configuration.SettingsSavingEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-296">Tritt ein, bevor Werte im Datenspeicher gespeichert werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-296">Occurs before values are saved to the data store.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-297">Die <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> Ereignis wird ausgelöst, durch die <xref:System.Configuration.ApplicationSettingsBase.Save%2A> -Methode auf, bevor sie die Eigenschaften der Anwendung auf ihrer zugeordneten Datenspeicher gespeichert.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-297">The <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> event is raised by the <xref:System.Configuration.ApplicationSettingsBase.Save%2A> method before it stores the application settings properties to their associated data store.</span></span> <span data-ttu-id="c4b6d-298">Der zugeordnete Ereignishandler kann dieses Ereignis abbrechen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-298">The associated event handler can cancel this event.</span></span>  
+  
+   
+  
+## Examples  
+ <span data-ttu-id="c4b6d-299">Das folgende Codebeispiel zeigt die <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> -Ereignishandler für das Objekt vom Typ `FormSettings`, eine Wrapperklasse abgeleitet aus <xref:System.Configuration.ApplicationSettingsBase>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-299">The following code example shows the <xref:System.Configuration.ApplicationSettingsBase.SettingsSaving> event handler for object of type `FormSettings`, which is a wrapper class derived from <xref:System.Configuration.ApplicationSettingsBase>.</span></span> <span data-ttu-id="c4b6d-300">Der Handler fragt die Benutzer aus, um die aktuellen Werte der Anwendungseinstellungseigenschaft speichern.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-300">The handler queries the user to save the current application settings property values.</span></span> <span data-ttu-id="c4b6d-301">Das vollständige Codebeispiel, finden Sie unter der <xref:System.Configuration.ApplicationSettingsBase> -Klassenübersicht.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-301">The full code example is listed in the <xref:System.Configuration.ApplicationSettingsBase> class overview.</span></span>  
+  
+ [!code-cpp[AppSettingsSample#8](~/samples/snippets/cpp/VS_Snippets_Winforms/AppSettingsSample/cpp/AppSettingsSample.cpp#8)]
+ [!code-csharp[AppSettingsSample#8](~/samples/snippets/csharp/VS_Snippets_Winforms/AppSettingsSample/CS/AppSettingsSample.cs#8)]
+ [!code-vb[AppSettingsSample#8](~/samples/snippets/visualbasic/VS_Snippets_Winforms/AppSettingsSample/VB/Form1.vb#8)]  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.OnSettingsSaving(System.Object,System.ComponentModel.CancelEventArgs)" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Save" />
+      </Docs>
+    </Member>
+    <Member MemberName="Upgrade">
+      <MemberSignature Language="C#" Value="public virtual void Upgrade ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Upgrade() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Configuration.ApplicationSettingsBase.Upgrade" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub Upgrade ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Upgrade();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="c4b6d-302">Aktualisiert Anwendungseinstellungen, um eine aktuellere Installation der Anwendung wiederzugeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-302">Updates application settings to reflect a more recent installation of the application.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="c4b6d-303">Die <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> -Methode führt zwei Aktionen, um den reibungslosen Übergang auf eine neue Version einer Anwendung zu gewährleisten:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-303">The <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> method performs two actions to assure smooth transition to a new version of an application:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-304">Benachrichtigt alle entsprechenden Einstellungsanbieter von der Existenz der aktualisierten Anwendung durch einen Aufruf von ihren <xref:System.Configuration.IApplicationSettingsProvider.Upgrade%2A?displayProperty=nameWithType> -Methode, sofern sie implementiert haben die <xref:System.Configuration.IApplicationSettingsProvider> Schnittstelle.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-304">It notifies all of the corresponding settings providers of the existence of the upgraded application through a call to their <xref:System.Configuration.IApplicationSettingsProvider.Upgrade%2A?displayProperty=nameWithType> method, assuming they have implemented the <xref:System.Configuration.IApplicationSettingsProvider> interface.</span></span> <span data-ttu-id="c4b6d-305">Diese Aktion wird nicht ausgeführt, wenn die Wrapperklasse für Anwendungseinstellungen mit gekennzeichnet ist <xref:System.Configuration.NoSettingsVersionUpgradeAttribute>.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-305">This action is not performed if the settings wrapper class is marked with <xref:System.Configuration.NoSettingsVersionUpgradeAttribute>.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-306">Es lädt die Werte für alle Anwendungseinstellungen für die erneut.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-306">It reloads the values for all of the application settings.</span></span>  
+  
+ <span data-ttu-id="c4b6d-307">Sie können das Standardverhalten überschreiben <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> um benutzerdefinierte aktualisieren oder Zusammenführen von Verhalten zu implementieren.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-307">You can override the default behavior of <xref:System.Configuration.ApplicationSettingsBase.Upgrade%2A> to implement custom upgrading or merging behavior.</span></span> <span data-ttu-id="c4b6d-308">Verwenden der <xref:System.Configuration.ApplicationSettingsBase.GetPreviousVersion%2A> Methode, um einzelne Werte für eine Einstellung für die vorherige Version der Anwendung abzurufen.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-308">Use the <xref:System.Configuration.ApplicationSettingsBase.GetPreviousVersion%2A> method to retrieve individual values for a setting for the previous version of the application.</span></span> <span data-ttu-id="c4b6d-309">Beispiele für benutzerdefinierte Upgradeverhalten:</span><span class="sxs-lookup"><span data-stu-id="c4b6d-309">Examples of custom upgrade behavior include:</span></span>  
+  
+-   <span data-ttu-id="c4b6d-310">Mithilfe von neue Richtlinie Standardwerte, die eine oder mehrere der vorherigen Benutzer angegebene Werte überschreiben oder vorherigen Standardwerte.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-310">Using new policy defaults that override one or more of the previous user-specified values or previous defaults.</span></span>  
+  
+-   <span data-ttu-id="c4b6d-311">Spezielle Übersetzung der alten Werte mit neueren Bereiche, eine andere Einstellungseigenschaftengruppe usw. kompatibel sein.</span><span class="sxs-lookup"><span data-stu-id="c4b6d-311">Special translation of old values to be compatible with newer ranges, a different settings property group, and so on.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Configuration.ConfigurationErrorsException">
+          <span data-ttu-id="c4b6d-312">Die Konfigurationsdatei konnte nicht analysiert werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="c4b6d-312">The configuration file could not be parsed.</span>
+          </span>
+        </exception>
+        <altmember cref="P:System.Configuration.ApplicationSettingsBase.Providers" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.Reload" />
+        <altmember cref="M:System.Configuration.ApplicationSettingsBase.GetPreviousVersion(System.String)" />
+        <altmember cref="T:System.Configuration.NoSettingsVersionUpgradeAttribute" />
+        <altmember cref="M:System.Configuration.IApplicationSettingsProvider.Upgrade(System.Configuration.SettingsContext,System.Configuration.SettingsPropertyCollection)" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

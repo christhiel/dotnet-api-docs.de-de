@@ -1,0 +1,1663 @@
+<Type Name="FileLogTraceListener" FullName="Microsoft.VisualBasic.Logging.FileLogTraceListener">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="78cc1b5b2fdd6e02efea469bb7ec414d6f4ba417" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class FileLogTraceListener : System.Diagnostics.TraceListener" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit FileLogTraceListener extends System.Diagnostics.TraceListener" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />
+  <TypeSignature Language="VB.NET" Value="Public Class FileLogTraceListener&#xA;Inherits TraceListener" />
+  <TypeSignature Language="C++ CLI" Value="public ref class FileLogTraceListener : System::Diagnostics::TraceListener" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Diagnostics.TraceListener</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <span data-ttu-id="9abeb-101">Stellt einen einfachen Listener bereit, der Protokollausgaben an eine Datei weiterleitet.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="9abeb-101">Provides a simple listener that directs logging output to file.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-102">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> -Klasse stellt automatisierte Wartungsfunktionen Protokolldateien archivieren Bedarf auf täglich oder pro Anwendung.</span><span class="sxs-lookup"><span data-stu-id="9abeb-102">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class provides automated maintenance capabilities to archive log files as needed, on a daily or per-application basis.</span></span> <span data-ttu-id="9abeb-103">Diese Funktionen zum automatischen Archivierung kann die Wartung Aufgaben von Entwicklern und Administratoren reduziert werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-103">This automatic archival functionality helps reduce the maintenance responsibilities of developers and administrators.</span></span>  
+  
+ <span data-ttu-id="9abeb-104">Eine Instanz von <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> hinzugefügt werden können die <xref:System.Diagnostics.Debug.Listeners%2A?displayProperty=nameWithType> oder <xref:System.Diagnostics.Trace.Listeners%2A?displayProperty=nameWithType> Sammlungen Protokollausgabe in eine Textdatei umleiten.</span><span class="sxs-lookup"><span data-stu-id="9abeb-104">An instance of <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> can be added to the <xref:System.Diagnostics.Debug.Listeners%2A?displayProperty=nameWithType> or <xref:System.Diagnostics.Trace.Listeners%2A?displayProperty=nameWithType> collections to redirect output from logging to a text file.</span></span> <span data-ttu-id="9abeb-105">Instanzen dieser Klasse können auch hinzugefügt werden, um `My.Application.Log` oder `My.Log` (für Webanwendungen) in [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)] Anwendungen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-105">Instances of this class can also be added to `My.Application.Log` or `My.Log` (for Web applications) in [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)] applications.</span></span> <span data-ttu-id="9abeb-106">Weitere Informationen finden Sie unter [Exemplarische Vorgehensweise: ändern, wohin "My.Application.log" schreibt Informationen](~/docs/visual-basic/developing-apps/programming/log-info/walkthrough-changing-where-my-application-log-writes-information.md)`.`</span><span class="sxs-lookup"><span data-stu-id="9abeb-106">For more information, see [Walkthrough: Changing Where My.Application.Log Writes Information](~/docs/visual-basic/developing-apps/programming/log-info/walkthrough-changing-where-my-application-log-writes-information.md)`.`</span></span>  
+  
+ <span data-ttu-id="9abeb-107">Die Hauptfunktionen von dieser Klasse werden zu können:</span><span class="sxs-lookup"><span data-stu-id="9abeb-107">The main features of this class are:</span></span>  
+  
+1.  <span data-ttu-id="9abeb-108">*Archivierung Funktionalität*.</span><span class="sxs-lookup"><span data-stu-id="9abeb-108">*Archival functionality*.</span></span> <span data-ttu-id="9abeb-109">Die von dieser Klasse generierten Protokolldateien heißen gemäß dem Basisnamen und dem Datum wird zusammen mit einer Zahl in die Protokolldatei von aufeinander folgenden Versionen des Protokolls zu unterscheiden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-109">The log files generated by this class are named according to the base name and the date, along with a number to distinguish the log file from successive versions of the log.</span></span> <span data-ttu-id="9abeb-110">Neue Protokolldateien werden auf Basis bei Bedarf erstellt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-110">New log files are created on an as-needed basis.</span></span>  
+  
+     <span data-ttu-id="9abeb-111">Die explizite Form des Dateinamens ist `baseName`[-`dateStamp`] [-`version`] .log, wobei:</span><span class="sxs-lookup"><span data-stu-id="9abeb-111">The explicit form of the file name is `baseName`[-`dateStamp`][-`version`].log, where:</span></span>  
+  
+    -   <span data-ttu-id="9abeb-112">Die `baseName` Teil ist der grundlegende Protokollnamen gemäß der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-112">The `baseName` part is the fundamental log name, specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> property.</span></span>  
+  
+    -   <span data-ttu-id="9abeb-113">Die `dateStamp` Teil hat das Format "YYYY-MM-DD" und wird angezeigt, wenn <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> ist <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> oder <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-113">The `dateStamp` part has the format "YYYY-MM-DD", and it is shown when <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> is <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> or <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span></span>  
+  
+    -   <span data-ttu-id="9abeb-114">Ggf. mehr als eine Protokolldatei mit dem gleichen `baseName` und `dateStamp`, `version` Webpart, ein positiver `Integer`, wird dem Dateinamen hinzugefügt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-114">If more than one log file is needed with the same `baseName` and `dateStamp`, the `version` part, a positive `Integer`, is added to the file name.</span></span>  
+  
+2.  <span data-ttu-id="9abeb-115">*Mehrere Klasseninstanzen*.</span><span class="sxs-lookup"><span data-stu-id="9abeb-115">*Multiple class instances*.</span></span> <span data-ttu-id="9abeb-116">Wenn eine Instanz von der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse schreibt in eine Datei, die verwendet wird:</span><span class="sxs-lookup"><span data-stu-id="9abeb-116">If an instance of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class writes to a file that is in use:</span></span>  
+  
+    -   <span data-ttu-id="9abeb-117">Die Klasse gibt die Datei frei, wenn sie von einer anderen Instanz verwendet wird, wird die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse im gleichen Prozess.</span><span class="sxs-lookup"><span data-stu-id="9abeb-117">The class shares the file if it is being used by another instance of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class in the same process.</span></span>  
+  
+    -   <span data-ttu-id="9abeb-118">Die Klasse erstellt eine neue Protokolldatei mit den Namen des nächsten verfügbar, wenn die Datei von einem anderen Prozess verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="9abeb-118">The class creates a new log file using the next available name if the file is being used by another process.</span></span>  
+  
+3.  <span data-ttu-id="9abeb-119">*Threadsicherheit*.</span><span class="sxs-lookup"><span data-stu-id="9abeb-119">*Thread safety*.</span></span> <span data-ttu-id="9abeb-120">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> -Klasse ist threadsicher.</span><span class="sxs-lookup"><span data-stu-id="9abeb-120">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class is thread safe.</span></span> <span data-ttu-id="9abeb-121">Dadurch können Sie problemlos in das Protokoll aus mehreren Threads Schreiben von Nachrichten ohne Verwendung von Sperren.</span><span class="sxs-lookup"><span data-stu-id="9abeb-121">This allows you to safely write messages to the log from multiple threads without using locks.</span></span>  
+  
+ <span data-ttu-id="9abeb-122">**Protokolldatei Speicherort**</span><span class="sxs-lookup"><span data-stu-id="9abeb-122">**Log-File Location**</span></span>  
+  
+-   <span data-ttu-id="9abeb-123">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> Eigenschaft akzeptiert einen <xref:Microsoft.VisualBasic.Logging.LogFileLocation> Enumeration eines üblichen Verzeichnisse an, die Protokolldatei geschrieben werden soll.</span><span class="sxs-lookup"><span data-stu-id="9abeb-123">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> property takes a <xref:Microsoft.VisualBasic.Logging.LogFileLocation> enumeration to specify one of the typical directories to write the log file to.</span></span>  
+  
+-   <span data-ttu-id="9abeb-124">Um das Protokoll an einen anderen Speicherort zu schreiben, legen die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> Eigenschaft für diesen Speicherort.</span><span class="sxs-lookup"><span data-stu-id="9abeb-124">To write the log to another location, set the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> property to that location.</span></span>  
+  
+ <span data-ttu-id="9abeb-125">**Name der Protokolldatei.**</span><span class="sxs-lookup"><span data-stu-id="9abeb-125">**Log-File Name**</span></span>  
+  
+-   <span data-ttu-id="9abeb-126">Der Basisname der Protokolldatei wird gemäß der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-126">The base name for the log file is specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> property.</span></span>  
+  
+-   <span data-ttu-id="9abeb-127">Name der aktuellen Protokolldatei gelesen werden kann, aus der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-127">The current log file name can be read from the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> property.</span></span> <span data-ttu-id="9abeb-128">Es wird über mehrere weitere Eigenschaften und den aktuellen Status der Protokolle im Dateisystem abgeleitet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-128">It is derived from several other properties and the current state of the logs in the file system.</span></span>  
+  
+ <span data-ttu-id="9abeb-129">**Pflege**</span><span class="sxs-lookup"><span data-stu-id="9abeb-129">**Log Maintenance**</span></span>  
+  
+-   <span data-ttu-id="9abeb-130">Die mindesthäufigkeit für die Erstellung neuer Protokolldateien richtet sich nach der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-130">The minimum frequency for creating new log files is determined by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property.</span></span> <span data-ttu-id="9abeb-131">Wenn der Wert ist <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> oder <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>, eine neue Protokolldatei wird jedem Tag oder Woche mindestens einmal erstellt und einen Datumsstempel in den <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Namen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-131">When the value is <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> or <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>, a new log file is created at least once every day or week, and a date stamp is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.</span></span>  
+  
+-   <span data-ttu-id="9abeb-132">Die maximale Größe (in Bytes) der Protokolldatei richtet sich nach der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-132">The maximum size (in bytes) of the log file is determined by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> property.</span></span> <span data-ttu-id="9abeb-133">Wenn die Größe der Protokolldatei diese Größe überschreitet, werden zusätzliche Nachrichten, die in das Protokoll geschrieben verworfen und, je nach den <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> -Eigenschaft, eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9abeb-133">If the log file size exceeds this size, additional messages written to the log are discarded and, depending on the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property, an exception is thrown.</span></span>  
+  
+-   <span data-ttu-id="9abeb-134">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A> Eigenschaft bestimmt, wie viel freier Speicherplatz (in Byte) verfügbar sein muss.</span><span class="sxs-lookup"><span data-stu-id="9abeb-134">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A> property determines how much free space (in bytes) must be available.</span></span> <span data-ttu-id="9abeb-135">So kann sichergestellt werden, die die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse werden nicht alle verfügbaren Speicherplatz zu nutzen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-135">This helps ensure that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class will not consume all available disk space.</span></span> <span data-ttu-id="9abeb-136">Verwenden der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> Eigenschaft zum Festlegen des Verhaltens von Protokoll schreibt, wenn stehen weniger als <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A> freien Bytes verfügbar.</span><span class="sxs-lookup"><span data-stu-id="9abeb-136">Use the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property to specify the behavior of log writes when there are less than <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A> bytes free.</span></span>  
+  
+ <span data-ttu-id="9abeb-137">**Protokolldatei Ausgabeeinstellungen**</span><span class="sxs-lookup"><span data-stu-id="9abeb-137">**Log-File Output Settings**</span></span>  
+  
+-   <span data-ttu-id="9abeb-138">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.AutoFlush%2A> Eigenschaft gibt an, ob der zugrunde liegende Stream nach jedem Schreibvorgang in die Protokolldatei automatisch geleert werden soll.</span><span class="sxs-lookup"><span data-stu-id="9abeb-138">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.AutoFlush%2A> property specifies whether the underlying stream should be flushed automatically after each write to the log file.</span></span>  
+  
+-   <span data-ttu-id="9abeb-139">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> Eigenschaft gibt an, ob Nachrichten in die aktuelle Protokolldatei anfügen, wenn die zugelassen oder in eine neue Protokolldatei schreiben.</span><span class="sxs-lookup"><span data-stu-id="9abeb-139">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> property specifies whether to append messages to the current log file, if allowed, or write them to a new log file.</span></span>  
+  
+-   <span data-ttu-id="9abeb-140">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft gibt die Zeichenfolge zum begrenzen die Felder in einer Lognachricht verwendet werden soll.</span><span class="sxs-lookup"><span data-stu-id="9abeb-140">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property specifies the string to use for delimiting the fields within a log message.</span></span>  
+  
+-   <span data-ttu-id="9abeb-141">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Encoding%2A> Eigenschaft gibt an, die beim Erstellen einer neuen Protokolldatei zu verwendende Codierung.</span><span class="sxs-lookup"><span data-stu-id="9abeb-141">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Encoding%2A> property specifies the encoding to use when creating a new log file.</span></span>  
+  
+ <span data-ttu-id="9abeb-142">**Protokolldatei Ausgabe**</span><span class="sxs-lookup"><span data-stu-id="9abeb-142">**Log-File Output**</span></span>  
+  
+-   <span data-ttu-id="9abeb-143">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> und <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> Methoden schreiben Nachrichten in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-143">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> and <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> methods write messages to the log file.</span></span> <span data-ttu-id="9abeb-144">Diese Methoden vergleichen die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> Eigenschaft zusammen mit der vorhandenen Protokolle mit den gleichen Basisnamen, um festzustellen, ob ein neues Protokoll erstellt werden soll.</span><span class="sxs-lookup"><span data-stu-id="9abeb-144">These methods check the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property, along with any existing logs with the same base name to determine if a new log should be created.</span></span>  
+  
+-   <span data-ttu-id="9abeb-145">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> Methode leert Nachrichten, die derzeit in den Ausgabepuffer in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-145">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> method flushes any messages currently in the output buffer to the log file.</span></span>  
+  
+-   <span data-ttu-id="9abeb-146">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> Methode schließt die Protokolldatei, damit er von anderen Prozessen verwendet werden kann.</span><span class="sxs-lookup"><span data-stu-id="9abeb-146">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> method closes the log file so that it can be used by other processes.</span></span>  
+  
+ <span data-ttu-id="9abeb-147">**Aktivieren der Ausgabe**</span><span class="sxs-lookup"><span data-stu-id="9abeb-147">**Enabling Output**</span></span>  
+  
+ <span data-ttu-id="9abeb-148">Sie müssen die Ablaufverfolgungs- oder Debuggen verwenden Sie einen Ablaufverfolgungslistener aktivieren.</span><span class="sxs-lookup"><span data-stu-id="9abeb-148">You must enable tracing or debugging to use a trace listener.</span></span> <span data-ttu-id="9abeb-149">Die folgende Syntax ist compilerspezifisch.</span><span class="sxs-lookup"><span data-stu-id="9abeb-149">The following syntax is compiler specific.</span></span> <span data-ttu-id="9abeb-150">Wenn Sie als C#-Compiler verwenden dabei oder [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], finden Sie in der Dokumentation für den Compiler.</span><span class="sxs-lookup"><span data-stu-id="9abeb-150">If you use compilers other than C# or [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], refer to the documentation for your compiler.</span></span>  
+  
+-   <span data-ttu-id="9abeb-151">Fügen Sie zum Aktivieren des Debuggens in C# geschrieben, die `/d:DEBUG` Flag an die Befehlszeile des Compilers beim Kompilieren des Codes, oder Sie fügen `#define DEBUG` an den Anfang der Datei.</span><span class="sxs-lookup"><span data-stu-id="9abeb-151">To enable debugging in C#, add the `/d:DEBUG` flag to the compiler command line when you compile your code, or you can add `#define DEBUG` to the top of your file.</span></span> <span data-ttu-id="9abeb-152">In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], Hinzufügen der `/d:DEBUG=True` -Kennzeichen an die Befehlszeile des Compilers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-152">In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], add the `/d:DEBUG=True` flag to the compiler command line.</span></span>  
+  
+-   <span data-ttu-id="9abeb-153">Fügen Sie zum Aktivieren der Ablaufverfolgung in c# die `/d:TRACE` Flag an die Befehlszeile des Compilers beim Kompilieren des Codes, oder fügen `#define TRACE` an den Anfang der Datei.</span><span class="sxs-lookup"><span data-stu-id="9abeb-153">To enable tracing in C#, add the `/d:TRACE` flag to the compiler command line when you compile your code, or add `#define TRACE` to the top of your file.</span></span> <span data-ttu-id="9abeb-154">In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], Hinzufügen der `/d:TRACE=True` -Kennzeichen an die Befehlszeile des Compilers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-154">In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], add the `/d:TRACE=True` flag to the compiler command line.</span></span>  
+  
+ <span data-ttu-id="9abeb-155">Bearbeiten Sie die Konfigurationsdatei für die Anwendung, zum Festlegen der Ebene des Listeners.</span><span class="sxs-lookup"><span data-stu-id="9abeb-155">To set the level of your listener, edit the configuration file for your application.</span></span> <span data-ttu-id="9abeb-156">In dieser Datei können Sie einen Listener hinzufügen und dessen Typ und Parameter festlegen, einen Listener zu entfernen oder deaktivieren die Listener, die zuvor von der Anwendung festgelegt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-156">Within this file, you can add a listener, set its type and set its parameters, remove a listener, or clear all the listeners previously set by the application.</span></span> <span data-ttu-id="9abeb-157">Die Konfigurationsdatei sollte wie im folgenden Beispiel formatiert werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-157">The configuration file should be formatted like the following example.</span></span>  
+  
+ <span data-ttu-id="9abeb-158">Für dieses Beispiel ausführen müssen Sie den vollqualifizierten Assemblynamen bereitstellen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-158">For this example to run, you must provide the fully qualified assembly name.</span></span> <span data-ttu-id="9abeb-159">Informationen zur Vorgehensweise zum Abrufen der vollqualifizierte Assemblyname finden Sie unter [Assemblynamen](~/docs/framework/app-domains/assembly-names.md).</span><span class="sxs-lookup"><span data-stu-id="9abeb-159">For information about how to obtain the fully qualified assembly name, see [Assembly Names](~/docs/framework/app-domains/assembly-names.md).</span></span>  
+  
+```  
+<configuration>  
+    <system.diagnostics>  
+        <sharedListeners>  
+            <add name="FileLog"  
+                type="Microsoft.VisualBasic.Logging.FileLogTraceListener,   
+                      Microsoft.VisualBasic, Version=8.0.0.0,   
+                      Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a,   
+                      processorArchitecture=MSIL"   
+                initializeData="FileLogWriter"/>  
+        </sharedListeners>  
+    </system.diagnostics>  
+</configuration>  
+```  
+  
+ ]]></format>
+    </remarks>
+    <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName" />
+    <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+    <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+    <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush" />
+    <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close" />
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-160">Initialisiert eine neue Instanz der <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />-Klasse und legt den Namen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-160">Initializes a new instance of the <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" /> class and sets the name.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileLogTraceListener ();" />
+      <MemberSignature Language="ILAsm" Value=".method public specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; FileLogTraceListener();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-161">Initialisiert eine neue Instanz der <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />-Klasse mit dem Standardnamen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-161">Initializes a new instance of the <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" /> class with the default name.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-162">Diese Methode legt den Instanznamen, der die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse auf FileLogTraceListener fest.</span><span class="sxs-lookup"><span data-stu-id="9abeb-162">This method sets the instance name of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class to FileLogTraceListener.</span></span>  
+  
+ <span data-ttu-id="9abeb-163">Sie erreichen den Namen der Instanz über die <xref:System.Diagnostics.TraceListener.Name%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-163">You can access the instance name through the <xref:System.Diagnostics.TraceListener.Name%2A> property.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:Microsoft.VisualBasic.Logging.Log" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileLogTraceListener (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public specialname rtspecialname instance void .ctor(string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.#ctor(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (name As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; FileLogTraceListener(System::String ^ name);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="9abeb-164">
+            <see langword="String" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-164">
+              <see langword="String" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-165">Der Name des Instanzobjekts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-165">The name of the instance object.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-166">Initialisiert eine neue Instanz der <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />-Klasse mit dem angegebenen Namen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-166">Initializes a new instance of the <see cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" /> class with the supplied name.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-167">Diese Methode legt den Instanznamen, der die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse `name`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-167">This method sets the instance name of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class to `name`.</span></span>  
+  
+ <span data-ttu-id="9abeb-168">Sie erreichen den Instanznamen der <xref:System.Diagnostics.TraceListener.Name%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-168">You can access the instance name thought the <xref:System.Diagnostics.TraceListener.Name%2A> property.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:Microsoft.VisualBasic.Logging.Log" />
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="T:Microsoft.VisualBasic.Logging.FileLogTraceListener" />
+      </Docs>
+    </Member>
+    <Member MemberName="Append">
+      <MemberSignature Language="C#" Value="public bool Append { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool Append" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append" />
+      <MemberSignature Language="VB.NET" Value="Public Property Append As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool Append { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-169">Bestimmt, ob die Ausgabe an die aktuelle Datei angefügt oder in eine neue Datei geschrieben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-169">Determines whether to append the output to the current file or write it to a new file.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-170">Ein <see langword="Boolean" />-Wert, wobei <see langword="True" /> angibt, dass die Ausgabe an die aktuelle Datei angefügt wird, wohingegen die Ausgabe bei <see langword="False" /> in eine neue Datei geschrieben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-170">
+              <see langword="Boolean" />, with <see langword="True" /> indicating that the output is appended to the current file, and <see langword="False" /> indicating that output is written to a new file.</span>
+          </span>
+          <span data-ttu-id="9abeb-171">Die Standardeinstellung für diese Eigenschaft ist <see langword="True" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-171">The default setting for this property is <see langword="True" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-172">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> Eigenschaft ist `False`, wird die Ausgabe in eine neue Datei geschrieben.</span><span class="sxs-lookup"><span data-stu-id="9abeb-172">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Append%2A> property is `False`, the output is written to a new file.</span></span> <span data-ttu-id="9abeb-173">Wenn die Eigenschaft den Wert `True`, die Ausgabe wird an die aktuelle Datei angefügt, es sei denn:</span><span class="sxs-lookup"><span data-stu-id="9abeb-173">When the property is `True`, the output is appended to the current file, unless:</span></span>  
+  
+-   <span data-ttu-id="9abeb-174">Die Ausgabedatei wird von einem anderen Prozess gesperrt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-174">The output file is locked by another process.</span></span> <span data-ttu-id="9abeb-175">In diesem Fall wird eine neue Protokolldatei erstellt, mit einer Versionsnummer, die in vorhandenen der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Name.</span><span class="sxs-lookup"><span data-stu-id="9abeb-175">In this situation, a new log file is created with a version number that is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.</span></span>  
+  
+-   <span data-ttu-id="9abeb-176">Die aktuelle Dateigröße ist größer als die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> Eigenschaft ermöglicht.</span><span class="sxs-lookup"><span data-stu-id="9abeb-176">The current file size is greater than what the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A> property allows.</span></span> <span data-ttu-id="9abeb-177">In diesem Fall werden zusätzliche Nachrichten verworfen, und, je nachdem, auf die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> -Eigenschaft, eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="9abeb-177">In this situation, additional messages are discarded and, depending on the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property, an exception is thrown.</span></span>  
+  
+-   <span data-ttu-id="9abeb-178">Der Name der vorhandenen gemäß den vom angegebenen protokollerstellung Zeitplan nicht mehr aktuell ist die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-178">The existing file name is out of date according to the log-creation schedule specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property.</span></span> <span data-ttu-id="9abeb-179">In diesem Fall wird eine neue Protokolldatei erstellt, und der Datumsstempel in den <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Namen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-179">In this situation, a new log file is created and the date stamp is incorporated into the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> name.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule" />
+      </Docs>
+    </Member>
+    <Member MemberName="AutoFlush">
+      <MemberSignature Language="C#" Value="public bool AutoFlush { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool AutoFlush" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.AutoFlush" />
+      <MemberSignature Language="VB.NET" Value="Public Property AutoFlush As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool AutoFlush { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-180">Gibt an, ob beim Schreiben in den Protokolldateistream der Puffer entleert wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-180">Indicates whether or not the writing to the log file stream flushes the buffer.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-181">Ein <see langword="Boolean" />-Wert, wobei <see langword="True" /> angibt, dass der Stream nach jedem Schreibvorgang entleert wird. Andernfalls werden die Protokolleinträge im Puffer gespeichert und können effizienter geschrieben werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-181">
+              <see langword="Boolean" />, with <see langword="True" /> indicating that the stream is flushed after every write; otherwise the log entries are buffered and written more efficiently.</span>
+          </span>
+          <span data-ttu-id="9abeb-182">Die Standardeinstellung für diese Eigenschaft ist <see langword="False" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-182">The default setting for this property is <see langword="False" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-183">Die `False` Einstellung für die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.AutoFlush%2A> Eigenschaft bietet die beste Leistung für die meisten Anwendungen, da es effizienter, mehrere Nachrichten gleichzeitig in die Protokolldatei geschrieben wird.</span><span class="sxs-lookup"><span data-stu-id="9abeb-183">The `False` setting for the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.AutoFlush%2A> property provides the best performance for most applications, because it is more efficient to write multiple messages to the log file at one time.</span></span> <span data-ttu-id="9abeb-184">Sie können die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> Methode, um alle Nachrichten derzeit in der Protokolldatei zu leeren Ausgabe des Puffers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-184">You can use the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> method to flush any messages currently in the log file's output buffer.</span></span> <span data-ttu-id="9abeb-185">Sie können auch die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> -Methode, die implizit den Stream entleert vor dem Schließen der Protokolldatei.</span><span class="sxs-lookup"><span data-stu-id="9abeb-185">You can also use the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> method, which implicitly flushes the stream before closing the log file.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close" />
+      </Docs>
+    </Member>
+    <Member MemberName="BaseFileName">
+      <MemberSignature Language="C#" Value="public string BaseFileName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string BaseFileName" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName" />
+      <MemberSignature Language="VB.NET" Value="Public Property BaseFileName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ BaseFileName { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-186">Ruft den Basisnamen für die Protokolldateien ab, der zum Erstellen des vollständigen Protokolldateinamens verwendet wird, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-186">Gets or sets the base name for the log files, which is used to create the full log-file name.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-187">
+            <see langword="String" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-187">
+              <see langword="String" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-188">Der Basisname für die Protokolldateien.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-188">The base name for the log files.</span>
+          </span>
+          <span data-ttu-id="9abeb-189">Der Standardwert ist der Produktname der Anwendung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-189">The default is the application's product name.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-190">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> Eigenschaft bestimmt den Basisnamen für die Protokolldateien der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> schreibt-Klasse auf.</span><span class="sxs-lookup"><span data-stu-id="9abeb-190">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> property determines the base name for the log files that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class writes to.</span></span>  
+  
+ <span data-ttu-id="9abeb-191">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Eigenschaft ermöglicht es den Namen der aktuellen vollständigen Protokolldatei.</span><span class="sxs-lookup"><span data-stu-id="9abeb-191">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> property gives the current full log-file name.</span></span> <span data-ttu-id="9abeb-192">Es wird gemäß den Pfad des Protokolls, den Basisnamen, das Datum und eine Zahl zur Unterscheidung von verschiedenen Versionen des Protokolls generiert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-192">It is generated according to the log path, the base name, the date, and a number to distinguish it from different versions of the log.</span></span> <span data-ttu-id="9abeb-193">Neue Protokolldateien werden auf Basis bei Bedarf erstellt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-193">New log files are created on an as-needed basis.</span></span>  
+  
+ <span data-ttu-id="9abeb-194">Die explizite Form der Name der Protokolldatei voll ist `path` \\ `baseName`[-`dateStamp`] [-`iteration`] .log, wobei</span><span class="sxs-lookup"><span data-stu-id="9abeb-194">The explicit form of the full log file name is `path`\\`baseName`[-`dateStamp`][-`iteration`].log, where</span></span>  
+  
+-   <span data-ttu-id="9abeb-195">Die `path` Teil richtet sich nach der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> Eigenschaft und, wenn dieser Eigenschaftswert, um festgelegt ist <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-195">The `path` part is determined by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> property and, if that property value is set to <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>, the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> property.</span></span>  
+  
+-   <span data-ttu-id="9abeb-196">Die `baseName` Teil ist der grundlegende Protokollnamen gemäß der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-196">The `baseName` part is the fundamental log name, specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> property.</span></span>  
+  
+-   <span data-ttu-id="9abeb-197">Die `dateStamp` Teil hat das Format "YYYY-MM-DD" und wird angezeigt, wenn <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> festgelegt ist, um <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> oder <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-197">The `dateStamp` part has the format "YYYY-MM-DD", and it is shown when <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> is set to <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> or <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span></span>  
+  
+-   <span data-ttu-id="9abeb-198">Ggf. mehr als eine Protokolldatei mit dem gleichen `baseName` und `dateStamp`, `iteration` Webpart, ein positiver `Integer`, wird dem Dateinamen hinzugefügt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-198">If more than one log file is needed with the same `baseName` and `dateStamp`, the `iteration` part, a positive `Integer`, is added to the file name.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" />
+        <altmember cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.Custom" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule" />
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public override void Close ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Close() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Close ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Close();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-199">Schließt den der aktuellen Protokolldatei zugrunde liegenden Stream und gibt alle Ressourcen frei, die dem aktuellen Stream zugeordnet sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-199">Closes the underlying stream for the current log file and releases any resources associated with the current stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-200">Sie müssen nicht Aufrufen der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> Methode explizit, da die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse verwaltet den zugrunde liegenden Stream.</span><span class="sxs-lookup"><span data-stu-id="9abeb-200">You do not need to call the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Close%2A> method explicitly, because the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class manages the underlying steam.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CustomLocation">
+      <MemberSignature Language="C#" Value="public string CustomLocation { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string CustomLocation" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation" />
+      <MemberSignature Language="VB.NET" Value="Public Property CustomLocation As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ CustomLocation { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>get: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-201">Ruft das Verzeichnis der Protokolldateien ab oder legt dieses fest, wenn die <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" />-Eigenschaft auf <see cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.Custom" /> festgelegt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-201">Gets or sets the log file directory when the <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" /> property is set to <see cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.Custom" />.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-202">Ein <see langword="String" />, der den Namen des Protokolldateiverzeichnisses angibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-202">
+              <see langword="String" />, which is the name of the log-file directory.</span>
+          </span>
+          <span data-ttu-id="9abeb-203">Die Standardeinstellung für diese Eigenschaft ist das Anwendungsdatenverzeichnis des Benutzers.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-203">The default setting for this property is the user's directory for application data.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-204">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> -Eigenschaft gesetzt ist, wird auch die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> Eigenschaft, um <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-204">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> property is set, it also sets the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> property to <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>.</span></span>  
+  
+ <span data-ttu-id="9abeb-205">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> -Eigenschaft löst eine Ausnahme aus, wenn das Verzeichnis nicht aufgelöst werden kann.</span><span class="sxs-lookup"><span data-stu-id="9abeb-205">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> property will throw an exception if the directory cannot be resolved.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" />
+      </Docs>
+    </Member>
+    <Member MemberName="Delimiter">
+      <MemberSignature Language="C#" Value="public string Delimiter { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Delimiter" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter" />
+      <MemberSignature Language="VB.NET" Value="Public Property Delimiter As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ Delimiter { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-206">Ruft das Trennzeichen ab, das zum Begrenzen der Felder in einer Protokollmeldung verwendet wird, oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-206">Gets or sets the delimiter used to delimit fields within a log message.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-207">Ein <see langword="String" />, der das für die Felder in einer Protokollmeldung verwendete Trennzeichen ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-207">
+              <see langword="String" />, which is the delimiter used for fields within a log message.</span>
+          </span>
+          <span data-ttu-id="9abeb-208">Die Standardeinstellung für diese Eigenschaft ist das Tabstoppzeichen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-208">The default setting for this property is the TAB character.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-209">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft können Sie das Standardtrennzeichen zu ändern.</span><span class="sxs-lookup"><span data-stu-id="9abeb-209">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property allows you to change the default delimiter.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DiskSpaceExhaustedBehavior">
+      <MemberSignature Language="C#" Value="public Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption DiskSpaceExhaustedBehavior { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption DiskSpaceExhaustedBehavior" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior" />
+      <MemberSignature Language="VB.NET" Value="Public Property DiskSpaceExhaustedBehavior As DiskSpaceExhaustedOption" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::VisualBasic::Logging::DiskSpaceExhaustedOption DiskSpaceExhaustedBehavior { Microsoft::VisualBasic::Logging::DiskSpaceExhaustedOption get(); void set(Microsoft::VisualBasic::Logging::DiskSpaceExhaustedOption value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-210">Bestimmt die Vorgehensweise, wenn beim Schreiben in die Protokolldatei weniger freier Speicherplatz vorhanden ist, als die <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" />-Eigenschaft angibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-210">Determines what to do when writing to the log file and there is less free disk space available than specified by the <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" /> property.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-211">
+            <see cref="T:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-211">
+              <see cref="T:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-212">Bestimmt die Vorgehensweise, wenn beim Schreiben in die Protokolldatei weniger freier Speicherplatz vorhanden ist, als die <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" />-Eigenschaft angibt, oder wenn die Größe der Protokolldatei den höchstzulässigen Wert der <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" />-Eigenschaft überschreitet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-212">Determines what to do when attempting to write to the log file and there is less free disk space available than specified by the <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" /> property, or if the log file size is greater than what the <see cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" /> property allows.</span>
+          </span>
+          <span data-ttu-id="9abeb-213">Der Standardwert ist <see cref="F:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.DiscardMessages" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-213">The default value is <see cref="F:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.DiscardMessages" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-214">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> -Eigenschaftensatz auf <xref:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.DiscardMessages>, die protokollmeldungen werden automatisch verworfen werden, wenn nicht genügend reservierte Speicherplatz vorhanden ist.</span><span class="sxs-lookup"><span data-stu-id="9abeb-214">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property is set to <xref:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.DiscardMessages>, the log messages are silently discarded if there is not enough reserved disk space.</span></span> <span data-ttu-id="9abeb-215">Dies ist das Standardverhalten, und es wird verhindert, dass einfache Anwendungen fehlschlägt, wenn der Datenträger zu voll abruft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-215">This is the default behavior, and it prevents simple applications from failing if the disk gets too full.</span></span>  
+  
+ <span data-ttu-id="9abeb-216">Robustere Anwendungen können festlegen, die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> Eigenschaft <xref:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.ThrowException>, und fügen `Try...Catch` -Blöcke für Code, der in das Protokoll schreibt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-216">More robust applications can set the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property to <xref:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption.ThrowException>, and add `Try...Catch` blocks around all code that writes to the log.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:Microsoft.VisualBasic.Logging.DiskSpaceExhaustedOption" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" />
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Dispose(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub Dispose (disposing As Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void Dispose(bool disposing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">
+          <span data-ttu-id="9abeb-217">Bei <see langword="True" /> werden sowohl verwaltete als auch nicht verwaltete Ressourcen, bei <see langword="False" /> nur nicht verwaltete Ressourcen freigegeben.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-217">
+              <see langword="True" /> releases both managed and unmanaged resources; <see langword="False" /> releases only unmanaged resources.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-218">Schließt den zugrunde liegenden Stream und gibt optional die verwalteten Ressourcen frei.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-218">Closes the underlying stream and optionally releases the managed resources.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-219">Wenn der `disposing`-Parameter `True` ist, gibt diese Methode sämtliche Ressourcen frei, die für verwaltete Objekte reserviert sind, auf die dieser <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> verweist.</span><span class="sxs-lookup"><span data-stu-id="9abeb-219">When the `disposing` parameter is `True`, this method releases all resources held by any managed objects that this <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> references.</span></span> <span data-ttu-id="9abeb-220">Diese Methode ruft die `Dispose`-Methode aller Objekte auf, auf die verwiesen wird.</span><span class="sxs-lookup"><span data-stu-id="9abeb-220">This method invokes the `Dispose` method of each referenced object.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="9abeb-221">
+              <see langword="Dispose" /> kann von anderen Objekten mehrmals aufgerufen werden.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="9abeb-221">
+                <see langword="Dispose" /> can be called multiple times by other objects.</span>
+            </span>
+            <span data-ttu-id="9abeb-222">Beim Überschreiben von <see langword="Dispose" /> müssen Sie darauf achten, nicht auf Objekte zu verweisen, die durch einen früheren Aufruf von <see langword="Dispose" /> freigegeben wurden.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="9abeb-222">When overriding <see langword="Dispose" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />.</span>
+            </span>
+            <span data-ttu-id="9abeb-223">Diese Methode ruft die <see langword="Dispose" /> Methode der Basisklasse, <see langword="Dispose" />.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="9abeb-223">This method calls the <see langword="Dispose" /> method of the base class, <see langword="Dispose" />.</span>
+            </span>
+          </para>
+        </block>
+      </Docs>
+    </Member>
+    <Member MemberName="Encoding">
+      <MemberSignature Language="C#" Value="public System.Text.Encoding Encoding { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Text.Encoding Encoding" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Encoding" />
+      <MemberSignature Language="VB.NET" Value="Public Property Encoding As Encoding" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Text::Encoding ^ Encoding { System::Text::Encoding ^ get(); void set(System::Text::Encoding ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.Encoding</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-224">Ruft die Codierung ab, die beim Erstellen einer neuen Protokolldatei verwendet werden soll, oder legt diese fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-224">Gets or sets the encoding to use when creating a new log file.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-225">
+            <see cref="T:System.Text.Encoding" />, die Codierung, die beim Erstellen einer neuen Protokolldatei verwendet werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-225">
+              <see cref="T:System.Text.Encoding" />, which is the encoding to use when creating a new log file.</span>
+          </span>
+          <span data-ttu-id="9abeb-226">Der Standardwert dieser Eigenschaft ist <see cref="T:System.Text.UTF8Encoding" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-226">The default value of this property is <see cref="T:System.Text.UTF8Encoding" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-227">Beim Anfügen von Text an eine vorhandene Protokolldatei die Codierung für diese Datei anstatt durch die angegebene Codierung verwendet die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Encoding%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-227">When appending text to an existing log file, the encoding for that file is used instead of the encoding specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Encoding%2A> property.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Text.Encoding" />
+        <altmember cref="T:System.Text.UTF8Encoding" />
+      </Docs>
+    </Member>
+    <Member MemberName="Flush">
+      <MemberSignature Language="C#" Value="public override void Flush ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Flush() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Flush ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Flush();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-228">Entleert den zugrunde liegenden Stream, der in die aktuelle Protokolldatei schreibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-228">Flushes the underlying stream that writes to the current log file.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-229">Verwenden der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> Methode, um alle gepufferten Daten in der aktuellen Protokolldatei zu schreiben.</span><span class="sxs-lookup"><span data-stu-id="9abeb-229">Use the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Flush%2A> method to write all buffered data to the current log file.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FullLogFileName">
+      <MemberSignature Language="C#" Value="public string FullLogFileName { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string FullLogFileName" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property FullLogFileName As String" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ FullLogFileName { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>get: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-230">Ruft den vollständigen Namen der aktuellen Protokolldatei ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-230">Gets the current full log-file name.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-231">Ein <see langword="String" />, der vollständige Name der aktuellen Protokolldatei.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-231">
+              <see langword="String" />, which is the current full log-file name.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-232">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> Eigenschaft ermöglicht es den Namen der aktuellen vollständigen Protokolldatei.</span><span class="sxs-lookup"><span data-stu-id="9abeb-232">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A> property gives the current full log-file name.</span></span> <span data-ttu-id="9abeb-233">Es wird gemäß den Pfad des Protokolls, den Basisnamen, das Datum und eine Zahl zur Unterscheidung von verschiedenen Versionen des Protokolls generiert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-233">It is generated according to the log path, the base name, the date, and a number to distinguish it from different versions of the log.</span></span> <span data-ttu-id="9abeb-234">Neue Protokolldateien werden auf Basis bei Bedarf erstellt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-234">New log files are created on an as-needed basis.</span></span>  
+  
+ <span data-ttu-id="9abeb-235">Die explizite Form der der vollständige Dateiname des Protokolls wird `path` \\ `baseName`[-`dateStamp`] [-`iteration`] .log, wobei:</span><span class="sxs-lookup"><span data-stu-id="9abeb-235">The explicit form of the full log-file name is `path`\\`baseName`[-`dateStamp`][-`iteration`].log, where:</span></span>  
+  
+-   <span data-ttu-id="9abeb-236">Die `path` Teil richtet sich nach der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> Eigenschaft und, wenn dieser Eigenschaftswert, um festgelegt ist <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-236">The `path` part is determined by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> property and, if that property value is set to <xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>, the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> property.</span></span>  
+  
+-   <span data-ttu-id="9abeb-237">Die `baseName` Teil ist der grundlegende Protokollnamen gemäß der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-237">The `baseName` part is the fundamental log name, specified by the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName%2A> property.</span></span>  
+  
+-   <span data-ttu-id="9abeb-238">Die `dateStamp` Teil hat das Format JJJJ-MM-TT und wird angezeigt, wenn <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> ist <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> oder <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-238">The `dateStamp` part has the format YYYY-MM-DD, and it is shown when <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> is <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily> or <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>.</span></span>  
+  
+-   <span data-ttu-id="9abeb-239">Ggf. mehr als eine Protokolldatei mit dem gleichen `baseName` und `dateStamp`, `iteration` Webpart, ein positiver `Integer`, wird dem Dateinamen hinzugefügt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-239">If more than one log file is needed with the same `baseName` and `dateStamp`, the `iteration` part, a positive `Integer`, is added to the file name.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.BaseFileName" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" />
+        <altmember cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.Custom" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetSupportedAttributes">
+      <MemberSignature Language="C#" Value="protected override string[] GetSupportedAttributes ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance string[] GetSupportedAttributes() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.GetSupportedAttributes" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function GetSupportedAttributes () As String()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override cli::array &lt;System::String ^&gt; ^ GetSupportedAttributes();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-240">Ruft die vom Ablaufverfolgungslistener unterstützten benutzerdefinierten XML-Konfigurationsattribute ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-240">Gets the custom XML configuration attributes supported by the trace listener.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="9abeb-241">Ein <see langword="String" />-Array, das die von diesem Listener erkannten XML-Konfigurationsattribute enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-241">
+              <see langword="String" /> array containing the XML configuration attributes recognized by this listener.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-242">Die benutzerdefinierten Attribute für die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> können verwendet werden, in der XML-Konfigurationsdatei zum Steuern des Verhaltens einer Instanz von der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> Klasse.</span><span class="sxs-lookup"><span data-stu-id="9abeb-242">The custom attributes for the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> can be used in the XML configuration file for controlling the behavior of an instance of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class.</span></span> <span data-ttu-id="9abeb-243">Andere Attribute verwenden, führt dazu, dass eine Konfigurationsausnahme.</span><span class="sxs-lookup"><span data-stu-id="9abeb-243">Using any other attribute causes a configuration exception.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Diagnostics.TraceSource.GetSupportedAttributes" />
+      </Docs>
+    </Member>
+    <Member MemberName="IncludeHostName">
+      <MemberSignature Language="C#" Value="public bool IncludeHostName { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IncludeHostName" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName" />
+      <MemberSignature Language="VB.NET" Value="Public Property IncludeHostName As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IncludeHostName { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-244">Gibt an, ob der Hostname des protokollierenden Computers in die Ausgabe aufgenommen werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-244">Indicates whether or not the host name of the logging machine should be included in the output.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-245">
+            <see langword="Boolean" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-245">
+              <see langword="Boolean" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-246">Verwenden Sie <see langword="True" />, um den Hostbezeichner aufzunehmen, andernfalls <see langword="False" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-246">Use <see langword="True" /> if the host identifier should be included; otherwise use <see langword="False" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-247">Der Standardwert ist <see langword="False" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-247">The default value is <see langword="False" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-248">Verwenden Sie die Eigenschaft so konfigurieren Sie das Verhalten der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> und <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> Methoden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-248">Use the property to configure the behavior of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> and <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> methods.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Location">
+      <MemberSignature Language="C#" Value="public Microsoft.VisualBasic.Logging.LogFileLocation Location { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Microsoft.VisualBasic.Logging.LogFileLocation Location" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location" />
+      <MemberSignature Language="VB.NET" Value="Public Property Location As LogFileLocation" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::VisualBasic::Logging::LogFileLocation Location { Microsoft::VisualBasic::Logging::LogFileLocation get(); void set(Microsoft::VisualBasic::Logging::LogFileLocation value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.VisualBasic.Logging.LogFileLocation</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-249">Ruft den Speicherort für die Protokolldateien ab, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-249">Gets or sets location for the log files.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-250">
+            <see cref="T:Microsoft.VisualBasic.Logging.LogFileLocation" />, gibt den Speicherort für die Protokolldatei an.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-250">
+              <see cref="T:Microsoft.VisualBasic.Logging.LogFileLocation" />, which is the location for the log file.</span>
+          </span>
+          <span data-ttu-id="9abeb-251">Der Standardwert ist <see cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.LocalUserApplicationDirectory" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-251">The default value is <see cref="F:Microsoft.VisualBasic.Logging.LogFileLocation.LocalUserApplicationDirectory" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-252">Verwenden der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> -Eigenschaft zum Festlegen des Pfads des Protokolls auf einen der vordefinierten Pfade bestimmt, indem die <xref:Microsoft.VisualBasic.Logging.LogFileLocation> Enumerationswerte.</span><span class="sxs-lookup"><span data-stu-id="9abeb-252">Use the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Location%2A> property to set the log path to one of the predefined paths, determined by the <xref:Microsoft.VisualBasic.Logging.LogFileLocation> enumeration values.</span></span>  
+  
+|<span data-ttu-id="9abeb-253">**Location-Wert**</span><span class="sxs-lookup"><span data-stu-id="9abeb-253">**Location value**</span></span>|<span data-ttu-id="9abeb-254">**Pfad**</span><span class="sxs-lookup"><span data-stu-id="9abeb-254">**Path**</span></span>|  
+|------------------------|--------------|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileLocation.CommonApplicationDirectory>|<span data-ttu-id="9abeb-255">Der Pfad für die Anwendungsdaten, die für alle Benutzer, mit dem Format freigegeben werden:</span><span class="sxs-lookup"><span data-stu-id="9abeb-255">The path for the application data that is shared among all users, with the format:</span></span><br /><br /> `BasePath`\\`CompanyName`\\`ProductName`\\`ProductVersion`<br /><br /> <span data-ttu-id="9abeb-256">Ein häufig angegebener Wert für `BasePath` ist:</span><span class="sxs-lookup"><span data-stu-id="9abeb-256">A typical value for `BasePath` is:</span></span><br /><br /> <span data-ttu-id="9abeb-257">C:\Documents and Einstellungen\All Einstellungen\Alle Daten</span><span class="sxs-lookup"><span data-stu-id="9abeb-257">C:\Documents and Settings\All Users\Application Data</span></span><br /><br /> <span data-ttu-id="9abeb-258">Die Werte der `CompanyName`, `ProductName`, und `ProductVersion` stammen aus der Assembly.</span><span class="sxs-lookup"><span data-stu-id="9abeb-258">The values of `CompanyName`, `ProductName`, and `ProductVersion` come from the assembly.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileLocation.ExecutableDirectory>|<span data-ttu-id="9abeb-259">Der Pfad für die ausführbare Datei, die die Anwendung gestartet hat.</span><span class="sxs-lookup"><span data-stu-id="9abeb-259">The path for the executable file that started the application.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileLocation.LocalUserApplicationDirectory>|<span data-ttu-id="9abeb-260">Der Pfad für die Anwendungsdaten eines Benutzers, mit dem Format:</span><span class="sxs-lookup"><span data-stu-id="9abeb-260">The path for the application data of a user, with the format:</span></span><br /><br /> `BasePath`\\`CompanyName`\\`ProductName`\\`ProductVersion`<br /><br /> <span data-ttu-id="9abeb-261">Ein häufig angegebener Wert für `BasePath` ist:</span><span class="sxs-lookup"><span data-stu-id="9abeb-261">A typical value for `BasePath` is:</span></span><br /><br /> <span data-ttu-id="9abeb-262">C:\Dokumente und Einstellungen\\`username`\Anwendungsdaten</span><span class="sxs-lookup"><span data-stu-id="9abeb-262">C:\Documents and Settings\\`username`\Application Data</span></span><br /><br /> <span data-ttu-id="9abeb-263">Die Werte der `CompanyName`, `ProductName`, und `ProductVersion` stammen aus der Assembly.</span><span class="sxs-lookup"><span data-stu-id="9abeb-263">The values of `CompanyName`, `ProductName`, and `ProductVersion` come form the assembly.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileLocation.TempDirectory>|<span data-ttu-id="9abeb-264">Der Pfad des temporären Ordners des aktuellen Systems.</span><span class="sxs-lookup"><span data-stu-id="9abeb-264">The path of the current system's temporary folder.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileLocation.Custom>|<span data-ttu-id="9abeb-265">Wenn die Zeichenfolge durch angegebene <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> ist nicht leer ist, und klicken Sie dann als Pfad verwenden; verwenden Sie andernfalls den Pfad für die Anwendungsdaten eines Benutzers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-265">If the string specified by <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.CustomLocation%2A> is not empty, then use it as the path; otherwise use the path for the application data of a user.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:Microsoft.VisualBasic.Logging.LogFileLocation" />
+      </Docs>
+    </Member>
+    <Member MemberName="LogFileCreationSchedule">
+      <MemberSignature Language="C#" Value="public Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption LogFileCreationSchedule { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption LogFileCreationSchedule" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule" />
+      <MemberSignature Language="VB.NET" Value="Public Property LogFileCreationSchedule As LogFileCreationScheduleOption" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::VisualBasic::Logging::LogFileCreationScheduleOption LogFileCreationSchedule { Microsoft::VisualBasic::Logging::LogFileCreationScheduleOption get(); void set(Microsoft::VisualBasic::Logging::LogFileCreationScheduleOption value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-266">Bestimmt das Datum, das in die Namen der Protokolldateien eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-266">Determines which date to include in the names of the log files.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-267">
+            <see cref="T:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-267">
+              <see cref="T:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-268">Dies gibt das Datum an, das in die Namen der Protokolldateien eingefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-268">This indicates which date to include in the log-file names.</span>
+          </span>
+          <span data-ttu-id="9abeb-269">Der Standardwert ist <see cref="F:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.None" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-269">The default value is <see cref="F:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.None" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-270">Zuweisen eines der <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption> -Enumerationswerte zum die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> Eigenschaft, um das Datum, das die Namen der Protokolldateien einschließt anzugeben.</span><span class="sxs-lookup"><span data-stu-id="9abeb-270">Assign one of the <xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption> enumeration values to the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.LogFileCreationSchedule%2A> property to specify which date to include in the names of the log files.</span></span>  
+  
+ <span data-ttu-id="9abeb-271">Das Format des Datums ist JJJJ-MM-TT.</span><span class="sxs-lookup"><span data-stu-id="9abeb-271">The format of the date is YYYY-MM-DD.</span></span> <span data-ttu-id="9abeb-272">Weitere Informationen zum Format der Name der Protokolldatei finden Sie unter <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-272">For more information on the format of the log file name, see <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span></span>  
+  
+|<span data-ttu-id="9abeb-273">**LogFileCreationSchedule-Wert**</span><span class="sxs-lookup"><span data-stu-id="9abeb-273">**LogFileCreationSchedule value**</span></span>|<span data-ttu-id="9abeb-274">**Das Datum in den Protokolldateinamen**</span><span class="sxs-lookup"><span data-stu-id="9abeb-274">**Date in the log file name**</span></span>|  
+|---------------------------------------|-----------------------------------|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Daily>|<span data-ttu-id="9abeb-275">Schließt das aktuelle Datum in den Namen der Protokolldatei ein.</span><span class="sxs-lookup"><span data-stu-id="9abeb-275">Include the current date in the log file name.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.None>|<span data-ttu-id="9abeb-276">Schließt kein Datum in den Namen der Protokolldatei ein.</span><span class="sxs-lookup"><span data-stu-id="9abeb-276">Do not include the date in the log file name.</span></span>|  
+|<xref:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption.Weekly>|<span data-ttu-id="9abeb-277">Schließt den ersten Tag der laufenden Woche in den Namen der Protokolldatei ein.</span><span class="sxs-lookup"><span data-stu-id="9abeb-277">Include the first day of the current week in the log file name.</span></span><br /><br /> <span data-ttu-id="9abeb-278">Die Woche beginnt am Samstag.</span><span class="sxs-lookup"><span data-stu-id="9abeb-278">The week starts on Saturday.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:Microsoft.VisualBasic.Logging.LogFileCreationScheduleOption" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+      </Docs>
+    </Member>
+    <Member MemberName="MaxFileSize">
+      <MemberSignature Language="C#" Value="public long MaxFileSize { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int64 MaxFileSize" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize" />
+      <MemberSignature Language="VB.NET" Value="Public Property MaxFileSize As Long" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property long MaxFileSize { long get(); void set(long value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-279">Ruft die höchstzulässige Größe der Protokolldatei (in Bytes) ab oder legt diese fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-279">Gets or sets the maximum allowed size of the log file, in bytes.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-280">
+            <see langword="Long" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-280">
+              <see langword="Long" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-281">Dies ist die höchstzulässige Protokolldateigröße, in Bytes.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-281">This is the maximum allowed log-file size, in bytes.</span>
+          </span>
+          <span data-ttu-id="9abeb-282">Der Standardwert ist 5000000.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-282">The default value is 5000000.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-283">Verwenden Sie diese Eigenschaft, um sicherzustellen, dass die Protokolldateien nicht zu groß werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-283">Use this property to make sure that the log files do not grow too large.</span></span>  
+  
+ <span data-ttu-id="9abeb-284">Wenn die Größe (in Byte) Protokolldatei ist größer als der Wert dieser Eigenschaft bei der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> -Klasse versucht, eine Meldung im Ereignisprotokoll zu schreiben, wird die Nachricht verworfen, und der Fehler ist, ob eine automatische oder eine Ausnahme wird ausgelöst, abhängig vom Wert der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A>Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-284">If the log file size (in bytes) is greater than the value of this property, then when the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class attempts to write a message to the log, the message is discarded and the failure is either silent or an exception is thrown depending on the value of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property.</span></span> <span data-ttu-id="9abeb-285">Hingegen ist die Nachricht in das Protokoll geschrieben, wenn die Menge des freien Speicherplatzes (in Bytes) ist kleiner als <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-285">Otherwise, the message is written to the log, if the amount of free disk space (in bytes) is less than <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace%2A>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9abeb-286">Tritt ein, wenn die Eigenschaft wird auf einen Wert unter 1000 festgelegt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-286">When this property is set to a value less than 1000.</span>
+          </span>
+        </exception>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+      </Docs>
+    </Member>
+    <Member MemberName="ReserveDiskSpace">
+      <MemberSignature Language="C#" Value="public long ReserveDiskSpace { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int64 ReserveDiskSpace" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.ReserveDiskSpace" />
+      <MemberSignature Language="VB.NET" Value="Public Property ReserveDiskSpace As Long" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property long ReserveDiskSpace { long get(); void set(long value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>set: System.Security.SecuritySafeCritical</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-287">Ruft den freien Speicherplatz in Bytes ab, der benötigt wird, um Meldungen in die Protokolldatei zu schreiben, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-287">Gets or sets the amount of free disk space, in bytes, necessary before messages can be written to the log file.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="9abeb-288">
+            <see langword="Long" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-288">
+              <see langword="Long" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-289">Dies ist die erforderliche Menge an freiem Speicherplatz.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-289">This is the amount of free disk space necessary.</span>
+          </span>
+          <span data-ttu-id="9abeb-290">Der Standardwert ist 10000000.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-290">The default value is 10000000.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-291">Verwenden Sie diese Eigenschaft, um sicherzustellen, dass die Protokolldateien den Datenträger nicht vollständig aufgefüllt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-291">Use this property to make sure that the log files do not completely fill the disk.</span></span>  
+  
+ <span data-ttu-id="9abeb-292">Wenn Speicherplatz, der den Umfang des freien Speicherplatzes (in Byte) ist kleiner als der Wert dieser Eigenschaft, wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> -Klasse versucht, eine Meldung im Ereignisprotokoll zu schreiben, wird die Nachricht verworfen, und der Fehler ist, ob eine automatische oder eine Ausnahme wird ausgelöst, abhängig vom Wert der < C2 > <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A>  Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-292">If the amount of free disk space (in bytes) is less than the value of this property, then when the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener> class attempts to write a message to the log, the message is discarded and the failure is either silent or an exception is thrown depending on the value of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior%2A> property.</span></span> <span data-ttu-id="9abeb-293">Andernfalls wird die Nachricht in das Protokoll geschrieben, ist die Größe der Protokolldatei (in Bytes) größer als <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-293">Otherwise, the message is written to the log, if the log file size (in bytes) is greater than <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.MaxFileSize%2A>.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="9abeb-294">Tritt ein, wenn die Eigenschaft wird auf einen Wert unter 0 festgelegt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-294">When this property is set to a value less than 0.</span>
+          </span>
+        </exception>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.DiskSpaceExhaustedBehavior" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="TraceData">
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-295">Schreibt Ablaufverfolgungsdaten in die Ausgabedatei.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-295">Writes trace data to the output file.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-296"><xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> Methoden dürfen nicht von Anwendungscode aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-296"><xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> methods are not intended to be called by application code.</span></span> <span data-ttu-id="9abeb-297">Diese Methoden werden aufgerufen, von einem Mitglied der <xref:System.Diagnostics.Debug>, <xref:System.Diagnostics.Trace>, und <xref:System.Diagnostics.TraceSource> Klassen zum Schreiben von auszugebenden Ablaufverfolgungsdaten.</span><span class="sxs-lookup"><span data-stu-id="9abeb-297">These methods are called by members of the <xref:System.Diagnostics.Debug>, <xref:System.Diagnostics.Trace>, and <xref:System.Diagnostics.TraceSource> classes to write trace data to output.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="TraceData">
+      <MemberSignature Language="C#" Value="public override void TraceData (System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, object data);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void TraceData(class System.Diagnostics.TraceEventCache eventCache, string source, valuetype System.Diagnostics.TraceEventType eventType, int32 id, object data) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub TraceData (eventCache As TraceEventCache, source As String, eventType As TraceEventType, id As Integer, data As Object)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void TraceData(System::Diagnostics::TraceEventCache ^ eventCache, System::String ^ source, System::Diagnostics::TraceEventType eventType, int id, System::Object ^ data);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="eventCache" Type="System.Diagnostics.TraceEventCache" />
+        <Parameter Name="source" Type="System.String" />
+        <Parameter Name="eventType" Type="System.Diagnostics.TraceEventType" />
+        <Parameter Name="id" Type="System.Int32" />
+        <Parameter Name="data" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="eventCache">
+          <span data-ttu-id="9abeb-298">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-298">A <see cref="T:System.Diagnostics.TraceEventCache" /> object that contains the current process ID, thread ID, and stack trace information.</span>
+          </span>
+        </param>
+        <param name="source">
+          <span data-ttu-id="9abeb-299">Der Name der Ablaufverfolgungsquelle, die diese Methode aufgerufen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-299">A name of the trace source that invoked this method.</span>
+          </span>
+        </param>
+        <param name="eventType">
+          <span data-ttu-id="9abeb-300">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Enumerationswerte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-300">One of the <see cref="T:System.Diagnostics.TraceEventType" /> enumeration values.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="9abeb-301">Ein numerischer Bezeichner für das Ereignis.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-301">A numeric identifier for the event.</span>
+          </span>
+        </param>
+        <param name="data">
+          <span data-ttu-id="9abeb-302">Die auszugebenden Ablaufverfolgungsdaten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-302">The trace data to emit.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-303">Schreibt Ablaufverfolgungsinformationen, ein Datenobjekt und Ereignisinformationen in die Ausgabedatei oder den Stream.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-303">Writes trace information, a data object, and event information to the output file or stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-304">Diese Methode:</span><span class="sxs-lookup"><span data-stu-id="9abeb-304">This method:</span></span>  
+  
+1.  <span data-ttu-id="9abeb-305">Formatiert die Daten und dem angegebenen Kontext Informationen für die Ausgabe an.</span><span class="sxs-lookup"><span data-stu-id="9abeb-305">Formats the data and context information for output.</span></span>  
+  
+2.  <span data-ttu-id="9abeb-306">Eine neue Protokolldatei erstellt, bei Bedarf.</span><span class="sxs-lookup"><span data-stu-id="9abeb-306">Creates a new log file, if necessary.</span></span>  
+  
+3.  <span data-ttu-id="9abeb-307">Schreibt die Informationen in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-307">Writes the information to the log file.</span></span>  
+  
+ <span data-ttu-id="9abeb-308">Weitere Informationen zum Erstellen von neuen Protokolldateien finden Sie unter <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-308">For more information on creating new log files, see <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span></span>  
+  
+ <span data-ttu-id="9abeb-309">In der folgenden Tabelle sind die Ausgabefelder "in der Reihenfolge aufgeführt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-309">The following table lists the output fields in the order they appear.</span></span> <span data-ttu-id="9abeb-310">Die Felder werden durch die Zeichenfolge begrenzt, die die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft gibt an, und gefolgt von einem Zeilenabschluss.</span><span class="sxs-lookup"><span data-stu-id="9abeb-310">The fields are delimited by the string that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property specifies, and are followed by a line terminator.</span></span>  
+  
+|<span data-ttu-id="9abeb-311">**Feld**</span><span class="sxs-lookup"><span data-stu-id="9abeb-311">**Field**</span></span>|<span data-ttu-id="9abeb-312">**Ausgabe-Bedingung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-312">**Output condition**</span></span>|<span data-ttu-id="9abeb-313">**Beschreibung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-313">**Description**</span></span>|  
+|---------------|--------------------------|---------------------|  
+|`source`|<span data-ttu-id="9abeb-314">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-314">Always</span></span>|<span data-ttu-id="9abeb-315">Der Wert von `name`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-315">The value of `name`.</span></span>|  
+|`severity`|<span data-ttu-id="9abeb-316">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-316">Always</span></span>|<span data-ttu-id="9abeb-317">Die Enumeration Wertnamen des `eventType`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-317">The enumeration-value name of `eventType`.</span></span>|  
+|`id`|<span data-ttu-id="9abeb-318">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-318">Always</span></span>|<span data-ttu-id="9abeb-319">Eine Zeichenfolgendarstellung von `id`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-319">The string representation of `id`.</span></span>|  
+|`message`|<span data-ttu-id="9abeb-320">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-320">Always</span></span>|<span data-ttu-id="9abeb-321">Eine Zeichenfolgendarstellung von `data`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-321">The string representation of `data`.</span></span>|  
+|`callStack`|<span data-ttu-id="9abeb-322">Wenn die <xref:System.Diagnostics.TraceOptions.Callstack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-322">When the <xref:System.Diagnostics.TraceOptions.Callstack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-323">Die <xref:System.Diagnostics.TraceEventCache.Callstack%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-323">The <xref:System.Diagnostics.TraceEventCache.Callstack%2A> property of `eventCache`.</span></span>|  
+|`CorrelationID`|<span data-ttu-id="9abeb-324">Wenn die <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-324">When the <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-325">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-325">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`DateTime`|<span data-ttu-id="9abeb-326">Wenn die <xref:System.Diagnostics.TraceOptions.DateTime> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-326">When the <xref:System.Diagnostics.TraceOptions.DateTime> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-327">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.DateTime%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-327">The string representation of the <xref:System.Diagnostics.TraceEventCache.DateTime%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-328">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-328">The invariant culture is used for the string conversion.</span></span>|  
+|`ProcessID`|<span data-ttu-id="9abeb-329">Wenn die <xref:System.Diagnostics.TraceOptions.ProcessId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-329">When the <xref:System.Diagnostics.TraceOptions.ProcessId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-330">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-330">The string representation of the <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-331">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-331">The invariant culture is used for the string conversion.</span></span>|  
+|`ThreadID`|<span data-ttu-id="9abeb-332">Wenn die <xref:System.Diagnostics.TraceOptions.ThreadId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-332">When the <xref:System.Diagnostics.TraceOptions.ThreadId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-333">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-333">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`Timestamp`|<span data-ttu-id="9abeb-334">Wenn die <xref:System.Diagnostics.TraceOptions.Timestamp> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-334">When the <xref:System.Diagnostics.TraceOptions.Timestamp> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-335">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-335">The string representation of the <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-336">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-336">The invariant culture is used for the string conversion.</span></span>|  
+|`HostName`|<span data-ttu-id="9abeb-337">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> Eigenschaft ist `True`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-337">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> property is `True`.</span></span>|<span data-ttu-id="9abeb-338">Der Name des Computers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-338">The name of the computer.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="P:System.Diagnostics.TraceListener.TraceOutputOptions" />
+        <altmember cref="T:System.Diagnostics.TraceEventCache" />
+        <altmember cref="T:System.Diagnostics.TraceEventType" />
+      </Docs>
+    </Member>
+    <Member MemberName="TraceData">
+      <MemberSignature Language="C#" Value="public override void TraceData (System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, params object[] data);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void TraceData(class System.Diagnostics.TraceEventCache eventCache, string source, valuetype System.Diagnostics.TraceEventType eventType, int32 id, object[] data) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub TraceData (eventCache As TraceEventCache, source As String, eventType As TraceEventType, id As Integer, ParamArray data As Object())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void TraceData(System::Diagnostics::TraceEventCache ^ eventCache, System::String ^ source, System::Diagnostics::TraceEventType eventType, int id, ... cli::array &lt;System::Object ^&gt; ^ data);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="eventCache" Type="System.Diagnostics.TraceEventCache" />
+        <Parameter Name="source" Type="System.String" />
+        <Parameter Name="eventType" Type="System.Diagnostics.TraceEventType" />
+        <Parameter Name="id" Type="System.Int32" />
+        <Parameter Name="data" Type="System.Object[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="eventCache">
+          <span data-ttu-id="9abeb-339">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-339">A <see cref="T:System.Diagnostics.TraceEventCache" /> object that contains the current process ID, thread ID, and stack trace information.</span>
+          </span>
+        </param>
+        <param name="source">
+          <span data-ttu-id="9abeb-340">Der Name der Ablaufverfolgungsquelle, die diese Methode aufgerufen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-340">The name of the trace source that invoked this method.</span>
+          </span>
+        </param>
+        <param name="eventType">
+          <span data-ttu-id="9abeb-341">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Enumerationswerte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-341">One of the <see cref="T:System.Diagnostics.TraceEventType" /> enumeration values.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="9abeb-342">Ein numerischer Bezeichner für das Ereignis.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-342">A numeric identifier for the event.</span>
+          </span>
+        </param>
+        <param name="data">
+          <span data-ttu-id="9abeb-343">Ein Objektarray, das in Form von Daten ausgegeben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-343">An array of objects to emit as data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-344">Schreibt Ablaufverfolgungsinformationen, ein Array von Datenobjekten und Ereignisinformationen in die Ausgabedatei oder den Stream.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-344">Writes trace information, an array of data objects, and event information to the output file or stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-345">Diese Methode:</span><span class="sxs-lookup"><span data-stu-id="9abeb-345">This method:</span></span>  
+  
+1.  <span data-ttu-id="9abeb-346">Formatiert die Daten und dem angegebenen Kontext Informationen für die Ausgabe,</span><span class="sxs-lookup"><span data-stu-id="9abeb-346">Formats the data and context information for output,</span></span>  
+  
+2.  <span data-ttu-id="9abeb-347">Eine neue Protokolldatei erstellt, bei Bedarf,</span><span class="sxs-lookup"><span data-stu-id="9abeb-347">Creates a new log file, if necessary,</span></span>  
+  
+3.  <span data-ttu-id="9abeb-348">Schreibt die Informationen in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-348">Writes the information to the log file.</span></span>  
+  
+ <span data-ttu-id="9abeb-349">Weitere Informationen zum Erstellen von neuen Protokolldateien finden Sie unter <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-349">For more information on creating new log files, see <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span></span>  
+  
+ <span data-ttu-id="9abeb-350">In dieser Tabelle sind die Ausgabefelder "in der Reihenfolge aufgeführt.</span><span class="sxs-lookup"><span data-stu-id="9abeb-350">This table lists the output fields in the order they appear.</span></span> <span data-ttu-id="9abeb-351">Die Felder werden durch die Zeichenfolge begrenzt, die die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft gibt an, und gefolgt von einem Zeilenabschluss.</span><span class="sxs-lookup"><span data-stu-id="9abeb-351">The fields are delimited by the string that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property specifies, and are followed by a line terminator.</span></span>  
+  
+|<span data-ttu-id="9abeb-352">**Feld**</span><span class="sxs-lookup"><span data-stu-id="9abeb-352">**Field**</span></span>|<span data-ttu-id="9abeb-353">**Ausgabe-Bedingung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-353">**Output condition**</span></span>|<span data-ttu-id="9abeb-354">**Beschreibung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-354">**Description**</span></span>|  
+|---------------|--------------------------|---------------------|  
+|`source`|<span data-ttu-id="9abeb-355">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-355">Always</span></span>|<span data-ttu-id="9abeb-356">Der Wert von `name`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-356">The value of `name`.</span></span>|  
+|`severity`|<span data-ttu-id="9abeb-357">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-357">Always</span></span>|<span data-ttu-id="9abeb-358">Die Enumeration Wertnamen des `eventType`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-358">The enumeration-value name of `eventType`.</span></span>|  
+|`id`|<span data-ttu-id="9abeb-359">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-359">Always</span></span>|<span data-ttu-id="9abeb-360">Eine Zeichenfolgendarstellung von `id`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-360">The string representation of `id`.</span></span>|  
+|`message`|<span data-ttu-id="9abeb-361">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-361">Always</span></span>|<span data-ttu-id="9abeb-362">Die Zeichenfolge besteht die Zeichenfolgendarstellung für jedes Element im `data`, jeweils getrennt durch <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-362">The string consisting of the string representation of each element in `data`, each separated by <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A>.</span></span>|  
+|`callStack`|<span data-ttu-id="9abeb-363">Wenn die <xref:System.Diagnostics.TraceOptions.Callstack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-363">When the <xref:System.Diagnostics.TraceOptions.Callstack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-364">Die <xref:System.Diagnostics.TraceEventCache.Callstack%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-364">The <xref:System.Diagnostics.TraceEventCache.Callstack%2A> property of `eventCache`.</span></span>|  
+|`CorrelationID`|<span data-ttu-id="9abeb-365">Wenn die <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-365">When the <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-366">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-366">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`DateTime`|<span data-ttu-id="9abeb-367">Wenn die <xref:System.Diagnostics.TraceOptions.DateTime> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-367">When the <xref:System.Diagnostics.TraceOptions.DateTime> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-368">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.DateTime%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-368">The string representation of the <xref:System.Diagnostics.TraceEventCache.DateTime%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-369">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-369">The invariant culture is used for the string conversion.</span></span>|  
+|`ProcessID`|<span data-ttu-id="9abeb-370">Wenn die <xref:System.Diagnostics.TraceOptions.ProcessId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-370">When the <xref:System.Diagnostics.TraceOptions.ProcessId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-371">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-371">The string representation of the <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-372">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-372">The invariant culture is used for the string conversion.</span></span>|  
+|`ThreadID`|<span data-ttu-id="9abeb-373">Wenn die <xref:System.Diagnostics.TraceOptions.ThreadId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-373">When the <xref:System.Diagnostics.TraceOptions.ThreadId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-374">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-374">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`Timestamp`|<span data-ttu-id="9abeb-375">Wenn die <xref:System.Diagnostics.TraceOptions.Timestamp> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-375">When the <xref:System.Diagnostics.TraceOptions.Timestamp> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-376">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-376">The string representation of the <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-377">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-377">The invariant culture is used for the string conversion.</span></span>|  
+|`HostName`|<span data-ttu-id="9abeb-378">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> Eigenschaft ist `True`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-378">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> property is `True`.</span></span>|<span data-ttu-id="9abeb-379">Der Name des Computers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-379">The name of the computer.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="P:System.Diagnostics.TraceListener.TraceOutputOptions" />
+        <altmember cref="T:System.Diagnostics.TraceEventCache" />
+        <altmember cref="T:System.Diagnostics.TraceEventType" />
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="TraceEvent">
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="9abeb-380">Schreibt Ablaufverfolgungs- und Ereignisdaten in die Ausgabedatei oder den Ausgabestream.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-380">Writes trace and event information to the output file or stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-381"><xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> Methoden dürfen nicht von Anwendungscode aufgerufen werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-381"><xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent%2A> methods are not intended to be called by application code.</span></span> <span data-ttu-id="9abeb-382">Diese Methoden werden aufgerufen, von einem Mitglied der <xref:System.Diagnostics.Debug>, <xref:System.Diagnostics.Trace>, und <xref:System.Diagnostics.TraceSource> Klassen zum Schreiben von auszugebenden Ablaufverfolgungsdaten.</span><span class="sxs-lookup"><span data-stu-id="9abeb-382">These methods are called by members of the <xref:System.Diagnostics.Debug>, <xref:System.Diagnostics.Trace>, and <xref:System.Diagnostics.TraceSource> classes to write trace data to output.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="TraceEvent">
+      <MemberSignature Language="C#" Value="public override void TraceEvent (System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, string message);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void TraceEvent(class System.Diagnostics.TraceEventCache eventCache, string source, valuetype System.Diagnostics.TraceEventType eventType, int32 id, string message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub TraceEvent (eventCache As TraceEventCache, source As String, eventType As TraceEventType, id As Integer, message As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void TraceEvent(System::Diagnostics::TraceEventCache ^ eventCache, System::String ^ source, System::Diagnostics::TraceEventType eventType, int id, System::String ^ message);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="eventCache" Type="System.Diagnostics.TraceEventCache" />
+        <Parameter Name="source" Type="System.String" />
+        <Parameter Name="eventType" Type="System.Diagnostics.TraceEventType" />
+        <Parameter Name="id" Type="System.Int32" />
+        <Parameter Name="message" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="eventCache">
+          <span data-ttu-id="9abeb-383">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-383">A <see cref="T:System.Diagnostics.TraceEventCache" /> object that contains the current process ID, thread ID, and stack trace information.</span>
+          </span>
+        </param>
+        <param name="source">
+          <span data-ttu-id="9abeb-384">Der Name der Ablaufverfolgungsquelle, die diese Methode aufgerufen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-384">A name of the trace source that invoked this method.</span>
+          </span>
+        </param>
+        <param name="eventType">
+          <span data-ttu-id="9abeb-385">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Enumerationswerte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-385">One of the <see cref="T:System.Diagnostics.TraceEventType" /> enumeration values.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="9abeb-386">Ein numerischer Bezeichner für das Ereignis.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-386">A numeric identifier for the event.</span>
+          </span>
+        </param>
+        <param name="message">
+          <span data-ttu-id="9abeb-387">Eine zu schreibende Meldung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-387">A message to write.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-388">Schreibt Ablaufverfolgungsinformationen, eine Meldung und Ereignisinformationen in die Ausgabedatei oder den Stream.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-388">Writes trace information, a message and event information to the output file or stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-389">Diese Methode:</span><span class="sxs-lookup"><span data-stu-id="9abeb-389">This method:</span></span>  
+  
+1.  <span data-ttu-id="9abeb-390">Formatiert die Daten und dem angegebenen Kontext Informationen für die Ausgabe an.</span><span class="sxs-lookup"><span data-stu-id="9abeb-390">Formats the data and context information for output.</span></span>  
+  
+2.  <span data-ttu-id="9abeb-391">Eine neue Protokolldatei erstellt, bei Bedarf.</span><span class="sxs-lookup"><span data-stu-id="9abeb-391">Creates a new log file, if necessary.</span></span>  
+  
+3.  <span data-ttu-id="9abeb-392">Schreibt die Informationen in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-392">Writes the information to the log file.</span></span>  
+  
+ <span data-ttu-id="9abeb-393">Weitere Informationen zum Erstellen von neuen Protokolldateien finden Sie unter <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-393">For more information on creating new log files, see <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span></span>  
+  
+ <span data-ttu-id="9abeb-394">Diese Tabelle enthält die Ausgabefelder in der Reihenfolge, in der sie angezeigt werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-394">This table lists the output fields in the order in which they appear.</span></span> <span data-ttu-id="9abeb-395">Die Felder werden durch die Zeichenfolge begrenzt, die die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft gibt an, und gefolgt von einem Zeilenabschluss.</span><span class="sxs-lookup"><span data-stu-id="9abeb-395">The fields are delimited by the string that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property specifies, and are followed by a line terminator.</span></span>  
+  
+|<span data-ttu-id="9abeb-396">**Feld**</span><span class="sxs-lookup"><span data-stu-id="9abeb-396">**Field**</span></span>|<span data-ttu-id="9abeb-397">**Ausgabe-Bedingung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-397">**Output condition**</span></span>|<span data-ttu-id="9abeb-398">**Beschreibung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-398">**Description**</span></span>|  
+|---------------|--------------------------|---------------------|  
+|`source`|<span data-ttu-id="9abeb-399">Immer.</span><span class="sxs-lookup"><span data-stu-id="9abeb-399">Always.</span></span>|<span data-ttu-id="9abeb-400">Der Wert von `name`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-400">The value of `name`.</span></span>|  
+|`severity`|<span data-ttu-id="9abeb-401">Immer.</span><span class="sxs-lookup"><span data-stu-id="9abeb-401">Always.</span></span>|<span data-ttu-id="9abeb-402">Die Enumeration Wertnamen des `eventType`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-402">The enumeration-value name of `eventType`.</span></span>|  
+|`id`|<span data-ttu-id="9abeb-403">Immer.</span><span class="sxs-lookup"><span data-stu-id="9abeb-403">Always.</span></span>|<span data-ttu-id="9abeb-404">Eine Zeichenfolgendarstellung von `id`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-404">The string representation of `id`.</span></span>|  
+|`message`|<span data-ttu-id="9abeb-405">Immer.</span><span class="sxs-lookup"><span data-stu-id="9abeb-405">Always.</span></span>|<span data-ttu-id="9abeb-406">Der Wert von `message`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-406">The value of `message`.</span></span>|  
+|`callStack`|<span data-ttu-id="9abeb-407">Wenn die <xref:System.Diagnostics.TraceOptions.Callstack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-407">When the <xref:System.Diagnostics.TraceOptions.Callstack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-408">Die <xref:System.Diagnostics.TraceEventCache.Callstack%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-408">The <xref:System.Diagnostics.TraceEventCache.Callstack%2A> property of `eventCache`.</span></span>|  
+|`CorrelationID`|<span data-ttu-id="9abeb-409">Wenn die <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-409">When the <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-410">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-410">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`DateTime`|<span data-ttu-id="9abeb-411">Wenn die <xref:System.Diagnostics.TraceOptions.DateTime> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-411">When the <xref:System.Diagnostics.TraceOptions.DateTime> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-412">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.DateTime%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-412">The string representation of the <xref:System.Diagnostics.TraceEventCache.DateTime%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-413">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-413">The invariant culture is used for the string conversion.</span></span>|  
+|`ProcessID`|<span data-ttu-id="9abeb-414">Wenn die <xref:System.Diagnostics.TraceOptions.ProcessId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-414">When the <xref:System.Diagnostics.TraceOptions.ProcessId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-415">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-415">The string representation of the <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-416">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-416">The invariant culture is used for the string conversion.</span></span>|  
+|`ThreadID`|<span data-ttu-id="9abeb-417">Wenn die <xref:System.Diagnostics.TraceOptions.ThreadId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-417">When the <xref:System.Diagnostics.TraceOptions.ThreadId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-418">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-418">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`Timestamp`|<span data-ttu-id="9abeb-419">Wenn die <xref:System.Diagnostics.TraceOptions.Timestamp> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-419">When the <xref:System.Diagnostics.TraceOptions.Timestamp> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-420">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-420">The string representation of the <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-421">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-421">The invariant culture is used for the string conversion.</span></span>|  
+|`HostName`|<span data-ttu-id="9abeb-422">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> Eigenschaft ist `True`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-422">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> property is `True`.</span></span>|<span data-ttu-id="9abeb-423">Der Name des Computers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-423">The name of the computer.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="P:System.Diagnostics.TraceListener.TraceOutputOptions" />
+        <altmember cref="T:System.Diagnostics.TraceEventCache" />
+        <altmember cref="T:System.Diagnostics.TraceEventType" />
+      </Docs>
+    </Member>
+    <Member MemberName="TraceEvent">
+      <MemberSignature Language="C#" Value="public override void TraceEvent (System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, string format, params object[] args);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void TraceEvent(class System.Diagnostics.TraceEventCache eventCache, string source, valuetype System.Diagnostics.TraceEventType eventType, int32 id, string format, object[] args) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub TraceEvent (eventCache As TraceEventCache, source As String, eventType As TraceEventType, id As Integer, format As String, ParamArray args As Object())" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void TraceEvent(System::Diagnostics::TraceEventCache ^ eventCache, System::String ^ source, System::Diagnostics::TraceEventType eventType, int id, System::String ^ format, ... cli::array &lt;System::Object ^&gt; ^ args);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="eventCache" Type="System.Diagnostics.TraceEventCache" />
+        <Parameter Name="source" Type="System.String" />
+        <Parameter Name="eventType" Type="System.Diagnostics.TraceEventType" />
+        <Parameter Name="id" Type="System.Int32" />
+        <Parameter Name="format" Type="System.String" />
+        <Parameter Name="args" Type="System.Object[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="eventCache">
+          <span data-ttu-id="9abeb-424">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-424">A <see cref="T:System.Diagnostics.TraceEventCache" /> object that contains the current process ID, thread ID, and stack trace information.</span>
+          </span>
+        </param>
+        <param name="source">
+          <span data-ttu-id="9abeb-425">Der Name der Ablaufverfolgungsquelle, die diese Methode aufgerufen hat.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-425">A name of the trace source that invoked this method.</span>
+          </span>
+        </param>
+        <param name="eventType">
+          <span data-ttu-id="9abeb-426">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Enumerationswerte.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-426">One of the <see cref="T:System.Diagnostics.TraceEventType" /> enumeration values.</span>
+          </span>
+        </param>
+        <param name="id">
+          <span data-ttu-id="9abeb-427">Ein numerischer Bezeichner für das Ereignis.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-427">A numeric identifier for the event.</span>
+          </span>
+        </param>
+        <param name="format">
+          <span data-ttu-id="9abeb-428">Eine Formatzeichenfolge mit 0 oder mehr Formatelementen, die Objekten im <c>args</c>-Array entsprechen</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-428">A format string that contains zero or more format items, which correspond to objects in the <c>args</c> array.</span>
+          </span>
+        </param>
+        <param name="args">
+          <span data-ttu-id="9abeb-429">Ein <see langword="Object" />-Array mit 0 oder mehr zu formatierenden Objekten.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-429">An <see langword="Object" /> array containing zero or more objects to format.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-430">Schreibt Ablaufverfolgungsinformationen, ein formatiertes Array von Objekten und Ereignisinformationen in die Ausgabedatei oder den Stream.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-430">Writes trace information, a formatted array of objects, and event information to the output file or stream.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-431">Diese Methode:</span><span class="sxs-lookup"><span data-stu-id="9abeb-431">This method:</span></span>  
+  
+1.  <span data-ttu-id="9abeb-432">Formatiert die Daten und dem angegebenen Kontext Informationen für die Ausgabe an.</span><span class="sxs-lookup"><span data-stu-id="9abeb-432">Formats the data and context information for output.</span></span>  
+  
+2.  <span data-ttu-id="9abeb-433">Erstellt ein neues eine neue Protokolldatei bei Bedarf.</span><span class="sxs-lookup"><span data-stu-id="9abeb-433">Creates a new a new log file, if necessary.</span></span>  
+  
+3.  <span data-ttu-id="9abeb-434">Schreibt die Informationen in der Protokolldatei gespeichert.</span><span class="sxs-lookup"><span data-stu-id="9abeb-434">Writes the information to the log file.</span></span>  
+  
+ <span data-ttu-id="9abeb-435">Weitere Informationen zum Erstellen der neuen Protokolldatei finden Sie unter <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span><span class="sxs-lookup"><span data-stu-id="9abeb-435">For more information on creating new log file, see <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName%2A>.</span></span>  
+  
+ <span data-ttu-id="9abeb-436">Diese Tabelle enthält die Ausgabefelder in der Reihenfolge, in der sie angezeigt werden.</span><span class="sxs-lookup"><span data-stu-id="9abeb-436">This table lists the output fields in the order in which they appear.</span></span> <span data-ttu-id="9abeb-437">Die Felder werden durch die Zeichenfolge begrenzt, die die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> Eigenschaft gibt an, und gefolgt von einem Zeilenabschluss.</span><span class="sxs-lookup"><span data-stu-id="9abeb-437">The fields are delimited by the string that the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Delimiter%2A> property specifies, and followed by a line terminator.</span></span>  
+  
+|<span data-ttu-id="9abeb-438">**Feld**</span><span class="sxs-lookup"><span data-stu-id="9abeb-438">**Field**</span></span>|<span data-ttu-id="9abeb-439">**Ausgabe-Bedingung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-439">**Output condition**</span></span>|<span data-ttu-id="9abeb-440">**Beschreibung**</span><span class="sxs-lookup"><span data-stu-id="9abeb-440">**Description**</span></span>|  
+|---------------|--------------------------|---------------------|  
+|`source`|<span data-ttu-id="9abeb-441">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-441">Always</span></span>|<span data-ttu-id="9abeb-442">Der Wert von `name`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-442">The value of `name`.</span></span>|  
+|`severity`|<span data-ttu-id="9abeb-443">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-443">Always</span></span>|<span data-ttu-id="9abeb-444">Die Enumeration Wertnamen des `eventType`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-444">The enumeration-value name of `eventType`.</span></span>|  
+|`id`|<span data-ttu-id="9abeb-445">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-445">Always</span></span>|<span data-ttu-id="9abeb-446">Eine Zeichenfolgendarstellung von `id`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-446">The string representation of `id`.</span></span>|  
+|`message`|<span data-ttu-id="9abeb-447">Immer</span><span class="sxs-lookup"><span data-stu-id="9abeb-447">Always</span></span>|<span data-ttu-id="9abeb-448">Die Daten in `args` mit formatiert die `format` Zeichenfolge und mit der invarianten Kultur für zeichenfolgenkonvertierungen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-448">The data in `args` formatted with the `format` string and using the invariant culture for string conversions.</span></span>|  
+|`callStack`|<span data-ttu-id="9abeb-449">Wenn die <xref:System.Diagnostics.TraceOptions.Callstack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-449">When the <xref:System.Diagnostics.TraceOptions.Callstack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-450">Die <xref:System.Diagnostics.TraceEventCache.Callstack%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-450">The <xref:System.Diagnostics.TraceEventCache.Callstack%2A> property of `eventCache`.</span></span>|  
+|`CorrelationID`|<span data-ttu-id="9abeb-451">Wenn die <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-451">When the <xref:System.Diagnostics.TraceOptions.LogicalOperationStack> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-452">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-452">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`DateTime`|<span data-ttu-id="9abeb-453">Wenn die <xref:System.Diagnostics.TraceOptions.DateTime> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-453">When the <xref:System.Diagnostics.TraceOptions.DateTime> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-454">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.DateTime%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-454">The string representation of the <xref:System.Diagnostics.TraceEventCache.DateTime%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-455">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-455">The invariant culture is used for the string conversion.</span></span>|  
+|`ProcessID`|<span data-ttu-id="9abeb-456">Wenn die <xref:System.Diagnostics.TraceOptions.ProcessId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-456">When the <xref:System.Diagnostics.TraceOptions.ProcessId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-457">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-457">The string representation of the <xref:System.Diagnostics.TraceEventCache.ProcessId%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-458">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-458">The invariant culture is used for the string conversion.</span></span>|  
+|`ThreadID`|<span data-ttu-id="9abeb-459">Wenn die <xref:System.Diagnostics.TraceOptions.ThreadId> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-459">When the <xref:System.Diagnostics.TraceOptions.ThreadId> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-460">Die <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-460">The <xref:System.Diagnostics.TraceEventCache.ThreadId%2A> property of `eventCache`.</span></span>|  
+|`Timestamp`|<span data-ttu-id="9abeb-461">Wenn die <xref:System.Diagnostics.TraceOptions.Timestamp> Flag wird festgelegt, der <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="9abeb-461">When the <xref:System.Diagnostics.TraceOptions.Timestamp> flag is set in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property.</span></span>|<span data-ttu-id="9abeb-462">Die Zeichenfolgendarstellung der <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> Eigenschaft `eventCache`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-462">The string representation of the <xref:System.Diagnostics.TraceEventCache.Timestamp%2A> property of `eventCache`.</span></span> <span data-ttu-id="9abeb-463">Die invariante Kultur wird für die zeichenfolgenkonvertierung verwendet.</span><span class="sxs-lookup"><span data-stu-id="9abeb-463">The invariant culture is used for the string conversion.</span></span>|  
+|`HostName`|<span data-ttu-id="9abeb-464">Wenn die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> Eigenschaft ist `True`.</span><span class="sxs-lookup"><span data-stu-id="9abeb-464">When the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.IncludeHostName%2A> property is `True`.</span></span>|<span data-ttu-id="9abeb-465">Der Name des Computers.</span><span class="sxs-lookup"><span data-stu-id="9abeb-465">The name of the computer.</span></span>|  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Diagnostics.TraceListener" />
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="P:System.Diagnostics.TraceListener.TraceOutputOptions" />
+        <altmember cref="T:System.Diagnostics.TraceEventCache" />
+        <altmember cref="T:System.Diagnostics.TraceEventType" />
+      </Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public override void Write (string message);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Write(string message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.Write(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Write (message As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Write(System::String ^ message);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="message" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="message">
+          <span data-ttu-id="9abeb-466">
+            <see langword="String" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-466">
+              <see langword="String" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-467">Die benutzerdefinierte Meldung, die geschrieben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-467">The custom message to write.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-468">Schreibt eine wörtliche Meldung ohne weitere Kontextinformationen auf den Datenträger.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-468">Writes a verbatim message to disk, without any additional context information.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-469">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Write%2A> -Methode schreibt eine bestimmte Nachricht in der Protokolldatei gespeichert, ohne weitere Kontextinformationen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-469">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.Write%2A> method writes a specific message to the log file, without any additional context information.</span></span>  
+  
+ <span data-ttu-id="9abeb-470">Wenden Sie eines der der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> Methoden, die Kontextinformationen in die Protokollausgabe aufgenommen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-470">Use the one of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> methods to include the context information in the log output.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+      </Docs>
+    </Member>
+    <Member MemberName="WriteLine">
+      <MemberSignature Language="C#" Value="public override void WriteLine (string message);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void WriteLine(string message) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.WriteLine(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub WriteLine (message As String)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void WriteLine(System::String ^ message);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.VisualBasic</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="message" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="message">
+          <span data-ttu-id="9abeb-471">
+            <see langword="String" />
+          </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-471">
+              <see langword="String" />.</span>
+          </span>
+          <span data-ttu-id="9abeb-472">Die benutzerdefinierte Meldung, die geschrieben werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-472">The custom message to write.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="9abeb-473">Schreibt eine wörtliche Meldung ohne weitere Kontextinformationen, gefolgt vom aktuellen Zeilenabschlusszeichen, in die Datei</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="9abeb-473">Writes a verbatim message to disk, followed by the current line terminator, without any additional context information.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="9abeb-474">Die <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.WriteLine%2A> -Methode schreibt eine bestimmte Nachricht in der Protokolldatei gespeichert, ohne weitere Kontextinformationen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-474">The <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.WriteLine%2A> method writes a specific message to the log file, without any additional context information.</span></span>  
+  
+ <span data-ttu-id="9abeb-475">Wenden Sie eines der der <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> Methoden, die Kontextinformationen in die Protokollausgabe aufgenommen.</span><span class="sxs-lookup"><span data-stu-id="9abeb-475">Use the one of the <xref:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData%2A> methods to include the context information in the log output.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:Microsoft.VisualBasic.Logging.FileLogTraceListener.FullLogFileName" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" />
+        <altmember cref="M:Microsoft.VisualBasic.Logging.FileLogTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

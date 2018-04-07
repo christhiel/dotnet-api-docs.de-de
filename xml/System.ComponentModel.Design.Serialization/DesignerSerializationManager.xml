@@ -1,0 +1,1650 @@
+<Type Name="DesignerSerializationManager" FullName="System.ComponentModel.Design.Serialization.DesignerSerializationManager">
+  <Metadata>
+    <Meta Name="ms.openlocfilehash" Value="e4a005e0451f128854a14f9e2a11fbf960f7114e" />
+    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.translationtype" Value="HT" />
+    <Meta Name="ms.contentlocale" Value="de-DE" />
+    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
+  </Metadata>
+  <TypeSignature Language="C#" Value="public class DesignerSerializationManager : IServiceProvider, System.ComponentModel.Design.Serialization.IDesignerSerializationManager" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DesignerSerializationManager extends System.Object implements class System.ComponentModel.Design.Serialization.IDesignerSerializationManager, class System.IServiceProvider" />
+  <TypeSignature Language="DocId" Value="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" />
+  <TypeSignature Language="VB.NET" Value="Public Class DesignerSerializationManager&#xA;Implements IDesignerSerializationManager, IServiceProvider" />
+  <TypeSignature Language="C++ CLI" Value="public ref class DesignerSerializationManager : IServiceProvider, System::ComponentModel::Design::Serialization::IDesignerSerializationManager" />
+  <AssemblyInfo>
+    <AssemblyName>System.Design</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.ComponentModel.Design.Serialization.IDesignerSerializationManager</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IServiceProvider</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>
+      <span data-ttu-id="f5f82-101">Stellt eine Implementierung der <see cref="T:System.ComponentModel.Design.Serialization.IDesignerSerializationManager" />-Schnittstelle bereit.</span>
+      <span class="sxs-lookup">
+        <span data-stu-id="f5f82-101">Provides an implementation of the <see cref="T:System.ComponentModel.Design.Serialization.IDesignerSerializationManager" /> interface.</span>
+      </span>
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-102">Die <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager> Schnittstelle dient ein Format unabhängig-Schnittstelle, um ein Objekt sein, die Serialisierung steuert.</span><span class="sxs-lookup"><span data-stu-id="f5f82-102">The <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager> interface is designed to be a format-independent interface to an object that controls serialization.</span></span> <span data-ttu-id="f5f82-103">Es bietet im Wesentlichen Kontext und Dienste für Serialisierungsprogramme, die die Deserialisierung tatsächlich ausführen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-103">It essentially provides context and services to serializers, which actually perform the deserialization.</span></span> <span data-ttu-id="f5f82-104"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager> hilft bei der Deserialisierung durch das Nachverfolgen der Objekte.</span><span class="sxs-lookup"><span data-stu-id="f5f82-104"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager> assists in the deserialization process by keeping track of objects.</span></span> <span data-ttu-id="f5f82-105">Dies ist ähnlich wie in der Technik, um die <xref:System.ComponentModel.Design.IDesignerHost> Schnittstelle: Designer tatsächlich bereitstellen die Benutzeroberfläche (UI), und <xref:System.ComponentModel.Design.IDesignerHost> stellt die Verbindung, unterschiedliche Designern zusammenarbeiten können.</span><span class="sxs-lookup"><span data-stu-id="f5f82-105">This is similar in technique to the <xref:System.ComponentModel.Design.IDesignerHost> interface: designers actually provide the user interface (UI), and <xref:System.ComponentModel.Design.IDesignerHost> provides the glue that allows different designers to work together.</span></span>  
+  
+ <span data-ttu-id="f5f82-106">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> -Klasse implementiert <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager>.</span><span class="sxs-lookup"><span data-stu-id="f5f82-106">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> class implements <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager>.</span></span> <span data-ttu-id="f5f82-107">Es wurde entwickelt, um eine generische Form der Deserialisierung bereitzustellen, die zur Laufzeit-Serialisierungsprogramme, z. B. ähnelt der <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>.</span><span class="sxs-lookup"><span data-stu-id="f5f82-107">It is designed to provide a generic form of deserialization that is similar to run-time serializers like the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter>.</span></span>  
+  
+ <span data-ttu-id="f5f82-108">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> -Klasse werden drei Ziele erreicht:</span><span class="sxs-lookup"><span data-stu-id="f5f82-108">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> class achieves three goals:</span></span>  
+  
+-   <span data-ttu-id="f5f82-109">Es ist ein einfaches, sofort verwendbare-Objekt, das mit eine Vielzahl von Formaten deserialisiert werden kann.</span><span class="sxs-lookup"><span data-stu-id="f5f82-109">It is a simple, turnkey object that can be used to deserialize a variety of formats.</span></span>  
+  
+-   <span data-ttu-id="f5f82-110">Generische und nicht an ein bestimmtes Format gebunden ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-110">It is generic and not tied to any particular format.</span></span> <span data-ttu-id="f5f82-111">Es kann gleichermaßen für CodeDOM-Deserialisierung sowie Markupdeserialisierung verwendet werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-111">It can be used equally for CodeDOM deserialization as well as markup deserialization.</span></span>  
+  
+-   <span data-ttu-id="f5f82-112">Es ist erweiterbar und unterstützt verschiedene Serialisierungsmethoden, mit denen in Szenarien mit Kopieren/Einfügen und Rückgängig/Wiederholen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-112">It is extensible and supports different serialization methods that are used in copy/paste and undo/redo scenarios.</span></span>  
+  
+ <span data-ttu-id="f5f82-113">Während der Entwurfszeit-Serialisierung besitzt die folgenden Unterschiede gegenüber Laufzeitobjekt Serialisierung:</span><span class="sxs-lookup"><span data-stu-id="f5f82-113">Design-time serialization has the following differences from run-time object serialization:</span></span>  
+  
+-   <span data-ttu-id="f5f82-114">Das Objekt, das die Serialisierung ausführt, ist im Allgemeinen getrennt von der Laufzeit-Objekt, sodass Logik zur Entwurfszeit von einer Komponente entfernt werden kann.</span><span class="sxs-lookup"><span data-stu-id="f5f82-114">The object performing the serialization is generally separate from the run-time object, so that design-time logic can be removed from a component.</span></span>  
+  
+-   <span data-ttu-id="f5f82-115">Das Serialisierungsschema geht davon aus, das Objekt vollständig initialisiert ist, erstellt und dann während der Deserialisierung durch Eigenschaften und Methoden Aufrufe geändert.</span><span class="sxs-lookup"><span data-stu-id="f5f82-115">The serialization scheme assumes the object will be created fully initialized, and then modified through property and method invocations during deserialization.</span></span>  
+  
+-   <span data-ttu-id="f5f82-116">Eigenschaften eines Objekts, die über Werte, die nie auf das Objekt festgelegt wurden verfügen (die Eigenschaften enthalten die Standardwerte) werden nicht serialisiert.</span><span class="sxs-lookup"><span data-stu-id="f5f82-116">Properties of an object that have values that were never set on the object (the properties contain the default values) are not serialized.</span></span> <span data-ttu-id="f5f82-117">Im Gegensatz dazu möglicherweise die Deserialisierungsstream Lücken enthält.</span><span class="sxs-lookup"><span data-stu-id="f5f82-117">Conversely, the deserialization stream may have holes.</span></span>  
+  
+-   <span data-ttu-id="f5f82-118">Augenmerk wird auf die Qualität des Inhalts in den Serialisierungsstream, anstatt die vollständige Serialisierung eines Objekts.</span><span class="sxs-lookup"><span data-stu-id="f5f82-118">Emphasis is placed on the quality of the content within the serialization stream, rather than the full serialization of an object.</span></span> <span data-ttu-id="f5f82-119">Dies bedeutet, dass das Objekt ist keine definierte Methode zum Serialisieren eines Objekts, übersprungen werden kann und nicht als eine Ausnahme auszulösen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-119">This means that if there is no defined way to serialize an object, that object may be skipped rather than throwing an exception.</span></span> <span data-ttu-id="f5f82-120">Das Serialisierungsmodul vorsehen, dass hier Heuristik, um zu entscheiden, welche Fehler ignoriert werden können und welche nicht mehr wiederherstellbar sind.</span><span class="sxs-lookup"><span data-stu-id="f5f82-120">The serialization engine may provide heuristics here to decide which failures can be ignored and which are unrecoverable.</span></span>  
+  
+-   <span data-ttu-id="f5f82-121">Serialisierungsstream möglicherweise mehr Daten als für die Deserialisierung erforderlich ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-121">The serialization stream may have more data than is needed for deserialization.</span></span> <span data-ttu-id="f5f82-122">Serialisierung von Quellcode, hat z. B. Benutzercode, der mit dem der Code, der zur Deserialisierung eines Objektdiagramms benötigt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-122">Source code serialization, for example, has user code mixed in with the code needed to deserialize an object graph.</span></span> <span data-ttu-id="f5f82-123">Mit diesem Benutzercode muss bei der Deserialisierung ignoriert und bei der Serialisierung beibehalten werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-123">This user code must be ignored on deserialization and preserved on serialization.</span></span>  
+  
+ <span data-ttu-id="f5f82-124">Aufgrund dieser Unterschiede gilt Entwurfszeitserialisierung ein anderes Serialisierungsmodell.</span><span class="sxs-lookup"><span data-stu-id="f5f82-124">Because of these differences, a different serialization model applies to design-time serialization.</span></span> <span data-ttu-id="f5f82-125">Bei diesem Modell wird ein separates Serialisierungsprogrammobjekt für jeden Datentyp, der serialisiert wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-125">This model utilizes a separate serializer object for each data type being serialized.</span></span> <span data-ttu-id="f5f82-126">Jedes Serialisierungsprogramm bietet seinen kleinen Beitrag für das Problem als Ganzes.</span><span class="sxs-lookup"><span data-stu-id="f5f82-126">Each serializer provides its small contribution to the problem as a whole.</span></span> <span data-ttu-id="f5f82-127">Diese Serialisierungsprogramme werden alle über einen gemeinsamen Serialisierungs-Manager koordiniert.</span><span class="sxs-lookup"><span data-stu-id="f5f82-127">These serializers are all coordinated through a common serialization manager.</span></span> <span data-ttu-id="f5f82-128">Der Serialisierungs-Manager dient zur Verwaltung des Zustands zwischen diesen verschiedenen Serialisierungsprogrammen zur Verfügung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-128">The serialization manager is responsible for maintaining state between these different serializers.</span></span> <span data-ttu-id="f5f82-129">Betrachten Sie beispielsweise die folgende Klasse ein:</span><span class="sxs-lookup"><span data-stu-id="f5f82-129">As an example, consider the following class:</span></span>  
+  
+ [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#2](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/Program.cs#2)]
+ [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#2](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/Program.vb#2)]  
+  
+ <span data-ttu-id="f5f82-130">Eine Instanz dieser Klasse nutzt drei verschiedene Serialisierer: eine für `SampleObject`, eine für Strings und ein anderes für ganze Zahlen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-130">An instance of this class would utilize three different serializers: one for `SampleObject`, one for strings, and another for integers.</span></span> <span data-ttu-id="f5f82-131">Das Serialisierungsprogramm für `SampleObject` wird das Stammserialisierungsprogramm bezeichnet, da `SampleObject` ist der Stamm des Serialisierungsdiagramms.</span><span class="sxs-lookup"><span data-stu-id="f5f82-131">The serializer for `SampleObject` is called the root serializer because `SampleObject` is the root of the serialization graph.</span></span> <span data-ttu-id="f5f82-132">Komplexere Objektdiagramme können auch erstellt werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-132">More complex object graphs can be created as well.</span></span> <span data-ttu-id="f5f82-133">Betrachten Sie beispielsweise, was passieren würde, wenn `SampleObject` wurden wie folgt geändert:</span><span class="sxs-lookup"><span data-stu-id="f5f82-133">For example, consider what would happen if `SampleObject` were changed as follows:</span></span>  
+  
+ [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#11](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs#11)]
+ [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#11](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb#11)]  
+  
+ <span data-ttu-id="f5f82-134">Dadurch können `SampleObject` ein untergeordnetes Element vorhanden sein, das eine andere Instanz von sich selbst ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-134">This allows `SampleObject` to have a child that is another instance of itself.</span></span> <span data-ttu-id="f5f82-135">Der folgende Code füllt im Objektdiagramm enthalten sind:</span><span class="sxs-lookup"><span data-stu-id="f5f82-135">The following code fills in the object graph:</span></span>  
+  
+ [!code-csharp[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#12](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/CS/SampleObject.cs#12)]
+ [!code-vb[System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject#12](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.Design.Serialization.DesignerSerializationManager.SampleObject/VB/SampleObject.vb#12)]  
+  
+ <span data-ttu-id="f5f82-136">Wenn `root` serialisiert wird, werden vier Serialisierungsprogramme verwendet: ein Stamm-Serialisierungsprogramm, ein Serialisierungsprogramm für das untergeordnete Element `SampleObject`, ein Serialisierungsprogramm für `int`, und ein Serialisierungsprogramm für `string`.</span><span class="sxs-lookup"><span data-stu-id="f5f82-136">When `root` is serialized, there will be four serializers used: one root serializer, one serializer for the child `SampleObject`, one serializer for `int`, and one serializer for `string`.</span></span> <span data-ttu-id="f5f82-137">Serialisierungsprogramme werden auf Grundlage des Typs, daher keine Notwendigkeit zum Erstellen eines Serialisierungsprogramms für jede Instanz des besteht zwischengespeichert `SampleObject`.</span><span class="sxs-lookup"><span data-stu-id="f5f82-137">Serializers are cached based on type, so there is no need to create a serializer for each instance of `SampleObject`.</span></span>  
+  
+ <span data-ttu-id="f5f82-138">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> Klasse basiert auf dem Konzept einer Sitzung für die Serialisierung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-138">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> class is based on the idea of a serialization session.</span></span> <span data-ttu-id="f5f82-139">Eine Sitzung verwaltet den Zustand, die von den verschiedenen Serialisierungsprogrammen zugegriffen werden kann.</span><span class="sxs-lookup"><span data-stu-id="f5f82-139">A session maintains state that can be accessed by the various serializers.</span></span> <span data-ttu-id="f5f82-140">Wenn eine Sitzung freigegeben wird, wird dieser Zustand zerstört.</span><span class="sxs-lookup"><span data-stu-id="f5f82-140">When a session is disposed, this state is destroyed.</span></span> <span data-ttu-id="f5f82-141">Dadurch wird sichergestellt, dass Serialisierungsprogramme größtenteils zustandslos bleiben und liefert Informationen zum Bereinigen von Serialisierungsprogrammen, die beschädigt wurden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-141">This helps to ensure that serializers remain largely stateless, and helps to clean up serializers that are have been corrupted.</span></span> <span data-ttu-id="f5f82-142">Die folgenden Tabellen beschreiben, wie der Status in und zwischen Sitzungen verwaltet wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-142">The following tables describe how state is managed in and among sessions.</span></span>  
+  
+## <a name="global-state"></a><span data-ttu-id="f5f82-143">Globaler Zustand</span><span class="sxs-lookup"><span data-stu-id="f5f82-143">Global State</span></span>  
+ <span data-ttu-id="f5f82-144">Dieser Status ist im Besitz der Serialisierungs-Manager-Objekt, aber ist unabhängig von der aktuellen Serialisierungssitzung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-144">This state is owned by the serialization manager object, but is independent of the current serialization session.</span></span>  
+  
+|<span data-ttu-id="f5f82-145">Object</span><span class="sxs-lookup"><span data-stu-id="f5f82-145">Object</span></span>|<span data-ttu-id="f5f82-146">Verwendung</span><span class="sxs-lookup"><span data-stu-id="f5f82-146">Usage</span></span>|  
+|------------|-----------|  
+|<span data-ttu-id="f5f82-147">Serialisierungsprovider</span><span class="sxs-lookup"><span data-stu-id="f5f82-147">Serialization providers</span></span>|<span data-ttu-id="f5f82-148">Objekte, die selbst als benutzerdefinierte Serialisierungsprovider hinzufügen können.</span><span class="sxs-lookup"><span data-stu-id="f5f82-148">Objects can add themselves as custom serialization providers.</span></span> <span data-ttu-id="f5f82-149">Da diese Anbieter, zum Suchen von Serialisierungsprogrammen verwendet werden, Überleben sie eine Serialisierungssitzung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-149">Because these providers are used to locate serializers, they outlive a serialization session.</span></span>|  
+  
+## <a name="session-owned-state"></a><span data-ttu-id="f5f82-150">Im Besitz der Sitzung des Status</span><span class="sxs-lookup"><span data-stu-id="f5f82-150">Session-Owned State</span></span>  
+ <span data-ttu-id="f5f82-151">Dieser Status ist im Besitz einer Sitzungs und wird zerstört, wenn eine Sitzung zerstört wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-151">This state is owned by a session and is destroyed when a session is destroyed.</span></span> <span data-ttu-id="f5f82-152">Daher, den Zugriff auf Eigenschaften oder Methoden, die diesen Zustand ändern löst eine Ausnahme ist der Serialisierungs-Manager nicht in einer aktiven Sitzung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-152">Consequently, accessing any properties or methods that would manipulate this state will throw an exception if the serialization manager is not in an active session.</span></span>  
+  
+|<span data-ttu-id="f5f82-153">Object</span><span class="sxs-lookup"><span data-stu-id="f5f82-153">Object</span></span>|<span data-ttu-id="f5f82-154">Verwendung</span><span class="sxs-lookup"><span data-stu-id="f5f82-154">Usage</span></span>|  
+|------------|-----------|  
+|<span data-ttu-id="f5f82-155"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName>-Ereignis</span><span class="sxs-lookup"><span data-stu-id="f5f82-155"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName> event</span></span>|<span data-ttu-id="f5f82-156">Die <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName> Ereignis ein Serialisierungsprogramm Bereitstellen zusätzlicher Auflösung von Namen angefügt wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-156">The <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName> event is attached by a serializer to provide additional resolution of names.</span></span> <span data-ttu-id="f5f82-157">Aus diesem Ereignis, wenn eine Sitzung beendet wird, sind alle Handler getrennt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-157">All handlers are detached from this event when a session terminates.</span></span>|  
+|<span data-ttu-id="f5f82-158"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SerializationComplete>-Ereignis</span><span class="sxs-lookup"><span data-stu-id="f5f82-158"><xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SerializationComplete> event</span></span>|<span data-ttu-id="f5f82-159">Die <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SerializationComplete> Ereignis wird ausgelöst, kurz bevor eine Sitzung freigegeben wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-159">The <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SerializationComplete> event is raised just before a session is disposed.</span></span> <span data-ttu-id="f5f82-160">Anschließend werden alle Handler von diesem Ereignis getrennt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-160">Then, all handlers are detached from this event.</span></span>|  
+|<span data-ttu-id="f5f82-161">Namenstabelle</span><span class="sxs-lookup"><span data-stu-id="f5f82-161">Name table</span></span>|<span data-ttu-id="f5f82-162">Der Serialisierungs-Manager verwaltet eine Tabelle, die zwischen Objekten und deren Namen zugeordnet.</span><span class="sxs-lookup"><span data-stu-id="f5f82-162">The serialization manager maintains a table that maps between objects and their names.</span></span> <span data-ttu-id="f5f82-163">Serialisierungsprogramme können Objektnamen für die einfache Identifikation geben.</span><span class="sxs-lookup"><span data-stu-id="f5f82-163">Serializers may give objects names for easy identification.</span></span> <span data-ttu-id="f5f82-164">Diese Namenstabelle ist deaktiviert, wenn die Sitzung beendet wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-164">This name table is cleared when the session terminates.</span></span>|  
+|<span data-ttu-id="f5f82-165">Serialisierungsprogramm-cache</span><span class="sxs-lookup"><span data-stu-id="f5f82-165">Serializer cache</span></span>|<span data-ttu-id="f5f82-166">Der Serialisierungs-Manager verwaltet einen Cache von Serialisierungsprogrammen, gebeten, einzugeben.</span><span class="sxs-lookup"><span data-stu-id="f5f82-166">The serialization manager maintains a cache of serializers it has been asked to supply.</span></span> <span data-ttu-id="f5f82-167">Dieser Cache wird gelöscht, wenn die Sitzung beendet wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-167">This cache is cleared when the session terminates.</span></span> <span data-ttu-id="f5f82-168">Die öffentliche <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer%2A> Methode kann jedoch jederzeit problemlos aufgerufen werden, jedoch wird der Wert zwischengespeichert wird, nur dann, wenn sie innerhalb einer Sitzung aus aufgerufen wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-168">The public <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer%2A> method can safely be called at any time, but its value is cached only if it is called from within a session.</span></span>|  
+|<span data-ttu-id="f5f82-169">Kontextstapels</span><span class="sxs-lookup"><span data-stu-id="f5f82-169">Context stack</span></span>|<span data-ttu-id="f5f82-170">Der Serialisierungs-Manager verwaltet ein Objekt namens kontextstapels, das Sie zugreifen können, mit der <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context%2A> Eigenschaft.</span><span class="sxs-lookup"><span data-stu-id="f5f82-170">The serialization manager maintains an object called the context stack, which you can access with the <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context%2A> property.</span></span> <span data-ttu-id="f5f82-171">Serialisierungsprogramme können dieser Stapel verwenden, um zusätzliche Informationen zu speichern, die von anderen Serialisierungsprogrammen zur Verfügung steht.</span><span class="sxs-lookup"><span data-stu-id="f5f82-171">Serializers can use this stack to store additional information that is available to other serializers.</span></span> <span data-ttu-id="f5f82-172">Beispielsweise kann ein Serialisierungsprogramm, das einen Eigenschaftswert serialisiert den Namen der Eigenschaft auf dem Serialisierungsstapel mithilfe von Push übertragen vor gefragt werden, des zu serialisierende Werts.</span><span class="sxs-lookup"><span data-stu-id="f5f82-172">For example, a serializer that is serializing a property value can push the property name on the serialization stack before asking the value to serialize.</span></span> <span data-ttu-id="f5f82-173">Dieser Stapel ist deaktiviert, wenn die Sitzung beendet wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-173">This stack is cleared when the session is terminated.</span></span>|  
+|<span data-ttu-id="f5f82-174">Fehlerliste</span><span class="sxs-lookup"><span data-stu-id="f5f82-174">Error list</span></span>|<span data-ttu-id="f5f82-175">Der Serialisierungs-Manager verwaltet eine Liste von Fehlern, die während der Serialisierung aufgetreten sind.</span><span class="sxs-lookup"><span data-stu-id="f5f82-175">The serialization manager maintains a list of errors that occurred during serialization.</span></span> <span data-ttu-id="f5f82-176">Diese Liste, die über zugegriffen wird die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> -Eigenschaft wird gelöscht, wenn die Sitzung beendet wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-176">This list, which is accessed through the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> property, is cleared when the session is terminated.</span></span> <span data-ttu-id="f5f82-177">Zugreifen auf die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> Eigenschaft zwischen Sitzungen wird eine Ausnahme ausgelöst.</span><span class="sxs-lookup"><span data-stu-id="f5f82-177">Accessing the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> property between sessions will result in an exception.</span></span>|  
+  
+ ]]></format>
+    </remarks>
+    <altmember cref="T:System.ComponentModel.Design.Serialization.IDesignerSerializationManager" />
+    <altmember cref="T:System.ComponentModel.Design.IDesignerHost" />
+    <altmember cref="T:System.ComponentModel.Design.Serialization.ContextStack" />
+    <altmember cref="T:System.IServiceProvider" />
+    <altmember cref="T:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter" />
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-178">Initialisiert eine neue Instanz der <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-178">Initializes a new instance of the <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" /> class.</span>
+          </span>
+        </summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DesignerSerializationManager ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DesignerSerializationManager();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-179">Initialisiert eine neue Instanz der <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" />-Klasse.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-179">Initializes a new instance of the <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" /> class.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-180">Dieser Konstruktor legt die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> und <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> Eigenschaften `true`.</span><span class="sxs-lookup"><span data-stu-id="f5f82-180">This constructor sets the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> and <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> properties to `true`.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DesignerSerializationManager (IServiceProvider provider);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IServiceProvider provider) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.#ctor(System.IServiceProvider)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (provider As IServiceProvider)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DesignerSerializationManager(IServiceProvider ^ provider);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="provider" Type="System.IServiceProvider" />
+      </Parameters>
+      <Docs>
+        <param name="provider">
+          <span data-ttu-id="f5f82-181">Eine <see cref="T:System.IServiceProvider" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-181">An <see cref="T:System.IServiceProvider" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-182">Initialisiert eine neue Instanz der <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" />-Klasse mit dem angegebenen Dienstanbieter.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-182">Initializes a new instance of the <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" /> class with the given service provider.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-183">Wenn ein Serialisierungsprogramm Dienste, der von dem Serialisierungs-Manager nicht erfüllt werden können anfordert, leitet die standardmäßige Implementierung solcher Anforderungen an die `provider` Parameter.</span><span class="sxs-lookup"><span data-stu-id="f5f82-183">If a serializer requests services that cannot be satisfied by the serialization manager, the default implementation will forward those requests to the `provider` parameter.</span></span>  
+  
+ <span data-ttu-id="f5f82-184">Dieser Konstruktor legt die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> und <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> Eigenschaften `true`.</span><span class="sxs-lookup"><span data-stu-id="f5f82-184">This constructor sets the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> and <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> properties to `true`.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="f5f82-185">
+            <paramref name="provider" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-185">
+              <paramref name="provider" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.IServiceProvider" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      </Docs>
+    </Member>
+    <Member MemberName="Container">
+      <MemberSignature Language="C#" Value="public System.ComponentModel.IContainer Container { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.IContainer Container" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Container" />
+      <MemberSignature Language="VB.NET" Value="Public Property Container As IContainer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::ComponentModel::IContainer ^ Container { System::ComponentModel::IContainer ^ get(); void set(System::ComponentModel::IContainer ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ComponentModel.IContainer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-186">Ruft den Container für diesen Serialisierungs-Manager ab oder legt ihn fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-186">Gets or sets to the container for this serialization manager.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-187">Der <see cref="T:System.ComponentModel.IContainer" />, dem der Serialisierungs-Manager Komponenten hinzufügt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-187">The <see cref="T:System.ComponentModel.IContainer" /> to which the serialization manager will add components.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-188">Wenn ein Container vorhanden ist, werden alle Komponenten, die von dem Serialisierungs-Manager erstellt werden für den Container hinzugefügt werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-188">If a container exists, all components that are created by the serialization manager will be added to the container.</span></span> <span data-ttu-id="f5f82-189">Die standardmäßige Implementierung dieser Eigenschaft sucht den Dienstanbieter für eine <xref:System.ComponentModel.Design.IDesignerHost> und vom Designerhost angegeben Container verwenden, sollte eine vorhanden sein.</span><span class="sxs-lookup"><span data-stu-id="f5f82-189">The default implementation of this property will search the service provider for an <xref:System.ComponentModel.Design.IDesignerHost> and use the container provided by the designer host, should one exist.</span></span> <span data-ttu-id="f5f82-190">Andernfalls gibt diese Eigenschaft zurück `null` und keine Komponenten werden ein Container nicht hinzugefügt werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-190">Otherwise, this property will return `null` and no components will be added to a container.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-191">Der Serialisierungs-Manager verfügt über eine aktive Serialisierungssitzung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-191">The serialization manager has an active serialization session.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateInstance">
+      <MemberSignature Language="C#" Value="protected virtual object CreateInstance (Type type, System.Collections.ICollection arguments, string name, bool addToContainer);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance object CreateInstance(class System.Type type, class System.Collections.ICollection arguments, string name, bool addToContainer) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="arguments" Type="System.Collections.ICollection" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="addToContainer" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="type">
+          <span data-ttu-id="f5f82-192">Der Typ, von dem eine Instanz erstellt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-192">The type to create an instance of.</span>
+          </span>
+        </param>
+        <param name="arguments">
+          <span data-ttu-id="f5f82-193">Die Parameter des Konstruktors für den Typ.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-193">The parameters of the type’s constructor.</span>
+          </span>
+          <span data-ttu-id="f5f82-194">Kann <see langword="null" /> oder eine leere Auflistung sein, um den Standardkonstruktor aufzurufen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-194">This can be <see langword="null" /> or an empty collection to invoke the default constructor.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="f5f82-195">Ein Name, der dem Objekt gegeben wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-195">A name to give the object.</span>
+          </span>
+          <span data-ttu-id="f5f82-196">Wenn <see langword="null" />, wird dem Objekt kein Name gegeben, es sei denn, das Objekt wird einem Container hinzugefügt, und der Container gibt dem Objekt einen Namen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-196">If <see langword="null" />, the object will not be given a name, unless the object is added to a container and the container gives the object a name.</span>
+          </span>
+        </param>
+        <param name="addToContainer">
+          <span data-ttu-id="f5f82-197">
+            <see langword="true" />, wenn das Objekt bei Implementierung von <see cref="T:System.ComponentModel.IComponent" /> dem Container hinzugefügt werden soll, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-197">
+              <see langword="true" /> to add the object to the container if the object implements <see cref="T:System.ComponentModel.IComponent" />; otherwise, <see langword="false" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-198">Erstellt eine Instanz eines Typs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-198">Creates an instance of a type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-199">Ein neue Instanz des von <paramref name="type" /> angegebenen Typs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-199">A new instance of the type specified by <paramref name="type" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-200">Diese Methode wird von Serialisierungsprogrammen aufgerufen, wenn sie versuchen, eine Instanz eines Typs zu erstellen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-200">This method is called by serializers when they attempt to create an instance of a type.</span></span> <span data-ttu-id="f5f82-201">Die Standardimplementierung erstellt eine neue Instanz des Typs oder eine vorhandene Instanz abhängig von den Werten der Zurückgeben der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> und <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> Eigenschaften.</span><span class="sxs-lookup"><span data-stu-id="f5f82-201">The default implementation creates a new instance of the type, or it may return an existing instance depending on the values of the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> and <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> properties.</span></span> <span data-ttu-id="f5f82-202">Die <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance%2A> Methode mithilfe von Reflektion Instanzen erstellt und führt einige generische <xref:System.IConvertible> Transformationen auf Parameter einen übereinstimmenden Konstruktor gefunden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-202">The <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance%2A> method uses reflection to create instances and will perform some generic <xref:System.IConvertible> transformations on parameters to find a matching constructor.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.Runtime.Serialization.SerializationException">
+          <span data-ttu-id="f5f82-203">
+            <paramref name="type" /> verfügt über keinen Konstruktor, der in <paramref name="arguments" /> enthaltene Parameter akzeptiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-203">
+              <paramref name="type" /> does not have a constructor that takes parameters contained in <paramref name="arguments" />.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetInstance(System.String)" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      </Docs>
+    </Member>
+    <Member MemberName="CreateSession">
+      <MemberSignature Language="C#" Value="public IDisposable CreateSession ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IDisposable CreateSession() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
+      <MemberSignature Language="VB.NET" Value="Public Function CreateSession () As IDisposable" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; IDisposable ^ CreateSession();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IDisposable</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-204">Erstellt eine neue Serialisierungssitzung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-204">Creates a new serialization session.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-205">Ein <see cref="T:System.IDisposable" />, das eine neue Serialisierungssitzung darstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-205">An <see cref="T:System.IDisposable" /> that represents a new serialization session.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-206">Die meisten Daten innerhalb des Serialisierungs-Managers ist vorübergehend und nur für die Lebensdauer einer Serialisierung-Sitzung aktiv ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-206">Most data within the serialization manager is transient and only lives for the life of a serialization session.</span></span> <span data-ttu-id="f5f82-207">Wenn eine Sitzung freigegeben wird, Serialisierung wird als abgeschlossen betrachtet, und dieser Übergangszustand deaktiviert ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-207">When a session is disposed, serialization is considered to be complete and this transient state is cleared.</span></span> <span data-ttu-id="f5f82-208">Dadurch wird eine einzelne Instanz eines Serialisierungs-Managers verwendet werden, um mehrere Objektstrukturen zu serialisieren.</span><span class="sxs-lookup"><span data-stu-id="f5f82-208">This allows a single instance of a serialization manager to be used to serialize multiple object trees.</span></span> <span data-ttu-id="f5f82-209">Einige Status, einschließlich der Dienstanbieter und jeder benutzerdefinierte Serialisierungsprovider, die dem Serialisierungs-Manager hinzugefügt wurden, erstrecken sich über Sitzungen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-209">Some state, including the service provider and any custom serialization providers that were added to the serialization manager, span sessions.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-210">Der Serialisierungs-Manager befindet sich bereits in einer Sitzung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-210">The serialization manager is already within a session.</span>
+          </span>
+          <span data-ttu-id="f5f82-211">Diese Version von <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" /> unterstützt keine gleichzeitigen Sitzungen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-211">This version of <see cref="T:System.ComponentModel.Design.Serialization.DesignerSerializationManager" /> does not support simultaneous sessions.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="Errors">
+      <MemberSignature Language="C#" Value="public System.Collections.IList Errors { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.IList Errors" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Errors As IList" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::IList ^ Errors { System::Collections::IList ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.IList</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-212">Ruft die Liste mit Fehlern ab, die während der Serialisierung oder Deserialisierung aufgetreten sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-212">Gets the list of errors that occurred during serialization or deserialization.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-213">Die Liste mit Fehlern, die während der Serialisierung oder Deserialisierung aufgetreten sind.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-213">The list of errors that occurred during serialization or deserialization.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-214">Die Fehlerliste kann nur gelesen werden, während eine Serialisierungssitzung aktiv ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-214">You can only read the error list while a serialization session is active.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-215">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-215">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRuntimeType">
+      <MemberSignature Language="C#" Value="public Type GetRuntimeType (string typeName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Type GetRuntimeType(string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetRuntimeType(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetRuntimeType (typeName As String) As Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Type ^ GetRuntimeType(System::String ^ typeName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="typeName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="typeName">
+          <span data-ttu-id="f5f82-216">Der Name des abzurufenden Typs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-216">The name of the type to get.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-217">Ruft den entsprechenden Typ für den angegebenen Typnamen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-217">Gets the type corresponding to the specified type name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-218">Der angegebene Typ.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-218">The specified type.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSerializer">
+      <MemberSignature Language="C#" Value="public object GetSerializer (Type objectType, Type serializerType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetSerializer(class System.Type objectType, class System.Type serializerType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer(System.Type,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetSerializer (objectType As Type, serializerType As Type) As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ GetSerializer(Type ^ objectType, Type ^ serializerType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectType" Type="System.Type" />
+        <Parameter Name="serializerType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="objectType">
+          <span data-ttu-id="f5f82-219">Der Typ des Objekts, für den das Serialisierungsprogramm abgerufen wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-219">The type of object for which to retrieve the serializer.</span>
+          </span>
+        </param>
+        <param name="serializerType">
+          <span data-ttu-id="f5f82-220">Der Typ des abzurufenden Serialisierungsprogramms.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-220">The type of serializer to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-221">Ruft das Serialisierungsprogramm für den angegebenen Objekttyp ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-221">Gets the serializer for the given object type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-222">Das Serialisierungsprogramm für <paramref name="objectType" /> oder <see langword="null" />, wenn es nicht gefunden wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-222">The serializer for <paramref name="objectType" />, or <see langword="null" />, if not found.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-223">Sie können den Typ des Serialisierungsprogramms anfordern, Sie möchten.</span><span class="sxs-lookup"><span data-stu-id="f5f82-223">You can request the type of serializer you would like.</span></span> <span data-ttu-id="f5f82-224">Diese Methode gibt `null` , wenn kein Serialisierungsprogramm des angeforderten Typs für den angegebenen Objekttyp vorhanden ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-224">This method returns `null` if there is no serializer of the requested type for the specified object type.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="f5f82-225">
+            <paramref name="objectType" /> oder <paramref name="serializerType" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-225">
+              <paramref name="objectType" /> or <paramref name="serializerType" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#AddSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#RemoveSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetService">
+      <MemberSignature Language="C#" Value="protected virtual object GetService (Type serviceType);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance object GetService(class System.Type serviceType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetService(System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function GetService (serviceType As Type) As Object" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Object ^ GetService(Type ^ serviceType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serviceType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="serviceType">
+          <span data-ttu-id="f5f82-226">Der Typ des abzurufenden Diensts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-226">The type of service to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-227">Ruft den angeforderten Dienst ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-227">Gets the requested service.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-228">Der angeforderte Dienst oder <see langword="null" />, wenn der Dienst nicht aufgelöst werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-228">The requested service, or <see langword="null" /> if the service cannot be resolved.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-229">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetService%2A> -Methode bietet Zugriff auf die zugrunde liegenden Container oder den Dienstanbieter, der im Konstruktor festgelegt wurde.</span><span class="sxs-lookup"><span data-stu-id="f5f82-229">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetService%2A> method provides access to the underlying container or service provider that was set in the constructor.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetType">
+      <MemberSignature Language="C#" Value="protected virtual Type GetType (string typeName);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Type GetType(string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function GetType (typeName As String) As Type" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual Type ^ GetType(System::String ^ typeName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="typeName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="typeName">
+          <span data-ttu-id="f5f82-230">Der Name des abzurufenden Typs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-230">The name of the type to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-231">Ruft den angeforderten Typ ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-231">Gets the requested type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-232">Der angeforderte Typ oder <see langword="null" />, wenn der Typ nicht aufgelöst werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-232">The requested type, or <see langword="null" /> if the type cannot be resolved.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-233">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType%2A> Methode sucht den Dienstanbieter für eine <xref:System.ComponentModel.Design.ITypeResolutionService> und, falls verfügbar, es delegiert an diesen Dienst, den Typ aufzulösen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-233">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType%2A> method will search the service provider for an <xref:System.ComponentModel.Design.ITypeResolutionService> and, if available, it will delegate to that service to resolve the type.</span></span> <span data-ttu-id="f5f82-234">Wenn ein <xref:System.ComponentModel.Design.ITypeResolutionService> ist nicht verfügbar, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType%2A> aufrufen, wird die <xref:System.Object.GetType%2A?displayProperty=nameWithType> Methode.</span><span class="sxs-lookup"><span data-stu-id="f5f82-234">If an <xref:System.ComponentModel.Design.ITypeResolutionService> is not available, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetType%2A> will call the <xref:System.Object.GetType%2A?displayProperty=nameWithType> method.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnResolveName">
+      <MemberSignature Language="C#" Value="protected virtual void OnResolveName (System.ComponentModel.Design.Serialization.ResolveNameEventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnResolveName(class System.ComponentModel.Design.Serialization.ResolveNameEventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnResolveName (e As ResolveNameEventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnResolveName(System::ComponentModel::Design::Serialization::ResolveNameEventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="e" Type="System.ComponentModel.Design.Serialization.ResolveNameEventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="e">
+          <span data-ttu-id="f5f82-235">Ein <see cref="T:System.ComponentModel.Design.Serialization.ResolveNameEventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-235">A <see cref="T:System.ComponentModel.Design.Serialization.ResolveNameEventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-236">Löst das <see cref="E:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-236">Raises the <see cref="E:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-237">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-237">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="f5f82-238">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="f5f82-238">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="f5f82-239">Mit der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="f5f82-239">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="f5f82-240">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="f5f82-240">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="f5f82-241">Zum Überschreiben <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" /> werden Sie in einer abgeleiteten Klasse der Basisklasse aufrufen <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" /> Methode, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="f5f82-241">When overriding <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" /> in a derived class, be sure to call the base class’s <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnResolveName(System.ComponentModel.Design.Serialization.ResolveNameEventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="E:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetName(System.Object)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#SetName(System.Object,System.String)" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnSessionCreated">
+      <MemberSignature Language="C#" Value="protected virtual void OnSessionCreated (EventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSessionCreated(class System.EventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSessionCreated (e As EventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionCreated(EventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="e" Type="System.EventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="e">
+          <span data-ttu-id="f5f82-242">Ein <see cref="T:System.EventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-242">An <see cref="T:System.EventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-243">Löst das <see cref="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionCreated" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-243">Raises the <see cref="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionCreated" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-244">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-244">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="f5f82-245">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="f5f82-245">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="f5f82-246">Mit der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="f5f82-246">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="f5f82-247">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="f5f82-247">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="f5f82-248">Zum Überschreiben <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" /> werden Sie in einer abgeleiteten Klasse der Basisklasse aufrufen <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" /> Methode, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="f5f82-248">When overriding <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" /> in a derived class, be sure to call the base class’s <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="OnSessionDisposed">
+      <MemberSignature Language="C#" Value="protected virtual void OnSessionDisposed (EventArgs e);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnSessionDisposed(class System.EventArgs e) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnSessionDisposed (e As EventArgs)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnSessionDisposed(EventArgs ^ e);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="e" Type="System.EventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="e">
+          <span data-ttu-id="f5f82-249">Ein <see cref="T:System.EventArgs" />, das die Ereignisdaten enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-249">An <see cref="T:System.EventArgs" /> that contains the event data.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-250">Löst das <see cref="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionDisposed" />-Ereignis aus.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-250">Raises the <see cref="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionDisposed" /> event.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-251">Durch das Auslösen eines Ereignisses wird der Ereignishandler über einen Delegaten aufgerufen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-251">Raising an event invokes the event handler through a delegate.</span></span> <span data-ttu-id="f5f82-252">Weitere Informationen finden Sie unter [behandeln und Auslösen von Ereignissen](~/docs/standard/events/index.md).</span><span class="sxs-lookup"><span data-stu-id="f5f82-252">For more information, see [Handling and Raising Events](~/docs/standard/events/index.md).</span></span>  
+  
+ <span data-ttu-id="f5f82-253">Mit der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed%2A>-Methode können auch abgeleitete Klassen das Ereignis ohne Anfügen eines Delegaten behandeln.</span><span class="sxs-lookup"><span data-stu-id="f5f82-253">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed%2A> method also allows derived classes to handle the event without attaching a delegate.</span></span> <span data-ttu-id="f5f82-254">Dies ist das bevorzugte Verfahren für die Behandlung des Ereignisses in einer abgeleiteten Klasse.</span><span class="sxs-lookup"><span data-stu-id="f5f82-254">This is the preferred technique for handling the event in a derived class.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <span data-ttu-id="f5f82-255">Zum Überschreiben <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" /> werden Sie in einer abgeleiteten Klasse der Basisklasse aufrufen <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" /> Methode, damit registrierte Delegaten das Ereignis empfangen.</span>
+            <span class="sxs-lookup">
+              <span data-stu-id="f5f82-255">When overriding <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" /> in a derived class, be sure to call the base class’s <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionDisposed(System.EventArgs)" /> method so that registered delegates receive the event.</span>
+            </span>
+          </para>
+        </block>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.OnSessionCreated(System.EventArgs)" />
+      </Docs>
+    </Member>
+    <Member MemberName="PreserveNames">
+      <MemberSignature Language="C#" Value="public bool PreserveNames { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool PreserveNames" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames" />
+      <MemberSignature Language="VB.NET" Value="Public Property PreserveNames As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool PreserveNames { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-256">Ruft einen Wert ab, der angibt, ob das Vorhandensein eines angegebenen Namens im Container durch die <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />-Methode überprüft werden soll, oder legt diesen fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-256">Gets or sets a value indicating whether the <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> method should check for the presence of the given name in the container.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-257">
+            <see langword="true" />, wenn <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> den angegebenen Komponentennamen übergibt; <see langword="false" />, wenn <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> überprüft, ob der angegebenen Name im Container vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-257">
+              <see langword="true" /> if <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> will pass the given component name; <see langword="false" /> if <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> will check for the presence of the given name in the container.</span>
+          </span>
+          <span data-ttu-id="f5f82-258">Der Standardwert ist <see langword="true" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-258">The default is <see langword="true" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-259">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> -Eigenschaft bestimmt das Verhalten der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="f5f82-259">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PreserveNames%2A> property determines the behavior of the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> method.</span></span> <span data-ttu-id="f5f82-260">Wenn `true`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> den Namen der angegebenen Komponente übergeben wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-260">If `true`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will pass the given component name.</span></span> <span data-ttu-id="f5f82-261">Wenn `false`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> überprüft das Vorhandensein des angegebenen Namens im Container.</span><span class="sxs-lookup"><span data-stu-id="f5f82-261">If `false`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will check for the presence of the given name in the container.</span></span> <span data-ttu-id="f5f82-262">Wenn der Name nicht, im Container vorhanden ist <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> dem angegebenen Namen verwendet.</span><span class="sxs-lookup"><span data-stu-id="f5f82-262">If the name does not exist in the container, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will use the given name.</span></span> <span data-ttu-id="f5f82-263">Wenn der Name im Container vorhanden ist <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> wird einen null-Wert als den Namen einer Komponente übergeben, wenn sie den Container auf diese Weise erhalten sie einen neuen Namen hinzugefügt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-263">If the name does exist in the container, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will pass a null value as the name of a component when adding it to the container, thereby giving it a new name.</span></span> <span data-ttu-id="f5f82-264">Diese zweite Variante eignet sich zum Implementieren eines Serialisierungsprogramms, das Objekte immer dupliziert, anstatt Sie zu vorausgesetzt, dass diese Objekte nicht vorhanden sind.</span><span class="sxs-lookup"><span data-stu-id="f5f82-264">This second variation is useful for implementing a serializer that always duplicates objects, rather than assuming those objects do not exist.</span></span> <span data-ttu-id="f5f82-265">Fügen Sie Befehle verwenden häufig dieses Typs des Serialisierungsprogramms.</span><span class="sxs-lookup"><span data-stu-id="f5f82-265">Paste commands often use this type of serializer.</span></span>  
+  
+ <span data-ttu-id="f5f82-266">Sie können diese Eigenschaft nur ändern, wenn Sie nicht in einer Serialisierungssitzung sind.</span><span class="sxs-lookup"><span data-stu-id="f5f82-266">You can only change this property when you are not in a serialization session.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-267">Diese Eigenschaft wurde innerhalb einer Serialisierungssitzung geändert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-267">This property was changed from within a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="Overload:System.ComponentModel.Design.Serialization.DesignerSerializationManager.#ctor" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+      </Docs>
+    </Member>
+    <Member MemberName="PropertyProvider">
+      <MemberSignature Language="C#" Value="public object PropertyProvider { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance object PropertyProvider" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PropertyProvider" />
+      <MemberSignature Language="VB.NET" Value="Public Property PropertyProvider As Object" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Object ^ PropertyProvider { System::Object ^ get(); void set(System::Object ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-268">Ruft das Objekt ab, mit dem Eigenschaften für die <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />-Eigenschaft des Serialisierungs-Managers bereitgestellt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-268">Gets the object that should be used to provide properties to the serialization manager's <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" /> property.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-269">Das Objekt, mit dem Eigenschaften für die <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />-Eigenschaft des Serialisierungs-Managers bereitgestellt werden sollen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-269">The object that should be used to provide properties to the serialization manager's <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" /> property.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-270">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PropertyProvider%2A> Eigenschaft bietet eine Möglichkeit, zu dem Serialisierungs-Manager eine Reihe von Eigenschaften für Serialisierung, die Serialisierungsprogramme verwenden können, deren Verhalten führt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-270">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.PropertyProvider%2A> property provides a way to give the serialization manager a set of serialization properties that serializers can use to guide their behavior.</span></span>  
+  
+ <span data-ttu-id="f5f82-271">Öffentliche Eigenschaften dieses Objekts werden überprüft und in neuen Eigenschaftendeskriptoren, die ein Zielobjekt des Serialisierungs-Managers haben eingeschlossen werden.</span><span class="sxs-lookup"><span data-stu-id="f5f82-271">This object's public properties will be inspected and wrapped in new property descriptors that have a target object of the serialization manager.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecycleInstances">
+      <MemberSignature Language="C#" Value="public bool RecycleInstances { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool RecycleInstances" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances" />
+      <MemberSignature Language="VB.NET" Value="Public Property RecycleInstances As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool RecycleInstances { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-272">Ruft ein Flag ab, das angibt, ob <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> immer eine neue Instanz eines Typs erstellt, oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-272">Gets or sets a flag indicating whether <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> will always create a new instance of a type.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-273">
+            <see langword="true" />, wenn <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> die vorhandene Instanz zurückgibt; <see langword="false" />, wenn <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> eine neue Instanz eines Typs erstellt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-273">
+              <see langword="true" /> if <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> will return the existing instance; <see langword="false" /> if <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> will create a new instance of a type.</span>
+          </span>
+          <span data-ttu-id="f5f82-274">Der Standardwert ist <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-274">The default is <see langword="false" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-275">Wenn die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> Eigenschaft `false`, die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> Methode wird immer eine neue Instanz eines Typs erstellen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-275">If the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> property is `false`, the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> method will always create a new instance of a type.</span></span> <span data-ttu-id="f5f82-276">Wenn <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> ist `true`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> zuerst das Namenstabelle und der Container für ein Objekt mit demselben Namen durchsucht.</span><span class="sxs-lookup"><span data-stu-id="f5f82-276">If <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> is `true`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will first search the name table and container for an object of the same name.</span></span> <span data-ttu-id="f5f82-277">Wenn ein solches Objekt vorhanden ist und vom selben Typ <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> wird die vorhandene Instanz zurück.</span><span class="sxs-lookup"><span data-stu-id="f5f82-277">If such an object exists and is of the same type, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> will return the existing instance.</span></span> <span data-ttu-id="f5f82-278">Diese zweite Variante eignet sich für das Implementieren eines Serialisierungsprogramms, das Serialisierungszustand auf einen vorhandenen Satz von Objekten anwendet, statt immer eine neue Struktur erstellen.</span><span class="sxs-lookup"><span data-stu-id="f5f82-278">This second variation is useful for implementing a serializer that applies serialization state to an existing set of objects, rather than always creating a new tree.</span></span> <span data-ttu-id="f5f82-279">Die **Rückgängig** Befehl häufig dieser Typ des Serialisierungsprogramms verwendet.</span><span class="sxs-lookup"><span data-stu-id="f5f82-279">The **Undo** command often uses this type of serializer.</span></span>  
+  
+ <span data-ttu-id="f5f82-280">Im Fall, in dem die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> Eigenschaft ist `true`, <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> Eigenschaft wird das Verhalten der weiter bearbeiten <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> je nach Art der beiden Objekte.</span><span class="sxs-lookup"><span data-stu-id="f5f82-280">In the case where the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> property is `true`, the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> property will further modify the behavior of <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> depending on the types of the two objects.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-281">Der Serialisierungs-Manager verfügt über eine aktive Serialisierungssitzung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-281">The serialization manager has an active serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      </Docs>
+    </Member>
+    <Member MemberName="SessionCreated">
+      <MemberSignature Language="C#" Value="public event EventHandler SessionCreated;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler SessionCreated" />
+      <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionCreated" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event SessionCreated As EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionCreated;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-282">Tritt beim Erstellen einer Sitzung ein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-282">Occurs when a session is created.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SessionDisposed">
+      <MemberSignature Language="C#" Value="public event EventHandler SessionDisposed;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler SessionDisposed" />
+      <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.Serialization.DesignerSerializationManager.SessionDisposed" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event SessionDisposed As EventHandler " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ SessionDisposed;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-283">Tritt beim Löschen einer Sitzung ein.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-283">Occurs when a session is disposed.</span>
+          </span>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider">
+      <MemberSignature Language="C#" Value="void IDesignerSerializationManager.AddSerializationProvider (System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(class System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#AddSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+      <MemberSignature Language="VB.NET" Value="Sub AddSerializationProvider (provider As IDesignerSerializationProvider) Implements IDesignerSerializationManager.AddSerializationProvider" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.AddSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::AddSerializationProvider;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="provider" Type="System.ComponentModel.Design.Serialization.IDesignerSerializationProvider" />
+      </Parameters>
+      <Docs>
+        <param name="provider">
+          <span data-ttu-id="f5f82-284">Der hinzuzufügende Serialisierungsprovider.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-284">The serialization provider to add.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-285">Fügt dem Serialisierungs-Manager einen benutzerdefinierten Serialisierungsanbieter hinzu.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-285">Adds a custom serialization provider to the serialization manager.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-286">Wenn die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer%2A> Methode wird verwendet, um einen Serialisierungsprovider anzufordern, der Serialisierungs-Manager fragt die benutzerdefinierte Serialisierung-Anbieter zunächst vor sucht in den Metadaten des Typs der geeigneten Serialisierungsprogramms.</span><span class="sxs-lookup"><span data-stu-id="f5f82-286">When the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer%2A> method is used to request a serialization provider, the serialization manager queries the custom serialization providers first before looking in the type's metadata for the appropriate serializer.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer(System.Type,System.Type)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#RemoveSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context">
+      <MemberSignature Language="C#" Value="System.ComponentModel.Design.Serialization.ContextStack System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.Design.Serialization.ContextStack System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Context" />
+      <MemberSignature Language="VB.NET" Value=" ReadOnly Property Context As ContextStack Implements IDesignerSerializationManager.Context" />
+      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::Design::Serialization::ContextStack ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Context { System::ComponentModel::Design::Serialization::ContextStack ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ComponentModel.Design.Serialization.ContextStack</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-287">Ruft den Kontextstapel für diese Serialisierungssitzung ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-287">Gets the context stack for this serialization session.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-288">Ein <see cref="T:System.ComponentModel.Design.Serialization.ContextStack" />, in dem Daten gespeichert werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-288">A <see cref="T:System.ComponentModel.Design.Serialization.ContextStack" /> that stores data.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-289">Ein Kontextstapel bietet es sich um einen benutzerdefinierten Speicherbereich, als einen Stapel implementiert.</span><span class="sxs-lookup"><span data-stu-id="f5f82-289">A context stack provides a user-defined storage area, implemented as a stack.</span></span> <span data-ttu-id="f5f82-290">Dieser Speicherbereich ist eine gute Möglichkeit, die Kommunikation über Serialisierungsprogramme, bereit, wie die Serialisierung eines Prozesses in der Regel auf hierarchisch ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-290">This storage area is a useful way to provide communication across serializers, as serialization is a generally hierarchical process.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-291">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-291">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="T:System.ComponentModel.Design.Serialization.ContextStack" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateSession" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance">
+      <MemberSignature Language="C#" Value="object IDesignerSerializationManager.CreateInstance (Type type, System.Collections.ICollection arguments, string name, bool addToContainer);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(class System.Type type, class System.Collections.ICollection arguments, string name, bool addToContainer) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(Type ^ type, System::Collections::ICollection ^ arguments, System::String ^ name, bool addToContainer) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::CreateInstance;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="arguments" Type="System.Collections.ICollection" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="addToContainer" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="type">
+          <span data-ttu-id="f5f82-292">Der zu erstellende Datentyp.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-292">The data type to create.</span>
+          </span>
+        </param>
+        <param name="arguments">
+          <span data-ttu-id="f5f82-293">Die an den Konstruktor für diesen Typ zu übergebenden Argumente.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-293">The arguments to pass to the constructor for this type.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="f5f82-294">Der Name des Objekts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-294">The name of the object.</span>
+          </span>
+          <span data-ttu-id="f5f82-295">Mit diesem Namen kann später über <see cref="M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System.String)" /> auf das Objekt zugegriffen werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-295">This name can be used to access the object later through <see cref="M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System.String)" />.</span>
+          </span>
+          <span data-ttu-id="f5f82-296">Wenn <see langword="null" /> übergeben wird, dann wird das Objekt dennoch erstellt, jedoch kann darauf nicht über den Namen zugegriffen werden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-296">If <see langword="null" /> is passed, the object is still created but cannot be accessed by name.</span>
+          </span>
+        </param>
+        <param name="addToContainer">
+          <span data-ttu-id="f5f82-297">
+            <see langword="true" />, wenn dieses Objekt dem Entwurfscontainer hinzugefügt werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-297">
+              <see langword="true" /> to add this object to the design container.</span>
+          </span>
+          <span data-ttu-id="f5f82-298">Dies wirkt sich nur dann aus, wenn das Objekt <see cref="T:System.ComponentModel.IComponent" /> implementiert.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-298">The object must implement <see cref="T:System.ComponentModel.IComponent" /> for this to have any effect.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-299">Implementiert die <see cref="M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />-Methode.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-299">Implements the <see cref="M:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> method.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-300">Die neu erstellte Objektinstanz.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-300">The newly created object instance.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance">
+      <MemberSignature Language="C#" Value="object IDesignerSerializationManager.GetInstance (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetInstance(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Function GetInstance (name As String) As Object Implements IDesignerSerializationManager.GetInstance" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetInstance(System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetInstance;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">
+          <span data-ttu-id="f5f82-301">Der Name des abzurufenden Objekts.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-301">The name of the object to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-302">Ruft eine Instanz eines erstellten Objekts mit dem angegebenen Namen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-302">Retrieves an instance of a created object of the specified name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-303">Eine Instanz des Objekts mit dem angegebenen Namen oder <see langword="null" />, wenn kein Objekt mit diesem Namen gefunden wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-303">An instance of the object with the given name, or <see langword="null" /> if no object by that name can be found.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="f5f82-304">
+            <paramref name="name" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-304">
+              <paramref name="name" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-305">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-305">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetName(System.Object)" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName">
+      <MemberSignature Language="C#" Value="string IDesignerSerializationManager.GetName (object value);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance string System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetName(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Function GetName (value As Object) As String Implements IDesignerSerializationManager.GetName" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::String ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetName(System::Object ^ value) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetName;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">
+          <span data-ttu-id="f5f82-306">Das Objekt, für das der Name abgerufen werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-306">The object for which to retrieve the name.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-307">Ruft einen Namen für das angegebene Objekt ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-307">Retrieves a name for the specified object.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-308">Der Name des Objekts oder <see langword="null" />, wenn das Objekt unbenannt ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-308">The name of the object, or <see langword="null" /> if the object is unnamed.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-309">Wenn die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23GetName%2A> Methode wurde nicht gefunden einen entsprechenden Namen für die `value` Parameter, es wird ausgelöst, die <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName> Ereignis vor der Rückgabe `null`.</span><span class="sxs-lookup"><span data-stu-id="f5f82-309">If the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23GetName%2A> method cannot find a corresponding name for the `value` parameter, it raises the <xref:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName> event before it returns `null`.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="f5f82-310">
+            <paramref name="value" /> ist <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-310">
+              <paramref name="value" /> is <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-311">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-311">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetInstance(System.String)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#SetName(System.Object,System.String)" />
+        <altmember cref="E:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ResolveName" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer">
+      <MemberSignature Language="C#" Value="object IDesignerSerializationManager.GetSerializer (Type objectType, Type serializerType);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(class System.Type objectType, class System.Type serializerType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetSerializer(System.Type,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Function GetSerializer (objectType As Type, serializerType As Type) As Object Implements IDesignerSerializationManager.GetSerializer" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetSerializer(Type ^ objectType, Type ^ serializerType) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetSerializer;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectType" Type="System.Type" />
+        <Parameter Name="serializerType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="objectType">
+          <span data-ttu-id="f5f82-312">Der Typ des Objekts, für das das Serialisierungsprogramm abgerufen werden soll.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-312">The type of the object to get the serializer for.</span>
+          </span>
+        </param>
+        <param name="serializerType">
+          <span data-ttu-id="f5f82-313">Der Typ des abzurufenden Serialisierungsprogramms.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-313">The type of the serializer to retrieve.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-314">Ruft ein Serialisierungsprogramm vom angeforderten Typ für den angegebenen Objekttyp ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-314">Gets a serializer of the requested type for the specified object type.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-315">Eine Instanz des angeforderten Serialisierungsprogramms oder <see langword="null" />, falls kein entsprechendes Serialisierungsprogramm gefunden werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-315">An instance of the requested serializer, or <see langword="null" /> if no appropriate serializer can be located.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType">
+      <MemberSignature Language="C#" Value="Type IDesignerSerializationManager.GetType (string typeName);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Type System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(string typeName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetType(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Function GetType (typeName As String) As Type Implements IDesignerSerializationManager.GetType" />
+      <MemberSignature Language="C++ CLI" Value=" virtual Type ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.GetType(System::String ^ typeName) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::GetType;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="typeName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="typeName">
+          <span data-ttu-id="f5f82-316">Der voll gekennzeichnete Name des zu ladenden Typs.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-316">The fully qualified name of the type to load.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-317">Ruft einen Typ mit dem angegebenen Namen ab.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-317">Gets a type of the specified name.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-318">Eine Instanz des Typs oder <see langword="null" />, wenn der Typ nicht geladen werden kann.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-318">An instance of the type, or <see langword="null" /> if the type cannot be loaded.</span>
+          </span>
+        </returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-319">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-319">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties">
+      <MemberSignature Language="C#" Value="System.ComponentModel.PropertyDescriptorCollection System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.ComponentModel.PropertyDescriptorCollection System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#Properties" />
+      <MemberSignature Language="VB.NET" Value=" ReadOnly Property Properties As PropertyDescriptorCollection Implements IDesignerSerializationManager.Properties" />
+      <MemberSignature Language="C++ CLI" Value="property System::ComponentModel::PropertyDescriptorCollection ^ System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties { System::ComponentModel::PropertyDescriptorCollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ComponentModel.PropertyDescriptorCollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-320">Implementiert die <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" />-Eigenschaft.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-320">Implements the <see cref="P:System.ComponentModel.Design.Serialization.IDesignerSerializationManager.Properties" /> property.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-321">Eine <see cref="T:System.ComponentModel.PropertyDescriptorCollection" />, die die zu serialisierenden Eigenschaften enthält.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-321">A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> containing the properties to be serialized.</span>
+          </span>
+        </value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider">
+      <MemberSignature Language="C#" Value="void IDesignerSerializationManager.RemoveSerializationProvider (System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(class System.ComponentModel.Design.Serialization.IDesignerSerializationProvider provider) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#RemoveSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+      <MemberSignature Language="VB.NET" Value="Sub RemoveSerializationProvider (provider As IDesignerSerializationProvider) Implements IDesignerSerializationManager.RemoveSerializationProvider" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.RemoveSerializationProvider(System::ComponentModel::Design::Serialization::IDesignerSerializationProvider ^ provider) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::RemoveSerializationProvider;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="provider" Type="System.ComponentModel.Design.Serialization.IDesignerSerializationProvider" />
+      </Parameters>
+      <Docs>
+        <param name="provider">
+          <span data-ttu-id="f5f82-322">Das zu entfernende <see cref="T:System.ComponentModel.Design.Serialization.IDesignerSerializationProvider" />-Element.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-322">The <see cref="T:System.ComponentModel.Design.Serialization.IDesignerSerializationProvider" /> to remove.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-323">Entfernt einen zuvor hinzugefügten Serialisierungsanbieter.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-323">Removes a previously added serialization provider.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-324">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23RemoveSerializationProvider%2A> -Methode entfernt einen benutzerdefinierten Serialisierungsprovider aus, die zuvor durch einen Aufruf von hinzugefügte die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23AddSerializationProvider%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="f5f82-324">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23RemoveSerializationProvider%2A> method removes a custom serialization provider that was previously added by a call to the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23AddSerializationProvider%2A> method.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.GetSerializer(System.Type,System.Type)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#AddSerializationProvider(System.ComponentModel.Design.Serialization.IDesignerSerializationProvider)" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError">
+      <MemberSignature Language="C#" Value="void IDesignerSerializationManager.ReportError (object errorInformation);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(object errorInformation) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#ReportError(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Sub ReportError (errorInformation As Object) Implements IDesignerSerializationManager.ReportError" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.ReportError(System::Object ^ errorInformation) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::ReportError;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="errorInformation" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="errorInformation">
+          <span data-ttu-id="f5f82-325">Ein Objekt, das die Fehlerinformationen enthält; normalerweise vom Typ <see cref="T:System.String" /> oder <see cref="T:System.Exception" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-325">An object containing the error information, usually of type <see cref="T:System.String" /> or <see cref="T:System.Exception" />.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-326">Wird verwendet, um einen behebbaren Fehler bei der Serialisierung zu melden.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-326">Used to report a recoverable error in serialization.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-327">Behebbarer Fehler durch den Aufruf sauber Serialisierungsprogramme geschrieben werden können die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23ReportError%2A> Methode mit der Fehlerinformation.</span><span class="sxs-lookup"><span data-stu-id="f5f82-327">Serializers can be written to handle recoverable errors gracefully by calling the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23ReportError%2A> method with the error information.</span></span> <span data-ttu-id="f5f82-328">Der Serialisierungs-Manager möglicherweise unterstützen von Berichten eine Liste von Fehlern, nachdem er abgeschlossen wurde oder diese Methode eine Ausnahme auslösen und Abbrechen des Serialisierungsprozesses.</span><span class="sxs-lookup"><span data-stu-id="f5f82-328">The serialization manager may support reporting a list of errors after it completes, or it may throw an exception from this method and abort the serialization process.</span></span> <span data-ttu-id="f5f82-329">Das Serialisierungsprogramm sollte weiterhin nach dem Aufrufen dieser Funktion.</span><span class="sxs-lookup"><span data-stu-id="f5f82-329">The serializer should continue after calling this function.</span></span>  
+  
+ <span data-ttu-id="f5f82-330"><xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23ReportError%2A> Fügt der `errorInformation` Parameter an die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> Auflistung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-330"><xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23ReportError%2A> adds the `errorInformation` parameter to the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors%2A> collection.</span></span> <span data-ttu-id="f5f82-331">Wenn `errorInformation` ist `null`, wird keine Aktion ausgeführt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-331">If `errorInformation` is `null`, no action is taken.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-332">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-332">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.Errors" />
+        <altmember cref="M:System.Collections.ArrayList.Add(System.Object)" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName">
+      <MemberSignature Language="C#" Value="void IDesignerSerializationManager.SetName (object instance, string name);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(object instance, string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#SetName(System.Object,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Sub SetName (instance As Object, name As String) Implements IDesignerSerializationManager.SetName" />
+      <MemberSignature Language="C++ CLI" Value=" virtual void System.ComponentModel.Design.Serialization.IDesignerSerializationManager.SetName(System::Object ^ instance, System::String ^ name) = System::ComponentModel::Design::Serialization::IDesignerSerializationManager::SetName;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="instance" Type="System.Object" />
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="instance">
+          <span data-ttu-id="f5f82-333">Das Objekt, für das der Name festgelegt wird.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-333">The object to set the name.</span>
+          </span>
+        </param>
+        <param name="name">
+          <span data-ttu-id="f5f82-334">Ein als Name des Objekts verwendeter <see cref="T:System.String" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-334">A <see cref="T:System.String" /> used as the name of the object.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-335">Legt den Namen für das angegebene Objekt fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-335">Sets the name for the specified object.</span>
+          </span>
+        </summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-336">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23SetName%2A> Methode bietet eine Möglichkeit, den Namen eines vorhandenen Objekts festgelegt.</span><span class="sxs-lookup"><span data-stu-id="f5f82-336">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23SetName%2A> method provides a way to set the name of an existing object.</span></span> <span data-ttu-id="f5f82-337">Dies ermöglicht die Erstellung einer Instanz des Objekts durch einen Aufruf von der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23GetInstance%2A> -Methode, der Mehraufwand verhindert die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> Methode.</span><span class="sxs-lookup"><span data-stu-id="f5f82-337">This enables creation of an instance of the object through a call to the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System%23ComponentModel%23Design%23Serialization%23IDesignerSerializationManager%23GetInstance%2A> method, avoiding the overhead of the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> method.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <span data-ttu-id="f5f82-338">Ein oder beide Parameter sind <see langword="null" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-338">One or both of the parameters are <see langword="null" />.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <span data-ttu-id="f5f82-339">Das von der Instanz angegebene Objekt verfügt bereits über einen Namen, oder <paramref name="name" /> wird bereits von einem anderen benannten Objekt verwendet.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-339">The object specified by instance already has a name, or <paramref name="name" /> is already used by another named object.</span>
+          </span>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-340">Auf diese Eigenschaft wurde außerhalb einer Serialisierungssitzung zugegriffen.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-340">This property was accessed outside of a serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetName(System.Object)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#ComponentModel#Design#Serialization#IDesignerSerializationManager#GetInstance(System.String)" />
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+      </Docs>
+    </Member>
+    <Member MemberName="System.IServiceProvider.GetService">
+      <MemberSignature Language="C#" Value="object IServiceProvider.GetService (Type serviceType);" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance object System.IServiceProvider.GetService(class System.Type serviceType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.System#IServiceProvider#GetService(System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Function GetService (serviceType As Type) As Object Implements IServiceProvider.GetService" />
+      <MemberSignature Language="C++ CLI" Value=" virtual System::Object ^ System.IServiceProvider.GetService(Type ^ serviceType) = IServiceProvider::GetService;" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serviceType" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="serviceType">
+          <span data-ttu-id="f5f82-341">Ein Objekt, das den Typ des abzurufenden Dienstobjekts angibt.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-341">An object that specifies the type of service object to get.</span>
+          </span>
+        </param>
+        <summary>
+          <span data-ttu-id="f5f82-342">Eine Beschreibung dieses Members finden Sie unter der <see cref="M:System.IServiceProvider.GetService(System.Type)" />-Methode.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-342">For a description of this member, see the <see cref="M:System.IServiceProvider.GetService(System.Type)" /> method.</span>
+          </span>
+        </summary>
+        <returns>
+          <span data-ttu-id="f5f82-343">Ein Dienstobjekt vom Typ <paramref name="serviceType" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-343">A service object of type <paramref name="serviceType" />.</span>
+          </span>
+          <span data-ttu-id="f5f82-344">- oder - </span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-344">-or-</span>
+          </span>
+          <span data-ttu-id="f5f82-345">
+            <see langword="null" />, wenn kein Objekt vom Typ <paramref name="serviceType" /> vorhanden ist.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-345">
+              <see langword="null" /> if there is no service object of type <paramref name="serviceType" />.</span>
+          </span>
+        </returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-346">Bei diesem Member handelt es sich um eine explizite Schnittstellenmemberimplementierung.</span><span class="sxs-lookup"><span data-stu-id="f5f82-346">This member is an explicit interface member implementation.</span></span> <span data-ttu-id="f5f82-347">Er kann nur verwendet werden, wenn die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager>-Instanz in eine <xref:System.IServiceProvider>-Schnittstelle umgewandelt wird.</span><span class="sxs-lookup"><span data-stu-id="f5f82-347">It can be used only when the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager> instance is cast to an <xref:System.IServiceProvider> interface.</span></span>  
+  
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ValidateRecycledTypes">
+      <MemberSignature Language="C#" Value="public bool ValidateRecycledTypes { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool ValidateRecycledTypes" />
+      <MemberSignature Language="DocId" Value="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes" />
+      <MemberSignature Language="VB.NET" Value="Public Property ValidateRecycledTypes As Boolean" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool ValidateRecycledTypes { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Design</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <span data-ttu-id="f5f82-348">Ruft ein Flag ab, das angibt, ob die <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />-Methode übereinstimmende Namen hinsichtlich ihres Verweises auf den gleichen Typ überprüft, oder legt dieses fest.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-348">Gets or sets a flag indicating whether the <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> method will verify that matching names refer to the same type.</span>
+          </span>
+        </summary>
+        <value>
+          <span data-ttu-id="f5f82-349">
+            <see langword="true" />, wenn <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> Typen überprüft, andernfalls <see langword="false" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-349">
+              <see langword="true" /> if <see cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" /> verifies types; otherwise, <see langword="false" /> if it does not.</span>
+          </span>
+          <span data-ttu-id="f5f82-350">Der Standardwert ist <see langword="true" />.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-350">The default is <see langword="true" />.</span>
+          </span>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ <span data-ttu-id="f5f82-351">Die <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> Eigenschaft ändert das Verhalten von der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> Methode bei der <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> Eigenschaft ist `true`, wie in der folgenden Tabelle ausführlich beschrieben.</span><span class="sxs-lookup"><span data-stu-id="f5f82-351">The <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> property modifies the behavior of the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance%2A> method when the <xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances%2A> property is `true`, as detailed in the following table.</span></span>  
+  
+|`RecycleInstances`|`ValidateRecycledTypes`|<span data-ttu-id="f5f82-352">Verhalten von `CreateInstance`</span><span class="sxs-lookup"><span data-stu-id="f5f82-352">Behavior of `CreateInstance`</span></span>|  
+|------------------------|-----------------------------|----------------------------------|  
+|`false`|<span data-ttu-id="f5f82-353">`true` oder `false`</span><span class="sxs-lookup"><span data-stu-id="f5f82-353">`true` or `false`</span></span>|<span data-ttu-id="f5f82-354">Erstellen Sie immer eine neue Instanz des angegebenen Typs</span><span class="sxs-lookup"><span data-stu-id="f5f82-354">Always create a new instance of the specified type</span></span>|  
+|`true`|`false`|<span data-ttu-id="f5f82-355">Sofern eine entsprechende Instanz gefunden wird, unabhängig vom Typ zurückgegeben.</span><span class="sxs-lookup"><span data-stu-id="f5f82-355">If a matching instance is found it is returned, regardless of its type.</span></span>|  
+|`true`|`true`|<span data-ttu-id="f5f82-356">Wenn eine entsprechende Instanz gefunden wird, ist es nur zurückgegeben, wenn dessen Typ die gleiche wie im Aufruf Methode angegeben ist.</span><span class="sxs-lookup"><span data-stu-id="f5f82-356">If a matching instance is found, it is returned only if its type is the same as specified in the method call.</span></span>|  
+  
+ <span data-ttu-id="f5f82-357"><xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> eignet sich für einen Typ des Objekts in eine andere morphing, wenn sie ähnliche Eigenschaften haben, jedoch kein gemeinsames übergeordnetes Element Schnittstelle oder.</span><span class="sxs-lookup"><span data-stu-id="f5f82-357"><xref:System.ComponentModel.Design.Serialization.DesignerSerializationManager.ValidateRecycledTypes%2A> is useful for morphing one type of object to another if they have similar properties but share no common parent or interface.</span></span>  
+  
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <span data-ttu-id="f5f82-358">Der Serialisierungs-Manager verfügt über eine aktive Serialisierungssitzung.</span>
+          <span class="sxs-lookup">
+            <span data-stu-id="f5f82-358">The serialization manager has an active serialization session.</span>
+          </span>
+        </exception>
+        <altmember cref="M:System.ComponentModel.Design.Serialization.DesignerSerializationManager.CreateInstance(System.Type,System.Collections.ICollection,System.String,System.Boolean)" />
+        <altmember cref="P:System.ComponentModel.Design.Serialization.DesignerSerializationManager.RecycleInstances" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>
