@@ -1,0 +1,1 @@
+<span data-ttu-id="63396-101">Datei-Explorer</span><span class="sxs-lookup"><span data-stu-id="63396-101">File Explorer</span></span>

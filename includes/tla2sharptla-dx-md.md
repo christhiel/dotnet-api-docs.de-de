@@ -1,0 +1,1 @@
+<span data-ttu-id="fed83-101">DirectX</span><span class="sxs-lookup"><span data-stu-id="fed83-101">DirectX</span></span>

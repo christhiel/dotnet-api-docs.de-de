@@ -1,0 +1,1 @@
+<span data-ttu-id="85789-101">Desktop</span><span class="sxs-lookup"><span data-stu-id="85789-101">desktop</span></span>

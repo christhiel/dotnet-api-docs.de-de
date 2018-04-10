@@ -1,0 +1,1 @@
+<span data-ttu-id="c778a-101">Grafikprozessor (Graphics Processing Unit; GPU)</span><span class="sxs-lookup"><span data-stu-id="c778a-101">graphics processing unit (GPU)</span></span>

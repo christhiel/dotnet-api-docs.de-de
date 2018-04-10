@@ -1,0 +1,1 @@
+<span data-ttu-id="4d046-101">Strukturierte Abfragesprache (Structured Query Language; SQL)</span><span class="sxs-lookup"><span data-stu-id="4d046-101">Structured Query Language (SQL)</span></span>

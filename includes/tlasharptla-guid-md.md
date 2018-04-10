@@ -1,0 +1,1 @@
+<span data-ttu-id="fefed-101">Globally Unique Identifier (GUID)</span><span class="sxs-lookup"><span data-stu-id="fefed-101">globally unique identifier (GUID)</span></span>

@@ -1,0 +1,1 @@
+<span data-ttu-id="d4939-101">WCF</span><span class="sxs-lookup"><span data-stu-id="d4939-101">WCF</span></span>

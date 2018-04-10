@@ -1,0 +1,1 @@
+<span data-ttu-id="b3129-101">unabhängiger Softwarehersteller (independent software vendor, ISV)</span><span class="sxs-lookup"><span data-stu-id="b3129-101">independent software vendor (ISV)</span></span>

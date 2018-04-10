@@ -1,0 +1,1 @@
+<span data-ttu-id="6861d-101">Portable Klassenbibliothek</span><span class="sxs-lookup"><span data-stu-id="6861d-101">Portable Class Library</span></span>

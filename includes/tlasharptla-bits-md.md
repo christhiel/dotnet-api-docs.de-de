@@ -1,0 +1,1 @@
+<span data-ttu-id="9a884-101">Intelligenter Hintergrundübertragungsdienst von Microsoft (Background Intelligent Transfer Service; BITS)</span><span class="sxs-lookup"><span data-stu-id="9a884-101">Microsoft Background Intelligent Transfer Service (BITS)</span></span>

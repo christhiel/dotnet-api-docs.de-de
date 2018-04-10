@@ -1,0 +1,1 @@
+<span data-ttu-id="6dbbf-101">Microsoft Windows Graphics Device Interface (Schnittstelle für Grafikgeräte; GDI)</span><span class="sxs-lookup"><span data-stu-id="6dbbf-101">Microsoft Windows Graphics Device Interface (GDI)</span></span>
