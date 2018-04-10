@@ -1,0 +1,1 @@
+Weitere Informationen über das Element, das diese Klasse darstellt, finden Sie unter der folgenden Spezifikation: [Assertionen und Protokolle für die OASIS Security Assertion Markup Language (SAML) v2. 0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf).

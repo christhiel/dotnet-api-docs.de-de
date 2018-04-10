@@ -1,0 +1,4 @@
+> [!NOTE]
+> Ab .NET Core-Version 2.0 nicht stehen Ihnen zum Ausführen [ `dotnet restore` ](~/docs/core/tools/dotnet-restore.md) , da es implizit durch alle Befehle, wie z. B. ausgeführt wird `dotnet build` und `dotnet run`, erfordern eine Wiederherstellung erfolgen. Es ist immer noch ein gültiger Befehl in bestimmten Szenarien, in denen auf diese Weise einer explizite Wiederherstellung sinnvoll, z. B. [fortlaufende Integrationsbuilds in Visual Studio Team Services](/vsts/build-release/apps/aspnet/build-aspnet-core) oder in Build-Systeme, müssen Zeit, zu der explizit zu steuern, die Wiederherstellung erfolgt.
+>
+> Dieser Befehl unterstützt auch die `dotnet restore` Optionen, wenn die Langform übergeben (z. B. `--source`). Optionen, wie z. B. kurz `-s`, werden nicht unterstützt.

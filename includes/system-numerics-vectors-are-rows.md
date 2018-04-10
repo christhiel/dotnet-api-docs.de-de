@@ -1,0 +1,1 @@
+Matrix-Transformationen die <xref:System.Numerics.Vector2>, <xref:System.Numerics.Vector3>, und <xref:System.Numerics.Vector4> Instanzen werden als Zeilen dargestellt: einen Vektor *v* wird mit einer Matrix transformiert *M* mit *vM*  Multiplikation.

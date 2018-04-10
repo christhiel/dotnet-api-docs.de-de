@@ -1,0 +1,11 @@
+### <a name="item-scrolling-a-flat-list-with-items-of-different-pixel-height"></a>Eine flache Liste mit Elementen eines anderen Pixelhöhe Bildlauf Element
+
+|   |   |
+|---|---|
+|Details|Wenn ein <xref:System.Windows.Controls.ItemsControl?displayProperty=name> zeigt eine Auflistung, die mithilfe der Virtualisierung (<code>IsVirtualizing=true</code>) und Element - durchführen eines Bildlaufs (<code>ScrollUnit=Item</code>), und wenn das Steuerelement einen zum Anzeigen eines Elements Bildlauf, dessen Höhe in Pixel unterscheidet sich von seiner Nachbarn, die <xref:System.Windows.Controls.VirtualizingStackPanel?displayProperty=name> führt eine Iteration durch alle Elemente in der Auflistung. Die Benutzeroberfläche ist nicht mehr reagiert, während dieser Iteration; Wenn die Auflistung groß ist, kann dies als ein Hängenbleiben wahrgenommen werden. Die Iteration tritt auf, in anderen Fällen auch in früheren Versionen von .net. Es tritt z. B. beim Durchführen eines Bildlaufs Pixel (<code>ScrollUnit=Pixel</code>) ausführt, wenn ein Element mit verschiedenen Pixelhöhe und beim Durchführen eines Bildlaufs Element hierarchische Daten (z. B. eine <xref:System.Windows.Controls.TreeView?displayProperty=name> oder ein <xref:System.Windows.Controls.ItemsControl?displayProperty=name> mit Gruppierung aktiviert) ausführt, wenn ein Element mit einer unterschiedliche Anzahl von untergeordneten Elementen als seinen Nachbarn. Für die Groß-/Kleinschreibung durchführen eines Bildlaufs Element und anderen Pixelhöhe wurde die Iteration in .net 4.6.1 zum Beheben von Fehlern im Layout von hierarchischen Daten eingeführt.  Es ist nicht erforderlich, wenn die Daten sind für Flatfiles (ohne Hierarchie) und .net 4.6.2 keine es in diesem Fall.|
+|Vorschlag|Wenn die Iteration in .net 4.6.1 jedoch nicht in früheren Versionen – d. h. wenn tritt auf, die <xref:System.Windows.Controls.ItemsControl?displayProperty=name> ist Element-durchführen eines Bildlaufs einer flachen Liste mit Elementen eines anderen Pixelhöhe - stehen zwei Schadenersatzes:<ol><li>Installieren Sie .net 4.6.2.</li><li>Installieren Sie Hotfix HR 1605 für .net 4.6.1.</li></ol>|
+|Bereich|Gering|
+|Version|4.6.1|
+|Typ|Laufzeit|
+|Betroffene APIs|<ul><li><xref:System.Windows.Controls.VirtualizingStackPanel?displayProperty=nameWithType></li></ul>|
+

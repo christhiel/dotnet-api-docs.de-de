@@ -1,0 +1,10 @@
+### <a name="wcf-transport-security-supports-certificates-stored-using-cng"></a>Sicherheit für WCF-Transport unterstützt Zertifikate mit CNG gespeichert
+
+|   |   |
+|---|---|
+|Details|Beginnend mit apps, die auf .NET Framework 4.6.2, unterstützt die WCF-transportsicherheit Zertifikate mithilfe der Windows-Kryptografie-Bibliothek (CNG) gespeichert. Diese Unterstützung ist auf die Verwendung von Zertifikaten mit einem öffentlichen Schlüssel beschränkt, der über einen Exponent mit einer Länge von nicht mehr als 32 Bit verfügt. Wenn eine Anwendung .NET Framework 4.6.2 abzielt, ist dieses Feature standardmäßig aktiviert. In früheren Versionen von .NET Framework, der Versuch, X509 Verwenden von Zertifikaten mit einer CSG softwareschlüsselspeicher-Anbieter löst eine Ausnahme aus.|
+|Vorschlag|Apps, die für .NET Framework 4.6.1 und früheren jedoch auf .NET Framework 4.6.2 ausgeführt werden können Unterstützung für CNG-Zertifikate aktivieren, indem Sie die folgende Zeile zum Hinzufügen der <code>&lt;runtime&gt;</code> Abschnitt der Datei "App.config" oder "Web.config":<pre><code class="language-xml">&lt;runtime&gt;&#13;&#10;&lt;AppContextSwitchOverrides value=&quot;Switch.System.ServiceModel.DisableCngCertificates=false&quot; /&gt;&#13;&#10;&lt;/runtime&gt;&#13;&#10;</code></pre>Dies kann mithilfe des folgenden Codes auch programmgesteuert erfolgen:<pre><code class="language-cs">private const string DisableCngCertificates = @&quot;Switch.System.ServiceModel.DisableCngCertificate&quot;;&#13;&#10;AppContext.SetSwitch(disableCngCertificates, false);&#13;&#10;</code></pre><pre><code class="language-vb">Const DisableCngCertificates As String = &quot;Switch.System.ServiceModel.DisableCngCertificates&quot;&#13;&#10;AppContext.SetSwitch(disableCngCertificates, False)&#13;&#10;</code></pre>Beachten Sie, dass aufgrund dieser Änderung jeglicher Code zur Ausnahmebehandlung, der von dem Versuch zur Einleitung von sicherer Kommunikation mit einem CNG-Zertifikat abhängt, nicht ausgeführt wird.|
+|Bereich|Gering|
+|Version|4.6.2|
+|Typ|Neuzuweisung|
+

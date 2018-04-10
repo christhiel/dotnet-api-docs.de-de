@@ -1,0 +1,11 @@
+### <a name="tls-1x-by-default-passes-the-schsendauxrecord-flag-to-the-underlying-schannel-api"></a>TLS 1.x standardmäßig übergibt das Flag SCH_SEND_AUX_RECORD an der zugrunde liegenden SCHANNEL-API
+
+|   |   |
+|---|---|
+|Details|Bei Verwendung von TLS 1.x, .NET Framework basiert auf der zugrunde liegenden Windows SCHANNEL-API. Ab .NET Framework 4.6, die [SCH_SEND_AUX_RECORD](https://msdn.microsoft.com/library/windows/desktop/aa379810.aspx) -Flag ist standardmäßig auf SCHANNEL übergeben. Dies bewirkt, dass SCHANNEL zum Aufteilen von Daten in zwei separaten Datensätzen, die zunächst als ein einzelnes Byte und die zweite als verschlüsselt werden <em>n</em>-1 Byte. In seltenen Fällen unterbricht diese Kommunikation zwischen Clients und der vorhandene Server, die die Annahmen ausgehen, dass die Daten in einem einzelnen Datensatz gespeichert.|
+|Vorschlag|Wenn diese Änderung der Kommunikation mit einem vorhandenen Server unterbrochen wird, können Sie deaktiviert das Senden der [SCH_SEND_AUX_RECORD](https://msdn.microsoft.com/library/windows/desktop/aa379810.aspx) flag und das vorherige Verhalten von Teilen von Daten nicht in separaten Datensätzen durch Hinzufügen der folgenden Schalters zum Wiederherstellen der [ \<AppContextSwitchOverrides >](~/docs/framework/configure-apps/file-schema/runtime/appcontextswitchoverrides-element.md) in der [ ` ](~/docs/framework/configure-apps/file-schema/runtime/runtime-element.md) von Ihrer app-Konfigurationsdatei:<pre><code class="language-xml">&lt;runtime&gt;&#13;&#10;&lt;AppContextSwitchOverrides&#13;&#10;value=&quot;Switch.System.Net.DontEnableSchSendAuxRecord=true&quot; /&gt;&#13;&#10;&lt;/runtime&gt;&#13;&#10;</code></pre> <blockquote> [!IMPORTANT] Diese Einstellung wird nur für Abwärtskompatibilität bereitgestellt. Seine Verwendung wird andernfalls nicht empfohlen.</blockquote> |
+|Bereich|Edge|
+|Version|4.6|
+|Typ|Neuzuweisung|
+|Betroffene APIs|<ul><li><xref:System.Net.Security.SslStream?displayProperty=nameWithType></li><li><xref:System.Net.ServicePointManager?displayProperty=nameWithType></li><li><xref:System.Net.Http.HttpClient?displayProperty=nameWithType></li><li><xref:System.Net.Mail.SmtpClient?displayProperty=nameWithType></li><li><xref:System.Net.HttpWebRequest?displayProperty=nameWithType></li><li><xref:System.Net.FtpWebRequest?displayProperty=nameWithType></li></ul>|
+

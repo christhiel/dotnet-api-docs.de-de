@@ -1,0 +1,3 @@
+
+> [!IMPORTANT] 
+> Statt die **String.Format** -Methode oder mit [zusammengesetzte Formatzeichenfolgen](~/docs/standard/base-types/composite-formatting.md), können Sie *interpoliert Zeichenfolgen* , wenn Ihre Sprache unterstützt. Eine interpolierte Zeichenfolge ist eine Zeichenfolge, enthält *interpoliert Ausdrücke*. Jede interpolierte Ausdruck ist behoben, wobei der Wert des Ausdrucks und in die Ergebniszeichenfolge eingeschlossen, wenn die Zeichenfolge zugewiesen ist. Weitere Informationen finden Sie unter [Zeichenfolge Interpolation (C#-Referenz)](~/docs/csharp/language-reference/tokens/interpolated.md) und [interpoliert Zeichenfolgen (Visual Basic-Referenz)](~/docs/visual-basic/programming-guide/language-features/strings/interpolated-strings.md). 
