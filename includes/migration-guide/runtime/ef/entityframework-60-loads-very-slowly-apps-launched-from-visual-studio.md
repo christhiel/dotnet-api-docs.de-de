@@ -1,0 +1,10 @@
+### <a name="entityframework-60-loads-very-slowly-in-apps-launched-from-visual-studio"></a><span data-ttu-id="723b2-101">EntityFramework 6.0 wird in apps, die von Visual Studio gestartet sehr langsam geladen.</span><span class="sxs-lookup"><span data-stu-id="723b2-101">EntityFramework 6.0 loads very slowly in apps launched from Visual Studio</span></span>
+
+|   |   |
+|---|---|
+|<span data-ttu-id="723b2-102">Details</span><span class="sxs-lookup"><span data-stu-id="723b2-102">Details</span></span>|<span data-ttu-id="723b2-103">Das Starten einer App, die EntityFramework 6.0 verwendet, kann über Visual Studio 2013 sehr langsam sein.</span><span class="sxs-lookup"><span data-stu-id="723b2-103">Launching an app from Visual Studio 2013 that uses EntityFramework 6.0 can be very slow.</span></span>|
+|<span data-ttu-id="723b2-104">Vorschlag</span><span class="sxs-lookup"><span data-stu-id="723b2-104">Suggestion</span></span>|<span data-ttu-id="723b2-105">Dieses Problem wurde in EntityFramework 6.0.2 behoben.</span><span class="sxs-lookup"><span data-stu-id="723b2-105">This issue is fixed in EntityFramework 6.0.2.</span></span> <span data-ttu-id="723b2-106">Aktualisieren Sie EntityFramework, um die Leistungsprobleme zu vermeiden.</span><span class="sxs-lookup"><span data-stu-id="723b2-106">Please update EntityFramework to avoid the performance issue.</span></span>|
+|<span data-ttu-id="723b2-107">Bereich</span><span class="sxs-lookup"><span data-stu-id="723b2-107">Scope</span></span>|<span data-ttu-id="723b2-108">Edge</span><span class="sxs-lookup"><span data-stu-id="723b2-108">Edge</span></span>|
+|<span data-ttu-id="723b2-109">Version</span><span class="sxs-lookup"><span data-stu-id="723b2-109">Version</span></span>|<span data-ttu-id="723b2-110">4.5</span><span class="sxs-lookup"><span data-stu-id="723b2-110">4.5</span></span>|
+|<span data-ttu-id="723b2-111">Typ</span><span class="sxs-lookup"><span data-stu-id="723b2-111">Type</span></span>|<span data-ttu-id="723b2-112">Laufzeit</span><span class="sxs-lookup"><span data-stu-id="723b2-112">Runtime</span></span>|
+
