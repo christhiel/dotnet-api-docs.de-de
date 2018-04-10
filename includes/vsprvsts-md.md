@@ -1,0 +1,1 @@
+<span data-ttu-id="cce9f-101">Visual Studio Application Lifecycle Management</span><span class="sxs-lookup"><span data-stu-id="cce9f-101">Visual Studio Application Lifecycle Management</span></span>
