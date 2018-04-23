@@ -1,9 +1,9 @@
-### <a name="appdomainsetupdynamicbase-is-no-longer-randomized-by-userandomizedstringhashalgorithm"></a>AppDomainSetup.DynamicBase ist nicht mehr von UseRandomizedStringHashAlgorithm zufällig.
+### <a name="appdomainsetupdynamicbase-is-no-longer-randomized-by-userandomizedstringhashalgorithm"></a>AppDomainSetup.DynamicBase wird mithilfe von UseRandomizedStringHashAlgorithm nicht mehr zufällig festgelegt
 
 |   |   |
 |---|---|
-|Details|Vor .NET Framework 4.6, den Wert des <xref:System.AppDomainSetup.DynamicBase> würde zufällige werden, zwischen Anwendungsdomänen oder Prozessen, wenn UseRandomizedStringHashAlgorithm in der app-Datei "App.config" aktiviert wurde. Ab .NET Framework 4.6 <xref:System.AppDomainSetup.DynamicBase> stabil Ergebnis zurückgegeben wird, zwischen verschiedenen Instanzen von einer app ausgeführt werden und zwischen verschiedenen app-Domänen. Dynamische Basen werden weiterhin für andere apps unterschiedlich sein. Diese Änderung wird nur die Benennung zufallselement für verschiedene Instanzen der gleichen app entfernt.|
-|Vorschlag|Beachten Sie diese aktivieren <code>UseRandomizedStringHashAlgorithm</code> führt nicht zu <xref:System.AppDomainSetup.DynamicBase> wird zufällig. Wenn eine zufällige Basis erforderlich ist, muss es in Ihrer app-Code nicht über diese API erstellt werden.|
+|Details|Vor .NET Framework 4.6 wurde der Wert von <xref:System.AppDomainSetup.DynamicBase> für Anwendungsdomänen oder Prozesse zufällig festgelegt, wenn UseRandomizedStringHashAlgorithm in der Konfigurationsdatei der App aktiviert war. Ab .NET Framework 4.6 gibt <xref:System.AppDomainSetup.DynamicBase> ein stabiles Ergebnis zurück, das zwischen verschiedenen Instanzen einer ausgeführten App und zwischen verschiedenen App-Domänen besteht. Verschiedene Apps haben auch unterschiedliche dynamische Basen. Diese Änderung entfernt nur die Elemente von verschiedenen Instanzen einer App, die zufällig benannt werden.|
+|Vorschlag|Beachten Sie, dass bei der Aktivierung von <code>UseRandomizedStringHashAlgorithm</code> <xref:System.AppDomainSetup.DynamicBase> nicht zufällig festgelegt wird. Wenn eine zufällige Basis benötigt wird, muss diese im Code Ihrer App anstelle einer API erstellt werden.|
 |Bereich|Edge|
 |Version|4.6|
 |Typ|Laufzeit|

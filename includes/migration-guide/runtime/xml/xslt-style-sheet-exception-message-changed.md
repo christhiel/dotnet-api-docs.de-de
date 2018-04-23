@@ -1,9 +1,9 @@
-### <a name="xslt-style-sheet-exception-message-changed"></a>XSLT-Stylesheet Ausnahmemeldung geändert
+### <a name="xslt-style-sheet-exception-message-changed"></a>Ausnahmemeldung für XSLT-Stylesheet wurde geändert
 
 |   |   |
 |---|---|
-|Details|In .NET Framework 4.5, wird der Text der Fehlermeldung, wenn eine XSLT-Datei zu komplex ist &quot;das Stylesheet ist zu komplex.&quot; In früheren Versionen wurde die Fehlermeldung &quot;XSLT Kompilierungsfehler.&quot; Anwendungscode, der vom Text der Fehlermeldung abhängt, funktioniert nicht mehr. Die Ausnahmetypen sind jedoch nach wie vor identisch, daher sollte diese Änderung keine tatsächlichen Auswirkungen haben.|
-|Vorschlag|Aktualisieren des app-Code je nach der Ausnahmemeldung aus diesen Fehlerzustand zu erwarten, dass die neue Nachricht, oder (sogar) aktualisieren Sie den Code so, dass nur der Typ der Ausnahme abhängig (<xref:System.Xml.Xsl.XsltException?displayProperty=name>), die nicht geändert wurde.|
+|Details|In .NET Framework 4.5 lautet die Fehlermeldung bei einer zu komplexen XSLT-Datei wie folgt: &quot;The style sheet is too complex.&quot; (Das Stylesheet ist zu komplex.) In früheren Versionen lautete die Fehlermeldung &quot;XSLT-Compilerfehler.&quot; Anwendungscode, der vom Text der Fehlermeldung abhängt, funktioniert nicht mehr. Die Ausnahmetypen sind jedoch nach wie vor identisch, daher sollte diese Änderung keine tatsächlichen Auswirkungen haben.|
+|Vorschlag|Aktualisieren Sie jeglichen App-Code so, dass er von der Ausnahmemeldung dieser Fehlerbedingung abhängig ist, um die neue Meldung zu erwarten, oder (noch besser) aktualisieren Sie den Code so, dass er nur vom Ausnahmetyp (<xref:System.Xml.Xsl.XsltException?displayProperty=name>) abhängig ist, der nicht geändert wurde.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

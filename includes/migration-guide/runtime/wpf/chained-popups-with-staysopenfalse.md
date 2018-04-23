@@ -1,8 +1,8 @@
-### <a name="chained-popups-with-staysopenfalse"></a>Verkettet Popups mit "StaysOpen" = "false"
+### <a name="chained-popups-with-staysopenfalse"></a>Verkettete Popups mit „StaysOpen=FALSE“
 
 |   |   |
 |---|---|
-|Details|Ein Popup mit "StaysOpen" = "false" sollte auf Schließen, wenn Sie außerhalb des Popups klicken. Wenn zwei oder mehr solcher Popups verkettet sind (d. h. eine enthält eine andere), es wurden viele Probleme, einschließlich:<ul><li>Öffnen Sie zwei Ebenen zu, klicken Sie auf außerhalb P2, aber in P1.  Nichts geschieht.</li><li>Öffnen Sie zwei Ebenen zu, klicken Sie auf externe P1.  Schließen Sie beide Popups.</li><li>Öffnen Sie und schließen Sie zwei Ebenen.  Wiederholen Sie dann, P2 erneut zu öffnen.  Nichts geschieht.</li><li>Versuchen Sie drei Ebenen zu öffnen.  Ist nicht möglich.  (Geschieht nichts oder die ersten beiden Stufen schließen, je nachdem, wo Sie klicken.) Diese Fälle (und andere Variationen) jetzt wie erwartet funktionieren.</li></ul>|
+|Details|Ein Popup mit „StaysOpen=FALSE“ sollte geschlossen werden, wenn Sie außerhalb des Popups klicken. Wenn zwei oder mehr Popups verkettet sind (d.h. ein Popup enthält ein anderes), treten viele Probleme auf, unter anderem folgende:<ul><li>Öffnen Sie zwei Ebenen. Klicken Sie außerhalb von P2, aber innerhalb von P1.  Nichts geschieht.</li><li>Öffnen Sie zwei Ebenen. Klicken Sie außerhalb von P1.  Beide Popups werden geschlossen.</li><li>Öffnen und schließen Sie zwei Ebenen.  Versuchen Sie dann, P2 erneut zu öffnen.  Nichts geschieht.</li><li>Versuchen Sie, drei Ebenen zu öffnen.  Dies ist nicht möglich.  (Je nachdem, wo Sie klicken, geschieht entweder nichts oder die ersten zwei Ebenen werden geschlossen.) Diese Fälle (und andere Varianten) funktionieren nun wie erwartet.</li></ul>|
 |Bereich|Edge|
 |Version|4.7.1|
 |Typ|Laufzeit|

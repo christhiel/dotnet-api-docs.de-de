@@ -1,4 +1,4 @@
-### <a name="calling-attributegetcustomattributes-on-an-indexer-property-no-longer-throws-ambiguousmatchexception-if-the-ambiguity-can-be-resolved-by-indexs-type"></a>AmbiguousMatchException Attribute.GetCustomAttributes nicht mehr für eine Indexereigenschaft aufrufen ausgelöst werden, wenn die Mehrdeutigkeit durch den Typ des Indexes behoben werden kann
+### <a name="calling-attributegetcustomattributes-on-an-indexer-property-no-longer-throws-ambiguousmatchexception-if-the-ambiguity-can-be-resolved-by-indexs-type"></a>Der Aufruf von Attribute.GetCustomAttributes für eine Indexereigenschaft löst keine AmbiguousMatchException-Ausnahme mehr aus, wenn die Mehrdeutigkeit durch den Typ des Indexes aufgelöst werden kann
 
 |   |   |
 |---|---|

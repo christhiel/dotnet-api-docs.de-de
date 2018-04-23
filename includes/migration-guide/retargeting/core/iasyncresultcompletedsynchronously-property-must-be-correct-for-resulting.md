@@ -1,9 +1,9 @@
-### <a name="iasyncresultcompletedsynchronously-property-must-be-correct-for-the-resulting-task-to-complete"></a>IAsyncResult.CompletedSynchronously-Eigenschaft muss für die resultierende Aufgabe abgeschlossen sein.
+### <a name="iasyncresultcompletedsynchronously-property-must-be-correct-for-the-resulting-task-to-complete"></a>Die IAsyncResult.CompletedSynchronously-Eigenschaft muss korrekt sein, damit die resultierende Aufgabe abgeschlossen wird
 
 |   |   |
 |---|---|
-|Details|Beim Aufrufen von TaskFactory.FromAsync, die Implementierung der <xref:System.IAsyncResult.CompletedSynchronously> -Eigenschaft muss korrekt sein, damit die resultierende Aufgabe abgeschlossen. Das heißt, die Eigenschaft muss für den Fall, und ausschließlich für den Fall, dass die Implementierung synchron abgeschlossen wurde, „true“ zurückgeben. Zuvor wurde die Eigenschaft nicht überprüft.|
-|Vorschlag|Wenn <xref:System.IAsyncResult?displayProperty=name> Implementierungen ordnungsgemäß für "true" Zurückgeben der <xref:System.IAsyncResult.CompletedSynchronously?displayProperty=name> Eigenschaft nur, wenn ein Task synchron abgeschlossen, dann kein Umbruch wird beachtet werden. Benutzer sollten <xref:System.IAsyncResult?displayProperty=name> Implementierungen deren Besitzer Sie sind (sofern vorhanden) um sicherzustellen, dass sie, ob eine Aufgabe abgeschlossen wird, synchron oder nicht richtig ausgewertet.|
+|Details|Wenn Sie TaskFactory.FromAsync aufrufen, muss die Implementierung der <xref:System.IAsyncResult.CompletedSynchronously>-Eigenschaft korrekt sein, damit die resultierende Aufgabe abgeschlossen wird. Das heißt, die Eigenschaft muss für den Fall, und ausschließlich für den Fall, dass die Implementierung synchron abgeschlossen wurde, „true“ zurückgeben. Zuvor wurde die Eigenschaft nicht überprüft.|
+|Vorschlag|Wenn <xref:System.IAsyncResult?displayProperty=name>-Implementierungen nur dann ordnungsgemäß TRUE für die <xref:System.IAsyncResult.CompletedSynchronously?displayProperty=name>-Eigenschaft zurückgeben, wenn eine Aufgabe synchron abgeschlossen wurde, tritt kein Fehler auf. Benutzer sollten <xref:System.IAsyncResult?displayProperty=name>-Implementierungen überprüfen, die sie ggf. besitzen, um sicherzustellen, dass ordnungsgemäß ausgewertet wird, ob eine Aufgabe synchron abgeschlossen wurde.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Neuzuweisung|

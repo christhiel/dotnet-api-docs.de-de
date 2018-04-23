@@ -1,9 +1,9 @@
-### <a name="error-codes-for-maxrequestlength-or-maxreceivedmessagesize-are-different"></a>Fehlercodes für MaxRequestLength oder "MaxReceivedMessageSize" unterscheiden.
+### <a name="error-codes-for-maxrequestlength-or-maxreceivedmessagesize-are-different"></a>Die Fehlercodes für maxRequestLength oder maxReceivedMessageSize sind unterschiedlich
 
 |   |   |
 |---|---|
-|Details|Nachrichten in WCF-Webdiensten in Internet Information Services (IIS) oder ASP.NET Development Server gehostet, die MaxRequestLength (in ASP.NET) überschreiten, oder "MaxReceivedMessageSize" (in WCF) über ein anderer Fehler CodeThe HTTP-Statuscode 400 (Ungültige Anforderung geändert hat ) zum 413 (Anforderungsentität zu groß) und Nachrichten, die die MaxRequestLength oder die Einstellung "MaxReceivedMessageSize" überschreiten Auslösen einer <xref:System.ServiceModel.ProtocolException?displayProperty=name> Ausnahme. Dies gilt auch für Fälle, in denen der Übertragungsmodus gestreamt wird.|
-|Vorschlag|Diese Änderung erleichtert das Debuggen in Fällen, in denen die Nachrichtenlänge die von ASP.NET oder WCF zulässigen Begrenzungen überschreitet. Sie müssen Code ändern, die Verarbeitung basierend auf einen HTTP 400-Statuscode ausführt.|
+|Details|Meldung in WCF-Webdiensten, die in Internetinformationsdiensten (Internet Information Services, IIS) oder in ASP.NET Development Server gehostet werden und maxRequestLength (in ASP.NET) oder maxReceivedMessageSize (in WCF) überschreiten, haben verschiedene Fehlercodes. Der HTTP-Statuscode hat sich von 400 (Ungültige Anforderung) in 413 (Anforderungseinheit zu groß) geändert, und entweder die maxRequestLength- oder die maxReceivedMessageSize-Einstellung löst eine <xref:System.ServiceModel.ProtocolException?displayProperty=name>-Ausnahme aus. Dies gilt auch für Fälle, in denen der Übergangsmodus „Streamed“ ist.|
+|Vorschlag|Diese Änderung erleichtert das Debuggen in Fällen, in denen die Länge der Meldung die von ASP.NET oder WCF zulässigen Limits überschreiten. Sie müssen sämtlichen Code ändern, der Verarbeitungen auf Grundlage des HTTP-Statuscodes „400“ durchführt.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

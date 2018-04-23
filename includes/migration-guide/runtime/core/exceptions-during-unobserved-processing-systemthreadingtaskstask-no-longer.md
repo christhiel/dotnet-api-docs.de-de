@@ -1,9 +1,9 @@
-### <a name="exceptions-during-unobserved-processing-in-systemthreadingtaskstask-no-longer-propagate-on-finalizer-thread"></a>Ausnahmen während der nicht überwachte Verarbeitungen in System.Threading.Tasks.Task nicht mehr weitergegeben im Finalizer-thread
+### <a name="exceptions-during-unobserved-processing-in-systemthreadingtaskstask-no-longer-propagate-on-finalizer-thread"></a>Ausnahmen während der nicht überwachten Verarbeitung in System.Threading.Tasks.Task werden nicht mehr an den Finalizerthread weitergegeben
 
 |   |   |
 |---|---|
 |Details|Da die <xref:System.Threading.Tasks.Task?displayProperty=name>-Klasse einen asynchronen Vorgang darstellt, fängt sie alle nicht schwerwiegenden Ausnahmen ab, die während einer asynchronen Verarbeitung auftreten. Wenn eine Ausnahme in .NET Framework 4.5 nicht überwacht wird und der Code nie auf die Aufgabe wartet, wird die Ausnahme nicht mehr im Finalizer-Thread weitergegeben und führt dazu, dass der Prozess während der Garbage Collection abstürzt. Diese Änderung erhöht die Zuverlässigkeit von Anwendungen, die mithilfe der Task-Klasse nicht überwachte asynchrone Verarbeitungen ausführen.|
-|Vorschlag|Wenn eine app nicht überwachte asynchrone Ausnahmen, die an die Finalizer-Thread weitergegeben abhängig ist, kann das vorherige Verhalten wiederhergestellt werden, indem Sie mit einem entsprechenden Handler für die <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException> -Ereignis oder durch Festlegen einer [Common Language Runtime-Konfigurationselement ](~/docs/framework/configure-apps/file-schema/runtime/throwunobservedtaskexceptions-element.md).|
+|Vorschlag|Wenn eine App von nicht überwachten asynchronen Ausnahmen abhängt, die an den Finalizer-Thread weitergegeben werden, kann das vorherige Verhalten wiederhergestellt werden, indem ein entsprechender Handler für das <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException>-Ereignis bereitgestellt oder ein [Runtimekonfigurationselement](~/docs/framework/configure-apps/file-schema/runtime/throwunobservedtaskexceptions-element.md) festgelegt wird.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

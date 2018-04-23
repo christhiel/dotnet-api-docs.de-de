@@ -1,9 +1,9 @@
-### <a name="dataobjectgetdata-now-retrieves-data-as-utf-8"></a>DataObject.GetData Ruft Daten jetzt als UTF-8 ab
+### <a name="dataobjectgetdata-now-retrieves-data-as-utf-8"></a>DataObject.GetData ruft Daten jetzt als UTF-8 ab
 
 |   |   |
 |---|---|
-|Details|Für apps, die auf .NET Framework 4 oder die auf .NET Framework 4.5.1 oder älteren Versionen ausgeführt <code>DataObject.GetData</code> Ruft die HTML-formatierte Daten als ASCII-Zeichenfolge ab. Daher werden nur ASCII-Zeichen (Zeichen mit ASCII-Codes größer als 0x7F) durch zwei zufällige Zeichen dargestellt. Für apps, .NET Framework 4.5 oder höher, und führen auf .NET Framework 4.5.2 ausgerichtet <code>DataObject.GetData</code> ruft von HTML-formatierte Daten als UTF-8, mit dem stellt Zeichen größer als 0x7F korrekt dar.|
-|Vorschlag|Wenn Sie eine problemumgehung für das Codierungsproblem mit HTML-formatierten Zeichenfolgen implementiert (z. B. aus der Zwischenablage durch explizites Codieren der HTML-Zeichenfolge durch Übergabe an abgerufen <xref:System.Text.UTF8Encoding.GetString(System.Byte[],System.Int32,System.Int32)?displayProperty=name>) und das Ziel Ihrer app von Version 4, 4.5, Dieses Problem zu umgehen, sollten entfernt werden. Wenn aus irgendeinem Grund das alte Verhalten erforderlich ist, kann die app .NET Framework 4.0, um dieses Verhalten abzurufen abzielen.|
+|Details|In Apps, die für .NET Framework 4 konzipiert sind oder die unter .NET Framework 4.5.1 oder früheren Versionen ausgeführt werden, ruft <code>DataObject.GetData</code> HTML-formatierte Daten als ASCII-Zeichenfolge ab. Daher werden Zeichen, bei denen es sich nicht um ASCII-Zeichen handelt (Zeichen mit einem ASCII-Code, der über 0x7F liegt), als zwei beliebige Zeichen dargestellt. In Apps, die für .NET Framework 4.5 oder höher konzipiert sind oder die unter .NET Framework 4.5.2 ausgeführt werden, ruft <code>DataObject.GetData</code> HTML-formatierte Daten als UTF-8-Kodierung ab, durch die Zeichen über 0x7F richtig dargestellt werden.|
+|Vorschlag|Wenn Sie eine Problemumgehung für das Codierungsproblem mit HTML-formatierten Zeichenfolgen implementiert haben (z.B. durch explizites Codieren der HTML-Zeichenfolge aus der Zwischenablage durch Übergabe an <xref:System.Text.UTF8Encoding.GetString(System.Byte[],System.Int32,System.Int32)?displayProperty=name>) und das Ziel Ihrer App von Version 4 zu 4.5 neu zuweisen, sollten Sie diese Problemumgehung entfernen. Wenn das alte Verhalten benötigt wird, kann die App auf .NET Framework 4.0 ausgerichtet werden.|
 |Bereich|Edge|
 |Version|4.5.2|
 |Typ|Neuzuweisung|

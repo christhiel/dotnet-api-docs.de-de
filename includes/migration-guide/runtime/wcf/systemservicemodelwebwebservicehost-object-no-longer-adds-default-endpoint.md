@@ -1,9 +1,9 @@
-### <a name="systemservicemodelwebwebservicehost-object-no-longer-adds-a-default-endpoint"></a>System.ServiceModel.Web.WebServiceHost Objekt fügt keinen standardmäßigen Endpunkt mehr hinzu.
+### <a name="systemservicemodelwebwebservicehost-object-no-longer-adds-a-default-endpoint"></a>Das System.ServiceModel.Web.WebServiceHost-Objekt fügt keinen Standardendpunkt mehr hinzu
 
 |   |   |
 |---|---|
 |Details|Das <xref:System.ServiceModel.Web.WebServiceHost>-Objekt fügt keinen standardmäßigen Endpunkt mehr hinzu, wenn ein expliziter Endpunkt vom Anwendungscode hinzugefügt wurde.|
-|Vorschlag|Wenn Benutzer erwarten, dass in der Lage, eine Verbindung mit einer Standardendpunkt sein, und andere explizite Endpunkte, um hinzugefügt wurden die <xref:System.ServiceModel.Web.WebServiceHost?displayProperty=name>, Standardendpunkte sollte auch explizit hinzugefügt werden (mit <xref:System.ServiceModel.ServiceHostBase.AddDefaultEndpoints?displayProperty=name>).|
+|Vorschlag|Wenn Benutzer erwarten, dass sie eine Verbindung mit einem Standardendpunkt herstellen können und andere explizite Endpunkte zu <xref:System.ServiceModel.Web.WebServiceHost?displayProperty=name> hinzugefügt wurden, sollten (über <xref:System.ServiceModel.ServiceHostBase.AddDefaultEndpoints?displayProperty=name>) auch die Standardendpunkte explizit hinzugefügt werden.|
 |Bereich|Gering|
 |Version|4.5|
 |Typ|Laufzeit|

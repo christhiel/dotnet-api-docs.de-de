@@ -1,4 +1,4 @@
-### <a name="sqlvariant-data-uses-sqlvariant-collation-rather-than-database-collation"></a>Sql_variant-Daten verwendet, Sql_variant Sortierung anstatt datenbanksortierreihenfolgen
+### <a name="sqlvariant-data-uses-sqlvariant-collation-rather-than-database-collation"></a>Sql_variant-Daten verwenden sql_variant-Sortierreihenfolgen anstatt Datenbanksortierreihenfolgen
 
 |   |   |
 |---|---|

@@ -1,9 +1,9 @@
-### <a name="workflow-now-throws-original-exception-instead-of-nullreferenceexception-in-some-cases"></a>Workflow löst jetzt ursprünglichen Ausnahme anstelle von NullReferenceException in einigen Fällen aus.
+### <a name="workflow-now-throws-original-exception-instead-of-nullreferenceexception-in-some-cases"></a>Der Workflow löst jetzt anstelle einer NullReferenceException teilweise eine ursprüngliche Ausnahme aus
 
 |   |   |
 |---|---|
-|Details|In .NET Framework 4.6.2 und früheren Versionen, wenn die Execute-Methode einer Workflow-Aktivität eine Ausnahme mit einer <code>null</code> Wert für die <xref:System.Exception.Message> -Eigenschaft, die Workflowlaufzeit System.Activities löst eine <xref:System.NullReferenceException?displayProperty=name>, Masking der ursprüngliche Ausnahme. In der .NET Framework-4.7 wird die zuvor maskierte Ausnahme ausgelöst.|
-|Vorschlag|Wenn Codes Behandlung verwendet die <xref:System.NullReferenceException?displayProperty=name>, ändern Sie ihn zum Abfangen von Ausnahmen, die von Ihren benutzerdefinierten Aktivitäten ausgelöst werden kann.|
+|Details|In .NET Framework 4.6.2 und früheren Versionen löst die System.Activities-Workflowruntime eine <code>null</code> aus, wenn die Execute-Methode einer Workflowaktivität eine Ausnahme mit einem <xref:System.Exception.Message>-Wert für die <xref:System.NullReferenceException?displayProperty=name>-Eigenschaft auslöst, wodurch die ursprüngliche Ausnahme maskiert wird. In .NET Framework 4.7 wird die zuvor maskierte Ausnahme ausgelöst.|
+|Vorschlag|Wenn Ihr Code von der Verarbeitung von <xref:System.NullReferenceException?displayProperty=name> abhängig ist, ändern Sie diesen, um die Ausnahmen zu erfassen, die Ihre benutzerdefinierten Aktivitäten auslösen könnten.|
 |Bereich|Gering|
 |Version|4.7|
 |Typ|Laufzeit|

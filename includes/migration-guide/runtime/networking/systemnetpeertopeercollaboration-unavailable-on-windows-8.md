@@ -1,4 +1,4 @@
-### <a name="systemnetpeertopeercollaboration-unavailable-on-windows-8"></a>System.Net.PeerToPeer.Collaboration auf Windows 8 nicht verfügbar
+### <a name="systemnetpeertopeercollaboration-unavailable-on-windows-8"></a>System.NET.PeerToPeer.Collaboration ist unter Windows 8 nicht verfügbar
 
 |   |   |
 |---|---|

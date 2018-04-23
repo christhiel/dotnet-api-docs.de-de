@@ -1,9 +1,9 @@
-### <a name="exception-message-has-changed-for-failed-datacontract-serialization-in-case-of-an-unknown-type"></a>Ausnahmemeldung wurde für die fehlerhafte DataContract-Serialisierung im Falle eines unbekannten Typs geändert werden.
+### <a name="exception-message-has-changed-for-failed-datacontract-serialization-in-case-of-an-unknown-type"></a>Die Ausnahmemeldung für fehlgeschlagene DataContract-Serialisierungen im Fall eines unbekannten Typs hat sich geändert
 
 |   |   |
 |---|---|
-|Details|Ab .NET Framework 4.6, die Ausnahmemeldung ausgegeben, wenn eine <xref:System.Runtime.Serialization.DataContractSerializer?displayProperty=name> oder <xref:System.Runtime.Serialization.Json.DataContractJsonSerializer?displayProperty=name> nicht serialisieren oder Deserialisieren aufgrund fehlender "bekannte Typen" wurde klargestellt.|
-|Vorschlag|Apps sollten nicht von bestimmten ausnahmemeldungen abhängen. Wenn eine app je nach dieser Meldung, aktualisieren Sie sie erwarten, dass die neue Nachricht entweder oder (vorzugsweise) ändern Sie, damit Sie nur von den Ausnahmetyp abhängen.|
+|Details|Ab .NET Framework 4.6 wurde die Fehlermeldung klarer formuliert, die ausgelöst wurde, wenn die Serialisierung oder Deserialisierung von <xref:System.Runtime.Serialization.DataContractSerializer?displayProperty=name> oder <xref:System.Runtime.Serialization.Json.DataContractJsonSerializer?displayProperty=name> wegen fehlender „bekannter Typen“ fehlschlägt.|
+|Vorschlag|Apps sollten nicht von bestimmten Ausnahmemeldungen abhängig sein. Wenn eine App von dieser Meldung abhängt, aktualisieren Sie diese, damit die neue Meldung erwartet wird. Im besten Fall ändern Sie die App so, dass sie nur vom Ausnahmetyp abhängt.|
 |Bereich|Edge|
 |Version|4.6|
 |Typ|Laufzeit|

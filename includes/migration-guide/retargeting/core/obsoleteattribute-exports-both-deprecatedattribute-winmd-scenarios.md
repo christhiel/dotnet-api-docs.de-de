@@ -1,9 +1,9 @@
-### <a name="obsoleteattribute-exports-as-both-obsoleteattribute-and-deprecatedattribute-in-winmd-scenarios"></a>ObsoleteAttribute exportiert als ObsoleteAttribute und DeprecatedAttribute in WinMD-Szenarien
+### <a name="obsoleteattribute-exports-as-both-obsoleteattribute-and-deprecatedattribute-in-winmd-scenarios"></a>ObsoleteAttribute wird in WinMD-Szenarios sowohl als ObsoleteAttribute als auch als DeprecatedAttribute exportiert
 
 |   |   |
 |---|---|
-|Details|Bei der Erstellung einer Windows-metadatenbibliothek (winmd-Datei), die <xref:System.ObsoleteAttribute?displayProperty=name> Attribut als sowohl exportiert <xref:System.ObsoleteAttribute?displayProperty=name> und [Windows.Foundation.DeprecatedAttribute](https://docs.microsoft.com/uwp/api/windows.foundation.metadata.deprecatedattribute).|
-|Vorschlag|Neukompilierung des vorhandenen Quellcodes, die verwendet die <xref:System.ObsoleteAttribute?displayProperty=name> generiert möglicherweise Warnungen beim Verarbeiten des Codes in C + c++ / CX oder JavaScript.We wird nicht empfohlen, sowohl <xref:System.ObsoleteAttribute?displayProperty=name> und [ Windows.Foundation.DeprecatedAttribute](https://docs.microsoft.com/uwp/api/windows.foundation.metadata.deprecatedattribute) für Code in verwalteten Assemblys aus; sie kann zu Buildwarnungen führen.|
+|Details|Wenn Sie eine Windows-Metadatenbibliothek (WINMD-Datei) erstellen, wird das Attribut <xref:System.ObsoleteAttribute?displayProperty=name> als <xref:System.ObsoleteAttribute?displayProperty=name> und als [Windows.Foundation.DeprecatedAttribute](https://docs.microsoft.com/uwp/api/windows.foundation.metadata.deprecatedattribute) exportiert.|
+|Vorschlag|Durch die Neukompilierung von vorhandenem Quellcode, in dem das Attribut <xref:System.ObsoleteAttribute?displayProperty=name> verwendet wird, können Warnungen generiert werden, wenn dieser Code von C++/CX oder JavaScript verarbeitet wird. Es wird davon abgeraten, sowohl <xref:System.ObsoleteAttribute?displayProperty=name> als auch [Windows.Foundation.DeprecatedAttribute](https://docs.microsoft.com/uwp/api/windows.foundation.metadata.deprecatedattribute) in Code in verwalteten Assemblys anzuwenden, da dies zu Buildwarnungen führen kann.|
 |Bereich|Edge|
 |Version|4.5.1|
 |Typ|Neuzuweisung|

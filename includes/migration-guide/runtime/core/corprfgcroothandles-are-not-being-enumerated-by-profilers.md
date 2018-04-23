@@ -1,9 +1,9 @@
-### <a name="corprfgcroothandles-are-not-being-enumerated-by-profilers"></a>COR_PRF_GC_ROOT_HANDLEs werden wird vom Profiler nicht aufgezählt.
+### <a name="corprfgcroothandles-are-not-being-enumerated-by-profilers"></a>COR_PRF_GC_ROOT_HANDLE-Elemente werden nicht vom Profiler aufgezählt
 
 |   |   |
 |---|---|
-|Details|In der .NET Framework 4.5.1, die die profilerstellungs-API <code>RootReferences2()</code> nie falsch zurückgeben <code>COR_PRF_GC_ROOT_HANDLE</code> (sie werden zurückgegeben, als <code>COR_PRF_GC_ROOT_OTHER</code> stattdessen). Dieses Problem wurde behoben in .NET Framework 4.6 ab.|
-|Vorschlag|Dieses Problem behoben wurde in .NET Framework 4.6 und kann durch ein Upgrade auf diese Version von .NET Framework adressiert werden.|
+|Details|In .NET Framework 4.5.1 gibt die Profilerstellungs-API <code>RootReferences2()</code> fälschlicherweise nie <code>COR_PRF_GC_ROOT_HANDLE</code> zurück (stattdessen wird <code>COR_PRF_GC_ROOT_OTHER</code> zurückgegeben). Dieses Problem ist seit .NET Framework 4.6 behoben.|
+|Vorschlag|Dieses Problem wurde in .NET Framework 4.6 behoben und kann durch ein Upgrade auf diese Version von .NET Framework vermieden werden.|
 |Bereich|Gering|
 |Version|4.5.1|
 |Typ|Laufzeit|

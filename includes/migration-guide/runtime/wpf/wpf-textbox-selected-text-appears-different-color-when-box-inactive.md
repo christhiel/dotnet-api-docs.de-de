@@ -1,9 +1,9 @@
-### <a name="wpf-textbox-selected-text-appears-a-different-color-when-the-text-box-is-inactive"></a>WPF-Textfeld ausgewählten Text wird einer anderen Farbe angezeigt, wenn das Textfeld aktiv ist
+### <a name="wpf-textbox-selected-text-appears-a-different-color-when-the-text-box-is-inactive"></a>In einem WPF-TextBox-Element markierter Text wird in einer anderen Farbe angezeigt, wenn das Textfeld inaktiv ist
 
 |   |   |
 |---|---|
 |Details|Wenn in .NET 4.5 ein WPF-Textfeldsteuerelement inaktiv ist (nicht den Fokus besitzt), wird der im Feld markierte Text in einer anderen Farbe als bei einem aktiven Steuerelement angezeigt.|
-|Vorschlag|Vorherige (.NET 4.0)-Verhalten kann wiederhergestellt werden, durch Festlegen der <xref:System.Windows.FrameworkCompatibilityPreferences.AreInactiveSelectionHighlightBrushKeysSupported> Eigenschaft <code>false</code>.|
+|Vorschlag|Das vorherige Verhalten (.NET 4.0) kann wiederhergestellt werden, indem Sie die <xref:System.Windows.FrameworkCompatibilityPreferences.AreInactiveSelectionHighlightBrushKeysSupported>-Eigenschaft auf <code>false</code> festlegen.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

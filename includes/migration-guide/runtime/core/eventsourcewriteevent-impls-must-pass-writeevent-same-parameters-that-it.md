@@ -1,4 +1,4 @@
-### <a name="eventsourcewriteevent-impls-must-pass-writeevent-the-same-parameters-that-it-received-plus-id"></a>Die gleichen Parameter, die empfangen wurde (plus -ID), müssen EventSource.WriteEvent Impls WriteEvent übergeben.
+### <a name="eventsourcewriteevent-impls-must-pass-writeevent-the-same-parameters-that-it-received-plus-id"></a>„EventSource.WriteEvent impls“ muss denselben Parameter (inklusive einer ID) an WriteEvent übergeben, den es erhalten hat
 
 |   |   |
 |---|---|

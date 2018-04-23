@@ -1,4 +1,4 @@
-### <a name="workflow-30-types-are-obsolete"></a>3.0-Workflowtypen sind veraltet
+### <a name="workflow-30-types-are-obsolete"></a>WorkFlow 3.0-Typen sind veraltet
 
 |   |   |
 |---|---|

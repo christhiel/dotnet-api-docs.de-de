@@ -1,9 +1,9 @@
-### <a name="wpf-spawns-a-wisptisexe-process-which-can-freeze-the-mouse"></a>WPF erzeugt einen wisptis.exe-Prozess, der fixieren die Maus
+### <a name="wpf-spawns-a-wisptisexe-process-which-can-freeze-the-mouse"></a>WPF erzeugt einen „wiptis.exe“-Prozess, der die Maus sperren kann
 
 |   |   |
 |---|---|
-|Details|Ein Problem seit 4.5.2, die bewirkt, dass <code>wisptis.exe</code> auf erzeugt werden können, die Mauseingabe fixieren.|
-|Vorschlag|Eine Behebung dieses Problems steht innerhalb eines Service Release von .NET Framework 4.5.2 (Hotfixrollup 3026376) oder durch ein Upgrade auf .NET Framework 4.6|
+|Details|Mit Version 4.5.2 wurde ein Problem eingeführt, durch das <code>wisptis.exe</code> erzeugt wird. Hierdurch kann die Mauseingabe gesperrt werden.|
+|Vorschlag|Eine Problembehebung steht in einem Service Release von .NET Framework 4.5.2 (Hotfixrollup 3026376) oder durch ein Upgrade auf .NET Framework 4.6 zur Verfügung.|
 |Bereich|Hauptversion|
 |Version|4.5.2|
 |Typ|Laufzeit|

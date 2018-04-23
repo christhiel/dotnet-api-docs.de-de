@@ -1,9 +1,9 @@
-### <a name="objectdisposedexception-thrown-by-wpf-spellchecker"></a>Ausgelöst von WPF-Rechtschreibprüfung "ObjectDisposedException"
+### <a name="objectdisposedexception-thrown-by-wpf-spellchecker"></a>Von der WPF-Rechtschreibprüfung ausgelöste ObjectDisposedException-Ausnahme
 
 |   |   |
 |---|---|
-|Details|WPF gelegentlich Programmabstürze beim Herunterfahren der Anwendung mit einer <xref:System.ObjectDisposedException?displayProperty=name> , die von der Rechtschreibprüfung ausgelöst. Dies ist in .NET 4.7 WPF behoben, indem Sie die Ausnahme ordnungsgemäß behandelt und und so sicherstellen, dass Anwendungen nicht mehr beeinträchtigt werden. Beachten Sie, dass gelegentliche Ausnahmen der ersten Chance weiterhin in Anwendungen, die unter einem Debugger beachtet werden.|
-|Vorschlag|Upgrade auf .NET 4.7|
+|Details|WPF-Anwendungen stürzen beim Beenden der Anwendung gelegentlich ab. Dabei löst die Rechtschreibprüfung die Ausnahme <xref:System.ObjectDisposedException?displayProperty=name> aus. Dies wurde in WPF für .NET 4.7 behoben, indem die Ausnahme ordnungsgemäß verarbeitet wird. Dadurch wird sichergestellt, dass die Anwendungen nicht mehr beeinträchtigt werden. Es ist zu beachten, dass auch weiterhin gelegentlich nicht abgefangene Ausnahmen bei Anwendungen auftreten, die unter einem Debugger ausgeführt werden.|
+|Vorschlag|Führen Sie ein Upgrade auf .NET 4.7 durch.|
 |Bereich|Edge|
 |Version|4.6.1|
 |Typ|Laufzeit|

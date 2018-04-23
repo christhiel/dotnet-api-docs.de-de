@@ -1,9 +1,9 @@
-### <a name="wpf-spell-checking-fails-in-unexpected-ways"></a>WPF-Rechtschreibprüfung auf unerwartete Weise ein Fehler auftritt
+### <a name="wpf-spell-checking-fails-in-unexpected-ways"></a>Die WPF-Rechtschreibprüfungs-API schlägt auf unerwartete Weise fehl
 
 |   |   |
 |---|---|
-|Details|Dies umfasst eine Reihe von WPF-Rechtschreibprüfung Punkten:<ul><li>WPF-Rechtschreibprüfung in einigen Fällen löst aus <xref:System.Runtime.InteropServices.COMException?displayProperty=name></li><li>WPF-Rechtschreibprüfung schlägt mit <xref:System.UnauthorizedAccessException> bei Anwendungen mithilfe von "Ausführen als anderer Benutzer" gestartet werden</li><li>WPF-Rechtschreibprüfung identifiziert falsch Rechtschreibfehler im zusammengesetzte Wörter wie "Hausnummer" auf Deutsch.</li></ul>|
-|Vorschlag|Problem #1 – dieser Fehler wurde in .NET Framework 4.6.2 behoben Problem Nr. 2 - WPF-Rechtschreibprüfung wird nicht mehr unterstützt, wenn Anwendungen mithilfe von "Ausführen als anderer Benutzer" gestartet werden. Ab .NET Framework 4.6.2, Anwendungen, die auf diese Weise gestartet werden nicht mehr Anwendungsabstürzen - stattdessen die Rechtschreibprüfung im Hintergrund deaktiviert sein. Problem #3 – dieser Fehler wurde in .NET Framework 4.6.2 behoben.|
+|Details|Dies umfasst eine Reihe von Problemen mit der WPF-Rechtschreibprüfungs-API:<ul><li>Die WPF-Rechtschreibprüfungs-API löst manchmal <xref:System.Runtime.InteropServices.COMException?displayProperty=name> aus</li><li>Die WPF-Rechtschreibprüfungs-API schlägt mit der Ausnahme <xref:System.UnauthorizedAccessException> fehl, wenn Anwendungen mit der Einstellung „Als anderer Benutzer ausführen“ gestartet werden.</li><li>Die WPF-Rechtschreibprüfungs-API erkennt fälschlicherweise Rechtschreibfehler in zusammengesetzten deutschen Wörtern wie „Hausnummer“.</li></ul>|
+|Vorschlag|Problem 1: wurde in .NET Framework 4.6.2 behoben. Problem 2: Die WPF-Rechtschreibprüfungs-API wird nicht mehr unterstützt, wenn Anwendungen mit der Einstellung „Als anderer Benutzer ausführen“ gestartet werden. Ab .NET Framework 4.6.2 stürzen Anwendungen, die auf diese Weise gestartet werden, nicht mehr unerwartet ab. Stattdessen wird nur die Rechtschreibprüfungs-API im Hintergrund deaktiviert. Problem 3: wurde in .NET Framework 4.6.2 behoben.|
 |Bereich|Edge|
 |Version|4.6.1|
 |Typ|Laufzeit|

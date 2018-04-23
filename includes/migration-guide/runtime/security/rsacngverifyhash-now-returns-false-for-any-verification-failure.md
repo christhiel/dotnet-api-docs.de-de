@@ -1,9 +1,9 @@
-### <a name="rsacngverifyhash-now-returns-false-for-any-verification-failure"></a>RSACng.VerifyHash gibt "false" jetzt für alle Verifizierungsfehler
+### <a name="rsacngverifyhash-now-returns-false-for-any-verification-failure"></a>RSACng.VerifyHash gibt nun FALSE für alle Überprüfungsfehler zurück
 
 |   |   |
 |---|---|
-|Details|Beginnend mit .NET Framework 4.6.2, Rückgabe dieser Methode <strong>"false"</strong> , wenn die Signatur selbst falsch formatiert ist. Es gibt jetzt für alle Fehler bei der computerüberprüfung "false" zurück. In .NET Framework 4.6 und 4.6.1, löst die Methode eine <xref:System.Security.Cryptography.CryptographicException?displayProperty=name> , wenn die Signatur selbst falsch formatiert ist.|
-|Vorschlag|Jeglicher Code, dessen Ausführung abhängig, auf die Behandlung ist, der <xref:System.Security.Cryptography.CryptographicException?displayProperty=name> sollten stattdessen ausgeführt werden, wenn die Validierung fehlschlägt und die Methode gibt <strong>"false"</strong>.|
+|Details|Ab .NET Framework 4.6.2 gibt diese Methode <strong>FALSE</strong> zurück, wenn die Signatur selbst ein ungültiges Format aufweist. Sie gibt nun für jeden Überprüfungsfehler FALSE zurück. In .NET Framework 4.6 und 4.6.1 löst diese Methode die Ausnahme <xref:System.Security.Cryptography.CryptographicException?displayProperty=name> aus, wenn die Signatur selbst falsch formatiert ist.|
+|Vorschlag|Jeder Code, dessen Ausführung von der Behandlung der <xref:System.Security.Cryptography.CryptographicException?displayProperty=name>-Ausnahme abhängt, sollte stattdessen ausgeführt werden, wenn ein Validierungsfehler auftritt und die Methode <strong>FALSE</strong> zurückgibt.|
 |Bereich|Gering|
 |Version|4.6.2|
 |Typ|Laufzeit|

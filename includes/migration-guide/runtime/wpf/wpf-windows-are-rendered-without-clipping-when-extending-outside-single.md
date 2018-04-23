@@ -1,9 +1,9 @@
-### <a name="wpf-windows-are-rendered-without-clipping-when-extending-outside-a-single-monitor"></a>WPF-Fenster werden ohne Clipping gerendert, wenn außerhalb eines einzelnen Monitors erweitern
+### <a name="wpf-windows-are-rendered-without-clipping-when-extending-outside-a-single-monitor"></a>WPF-Fenster werden ohne Clipping gerendert, wenn diese die Größe eines einzelnen Monitors überschreiten
 
 |   |   |
 |---|---|
-|Details|In der .NET Framework 4.6 ausgeführt wird, auf Windows 8 und höher, wird das gesamte Fenster ohne Clipping gerendert, wenn es außerhalb einer einzelnen Anzeige in einem Szenario mit mehreren Monitoren erweitert. Dies unterscheidet sich von früheren Versionen von .NET Framework die WPF-Fenster clip würde, die über eine einzelne Anzeige erweitert.|
-|Vorschlag|Dieses Verhalten (entweder ausgeschnitten oder nicht) kann explizit mithilfe von festgelegt werden die <code>&lt;EnableMultiMonitorDisplayClipping&gt;</code> Element im <code>&lt;appSettings&gt;</code> in einer Anwendungskonfigurationsdatei oder durch Festlegen der <code>EnableMultiMonitorDisplayClipping</code> Eigenschaft beim Starten der app.|
+|Details|In .NET Framework 4.6, das auf Windows 8 und höher ausgeführt wird, wird das gesamte Fenster ohne Clipping gerendert, wenn es in einem Szenario mit mehreren Monitoren außerhalb einer einzelnen Anzeige liegt. Dies unterscheidet sich von früheren Versionen von .NET Framework, bei denen WPF-Fenster beschnitten werden, die eine einzelne Anzeige überschreiten.|
+|Vorschlag|Dieses Verhalten (ob ein Clipping angewendet wird oder nicht) kann explizit festgelegt werden, indem Sie das <code>&lt;EnableMultiMonitorDisplayClipping&gt;</code>-Element von <code>&lt;appSettings&gt;</code> in der Konfigurationsdatei einer Anwendung verwenden oder indem Sie die <code>EnableMultiMonitorDisplayClipping</code>-Eigenschaft beim Starten der App festlegen.|
 |Bereich|Gering|
 |Version|4.6|
 |Typ|Laufzeit|

@@ -1,29 +1,29 @@
 ## <a name="installation-instructions"></a>Installationsanweisungen 
 
-Es gibt zwei unterschiedliche Wege zum Suchen der **.NET Compiler Platform SDK** in der **Installer für Visual Studio**:
+Es gibt zwei verschiedene Möglichkeiten, das **.NET Compiler Platform SDK** im **Visual Studio-Installer** zu finden:
 
-### <a name="install-using-the-workloads-view"></a>Installieren Sie mithilfe der Arbeitslasten-Ansicht
+### <a name="install-using-the-workloads-view"></a>Installation mithilfe der Workloads-Ansicht
 
-Die .NET Compiler Platform SDK wird als Teil der Visual Studio-Erweiterung Entwicklung arbeitsauslastung nicht automatisch ausgewählt. Sie müssen sie als optionale Komponente auswählen.
+Das .NET Compiler Platform SDK wird nicht automatisch als Teil der Workload „Visual Studio-Extensionentwicklung“ ausgewählt. Sie müssen sie als optionale Komponente auswählen.
 
-1. Führen Sie **Visual Studio-Installer** 
-1. Wählen Sie **ändern** 
-1. Überprüfen Sie die **Development für Visual Studio-Erweiterung** arbeitsauslastung.
-1. Öffnen der **Development für Visual Studio-Erweiterung** Knoten in der Zusammenfassung Struktur.
-1. Aktivieren Sie das Kontrollkästchen für **.NET Compiler Platform SDK**. Es finden zuletzt unter den optionalen Komponenten Sie.
+1. Führen Sie den **Visual Studio-Installer** aus. 
+1. Klicken Sie auf **Ändern**. 
+1. Aktivieren Sie die Workload **Visual Studio-Extensionentwicklung**.
+1. Öffnen Sie den Knoten **Visual Studio-Extensionentwicklung** in der Zusammenfassungsstruktur.
+1. Aktivieren Sie das Kontrollkästchen für das **.NET Compiler Platform SDK**. Sie finden es an letzter Stelle unter den optionalen Komponenten.
 
-Optional, sollten Sie auch die **DGML-Editor** Diagramme in der Schnellansicht angezeigt:
+Optional können Sie einstellen, dass der **DGML-Editor** Diagramme in der Schnellansicht anzeigt:
 
-1. Öffnen der **Einzelkomponenten** Knoten in der Zusammenfassung Struktur.
-1. Aktivieren Sie das Kontrollkästchen für **DGML-Editor**
+1. Öffnen Sie den Knoten **Einzelne Komponenten** in der Zusammenfassungsstruktur.
+1. Aktivieren Sie das Kontrollkästchen für den **DGML-Editor**.
 
-### <a name="install-using-the-individual-components-tab"></a>Installieren Sie mithilfe der einzelnen Komponenten (Registerkarte)
+### <a name="install-using-the-individual-components-tab"></a>Installation über die Registerkarte „Einzelne Komponenten“
 
-1. Führen Sie **Visual Studio-Installer** 
-1. Wählen Sie **ändern** 
-1. Wählen Sie die **Einzelkomponenten** Registerkarte 
-1. Aktivieren Sie das Kontrollkästchen für **.NET Compiler Platform SDK**. Sie finden es zuletzt unter der **Compilern, Buildtools, und die Laufzeiten** Abschnitt.
+1. Führen Sie den **Visual Studio-Installer** aus. 
+1. Klicken Sie auf **Ändern**. 
+1. Klicken Sie auf die Registerkarte **Einzelne Komponenten**. 
+1. Aktivieren Sie das Kontrollkästchen für das **.NET Compiler Platform SDK**. Sie finden es an letzter Stelle im Abschnitt **Compiler, Buildtools und Laufzeiten**.
 
-Optional, sollten Sie auch die **DGML-Editor** Diagramme in der Schnellansicht angezeigt:
+Optional können Sie einstellen, dass der **DGML-Editor** Diagramme in der Schnellansicht anzeigt:
 
-1. Aktivieren Sie das Kontrollkästchen für **DGML-Editor**. Sie finden sie unter der **Code Tools** Abschnitt.
+1. Aktivieren Sie das Kontrollkästchen für den **DGML-Editor**. Sie finden es im Abschnitt **Codetools**.

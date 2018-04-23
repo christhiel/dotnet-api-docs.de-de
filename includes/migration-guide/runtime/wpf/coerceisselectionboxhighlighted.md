@@ -2,8 +2,8 @@
 
 |   |   |
 |---|---|
-|Details|Bestimmte Sequenzen von Aktionen im Zusammenhang mit einem <xref:System.Windows.Controls.ComboBox?displayProperty=name> und dessen Datenquelle kann dazu führen, ein <xref:System.NullReferenceException?displayProperty=name>.|
-|Vorschlag|Wenn möglich, aktualisieren Sie auf .NET 4.6.2.|
+|Details|Einige Sequenzen von Aktionen, die ein <xref:System.Windows.Controls.ComboBox?displayProperty=name>-Element und dessen Datenquelle umfassen, können eine <xref:System.NullReferenceException?displayProperty=name> auslösen.|
+|Vorschlag|Führen Sie ggf. ein Upgrade auf .NET 4.6.2 durch.|
 |Bereich|Gering|
 |Version|4.6|
 |Typ|Laufzeit|

@@ -1,9 +1,9 @@
-### <a name="incorrect-code-generation-when-passing-and-comparing-uint16-values"></a>Falsche codegenerierung beim übergeben und Vergleichen von UInt16-Werten
+### <a name="incorrect-code-generation-when-passing-and-comparing-uint16-values"></a>Falsche Codegenerierung bei der Übergabe und dem Vergleich von UInt16-Werten
 
 |   |   |
 |---|---|
-|Details|Aufgrund von Änderungen, die in der .NET Framework-4.7 eingeführt wurden, in einigen Fällen vom JIT-Compiler in Anwendungen auf die .NET Framework-4.7 falsch generierte Code vergleicht zwei <code>T:System.UInt16</code> Werte. Weitere Informationen finden Sie unter [Problem #11508: lautlose beim übergeben und Vergleichen von "ushort" Args](https://github.com/dotnet/coreclr/issues/11508) auf "github.com".|
-|Vorschlag|Wenn Sie Probleme beim Vergleich von 16-Bit, die in der .NET Framework-4.7 Werte ohne Vorzeichen auftreten, aktualisieren Sie auf .NET Framework 4.7.1.|
+|Details|Aufgrund von Änderungen, die in .NET Framework 4.7 eingeführt wurden, vergleicht der Code, der vom JIT-Compiler generiert wird, in Anwendungen, die unter .NET Framework 4.7 ausgeführt werden, manchmal zwei <code>T:System.UInt16</code>-Werte fehlerhaft miteinander. Weitere Informationen finden Sie unter [Issue #11508: Silent bad codegen when passing and comparing ushort args (Problem #11508: Lautlose, ungültige Codegenerierung beim Übergeben und Vergleichen von ushort-Argumenten)](https://github.com/dotnet/coreclr/issues/11508) unter GitHub.com.|
+|Vorschlag|Wenn Sie beim Vergleichen von unsignierten 16-Bit-Werten in .NET Framework 4.7 auf ein Problem stoßen, führen Sie ein Upgrade auf .NET Framework 4.7.1 aus.|
 |Bereich|Edge|
 |Version|4.7|
 |Typ|Laufzeit|

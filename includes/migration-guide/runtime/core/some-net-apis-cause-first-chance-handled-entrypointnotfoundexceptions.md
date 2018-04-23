@@ -1,9 +1,9 @@
-### <a name="some-net-apis-cause-first-chance-handled-entrypointnotfoundexceptions"></a>Einige .NET APIs Ursache erste-Chance EntryPointNotFoundExceptions (behandelt)
+### <a name="some-net-apis-cause-first-chance-handled-entrypointnotfoundexceptions"></a>Einige .NET-APIs führen zu erstmaligen (behandelten) EntryPointNotFoundExceptions
 
 |   |   |
 |---|---|
-|Details|In .NET Framework 4.5, eine kleine Anzahl von .NET Methoden begann auslösen erste Chance <xref:System.EntryPointNotFoundException?displayProperty=name>s. Diese Ausnahmen wurden in .NET Framework behandelt, konnten aber die Testautomatisierung unterbrechen, die keine erstmaligen Ausnahmen erwartete. Dieselben APIs stören einige ApiVerifier-Szenarien, wenn „HighVersionLie“ aktiviert ist.|
-|Vorschlag|Dieser Fehler kann durch ein Upgrade auf .NET Framework 4.5.1 vermieden werden. Alternativ können Sie für die Automatisierung aktualisiert werden kann, um nicht bei der ersten Chance unterbrochen <xref:System.EntryPointNotFoundException?displayProperty=name>s.|
+|Details|In .NET Framework 4.5 hat eine geringe Anzahl von .NET-Methoden damit begonnen, erstmalige <xref:System.EntryPointNotFoundException?displayProperty=name> auszulösen. Diese Ausnahmen wurden in .NET Framework behandelt, konnten aber die Testautomatisierung unterbrechen, die keine erstmaligen Ausnahmen erwartete. Dieselben APIs stören einige ApiVerifier-Szenarien, wenn „HighVersionLie“ aktiviert ist.|
+|Vorschlag|Dieser Fehler kann durch ein Upgrade auf .NET Framework 4.5.1 vermieden werden. Alternativ kann die Testautomatisierung aktualisiert werden, damit keine Störung durch erstmalige <xref:System.EntryPointNotFoundException?displayProperty=name> erfolgt.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

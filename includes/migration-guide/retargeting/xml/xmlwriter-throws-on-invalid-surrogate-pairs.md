@@ -1,9 +1,9 @@
-### <a name="xmlwriter-throws-on-invalid-surrogate-pairs"></a>"XmlWriter" löst auf ungültige Ersatzzeichenpaare
+### <a name="xmlwriter-throws-on-invalid-surrogate-pairs"></a>XmlWriter löst bei ungültigen Ersatzzeichenpaaren Ausnahmen aus
 
 |   |   |
 |---|---|
-|Details|Bei Apps, die auf .NET Framework 4.5.2 oder niedrigere Versionen abzielen, löst das Schreiben eines ungültigen Ersatzzeichenpaars mithilfe der Fallbackbehandlung nicht immer eine Ausnahme aus. Für apps, die auf .NET Framework 4.6 abzielen, versuchen, ein ungültiges Ersatzzeichen schreiben Paar löst eine <xref:System.ArgumentException?displayProperty=name>.|
-|Vorschlag|Falls erforderlich, kann dieser Umbruch umgehenden, indem Sie als Ziel .NET Framework 4.5.2 oder früher sein. Ungültige Ersatzzeichenpaare können auch in gültigen XML-Code vor dem Schreiben sie vorab verarbeitete sein.|
+|Details|Bei Apps, die auf .NET Framework 4.5.2 oder niedrigere Versionen abzielen, löst das Schreiben eines ungültigen Ersatzzeichenpaars mithilfe der Fallbackbehandlung nicht immer eine Ausnahme aus. Bei Apps mit der Zielplattform .NET Framework 4.6 löst der Versuch, ein ungültiges Ersatzzeichenpaar zu schreiben, eine <xref:System.ArgumentException?displayProperty=name> aus.|
+|Vorschlag|Falls erforderlich, kann dieser Fehler umgangen werden, indem als Zielplattform.NET Framework 4.5.2 oder eine ältere Version verwendet wird. Alternativ können ungültige Ersatzzeichenpaare vor dem Schreiben auch zuerst in gültigen XML-Code umgewandelt werden.|
 |Bereich|Edge|
 |Version|4.6|
 |Typ|Neuzuweisung|

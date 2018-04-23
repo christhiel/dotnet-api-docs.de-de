@@ -1,9 +1,9 @@
-### <a name="accessing-a-wpf-datagrids-selected-items-from-a-handler-of-the-datagrids-unloadingrow-event-can-cause-a-nullreferenceexception"></a>Zugreifen auf ein WPF-DataGrid ausgewählten Elemente von einem Handler des Ereignisses für das Datenraster UnloadingRow kann bewirken, dass eine NullReferenceException
+### <a name="accessing-a-wpf-datagrids-selected-items-from-a-handler-of-the-datagrids-unloadingrow-event-can-cause-a-nullreferenceexception"></a>Der Zugriff auf die ausgewählten Elemente eines WPF-DataGrid-Steuerelements über einen Handler des UnloadingRow-Ereignisses kann eine NullReferenceException auslösen
 
 |   |   |
 |---|---|
-|Details|Aufgrund eines Fehlers in der .NET Framework 4.5-Ereignishandler für <xref:System.Windows.Controls.DataGrid> Ereignisse im Zusammenhang mit dem Entfernen einer Zeile können dazu führen, dass eine <xref:System.NullReferenceException?displayProperty=name> ausgelöst wird, wenn sie Zugriff auf die <xref:System.Windows.Controls.DataGrid>des <xref:System.Windows.Controls.Primitives.Selector.SelectedItem?displayProperty=name> oder <xref:System.Windows.Controls.Primitives.MultiSelector.SelectedItems?displayProperty=name> Eigenschaften.|
-|Vorschlag|Dieses Problem behoben wurde in .NET Framework 4.6 und kann durch ein Upgrade auf diese Version von .NET Framework adressiert werden.|
+|Details|Aufgrund eines Fehlers in .NET Framework 4.5 können Ereignishandler für <xref:System.Windows.Controls.DataGrid>-Ereignisse, die das Entfernen einer Zeile umfassen, eine <xref:System.NullReferenceException?displayProperty=name> auslösen, die ausgelöst werden soll, wenn auf die <xref:System.Windows.Controls.Primitives.Selector.SelectedItem?displayProperty=name>- oder <xref:System.Windows.Controls.Primitives.MultiSelector.SelectedItems?displayProperty=name>-Eigenschaft von <xref:System.Windows.Controls.DataGrid> zugegriffen wird.|
+|Vorschlag|Dieses Problem wurde in .NET Framework 4.6 behoben und kann durch ein Upgrade auf diese Version von .NET Framework vermieden werden.|
 |Bereich|Gering|
 |Version|4.5|
 |Typ|Laufzeit|

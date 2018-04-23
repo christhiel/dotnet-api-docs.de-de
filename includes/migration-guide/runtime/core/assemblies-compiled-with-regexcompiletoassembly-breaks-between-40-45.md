@@ -1,9 +1,9 @@
-### <a name="assemblies-compiled-with-regexcompiletoassembly-breaks-between-40-and-45"></a>Mit Regex.CompileToAssembly Umbrüche zwischen 4.0 und 4.5 kompilierte Assemblys
+### <a name="assemblies-compiled-with-regexcompiletoassembly-breaks-between-40-and-45"></a>Mit der Regex.CompileToAssembly-Methode kompilierte Assemblys zwischen 4.0 und 4.5 werden unterbrochen
 
 |   |   |
 |---|---|
-|Details|Wenn eine Assembly aus kompilierten regulären Ausdrücken mit dem .NET Framework 4.5, aber .NET Framework 4-Ziele erstellt wird, versucht, eine für reguläre Ausdrücke verwenden, da die Assembly auf einem System mit .NET Framework 4 installiert eine Ausnahme ausgelöst.|
-|Vorschlag|Um dieses Problem zu umgehen, haben Sie die folgenden Möglichkeiten:<ul><li>Erstellen Sie die Assembly, die die regulären Ausdrücke mit .NET Framework 4 enthält.</li><li>Verwenden Sie einen interpretierten regulären Ausdruck.</li></ul>|
+|Details|Wenn eine Assembly aus kompilierten regulären Ausdrücken mit .NET Framework 4.5 erstellt wird und auf .NET Framework 4 ausgerichtet ist, wird bei dem Versuch, die regulären Ausdrücke in dieser Assembly auf einem System zu verwenden, auf dem .NET Framework 4 installiert ist, eine Ausnahme ausgelöst.|
+|Vorschlag|Um dieses Problem zu umgehen, haben Sie die folgenden Möglichkeiten:<ul><li>Erstellen Sie die Assembly, die die regulären Ausdrücke enthält, mit .NET Framework 4.</li><li>Verwenden Sie einen interpretierten regulären Ausdruck.</li></ul>|
 |Bereich|Gering|
 |Version|4.5|
 |Typ|Laufzeit|

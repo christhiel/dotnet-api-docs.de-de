@@ -1,9 +1,9 @@
-### <a name="sharing-session-state-with-aspnet-stateserver-requires-all-servers-in-the-web-farm-to-use-the-same-net-framework-version"></a>Alle Server in der Webfarm, verwenden Sie die gleiche Version von .NET Framework erfordert Freigeben des Sitzungszustands mit Asp.Net "StateServer"
+### <a name="sharing-session-state-with-aspnet-stateserver-requires-all-servers-in-the-web-farm-to-use-the-same-net-framework-version"></a>Für das Freigeben des Sitzungszustands mit Asp.Net StateServer müssen alle Server in der Webfarm dieselbe .NET Framework-Version verwenden
 
 |   |   |
 |---|---|
-|Details|Bei der Aktivierung <xref:System.Web.SessionState.SessionStateMode.StateServer?displayProperty=name> Sitzung aufweist, müssen alle Server in der angegebenen Webfarm die gleiche Version von .NET Framework in der Reihenfolge für den Status verwenden, ordnungsgemäß freigegeben werden.|
-|Vorschlag|Achten Sie darauf, dass Sie .NET Framework-Versionen auf Webservern zu aktualisieren, die zur gleichen Zeit ihren Zustand freigeben.|
+|Details|Wenn ein <xref:System.Web.SessionState.SessionStateMode.StateServer?displayProperty=name>-Sitzungszustand aktiviert wird, müssen alle Server in der jeweiligen Webfarm dieselbe Version von .NET Framework verwenden, damit der Zustand ohne Probleme freigegeben werden kann.|
+|Vorschlag|Führen Sie für alle .NET Framework-Versionen auf Webservern, für die ein Zustand freigegeben wird, gleichzeitig ein Upgrade aus.|
 |Bereich|Edge|
 |Version|4.5|
 |Typ|Laufzeit|

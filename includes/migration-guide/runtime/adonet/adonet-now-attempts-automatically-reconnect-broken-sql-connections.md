@@ -1,9 +1,9 @@
-### <a name="adonet-now-attempts-to-automatically-reconnect-broken-sql-connections"></a>ADO.NET versucht nun, fehlerhafte SQL-Verbindungen automatisch wieder verbunden
+### <a name="adonet-now-attempts-to-automatically-reconnect-broken-sql-connections"></a>ADO.NET versucht nun, unterbrochene SQL-Verbindungen automatisch wiederherzustellen
 
 |   |   |
 |---|---|
-|Details|Ab .NET Framework 4.5.1 wird .NET Framework versucht, fehlerhafte SQL-Verbindungen automatisch wiederherzustellen. Obwohl dies in der Regel apps zuverlässiger durchführen, stehen Grenzfälle, in denen eine app muss wissen, dass die Verbindung getrennt wurde, damit es bestimmte Aktionen beim erneuten Herstellen einer Verbindung ausführen kann.|
-|Vorschlag|Wenn diese Funktion aus Gründen der Kompatibilität nicht erwünscht ist, können sie durch Festlegen von deaktiviert die <xref:System.Data.SqlClient.SqlConnectionStringBuilder.ConnectRetryCount?displayProperty=name> Eigenschaft einer Verbindungszeichenfolge (oder <xref:System.Data.SqlClient.SqlConnectionStringBuilder?displayProperty=name>) auf 0.|
+|Details|Ab .NET Framework 4.5.1 versucht .NET Framework, unterbrochene SQL-Verbindungen automatisch wiederherzustellen. Obwohl dies in der Regel dazu führt, dass Apps zuverlässiger werden, gibt es Grenzfälle, in denen eine App wissen muss, dass die Verbindung getrennt wurde, sodass sie bei der Wiederherstellung der Verbindung bestimmte Aktionen ausführen kann.|
+|Vorschlag|Wenn dieses Feature aus Kompatibilitätsgründen nicht erwünscht ist, kann es durch Festlegen der <xref:System.Data.SqlClient.SqlConnectionStringBuilder.ConnectRetryCount?displayProperty=name>-Eigenschaft einer Verbindungszeichenfolge (oder <xref:System.Data.SqlClient.SqlConnectionStringBuilder?displayProperty=name>) auf 0 (null) deaktiviert werden.|
 |Bereich|Edge|
 |Version|4.5.1|
 |Typ|Laufzeit|

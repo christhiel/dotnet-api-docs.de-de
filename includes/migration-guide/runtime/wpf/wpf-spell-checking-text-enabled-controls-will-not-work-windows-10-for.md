@@ -1,9 +1,9 @@
-### <a name="wpf-spell-checking-in-text-enabled-controls-will-not-work-in-windows-10-for-languages-not-in-the-oss-input-language-list"></a>WPF-Rechtschreibprüfungs in Text aktivierte Steuerelemente funktioniert in Windows 10 nicht für Sprachen, die nicht in der Betriebssystemliste Eingabesprache
+### <a name="wpf-spell-checking-in-text-enabled-controls-will-not-work-in-windows-10-for-languages-not-in-the-oss-input-language-list"></a>Die Rechtschreibüberprüfung in textfähigen WPF-Steuerelementen funktioniert unter Windows 10 nicht für die Sprachen, die nicht in der Liste der Eingabesprachen in dem Betriebssystem aufgeführt sind
 
 |   |   |
 |---|---|
-|Details|Bei Ausführung auf Windows 10 funktionieren die Rechtschreibprüfung nicht für Text aktiviert WPF-Steuerelemente, da Plattform-rechtschreibungsfunktionen nur für Sprachen, die in der eingabesprachenliste vorhanden verfügbar sind. In Windows 10 Wenn die Liste der verfügbaren Tastaturen eine anderen Sprache hinzugefügt wird Windows automatisch heruntergeladen und installiert eine entsprechende Funktion Paket bei Bedarf (Feature-On), die Rechtschreibprüfung Funktionen bereitstellt. Durch das Hinzufügen der Sprache zur Eingabesprachenliste wird die Rechtschreibprüfung unterstützt.|
-|Vorschlag|Denken Sie daran, dass die Sprache oder das Text-der Rechtschreibprüfung werden als eine Eingabesprache für die Rechtschreibprüfung, Informationen zum Arbeiten in Windows 10 hinzugefügt werden muss.|
+|Details|Bei einem Windows 10-Betriebssystem kann es sein, dass die Rechtschreibüberprüfung für textfähige WPF-Steuerelemente nicht funktioniert, da die plattformspezifischen Funktionen zur Rechtsschreibüberprüfung nur für die Sprachen verfügbar sind, die in der Liste mit den Eingabesprachen aufgeführt sind. Wenn in Windows 10 eine Sprache zu der Liste mit verfügbaren Tastaturen hinzugefügt wird, lädt Windows automatisch ein passendes Feature-On-Demand-Paket herunter, das Funktion zur Rechtschreibüberprüfung enthält, und installiert dieses. Durch das Hinzufügen der Sprache zur Eingabesprachenliste wird die Rechtschreibprüfung unterstützt.|
+|Vorschlag|Beachten Sie, das die Sprache oder der Text, deren bzw. dessen Rechtschreibung überprüft werden muss, als Eingabesprache hinzugefügt werden muss, damit die Rechtschreibüberprüfung in Windows 10 funktioniert.|
 |Bereich|Edge|
 |Version|4.6|
 |Typ|Laufzeit|
