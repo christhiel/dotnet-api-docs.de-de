@@ -1,1 +1,0 @@
-XAML-Browseranwendungen (XAML browser applications; XBAPs)

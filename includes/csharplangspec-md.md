@@ -1,1 +1,0 @@
-Weitere Informationen erhalten Sie unter [C#-Sprachspezifikation](~/docs/csharp/language-reference/language-specification/index.md). Die Sprachspezifikation ist die verbindliche Quelle für die Syntax und Verwendung von C#.

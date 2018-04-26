@@ -1,1 +1,0 @@
-Eingabemethoden-Editoren (Input Method Editors, IMEs)

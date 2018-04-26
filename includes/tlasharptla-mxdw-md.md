@@ -1,1 +1,0 @@
-Microsoft XPS-Dokument-Generator

@@ -1,1 +1,0 @@
-Strukturierte Abfragesprache (Structured Query Language; SQL)

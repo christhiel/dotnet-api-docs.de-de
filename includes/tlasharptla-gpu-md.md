@@ -1,1 +1,0 @@
-Grafikprozessor (Graphics Processing Unit; GPU)

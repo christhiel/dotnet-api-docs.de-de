@@ -1,1 +1,0 @@
-Benutzeroberfläche (User Interface, UI)

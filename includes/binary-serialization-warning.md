@@ -1,2 +1,0 @@
-> [!WARNING]
-> Die binäre Serialisierung kann gefährlich sein. Deserialisieren Sie niemals Daten aus nicht vertrauenswürdigen Quellen, und führen Sie niemals eine Schleife für serialisierte Daten in Systeme durch, die Sie nicht steuern.

@@ -1,1 +1,0 @@
-Microsoft-Internetinformationsdienste 7.0 (Internet Information Services; IIS)
