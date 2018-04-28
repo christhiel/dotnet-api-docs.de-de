@@ -1,0 +1,1 @@
+<span data-ttu-id="e56de-101">Komponentenerweiterungen für Visual C++</span><span class="sxs-lookup"><span data-stu-id="e56de-101">Visual C++ component extensions</span></span>
