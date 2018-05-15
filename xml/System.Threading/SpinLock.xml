@@ -1,809 +1,252 @@
-<Type Name="SpinLock" FullName="System.Threading.SpinLock">
-  <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="2e23183129f62f63c4589bc805d4ebc7b8b87041" />
-    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
-    <Meta Name="ms.translationtype" Value="HT" />
-    <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
-  </Metadata>
-  <TypeSignature Language="C#" Value="public struct SpinLock" />
-  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit SpinLock extends System.ValueType" />
-  <TypeSignature Language="DocId" Value="T:System.Threading.SpinLock" />
-  <TypeSignature Language="VB.NET" Value="Public Structure SpinLock" />
-  <TypeSignature Language="C++ CLI" Value="public value class SpinLock" />
-  <AssemblyInfo>
-    <AssemblyName>System.Threading</AssemblyName>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <AssemblyVersion>4.0.10.0</AssemblyVersion>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
-    <AssemblyVersion>4.1.1.0</AssemblyVersion>
-  </AssemblyInfo>
-  <AssemblyInfo>
-    <AssemblyName>mscorlib</AssemblyName>
-    <AssemblyVersion>2.0.5.0</AssemblyVersion>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-  </AssemblyInfo>
-  <AssemblyInfo>
-    <AssemblyName>netstandard</AssemblyName>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-  </AssemblyInfo>
-  <Base>
-    <BaseTypeName>System.ValueType</BaseTypeName>
-  </Base>
-  <Interfaces />
-  <Attributes>
-    <Attribute>
-      <AttributeName>System.Diagnostics.DebuggerDisplay("IsHeld = {IsHeld}")</AttributeName>
-    </Attribute>
-    <Attribute>
-      <AttributeName>System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.SpinLock/SystemThreading_SpinLockDebugView))</AttributeName>
-    </Attribute>
-    <Attribute>
-      <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
-    </Attribute>
-  </Attributes>
-  <Docs>
-    <summary>
-      <span data-ttu-id="b7a9b-101">Stellt einen Mutex-Sperrprimitiven bereit, wobei ein Thread, der versucht, die Sperre abzurufen, in einer Schleife wartet, die laufend prüft, ob die Sperre verfügbar wird.</span>
-      <span class="sxs-lookup">
-        <span data-stu-id="b7a9b-101">Provides a mutual exclusion lock primitive where a thread trying to acquire the lock waits in a loop repeatedly checking until the lock becomes available.</span>
-      </span>
-    </summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-102">Ein Beispiel zum Verwenden eines Spinlocks, finden Sie unter [wie: Verwenden von SpinLock für die Synchronisierung auf niedriger Ebene](~/docs/standard/threading/how-to-use-spinlock-for-low-level-synchronization.md).</span><span class="sxs-lookup"><span data-stu-id="b7a9b-102">For an example of how to use a Spin Lock, see [How to: Use SpinLock for Low-Level Synchronization](~/docs/standard/threading/how-to-use-spinlock-for-low-level-synchronization.md).</span></span>  
-  
- <span data-ttu-id="b7a9b-103">Spinlocks genutzt werden Sperren auf Blattebene impliziert, in dem die Zuordnung mit einem <xref:System.Threading.Monitor>, Größe oder aufgrund von ungenügendem für Garbage Collection, ist zu teuer.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-103">Spin locks can be used for leaf-level locks where the object allocation implied by using a <xref:System.Threading.Monitor>, in size or due to garbage collection pressure, is overly expensive.</span></span> <span data-ttu-id="b7a9b-104">Ein SpinLock kann bei vermeiden der Blockierung hilfreich sein; Wenn Sie eine beträchtliche Menge an Blockierung erwarten, sollten Sie Spinlocks aufgrund übermäßiger Spinvorgänge wahrscheinlich nicht verwenden.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-104">A spin lock can be useful in to avoid blocking; however, if you expect a significant amount of blocking, you should probably not use spin locks due to excessive spinning.</span></span> <span data-ttu-id="b7a9b-105">Spins können nützlich sein, wenn Sperren differenzierte und große Anzahl (z. B. eine Sperre pro Knoten in einer verknüpften Liste) sind und wenn Sperre Hold-Laufzeiten immer sehr kurz sind.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-105">Spinning can be beneficial when locks are fine-grained and large in number (for example, a lock per node in a linked list) and also when lock hold-times are always extremely short.</span></span> <span data-ttu-id="b7a9b-106">Im Allgemeinen sollten während eines Spinlocks, eine dieser Aktionen vermeiden:</span><span class="sxs-lookup"><span data-stu-id="b7a9b-106">In general, while holding a spin lock, one should avoid any of these actions:</span></span>  
-  
--   <span data-ttu-id="b7a9b-107">blockieren,</span><span class="sxs-lookup"><span data-stu-id="b7a9b-107">blocking,</span></span>  
-  
--   <span data-ttu-id="b7a9b-108">Alles aufrufen kann, die selbst blockieren,</span><span class="sxs-lookup"><span data-stu-id="b7a9b-108">calling anything that itself may block,</span></span>  
-  
--   <span data-ttu-id="b7a9b-109">Halten gleichzeitig mehrere Spinlocks,</span><span class="sxs-lookup"><span data-stu-id="b7a9b-109">holding more than one spin lock at once,</span></span>  
-  
--   <span data-ttu-id="b7a9b-110">Ausführen von dynamisch weitergeleiteten Aufrufen (Schnittstelle und von Virtuals)</span><span class="sxs-lookup"><span data-stu-id="b7a9b-110">making dynamically dispatched calls (interface and virtuals),</span></span>  
-  
--   <span data-ttu-id="b7a9b-111">Ausführen von statisch weitergeleiteten Aufrufen in Code, der eine nicht besitzen, oder</span><span class="sxs-lookup"><span data-stu-id="b7a9b-111">making statically dispatched calls into any code one doesn't own, or</span></span>  
-  
--   <span data-ttu-id="b7a9b-112">Reservieren von Speicher.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-112">allocating memory.</span></span>  
-  
- <span data-ttu-id="b7a9b-113"><xref:System.Threading.SpinLock> sollte nur verwendet werden, wenn sich herausgestellt hat, dass dadurch die Leistung einer Anwendung verbessert wird.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-113"><xref:System.Threading.SpinLock> should only be used after you have been determined that doing so will improve an application's performance.</span></span> <span data-ttu-id="b7a9b-114">Es ist auch wichtig zu beachten, dass die <xref:System.Threading.SpinLock> ist ein Werttyp ist, zur Verbesserung der Leistung.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-114">It is also important to note that <xref:System.Threading.SpinLock> is a value type, for performance reasons.</span></span> <span data-ttu-id="b7a9b-115">Aus diesem Grund müssen Sie sehr darauf achten, keine versehentlich kopieren werden eine <xref:System.Threading.SpinLock> -Instanz ab, wie die beiden Instanzen (die ursprüngliche und die Kopie) dann vollkommen unabhängig voneinander, wären, was wahrscheinlich zu falschem Verhalten der Anwendung führen würde.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-115">For this reason, you must be very careful not to accidentally copy a <xref:System.Threading.SpinLock> instance, as the two instances (the original and the copy) would then be completely independent of one another, which would likely lead to erroneous behavior of the application.</span></span> <span data-ttu-id="b7a9b-116">Wenn eine <xref:System.Threading.SpinLock> Instanz übergeben werden muss, sollten durch Verweis und nicht als Wert übergeben werden.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-116">If a <xref:System.Threading.SpinLock> instance must be passed around, it should be passed by reference rather than by value.</span></span>  
-  
- <span data-ttu-id="b7a9b-117">Speichern Sie keinesfalls <xref:System.Threading.SpinLock> Instanzen in schreibgeschützten Feldern.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-117">Do not store <xref:System.Threading.SpinLock> instances in readonly fields.</span></span>  
-  
-   
-  
-## Examples  
- <span data-ttu-id="b7a9b-118">Das folgende Beispiel zeigt, wie Sie eine <xref:System.Threading.SpinLock>:</span><span class="sxs-lookup"><span data-stu-id="b7a9b-118">The following example shows how to use a <xref:System.Threading.SpinLock>:</span></span>  
-  
- [!code-csharp[System.Threading.SpinLock#01](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.spinlock/cs/spinlock.cs#01)]
- [!code-vb[System.Threading.SpinLock#01](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.spinlock/vb/spinlock.vb#01)]  
-  
- ]]></format>
-    </remarks>
-    <threadsafe>
-      <span data-ttu-id="b7a9b-119">Alle Mitglieder der <see cref="T:System.Threading.SpinLock" /> sind threadsicher und können von mehreren Threads gleichzeitig verwendet werden.</span>
-      <span class="sxs-lookup">
-        <span data-stu-id="b7a9b-119">All members of <see cref="T:System.Threading.SpinLock" /> are thread-safe and may be used from multiple threads concurrently.</span>
-      </span>
-    </threadsafe>
-  </Docs>
-  <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public SpinLock (bool enableThreadOwnerTracking);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool enableThreadOwnerTracking) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.#ctor(System.Boolean)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (enableThreadOwnerTracking As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; SpinLock(bool enableThreadOwnerTracking);" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="enableThreadOwnerTracking" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="enableThreadOwnerTracking">
-          <span data-ttu-id="b7a9b-120">Gibt an, ob Thread-IDs zu Debugzwecken erfasst und verwendet werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-120">Whether to capture and use thread IDs for debugging purposes.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-121">Initialisiert eine neue Instanz der <see cref="T:System.Threading.SpinLock" />-Struktur mit der Option, Thread-IDs nachzuverfolgen, um das Debuggen zu vereinfachen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-121">Initializes a new instance of the <see cref="T:System.Threading.SpinLock" /> structure with the option to track thread IDs to improve debugging.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-122">Der Standardkonstruktor für <xref:System.Threading.SpinLock> verfolgt thread Besitz.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-122">The default constructor for <xref:System.Threading.SpinLock> tracks thread ownership.</span></span>  
-  
-   
-  
-## Examples  
- <span data-ttu-id="b7a9b-123">Im folgende Beispiel wird veranschaulicht, wie ein SpinLock verwendet werden kann.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-123">The following example demonstrates how a SpinLock may be used.</span></span>  
-  
-```  
-// C#  
-public class MyType  
-{  
-    private SpinLock _spinLock = new SpinLock();  
-  
-    public void DoWork()  
-    {  
-        bool lockTaken = false;   
-        try  
-        {  
-           _spinLock.Enter(ref lockTaken);  
-           // do work here protected by the lock  
-        }  
-        finally  
-        {  
-            if (lockTaken) _spinLock.Exit();  
-        }  
-    }  
-}  
-```  
-  
-```  
-' Visual Basic  
-  
-Class MyType  
-   Private _spinLock As New SpinLock()  
-  
-   Public Sub DoWork()  
-      Dim lockTaken As Boolean = False  
-      Try  
-         _spinLock.Enter(lockTaken)  
-         ' do work here protected by the lock  
-      Finally  
-         If lockTaken Then _spinLock.Exit()  
-      End Try  
-   End Sub  
-End Class  
-```  
-  
- ]]></format>
-        </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Enter">
-      <MemberSignature Language="C#" Value="public void Enter (ref bool lockTaken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Enter(bool&amp; lockTaken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.Enter(System.Boolean@)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub Enter (ByRef lockTaken As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Enter(bool % lockTaken);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="lockTaken" Type="System.Boolean&amp;" RefType="ref" />
-      </Parameters>
-      <Docs>
-        <param name="lockTaken">
-          <span data-ttu-id="b7a9b-124">True, wenn die Sperre abgerufen wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-124">True if the lock is acquired; otherwise, false.</span>
-          </span>
-          <span data-ttu-id="b7a9b-125">
-            <c>lockTaken</c> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-125">
-              <c>lockTaken</c> must be initialized to false prior to calling this method.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-126">Ruft die Sperre zuverlässig ab, sodass <paramref name="lockTaken" /> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-126">Acquires the lock in a reliable manner, such that even if an exception occurs within the method call, <paramref name="lockTaken" /> can be examined reliably to determine whether the lock was acquired.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-127"><xref:System.Threading.SpinLock> ist eine Sperre nicht wieder eintretender, dies bedeutet, dass, wenn ein Thread die Sperre, es ist nicht zulässig, die Sperre erneut einzugeben.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-127"><xref:System.Threading.SpinLock> is a non-reentrant lock, meaning that if a thread holds the lock, it is not allowed to enter the lock again.</span></span> <span data-ttu-id="b7a9b-128">Wenn der Thread den Besitz Überwachung aktiviert ist (erhältlich ist, ob es aktiviert ist <xref:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled%2A>), wird eine Ausnahme ausgelöst, wenn ein Thread versucht, eine Sperre erneut eingeben, er bereits besitzt.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-128">If thread ownership tracking is enabled (whether it's enabled is available through <xref:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled%2A>), an exception will be thrown when a thread tries to re-enter a lock it already holds.</span></span> <span data-ttu-id="b7a9b-129">Jedoch wenn Thread den Besitz tracking deaktiviert ist, führt bei dem Versuch, eine Sperre bereits geben Deadlock.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-129">However, if thread ownership tracking is disabled, attempting to enter a lock already held will result in deadlock.</span></span>  
-  
- <span data-ttu-id="b7a9b-130">Beim Aufrufen <xref:System.Threading.SpinLock.Exit%2A> ohne dass zuerst aufgerufen <xref:System.Threading.SpinLock.Enter%2A> der interne Zustand der <xref:System.Threading.SpinLock> können beschädigt ist.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-130">If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentException">
-          <span data-ttu-id="b7a9b-131">Das <paramref name="lockTaken" />-Argument muss vor dem Aufrufen von Enter mit false initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-131">The <paramref name="lockTaken" /> argument must be initialized to false prior to calling Enter.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.Threading.LockRecursionException">
-          <span data-ttu-id="b7a9b-132">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-132">Thread ownership tracking is enabled, and the current thread has already acquired this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <MemberGroup MemberName="Exit">
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-133">Hebt die Sperre auf.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-133">Releases the lock.</span>
-          </span>
-        </summary>
-      </Docs>
-    </MemberGroup>
-    <Member MemberName="Exit">
-      <MemberSignature Language="C#" Value="public void Exit ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Exit() cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.Exit" />
-      <MemberSignature Language="VB.NET" Value="Public Sub Exit ()" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Exit();" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-134">Hebt die Sperre auf.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-134">Releases the lock.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-135">Die standardmäßige Überladung von <xref:System.Threading.SpinLock.Exit%2A> bietet das gleiche Verhalten, als wäre <xref:System.Threading.SpinLock.Exit%2A> "true" als Argument verwenden.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-135">The default overload of <xref:System.Threading.SpinLock.Exit%2A> provides the same behavior as if calling <xref:System.Threading.SpinLock.Exit%2A> using true as the argument.</span></span>  
-  
- <span data-ttu-id="b7a9b-136">Beim Aufrufen <xref:System.Threading.SpinLock.Exit%2A> ohne dass zuerst aufgerufen <xref:System.Threading.SpinLock.Enter%2A> der interne Zustand der <xref:System.Threading.SpinLock> können beschädigt ist.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-136">If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.Threading.SynchronizationLockException">
-          <span data-ttu-id="b7a9b-137">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread ist nicht Besitzer dieser Sperre.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-137">Thread ownership tracking is enabled, and the current thread is not the owner of this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <Member MemberName="Exit">
-      <MemberSignature Language="C#" Value="public void Exit (bool useMemoryBarrier);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Exit(bool useMemoryBarrier) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.Exit(System.Boolean)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub Exit (useMemoryBarrier As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Exit(bool useMemoryBarrier);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="useMemoryBarrier" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="useMemoryBarrier">
-          <span data-ttu-id="b7a9b-138">Ein boolescher Wert, der angibt, ob eine Arbeitsspeicherumgrenzung ausgegeben werden soll, um den Beendigungsvorgang sofort für andere Threads zu veröffentlichen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-138">A Boolean value that indicates whether a memory fence should be issued in order to immediately publish the exit operation to other threads.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-139">Hebt die Sperre auf.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-139">Releases the lock.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-140">Aufrufen von <xref:System.Threading.SpinLock.Exit%2A> mit der `useMemoryBarrier` Argument auf "true" festgelegt ist, wird die Fairness der Sperre auf Kosten der Leistung verbessert.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-140">Calling <xref:System.Threading.SpinLock.Exit%2A> with the `useMemoryBarrier` argument set to true will improve the fairness of the lock at the expense of some performance.</span></span> <span data-ttu-id="b7a9b-141">Die Standardeinstellung <xref:System.Threading.SpinLock.Exit%2A> Überladung verhält sich wie "true" für die Angabe `useMemoryBarrier`.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-141">The default <xref:System.Threading.SpinLock.Exit%2A> overload behaves as if specifying true for `useMemoryBarrier`.</span></span>  
-  
- <span data-ttu-id="b7a9b-142">Beim Aufrufen <xref:System.Threading.SpinLock.Exit%2A> ohne dass zuerst aufgerufen <xref:System.Threading.SpinLock.Enter%2A> der interne Zustand der <xref:System.Threading.SpinLock> können beschädigt ist.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-142">If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.Threading.SynchronizationLockException">
-          <span data-ttu-id="b7a9b-143">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread ist nicht Besitzer dieser Sperre.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-143">Thread ownership tracking is enabled, and the current thread is not the owner of this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <Member MemberName="IsHeld">
-      <MemberSignature Language="C#" Value="public bool IsHeld { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool IsHeld" />
-      <MemberSignature Language="DocId" Value="P:System.Threading.SpinLock.IsHeld" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsHeld As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsHeld { bool get(); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-144">Ruft einen Wert ab, der angibt, ob die Sperre zurzeit von einem Thread verwendet wird.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-144">Gets whether the lock is currently held by any thread.</span>
-          </span>
-        </summary>
-        <value>
-          <span data-ttu-id="b7a9b-145">True, wenn die Sperre zurzeit von einem Thread verwendet wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-145">true if the lock is currently held by any thread; otherwise false.</span>
-          </span>
-        </value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="IsHeldByCurrentThread">
-      <MemberSignature Language="C#" Value="public bool IsHeldByCurrentThread { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool IsHeldByCurrentThread" />
-      <MemberSignature Language="DocId" Value="P:System.Threading.SpinLock.IsHeldByCurrentThread" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsHeldByCurrentThread As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsHeldByCurrentThread { bool get(); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-146">Ruft einen Wert ab, der angibt, ob die Sperre vom aktuellen Thread verwendet wird.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-146">Gets whether the lock is held by the current thread.</span>
-          </span>
-        </summary>
-        <value>
-          <span data-ttu-id="b7a9b-147">True, wenn die Sperre vom aktuellen Thread verwendet wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-147">true if the lock is held by the current thread; otherwise false.</span>
-          </span>
-        </value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-148">Wenn die Sperre zum Nachverfolgen von Besitzerthreads initialisiert wurde, wird zurückgegeben, ob der aktuelle Thread die Sperre abgerufen wurde.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-148">If the lock was initialized to track owner threads, this will return whether the lock is acquired by the current thread.</span></span> <span data-ttu-id="b7a9b-149">Ist diese Eigenschaft verwendet wird, wenn die Sperre initialisiert wurde, nicht Nachverfolgen der Thread den Besitz ungültig.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-149">It is invalid to use this property when the lock was initialized to not track thread ownership.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.InvalidOperationException">
-          <span data-ttu-id="b7a9b-150">Die Threadbesitznachverfolgung wird deaktiviert.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-150">Thread ownership tracking is disabled.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <Member MemberName="IsThreadOwnerTrackingEnabled">
-      <MemberSignature Language="C#" Value="public bool IsThreadOwnerTrackingEnabled { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool IsThreadOwnerTrackingEnabled" />
-      <MemberSignature Language="DocId" Value="P:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsThreadOwnerTrackingEnabled As Boolean" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsThreadOwnerTrackingEnabled { bool get(); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName>get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-151">Ruft einen Wert ab, der angibt, ob die Threadbesitznachverfolgung für diese Instanz aktiviert ist.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-151">Gets whether thread ownership tracking is enabled for this instance.</span>
-          </span>
-        </summary>
-        <value>
-          <span data-ttu-id="b7a9b-152">True, wenn die Threadbesitznachverfolgung für diese Instanz aktiviert ist, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-152">true if thread ownership tracking is enabled for this instance; otherwise false.</span>
-          </span>
-        </value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <MemberGroup MemberName="TryEnter">
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Docs>
-        <summary>
-          <span data-ttu-id="b7a9b-153">Versucht, die Sperre zuverlässig abzurufen, sodass <paramref name="lockTaken" /> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-153">Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <paramref name="lockTaken" /> can be examined reliably to determine whether the lock was acquired.</span>
-          </span>
-        </summary>
-      </Docs>
-    </MemberGroup>
-    <Member MemberName="TryEnter">
-      <MemberSignature Language="C#" Value="public void TryEnter (ref bool lockTaken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TryEnter(bool&amp; lockTaken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.TryEnter(System.Boolean@)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TryEnter (ByRef lockTaken As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TryEnter(bool % lockTaken);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="lockTaken" Type="System.Boolean&amp;" RefType="ref" />
-      </Parameters>
-      <Docs>
-        <param name="lockTaken">
-          <span data-ttu-id="b7a9b-154">True, wenn die Sperre abgerufen wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-154">True if the lock is acquired; otherwise, false.</span>
-          </span>
-          <span data-ttu-id="b7a9b-155">
-            <c>lockTaken</c> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-155">
-              <c>lockTaken</c> must be initialized to false prior to calling this method.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-156">Versucht, die Sperre zuverlässig abzurufen, sodass <paramref name="lockTaken" /> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-156">Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <paramref name="lockTaken" /> can be examined reliably to determine whether the lock was acquired.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-157">Im Gegensatz zu <xref:System.Threading.SpinLock.Enter%2A>, TryEnter wird nicht verhindert, wartet auf die Sperre verfügbar sein.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-157">Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block waiting for the lock to be available.</span></span> <span data-ttu-id="b7a9b-158">Wenn die Sperre nicht verfügbar ist, wenn TryEnter aufgerufen wird, wird sofort zurückgegeben ohne weitere dreht.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-158">If the lock is not available when TryEnter is called, it will return immediately without any further spinning.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentException">
-          <span data-ttu-id="b7a9b-159">Das <paramref name="lockTaken" />-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-159">The <paramref name="lockTaken" /> argument must be initialized to false prior to calling TryEnter.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.Threading.LockRecursionException">
-          <span data-ttu-id="b7a9b-160">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-160">Thread ownership tracking is enabled, and the current thread has already acquired this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <Member MemberName="TryEnter">
-      <MemberSignature Language="C#" Value="public void TryEnter (int millisecondsTimeout, ref bool lockTaken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TryEnter(int32 millisecondsTimeout, bool&amp; lockTaken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TryEnter (millisecondsTimeout As Integer, ByRef lockTaken As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TryEnter(int millisecondsTimeout, bool % lockTaken);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="millisecondsTimeout" Type="System.Int32" />
-        <Parameter Name="lockTaken" Type="System.Boolean&amp;" RefType="ref" />
-      </Parameters>
-      <Docs>
-        <param name="millisecondsTimeout">
-          <span data-ttu-id="b7a9b-161">Die Anzahl von Millisekunden, die gewartet wird, oder <see cref="F:System.Threading.Timeout.Infinite" /> (-1) für Warten ohne Timeout.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-161">The number of milliseconds to wait, or <see cref="F:System.Threading.Timeout.Infinite" /> (-1) to wait indefinitely.</span>
-          </span>
-        </param>
-        <param name="lockTaken">
-          <span data-ttu-id="b7a9b-162">True, wenn die Sperre abgerufen wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-162">True if the lock is acquired; otherwise, false.</span>
-          </span>
-          <span data-ttu-id="b7a9b-163">
-            <c>lockTaken</c> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-163">
-              <c>lockTaken</c> must be initialized to false prior to calling this method.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-164">Versucht, die Sperre zuverlässig abzurufen, sodass <paramref name="lockTaken" /> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-164">Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <paramref name="lockTaken" /> can be examined reliably to determine whether the lock was acquired.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-165">Im Gegensatz zu <xref:System.Threading.SpinLock.Enter%2A>, TryEnter blockiert nicht unbegrenzt warten auf die Sperre verfügbar sein.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-165">Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block indefinitely waiting for the lock to be available.</span></span> <span data-ttu-id="b7a9b-166">Er wird blockiert, bis die Sperre verfügbar wird oder bis die `millisecondsTimeout` ist abgelaufen.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-166">It will block until either the lock is available or until the `millisecondsTimeout` has expired.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">
-          <span data-ttu-id="b7a9b-167">
-            <paramref name="millisecondsTimeout" /> ist eine negative Zahl, jedoch nicht -1, was einen unbeschränkten Timeout darstellt.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-167">
-              <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite time-out.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.ArgumentException">
-          <span data-ttu-id="b7a9b-168">Das <paramref name="lockTaken" />-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-168">The <paramref name="lockTaken" /> argument must be initialized to false prior to calling TryEnter.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.Threading.LockRecursionException">
-          <span data-ttu-id="b7a9b-169">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-169">Thread ownership tracking is enabled, and the current thread has already acquired this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-    <Member MemberName="TryEnter">
-      <MemberSignature Language="C#" Value="public void TryEnter (TimeSpan timeout, ref bool lockTaken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void TryEnter(valuetype System.TimeSpan timeout, bool&amp; lockTaken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TryEnter (timeout As TimeSpan, ByRef lockTaken As Boolean)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TryEnter(TimeSpan timeout, bool % lockTaken);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Threading</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.10.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="timeout" Type="System.TimeSpan" />
-        <Parameter Name="lockTaken" Type="System.Boolean&amp;" RefType="ref" />
-      </Parameters>
-      <Docs>
-        <param name="timeout">
-          <span data-ttu-id="b7a9b-170">Eine <see cref="T:System.TimeSpan" />-Struktur, die die Anzahl der zu wartenden Millisekunden angibt, oder eine <see cref="T:System.TimeSpan" />-Struktur, die -1 Millisekunden zum unendlichen Warten angibt.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-170">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait, or a <see cref="T:System.TimeSpan" /> that represents -1 milliseconds to wait indefinitely.</span>
-          </span>
-        </param>
-        <param name="lockTaken">
-          <span data-ttu-id="b7a9b-171">True, wenn die Sperre abgerufen wird, andernfalls false.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-171">True if the lock is acquired; otherwise, false.</span>
-          </span>
-          <span data-ttu-id="b7a9b-172">
-            <c>lockTaken</c> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-172">
-              <c>lockTaken</c> must be initialized to false prior to calling this method.</span>
-          </span>
-        </param>
-        <summary>
-          <span data-ttu-id="b7a9b-173">Versucht, die Sperre zuverlässig abzurufen, sodass <paramref name="lockTaken" /> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-173">Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <paramref name="lockTaken" /> can be examined reliably to determine whether the lock was acquired.</span>
-          </span>
-        </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <span data-ttu-id="b7a9b-174">Im Gegensatz zu <xref:System.Threading.SpinLock.Enter%2A>, TryEnter blockiert nicht unbegrenzt warten auf die Sperre verfügbar sein.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-174">Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block indefinitely waiting for the lock to be available.</span></span> <span data-ttu-id="b7a9b-175">Er wird blockiert, bis die Sperre verfügbar wird oder bis die `timeout` ist abgelaufen.</span><span class="sxs-lookup"><span data-stu-id="b7a9b-175">It will block until either the lock is available or until the `timeout` has expired.</span></span>  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">
-          <span data-ttu-id="b7a9b-176">
-            <paramref name="timeout" /> ist eine negative Zahl ungleich -1 Millisekunden, die ein unendliches Timeout darstellt, - oder - Timeout ist größer als <see cref="F:System.Int32.MaxValue" /> Millisekunden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-176">
-              <paramref name="timeout" /> is a negative number other than -1 milliseconds, which represents an infinite time-out -or- timeout is greater than <see cref="F:System.Int32.MaxValue" /> milliseconds.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.ArgumentException">
-          <span data-ttu-id="b7a9b-177">Das <paramref name="lockTaken" />-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-177">The <paramref name="lockTaken" /> argument must be initialized to false prior to calling TryEnter.</span>
-          </span>
-        </exception>
-        <exception cref="T:System.Threading.LockRecursionException">
-          <span data-ttu-id="b7a9b-178">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</span>
-          <span class="sxs-lookup">
-            <span data-stu-id="b7a9b-178">Thread ownership tracking is enabled, and the current thread has already acquired this lock.</span>
-          </span>
-        </exception>
-      </Docs>
-    </Member>
-  </Members>
-</Type>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="SpinLock.xml" source-language="en-US" target-language="de-DE">
+    <header>
+      <tool tool-id="mdxliff" tool-name="mdxliff" tool-version="1.0-b857fe3" tool-company="Microsoft" />
+      <xliffext:skl_file_name xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">2eccf4de-4b1c-4706-8cb3-f46682ccfb72f5bcd330020fac61054fec09791305e50bf0a619.skl</xliffext:skl_file_name>
+      <xliffext:version xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">1.2</xliffext:version>
+      <xliffext:ms.openlocfilehash xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">f5bcd330020fac61054fec09791305e50bf0a619</xliffext:ms.openlocfilehash>
+      <xliffext:ms.sourcegitcommit xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">b15b8cf0f6dbc1504057c88969d9ef4b790891fe</xliffext:ms.sourcegitcommit>
+      <xliffext:ms.lasthandoff xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">05/11/2018</xliffext:ms.lasthandoff>
+      <xliffext:moniker_ids xmlns:xliffext="urn:microsoft:content:schema:xliffextensions">netcore-1.0,netcore-1.1,netcore-2.0,netcore-2.1,netframework-4.5.1,netframework-4.5.2,netframework-4.5,netframework-4.6.1,netframework-4.6.2,netframework-4.6,netframework-4.7.1,netframework-4.7.2,netframework-4.7,netstandard-1.0,netstandard-1.1,netstandard-1.2,netstandard-1.3,netstandard-1.4,netstandard-1.6,netstandard-2.0,xamarinandroid-7.1,xamarinios-10.8,xamarinmac-3.0</xliffext:moniker_ids>
+    </header>
+    <body>
+      <group id="content" extype="content">
+        <trans-unit id="101" translate="yes" xml:space="preserve" uid="T:System.Threading.SpinLock">
+          <source>Provides a mutual exclusion lock primitive where a thread trying to acquire the lock waits in a loop repeatedly checking until the lock becomes available.</source>
+          <target state="translated">Stellt einen Mutex-Sperrprimitiven bereit, wobei ein Thread, der versucht, die Sperre abzurufen, in einer Schleife wartet, die laufend prüft, ob die Sperre verfügbar wird.</target>       </trans-unit>
+        <trans-unit id="102" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>For an example of how to use a Spin Lock, see <bpt id="p1">[</bpt>How to: Use SpinLock for Low-Level Synchronization<ept id="p1">](~/docs/standard/threading/how-to-use-spinlock-for-low-level-synchronization.md)</ept>.</source>
+          <target state="translated">Ein Beispiel zum Verwenden eines Spinlocks, finden Sie unter <bpt id="p1">[</bpt>wie: Verwenden von SpinLock für die Synchronisierung auf niedriger Ebene<ept id="p1">](~/docs/standard/threading/how-to-use-spinlock-for-low-level-synchronization.md)</ept>.</target>       </trans-unit>
+        <trans-unit id="103" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>Spin locks can be used for leaf-level locks where the object allocation implied by using a <ph id="ph1">&lt;xref:System.Threading.Monitor&gt;</ph>, in size or due to garbage collection pressure, is overly expensive.</source>
+          <target state="translated">Spinlocks genutzt werden Sperren auf Blattebene impliziert, in dem die Zuordnung mit einem <ph id="ph1">&lt;xref:System.Threading.Monitor&gt;</ph>, Größe oder aufgrund von ungenügendem für Garbage Collection, ist zu teuer.</target>       </trans-unit>
+        <trans-unit id="104" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>A spin lock can be useful in to avoid blocking; however, if you expect a significant amount of blocking, you should probably not use spin locks due to excessive spinning.</source>
+          <target state="translated">Ein SpinLock kann bei vermeiden der Blockierung hilfreich sein; Wenn Sie eine beträchtliche Menge an Blockierung erwarten, sollten Sie Spinlocks aufgrund übermäßiger Spinvorgänge wahrscheinlich nicht verwenden.</target>       </trans-unit>
+        <trans-unit id="105" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>Spinning can be beneficial when locks are fine-grained and large in number (for example, a lock per node in a linked list) and also when lock hold-times are always extremely short.</source>
+          <target state="translated">Spins können nützlich sein, wenn Sperren differenzierte und große Anzahl (z. B. eine Sperre pro Knoten in einer verknüpften Liste) sind und wenn Sperre Hold-Laufzeiten immer sehr kurz sind.</target>       </trans-unit>
+        <trans-unit id="106" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>In general, while holding a spin lock, one should avoid any of these actions:</source>
+          <target state="translated">Im Allgemeinen sollten während eines Spinlocks, eine dieser Aktionen vermeiden:</target>       </trans-unit>
+        <trans-unit id="107" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>blocking,</source>
+          <target state="translated">blockieren,</target>       </trans-unit>
+        <trans-unit id="108" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>calling anything that itself may block,</source>
+          <target state="translated">Alles aufrufen kann, die selbst blockieren,</target>       </trans-unit>
+        <trans-unit id="109" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>holding more than one spin lock at once,</source>
+          <target state="translated">Halten gleichzeitig mehrere Spinlocks,</target>       </trans-unit>
+        <trans-unit id="110" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>making dynamically dispatched calls (interface and virtuals),</source>
+          <target state="translated">Ausführen von dynamisch weitergeleiteten Aufrufen (Schnittstelle und von Virtuals)</target>       </trans-unit>
+        <trans-unit id="111" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>making statically dispatched calls into any code one doesn't own, or</source>
+          <target state="translated">Ausführen von statisch weitergeleiteten Aufrufen in Code, der eine nicht besitzen, oder</target>       </trans-unit>
+        <trans-unit id="112" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>allocating memory.</source>
+          <target state="translated">Reservieren von Speicher.</target>       </trans-unit>
+        <trans-unit id="113" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source><ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> should only be used after you have been determined that doing so will improve an application's performance.</source>
+          <target state="translated"><ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> sollte nur verwendet werden, wenn sich herausgestellt hat, dass dadurch die Leistung einer Anwendung verbessert wird.</target>       </trans-unit>
+        <trans-unit id="114" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>It is also important to note that <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> is a value type, for performance reasons.</source>
+          <target state="translated">Es ist auch wichtig zu beachten, dass die <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> ist ein Werttyp ist, zur Verbesserung der Leistung.</target>       </trans-unit>
+        <trans-unit id="115" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>For this reason, you must be very careful not to accidentally copy a <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> instance, as the two instances (the original and the copy) would then be completely independent of one another, which would likely lead to erroneous behavior of the application.</source>
+          <target state="translated">Aus diesem Grund müssen Sie sehr darauf achten, keine versehentlich kopieren werden eine <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> -Instanz ab, wie die beiden Instanzen (die ursprüngliche und die Kopie) dann vollkommen unabhängig voneinander, wären, was wahrscheinlich zu falschem Verhalten der Anwendung führen würde.</target>       </trans-unit>
+        <trans-unit id="116" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>If a <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> instance must be passed around, it should be passed by reference rather than by value.</source>
+          <target state="translated">Wenn eine <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> Instanz übergeben werden muss, sollten durch Verweis und nicht als Wert übergeben werden.</target>       </trans-unit>
+        <trans-unit id="117" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>Do not store <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> instances in readonly fields.</source>
+          <target state="translated">Speichern Sie keinesfalls <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> Instanzen in schreibgeschützten Feldern.</target>       </trans-unit>
+        <trans-unit id="118" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>The following example shows how to use a <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph>:</source>
+          <target state="translated">Das folgende Beispiel zeigt, wie Sie eine <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph>:</target>       </trans-unit>
+        <trans-unit id="119" translate="yes" xml:space="preserve" extradata="MT" uid="T:System.Threading.SpinLock">
+          <source>All members of <ph id="ph1">&lt;see cref="T:System.Threading.SpinLock" /&gt;</ph> are thread-safe and may be used from multiple threads concurrently.</source>
+          <target state="translated">Alle Mitglieder der <ph id="ph1">&lt;see cref="T:System.Threading.SpinLock" /&gt;</ph> sind threadsicher und können von mehreren Threads gleichzeitig verwendet werden.</target>       </trans-unit>
+        <trans-unit id="120" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.#ctor(System.Boolean)">
+          <source>Whether to capture and use thread IDs for debugging purposes.</source>
+          <target state="translated">Gibt an, ob Thread-IDs zu Debugzwecken erfasst und verwendet werden.</target>       </trans-unit>
+        <trans-unit id="121" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.#ctor(System.Boolean)">
+          <source>Initializes a new instance of the <ph id="ph1">&lt;see cref="T:System.Threading.SpinLock" /&gt;</ph> structure with the option to track thread IDs to improve debugging.</source>
+          <target state="translated">Initialisiert eine neue Instanz der <ph id="ph1">&lt;see cref="T:System.Threading.SpinLock" /&gt;</ph>-Struktur mit der Option, Thread-IDs nachzuverfolgen, um das Debuggen zu vereinfachen.</target>       </trans-unit>
+        <trans-unit id="122" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.#ctor(System.Boolean)">
+          <source>The default constructor for <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> tracks thread ownership.</source>
+          <target state="translated">Der Standardkonstruktor für <ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> verfolgt thread Besitz.</target>       </trans-unit>
+        <trans-unit id="123" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.#ctor(System.Boolean)">
+          <source>The following example demonstrates how a SpinLock may be used.</source>
+          <target state="translated">Im folgende Beispiel wird veranschaulicht, wie ein SpinLock verwendet werden kann.</target>       </trans-unit>
+        <trans-unit id="124" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>True if the lock is acquired; otherwise, false.</source>
+          <target state="translated">True, wenn die Sperre abgerufen wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="125" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> must be initialized to false prior to calling this method.</source>
+          <target state="translated"><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="126" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>Acquires the lock in a reliable manner, such that even if an exception occurs within the method call, <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> can be examined reliably to determine whether the lock was acquired.</source>
+          <target state="translated">Ruft die Sperre zuverlässig ab, sodass <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="127" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source><ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> is a non-reentrant lock, meaning that if a thread holds the lock, it is not allowed to enter the lock again.</source>
+          <target state="translated"><ph id="ph1">&lt;xref:System.Threading.SpinLock&gt;</ph> ist eine Sperre nicht wieder eintretender, dies bedeutet, dass, wenn ein Thread die Sperre, es ist nicht zulässig, die Sperre erneut einzugeben.</target>       </trans-unit>
+        <trans-unit id="128" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>If thread ownership tracking is enabled (whether it's enabled is available through <ph id="ph1">&lt;xref:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled%2A&gt;</ph>), an exception will be thrown when a thread tries to re-enter a lock it already holds.</source>
+          <target state="translated">Wenn der Thread den Besitz Überwachung aktiviert ist (erhältlich ist, ob es aktiviert ist <ph id="ph1">&lt;xref:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled%2A&gt;</ph>), wird eine Ausnahme ausgelöst, wenn ein Thread versucht, eine Sperre erneut eingeben, er bereits besitzt.</target>       </trans-unit>
+        <trans-unit id="129" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>However, if thread ownership tracking is disabled, attempting to enter a lock already held will result in deadlock.</source>
+          <target state="translated">Jedoch wenn Thread den Besitz tracking deaktiviert ist, führt bei dem Versuch, eine Sperre bereits geben Deadlock.</target>       </trans-unit>
+        <trans-unit id="130" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>If you call <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> without having first called <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> the internal state of the <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> can become corrupted.</source>
+          <target state="translated">Beim Aufrufen <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> ohne dass zuerst aufgerufen <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> der interne Zustand der <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> können beschädigt ist.</target>       </trans-unit>
+        <trans-unit id="131" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>The <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> argument must be initialized to false prior to calling Enter.</source>
+          <target state="translated">Das <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph>-Argument muss vor dem Aufrufen von Enter mit false initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="132" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Enter(System.Boolean@)">
+          <source>Thread ownership tracking is enabled, and the current thread has already acquired this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</target>       </trans-unit>
+        <trans-unit id="133" translate="yes" xml:space="preserve" uid="T:System.Threading.SpinLock">
+          <source>Releases the lock.</source>
+          <target state="translated">Hebt die Sperre auf.</target>       </trans-unit>
+        <trans-unit id="134" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Exit">
+          <source>Releases the lock.</source>
+          <target state="translated">Hebt die Sperre auf.</target>       </trans-unit>
+        <trans-unit id="135" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Exit">
+          <source>The default overload of <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> provides the same behavior as if calling <ph id="ph2">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> using true as the argument.</source>
+          <target state="translated">Die standardmäßige Überladung von <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> bietet das gleiche Verhalten, als wäre <ph id="ph2">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> "true" als Argument verwenden.</target>       </trans-unit>
+        <trans-unit id="136" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Exit">
+          <source>If you call <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> without having first called <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> the internal state of the <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> can become corrupted.</source>
+          <target state="translated">Beim Aufrufen <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> ohne dass zuerst aufgerufen <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> der interne Zustand der <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> können beschädigt ist.</target>       </trans-unit>
+        <trans-unit id="137" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Exit">
+          <source>Thread ownership tracking is enabled, and the current thread is not the owner of this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread ist nicht Besitzer dieser Sperre.</target>       </trans-unit>
+        <trans-unit id="138" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>A Boolean value that indicates whether a memory fence should be issued in order to immediately publish the exit operation to other threads.</source>
+          <target state="translated">Ein boolescher Wert, der angibt, ob eine Arbeitsspeicherumgrenzung ausgegeben werden soll, um den Beendigungsvorgang sofort für andere Threads zu veröffentlichen.</target>       </trans-unit>
+        <trans-unit id="139" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>Releases the lock.</source>
+          <target state="translated">Hebt die Sperre auf.</target>       </trans-unit>
+        <trans-unit id="140" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>Calling <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> with the <ph id="ph2">`useMemoryBarrier`</ph> argument set to true will improve the fairness of the lock at the expense of some performance.</source>
+          <target state="translated">Aufrufen von <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> mit der <ph id="ph2">`useMemoryBarrier`</ph> Argument auf "true" festgelegt ist, wird die Fairness der Sperre auf Kosten der Leistung verbessert.</target>       </trans-unit>
+        <trans-unit id="141" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>The default <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> overload behaves as if specifying true for <ph id="ph2">`useMemoryBarrier`</ph>.</source>
+          <target state="translated">Die Standardeinstellung <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> Überladung verhält sich wie "true" für die Angabe <ph id="ph2">`useMemoryBarrier`</ph>.</target>       </trans-unit>
+        <trans-unit id="142" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>If you call <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> without having first called <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> the internal state of the <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> can become corrupted.</source>
+          <target state="translated">Beim Aufrufen <ph id="ph1">&lt;xref:System.Threading.SpinLock.Exit%2A&gt;</ph> ohne dass zuerst aufgerufen <ph id="ph2">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph> der interne Zustand der <ph id="ph3">&lt;xref:System.Threading.SpinLock&gt;</ph> können beschädigt ist.</target>       </trans-unit>
+        <trans-unit id="143" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.Exit(System.Boolean)">
+          <source>Thread ownership tracking is enabled, and the current thread is not the owner of this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread ist nicht Besitzer dieser Sperre.</target>       </trans-unit>
+        <trans-unit id="144" translate="yes" xml:space="preserve" uid="P:System.Threading.SpinLock.IsHeld">
+          <source>Gets whether the lock is currently held by any thread.</source>
+          <target state="translated">Ruft einen Wert ab, der angibt, ob die Sperre zurzeit von einem Thread verwendet wird.</target>       </trans-unit>
+        <trans-unit id="145" translate="yes" xml:space="preserve" extradata="MT" uid="P:System.Threading.SpinLock.IsHeld">
+          <source>true if the lock is currently held by any thread; otherwise false.</source>
+          <target state="translated">True, wenn die Sperre zurzeit von einem Thread verwendet wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="146" translate="yes" xml:space="preserve" uid="P:System.Threading.SpinLock.IsHeldByCurrentThread">
+          <source>Gets whether the lock is held by the current thread.</source>
+          <target state="translated">Ruft einen Wert ab, der angibt, ob die Sperre vom aktuellen Thread verwendet wird.</target>       </trans-unit>
+        <trans-unit id="147" translate="yes" xml:space="preserve" extradata="MT" uid="P:System.Threading.SpinLock.IsHeldByCurrentThread">
+          <source>true if the lock is held by the current thread; otherwise false.</source>
+          <target state="translated">True, wenn die Sperre vom aktuellen Thread verwendet wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="148" translate="yes" xml:space="preserve" extradata="MT" uid="P:System.Threading.SpinLock.IsHeldByCurrentThread">
+          <source>If the lock was initialized to track owner threads, this will return whether the lock is acquired by the current thread.</source>
+          <target state="translated">Wenn die Sperre zum Nachverfolgen von Besitzerthreads initialisiert wurde, wird zurückgegeben, ob der aktuelle Thread die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="149" translate="yes" xml:space="preserve" extradata="MT" uid="P:System.Threading.SpinLock.IsHeldByCurrentThread">
+          <source>It is invalid to use this property when the lock was initialized to not track thread ownership.</source>
+          <target state="translated">Ist diese Eigenschaft verwendet wird, wenn die Sperre initialisiert wurde, nicht Nachverfolgen der Thread den Besitz ungültig.</target>       </trans-unit>
+        <trans-unit id="150" translate="yes" xml:space="preserve" uid="P:System.Threading.SpinLock.IsHeldByCurrentThread">
+          <source>Thread ownership tracking is disabled.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird deaktiviert.</target>       </trans-unit>
+        <trans-unit id="151" translate="yes" xml:space="preserve" uid="P:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled">
+          <source>Gets whether thread ownership tracking is enabled for this instance.</source>
+          <target state="translated">Ruft einen Wert ab, der angibt, ob die Threadbesitznachverfolgung für diese Instanz aktiviert ist.</target>       </trans-unit>
+        <trans-unit id="152" translate="yes" xml:space="preserve" extradata="MT" uid="P:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled">
+          <source>true if thread ownership tracking is enabled for this instance; otherwise false.</source>
+          <target state="translated">True, wenn die Threadbesitznachverfolgung für diese Instanz aktiviert ist, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="153" translate="yes" xml:space="preserve" uid="T:System.Threading.SpinLock">
+          <source>Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> can be examined reliably to determine whether the lock was acquired.</source>
+          <target state="translated">Versucht, die Sperre zuverlässig abzurufen, sodass <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="154" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>True if the lock is acquired; otherwise, false.</source>
+          <target state="translated">True, wenn die Sperre abgerufen wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="155" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> must be initialized to false prior to calling this method.</source>
+          <target state="translated"><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="156" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> can be examined reliably to determine whether the lock was acquired.</source>
+          <target state="translated">Versucht, die Sperre zuverlässig abzurufen, sodass <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="157" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>Unlike <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter will not block waiting for the lock to be available.</source>
+          <target state="translated">Im Gegensatz zu <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter wird nicht verhindert, wartet auf die Sperre verfügbar sein.</target>       </trans-unit>
+        <trans-unit id="158" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>If the lock is not available when TryEnter is called, it will return immediately without any further spinning.</source>
+          <target state="translated">Wenn die Sperre nicht verfügbar ist, wenn TryEnter aufgerufen wird, wird sofort zurückgegeben ohne weitere dreht.</target>       </trans-unit>
+        <trans-unit id="159" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>The <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> argument must be initialized to false prior to calling TryEnter.</source>
+          <target state="translated">Das <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph>-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="160" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Boolean@)">
+          <source>Thread ownership tracking is enabled, and the current thread has already acquired this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</target>       </trans-unit>
+        <trans-unit id="161" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>The number of milliseconds to wait, or <ph id="ph1">&lt;see cref="F:System.Threading.Timeout.Infinite" /&gt;</ph> (-1) to wait indefinitely.</source>
+          <target state="translated">Die Anzahl von Millisekunden, die gewartet wird, oder <ph id="ph1">&lt;see cref="F:System.Threading.Timeout.Infinite" /&gt;</ph> (-1) für Warten ohne Timeout.</target>       </trans-unit>
+        <trans-unit id="162" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>True if the lock is acquired; otherwise, false.</source>
+          <target state="translated">True, wenn die Sperre abgerufen wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="163" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> must be initialized to false prior to calling this method.</source>
+          <target state="translated"><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="164" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> can be examined reliably to determine whether the lock was acquired.</source>
+          <target state="translated">Versucht, die Sperre zuverlässig abzurufen, sodass <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="165" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>Unlike <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter will not block indefinitely waiting for the lock to be available.</source>
+          <target state="translated">Im Gegensatz zu <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter blockiert nicht unbegrenzt warten auf die Sperre verfügbar sein.</target>       </trans-unit>
+        <trans-unit id="166" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>It will block until either the lock is available or until the <ph id="ph1">`millisecondsTimeout`</ph> has expired.</source>
+          <target state="translated">Er wird blockiert, bis die Sperre verfügbar wird oder bis die <ph id="ph1">`millisecondsTimeout`</ph> ist abgelaufen.</target>       </trans-unit>
+        <trans-unit id="167" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source><ph id="ph1">&lt;paramref name="millisecondsTimeout" /&gt;</ph> is a negative number other than -1, which represents an infinite time-out.</source>
+          <target state="translated"><ph id="ph1">&lt;paramref name="millisecondsTimeout" /&gt;</ph> ist eine negative Zahl, jedoch nicht -1, was einen unbeschränkten Timeout darstellt.</target>       </trans-unit>
+        <trans-unit id="168" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>The <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> argument must be initialized to false prior to calling TryEnter.</source>
+          <target state="translated">Das <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph>-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="169" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)">
+          <source>Thread ownership tracking is enabled, and the current thread has already acquired this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</target>       </trans-unit>
+        <trans-unit id="170" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>A <ph id="ph1">&lt;see cref="T:System.TimeSpan" /&gt;</ph> that represents the number of milliseconds to wait, or a <ph id="ph2">&lt;see cref="T:System.TimeSpan" /&gt;</ph> that represents -1 milliseconds to wait indefinitely.</source>
+          <target state="translated">Eine <ph id="ph1">&lt;see cref="T:System.TimeSpan" /&gt;</ph>-Struktur, die die Anzahl der zu wartenden Millisekunden angibt, oder eine <ph id="ph2">&lt;see cref="T:System.TimeSpan" /&gt;</ph>-Struktur, die -1 Millisekunden zum unendlichen Warten angibt.</target>       </trans-unit>
+        <trans-unit id="171" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>True if the lock is acquired; otherwise, false.</source>
+          <target state="translated">True, wenn die Sperre abgerufen wird, andernfalls false.</target>       </trans-unit>
+        <trans-unit id="172" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> must be initialized to false prior to calling this method.</source>
+          <target state="translated"><bpt id="p1">&lt;c&gt;</bpt>lockTaken<ept id="p1">&lt;/c&gt;</ept> muss vor dem Aufrufen dieser Methode mit „false“ initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="173" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> can be examined reliably to determine whether the lock was acquired.</source>
+          <target state="translated">Versucht, die Sperre zuverlässig abzurufen, sodass <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> auch bei einer Ausnahme innerhalb des Methodenaufrufs zuverlässig untersucht werden kann, um zu bestimmen, ob die Sperre abgerufen wurde.</target>       </trans-unit>
+        <trans-unit id="174" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>Unlike <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter will not block indefinitely waiting for the lock to be available.</source>
+          <target state="translated">Im Gegensatz zu <ph id="ph1">&lt;xref:System.Threading.SpinLock.Enter%2A&gt;</ph>, TryEnter blockiert nicht unbegrenzt warten auf die Sperre verfügbar sein.</target>       </trans-unit>
+        <trans-unit id="175" translate="yes" xml:space="preserve" extradata="MT" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>It will block until either the lock is available or until the <ph id="ph1">`timeout`</ph> has expired.</source>
+          <target state="translated">Er wird blockiert, bis die Sperre verfügbar wird oder bis die <ph id="ph1">`timeout`</ph> ist abgelaufen.</target>       </trans-unit>
+        <trans-unit id="176" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source><ph id="ph1">&lt;paramref name="timeout" /&gt;</ph> is a negative number other than -1 milliseconds, which represents an infinite time-out -or- timeout is greater than <ph id="ph2">&lt;see cref="F:System.Int32.MaxValue" /&gt;</ph> milliseconds.</source>
+          <target state="translated"><ph id="ph1">&lt;paramref name="timeout" /&gt;</ph> ist eine negative Zahl ungleich -1 Millisekunden, die ein unendliches Timeout darstellt, - oder - Timeout ist größer als <ph id="ph2">&lt;see cref="F:System.Int32.MaxValue" /&gt;</ph> Millisekunden.</target>       </trans-unit>
+        <trans-unit id="177" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>The <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph> argument must be initialized to false prior to calling TryEnter.</source>
+          <target state="translated">Das <ph id="ph1">&lt;paramref name="lockTaken" /&gt;</ph>-Argument muss vor dem Aufrufen von TryEnter mit false initialisiert werden.</target>       </trans-unit>
+        <trans-unit id="178" translate="yes" xml:space="preserve" uid="M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)">
+          <source>Thread ownership tracking is enabled, and the current thread has already acquired this lock.</source>
+          <target state="translated">Die Threadbesitznachverfolgung wird aktiviert, und der aktuelle Thread hat diese Sperre bereits abgerufen.</target>       </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
