@@ -1,1 +1,0 @@
-<span data-ttu-id="deba5-101">Grafische Benutzeroberflächen (GUIs)</span><span class="sxs-lookup"><span data-stu-id="deba5-101">graphical user interfaces (GUIs)</span></span>
