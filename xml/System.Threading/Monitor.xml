@@ -1,17 +1,18 @@
 <Type Name="Monitor" FullName="System.Threading.Monitor">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="cfafcfe91d4ef6eba6ebbbbe6d7101119c93823a" />
-    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.openlocfilehash" Value="04c73d8d6d8c0205db70235fd1bb85ce866c6212" />
+    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
-    <Meta Name="ms.locfileid" Value="30531374" />
+    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.locfileid" Value="36606688" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class Monitor" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Monitor extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Threading.Monitor" />
   <TypeSignature Language="VB.NET" Value="Public Class Monitor" />
   <TypeSignature Language="C++ CLI" Value="public ref class Monitor abstract sealed" />
+  <TypeSignature Language="F#" Value="type Monitor = class" />
   <AssemblyInfo>
     <AssemblyName>System.Threading</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -72,7 +73,7 @@
 |------------|-----------------|  
 |<xref:System.Threading.Monitor.Enter%2A>, <xref:System.Threading.Monitor.TryEnter%2A>|Ruft eine Sperre für ein Objekt ab. Diese Aktion werden außerdem den Anfang eines kritischen Abschnitts. Keine anderen Threads kann den kritischen Abschnitt eingeben, es sei denn, sie die Anweisungen in den kritischen Abschnitt mithilfe eines anderen gesperrten Objekts ausgeführt wird.|  
 |<xref:System.Threading.Monitor.Wait%2A>|Gibt die Sperre für ein Objekt zum Zulassen von anderen Threads zu sperren, und greifen auf das Objekt frei. Der aufrufende Thread wartet, während ein anderer Thread das Objekt zugreift. Pulse Signale werden verwendet, um wartende Threads über Änderungen an der Status eines Objekts zu benachrichtigen.|  
-|<xref:System.Threading.Monitor.Pulse%2A> (signal), <xref:System.Threading.Monitor.PulseAll%2A>|Sendet ein Signal an einen oder mehrere wartende Threads. Das Signal benachrichtigt einen wartenden Thread, den der Zustand des gesperrten Objekts geändert wurde, und der Besitzer der Sperre ist bereit, um die Sperre aufzuheben. Des wartenden Threads befindet sich in die Warteschlange für abgearbeitete des Objekts, damit er die Sperre für das Objekt schließlich empfangen kann. Sobald der Thread die Sperre besitzt, kann es durch überprüfen den neuen Zustand des Objekts, um festzustellen, ob die erforderliche Status erreicht wurde.|  
+|<xref:System.Threading.Monitor.Pulse%2A> (dieses Signal) <xref:System.Threading.Monitor.PulseAll%2A>|Sendet ein Signal an einen oder mehrere wartende Threads. Das Signal benachrichtigt einen wartenden Thread, den der Zustand des gesperrten Objekts geändert wurde, und der Besitzer der Sperre ist bereit, um die Sperre aufzuheben. Des wartenden Threads befindet sich in die Warteschlange für abgearbeitete des Objekts, damit er die Sperre für das Objekt schließlich empfangen kann. Sobald der Thread die Sperre besitzt, kann es durch überprüfen den neuen Zustand des Objekts, um festzustellen, ob die erforderliche Status erreicht wurde.|  
 |<xref:System.Threading.Monitor.Exit%2A>|Hebt die Sperre für ein Objekt. Diese Aktion werden auch das Ende eines kritischen Abschnitts von gesperrten Objekts geschützt.|  
   
  Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], es gibt zwei Sätze von Überladungen für die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.TryEnter%2A> Methoden. Eine Gruppe von Überladungen hat eine `ref` (in c#) oder `ByRef` (in Visual Basic) <xref:System.Boolean> Parameter, der atomar auf `true` Wenn die Sperre abgerufen wird, auch wenn eine Ausnahme ausgelöst wird, wenn die Sperre abrufen. Verwenden Sie diese Überladung, wenn es wichtig ist, die Sperre in allen Fällen, selbst wenn die Ressourcen, die die Sperre zu schützen, ist möglicherweise nicht in einem konsistenten Zustand.  
@@ -190,6 +191,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Enter(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Enter (obj As Object)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Enter(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member Enter : obj -&gt; unit" Usage="System.Threading.Monitor.Enter obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -254,6 +256,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Enter(System.Object,System.Boolean@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Enter (obj As Object, ByRef lockTaken As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Enter(System::Object ^ obj, bool % lockTaken);" />
+      <MemberSignature Language="F#" Value="static member Enter : obj *  -&gt; unit" Usage="System.Threading.Monitor.Enter (obj, lockTaken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -280,9 +283,7 @@
       </Parameters>
       <Docs>
         <param name="obj">Das Objekt, auf das gewartet werden soll.</param>
-        <param name="lockTaken">Das Ergebnis des Versuchs, die Sperre abzurufen, übergeben als Verweis. Die Eingabe muss <see langword="false" /> sein. Die Ausgabe ist <see langword="true" />, wenn die Sperre abgerufen wurde. Andernfalls ist die Ausgabe <see langword="false" />. Die Ausgabe wird auch dann festgelegt, wenn eine Ausnahme bei dem Versuch auftritt, die Sperre abzurufen.  
-  
- Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer <see langword="true" />.</param>
+        <param name="lockTaken">Das Ergebnis des Versuchs, die Sperre abzurufen, übergeben als Verweis. Die Eingabe muss <see langword="false" /> sein. Die Ausgabe ist <see langword="true" />, wenn die Sperre abgerufen wurde. Andernfalls ist die Ausgabe <see langword="false" />. Die Ausgabe wird auch dann festgelegt, wenn eine Ausnahme bei dem Versuch auftritt, die Sperre abzurufen.  Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer <see langword="true" />.</param>
         <summary>Erhält eine exklusive Sperre für das angegebene Objekt und legt atomar einen Wert fest, der angibt, ob die Sperre angenommen wurde.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -316,6 +317,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Exit(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Exit (obj As Object)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Exit(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member Exit : obj -&gt; unit" Usage="System.Threading.Monitor.Exit obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -380,6 +382,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.IsEntered(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function IsEntered (obj As Object) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsEntered(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member IsEntered : obj -&gt; bool" Usage="System.Threading.Monitor.IsEntered obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -433,6 +436,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Pulse(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub Pulse (obj As Object)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void Pulse(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member Pulse : obj -&gt; unit" Usage="System.Threading.Monitor.Pulse obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -494,6 +498,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.PulseAll(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub PulseAll (obj As Object)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void PulseAll(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member PulseAll : obj -&gt; unit" Usage="System.Threading.Monitor.PulseAll obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -563,6 +568,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryEnter (obj As Object) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryEnter(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj -&gt; bool" Usage="System.Threading.Monitor.TryEnter obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -628,6 +634,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object,System.Boolean@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub TryEnter (obj As Object, ByRef lockTaken As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void TryEnter(System::Object ^ obj, bool % lockTaken);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj *  -&gt; unit" Usage="System.Threading.Monitor.TryEnter (obj, lockTaken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -694,6 +701,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryEnter (obj As Object, millisecondsTimeout As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryEnter(System::Object ^ obj, int millisecondsTimeout);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj * int -&gt; bool" Usage="System.Threading.Monitor.TryEnter (obj, millisecondsTimeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -752,6 +760,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object,System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryEnter (obj As Object, timeout As TimeSpan) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryEnter(System::Object ^ obj, TimeSpan timeout);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj * TimeSpan -&gt; bool" Usage="System.Threading.Monitor.TryEnter (obj, timeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -809,6 +818,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object,System.Int32,System.Boolean@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub TryEnter (obj As Object, millisecondsTimeout As Integer, ByRef lockTaken As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void TryEnter(System::Object ^ obj, int millisecondsTimeout, bool % lockTaken);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj * int *  -&gt; unit" Usage="System.Threading.Monitor.TryEnter (obj, millisecondsTimeout, lockTaken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -877,6 +887,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.TryEnter(System.Object,System.TimeSpan,System.Boolean@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Sub TryEnter (obj As Object, timeout As TimeSpan, ByRef lockTaken As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static void TryEnter(System::Object ^ obj, TimeSpan timeout, bool % lockTaken);" />
+      <MemberSignature Language="F#" Value="static member TryEnter : obj * TimeSpan *  -&gt; unit" Usage="System.Threading.Monitor.TryEnter (obj, timeout, lockTaken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -948,6 +959,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Wait(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Wait (obj As Object) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool Wait(System::Object ^ obj);" />
+      <MemberSignature Language="F#" Value="static member Wait : obj -&gt; bool" Usage="System.Threading.Monitor.Wait obj" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1008,6 +1020,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Wait(System.Object,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Wait (obj As Object, millisecondsTimeout As Integer) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool Wait(System::Object ^ obj, int millisecondsTimeout);" />
+      <MemberSignature Language="F#" Value="static member Wait : obj * int -&gt; bool" Usage="System.Threading.Monitor.Wait (obj, millisecondsTimeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1077,6 +1090,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Wait(System.Object,System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Wait (obj As Object, timeout As TimeSpan) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool Wait(System::Object ^ obj, TimeSpan timeout);" />
+      <MemberSignature Language="F#" Value="static member Wait : obj * TimeSpan -&gt; bool" Usage="System.Threading.Monitor.Wait (obj, timeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1146,6 +1160,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Wait(System.Object,System.Int32,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Wait (obj As Object, millisecondsTimeout As Integer, exitContext As Boolean) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool Wait(System::Object ^ obj, int millisecondsTimeout, bool exitContext);" />
+      <MemberSignature Language="F#" Value="static member Wait : obj * int * bool -&gt; bool" Usage="System.Threading.Monitor.Wait (obj, millisecondsTimeout, exitContext)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1229,6 +1244,7 @@
       <MemberSignature Language="DocId" Value="M:System.Threading.Monitor.Wait(System.Object,System.TimeSpan,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Wait (obj As Object, timeout As TimeSpan, exitContext As Boolean) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool Wait(System::Object ^ obj, TimeSpan timeout, bool exitContext);" />
+      <MemberSignature Language="F#" Value="static member Wait : obj * TimeSpan * bool -&gt; bool" Usage="System.Threading.Monitor.Wait (obj, timeout, exitContext)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
