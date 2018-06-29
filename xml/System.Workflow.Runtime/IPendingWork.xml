@@ -1,17 +1,18 @@
 <Type Name="IPendingWork" FullName="System.Workflow.Runtime.IPendingWork">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="13313edf9397ba6f96e3b2db9d3170e177e4d7a4" />
-    <Meta Name="ms.sourcegitcommit" Value="d31dc2ede16f6f7bc64e90d9f897ff54c4e3869b" />
+    <Meta Name="ms.openlocfilehash" Value="c0dd7a8c349646cb87772b0a5ddd487f7847c84b" />
+    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="04/03/2018" />
-    <Meta Name="ms.locfileid" Value="30685904" />
+    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.locfileid" Value="36445800" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface IPendingWork" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IPendingWork" />
   <TypeSignature Language="DocId" Value="T:System.Workflow.Runtime.IPendingWork" />
   <TypeSignature Language="VB.NET" Value="Public Interface IPendingWork" />
   <TypeSignature Language="C++ CLI" Value="public interface class IPendingWork" />
+  <TypeSignature Language="F#" Value="type IPendingWork = interface" />
   <AssemblyInfo>
     <AssemblyName>System.Workflow.Runtime</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -32,9 +33,9 @@
 > [!NOTE]
 >  [!INCLUDE[DeprecatedContent](~/includes/deprecatedcontent-md.md)]  
   
- Die <xref:System.Workflow.Runtime.IPendingWork>-Schnittstelle wird für Dienste bereitgestellt, die am Batchverarbeitungsmechanismus des Workflowlaufzeitmoduls teilnehmen möchten. Der Batchverarbeitungsmechanismus ist besonders für Dienste nützlich, die einen permanenten Speicher verwenden. In diesen Fällen ist es häufig wichtig, dass der vom Dienst verwendete permanente Speicher und der interne Zustand des Workflowlaufzeitmoduls konsistent bleiben.  
+ Die <xref:System.Workflow.Runtime.IPendingWork>-Schnittstelle wird für Dienste bereitgestellt, die am Batchverarbeitungsmechanismus der Workflowruntime-Engine teilnehmen möchten. Der Batchverarbeitungsmechanismus ist besonders für Dienste nützlich, die einen permanenten Speicher verwenden. In diesen Fällen ist es häufig wichtig, dass der vom Dienst verwendete permanente Speicher und der interne Zustand der Workflowruntime-Engine konsistent bleiben.  
   
- Wenn Sie möchten, dass der Dienst an der Batchverarbeitung für Workflowtransaktionen teilnimmt, die vom <xref:System.Workflow.Runtime.Hosting.WorkflowCommitWorkBatchService> bereitgestellt wird, müssen Sie die von der <xref:System.Workflow.Runtime.IPendingWork>-Schnittstelle definierten Methoden implementieren. Das Workflowlaufzeitmodul ruft die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode für Ihren Dienst auf, um einen Commit für den Batch auszuführen.  
+ Wenn Sie möchten, dass der Dienst an der Batchverarbeitung für Workflowtransaktionen teilnimmt, die vom <xref:System.Workflow.Runtime.Hosting.WorkflowCommitWorkBatchService> bereitgestellt wird, müssen Sie die von der <xref:System.Workflow.Runtime.IPendingWork>-Schnittstelle definierten Methoden implementieren. Die Workflowruntime-Engine ruft die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode für Ihren Dienst auf, um einen Commit für den Batch auszuführen.  
   
  Die <xref:System.Workflow.Runtime.Hosting.SqlWorkflowPersistenceService>-Klasse implementiert die <xref:System.Workflow.Runtime.IPendingWork>-Schnittstelle.  
   
@@ -47,6 +48,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Commit(class System.Transactions.Transaction transaction, class System.Collections.ICollection items) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Workflow.Runtime.IPendingWork.Commit(System.Transactions.Transaction,System.Collections.ICollection)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Commit(System::Transactions::Transaction ^ transaction, System::Collections::ICollection ^ items);" />
+      <MemberSignature Language="F#" Value="abstract member Commit : System.Transactions.Transaction * System.Collections.ICollection -&gt; unit" Usage="iPendingWork.Commit (transaction, items)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Workflow.Runtime</AssemblyName>
@@ -67,7 +69,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Das Workflowlaufzeitmodul ruft die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode auf, wenn seine Semantik vorgibt, dass für die anstehende Arbeit im Arbeitsbatch ein Commit ausgeführt werden soll. Wenn ein Commitpunkt erreicht wird, ruft das Workflowlaufzeitmodul die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode für jedes <xref:System.Workflow.Runtime.IPendingWork>-Objekt im Arbeitsbatch auf. Das Workflowlaufzeitmodul übergibt die Auflistung der Aufgaben, die dem <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Objekt zugeordnet sind, der <xref:System.Workflow.Runtime.IPendingWork>-Methode. Entweder wird die gesamte Arbeit in einem Batch erfolgreich ausgeführt, oder es wird keine Arbeitsaufgabe ausgeführt. Sie sollten eine Ausnahme auslösen, wenn für eine der Arbeitsaufgaben, die an die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode in Ihre Implementierung übergeben werden, kein Commit ausgeführt werden kann. Je nach Implementierung müssen Sie für die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode einen Rollback durchführen, falls für die Arbeitsaufgaben kein Commit möglich ist. Wenn das Workflowlaufzeitmodul für alle Arbeitsaufgaben in einem Arbeitsbatch erfolgreich Commits ausgeführt hat, ruft es die <xref:System.Workflow.Runtime.IPendingWork.Complete%2A> auf, wobei der `succeeded`-Parameter auf `true` gesetzt ist. Andernfalls ruft das Modul <xref:System.Workflow.Runtime.IPendingWork.Complete%2A> auf, wobei `succeeded` auf `false` gesetzt ist.  
+ Die Workflowruntime-Engine ruft die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode auf, wenn seine Semantik vorgibt, dass für die anstehende Arbeit im Arbeitsbatch ein Commit ausgeführt werden soll. Wenn ein Commitpunkt erreicht wird, ruft die Workflowruntime-Engine die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode für jedes <xref:System.Workflow.Runtime.IPendingWork>-Objekt im Arbeitsbatch auf. die Workflowruntime-Engine übergibt die Auflistung der Aufgaben, die dem <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Objekt zugeordnet sind, der <xref:System.Workflow.Runtime.IPendingWork>-Methode. Entweder wird die gesamte Arbeit in einem Batch erfolgreich ausgeführt, oder es wird keine Arbeitsaufgabe ausgeführt. Sie sollten eine Ausnahme auslösen, wenn für eine der Arbeitsaufgaben, die an die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode in Ihre Implementierung übergeben werden, kein Commit ausgeführt werden kann. Je nach Implementierung müssen Sie für die <xref:System.Workflow.Runtime.IPendingWork.Commit%2A>-Methode einen Rollback durchführen, falls für die Arbeitsaufgaben kein Commit möglich ist. Wenn die Workflowruntime-Engine für alle Arbeitsaufgaben in einem Arbeitsbatch erfolgreich Commits ausgeführt hat, ruft es die <xref:System.Workflow.Runtime.IPendingWork.Complete%2A> auf, wobei der `succeeded`-Parameter auf `true` gesetzt ist. Andernfalls ruft die Engine <xref:System.Workflow.Runtime.IPendingWork.Complete%2A> auf, wobei `succeeded` auf `false` gesetzt ist.  
   
  ]]></format>
         </remarks>
@@ -79,6 +81,7 @@
       <MemberSignature Language="DocId" Value="M:System.Workflow.Runtime.IPendingWork.Complete(System.Boolean,System.Collections.ICollection)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Complete (succeeded As Boolean, items As ICollection)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Complete(bool succeeded, System::Collections::ICollection ^ items);" />
+      <MemberSignature Language="F#" Value="abstract member Complete : bool * System.Collections.ICollection -&gt; unit" Usage="iPendingWork.Complete (succeeded, items)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Workflow.Runtime</AssemblyName>
@@ -112,6 +115,7 @@
       <MemberSignature Language="DocId" Value="M:System.Workflow.Runtime.IPendingWork.MustCommit(System.Collections.ICollection)" />
       <MemberSignature Language="VB.NET" Value="Public Function MustCommit (items As ICollection) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool MustCommit(System::Collections::ICollection ^ items);" />
+      <MemberSignature Language="F#" Value="abstract member MustCommit : System.Collections.ICollection -&gt; bool" Usage="iPendingWork.MustCommit items" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Workflow.Runtime</AssemblyName>
