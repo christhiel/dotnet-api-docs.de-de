@@ -1,17 +1,18 @@
 <Type Name="CultureInfo" FullName="System.Globalization.CultureInfo">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="def27fc8960e34162ed6faf152d89b8f64a9e167" />
-    <Meta Name="ms.sourcegitcommit" Value="3907f9a5780957d9c85af2e54c0a5bc2a5bf19ab" />
+    <Meta Name="ms.openlocfilehash" Value="760f47cb03120a95de0658b641d9eb0ff11b8f38" />
+    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/14/2018" />
-    <Meta Name="ms.locfileid" Value="34174404" />
+    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.locfileid" Value="36487809" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class CultureInfo : ICloneable, IFormatProvider" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi serializable beforefieldinit CultureInfo extends System.Object implements class System.ICloneable, class System.IFormatProvider" />
   <TypeSignature Language="DocId" Value="T:System.Globalization.CultureInfo" />
   <TypeSignature Language="VB.NET" Value="Public Class CultureInfo&#xA;Implements ICloneable, IFormatProvider" />
   <TypeSignature Language="C++ CLI" Value="public ref class CultureInfo : ICloneable, IFormatProvider" />
+  <TypeSignature Language="F#" Value="type CultureInfo = class&#xA;    interface ICloneable&#xA;    interface IFormatProvider" />
   <AssemblyInfo>
     <AssemblyName>System.Globalization</AssemblyName>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -65,7 +66,7 @@
  [Abrufen aller Kulturen](#GetAll)   
  [Kultur und threads](#Threads)   
  [Die Kultur und die Anwendung Domänen](#AppDomain)   
- [, ](#Async) und taskbasierte asynchrone Vorgänge mit   und   
+ [Kultur und aufgabenbasierte asynchrone Vorgänge](#Async)   
  [Serialisierung der CultureInfo-Objekt](#Serialization)   
  [Systemsteuerung überschreibt.](#CPanel)   
  [Alternative Sortierreihenfolgen](#AlternateSort)   
@@ -73,7 +74,7 @@
   
 <a name="CultureNames"></a>   
 ## <a name="culture-names-and-identifiers"></a>Kulturnamen und Bezeichner  
- Die <xref:System.Globalization.CultureInfo> Klasse gibt einen eindeutigen Namen für jede Kultur, basierend auf dem Standard RFC 4646. RFC 639 ist eine Kombination der ISO 3166, bei der zwei Kleinbuchstaben den Kulturcode beschreiben, der einer Sprache zugeordnet ist, und der ISO 3166, bei der zwei Großbuchstaben den Unterkulturcode beschreiben, der einem Land oder einer Region zugeordnet ist. Darüber hinaus für apps, die als Ziel [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)] oder höher und sind unter Windows 10 oder höher ausführen Kulturnamen, die gültige BCP-47-Sprache entsprechen-Tags werden unterstützt.  
+ Die <xref:System.Globalization.CultureInfo> Klasse gibt einen eindeutigen Namen für jede Kultur, basierend auf dem Standard RFC 4646. Der Name ist eine Kombination aus einer ISO 639 zweibuchstabige Kleinbuchstaben Kulturcode einer anderen Sprache zugeordnet und ein ISO 3166 zweibuchstabige Großbuchstaben Teilkulturcode ein Land oder Region zugeordnet. Darüber hinaus für apps, die als Ziel [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)] oder höher und sind unter Windows 10 oder höher ausführen Kulturnamen, die gültige BCP-47-Sprache entsprechen-Tags werden unterstützt.  
   
 > [!NOTE]
 >  Wenn ein Kulturnamen an übergeben ein Klassenkonstruktor oder eine Methode wie z. B. <xref:System.Globalization.CultureInfo.CreateSpecificCulture%2A> oder <xref:System.Globalization.CultureInfo>, dessen Fall spielt keine Rolle.  
@@ -89,7 +90,7 @@
   
  Eine Kultur-ID ist eine internationale numerische standardabkürzung und die Komponenten, die erforderlich sind, um eine der installierten Kulturen eindeutig zu identifizieren. Ihre Anwendung kann vordefinierte Kulturbezeichner verwenden oder benutzerdefinierte Bezeichner definieren.  
   
- Bestimmte vordefinierte Kulturnamen und Bezeichner verwendet werden, indem dieser und anderen Klassen in der <xref:System.Globalization?displayProperty=nameWithType> Namespace. Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center.  
+ Bestimmte vordefinierte Kulturnamen und Bezeichner verwendet werden, indem dieser und anderen Klassen in der <xref:System.Globalization?displayProperty=nameWithType> Namespace. Ausführliche kulturinformationen wird angezeigt, der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center.  
   
  Denken Sie daran, dass die Kulturnamen und Bezeichner nur eine Teilmenge der Kulturen darstellen, die auf einem bestimmten Computer gefunden werden kann. Windows-Versionen oder Servicepacks können die verfügbaren Kulturen ändern. Anwendungen hinzufügen Kulturen, die mithilfe der <xref:System.Globalization.CultureAndRegionInfoBuilder> Klasse. Benutzer können eigene benutzerdefinierten Kulturen, die mit dem Microsoft-Gebietsschema-Generator-Tool hinzugefügt werden. Microsoft-Gebietsschema-Generator wird geschrieben, in verwaltetem Code mit der `CultureAndRegionInfoBuilder` Klasse.  
   
@@ -107,13 +108,13 @@
   
  Es ist eine invariante Kultur kulturunabhängige. Ihre Anwendung gibt die invariante Kultur an, anhand des Namens, die mit einer leeren Zeichenfolge ("") oder durch seinen Bezeichner. <xref:System.Globalization.CultureInfo.InvariantCulture%2A> definiert eine Instanz der invarianten Kultur. Verknüpft ist mit der englischen Sprache, jedoch nicht für alle Länder/Regionen. Es dient in nahezu jede Methode in der `Globalization` Namespace, die eine Kultur erforderlich sind.  
   
- Eine neutrale Kultur ist nicht einem Land/einer Region, sondern einer Sprache zugeordnet. Eine spezifische Kultur ist einer Sprache und einem Land/einer Region zugeordnet. Beispielsweise fr ist neutral Name für die Kultur Französisch und fr-FR ist der Name der bestimmten Kultur Französisch (Frankreich). Beachten Sie, dass Chinesisch (vereinfacht) und Chinesisch (traditionell) auch neutrale Kulturen berücksichtigt werden.  
+ Eine neutrale Kultur ist eine Kultur, die verknüpft ist mit einer anderen Sprache jedoch nicht mit einem Land/Region. Eine bestimmte Kultur ist eine Kultur, die eine Sprache und ein Land/Region zugeordnet ist. Beispielsweise fr ist neutral Name für die Kultur Französisch und fr-FR ist der Name der bestimmten Kultur Französisch (Frankreich). Beachten Sie, dass Chinesisch (vereinfacht) und Chinesisch (traditionell) auch neutrale Kulturen berücksichtigt werden.  
   
  Erstellen einer Instanz von einem <xref:System.Globalization.CompareInfo> -Klasse für eine neutrale Kultur wird nicht empfohlen, da die darin enthaltenen Daten beliebiger ist. Geben Sie zum Anzeigen und Sortieren von Daten, Sprache und Region aus. Darüber hinaus die <xref:System.Globalization.CompareInfo.Name%2A> Eigenschaft von einem <xref:System.Globalization.CompareInfo> Objekt für eine neutrale Kultur nur das Land gibt und die Region nicht schließt erstellt.  
   
  Die definierten Kulturen bilden eine Hierarchie, in dem das übergeordnete Element einer bestimmten Kultur ist eine neutrale Kultur, das übergeordnete Element einer neutralen Kultur die invariante Kultur. Die <xref:System.Globalization.CultureInfo.Parent%2A> Eigenschaft enthält die neutrale Kultur, die eine bestimmte Kultur zugeordnet. Benutzerdefinierte Kulturen sollten definieren die <xref:System.Globalization.CultureInfo.Parent%2A> Eigenschaft in Übereinstimmung mit diesem Muster.  
   
- Wenn die Ressourcen für eine bestimmte Kultur nicht im Betriebssystem verfügbar sind, werden die Ressourcen für die zugehörige neutrale Kultur verwendet. Wenn die Ressourcen für die neutrale Kultur nicht verfügbar sind, werden die in die Hauptassembly eingebetteten Ressourcen verwendet. Weitere Informationen finden Sie im Abschnitt „Ressourcenfallback-Prozess“ in [Packaging and Deploying Resources](~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md).  
+ Wenn die Ressourcen für eine bestimmte Kultur nicht im Betriebssystem verfügbar sind, werden die Ressourcen für die zugehörige neutrale Kultur verwendet. Wenn die Ressourcen für die neutrale Kultur nicht verfügbar sind, werden die in die Hauptassembly eingebetteten Ressourcen verwendet. Weitere Informationen zu den Ressourcenfallback-Prozess, finden Sie unter [Verpacken und Bereitstellen von Ressourcen](~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md).  
   
  Die Liste der Gebietsschemas in der Windows-API unterscheidet sich leicht aus der Liste der von .NET Framework unterstützten Kulturen. Wenn Interoperabilität mit Windows erforderlich ist, sollten beispielsweise über den p/invoke-Mechanismus die Anwendung verwenden eine bestimmte Kultur, die definiert, ist für das Betriebssystem. Verwendung einer bestimmten Kultur gewährleistet die Konsistenz der entsprechende Windows-Gebietsschema, der mit der Gebietsschema-ID identifiziert wird, die als ist <xref:System.Globalization.CultureInfo.LCID%2A>.  
   
@@ -243,7 +244,7 @@
  Weitere Informationen über Kulturen und Anwendungsdomänen finden Sie im Abschnitt "Anwendung Domänen und Threads" im Thema.  
   
 <a name="Async"></a>   
-## <a name="culture-and-task-based-asynchronous-operations"></a>,  und taskbasierte asynchrone Vorgänge mit  und   
+## <a name="culture-and-task-based-asynchronous-operations"></a>Kultur und aufgabenbasierte asynchrone Vorgänge  
  Die [aufgabenbasierte asynchrone programmierschema](~/docs/standard/parallel-programming/task-based-asynchronous-programming.md) verwendet <xref:System.Threading.Tasks.Task> und <xref:System.Threading.Tasks.Task%601> Objekte, die asynchron auszuführende Delegaten auf thread des Threadpools. Die bestimmte Thread, der auf dem eine bestimmte Aufgabe ausgeführt wird nicht im Voraus bekannt ist, aber es wird nur zur Laufzeit bestimmt.  
   
  Für apps, die als Ziel der [!INCLUDE[net_v46](~/includes/net-v46-md.md)] oder höhere Versionen Kultur ist Bestandteil des Kontexts eines asynchronen Vorgangs. Das heißt, beginnend mit apps, die gezielt die [!INCLUDE[net_v46](~/includes/net-v46-md.md)], asynchrone Vorgänge standardmäßig erben die Werte der der <xref:System.Globalization.CultureInfo.CurrentCulture%2A> und <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> Eigenschaften des Threads, von dem sie gestartet werden. Wenn die aktuelle Kultur oder die aktuelle Benutzeroberflächenkultur die Systemkultur unterscheidet, und der aktuellen Kultur über mehrere Threads wird von der aktuellen Kultur der Thread des Threadpools, der einen asynchronen Vorgang ausführt.  
@@ -295,12 +296,12 @@
  Wenn <xref:System.Globalization.CultureInfo.UseUserOverride%2A> ist `true` und der angegebene Kultur entspricht die aktuelle Kultur von Windows die <xref:System.Globalization.CultureInfo> verwendet diese Außerkraftsetzungen, einschließlich der benutzereinstellungen für für die Eigenschaften der der <xref:System.Globalization.DateTimeFormatInfo> zurückgegebene Instanz der <xref:System.Globalization.CultureInfo.DateTimeFormat%2A> -Eigenschaft und die Eigenschaften der <xref:System.Globalization.NumberFormatInfo> zurückgegebene Instanz der <xref:System.Globalization.CultureInfo.NumberFormat%2A> Eigenschaft. Wenn die benutzereinstellungen nicht kompatibel mit der Kultur zugeordnet sind die <xref:System.Globalization.CultureInfo>, z. B. ist der ausgewählten Kalender nicht eines der <xref:System.Globalization.CultureInfo.OptionalCalendars%2A>, die Ergebnisse der Methoden und die Werte der Eigenschaften sind nicht definiert.  
   
 <a name="AlternateSort"></a>   
-## <a name="alternate-sort-orders"></a>Alternative Sortierreihenfolgen  
+## <a name="alternate-sort-orders"></a>Alternativen Sortierreihenfolgen  
  Einige Kulturen unterstützten mehr als eine Sortierreihenfolge. Zum Beispiel:  
   
 -   Die Kultur Spanisch (Spanien) verfügt über zwei Sortierreihenfolgen: internationaler Standard-Sortierreihenfolge und die herkömmliche Sortierreihenfolge. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt mit den Kulturnamens es-ES, die internationale Sortierreihenfolge verwendet wird. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> Objekt mit dem Kulturnamen es-ES-Tradnl die herkömmlichen Sortierreihenfolge verwendet wird.  
   
--   Beispielsweise unterstützt die Kultur "zh-CN" (Chinesisch – Volksrepublik China) zwei Arten von Sortierungen: nach Aussprache (Standard) sowie nach der Anzahl der Striche. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt mit den Kulturnamen Zh-CN-Standard-Sortierreihenfolge verwendet wird. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt mit einer lokalen Bezeichners der 0 x 00020804, Zeichenfolgen nach strichzählung sortiert sind.  
+-   Die Kultur Zh-CN (Chinesisch (vereinfacht, VR China)) werden zwei Sortierreihenfolgen unterstützt: durch Aussprache (Standard) und der Anzahl. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt mit den Kulturnamen Zh-CN-Standard-Sortierreihenfolge verwendet wird. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt mit einer lokalen Bezeichners der 0 x 00020804, Zeichenfolgen nach strichzählung sortiert sind.  
   
  Die folgende Tabelle enthält die Kulturen, die unterschiedliche Sortierreihenfolgen unterstützen, sowie die Bezeichner für die standardmäßigen und die alternativen Sortierreihenfolgen.  
   
@@ -353,6 +354,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.#ctor(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (culture As Integer)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; CultureInfo(int culture);" />
+      <MemberSignature Language="F#" Value="new System.Globalization.CultureInfo : int -&gt; System.Globalization.CultureInfo" Usage="new System.Globalization.CultureInfo culture" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -420,6 +422,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.#ctor(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (name As String)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; CultureInfo(System::String ^ name);" />
+      <MemberSignature Language="F#" Value="new System.Globalization.CultureInfo : string -&gt; System.Globalization.CultureInfo" Usage="new System.Globalization.CultureInfo name" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -450,7 +453,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
+ Eine Liste der vordefinierten Kulturnamen, finden Sie unter der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
   
  Wenn `name` ist <xref:System.String.Empty?displayProperty=nameWithType>, der Konstruktor erstellt eine Instanz der invarianten Kultur; Dies entspricht dem Abrufen des Werts der <xref:System.Globalization.CultureInfo.InvariantCulture%2A> Eigenschaft.  
   
@@ -498,6 +501,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.#ctor(System.Int32,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (culture As Integer, useUserOverride As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; CultureInfo(int culture, bool useUserOverride);" />
+      <MemberSignature Language="F#" Value="new System.Globalization.CultureInfo : int * bool -&gt; System.Globalization.CultureInfo" Usage="new System.Globalization.CultureInfo (culture, useUserOverride)" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -575,6 +579,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.#ctor(System.String,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (name As String, useUserOverride As Boolean)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; CultureInfo(System::String ^ name, bool useUserOverride);" />
+      <MemberSignature Language="F#" Value="new System.Globalization.CultureInfo : string * bool -&gt; System.Globalization.CultureInfo" Usage="new System.Globalization.CultureInfo (name, useUserOverride)" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -602,7 +607,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
+ Eine Liste der vordefinierten Kulturnamen, finden Sie unter der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
   
  Wenn `name` ist <xref:System.String.Empty?displayProperty=nameWithType>, der Konstruktor erstellt eine Instanz der invarianten Kultur; Dies entspricht dem Abrufen des Werts der <xref:System.Globalization.CultureInfo.InvariantCulture%2A> Eigenschaft.  
   
@@ -650,6 +655,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.Calendar" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Calendar As Calendar" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::Calendar ^ Calendar { System::Globalization::Calendar ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.Calendar : System.Globalization.Calendar" Usage="System.Globalization.CultureInfo.Calendar" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -701,6 +707,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.ClearCachedData" />
       <MemberSignature Language="VB.NET" Value="Public Sub ClearCachedData ()" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void ClearCachedData();" />
+      <MemberSignature Language="F#" Value="member this.ClearCachedData : unit -&gt; unit" Usage="cultureInfo.ClearCachedData " />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -742,6 +749,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.Clone" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function Clone () As Object" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ Clone();" />
+      <MemberSignature Language="F#" Value="abstract member Clone : unit -&gt; obj&#xA;override this.Clone : unit -&gt; obj" Usage="cultureInfo.Clone " />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.ICloneable.Clone</InterfaceMember>
@@ -778,7 +786,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
 ## Remarks  
  Der Klon beschreibbar ist auch dann, wenn die ursprüngliche <xref:System.Globalization.CultureInfo> ist schreibgeschützt. Aus diesem Grund können die Eigenschaften des Klons geändert werden.  
   
- Ein flacher Klon eines Objekts stellt nur eine Kopie des Objekts dar. Wenn das Objekt Verweise auf andere Objekte enthält, erstellt die flache Kopie keine Kopien der Objekte verwiesen wird. Er bezieht sich stattdessen auf die ursprünglichen Objekte. Mit einem tiefen Klon eines Objekts wird neben der Kopie des Objekts eine Kopie aller Elemente erstellt, auf die das betreffende Objekt direkt oder indirekt verweist.  
+ Eine flache Kopie eines Objekts ist eine Kopie des Objekts nur. Wenn das Objekt Verweise auf andere Objekte enthält, erstellt die flache Kopie keine Kopien der Objekte verwiesen wird. Er bezieht sich stattdessen auf die ursprünglichen Objekte. Im Gegensatz dazu erstellt eine tiefe Kopie eines Objekts eine Kopie des Objekts und eine Kopie aller Elemente auf die dieses Objekt direkt oder indirekt verweist.  
   
  Die <xref:System.Globalization.CultureInfo.Clone%2A> Methode eine verbesserte flache Kopie erstellt. Die zurückgegebenen Objekte die <xref:System.Globalization.CultureInfo.NumberFormat%2A>, <xref:System.Globalization.CultureInfo.DateTimeFormat%2A>, <xref:System.Globalization.CultureInfo.TextInfo%2A>, und <xref:System.Globalization.CultureInfo.Calendar%2A> Eigenschaften werden ebenfalls kopiert. Daher, das die geklonte <xref:System.Globalization.CultureInfo> Objekt kann die kopierten Eigenschaften ändern, ohne Auswirkungen auf die ursprüngliche <xref:System.Globalization.CultureInfo> Objekt.  
   
@@ -802,6 +810,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.CompareInfo" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property CompareInfo As CompareInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::CompareInfo ^ CompareInfo { System::Globalization::CompareInfo ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.CompareInfo : System.Globalization.CompareInfo" Usage="System.Globalization.CultureInfo.CompareInfo" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -858,6 +867,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.CreateSpecificCulture(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function CreateSpecificCulture (name As String) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ CreateSpecificCulture(System::String ^ name);" />
+      <MemberSignature Language="F#" Value="static member CreateSpecificCulture : string -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.CreateSpecificCulture name" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -890,9 +900,9 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
  Die <xref:System.Globalization.CultureInfo.CreateSpecificCulture%2A> Methode bindet einen Aufruf der <xref:System.Globalization.CultureInfo.%23ctor%28System.String%29> Konstruktor.  
   
 > [!NOTE]
->  Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
+>  Eine Liste der vordefinierten Kulturnamen, finden Sie unter der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
   
- Kulturen sind in drei Gruppen zusammengefasst: die invariante Kultur, die neutralen Kulturen und spezifischen Kulturen. Weitere Informationen finden Sie in der Beschreibung von .<xref:System.Globalization.CultureInfo>  
+ Kulturen sind in drei Gruppen zusammengefasst: die invariante Kultur, die neutralen Kulturen und spezifischen Kulturen. Weitere Informationen finden Sie unter der Beschreibung der <xref:System.Globalization.CultureInfo> Klasse.  
   
  Wenn Sie der Kulturbezeichner für die bestimmte Kultur, die von dieser Methode zurückgegebene den Kulturbezeichner für die aktuelle Windows-Kultur übereinstimmt, erstellt diese Methode eine <xref:System.Globalization.CultureInfo> überschreibt-Objekt, das die Windows-Kultur verwendet. Die Außerkraftsetzungen enthalten Einstellungen für die Eigenschaften des Benutzers die <xref:System.Globalization.DateTimeFormatInfo> zurückgegebenes Objekt die <xref:System.Globalization.CultureInfo.DateTimeFormat%2A> Eigenschaft und die <xref:System.Globalization.NumberFormatInfo> zurückgegebenes Objekt die <xref:System.Globalization.CultureInfo.NumberFormat%2A> Eigenschaft. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> Objekt, das standardmäßig kultureinstellungen statt Benutzer überschreibt, rufen Sie mit der <xref:System.Globalization.CultureInfo.%23ctor%28System.String%2CSystem.Boolean%29> Konstruktor mit einem Wert von `false` für die `useUserOverride` Argument.  
   
@@ -930,6 +940,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.CultureTypes" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property CultureTypes As CultureTypes" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Globalization::CultureTypes CultureTypes { System::Globalization::CultureTypes get(); };" />
+      <MemberSignature Language="F#" Value="member this.CultureTypes : System.Globalization.CultureTypes" Usage="System.Globalization.CultureInfo.CultureTypes" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -977,6 +988,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.CurrentCulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared Property CurrentCulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ CurrentCulture { System::Globalization::CultureInfo ^ get(); void set(System::Globalization::CultureInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.CurrentCulture : System.Globalization.CultureInfo with get, set" Usage="System.Globalization.CultureInfo.CurrentCulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1033,7 +1045,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
      [!code-csharp[System.Globalization.CultureInfo.CurrentCulture#14](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/cs/Async1.cs#14)]
      [!code-vb[System.Globalization.CultureInfo.CurrentCulture#14](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/vb/Async1.vb#14)]  
   
-     Weitere Informationen finden Sie im Abschnitt "Kultur und aufgabenbasierte asynchrone Vorgänge" im Thema zur <xref:System.Globalization.CultureInfo>-Klasse.  
+     Weitere Informationen finden Sie im Abschnitt "Kultur und aufgabenbasierte asynchrone Vorgänge" in der <xref:System.Globalization.CultureInfo> Thema.  
   
 -   Durch Aufruf der Windows `GetUserDefaultLocaleName` Funktion.  
   
@@ -1042,7 +1054,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
  Weitere Informationen, wie die Kultur eines Threads bestimmt wird, finden Sie im Abschnitt "Kultur und Threads" in der <xref:System.Globalization.CultureInfo> Referenzseite.  
   
 <a name="Getting"></a>   
-## <a name="getting-the-current-culture"></a>Die aktuelle Kultur.  
+## <a name="getting-the-current-culture"></a>Abrufen der aktuellen Kultur  
  Die <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> Eigenschaft ist eine Einstellung threadspezifisches; d. h. jeder Thread eine eigene Kultur verfügen kann. Sie erhalten die Kultur des aktuellen Threads an, indem Sie das Abrufen des Werts der <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> -Eigenschaft, wie im folgenden Beispiel illustriert.  
   
  [!code-csharp[System.Globalization.CultureInfo.CurrentCulture#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/cs/Get1.cs#5)]
@@ -1058,7 +1070,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
  [!code-vb[System.Globalization.CultureInfo.CurrentCulture#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentculture/vb/changeculture11.vb#11)]  
   
 > [!NOTE]
->  Ändern die Kultur mithilfe der <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> Eigenschaft erfordert eine <xref:System.Security.Permissions.SecurityPermission> Berechtigung mit der <xref:System.Security.Permissions.SecurityPermissionFlag.ControlThread> festgelegten Wert. Die Änderung von Threads ist aufgrund des mit Threads verbundenen Sicherheitszustands riskant. Diese problematischen Berechtigungen sollten nur bei Bedarf für vertrauenswürdigen Code erteilt werden. Sie können Threadkultur in teilweise vertrauenswürdigem Code nicht ändern.  
+>  Ändern die Kultur mithilfe der <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> Eigenschaft erfordert eine <xref:System.Security.Permissions.SecurityPermission> Berechtigung mit der <xref:System.Security.Permissions.SecurityPermissionFlag.ControlThread> festgelegten Wert. Bearbeiten von Threads ist aufgrund der mit Threads verbundenen Sicherheitszustands riskant. Daher sollte diese Berechtigung erteilt werden, nur für vertrauenswürdigen Code, und klicken Sie dann nur nach Bedarf. Sie können Threadkultur in teilweise vertrauenswürdigem Code nicht ändern.  
   
  Beginnend mit der [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)], Sie können die aktuelle Threadkultur explizit in einer bestimmten Kultur (z. B. Französisch (Kanada)) oder eine neutrale Kultur (z. B. Französisch) ändern. Wenn eine <xref:System.Globalization.CultureInfo> Objekt stellt eine neutrale Kultur, die Werte der <xref:System.Globalization.CultureInfo> Eigenschaften wie z. B. <xref:System.Globalization.CultureInfo.Calendar%2A>, <xref:System.Globalization.CultureInfo.CompareInfo%2A>, <xref:System.Globalization.CultureInfo.DateTimeFormat%2A>, <xref:System.Globalization.CultureInfo.NumberFormat%2A>, und <xref:System.Globalization.CultureInfo.TextInfo%2A> reflektieren die bestimmte Kultur, die zugeordnet ist die neutrale Kultur. Beispielsweise ist die bestimmende Kultur für die neutrale Kultur Englisch Englisch (Vereinigte Staaten); die bestimmende Kultur für die deutscher Kultur "Deutsch (Deutschland)". Das folgende Beispiel veranschaulicht den Unterschied bei der Formatierung, wenn die aktuelle Kultur, an eine bestimmte Kultur Französisch (Kanada) und eine neutrale Kultur festgelegt ist Französisch.  
   
@@ -1121,6 +1133,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.CurrentUICulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared Property CurrentUICulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ CurrentUICulture { System::Globalization::CultureInfo ^ get(); void set(System::Globalization::CultureInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.CurrentUICulture : System.Globalization.CultureInfo with get, set" Usage="System.Globalization.CultureInfo.CurrentUICulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1160,12 +1173,12 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
      [!code-csharp[System.Globalization.CultureInfo.CurrentUICulture#14](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentuiculture/cs/Async1.cs#14)]
      [!code-vb[System.Globalization.CultureInfo.CurrentUICulture#14](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.currentuiculture/vb/Async1.vb#14)]  
   
-     Weitere Informationen finden Sie im Abschnitt "Kultur und aufgabenbasierte asynchrone Vorgänge" im Thema zur <xref:System.Globalization.CultureInfo>-Klasse.  
+     Weitere Informationen finden Sie im Abschnitt "Kultur und aufgabenbasierte asynchrone Vorgänge" in der <xref:System.Globalization.CultureInfo> Thema.  
   
 -   Durch Aufruf der Windows `GetUserDefaultUILanguage` Funktion.  
   
 > [!NOTE]
->  [!INCLUDE[Compact](~/includes/compact-md.md)]<xref:System.Globalization.CultureInfo.CurrentUICulture%2A> ist , die Eigenschaft ist jedoch schreibgeschützt. Die aktuelle Benutzeroberflächenkultur hängt von den regionalen Einstellungen des Systems und kann nicht programmgesteuert geändert werden.  
+>  In der [!INCLUDE[Compact](~/includes/compact-md.md)]die <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> Eigenschaft ist schreibgeschützt. Die aktuelle Benutzeroberflächenkultur hängt von den regionalen Einstellungen des Systems und kann nicht programmgesteuert geändert werden.  
   
  Beginnend mit der [!INCLUDE[net_v46](~/includes/net-v46-md.md)], so ändern Sie die Kultur der Benutzeroberfläche verwendet wird, über einen Thread, legen Sie die <xref:System.Threading.Thread.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft, um der neuen Kultur. Wenn Sie die UI-Kultur des Threads auf diese Weise ändern, explizit ändern weiterhin auf, wenn der Thread Anwendungsdomänengrenzen überschreitet.  
   
@@ -1215,7 +1228,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine Einstellung p
  Ändern der Kultur des aktuellen Threads erfordert eine <xref:System.Security.Permissions.SecurityPermission> Berechtigung mit der <xref:System.Security.Permissions.SecurityPermissionFlag.ControlThread> festgelegten Wert.  
   
 > [!CAUTION]
->  Die Änderung von Threads ist aufgrund des mit Threads verbundenen Sicherheitszustands riskant. Diese problematischen Berechtigungen sollten nur bei Bedarf für vertrauenswürdigen Code erteilt werden. Sie können Threadkultur in teilweise vertrauenswürdigem Code nicht ändern.  
+>  Bearbeiten von Threads ist aufgrund der mit Threads verbundenen Sicherheitszustands riskant. Daher sollte diese Berechtigung erteilt werden, nur für vertrauenswürdigen Code, und klicken Sie dann nur nach Bedarf. Sie können Threadkultur in teilweise vertrauenswürdigem Code nicht ändern.  
   
 <a name="WindowsAndCurrUI"></a>   
 ## <a name="the-current-ui-culture-and-uwp-apps"></a>Die aktuelle Benutzeroberflächenkultur und uwp-apps  
@@ -1249,6 +1262,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Benutzeroberflächenkultur is
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.DateTimeFormat" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Property DateTimeFormat As DateTimeFormatInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::DateTimeFormatInfo ^ DateTimeFormat { System::Globalization::DateTimeFormatInfo ^ get(); void set(System::Globalization::DateTimeFormatInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.DateTimeFormat : System.Globalization.DateTimeFormatInfo with get, set" Usage="System.Globalization.CultureInfo.DateTimeFormat" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1314,6 +1328,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Benutzeroberflächenkultur is
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.DefaultThreadCurrentCulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared Property DefaultThreadCurrentCulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ DefaultThreadCurrentCulture { System::Globalization::CultureInfo ^ get(); void set(System::Globalization::CultureInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.DefaultThreadCurrentCulture : System.Globalization.CultureInfo with get, set" Usage="System.Globalization.CultureInfo.DefaultThreadCurrentCulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1382,6 +1397,7 @@ In .NET Framework und .NET Core-apps, die aktuelle Benutzeroberflächenkultur is
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared Property DefaultThreadCurrentUICulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ DefaultThreadCurrentUICulture { System::Globalization::CultureInfo ^ get(); void set(System::Globalization::CultureInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.DefaultThreadCurrentUICulture : System.Globalization.CultureInfo with get, set" Usage="System.Globalization.CultureInfo.DefaultThreadCurrentUICulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1499,6 +1515,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.DisplayName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property DisplayName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ DisplayName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.DisplayName : string" Usage="System.Globalization.CultureInfo.DisplayName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1524,7 +1541,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       </ReturnValue>
       <Docs>
         <summary>Ruft den vollständig lokalisierten Kulturnamen ab.</summary>
-        <value> Der vollständig lokalisierte Kulturname im Format languagefull [country/regionfull], wobei languagefull der vollständige Name der Sprache ist und country/regionfull der vollständige Name des Landes bzw. der Region.</value>
+        <value>Der vollständig lokalisierte Kulturname im Format * Languagefull * [* Country / Regionfull *], wobei * Languagefull * ist der vollständige Name der Sprache und * Country / Regionfull * lautet der vollständige Name des Landes bzw. der Region.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1563,6 +1580,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.EnglishName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property EnglishName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ EnglishName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.EnglishName : string" Usage="System.Globalization.CultureInfo.EnglishName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1588,7 +1606,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       </ReturnValue>
       <Docs>
         <summary>Ruft den Kulturnamen im Format *languagefull* [*country/regionfull*] auf Englisch ab.</summary>
-        <value>Der Kulturname im Format languagefull [country/regionfull] auf Englisch, wobei languagefull der vollständige Name der Sprache ist und country/regionfull der vollständige Name des Landes bzw. der Region.</value>
+        <value>Der Kulturname im Format * Languagefull * [* Country / Regionfull *] auf Englisch, wobei * Languagefull * ist der vollständige Name der Sprache und * Country / Regionfull * lautet der vollständige Name des Landes bzw. der Region.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1625,6 +1643,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.Equals(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (value As Object) As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Equals(System::Object ^ value);" />
+      <MemberSignature Language="F#" Value="override this.Equals : obj -&gt; bool" Usage="cultureInfo.Equals value" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -1675,6 +1694,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetConsoleFallbackUICulture" />
       <MemberSignature Language="VB.NET" Value="Public Function GetConsoleFallbackUICulture () As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Globalization::CultureInfo ^ GetConsoleFallbackUICulture();" />
+      <MemberSignature Language="F#" Value="member this.GetConsoleFallbackUICulture : unit -&gt; System.Globalization.CultureInfo" Usage="cultureInfo.GetConsoleFallbackUICulture " />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1714,74 +1734,74 @@ csc /resource:GreetingStrings.resources Example1.cs
   
 |Vordefinierte Kultur|Kulturname|Alternative Kulturname der Benutzeroberfläche|  
 |------------------------|------------------|------------------------------------------|  
-|Amharisch|7.46 Uhr|en-US|  
+|Amharisch|Uhr|en-US|  
 |Amharisch (Äthiopien)|Uhr-ET|en-US|  
 |(neutrale Arabisch)|ar|en-US|  
 |Arabisch (Vereinigte Arabische Emirate)|Ar-AE|en-US|  
-|Arabisch - Bahrain|Ar-NG|en-US|  
-|Arabisch - Algerien|ar-DZ|fr-FR|  
-|Arabisch - Ägypten|Ar-EG|en-US|  
-|Arabisch - Irak|Ar-IQ|en-US|  
-|Arabisch - Jordanien|ar-JO|en-US|  
-|Arabisch - Kuwait|Ar-KW|en-US|  
-|Arabisch - Libanon|Ar-LB|en-US|  
-|Arabisch - Libyen|Ar-übernehmen|en-US|  
-|Arabisch - Marokko|Ar-MA|fr-FR|  
-|Arabisch - Oman|Ar-OM|en-US|  
-|Arabisch - Katar|Ar-QA|en-US|  
-|Arabisch - Saudi-Arabien|ar-SA|en-US|  
-|Arabisch - Syrien|Ar-SY|en-US|  
-|Arabisch - Tunesien|Ar-TN|fr-FR|  
-|Arabisch - Jemen|Ar-Ihre|en-US|  
+|Arabisch (Bahrain)|Ar-NG|en-US|  
+|Arabisch (Algerien)|ar-DZ|fr-FR|  
+|Arabisch (Ägypten)|Ar-EG|en-US|  
+|Arabisch (Irak)|Ar-IQ|en-US|  
+|Arabisch (Jordanien)|ar-JO|en-US|  
+|Arabisch (Kuwait)|Ar-KW|en-US|  
+|Arabisch (Libanon)|Ar-LB|en-US|  
+|Arabisch (Libyen)|Ar-übernehmen|en-US|  
+|Arabisch (Marokko)|Ar-MA|fr-FR|  
+|Arabisch (Oman)|Ar-OM|en-US|  
+|Arabisch (Katar)|Ar-QA|en-US|  
+|Arabisch (Saudi-Arabien)|ar-SA|en-US|  
+|Arabisch (Syrien)|Ar-SY|en-US|  
+|Arabisch (Tunesien)|Ar-TN|fr-FR|  
+|Arabisch (Jemen)|Ar-Ihre|en-US|  
 |Assamesisch|as|en-US|  
-|Assamesisch (Indien)|wie IN|en-US|  
-|Bangla|BN|en-US|  
+|Assamisch (Indien)|wie IN|en-US|  
+|Bangla|Bn|en-US|  
 |Bangla (Bangladesch)|bn-BD|en-US|  
 |Bangla (Indien)|Bn-IN|en-US|  
 |Tibetisch|BO|en-US|  
-|Tibetanisch (VR China)|bo-CN|en-US|  
-|Divehi|dv|en-US|  
+|Tibetisch (VRC)|bo-CN|en-US|  
+|Divehi|DV|en-US|  
 |Divehi (Indien)|dv-MV|en-US|  
-|Persisch|FA|en-US|  
+|Persisch|Anlagen|en-US|  
 |Persisch (Iran)|fa-IR|en-US|  
-|Gujarati|GU|en-US|  
+|Gujarati|gu|en-US|  
 |Gujarati (Indien)|gu-IN|en-US|  
 |Hebräisch|er|en-US|  
 |Hebräisch (Israel)|HE-IL|en-US|  
-|Hindi|Hallo,|en-US|  
+|Hindi|Hallo|en-US|  
 |Hindi (Indien)|hi-IN|en-US|  
-|Yi|ii.|en-US|  
-|Yi (Volksrepublik China)|II-CN|en-US|  
+|"Yi"|ii|en-US|  
+|Yi (VRC)|II-CN|en-US|  
 |Inukitut Syllabics|IU-Lebensmitteldosen|en-US|  
-|Inuktitut (Syllabics) – Kanada|iu-Cans-CA|en-US|  
-|Khmer|KM|en-US|  
+|Inukitut Syllabics (Kanada)|iu-Cans-CA|en-US|  
+|Khmer|km|en-US|  
 |Khmer (Kambodscha)|km-KH|en-US|  
 |Kannada|KN|en-US|  
 |Kannada (Indien)|KN-IN|en-US|  
 |Konkani|kok|en-US|  
-|Konkani (India)|Kok-IN|en-US|  
-|Laotisch|Lo|en-US|  
-|Laotisch (Demokratische Volksrepublik Laos)|lo LA|en-US|  
+|Konkani (Indien)|Kok-IN|en-US|  
+|Laotisch|lo|en-US|  
+|LAO (Volksrepublik P.D.R.)|lo LA|en-US|  
 |Malayalam|ml|en-US|  
 |Malayalam (Indien)|ml-IN|en-US|  
 |Mohawk|MOH enthalten|en-US|  
 |Mohawk (Kanada)|MOH enthalten-Zertifizierungsstelle|en-US|  
-|Marathi|MR|en-US|  
+|Marathi|die von Herrn|en-US|  
 |Marathi (Indien)|die von Herrn-IN|en-US|  
-|Nepali|-ne|en-US|  
-|Nepalesisch (Nepal)|Ne-NP|en-US|  
+|Nepali|ne|en-US|  
+|Nepali (Nepal)|Ne-NP|en-US|  
 |Norwegisch|Nein|nb-NO|  
-|Odia|oder|en-US|  
-|Odia (Indien)|oder-IN|en-US|  
+|Oriya|oder|en-US|  
+|Oriya (Indien)|oder-IN|en-US|  
 |Punjabi|PA|en-US|  
 |Punjabi (Indien)|PA-IN|en-US|  
 |Dari|prs|en-US|  
 |Dari (Afghanistan)|prs-AF|en-US|  
-|Paschtu|Ps|en-US|  
+|Paschtu|PS|en-US|  
 |Paschtu (Afghanistan)|ps-AF|en-US|  
-|Sanskrit|Sa|en-US|  
+|Sanskrit|SA|en-US|  
 |Sanskrit (Indien)|SA-IN|en-US|  
-|Singhalesisch|Si|en-US|  
+|Singhalesisch|si|en-US|  
 |Singhalesisch (Sri Lanka)|SI LK|en-US|  
 |Syrisch|SYR|en-US|  
 |Syrisch (Syrien)|SYR SY|en-US|  
@@ -1789,12 +1809,12 @@ csc /resource:GreetingStrings.resources Example1.cs
 |Tamil (Indien)|TA-IN|en-US|  
 |Telugu|Te|en-US|  
 |Telugu (Indien)|Te-IN|en-US|  
-|Thai|Di|en-US|  
-|Thailändisch (Thailand)|th-Th|en-US|  
-|Uighur|UG|en-US|  
+|Thai|th|en-US|  
+|Thai (Thailand)|th-Th|en-US|  
+|Uighur|¶g|en-US|  
 |Uighurisch (VRC)|UG-CN|en-US|  
-|Urdu|/ur|en-US|  
-|Urdu (Pakistan)|ur-PK|en-US|  
+|Urdu|Ihre|en-US|  
+|Urdu (Kanada)|ur-PK|en-US|  
 |Vietnamesisch|Vi|en-US|  
 |Vietnamesisch (Vietnam)|vi-VN|en-US|  
   
@@ -1829,6 +1849,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetCultureInfo(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetCultureInfo (culture As Integer) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ GetCultureInfo(int culture);" />
+      <MemberSignature Language="F#" Value="static member GetCultureInfo : int -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.GetCultureInfo culture" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1881,6 +1902,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetCultureInfo(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetCultureInfo (name As String) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ GetCultureInfo(System::String ^ name);" />
+      <MemberSignature Language="F#" Value="static member GetCultureInfo : string -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.GetCultureInfo name" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1910,7 +1932,7 @@ csc /resource:GreetingStrings.resources Example1.cs
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
+ Eine Liste der vordefinierten Kulturnamen, finden Sie unter der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
   
  Die <xref:System.Globalization.CultureInfo.GetCultureInfo%2A> Methode ruft eine zwischengespeicherte schreibgeschützt <xref:System.Globalization.CultureInfo> Objekt. Er bietet eine bessere Leistung als einen zugehörigen Aufruf an die <xref:System.Globalization.CultureInfo.%23ctor%28System.String%29?displayProperty=nameWithType> Konstruktor.  
   
@@ -1936,6 +1958,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetCultureInfo(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetCultureInfo (name As String, altName As String) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ GetCultureInfo(System::String ^ name, System::String ^ altName);" />
+      <MemberSignature Language="F#" Value="static member GetCultureInfo : string * string -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.GetCultureInfo (name, altName)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1967,7 +1990,7 @@ csc /resource:GreetingStrings.resources Example1.cs
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
+ Eine Liste der vordefinierten Kulturnamen, finden Sie unter der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) am Go Global Developer Center. Darüber hinaus starten mit Windows 10, `name` kann eine beliebige gültige BCP-47-Sprachtag.  
   
  Die <xref:System.Globalization.CultureInfo.GetCultureInfo%2A> Methode ruft eine zwischengespeicherte schreibgeschützt <xref:System.Globalization.CultureInfo> Objekt. Er bietet eine bessere Leistung als einen zugehörigen Aufruf an ein <xref:System.Globalization.CultureInfo.%23ctor%2A> Konstruktor. Die Methode wird verwendet, um eine Kultur zu erstellen, die ähnlich, die durch die `name` Parameter, jedoch mit anderen Sortierung und Groß-/Kleinschreibung Regeln.  
   
@@ -1992,6 +2015,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetCultureInfoByIetfLanguageTag(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetCultureInfoByIetfLanguageTag (name As String) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ GetCultureInfoByIetfLanguageTag(System::String ^ name);" />
+      <MemberSignature Language="F#" Value="static member GetCultureInfoByIetfLanguageTag : string -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.GetCultureInfoByIetfLanguageTag name" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2053,6 +2077,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetCultures (types As CultureTypes) As CultureInfo()" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static cli::array &lt;System::Globalization::CultureInfo ^&gt; ^ GetCultures(System::Globalization::CultureTypes types);" />
+      <MemberSignature Language="F#" Value="static member GetCultures : System.Globalization.CultureTypes -&gt; System.Globalization.CultureInfo[]" Usage="System.Globalization.CultureInfo.GetCultures types" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2120,6 +2145,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetFormat(System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetFormat (formatType As Type) As Object" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ GetFormat(Type ^ formatType);" />
+      <MemberSignature Language="F#" Value="abstract member GetFormat : Type -&gt; obj&#xA;override this.GetFormat : Type -&gt; obj" Usage="cultureInfo.GetFormat formatType" />
       <MemberType>Method</MemberType>
       <Implements>
         <InterfaceMember>M:System.IFormatProvider.GetFormat(System.Type)</InterfaceMember>
@@ -2176,6 +2202,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.GetHashCode" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function GetHashCode () As Integer" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetHashCode();" />
+      <MemberSignature Language="F#" Value="override this.GetHashCode : unit -&gt; int" Usage="cultureInfo.GetHashCode " />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2224,6 +2251,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.IetfLanguageTag" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IetfLanguageTag As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ IetfLanguageTag { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.IetfLanguageTag : string" Usage="System.Globalization.CultureInfo.IetfLanguageTag" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2262,7 +2290,7 @@ csc /resource:GreetingStrings.resources Example1.cs
   
  Ein IETF-Sprachtag besteht aus einer obligatorischen Sprachen-ID, ein optionales Skriptbezeichner und eine optionale Regionsbezeichner.  
   
- Weitere Informationen finden Sie unter [RFC 5646, "Tags für identifizieren Sprachen](http://go.microsoft.com/fwlink/?LinkId=230876). Eine Liste der Sprachen finden Sie in der Registrierung untergeordneter IANA-Sprachtags](http://go.microsoft.com/fwlink/?LinkId=230877)[.  
+ Weitere Informationen finden Sie unter [RFC 5646, "Tags für identifizieren Sprachen](http://go.microsoft.com/fwlink/?LinkId=230876). Eine Liste der untergeordneten Tags, finden Sie unter [der IANA Sprache Gebietsschemazeichenfolge Registrierung](http://go.microsoft.com/fwlink/?LinkId=230877).  
   
  ]]></format>
         </remarks>
@@ -2276,6 +2304,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.InstalledUICulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property InstalledUICulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ InstalledUICulture { System::Globalization::CultureInfo ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.InstalledUICulture : System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.InstalledUICulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2318,6 +2347,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.InvariantCulture" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property InvariantCulture As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Globalization::CultureInfo ^ InvariantCulture { System::Globalization::CultureInfo ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.InvariantCulture : System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.InvariantCulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2352,7 +2382,7 @@ csc /resource:GreetingStrings.resources Example1.cs
   
  Im Gegensatz zu kulturabhängige Daten, d. h. implementierungsspezifisch benutzeranpassung oder Updates für .NET Framework oder das Betriebssystem, Daten der invarianten Kultur stabil ist, im Zeitverlauf und über installierte Kulturen und können nicht von Benutzern angepasst werden. Dadurch wird die invariante Kultur besonders nützlich für Vorgänge, die kulturunabhängige Ergebnisse erfordern, z. B. Formatierung und Analyse für Vorgänge, die beibehalten werden formatiert, oder sortieren und die Reihenfolge der Vorgänge, die erfordern, dass Daten in angezeigt werden ein festen Reihenfolge unabhängig von der Kultur.  
   
-## <a name="string-operations"></a>Zeichenfolgenvorgänge  
+## <a name="string-operations"></a>Zeichenfolgenoperationen  
  Sie können die invariante Kultur für kulturabhängige Zeichenfolgenoperationen, sind nicht betroffen von den Konventionen der aktuellen Threadkultur und zwischen Kulturen konsistent sind. Beispielsweise empfiehlt sortierte Daten in einer festen Reihenfolge angezeigt werden, oder wenden einen Standardsatz von Groß-/ Kleinschreibungskonventionen in Zeichenfolgen unabhängig von der die aktuelle Threadkultur verwendet. Übergeben Sie zu diesem Zweck die <xref:System.Globalization.CultureInfo.InvariantCulture%2A> Objekt, das eine Methode mit einer <xref:System.Globalization.CultureInfo> Parameter, wie z. B. <xref:System.String.Compare%28System.String%2CSystem.String%2CSystem.Boolean%2CSystem.Globalization.CultureInfo%29> und <xref:System.String.ToUpper%28System.Globalization.CultureInfo%29>.  
   
 ## <a name="persisting-data"></a>Beibehalten von Daten  
@@ -2383,6 +2413,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.IsNeutralCulture" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property IsNeutralCulture As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool IsNeutralCulture { bool get(); };" />
+      <MemberSignature Language="F#" Value="member this.IsNeutralCulture : bool" Usage="System.Globalization.CultureInfo.IsNeutralCulture" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2441,6 +2472,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.IsReadOnly" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsReadOnly As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsReadOnly { bool get(); };" />
+      <MemberSignature Language="F#" Value="member this.IsReadOnly : bool" Usage="System.Globalization.CultureInfo.IsReadOnly" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2494,6 +2526,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.KeyboardLayoutId" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property KeyboardLayoutId As Integer" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int KeyboardLayoutId { int get(); };" />
+      <MemberSignature Language="F#" Value="member this.KeyboardLayoutId : int" Usage="System.Globalization.CultureInfo.KeyboardLayoutId" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2536,6 +2569,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.LCID" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property LCID As Integer" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int LCID { int get(); };" />
+      <MemberSignature Language="F#" Value="member this.LCID : int" Usage="System.Globalization.CultureInfo.LCID" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -2584,6 +2618,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.Name" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Name As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ Name { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.Name : string" Usage="System.Globalization.CultureInfo.Name" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2609,7 +2644,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       </ReturnValue>
       <Docs>
         <summary>Ruft den Kulturnamen im Format *languagecode2*-*country/regioncode2* ab.</summary>
-        <value>Der Kulturname im Format languagecode2-country/regioncode2. languagecode2 ist ein aus ISO 639-1 abgeleiteter, aus zwei Kleinbuchstaben bestehender Code. country/regioncode2 ist aus ISO 3166 abgeleitet und verwendet normalerweise zwei Großbuchstaben oder ein BCP-47-Sprachtag.</value>
+        <value>Der Kulturname im Format * languagecode2 *-* Country / regioncode2 *. * languagecode2 * ist einen Kleinbuchstaben zwei Buchstaben bestehende Code nach ISO 639-1 abgeleitet. * Country / regioncode2 * ist aus ISO 3166 abgeleitet und verwendet normalerweise zwei Großbuchstaben oder ein BCP-47-Sprachtag.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2648,6 +2683,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.NativeName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property NativeName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ NativeName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.NativeName : string" Usage="System.Globalization.CultureInfo.NativeName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2696,6 +2732,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.NumberFormat" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Property NumberFormat As NumberFormatInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::NumberFormatInfo ^ NumberFormat { System::Globalization::NumberFormatInfo ^ get(); void set(System::Globalization::NumberFormatInfo ^ value); };" />
+      <MemberSignature Language="F#" Value="member this.NumberFormat : System.Globalization.NumberFormatInfo with get, set" Usage="System.Globalization.CultureInfo.NumberFormat" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2758,6 +2795,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.OptionalCalendars" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property OptionalCalendars As Calendar()" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property cli::array &lt;System::Globalization::Calendar ^&gt; ^ OptionalCalendars { cli::array &lt;System::Globalization::Calendar ^&gt; ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.OptionalCalendars : System.Globalization.Calendar[]" Usage="System.Globalization.CultureInfo.OptionalCalendars" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2812,6 +2850,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.Parent" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Parent As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::CultureInfo ^ Parent { System::Globalization::CultureInfo ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.Parent : System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.Parent" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2844,7 +2883,7 @@ csc /resource:GreetingStrings.resources Example1.cs
 ## Remarks  
  Die Kulturen bilden eine Hierarchie, in dem das übergeordnete Element einer bestimmten Kultur eine neutrale Kultur ist, das übergeordnete Element eine neutrale Kultur ist die <xref:System.Globalization.CultureInfo.InvariantCulture%2A>, und das übergeordnete Element des der <xref:System.Globalization.CultureInfo.InvariantCulture%2A> die invariante Kultur selbst ist. Die übergeordnete Kultur zur umfasst nur die Informationen, die die untergeordneten Elemente gemeinsam sind.  
   
- Wenn die Ressourcen für die spezifische Kultur nicht im System verfügbar sind, werden die Ressourcen für die neutrale Kultur verwendet. Wenn die Ressourcen für die neutrale Kultur nicht verfügbar sind, werden die in die Hauptassembly eingebetteten Ressourcen verwendet. Weitere Informationen finden Sie im Abschnitt „Ressourcenfallback-Prozess“ in [Packaging and Deploying Resources](~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md).  
+ Wenn die Ressourcen für die spezifische Kultur nicht im System verfügbar sind, werden die Ressourcen für die neutrale Kultur verwendet. Wenn die Ressourcen für die neutrale Kultur nicht verfügbar sind, werden die in die Hauptassembly eingebetteten Ressourcen verwendet. Weitere Informationen zu den Ressourcenfallback-Prozess, finden Sie unter [Verpacken und Bereitstellen von Ressourcen](~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md).  
   
    
   
@@ -2874,6 +2913,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.ReadOnly(System.Globalization.CultureInfo)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function ReadOnly (ci As CultureInfo) As CultureInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Globalization::CultureInfo ^ ReadOnly(System::Globalization::CultureInfo ^ ci);" />
+      <MemberSignature Language="F#" Value="static member ReadOnly : System.Globalization.CultureInfo -&gt; System.Globalization.CultureInfo" Usage="System.Globalization.CultureInfo.ReadOnly ci" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2908,7 +2948,7 @@ csc /resource:GreetingStrings.resources Example1.cs
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dieser Wrapper wird verhindert, dass alle Änderungen an `ci`, oder die zurückgegebenen Objekte die `ci`.<xref:System.Globalization.CultureInfo.DateTimeFormat%2A> `ci` und <xref:System.Globalization.CultureInfo.NumberFormat%2A>. Eigenschaften  
+ Dieser Wrapper wird verhindert, dass alle Änderungen an `ci`, oder die zurückgegebenen Objekte die `ci`.<xref:System.Globalization.CultureInfo.DateTimeFormat%2A> und `ci`.<xref:System.Globalization.CultureInfo.NumberFormat%2A> Eigenschaften.  
   
    
   
@@ -2932,6 +2972,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.TextInfo" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property TextInfo As TextInfo" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Globalization::TextInfo ^ TextInfo { System::Globalization::TextInfo ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.TextInfo : System.Globalization.TextInfo" Usage="System.Globalization.CultureInfo.TextInfo" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -2984,6 +3025,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.ThreeLetterISOLanguageName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property ThreeLetterISOLanguageName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ThreeLetterISOLanguageName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.ThreeLetterISOLanguageName : string" Usage="System.Globalization.CultureInfo.ThreeLetterISOLanguageName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -3042,6 +3084,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.ThreeLetterWindowsLanguageName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property ThreeLetterWindowsLanguageName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ ThreeLetterWindowsLanguageName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.ThreeLetterWindowsLanguageName : string" Usage="System.Globalization.CultureInfo.ThreeLetterWindowsLanguageName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -3100,6 +3143,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="M:System.Globalization.CultureInfo.ToString" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function ToString () As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
+      <MemberSignature Language="F#" Value="override this.ToString : unit -&gt; string" Usage="cultureInfo.ToString " />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -3133,7 +3177,7 @@ csc /resource:GreetingStrings.resources Example1.cs
 ## Remarks  
  Diese Methode überschreibt <xref:System.Object.ToString%2A?displayProperty=nameWithType>. Gibt den Namen der Kultur, die an eine normalisierte Version der <xref:System.Globalization.CultureInfo.%23ctor%28System.String%29> oder <xref:System.Globalization.CultureInfo.%23ctor%28System.String%2CSystem.Boolean%29> Konstruktor oder die <xref:System.Globalization.CultureInfo.CreateSpecificCulture%2A> oder <xref:System.Globalization.CultureInfo.GetCultureInfo%28System.String%29> Methode. Er normalisiert die Ergebniszeichenfolge durch Konvertieren von Zeichen in *languagecode2* klein geschriebene und Konvertieren von Zeichen in *Country/regioncode2* bei Bedarf in Großbuchstaben.  
   
- Eine vollständige Liste der Kulturnamen finden Sie in der [Referenz zur Unterstützung der Landessprache (NLS)](http://go.microsoft.com/fwlink/?LinkId=200048) im Go Global Developer Center.  
+ Vordefinierten Kulturnamen sind aufgeführt, der [National Language Support (NLS) API Reference](http://go.microsoft.com/fwlink/?LinkId=200048) Seite bei der Go Global Developer Center.  
   
  ]]></format>
         </remarks>
@@ -3147,6 +3191,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.TwoLetterISOLanguageName" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property TwoLetterISOLanguageName As String" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ TwoLetterISOLanguageName { System::String ^ get(); };" />
+      <MemberSignature Language="F#" Value="member this.TwoLetterISOLanguageName : string" Usage="System.Globalization.CultureInfo.TwoLetterISOLanguageName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Globalization</AssemblyName>
@@ -3182,7 +3227,7 @@ csc /resource:GreetingStrings.resources Example1.cs
 > [!NOTE]
 >  Wenn die Kommunikation zwischen Prozessen und Beibehalten von Daten, die normalerweise ist es besser, verwenden Sie die vollständige <xref:System.Globalization.CultureInfo.Name%2A?displayProperty=nameWithType>. Verwenden nur in die Sprache kann Kontext und Daten gehen verloren.  
   
- Wenn ISO 639-1, die nicht über ein zweistelliger Sprachcode für eine bestimmte Kultur definiert die <xref:System.Globalization.CultureInfo.TwoLetterISOLanguageName%2A> Eigenschaft gibt eine Zeichenfolge, die aus mindestens drei Buchstaben besteht. Weitere Informationen finden Sie im untenstehenden Beispiel.  
+ Wenn ISO 639-1, die nicht über ein zweistelliger Sprachcode für eine bestimmte Kultur definiert die <xref:System.Globalization.CultureInfo.TwoLetterISOLanguageName%2A> Eigenschaft gibt eine Zeichenfolge, die aus mindestens drei Buchstaben besteht. Weitere Informationen finden Sie im Beispiel.  
   
    
   
@@ -3208,6 +3253,7 @@ csc /resource:GreetingStrings.resources Example1.cs
       <MemberSignature Language="DocId" Value="P:System.Globalization.CultureInfo.UseUserOverride" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property UseUserOverride As Boolean" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool UseUserOverride { bool get(); };" />
+      <MemberSignature Language="F#" Value="member this.UseUserOverride : bool" Usage="System.Globalization.CultureInfo.UseUserOverride" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -3238,7 +3284,7 @@ csc /resource:GreetingStrings.resources Example1.cs
   
  Wenn <xref:System.Globalization.CultureInfo.UseUserOverride%2A> ist `true` und der angegebene Kultur entspricht die aktuelle Kultur von Windows die <xref:System.Globalization.CultureInfo> verwendet diese Außerkraftsetzungen, einschließlich der benutzereinstellungen für für die Eigenschaften der der <xref:System.Globalization.DateTimeFormatInfo> zurückgegebene Instanz der <xref:System.Globalization.CultureInfo.DateTimeFormat%2A> -Eigenschaft und die Eigenschaften der <xref:System.Globalization.NumberFormatInfo> zurückgegebene Instanz der <xref:System.Globalization.CultureInfo.NumberFormat%2A> Eigenschaft. Wenn die benutzereinstellungen nicht kompatibel mit der Kultur zugeordnet sind die <xref:System.Globalization.CultureInfo>, z. B. ist der ausgewählten Kalender nicht eines der <xref:System.Globalization.CultureInfo.OptionalCalendars%2A>, die Ergebnisse der Methoden und die Werte der Eigenschaften sind nicht definiert.  
   
- Diese Eigenschaft wird festgelegt, wenn die <xref:System.Globalization.CultureInfo>-Eigenschaft  ist.  
+ Diese Eigenschaft wird festgelegt, wenn die <xref:System.Globalization.CultureInfo> wird erstellt.  
   
  ]]></format>
         </remarks>
