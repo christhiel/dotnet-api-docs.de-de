@@ -1,11 +1,11 @@
 <Type Name="AppDomainManager" FullName="System.AppDomainManager">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="112003e37eca2c32191ae8ffe51b51b3dd3713b5" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="0b90343272a54ba54fa065fea811d2b8e818f542" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36432972" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37729062" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class AppDomainManager : MarshalByRefObject" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AppDomainManager extends System.MarshalByRefObject" />
@@ -15,6 +15,7 @@
   <TypeSignature Language="F#" Value="type AppDomainManager = class&#xA;    inherit MarshalByRefObject" />
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -35,24 +36,24 @@
 ## Remarks  
   
 > [!IMPORTANT]
->  Verwenden Sie keine <xref:System.AppDomainManager> zum Konfigurieren einer Anwendungsdomäne in ASP.NET. In ASP.NET verwenden muss die Konfiguration vom Host verarbeitet werden.  
+>  Verwenden Sie keine <xref:System.AppDomainManager> zum Konfigurieren einer Anwendungsdomäne in ASP.NET. In ASP.NET muss die Konfiguration vom Host behandelt werden.  
   
- Implementieren der <xref:System.AppDomainManager> Klasse ermöglicht eine hostanwendung zur Teilnahme an der Erstellung der neuen Anwendungsdomänen. Ersetzen Sie die Standardeinstellung <xref:System.AppDomainManager>, identifizieren die Assembly und den Typ der Ersetzung <xref:System.AppDomainManager> in der Umgebungsvariablen APPDOMAIN_MANAGER_ASM und APPDOMAIN_MANAGER_TYPE ein, oder verwenden die [ \<AppDomainManagerAssembly >](~/docs/framework/configure-apps/file-schema/runtime/appdomainmanagerassembly-element.md) und [ \<AppDomainManagerType >](~/docs/framework/configure-apps/file-schema/runtime/appdomainmanagertype-element.md) Elemente in der Konfigurationsdatei. Die Assembly voll vertrauenswürdig sein und im globalen Assemblycache oder im Verzeichnis der ersten Anwendung enthalten sein. Die Typ- und Assemblynamen Namen müssen in den Umgebungsvariablen vollqualifiziert sein. Zum Beispiel:  
+ Implementieren der <xref:System.AppDomainManager> Klasse ermöglicht eine hostanwendung zur Teilnahme an der Erstellung neuer Anwendungsdomänen. Ersetzen Sie die Standardeinstellung <xref:System.AppDomainManager>, identifizieren Sie die Assembly und Typ der Ersetzung <xref:System.AppDomainManager> in der Umgebungsvariablen APPDOMAIN_MANAGER_ASM und APPDOMAIN_MANAGER_TYPE ein, oder Verwenden der [ \<AppDomainManagerAssembly >](~/docs/framework/configure-apps/file-schema/runtime/appdomainmanagerassembly-element.md) und [ \<AppDomainManagerType >](~/docs/framework/configure-apps/file-schema/runtime/appdomainmanagertype-element.md) Elemente in der Konfigurationsdatei. Die Assembly vollständig vertrauenswürdig sein und enthalten sein, in dem globalen Assemblycache oder das Verzeichnis der Anwendung ab. Die Namen von Typ und die Assembly müssen in den Umgebungsvariablen voll qualifiziert werden. Zum Beispiel:  
   
  `set APPDOMAIN_MANAGER_TYPE=MyNamespace.TestAppDomainManager`  
   
  `set APPDOMAIN_MANAGER_ASM=customappDomainmanager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f1368f7b12a08d72`  
   
 > [!IMPORTANT]
->  Wenn die Assembly, die die Unterklasse von enthält <xref:System.AppDomainManager> richtet sich nach Assemblys, die mit der bedingten markiert sind <xref:System.Security.AllowPartiallyTrustedCallersAttribute> -Attribut (APTCA), müssen Sie diese Assemblys enthalten, in der Liste, die Sie zum Übergeben der <xref:System.AppDomainSetup.PartialTrustVisibleAssemblies%2A> Eigenschaft von der <xref:System.AppDomainSetup>mit Anwendungsdomänen erstellt werden. Andernfalls werden die Assemblys, die mit dem bedingten APTCA-Attribut gekennzeichnet sind deaktiviert.  
+>  Wenn die Assembly, die die Unterklasse von enthält <xref:System.AppDomainManager> Assemblys, die mit der bedingten markiert sind, hängt <xref:System.Security.AllowPartiallyTrustedCallersAttribute> -Attribut (APTCA), müssen Sie die Assemblys einschließen, in der Liste, die Sie zum Übergeben der <xref:System.AppDomainSetup.PartialTrustVisibleAssemblies%2A> Eigenschaft der <xref:System.AppDomainSetup>Sie verwenden, um die Anwendungsdomänen zu erstellen. Andernfalls werden die Assemblys, die mit dem bedingten APTCA-Attribut markiert sind deaktiviert.  
   
- Die <xref:System.AppDomainManager> ist die verwaltete Entsprechung des nicht verwalteten Hosts. Ein <xref:System.AppDomainManager> Objekt die Erstellung von neuen Anwendungsdomänen in einem Prozess beteiligt und anpassbaren neuen <xref:System.AppDomain> bevor andere verwalteter Code ausgeführt wird. Die <xref:System.AppDomainManager> kann auch Host-Managern, die Teilnahme an andere Aspekte der Ausführung von common Language Runtime bereitgestellt werden. Z. B. ein <xref:System.AppDomainManager> Erkennen einer <xref:System.Security.HostSecurityManager> -Objekt, das in der Anwendungsdomäne sicherheitsentscheidungen beteiligt ist.  
-  
-> [!NOTE]
->  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in der <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
+ Die <xref:System.AppDomainManager> ist die verwaltete Entsprechung des nicht verwalteten Hosts. Ein <xref:System.AppDomainManager> Objekt bei der Erstellung neuer Anwendungsdomänen in einem Prozess beteiligt ist, und können anpassen, die neue <xref:System.AppDomain> vor anderen verwalteter Code ausgeführt wird. Die <xref:System.AppDomainManager> auch Host-Managern, die Teilnahme an andere Aspekte der Ausführung der common Language Runtime bereitgestellt werden können. Z. B. eine <xref:System.AppDomainManager> Erkennen einer <xref:System.Security.HostSecurityManager> Objekt, das in der Anwendungsdomäne der Sicherheitsfragen die richtigen Entscheidungen teilnimmt.  
   
 > [!NOTE]
->  Diese Klasse enthält einen Linkaufruf und einer vererbungsanforderung auf Klassenebene. Ein <xref:System.Security.SecurityException> wird ausgelöst, wenn nicht für den unmittelbaren Aufrufer oder die abgeleitete Klasse Berechtigung für die Infrastruktur verfügt. Weitere Informationen zu sicherheitsforderungen, finden Sie unter [Verknüpfungsaufrufe](~/docs/framework/misc/link-demands.md) und [Vererbungsanforderungen](http://msdn.microsoft.com/library/28b9adbb-8f08-4f10-b856-dbf59eb932d9).  
+>  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in die <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
+  
+> [!NOTE]
+>  Diese Klasse enthält einen Linkaufruf und einer vererbungsanforderung auf Klassenebene. Ein <xref:System.Security.SecurityException> wird ausgelöst, wenn Sie entweder den unmittelbaren Aufrufer oder die abgeleitete Klasse Infrastruktur Berechtigung nicht besitzt. Weitere Informationen zu sicherheitsanforderungen, finden Sie unter [Verknüpfungsaufrufe](~/docs/framework/misc/link-demands.md) und [Vererbungsanforderungen](http://msdn.microsoft.com/library/28b9adbb-8f08-4f10-b856-dbf59eb932d9).  
   
    
   
@@ -66,7 +67,7 @@
     </remarks>
     <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die ordnungsgemäßen Berechtigungen. Siehe den Abschnitt „Anforderungen“.</exception>
     <permission cref="T:System.Security.SecurityCriticalAttribute">Erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer. Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</permission>
-    <permission cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand">für abgeleitete Klassen, die ausführbaren Code in der common Language Runtime Host fungierende Infrastruktur eingebunden werden. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></permission>
+    <permission cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand">für abgeleitete Klassen, die ausführbaren Code in der common Language Runtime hosten Infrastruktur eingebunden werden. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.Infrastructure" /></permission>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -78,6 +79,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -90,7 +92,7 @@
 ## Remarks  
   
 > [!NOTE]
->  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in der <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
+>  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in die <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
   
  ]]></format>
         </remarks>
@@ -107,6 +109,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -120,7 +123,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Es ist eine einzelne angegebene Instanz von der <xref:System.Runtime.Hosting.ApplicationActivator> Klasse in den einzelnen <xref:System.AppDomain> , welche alle add-Ins und Manifest-basiertes Anwendung weitergeleitet werden. Die <xref:System.AppDomainManager> für den aktuellen <xref:System.AppDomain> bieten eine eigene benutzerdefinierte <xref:System.Runtime.Hosting.ApplicationActivator>, oder eine Instanz des Standardwerts <xref:System.Runtime.Hosting.ApplicationActivator> wird erstellt.  
+ Es gibt eine einzelne angegebene Instanz der <xref:System.Runtime.Hosting.ApplicationActivator> Klasse in den einzelnen <xref:System.AppDomain> , die für alle Add-Ins und manifestbasierten Anwendungen weitergeleitet werden. Die <xref:System.AppDomainManager> für die aktuelle <xref:System.AppDomain> bieten eine eigene benutzerdefinierte <xref:System.Runtime.Hosting.ApplicationActivator>, oder eine Instanz der standardmäßigen <xref:System.Runtime.Hosting.ApplicationActivator> erstellt wird.  
   
  ]]></format>
         </remarks>
@@ -136,6 +139,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -154,9 +158,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Gibt die standardmäßige Implementierung dieser Methode `false`.  
+ Die Standardimplementierung dieser Methode gibt `false`.  
   
- Diese Methode wird aufgerufen, wenn die <xref:System.IO.IsolatedStorage.IsolatedStorageFile.IncreaseQuotaTo%2A?displayProperty=nameWithType> Methode zum Erhöhen des Kontingents isolierten Speicher aufgerufen wurde. Eine Anwendung, die common Language Runtime (CLR) hostet, kann außer Kraft setzen die <xref:System.AppDomainManager.CheckSecuritySettings%2A> Methode zum Ausführen von richtlinienentscheidungen basierend auf einer <xref:System.IO.IsolatedStorage.IsolatedStorageSecurityState> Objekt (erbt <xref:System.Security.SecurityState>), und dann zulassen oder zu verhindern, dass die Steigerung können. Beispielsweise kann ein Host der Endbenutzer genehmigen oder Ablehnen der Anforderung zum Erhöhen des Kontingents aufgefordert. Der Host-Implementierung von <xref:System.AppDomainManager.CheckSecuritySettings%2A> sollte die Möglichkeit von Denial-of-Service-Angriffen berücksichtigt. Beispielsweise sollten sie den Benutzer auffordern, nur dann, wenn die Methode von einem Benutzer gestartete Ereignis aufgerufen wird, z. B. eine Schaltfläche klicken.  
+ Diese Methode wird aufgerufen, wenn die <xref:System.IO.IsolatedStorage.IsolatedStorageFile.IncreaseQuotaTo%2A?displayProperty=nameWithType> Methode aufgerufen wurde, um das Kontingent für die isolierten Speicher zu erhöhen. Kann eine Anwendung, die common Language Runtime (CLR) hostet, außer Kraft setzen der <xref:System.AppDomainManager.CheckSecuritySettings%2A> Methode zum Durchführen von richtlinienentscheidungen basierend auf einer <xref:System.IO.IsolatedStorage.IsolatedStorageSecurityState> Objekt (erbt <xref:System.Security.SecurityState>), und klicken Sie dann zulassen oder verhindern Sie die Erhöhung der können. Ein Host kann z. B. dem Benutzer genehmigen oder Ablehnen der Anforderung das Kontingent erhöht aufgefordert. Implementierung des Hosts <xref:System.AppDomainManager.CheckSecuritySettings%2A> sollte die Wahrscheinlichkeit von Denial-of-Service-Angriffen berücksichtigt. Beispielsweise sollten sie den Benutzer auffordern, nur dann, wenn die Methode aus einem vom Benutzer initiierte-Ereignis aufgerufen wird, wie z. B. eine Schaltfläche klicken.  
   
  ]]></format>
         </remarks>
@@ -172,6 +176,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -193,14 +198,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Anzeigename, der gemäß der `friendlyName` -Parameter kann auf Benutzeroberflächen zur Kennzeichnung der Domäne angezeigt werden. Weitere Informationen finden Sie in den Ausführungen zur <xref:System.AppDomain.FriendlyName%2A>-Eigenschaft.  
+ Der angezeigte Name, anhand der `friendlyName` -Parameter kann auf Benutzeroberflächen zur Kennzeichnung der Domäne angezeigt werden. Weitere Informationen finden Sie in den Ausführungen zur <xref:System.AppDomain.FriendlyName%2A>-Eigenschaft.  
   
- Die Standardeinstellung <xref:System.AppDomainManager.CreateDomain%2A> Methode ruft die geschützte <xref:System.AppDomainManager.CreateDomainHelper%2A> Methode zum Erstellen der <xref:System.AppDomain>. Müssen überschreibt diese Methode nicht Aufrufen der <xref:System.AppDomainManager.CreateDomainHelper%2A> Methode jedoch eine vorhandene Domäne zurückgeben kann.  
+ Der Standardwert <xref:System.AppDomainManager.CreateDomain%2A> Methode ruft die geschützte <xref:System.AppDomainManager.CreateDomainHelper%2A> Methode zum Erstellen der <xref:System.AppDomain>. Überschreibungen von dieser Methode müssen nicht aufrufen, die <xref:System.AppDomainManager.CreateDomainHelper%2A> Methode, jedoch kann eine vorhandene Domäne zurückgibt.  
   
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>Beim Erben von der <see cref="T:System.AppDomainManager" /> Klasse, und überschreiben die <see cref="M:System.AppDomainManager.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup)" /> -Methode, können Sie die Aktivitäten der benutzerdefinierten Anwendung Domäne Initialisierung vor dem Aufruf Ausführen der <see cref="M:System.AppDomainManager.CreateDomainHelper(System.String,System.Security.Policy.Evidence,System.AppDomainSetup)" /> -Methode, oder nicht rufen die Hilfsmethode überhaupt.  Sie konnten z. B. des Beweises als übergeben ändern <paramref name="securityInfo" />, aktualisieren Sie die Felder des zugeordneten <see cref="T:System.AppDomainSetup" />, oder verwenden Sie eine vorhandene Domäne erneut.</para>
+          <para>Beim Erben von der <see cref="T:System.AppDomainManager" /> Klasse, und überschreiben die <see cref="M:System.AppDomainManager.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup)" /> -Methode durchführen können Aktivitäten für die Initialisierung von benutzerdefinierten Anwendung Domäne vor dem Aufruf der <see cref="M:System.AppDomainManager.CreateDomainHelper(System.String,System.Security.Policy.Evidence,System.AppDomainSetup)" /> -Methode und nicht durch Aufrufen der Hilfsmethode überhaupt.  Sie könnten z. B. ändern, die Beweise, die als übergeben <paramref name="securityInfo" />, aktualisieren Sie die Felder des zugeordneten <see cref="T:System.AppDomainSetup" />, oder wiederverwenden eine vorhandene Domäne.</para>
         </block>
       </Docs>
     </Member>
@@ -214,6 +219,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -237,7 +243,7 @@
 ## Remarks  
  Diese geschützte Hilfsmethode behandelt die Erstellung einer neuen Anwendungsdomäne.  
   
- Dieser aussagekräftige Name, gemäß der `friendlyName` -Parameter kann auf Benutzeroberflächen zur Kennzeichnung der Domäne angezeigt werden. Weitere Informationen finden Sie in den Ausführungen zur <xref:System.AppDomain.FriendlyName%2A>-Eigenschaft.  
+ Diesen Anzeigenamen, die gemäß der `friendlyName` -Parameter kann auf Benutzeroberflächen zur Kennzeichnung der Domäne angezeigt werden. Weitere Informationen finden Sie in den Ausführungen zur <xref:System.AppDomain.FriendlyName%2A>-Eigenschaft.  
   
  ]]></format>
         </remarks>
@@ -256,6 +262,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -269,7 +276,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die Anwendung ein Manifest aktivierte Anwendung ist, wird die Eintragsassembly von des Anwendungsmanifests bestimmt. Wenn die Anwendung kein manifest aktiviert ist, ist die Eintragsassembly der in der Standardanwendungsdomäne ausführbaren Prozess an. In anderen Anwendungsdomänen ist der Eintragsassembly ist die erste ausführbare Datei, die ausgeführt wurde die <xref:System.AppDomain.ExecuteAssembly%2A?displayProperty=nameWithType> Methode.  
+ Wenn die Anwendung eine manifestaktivierte Anwendung ist, wird die Eintragsassembly aus dem Anwendungsmanifest bestimmt. Wenn die Anwendung nicht manifest aktiviert ist, ist die Eintragsassembly der in der Standardanwendungsdomäne ausführbaren Prozess. In anderen Anwendungsdomänen ist die Eintragsassembly ist die erste ausführbare Datei, die durch Ausführung der <xref:System.AppDomain.ExecuteAssembly%2A?displayProperty=nameWithType> Methode.  
   
  ]]></format>
         </remarks>
@@ -285,6 +292,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -298,7 +306,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Eigenschaft ermöglicht es einen Host zum Bereitstellen einer <xref:System.Threading.HostExecutionContextManager> , die den Fluss des Ausführungskontexts über asynchrone Aufrufe teilnehmen kann.  
+ Diese Eigenschaft kann ein Host Geben Sie einen <xref:System.Threading.HostExecutionContextManager> , die den Fluss des Ausführungskontexts über asynchrone Aufrufe teilnehmen kann.  
   
  ]]></format>
         </remarks>
@@ -314,6 +322,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -327,12 +336,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Eigenschaft ermöglicht es einen Host zum Bereitstellen einer <xref:System.Security.HostSecurityManager> zur Teilnahme an der sicherheitsrelevanten für die Anwendungsdomäne.  
+ Diese Eigenschaft kann ein Host Geben Sie einen <xref:System.Security.HostSecurityManager> zur Teilnahme an der Sicherheitsfragen die richtigen Entscheidungen für die Anwendungsdomäne.  
   
    
   
 ## Examples  
- Das folgende Beispiel zeigt eine Überschreibung der <xref:System.AppDomainManager.HostSecurityManager%2A> -Eigenschaft für eine benutzerdefinierte Anwendungsdomänen-Manager. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.AppDomainManager> Klasse.  
+ Das folgende Beispiel zeigt eine Überschreibung von der <xref:System.AppDomainManager.HostSecurityManager%2A> -Eigenschaft für eine benutzerdefinierte Anwendungsdomänen-Manager. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.AppDomainManager> Klasse.  
   
  [!code-csharp[System.AppDomainManager#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.AppDomainManager/CS/customAppDomainManager.cs#3)]
  [!code-vb[System.AppDomainManager#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.AppDomainManager/VB/customAppDomainManager.vb#3)]  
@@ -351,6 +360,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -373,6 +383,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -391,21 +402,21 @@
 ## Remarks  
   
 > [!IMPORTANT]
->  Verwenden Sie diese Methode nicht initialisiert werden, eine Anwendungsdomäne in ASP.NET. In ASP.NET verwenden muss die Konfiguration vom Host verarbeitet werden. Wenn Sie diese Methode verwenden, um die Anwendungsdomäne zu initialisieren, löst der Host <xref:System.InvalidOperationException> beim Versuch, die Anwendungsdomäne zu initialisieren. Die Ausnahmemeldung gibt an, dass die Initialisierung bereits stattgefunden hat.  
+>  Verwenden Sie diese Methode nicht zum Initialisieren einer Anwendungsdomäne in ASP.NET. In ASP.NET muss die Konfiguration vom Host behandelt werden. Wenn Sie diese Methode, zum Initialisieren der Anwendungsdomäne verwenden, der Host auslöst <xref:System.InvalidOperationException> beim Versuch, die die Anwendungsdomäne initialisiert werden. Die Ausnahmemeldung gibt an, dass die Initialisierung bereits aufgetreten ist.  
   
- Diese Methode wird unmittelbar nach dem Konstruktor aufgerufen. Die Standardeinstellung <xref:System.AppDomainManager.InitializeNewDomain%2A> Implementierung wird keine Aktion ausgeführt.  Eine benutzerdefinierte Implementierung kann interne Klassen und Delegaten einrichten, richten Sie eine Schnittstelle mit dem nicht verwaltete Hostschnittstelle oder definieren Sie Ereignishandler für das neue <xref:System.AppDomain>.  
+ Diese Methode wird unmittelbar nach dem Konstruktor aufgerufen. Der Standardwert <xref:System.AppDomainManager.InitializeNewDomain%2A> Implementierung hat keine Auswirkungen.  Eine benutzerdefinierte Implementierung kann interne Klassen und Delegaten einrichten, richten Sie eine Schnittstelle mit der nicht verwaltete Hostschnittstelle oder definieren Sie Ereignishandler für das neue <xref:System.AppDomain>.  
   
- Darüber hinaus für Add-in-Aktivierungen eine benutzerdefinierte Implementierung konnte identifiziert die aktuelle <xref:System.AppDomain> als der Zielanwendungsdomäne.  
+ Für Add-in-Aktivierungen, eine benutzerdefinierte Implementierung kann identifizieren Sie ferner die aktuelle <xref:System.AppDomain> als der Zielanwendungsdomäne.  
   
- Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], können Sie diese Methode für das Sandboxing die Standardanwendungsdomäne beim Start der Anwendung oder zum Ändern der Sandbox eine neue Anwendungsdomäne. Passen Sie zu diesem Zweck die <xref:System.Security.Policy.ApplicationTrust.DefaultGrantSet%2A> und <xref:System.Security.Policy.ApplicationTrust.FullTrustAssemblies%2A> Eigenschaften auf der <xref:System.Security.Policy.ApplicationTrust> -Objekt, das zugewiesen ist die <xref:System.AppDomainSetup.ApplicationTrust%2A?displayProperty=nameWithType> Eigenschaft `appDomainInfo`, bevor Sie die Anwendungsdomäne initialisiert werden.  
+ Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], können Sie diese Methode für das Sandboxing die Standardanwendungsdomäne beim Start der Anwendung oder zum Ändern der Sandbox eine neue Anwendungsdomäne. Passen Sie zu diesem Zweck die <xref:System.Security.Policy.ApplicationTrust.DefaultGrantSet%2A> und <xref:System.Security.Policy.ApplicationTrust.FullTrustAssemblies%2A> Eigenschaften für die <xref:System.Security.Policy.ApplicationTrust> -Objekt, das zugewiesen ist die <xref:System.AppDomainSetup.ApplicationTrust%2A?displayProperty=nameWithType> Eigenschaft `appDomainInfo`, bevor Sie die Anwendungsdomäne initialisiert.  
   
 > [!NOTE]
->  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in der <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
+>  Nur Assemblys gewährt `FullTrust`, z. B. Assemblys im globalen Assemblycache oder als identifiziert `fullTrustAssemblies` in die <xref:System.AppDomain.CreateDomain%28System.String%2CSystem.Security.Policy.Evidence%2CSystem.AppDomainSetup%2CSystem.Security.PermissionSet%2CSystem.Security.Policy.StrongName%5B%5D%29?displayProperty=nameWithType> Methode geladen werden kann, der <xref:System.AppDomainManager.%23ctor%2A> Konstruktor und die <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode.  
   
    
   
 ## Examples  
- Das folgende Beispiel zeigt eine Überschreibung der <xref:System.AppDomainManager.InitializeNewDomain%2A> Methode für einen benutzerdefinierten Anwendungsdomänen-Manager. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.AppDomainManager> Klasse.  
+ Das folgende Beispiel zeigt eine Überschreibung von der <xref:System.AppDomainManager.InitializeNewDomain%2A> -Methode für eine benutzerdefinierte Anwendungsdomänen-Manager. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.AppDomainManager> Klasse.  
   
  [!code-csharp[System.AppDomainManager#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.AppDomainManager/CS/customAppDomainManager.cs#2)]
  [!code-vb[System.AppDomainManager#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.AppDomainManager/VB/customAppDomainManager.vb#2)]  
