@@ -1,11 +1,11 @@
 <Type Name="ISinglePhaseNotification" FullName="System.Transactions.ISinglePhaseNotification">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="93e84c76de1b5f1e9f1ebae936445903569d5441" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="b68f852419e6c9edb29e501f50f7e935516381f0" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36605213" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37754378" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface ISinglePhaseNotification : System.Transactions.IEnlistmentNotification" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract ISinglePhaseNotification implements class System.Transactions.IEnlistmentNotification" />
@@ -15,6 +15,7 @@
   <TypeSignature Language="F#" Value="type ISinglePhaseNotification = interface&#xA;    interface IEnlistmentNotification" />
   <AssemblyInfo>
     <AssemblyName>System.Transactions</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -38,13 +39,13 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Beachten Sie, dass selbst wenn der Ressourcen-Manager einphasige Commits unterstützt diese Schnittstelle implementiert, nicht garantiert ist, dass er einen einzelnen Phasen-Commit erhält. Der Transaktions-Manager kann weiterhin stattdessen Zweiphasen-Commit-Benachrichtigung senden.  
+ Beachten Sie, dass selbst wenn der Ressourcen-Manager Einphasencommit-Optimierung unterstützen diese Schnittstelle implementiert, nicht gewährleistet ist, dass er ein Einphasencommit empfängt. Der Transaktions-Manager kann weiterhin stattdessen Zweiphasen-Commit-Benachrichtigung senden.  
   
- Aufrufen, um die Ressourcen-Manager als Teilnehmer in einer Transaktion einzutragen, die <xref:System.Transactions.Transaction.EnlistVolatile%2A> Methode oder die <xref:System.Transactions.Transaction.EnlistDurable%2A> Methode der <xref:System.Transactions.Transaction> Klasse. Insbesondere die `EnlistmentOptions` Parameter sollte gleich <xref:System.Transactions.EnlistmentOptions.None> um sicherzustellen, dass ein Commit für die einzelnen Phase ausgeführt wird. Wenn sie versehentlich, um festgelegt ist <xref:System.Transactions.EnlistmentOptions.EnlistDuringPrepareRequired>, kein Commit ausgeführt, einphasige.  
+ Um Ihre Ressourcen-Manager als Teilnehmer in einer Transaktion einzutragen, rufen die <xref:System.Transactions.Transaction.EnlistVolatile%2A> Methode oder die <xref:System.Transactions.Transaction.EnlistDurable%2A> Methode der <xref:System.Transactions.Transaction> Klasse. Insbesondere die `EnlistmentOptions` Parameter sollten gleich <xref:System.Transactions.EnlistmentOptions.None> , stellen Sie sicher, dass ein Einphasencommit ausgeführt wird. Wenn sie versehentlich, um festgelegt ist <xref:System.Transactions.EnlistmentOptions.EnlistDuringPrepareRequired>, wird kein Commit erfolgt.  
   
- Seit der <xref:System.Transactions.ISinglePhaseNotification> Schnittstelle leitet sich von der <xref:System.Transactions.IEnlistmentNotification> -Schnittstelle, der Ressourcen-Manager muss auch alle Methoden der letztere für-Commit-Benachrichtigung Zweiphasen implementieren.  Dies ist der Transaktions-Manager die Wahl, ob-Commit Zweiphasen, oder die einphasige Commits mit diesen Ressourcen-Manager verwendet wird.  Allerdings ermöglicht es implementieren diese Schnittstelle dem Ressourcen-Manager Nutzen der Optimierung, sobald es verfügbar ist.  
+ Da die <xref:System.Transactions.ISinglePhaseNotification> Schnittstelle leitet sich von der <xref:System.Transactions.IEnlistmentNotification> -Schnittstelle, der Ressourcen-Manager muss alle Methoden der letztere auch implementieren, für die Zweiphasen-Commit-Benachrichtigung.  Es ist der Transaktions-Manager-entscheiden, ob-Commit Zweiphasen, oder die Einphasencommit-Optimierung mit dieser Ressourcen-Manager verwendet wird.  Allerdings kann diese Schnittstelle implementiert dem Ressourcen-Manager zum Nutzen der Optimierung, sobald diese verfügbar ist.  
   
- Wenn die Optimierung verwendet wird und der Transaktions-Manager Ruft die <xref:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit%2A> Methode der eingetragenen Ressource, der Ressourcen-Manager auf diesen Aufruf reagieren soll, mithilfe der verschiedenen Methoden der <xref:System.Transactions.SinglePhaseEnlistment> Klasse, um den Transaktions-Manager zu informieren, wenn die Transaktion wird ein Commit oder Rollback.  
+ Wenn die Optimierung verwendet wird und der Transaktions-Manager Ruft die <xref:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit%2A> Methode der eingetragene Ressource, der Ressourcen-Manager auf diesen Aufruf reagieren soll, mithilfe verschiedener Methoden von der <xref:System.Transactions.SinglePhaseEnlistment> Klasse, um den Transaktions-Manager zu informieren, wenn die Transaktion wird ein Commit oder Rollback ausgeführt.  
   
  ]]></format>
     </remarks>
@@ -52,19 +53,20 @@
   </Docs>
   <Members>
     <Member MemberName="SinglePhaseCommit">
-      <MemberSignature Language="C#" Value="public void SinglePhaseCommit (System.Transactions.SinglePhaseEnlistment singlePhaseEnlistment);" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void SinglePhaseCommit(class System.Transactions.SinglePhaseEnlistment singlePhaseEnlistment) cil managed" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2" />
-      <MemberSignature Language="DocId" Value="M:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit(System.Transactions.SinglePhaseEnlistment)" FrameworkAlternate="netcore-2.0;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void SinglePhaseCommit(System::Transactions::SinglePhaseEnlistment ^ singlePhaseEnlistment);" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2" />
+      <MemberSignature Language="C#" Value="public void SinglePhaseCommit (System.Transactions.SinglePhaseEnlistment singlePhaseEnlistment);" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void SinglePhaseCommit(class System.Transactions.SinglePhaseEnlistment singlePhaseEnlistment) cil managed" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
+      <MemberSignature Language="DocId" Value="M:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit(System.Transactions.SinglePhaseEnlistment)" FrameworkAlternate="netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7.1;netstandard-2.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void SinglePhaseCommit(System::Transactions::SinglePhaseEnlistment ^ singlePhaseEnlistment);" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
       <MemberSignature Language="C#" Value="public void SinglePhaseCommit (System.Transactions.SinglePhaseEnlistment enlistment);" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void SinglePhaseCommit(class System.Transactions.SinglePhaseEnlistment enlistment) cil managed" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-      <MemberSignature Language="DocId" Value="M:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit(System.Transactions.SinglePhaseEnlistment)" FrameworkAlternate="netframework-4.7;netcore-2.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7.1;netstandard-2.0" />
+      <MemberSignature Language="DocId" Value="M:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit(System.Transactions.SinglePhaseEnlistment)" FrameworkAlternate="netframework-4.7;netcore-2.0;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="VB.NET" Value="Public Sub SinglePhaseCommit (enlistment As SinglePhaseEnlistment)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void SinglePhaseCommit(System::Transactions::SinglePhaseEnlistment ^ enlistment);" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="F#" Value="abstract member SinglePhaseCommit : System.Transactions.SinglePhaseEnlistment -&gt; unit" Usage="iSinglePhaseNotification.SinglePhaseCommit enlistment" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Transactions</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -81,7 +83,7 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="singlePhaseEnlistment" Type="System.Transactions.SinglePhaseEnlistment" Index="0" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2" />
+        <Parameter Name="singlePhaseEnlistment" Type="System.Transactions.SinglePhaseEnlistment" Index="0" FrameworkAlternate="netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
         <Parameter Name="enlistment" Type="System.Transactions.SinglePhaseEnlistment" Index="0" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
@@ -92,13 +94,13 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dies ist der Transaktions-Manager die Wahl, ob-Commit Zweiphasen, oder die einphasige Commits mit diesen Ressourcen-Manager verwendet wird.  Weitere Informationen zu einzelnen Phase und zwei-Phasen-Commit, finden Sie unter [Ausführen eines Commits für eine Transaktion In Single-Phase und mehreren Phasen bestehender](http://msdn.microsoft.com/library/74b3cfe1-d33a-45b8-91f4-dfd6f6598c4d).  
+ Es ist der Transaktions-Manager-entscheiden, ob-Commit Zweiphasen, oder die Einphasencommit-Optimierung mit dieser Ressourcen-Manager verwendet wird.  Weitere Informationen zu den einzelnen Phase und zwei-Phasen-Commit, finden Sie unter [Committing A Transaction In Single-Phase and Multi-Phase](http://msdn.microsoft.com/library/74b3cfe1-d33a-45b8-91f4-dfd6f6598c4d).  
   
- Aus diesem Grund für diese Eintragung des Ressourcen-Managers entweder die <xref:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit%2A> Methode aufgerufen wird, oder das Zweiphasen-Commit-Methoden, die in anderen definierten <xref:System.Transactions.IEnlistmentNotification> Schnittstelle aufgerufen werden.  
+ Aus diesem Grund für diese Eintragung des Ressourcen-Manager entweder die <xref:System.Transactions.ISinglePhaseNotification.SinglePhaseCommit%2A> Methode aufgerufen wird, oder die Zweiphasen-Commit-Methoden, die in anderen definierten <xref:System.Transactions.IEnlistmentNotification> Schnittstelle aufgerufen werden.  
   
- Die Implementierung dieser Methode sollte rufen Sie entweder die <xref:System.Transactions.SinglePhaseEnlistment.Committed%2A> Methode oder die <xref:System.Transactions.SinglePhaseEnlistment.Aborted%2A> Methode der `singlePhaseEnlistment` Parameter, um anzugeben, ob ein Commit oder ein Rollback der Transaktion ausgeführt werden soll.  
+ Sollte Ihre Implementierung dieser Methode rufen Sie entweder die <xref:System.Transactions.SinglePhaseEnlistment.Committed%2A> Methode oder der <xref:System.Transactions.SinglePhaseEnlistment.Aborted%2A> Methode der `singlePhaseEnlistment` Parameter, um anzugeben, ob die Transaktion ein Commit oder Rollback werden sollte.  
   
- Der Transaktions-Manager ruft diese Methode auf, wenn besteht nur ein flüchtigen Eintragung, die einphasige Commits unterstützt, oder 0 (null) oder mehr flüchtige Eintragungen und eine dauerhafte Eintragung vorhanden sind. Im letzteren Fall empfangen die flüchtigen Eintragungen <xref:System.Transactions.IEnlistmentNotification.Prepare%2A> Benachrichtigungen für Zweiphasencommit- und der einzige dauerhafte Eintragung erhält eine Phase hat Commit-Benachrichtigung.  
+ Der Transaktions-Manager ruft diese Methode auf, wenn es ist nur eine flüchtige Eintragung, die einphasige Commits unterstützt oder wenn 0 (null) oder mehr flüchtigen Eintragungen und eine dauerhafte Eintragung. Im letzteren Fall empfangen die flüchtigen Eintragungen <xref:System.Transactions.IEnlistmentNotification.Prepare%2A> Benachrichtigungen für Zweiphasencommit- und der einzige dauerhafte Eintragung erhält eine Single-Phase Commit-Benachrichtigung.  
   
  ]]></format>
         </remarks>
