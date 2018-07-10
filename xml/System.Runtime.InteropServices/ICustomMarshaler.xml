@@ -1,11 +1,11 @@
 <Type Name="ICustomMarshaler" FullName="System.Runtime.InteropServices.ICustomMarshaler">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="39f080201b9247188e6562c5fd981137ce4f6fec" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="be96cf3b310b21cd1fb19adf1505581a78166d88" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36538230" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37637511" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface ICustomMarshaler" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract ICustomMarshaler" />
@@ -15,6 +15,8 @@
   <TypeSignature Language="F#" Value="type ICustomMarshaler = interface" />
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -39,29 +41,29 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein Marshaller stellt eine Brücke zwischen der Funktionalität des alten und neuen Schnittstellen bereit. Benutzerdefiniertes Marshalling geht, bietet die folgenden Vorteile:  
+ Ein Marshaller stellt eine Brücke zwischen der Funktionalität des alten und neuen Schnittstelle. Benutzerdefiniertes Marshalling bietet die folgenden Vorteile:  
   
--   Er ermöglicht es Clientanwendungen, die entwickelt wurden, funktionieren mit einer alten Schnittstelle funktioniert auch mit Servern, die eine neue Schnittstelle implementieren.  
+-   Sie können Clientanwendungen, die entwickelt wurden, funktionieren mit einer alten Schnittstelle funktioniert auch mit Servern, die eine neue Schnittstelle zu implementieren.  
   
--   Sie ermöglicht Clientanwendungen erstellt, um eine neue Schnittstelle arbeiten, arbeiten mit Servern, die eine alte Schnittstelle zu implementieren.  
+-   Dadurch werden Client-Anwendungen erstellt, um die Arbeit mit einer neuen Schnittstelle für Server verwendet, die eine alte Schnittstelle implementieren.  
   
- Wenn Sie eine Schnittstelle, die verschiedenen Marshalling-Verhalten führt oder, wird das Component Object Model (COM) in eine andere Weise verfügbar gemacht, können Sie einen benutzerdefinierten Marshaller anstelle des Interop-Marshallers entwerfen. Sie können mit einem benutzerdefinierten Marshaller, den Unterschied zwischen neuen .NET Framework-Komponenten und vorhandenen COM-Komponenten minimieren.  
+ Wenn Sie eine Schnittstelle, die verschiedenen Marshalling-Verhalten führt oder, wird das Component Object Model (COM) in eine andere Weise verfügbar gemacht, können Sie einen benutzerdefinierten Marshaller anstelle des interop-Marshallers entwerfen. Mit einem benutzerdefinierten Marshaller, können Sie den Unterschied zwischen .NET Framework-Komponenten mit neuen und vorhandenen COM-Komponenten verringern.  
   
- Nehmen wir beispielsweise an, dass Sie eine verwaltete Schnittstelle namens entwickeln `INew`. Wenn diese Schnittstelle über einen standardmäßigen COM callable Wrapper (CCW) für COM bereitgestellt wird, verfügt über die gleichen Methoden wie die verwaltete Schnittstelle und verwendet die in der Interop-Marshaller integrierte Marshallregeln. Nehmen wir jetzt an, dass eine bekannte COM-Schnittstelle aufgerufen `IOld` enthält bereits die gleiche Funktionalität wie die `INew` Schnittstelle. Durch Entwerfen von einem benutzerdefinierten Marshaller, können Sie eine nicht verwaltete Implementierung bereitstellen `IOld` , die lediglich die Aufrufe an die verwaltete Implementierung der delegiert die `INew` Schnittstelle. Die benutzerdefinierte Marshaller fungiert als Brücke zwischen verwalteten und nicht verwalteten Schnittstellen.  
+ Nehmen wir beispielsweise an, dass Sie eine verwaltete Schnittstelle namens entwickeln `INew`. Wenn diese Schnittstelle für COM über einen standardmäßigen COM callable Wrapper (CCW) verfügbar gemacht wird, verfügt über die gleichen Methoden wie die verwaltete Schnittstelle und die Marshallregeln der interop-Marshaller verwendet. Nehmen wir nun an, dass eine bekannte COM-Schnittstelle aufgerufen `IOld` enthält bereits die gleiche Funktionalität wie die `INew` Schnittstelle. Mit dem Entwerfen eines benutzerdefinierten Marshallers an, Sie können eine nicht verwaltete Implementierung der bereitstellen `IOld` delegiert, die nur die Aufrufe an die verwaltete Implementierung des der `INew` Schnittstelle. Der benutzerdefinierte Marshaller fungiert als Brücke zwischen verwalteten und nicht verwaltete Schnittstellen.  
   
 > [!NOTE]
->  Benutzerdefinierte Marshaller werden nicht aufgerufen, wenn von verwaltetem Code an nicht verwalteten Code an einer Dispatch beschränkte Schnittstelle aufrufen.  
+>  Benutzerdefinierte Marshaller werden nicht aufgerufen werden, beim Aufrufen von verwaltetem Code an nicht verwalteten Code an einer nur-Dispatch-Schnittstelle.  
   
 ## <a name="defining-the-marshaling-type"></a>Definieren des Marshallingtyps  
- Bevor Sie einen benutzerdefinierten Marshaller erstellen können, müssen Sie die verwalteten und nicht verwalteten Schnittstellen definieren, die gemarshallt werden. Diese Schnittstellen im Allgemeinen führen dieselbe Funktion aber werden verfügbar gemacht werden anders verwalteten und nicht verwalteten Objekte.  
+ Bevor Sie einen benutzerdefinierten Marshaller erstellen können, müssen Sie die verwalteten und nicht verwalteten Schnittstellen definieren, die gemarshallt werden. Diese Schnittstellen im Allgemeinen führen dieselbe Funktion jedoch für verwaltete und nicht verwaltete Objekte anders bereitgestellt wurden.  
   
- Ein verwalteter Compiler generiert eine verwaltete Schnittstelle aus Metadaten und die resultierende Schnittstelle sieht eine beliebige andere verwaltete Schnittstelle. Das folgende Beispiel zeigt eine typische-Schnittstelle.  
+ Ein verwalteter Compiler generiert eine verwaltete Schnittstelle aus den Metadaten ein, und die resultierende Schnittstelle sieht wie eine beliebige andere verwaltete Schnittstelle aus. Das folgende Beispiel zeigt eine typische-Schnittstelle.  
   
  [!code-cpp[System.Runtime.InteropServices.ICustomMarshaler#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cpp/source.cpp#1)]
  [!code-csharp[System.Runtime.InteropServices.ICustomMarshaler#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cs/source.cs#1)]
  [!code-vb[System.Runtime.InteropServices.ICustomMarshaler#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/vb/source.vb#1)]  
   
- Sie definieren Sie den nicht verwalteten Typ in der Interface Definition Language (IDL), und kompilieren Sie ihn mit dem (MIDL, Microsoft Interface Definition Language)-Compiler. Sie definiert die Schnittstelle in einer Bibliothek-Anweisung, und weisen sie eine Schnittstellen-ID mit dem Attribut universelle eindeutige Bezeichner (UUID), wie im folgende Beispiel veranschaulicht.  
+ Sie definieren den nicht verwalteten Typ in der Interface Definition Language (IDL) und kompilieren Sie diese mit der Microsoft Interface Definition Language (MIDL)-Compiler. Sie definiert die Schnittstelle in einer Bibliothek-Anweisung und eine Schnittstellen-ID mit dem universal unique Identifier (UUID)-Attribut, wie im folgende Beispiel wird veranschaulicht, zuweisen.  
   
 ```  
  [uuid(9B2BAADA-0705-11D3-A0CD-00C04FA35826)]  
@@ -72,87 +74,87 @@ library OldLib {
 }  
 ```  
   
- Der MIDL-Compiler erzeugt mehrere Ausgabedateien. Die Ausgabedatei Old_i.c definiert, wenn die Schnittstelle in Old.idl definiert ist, eine `const` Variable mit der Schnittstellenbezeichner (IID) der Schnittstelle, wie im folgende Beispiel veranschaulicht.  
+ Der MIDL-Compiler erzeugt mehrere Ausgabedateien an. Die Ausgabedatei Old_i.c definiert, wenn die Schnittstelle in Old.idl definiert ist, eine `const` Variable mit dem der Schnittstellenbezeichner (IID) der Schnittstelle, wie das folgende Beispiel veranschaulicht.  
   
 ```  
 const IID IID_IOld = {0x9B2BAADD,0x0705,0x11D3,{0xA0,0xCD,0x00,0xC0,0x4F,0xA3,0x58,0x26}};  
 ```  
   
- Die Datei Old.h wird auch von "MIDL" ausgelöst. Sie enthält eine C++-Definition der Schnittstelle, die in Ihrem C++-Quellcode aufgenommen werden kann.  
+ Die Datei Old.h wird auch von MIDL erzeugt. Sie enthält eine C++-Definition der Schnittstelle, die in Ihrem C++-Quellcode aufgenommen werden kann.  
   
 ## <a name="implementing-the-icustommarshaler-interface"></a>Implementieren der ICustomMarshaler-Schnittstelle  
- Muss Ihre benutzerdefinierten Marshaller implementieren die <xref:System.Runtime.InteropServices.ICustomMarshaler> Schnittstelle, um die entsprechenden Wrapper für die Laufzeit bereitzustellen.  
+ Der benutzerdefinierte Marshaller implementieren muss die <xref:System.Runtime.InteropServices.ICustomMarshaler> Schnittstelle, um die entsprechenden Wrapper zur Laufzeit bereitzustellen.  
   
- Der folgende C#-Code zeigt die Basisschnittstelle, die von allen benutzerdefinierten Marshaller implementiert werden muss.  
+ Der folgende C#-Code zeigt die Basisschnittstelle, die von der alle benutzerdefinierten Marshaller implementiert werden muss.  
   
  [!code-cpp[System.Runtime.InteropServices.ICustomMarshaler#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cpp/source.cpp#2)]
  [!code-csharp[System.Runtime.InteropServices.ICustomMarshaler#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cs/source.cs#2)]
  [!code-vb[System.Runtime.InteropServices.ICustomMarshaler#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/vb/source.vb#2)]  
   
- Die <xref:System.Runtime.InteropServices.ICustomMarshaler> -Schnittstelle enthält Methoden, die Unterstützung der Konvertierung, Cleanup-Unterstützung und Informationen zu den Daten, die gemarshallt werden.  
+ Die <xref:System.Runtime.InteropServices.ICustomMarshaler> -Schnittstelle enthält Methoden, die Unterstützung der Konvertierung, Cleanup-Unterstützung und Informationen zu den zu marshallenden Daten bereitstellen.  
   
 |Typ des Vorgangs|ICustomMarshaler-Methode|Beschreibung |  
 |-----------------------|-----------------------------|-----------------|  
-|Konvertierung (von systemeigenem zu verwaltetem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A>|Marshallt einen Zeiger auf systemeigene Daten in ein verwaltetes Objekt. Diese Methode gibt einen benutzerdefinierten Runtime callable Wrapper (RCW), der nicht verwaltete Schnittstelle marshallen kann, die als Argument übergeben wird. Der Marshaller sollte eine Instanz des benutzerdefinierten RCW für diesen Typ zurückgeben.|  
-|Konvertierung (von verwaltetem zu systemeigenem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A>|Marshallt ein verwaltetes Objekt in einen Zeiger auf systemeigene Daten. Diese Methode gibt einen benutzerdefinierten COM callable Wrapper (CCW), der die verwaltete Schnittstelle marshallen kann, die als Argument übergeben wird. Der Marshaller sollte eine Instanz des benutzerdefinierten CCW für diesen Typ zurückgeben.|  
-|Bereinigung (von systemeigenem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpNativeData%2A>|Ermöglicht der Marshaller systemeigenen Daten (CCW) bereinigen, die von zurückgegeben wird die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methode.|  
-|Bereinigung (von verwaltetem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpManagedData%2A>|Ermöglicht der Marshaller die verwalteten Datentypinformationen (RCW) bereinigen, die von zurückgegeben wird die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> Methode.|  
-|Informationen (systemeigener Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.GetNativeDataSize%2A>|Gibt die Größe der nicht verwalteten Daten, die gemarshallt werden.|  
+|Konvertierung (von nativem zu verwaltetem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A>|Marshallt einen Zeiger auf systemeigene Daten in ein verwaltetes Objekt an. Diese Methode gibt einen benutzerdefinierten Runtime callable Wrapper (RCW), der die nicht verwaltete Schnittstelle gemarshallt werden kann, die als Argument übergeben wird. Der Marshaller sollte es sich um eine Instanz des benutzerdefinierten RCW für diesen Typ zurückgeben.|  
+|Konvertierung (von verwaltetem zu nativem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A>|Marshallt ein verwaltetes Objekt in einen Zeiger auf systemeigene Daten. Diese Methode gibt einen benutzerdefinierten COM callable Wrapper (CCW), der die verwaltete Schnittstelle gemarshallt werden kann, die als Argument übergeben wird. Der Marshaller sollte es sich um eine Instanz des benutzerdefinierten CCW für diesen Typ zurückgeben.|  
+|Bereinigung (von nativem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpNativeData%2A>|Ermöglicht der Marshaller die systemeigenen Daten (die CCW) bereinigen, die von zurückgegeben wird das <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methode.|  
+|Bereinigung (von verwaltetem Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpManagedData%2A>|Ermöglicht der Marshaller die verwalteten Datentypinformationen (RCW) bereinigen, die von zurückgegeben wird das <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> Methode.|  
+|Informationen (nativer Code)|<xref:System.Runtime.InteropServices.ICustomMarshaler.GetNativeDataSize%2A>|Gibt die Größe der nicht verwaltete Daten, die gemarshallt werden soll.|  
   
 ### <a name="conversion"></a>Umwandeln  
  <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A?displayProperty=nameWithType>  
   
- Marshallt einen Zeiger auf systemeigene Daten in ein verwaltetes Objekt. Diese Methode gibt einen benutzerdefinierten Runtime callable Wrapper (RCW), der nicht verwaltete Schnittstelle marshallen kann, die als Argument übergeben wird. Der Marshaller sollte eine Instanz des benutzerdefinierten RCW für diesen Typ zurückgeben.  
+ Marshallt einen Zeiger auf systemeigene Daten in ein verwaltetes Objekt an. Diese Methode gibt einen benutzerdefinierten Runtime callable Wrapper (RCW), der die nicht verwaltete Schnittstelle gemarshallt werden kann, die als Argument übergeben wird. Der Marshaller sollte es sich um eine Instanz des benutzerdefinierten RCW für diesen Typ zurückgeben.  
   
  <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A?displayProperty=nameWithType>  
   
- Marshallt ein verwaltetes Objekt in einen Zeiger auf systemeigene Daten. Diese Methode gibt einen benutzerdefinierten COM callable Wrapper (CCW), der die verwaltete Schnittstelle marshallen kann, die als Argument übergeben wird. Der Marshaller sollte eine Instanz des benutzerdefinierten CCW für diesen Typ zurückgeben.  
+ Marshallt ein verwaltetes Objekt in einen Zeiger auf systemeigene Daten. Diese Methode gibt einen benutzerdefinierten COM callable Wrapper (CCW), der die verwaltete Schnittstelle gemarshallt werden kann, die als Argument übergeben wird. Der Marshaller sollte es sich um eine Instanz des benutzerdefinierten CCW für diesen Typ zurückgeben.  
   
-### <a name="cleanup"></a>Bereinigung  
+### <a name="cleanup"></a>Bereinigen  
  <xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpNativeData%2A?displayProperty=nameWithType>  
   
- Ermöglicht der Marshaller systemeigenen Daten (CCW) bereinigen, die von zurückgegeben wird die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methode.  
+ Ermöglicht der Marshaller die systemeigenen Daten (die CCW) bereinigen, die von zurückgegeben wird das <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methode.  
   
  <xref:System.Runtime.InteropServices.ICustomMarshaler.CleanUpManagedData%2A?displayProperty=nameWithType>  
   
- Ermöglicht der Marshaller die verwalteten Datentypinformationen (RCW) bereinigen, die von zurückgegeben wird die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> Methode.  
+ Ermöglicht der Marshaller die verwalteten Datentypinformationen (RCW) bereinigen, die von zurückgegeben wird das <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> Methode.  
   
 ### <a name="size-information"></a>Informationen zur Datenbankgröße  
  <xref:System.Runtime.InteropServices.ICustomMarshaler.GetNativeDataSize%2A?displayProperty=nameWithType>  
   
- Gibt die Größe der nicht verwalteten Daten, die gemarshallt werden.  
+ Gibt die Größe der nicht verwaltete Daten, die gemarshallt werden soll.  
   
-## <a name="implementing-the-getinstance-method"></a>Implementieren der GetInstance-Methode  
- Zusätzlich zur Implementierung der <xref:System.Runtime.InteropServices.ICustomMarshaler> -Schnittstelle, benutzerdefinierten Marshaller müssen implementieren eine `static` Methode mit dem Namen `GetInstance` , akzeptiert eine <xref:System.String> als Parameter und einen Rückgabetyp von <xref:System.Runtime.InteropServices.ICustomMarshaler>. Dies `static` Methode wird von der common Language Runtime COM-Interop-Ebene zum Instanziieren einer Instanz des benutzerdefinierten Marshaller aufgerufen. Die Zeichenfolge, die an `GetInstance` ist ein Cookie, das die Methode verwenden kann, um den zurückgegebenen benutzerdefinierten Marshaller anzupassen.  
+## <a name="implementing-the-getinstance-method"></a>Implementieren die GetInstance-Methode  
+ Zusätzlich zur Implementierung der <xref:System.Runtime.InteropServices.ICustomMarshaler> -Schnittstelle, die benutzerdefinierte Marshaller implementieren müssen eine `static` aufgerufene Methode `GetInstance` , akzeptiert eine <xref:System.String> als Parameter und verfügt über einen Rückgabetyp von <xref:System.Runtime.InteropServices.ICustomMarshaler>. Dies `static` Methode wird aufgerufen, durch die common Language Runtime COM-interop-Ebene zum Instanziieren einer Instanz des benutzerdefinierten Marshallers. Die Zeichenfolge, die an `GetInstance` wird ein Cookie, das die Methode verwenden können, um den zurückgegebenen benutzerdefinierten Marshaller anzupassen.  
   
 ```  
 static ICustomMarshaler *GetInstance(String *pstrCookie);  
 ```  
   
-## <a name="applying-marshalasattribute"></a>Anwenden von MarshalAsAttribute  
- Sie müssen für die Verwendung einen benutzerdefinierten Marshaller Anwenden der <xref:System.Runtime.InteropServices.MarshalAsAttribute> -Attribut auf den Parameter oder ein Feld, das gemarshallt wird.  
+## <a name="applying-marshalasattribute"></a>Anwenden des "MarshalAsAttribute"  
+ Um einen benutzerdefinierten Marshaller verwenden zu können, müssen Sie anwenden, die <xref:System.Runtime.InteropServices.MarshalAsAttribute> Attribut auf den Parameter oder ein Feld, das gemarshallt werden.  
   
- Müssen Sie außerdem die <xref:System.Runtime.InteropServices.UnmanagedType.CustomMarshaler?displayProperty=nameWithType> Enumerationswert, auf die <xref:System.Runtime.InteropServices.MarshalAsAttribute> Konstruktor. Darüber hinaus müssen Sie angeben der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> -Feld durch eine der folgenden benannte Parameter:  
+ Sie müssen auch übergeben die <xref:System.Runtime.InteropServices.UnmanagedType.CustomMarshaler?displayProperty=nameWithType> Enumerationswert, der <xref:System.Runtime.InteropServices.MarshalAsAttribute> Konstruktor. Darüber hinaus müssen Sie angeben der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> Feld mit einem der folgenden benannten Parameter:  
   
--   <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> (erforderlich): die Assembly qualifizierte Name des benutzerdefinierten Marshaller. Der Name sollte den Namespace und die Klasse des benutzerdefinierten Marshaller enthalten. Wenn die benutzerdefinierte Marshaller nicht in der Assembly definiert ist, in dem er verwendet wird, müssen Sie den Namen der Assembly angeben, in denen sie definiert ist.  
+-   <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> (erforderlich): die Assembly qualifizierten Namen des benutzerdefinierten Marshallers. Der Name sollte es sich um den Namespace und die Klasse des benutzerdefinierten Marshallers enthalten. Wenn der benutzerdefinierte Marshaller nicht in der Assembly, die sie definiert ist in verwendet wird, müssen Sie den Namen der Assembly angeben, in denen sie definiert ist.  
   
     > [!NOTE]
-    >  Können Sie die <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalTypeRef> Feld statt der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> Feld. <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalTypeRef> akzeptiert einen Typ, der einfacher angegeben ist.  
+    >  Können Sie die <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalTypeRef> Feld anstelle der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> Feld. <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalTypeRef> akzeptiert einen Typ, der einfacher angegeben ist.  
   
--   <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalCookie> (optional): ein Cookie, das für dem benutzerdefinierten Marshaller übergeben wird. Das Cookie können Sie zusätzliche Informationen für den Marshaller angeben. Der Marshaller verwendet wird, um eine Zahl von Wrappern bereitzustellen, identifiziert das Cookie z. B. einen bestimmten Wrapper. Das Cookie wird zum Übergeben der `GetInstance` Methode der Marshaller.  
+-   <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalCookie> (optional): ein Cookie, das an dem benutzerdefinierten Marshaller übergeben wird. Sie können das Cookie verwenden, um zusätzliche Informationen für den Marshaller bereitstellen. Wenn Marshaller verwendet wird, mit einer Zahl von Wrappern angeben, wird das Cookie z. B. einen bestimmten Wrapper identifiziert. Das Cookie wird zum Übergeben der `GetInstance` -Methode der Marshaller.  
   
- Die <xref:System.Runtime.InteropServices.MarshalAsAttribute> Attribut identifiziert den benutzerdefinierten Marshaller, damit den entsprechenden Wrapper aktiviert werden kann. Interop-Dienst für die common Language Runtime überprüft das Attribut und erstellt die benutzerdefinierten Marshaller das erste Argument (Parameter oder ein Feld) muss das gemarshallt werden.  
+ Die <xref:System.Runtime.InteropServices.MarshalAsAttribute> Attribut identifiziert den benutzerdefinierten Marshaller, damit die entsprechenden Wrapper aktiviert werden kann. Die common Language Runtime-interop-Dienst überprüft das Attribut anschließend und erstellt die benutzerdefinierte Marshaller, wenn das Argument (Parameters bzw. Felds) gemarshallt werden muss.  
   
- Die Common Language Runtime ruft dann die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> und <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methoden für den benutzerdefinierten Marshaller den korrekten Wrapper um den Aufruf zu bewältigen zu aktivieren.  
+ Die Runtime ruft dann die <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalNativeToManaged%2A> und <xref:System.Runtime.InteropServices.ICustomMarshaler.MarshalManagedToNative%2A> Methoden für den benutzerdefinierten Marshaller den korrekten Wrapper um den Anruf abzuarbeiten aktivieren.  
   
-## <a name="using-a-custom-marshaler"></a>Verwenden von einem benutzerdefinierten Marshaller  
- Wenn der benutzerdefinierte Marshaller abgeschlossen ist, können Sie für einen bestimmten Typ als benutzerdefinierte Wrapper verwenden werden. Das folgende Beispiel zeigt die Definition der `IUserData` verwaltete Schnittstelle:  
+## <a name="using-a-custom-marshaler"></a>Verwendung eines benutzerdefinierten Marshallers  
+ Wenn der benutzerdefinierte Marshaller abgeschlossen ist, können Sie es als ein benutzerdefinierter Wrapper für einen bestimmten Typ verwenden. Das folgende Beispiel zeigt die Definition der `IUserData` verwaltete Schnittstelle:  
   
  [!code-cpp[System.Runtime.InteropServices.ICustomMarshaler#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cpp/source.cpp#3)]
  [!code-csharp[System.Runtime.InteropServices.ICustomMarshaler#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cs/source.cs#3)]
  [!code-vb[System.Runtime.InteropServices.ICustomMarshaler#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/vb/source.vb#3)]  
   
- Im folgenden Beispiel die `IUserData` Benutzeroberfläche verwendet die `NewOldMarshaler` benutzerdefinierten Marshaller zum Aktivieren von nicht verwalteten Clientanwendungen übergeben ein `IOld` Schnittstelle zu der `DoSomeStuff` Methode. Die verwaltete Beschreibung der der `DoSomeStuff` -Methode übernimmt ein `INew` -Schnittstelle ein, wie im vorherigen Beispiel dargestellt, während die nicht verwaltete Version der `DoSomeStuff` akzeptiert ein `IOld` Schnittstellenzeiger, wie im folgenden Beispiel gezeigt.  
+ Im folgenden Beispiel die `IUserData` Schnittstelle verwendet die `NewOldMarshaler` benutzerdefinierten Marshaller zum Aktivieren von nicht verwalteten Client-Anwendungen übergeben eine `IOld` -Schnittstelle die `DoSomeStuff` Methode. Die verwaltete Beschreibung der der `DoSomeStuff` -Methode übernimmt eine `INew` Schnittstelle, wie im vorherigen Beispiel gezeigt, während die nicht verwaltete Version der `DoSomeStuff` akzeptiert eine `IOld` Schnittstellenzeiger, wie im folgenden Beispiel gezeigt.  
   
 ```  
 [uuid(9B2BAADA-0705-11D3-A0CD-00C04FA35826)]  
@@ -163,7 +165,7 @@ library UserLib {
 }  
 ```  
   
- Die Typbibliothek, die generiert wird, indem Sie die verwaltete Definition der exportieren `IUserData` ergibt die nicht verwaltete Definition dargestellt, die in diesem Beispiel wird anstelle der Standarddefinition ab. Die <xref:System.Runtime.InteropServices.MarshalAsAttribute> -Attribut angewendet wird, die `INew` -Argument in die verwaltete Definition der der `DoSomeStuff` Methode gibt an, dass das Argument einen benutzerdefinierten Marshaller, wie im folgenden Beispiel gezeigt verwendet.  
+ Die Typbibliothek, die generiert wird, indem Sie die verwaltete Definition der exportieren `IUserData` ergibt die nicht verwaltete Definition dargestellt, die in diesem Beispiel wird anstelle der Standarddefinition ab. Die <xref:System.Runtime.InteropServices.MarshalAsAttribute> -Attribut angewendet wird, die `INew` -Argument in die verwaltete Definition der der `DoSomeStuff` -Methode gibt an, dass das Argument ein benutzerdefiniertes Marshallers, wie im folgenden Beispiel gezeigt verwendet.  
   
  [!code-cpp[System.Runtime.InteropServices.ICustomMarshaler#4](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cpp/source.cpp#4)]
  [!code-csharp[System.Runtime.InteropServices.ICustomMarshaler#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.interopservices.icustommarshaler/cs/source.cs#4)]
@@ -175,7 +177,7 @@ library UserLib {
   
  In den vorherigen Beispielen wird der erste Parameter bereitgestellt, um die <xref:System.Runtime.InteropServices.MarshalAsAttribute> -Attribut ist der <xref:System.Runtime.InteropServices.UnmanagedType.CustomMarshaler?displayProperty=nameWithType> Enumerationswert `UnmanagedType.CustomMarshaler`.  
   
- Der zweite Parameter ist der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> Feld, die die Assembly qualifizierte Name des benutzerdefinierten Marshaller bereitstellt. Dieser Name besteht aus dem Namespace und die Klasse des benutzerdefinierten Marshaller (`MarshalType="MyCompany.NewOldMarshaler"`).  
+ Der zweite Parameter ist der <xref:System.Runtime.InteropServices.MarshalAsAttribute.MarshalType> Feld, das die Assembly qualifizierten Namen des benutzerdefinierten Marshallers angibt. Dieser Name setzt sich aus dem Namespace und die Klasse des benutzerdefinierten Marshallers (`MarshalType="MyCompany.NewOldMarshaler"`).  
   
  ]]></format>
     </remarks>
@@ -191,6 +193,8 @@ library UserLib {
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -225,6 +229,8 @@ library UserLib {
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -259,6 +265,8 @@ library UserLib {
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -291,6 +299,8 @@ library UserLib {
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -326,6 +336,8 @@ library UserLib {
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
