@@ -1,11 +1,11 @@
 <Type Name="TransferMode" FullName="System.ServiceModel.TransferMode">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="fd27ea071ce2cdc686ce977d83a9516b7b04aeb8" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="eb3a0b4f3d0f2b79019682d8846a12c4a818ab0a" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36410294" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37611749" />
   </Metadata>
   <TypeSignature Language="C#" Value="public enum TransferMode" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed TransferMode extends System.Enum" />
@@ -16,6 +16,7 @@
   <AssemblyInfo>
     <AssemblyName>System.ServiceModel</AssemblyName>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
@@ -33,13 +34,13 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Windows Communication Foundation (WCF)--Transporte unterstützen zwei Modi zum Übertragen von Nachrichten in jeder Richtung:  
+ Windows Communication Foundation (WCF)-Transporte unterstützen zwei Modi zum Übertragen von Nachrichten in jeder Richtung:  
   
 -   Bei gepufferten Übertragungen wird die gesamte Nachricht in einem Puffer zwischengespeichert, bis die Übertragung abgeschlossen ist.  
   
 -   Bei Stream-Übertragungen werden lediglich die Nachrichtenheader gepuffert, und der Nachrichtentext wird als Stream verfügbar gemacht, aus dem jeweils kleinere Bestandteile gelesen werden können.  
   
- Festlegen des Übertragungsmodus auf Streamed ermöglicht kommunikationsstream in beide Richtungen. Festlegen des Übertragungsmodus StreamedRequest oder StreamedResponse werden kommunikationsstream nur in der angegebenen Richtung ermöglicht.  
+ Festlegen des Übertragungsmodus auf Streamed ermöglicht kommunikationsstream in beide Richtungen. Festlegen des Übertragungsmodus StreamedRequest oder StreamedResponse ermöglicht kommunikationsstream nur in der angegebenen Richtung.  
   
  Stream-Übertragungen können die Skalierbarkeit eines Dienstes verbessern, indem sie große Speicherpuffer überflüssig machen. Ob die Änderung des Übertragungsmodus die Skalierbarkeit tatsächlich verbessert, hängt von der Größe der übertragenen Nachrichten ab. Verbesserungen der Skalierbarkeit sollten am deutlichsten zutage treten, wenn große Nachrichten Stream-Übertragungen anstelle gepufferter Übertragungen verwenden.  
   
@@ -49,20 +50,20 @@
   
  Die Entscheidung, ob Stream-Übertragungen oder gepufferte Übertragungen verwendet werden, ist eine lokale Entscheidung des Endpunkts für HTTP-Transporte. Bei HTTP-Übertragungen wird der Übertragungsmodus nicht über Verbindungen oder an Proxyserver oder andere Vermittler weitergegeben. Das Festlegen des Übertragungsmodus spiegelt sich nicht in der Beschreibung des Dienstvertrags wider. Nachdem Sie einen Proxy für einen Dienst erstellt haben, können Sie (dies ist zulässig, aber nicht erforderlich) die Konfigurationsdatei für Dienste bearbeiten, die mit Stream-Übertragungen verwendet werden sollen, um den Übertragungsmodus festzulegen. Bei TCP und Named Pipe-Transporten wird der Übertragungsmodus als Richtlinienassertion weitergegeben.  
   
- Verwenden den Übertragungsmodus Streamed bewirkt, dass die WCF-Laufzeit, einige Einschränkungen zu erzwingen.  
+ Verwenden den Übertragungsmodus Streamed bewirkt, dass die WCF-Laufzeit, um einige Einschränkungen zu erzwingen.  
   
 -   Vorgänge, die in einem Stream-Transport erfolgen, können einen Vertrag mit höchstens einem Eingabeparameter und/oder einem Ausgabeparameter auf der Ebene des Programmiermodells haben. Der Parameter entspricht dem gesamten Nachrichtentext, und es muss sich um <xref:System.ServiceModel.Channels.Message>, einen Untertyp von <xref:System.IO.Stream> oder um eine <xref:System.Xml.Serialization.IXmlSerializable>-Implementierung handeln. Ein Rückgabewert für einen Vorgang entspricht einem Ausgabeparameter.  
   
--   Einige WCF-Funktionen wie zuverlässiges Messaging und SOAP-nachrichtensicherheit verwenden gepufferte Nachrichten für Übertragungen. Dadurch können mögliche Leistungsvorteile durch das Streaming reduziert oder zunichte gemacht werden. Um einen Stream-Transport zu sichern, verwenden Sie nur die Sicherheit auf Transportebene oder eine Mischmodussicherheit, die WS-Security-Ansprüche mit der Transportsicherheit verbindet.  
+-   Einige WCF-Funktionen wie zuverlässiges Messaging und Sicherheit für SOAP-Nachrichtenebene verwenden gepufferte Nachrichten für Übertragungen. Dadurch können mögliche Leistungsvorteile durch das Streaming reduziert oder zunichte gemacht werden. Um einen Stream-Transport zu sichern, verwenden Sie nur die Sicherheit auf Transportebene oder eine Mischmodussicherheit, die WS-Security-Ansprüche mit der Transportsicherheit verbindet.  
   
 -   SOAP-Header werden immer gepuffert, auch wenn der Übertragungsmodus auf Streamed festgelegt ist. Die Header für eine Nachricht dürfen die Größe des MaxBufferSize-Transportkontingents nicht überschreiten, das in den verschiedenen Bindungen und Bindungselementen verfügbar gemacht wird.  
   
- Ändern den Übertragungsmodus von gepufferte in Streamed ändert sich auch auf die systemeigene kanalform von TCP- und named Pipe-Transporten. Die systemeigene Kanalform für gepufferte Übertragungen ist <xref:System.ServiceModel.Channels.IDuplexSessionChannel>. Die systemeigenen Kanäle für Streamingübertragungen sind <xref:System.ServiceModel.Channels.IRequestChannel> und <xref:System.ServiceModel.Channels.IReplyChannel>. Eine Folge davon ist, dass sitzungsbasierten Dienstverträge nicht mit Transportstreaming verwendet werden können.  
+ Änderung des Übertragungsmodus von gepufferte zu Streamed ändert sich auch die systemeigene kanalform von TCP- und named Pipe-Transporten. Die systemeigene Kanalform für gepufferte Übertragungen ist <xref:System.ServiceModel.Channels.IDuplexSessionChannel>. Die systemeigenen Kanäle für Streamingübertragungen sind <xref:System.ServiceModel.Channels.IRequestChannel> und <xref:System.ServiceModel.Channels.IReplyChannel>. Eine Folge davon ist, dass sitzungsbasierten Dienstverträge nicht mit Transportstreaming verwendet werden können.  
   
    
   
 ## Examples  
- Im folgenden Codebeispiel wird gezeigt, die Einstellung der <xref:System.ServiceModel.TransferMode> Eigenschaft Streamed über Code:  
+ Das folgende Codebeispiel zeigt die Einstellung der <xref:System.ServiceModel.TransferMode> Eigenschaft Streamed mithilfe von Code:  
   
  **c#**  
   
@@ -99,6 +100,7 @@ CustomBinding binding = new CustomBinding(encoder, transport);
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
@@ -126,6 +128,7 @@ CustomBinding binding = new CustomBinding(encoder, transport);
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
@@ -153,6 +156,7 @@ CustomBinding binding = new CustomBinding(encoder, transport);
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
@@ -180,6 +184,7 @@ CustomBinding binding = new CustomBinding(encoder, transport);
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>

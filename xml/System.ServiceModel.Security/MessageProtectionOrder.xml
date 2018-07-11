@@ -1,11 +1,11 @@
 <Type Name="MessageProtectionOrder" FullName="System.ServiceModel.Security.MessageProtectionOrder">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="47b28b0fb20f3ab058671799bffbb846577fd307" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="47dc2ba10628aa0553fd5fbb771349a1b0c301c6" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36612791" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37614655" />
   </Metadata>
   <TypeSignature Language="C#" Value="public enum MessageProtectionOrder" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed MessageProtectionOrder extends System.Enum" />
@@ -15,6 +15,7 @@
   <TypeSignature Language="F#" Value="type MessageProtectionOrder = " />
   <AssemblyInfo>
     <AssemblyName>System.ServiceModel</AssemblyName>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
@@ -28,12 +29,12 @@
 ## Remarks  
  Diese Enumeration wird in Verbindung mit der <xref:System.ServiceModel.Channels.AsymmetricSecurityBindingElement.MessageProtectionOrder%2A?displayProperty=nameWithType>-Eigenschaft vom <xref:System.ServiceModel.Channels.AsymmetricSecurityBindingElement> und der <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement.MessageProtectionOrder%2A?displayProperty=nameWithType>-Eigenschaft der <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement>-Klassen verwendet.  
   
- Wenn eine Nachricht ist anfällig für einen digestangriff (z. B., wenn die Nachricht ist kurz, oder die Entropie niedrig ist), sollten Sie die Option SignBeforeEncryptAndEncryptSignature oder EncryptBeforeSign verwenden. (*Entropie* wird von einem Server oder einem Client bereitgestellte zufällige Daten und zum Erstellen eines freigegebenen Schlüssels zum Verschlüsseln und Entschlüsseln von Daten verwendet wird.)  
+ Wenn eine Nachricht ist anfällig für einen hashwertangriff (z. B., wenn die Nachricht ist kurz, oder die Entropie niedrig ist), sollten Sie die Option SignBeforeEncryptAndEncryptSignature oder EncryptBeforeSign verwenden. (*Entropie* wird von einem Server und/oder einem Client bereitgestellte zufällige Daten, und wird verwendet, um einen gemeinsam verwendeten Schlüssel zum Verschlüsseln und Entschlüsseln von Daten zu erstellen.)  
   
 ## <a name="what-is-ordered"></a>Was passiert?  
- WCF bietet drei verschiedene Schutzebenen, die bestimmen, wie Nachrichten werden über SOAP-nachrichtensicherheit gesichert. Der Standardwert ist SignBeforeEncryptAndEncryptSignature. Mit dieser Einstellung wird zuerst die Nachricht signiert, der Nachrichtentext verschlüsselt und dann die XML-Signatur verschlüsselt. Dies reduziert die Wahrscheinlichkeit für einen Angriff auf die Signatur durch Erraten der Verschlüsselung.  
+ WCF bietet drei verschiedene Schutzebenen, die bestimmen, wie Nachrichten werden mithilfe von SOAP-nachrichtensicherheit gesichert. Der Standardwert ist SignBeforeEncryptAndEncryptSignature. Mit dieser Einstellung wird zuerst die Nachricht signiert, der Nachrichtentext verschlüsselt und dann die XML-Signatur verschlüsselt. Dies reduziert die Wahrscheinlichkeit für einen Angriff auf die Signatur durch Erraten der Verschlüsselung.  
   
- Bei Verwendung der Standardeinstellung ist aber mit Auswirkungen auf die Leistung zu rechnen. Eine erhöhte Sicherheit führt in der Regel zu geringerer Leistung. Durch die Verschlüsselung der Signatur kann die Leistung um 10 bis 40 Prozent sinken. Wenn der Dateninhalt der Nachricht mit niedriger Wert weist Leistungsdurchsatz wichtiger ist, können Sie SignBeforeEncrypt. Bei dieser Einstellung wird der Signaturhashwert in Klartext gesendet, weswegen die Nachricht bei geringer Entropie anfälliger gegenüber Guess-and-Verify-Angriffen (Raten und Überprüfen) ist.  
+ Bei Verwendung der Standardeinstellung ist aber mit Auswirkungen auf die Leistung zu rechnen. Eine erhöhte Sicherheit führt in der Regel zu geringerer Leistung. Durch die Verschlüsselung der Signatur kann die Leistung um 10 bis 40 Prozent sinken. Wenn der Dateninhalt der Nachricht gering ist und Leistungsdurchsatz wichtiger ist, verwenden Sie SignBeforeEncrypt. Bei dieser Einstellung wird der Signaturhashwert in Klartext gesendet, weswegen die Nachricht bei geringer Entropie anfälliger gegenüber Guess-and-Verify-Angriffen (Raten und Überprüfen) ist.  
   
 ## <a name="custom-bindings-only"></a>Nur benutzerdefinierte Bindungen  
  Um die `MessageProtectionOrder`-Eigenschaft zu ändern, ist die Erstellung einer benutzerdefinierten Sicherheitsbindung erforderlich. Weitere Informationen zum Erstellen benutzerdefinierter Bindungen finden Sie unter [Erstellen benutzerdefinierter Bindungen](~/docs/framework/wcf/extending/creating-user-defined-bindings.md). Weitere Informationen zum Erstellen einer benutzerdefinierten Bindung für einen bestimmten Authentifizierungsmodus finden Sie unter [Vorgehensweise: Erstellen eines SecurityBindingElement für einen angegebenen Authentifizierungsmodus](~/docs/framework/wcf/feature-details/how-to-create-a-securitybindingelement-for-a-specified-authentication-mode.md).  
@@ -41,7 +42,7 @@
    
   
 ## Examples  
- Das folgende Beispiel erstellt eine <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement> Element und legt dessen <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement.MessageProtectionOrder%2A> Eigenschaft SignBeforeEncrypt.  
+ Das folgende Beispiel erstellt eine <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement> -Element und legt seine <xref:System.ServiceModel.Channels.SymmetricSecurityBindingElement.MessageProtectionOrder%2A> Eigenschaft SignBeforeEncrypt.  
   
  [!code-csharp[c_CustomBinding#3](~/samples/snippets/csharp/VS_Snippets_CFX/c_custombinding/cs/c_custombinding.cs#3)]
  [!code-vb[c_CustomBinding#3](~/samples/snippets/visualbasic/VS_Snippets_CFX/c_custombinding/vb/source.vb#3)]  
@@ -63,6 +64,7 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -83,6 +85,7 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -103,6 +106,7 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
