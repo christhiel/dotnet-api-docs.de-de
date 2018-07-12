@@ -1,11 +1,11 @@
 <Type Name="SessionStateStoreProviderBase" FullName="System.Web.SessionState.SessionStateStoreProviderBase">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="750f19ccbe5ffeeefe94b6eba1845e3877c47a61" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="f67b526b76fe2727eda8b0a31e7600ff75016c6f" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36594042" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37602811" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class SessionStateStoreProviderBase : System.Configuration.Provider.ProviderBase" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit SessionStateStoreProviderBase extends System.Configuration.Provider.ProviderBase" />
@@ -15,6 +15,7 @@
   <TypeSignature Language="F#" Value="type SessionStateStoreProviderBase = class&#xA;    inherit ProviderBase" />
   <AssemblyInfo>
     <AssemblyName>System.Web</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
@@ -27,32 +28,32 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- ASP.NET-Sitzungsstatus liest und schreibt die Sitzungsdaten aus und in einem Datenspeicher, der Status einer Sitzung mit Anbieter speichern. Ein Sitzungsstatus Speicheranbieter ist eine Klasse, erbt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> abstrakte Klasse und Außerkraftsetzungen Membern mit Implementierungen, die auf die Daten zu speichern. Der Sitzungsstatus Speicheranbieter wird aufgerufen, indem die <xref:System.Web.SessionState.SessionStateModule> Klasse während der Verarbeitung von einer ASP.NET-Seite für die Kommunikation mit dem Datenspeicher für die Speicherung und das Abrufen von Sitzungsvariablen und zugehörigen Sitzungsinformationen wie z. B. den Timeoutwert.  
+ ASP.NET-Sitzungszustand liest und schreibt, dass die Sitzungsdaten aus dem und in einem Datenspeicher, der Status einer Sitzung mit Anbieter zu speichern. Ein Sitzungszustandsspeicher-Anbieter ist eine Klasse, erbt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> abstrakte Klasse und Außerkraftsetzungen Membern mit Implementierungen, die spezifisch für die Daten zu speichern. Der Anbieter Sitzungszustandsspeicher-wird aufgerufen, durch die <xref:System.Web.SessionState.SessionStateModule> Klasse während der Verarbeitung einer ASP.NET-Seite für die Kommunikation mit dem Datenspeicher für den Speicher und das Abrufen von Sitzungsvariablen und die zugehörigen Sitzungsinformationen wie z. B. den Timeoutwert.  
   
- Sitzungsdaten innerhalb jeder ASP.NET-Anwendung werden separat gespeichert, für die einzelnen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Eigenschaft. ASP.NET-Anwendungen freigeben Sitzungsdaten nicht.  
+ Sitzungsdaten innerhalb jeder ASP.NET-Anwendung werden separat gespeichert, für die einzelnen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Eigenschaft. Sitzungsdaten freigeben ASP.NET-Anwendungen nicht.  
   
- Sie können angeben, dass eine benutzerdefinierte <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung für eine ASP.NET-Anwendung durch Festlegen der `mode` Attribut des der `sessionState` Konfigurationselement hinzu <xref:System.Web.SessionState.SessionStateMode.Custom> und die `customProvider` -Attribut auf den Namen des benutzerdefinierten Anbieters als Im Beispiel in diesem Thema gezeigt.  
+ Können Sie angeben, ein benutzerdefiniertes <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung für eine ASP.NET-Anwendung durch Festlegen der `mode` Attribut der `sessionState` Konfigurationselement, <xref:System.Web.SessionState.SessionStateMode.Custom> und die `customProvider` auf den Namen des benutzerdefinierten Anbieters, die als Attribut Im Beispiel in diesem Thema gezeigt.  
   
-## <a name="locking-session-store-data"></a>Sperren-Sitzung Speichern von Daten  
- Da ASP.NET-Anwendungen Multithread zur Unterstützung für gleichzeitige Anforderungen reagiert werden, ist es möglich, dass gleichzeitige Anforderungen versuchen, auf die gleiche Sitzungsinformationen zugreifen. Angenommen Sie, in dem mehrere Frames in einem Frameset auf dieselbe Anwendung zugreifen. Die separaten Anforderungen für jeden Frame im Frameset können auf dem Webserver auf verschiedenen Threads gleichzeitig ausgeführt werden. Wenn die ASP.NET-Seiten für jeden Frame Sitzungszustands Variablen zuzugreifen, konnte, müssen Sie mehrere Threads gleichzeitig Zugriff auf das Speichern des Sitzungszustands.  
+## <a name="locking-session-store-data"></a>Sperren Sitzung Store-Daten  
+ Da es sich bei ASP.NET-Anwendungen Multithread zur Unterstützung für gleichzeitige Anforderungen reagiert werden, ist es möglich, dass gleichzeitige Anforderungen versuchen, auf die gleiche Sitzungsinformationen zugreifen. Erwägen Sie ein Szenario, in dem mehrere Frames in einem Frameset derselben Anwendung zugreifen. Die separaten Anforderungen für jeden Frame im Frameset können auf dem Webserver auf verschiedenen Threads gleichzeitig ausgeführt werden. Wenn die ASP.NET-Seiten für jeden Frame Sitzungszustandsvariablen zugreifen, können Sie mehrere Threads gleichzeitig auf den Sitzungsspeicher haben.  
   
- Zur Vermeidung von Datenkonflikten in der Sitzung Store und unerwartetem Verhalten führen Sitzungszustands, der <xref:System.Web.SessionState.SessionStateModule> und <xref:System.Web.SessionState.SessionStateStoreProviderBase> Klassen umfassen Lock-Funktionen, die die Sitzung das Speicherelement für eine bestimmte Sitzung für die Dauer der exklusiv gesperrt der die Ausführung einer ASP.NET-Seite. Beachten Sie, dass selbst bei der <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> Attribut markiert ist, als `ReadOnly`, andere ASP.NET-Seiten in derselben Anwendung möglicherweise in der Lage, zum Speichern Sitzungszustands zu schreiben, damit eine Anforderung für nur-Lese Sitzung, die Daten aus dem Store möglicherweise immer noch warten auf Endbenutzer Daten, um gesperrt freigegeben.  
+ Um Datenkollisionen Sitzungsspeicher und unerwartetem Sitzungszustands-Verhalten zu vermeiden der <xref:System.Web.SessionState.SessionStateModule> und <xref:System.Web.SessionState.SessionStateStoreProviderBase> Klassen umfassen Lock-Funktionen, die im Sitzungsspeicher für eine bestimmte Sitzung für die Dauer der exklusiv gesperrt der die Ausführung einer ASP.NET-Seite. Beachten Sie, selbst wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> Attribut markiert ist, als `ReadOnly`, andere ASP.NET-Seiten in der gleichen Anwendung möglicherweise in der Sitzungsspeicher zu schreiben, damit eine Anforderung für nur-Lese Sitzung, die Daten aus dem Speicher können letztendlich trotzdem noch warten auf Daten gesperrt freigegeben.  
   
- Eine Sperre wird festgelegt, auf Daten am Anfang der Anforderung im Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode. Wenn die Anforderung abgeschlossen ist, die Sperre wird während des Aufrufs der <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode.  
+ Eine Sperre festgelegt ist, auf Daten im Sitzungsspeicher am Anfang der Anforderung, in dem Aufruf von der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode. Wenn die Anforderung abgeschlossen ist, wird die Sperre aufgehoben, während des Aufrufs der <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode.  
   
- Wenn die <xref:System.Web.SessionState.SessionStateModule> Objekt trifft gesperrte Sitzungsdaten während des Aufrufs entweder die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> oder <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> -Methode, es wird erneut angefordert die Sitzungsdaten in Intervallen von halben Sekunde, bis Sie die Sperre wird aufgehoben, oder die Zeit, die die Sitzungsdaten gesperrt überschreitet den Wert von der <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Eigenschaft. Wenn das Timeout für die Ausführung überschritten wird, die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, wird die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Sitzung Speicher freizugeben, und fordern die Sitzung Speichern von Daten zu diesem Zeitpunkt.  
+ Wenn die <xref:System.Web.SessionState.SessionStateModule> Objekt trifft die gesperrten Daten während des Aufrufs von entweder die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> oder <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> -Methode, fordert es die Sitzungsdaten halbe Sekunden bis die Sperre aufgehoben wird oder die Zeit, die die Sitzungsdaten gesperrt überschreitet den Wert von der <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Eigenschaft. Wenn das Ausführungstimeout überschritten wird, die <xref:System.Web.SessionState.SessionStateModule> Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Daten im Sitzungsspeicher – kostenlos und Anfordern der Sitzungsspeicher-Daten zu diesem Zeitpunkt.  
   
- Da Sitzung Speicher gesperrt Daten möglicherweise durch einen Aufruf von freigegeben wurden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode in einem separaten Thread vor dem Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode für die aktuelle Antwort, es konnte versucht werden, festgelegt und Freigeben von Sitzungszustandsspeicher-Daten, die bereits veröffentlicht und von einer anderen Sitzung geändert. Zur Vermeidung dieser Situation die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden geben einen Sperrbezeichner zurück. Diese Sperren-ID muss mit jeder Anforderung zum Ändern von gesperrten Store-Sitzung Daten enthalten sein. Store-Sitzung Daten geändert werden, nur dann, wenn der Sperrbezeichner im Datenspeicher mit dem vom übereinstimmt der <xref:System.Web.SessionState.SessionStateModule>.  
+ Da Sitzungsspeicher gesperrt Daten möglicherweise durch einen Aufruf von freigegeben wurden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode in einem separaten Thread vor dem Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode für die aktuelle Antwort, könnte versucht festlegen und Sitzungszustandsspeicher-Daten, die Version bereits veröffentlicht und von einer anderen Sitzung geändert. Zum Vermeiden dieser Situation die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden geben einen Sperrbezeichner zurück. Diese Sperren-ID muss bei jeder Anforderung zum Ändern von Daten der gesperrten Sitzungsspeicher enthalten sein. Sitzungsspeicher Daten geändert werden, nur dann, wenn der Sperrbezeichner im Datenspeicher die vom Sperren-ID entspricht der <xref:System.Web.SessionState.SessionStateModule>.  
   
-## <a name="deleting-expired-session-store-data"></a>Löschen von abgelaufenen Sitzung Speichern von Daten  
- Wenn die <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> Methode für eine bestimmte Sitzung aufgerufen wird, die Daten für diese Sitzung werden gelöscht, von dem Daten-Speicher mithilfe der <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode; andernfalls Daten verbleiben im Sitzungsdatenspeicher auf Server zukünftige Anforderungen für die Sitzung. Es liegt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> -Implementierung, dass abgelaufene Sitzungs-Daten zu löschen.  
+## <a name="deleting-expired-session-store-data"></a>Löschen von abgelaufenen Sitzungs-Store-Daten  
+ Bei der <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> Methode wird aufgerufen, für eine bestimmte Sitzung, die Daten für diese Sitzung werden gelöscht, aus der Daten unter Verwendung der <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode; andernfalls die Daten verbleiben in Sitzungsdatenspeicher auf zukünftige serveranforderungen für die Sitzung. Es liegt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung, dass abgelaufene Sitzungs-Daten zu löschen.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
- Im folgenden Codebeispiel wird veranschaulicht, die Datei "Web.config" für eine ASP.NET-Anwendung, die Verwendung einen benutzerdefinierten Sitzungszustandsspeicher-Anbieter konfiguriert ist.  
+ Das folgende Codebeispiel zeigt die Datei "Web.config" für eine ASP.NET-Anwendung, die Verwendung ein benutzerdefinierten Speicheranbieters für Sitzungszustands-konfiguriert ist.  
   
 ```  
 <configuration>  
@@ -87,6 +88,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
@@ -96,12 +98,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Sie sind nicht erforderlich, einen Konstruktor für eine Klasse implementieren, erbt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> abstrakte Klasse. Initialisierung Werte für eine <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung übergeben werden, um die <xref:System.Configuration.Provider.ProviderBase.Initialize%2A> methodenimplementierung.  
+ Sie sind nicht erforderlich, einen Konstruktor für eine Klasse zu implementieren, erbt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> abstrakte Klasse. Initialisierung Werte für eine <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung übergeben werden, um die <xref:System.Configuration.Provider.ProviderBase.Initialize%2A> methodenimplementierung.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -117,6 +119,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -135,18 +138,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode am Anfang einer Anforderung für eine ASP.NET-Seite während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis. Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode wird aufgerufen, wenn:  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> -Methode zu Beginn einer Anforderung für eine ASP.NET-Seite während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis. Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode wird aufgerufen, wenn:  
   
--   die eingehende Anforderung hat keine Sitzungs-ID, oder  
+-   die eingehende Anforderung enthält keine Sitzungs-ID, oder  
   
--   die eingehende Anforderung verfügt über eine Sitzungs-ID, aber die Sitzung wird im Datenspeicher nicht gefunden.  
+-   die eingehende Anforderung enthält eine Sitzungs-ID, aber die Sitzung wird im Datenspeicher nicht gefunden.  
   
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode erstellt ein neues <xref:System.Web.SessionState.SessionStateStoreData> Objekt mit einem leeren <xref:System.Web.SessionState.ISessionStateItemCollection> -Objekt, ein <xref:System.Web.HttpStaticObjectsCollection> Auflistung und der angegebenen `timeout` Wert. Die <xref:System.Web.HttpStaticObjectsCollection> Auflistung für die ASP.NET-Anwendung kann abgerufen werden, mithilfe der <xref:System.Web.SessionState.SessionStateUtility.GetSessionStaticObjects%2A> Methode.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode erstellt ein neues <xref:System.Web.SessionState.SessionStateStoreData> Objekt mit einer leeren <xref:System.Web.SessionState.ISessionStateItemCollection> Objekt ein <xref:System.Web.HttpStaticObjectsCollection> Auflistung verwendet werden soll, und der angegebenen `timeout` Wert. Die <xref:System.Web.HttpStaticObjectsCollection> Auflistung für die ASP.NET-Anwendung kann abgerufen werden, mithilfe der <xref:System.Web.SessionState.SessionStateUtility.GetSessionStaticObjects%2A> Methode.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -162,6 +165,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -181,18 +185,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode wird verwendet, mit Sitzungen bei der `cookieless` und `regenerateExpiredSessionId` Attribute sind beide `true`. Mit der `regenerateExpiredSessionId attribute` festgelegt `true` bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt zum Generieren einer neuen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert, wenn ein abgelaufenes <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> -Wert festgestellt wird.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode wird verwendet, mit Sitzungen bei der `cookieless` und `regenerateExpiredSessionId` Attribute sind beide `true`. Mit der `regenerateExpiredSessionId attribute` festgelegt `true` bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt um eine neue <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert, wenn ein abgelaufenes <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert festgestellt wird.  
   
- Der Prozess der Generierung einer neuen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert muss der Browser an eine URL, die den neu generierten enthält umgeleitet <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode wird aufgerufen, während die ursprüngliche Anforderung, die ein abgelaufenes enthält <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Nach der <xref:System.Web.SessionState.SessionStateModule> -Objekt abruft, einen neuen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert, der um den abgelaufenen Wert zu ersetzen, ruft es die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode, um einen nicht initialisierten Eintrag im Datenspeicher des Sitzungszustands hinzuzufügen. Der Browser wird dann an die URL mit dem neu generierten umgeleitet <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Das Vorhandensein des Eintrags im Sitzungsdatenspeicher nicht initialisiert wird sichergestellt, dass die umgeleitete Anforderung mit dem neu generierten <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert nicht für eine Anforderung für eine Sitzung für abgelaufene fälschlicherweise und stattdessen als eine neue Sitzung behandelt.  
+ Der Prozess der Generierung einer neuen <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert erforderlich ist, der Browser umgeleitet werden, um eine URL, die neu generierten enthält <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode wird aufgerufen, während der ursprünglichen Anforderung, die ein abgelaufenes enthält <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Nach der <xref:System.Web.SessionState.SessionStateModule> -Objekt abruft, eine neue <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert, der um den abgelaufenen Wert zu ersetzen, ruft es die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode, um einen nicht initialisierten Eintrag mit dem Sitzungszustand Datenspeicher hinzuzufügen. Der Browser wird dann umgeleitet, auf die URL, die mit dem neu generierten <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert. Das Vorhandensein der nicht initialisierte Eintrag im Sitzungsdatenspeicher wird sichergestellt, dass die umgeleitete Anforderung mit dem neu generierten <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert ist nicht für eine Anforderung für eine abgelaufene Sitzung gehalten und ist, sondern als eine neue Sitzung behandelt.  
   
- Der nicht initialisierte Eintrag im Sitzungsdatenspeicher bezieht sich auf den neu generierten <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> -Wert und enthält nur Standardwerte, z. B. ein Ablaufdatum und die Uhrzeit und ein Wert, der entspricht der `actionFlags` Parameter von der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A>und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden. Der nicht initialisierte Eintrag im Sitzungsstatus Speicher einschließen sollte ein `actionFlags` Wert gleich der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> -Enumerationswert. Dieser Wert wird zum Übergeben der <xref:System.Web.SessionState.SessionStateModule> -Objekts, indem die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden, und informiert den <xref:System.Web.SessionState.SessionStateModule> Objekt, das die aktuelle Sitzung eine neue, aber nicht initialisierte Sitzung. Die <xref:System.Web.SessionState.SessionStateModule> Objekt anschließend die neue Sitzung zu initialisieren und löst die `Session_OnStart` Ereignis.  
+ Der nicht initialisierte Eintrag im Sitzungsdatenspeicher bezieht sich auf den neu generierten <xref:System.Web.SessionState.HttpSessionState.SessionID%2A> Wert ein, und enthält nur Standardwerte aufweisen, einschließlich ein Ablaufdatum und die Uhrzeit und ein Wert, der die entspricht der `actionFlags` Parameter, der die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A>und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden. Sollte der nicht initialisierte Eintrag in der Sitzungszustandsspeicher enthalten eine `actionFlags` Wert gleich der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> Enumerationswert. Dieser Wert wird übergeben, um die <xref:System.Web.SessionState.SessionStateModule> Objekts, indem die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> und <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methoden, und informiert den <xref:System.Web.SessionState.SessionStateModule> Objekt, das die aktuelle Sitzung eine neue, aber nicht initialisierte Sitzung. Die <xref:System.Web.SessionState.SessionStateModule> Objekt anschließend initialisieren Sie die neue Sitzung und löst die `Session_OnStart` Ereignis.  
   
- Weitere Informationen zu Sitzungen ohne Cookies, finden Sie unter der <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> Eigenschaft.  
+ Weitere Informationen zu Sitzungen ohne Cookies, finden Sie unter den <xref:System.Web.SessionState.HttpSessionState.IsCookieless%2A> Eigenschaft.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -208,6 +212,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -220,12 +225,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.Dispose%2A?displayProperty=nameWithType> Methode wird aufgerufen, wenn die <xref:System.Web.SessionState.SessionStateModule.Dispose%2A?displayProperty=nameWithType> Methode, die beim Schließen der Anwendungsdomäne ausgeführt wird. Klassen, erben die <xref:System.Web.SessionState.SessionStateStoreProviderBase> Klasse kann diese Methode verwenden, um nicht mehr verwendeten Ressourcen frei.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.Dispose%2A?displayProperty=nameWithType> Methode wird aufgerufen, wenn die <xref:System.Web.SessionState.SessionStateModule.Dispose%2A?displayProperty=nameWithType> Methode, die beim Schließen der Anwendungsdomäne ausgeführt wird. Klassen, erben die <xref:System.Web.SessionState.SessionStateStoreProviderBase> Klasse kann diese Methode zum Freigeben von Ressourcen nicht mehr in Verwendung verwenden.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -241,6 +246,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -256,12 +262,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.EndRequest%2A> Methode am Ende einer Anforderung für eine ASP.NET-Seite während der <xref:System.Web.HttpApplication.EndRequest> Ereignis. Sie können die <xref:System.Web.SessionState.SessionStateStoreProviderBase.EndRequest%2A> Methode, um Ihren Sitzungszustandsspeicher-Anbieter erforderlichen pro Anforderung Bereinigung auszuführen.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.EndRequest%2A> Methode am Ende einer Anforderung für eine ASP.NET-Seite, während die <xref:System.Web.HttpApplication.EndRequest> Ereignis. Sie können die <xref:System.Web.SessionState.SessionStateStoreProviderBase.EndRequest%2A> Methode zum Durchführen von Bereinigungen pro Anforderung den Sitzungszustandsspeicher erforderlich.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -277,6 +283,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -303,22 +310,22 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode am Anfang einer Anforderung während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis, wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz zur `ReadOnly`. Wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz zur `true`, <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> -Methode zu Beginn einer Anforderung während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis, wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz auf `ReadOnly`. Wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz auf `true`, <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode.  
   
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode gibt ein <xref:System.Web.SessionState.SessionStateStoreData> Objekt bestückt mit Sitzungsinformationen aus dem Datenspeicher und aktualisiert das Ablaufdatum der Sitzungsdaten. Wenn keine Sitzungselement Daten im Datenspeicher gefunden werden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode legt die `locked` `out` Parameter `false` und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode zum Erstellen eines neuen Sitzung-Elements im Datenspeicher.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode gibt eine <xref:System.Web.SessionState.SessionStateStoreData> Objekt mit Informationen aus dem Datenspeicher gefüllt und aktualisiert das Ablaufdatum der Sitzungsdaten. Wenn keine Sitzungs-Element Daten mit dem Datenspeicher gefunden werden. der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode legt die `locked` `out` Parameter, um `false` und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode, um eine neue Sitzungs-Element im Datenspeicher zu erstellen.  
   
- Wenn Sitzungselement Daten im Datenspeicher gefunden werden, aber die Daten gesperrt werden der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode legt die `locked` `out` Parameter `true`, legt der `lockAge` `out` Parameter für das aktuelle Datum und die Uhrzeit abzüglich des Datums und die Uhrzeit, wann das Element gesperrt wurde (die aus dem Datenspeicher abgerufen wird), legt die `lockId` `out` Parameter für den Sperrbezeichner abgerufen wird, aus dem Datenspeicher und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode erneut nach einer halben Sekunde Intervall versucht, die Sitzung Elementinformationen abgerufen werden sollen.  
+ Wenn Sitzungselement Daten im Datenspeicher gefunden werden, aber die Daten gesperrt werden der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode wird die `locked` `out` Parameter, um `true`, legt der `lockAge` `out` Parameter, um das aktuelle Datum und Uhrzeit abzüglich des Datums und die Uhrzeit, wenn das Element gesperrt war (die aus dem Datenspeicher abgerufen wird), legt die `lockId` `out` Parameter auf den Sperrbezeichner abgerufen wird, aus dem Datenspeicher und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode später als eine halbe Sekunde Intervall versuchen, die Sitzungselementinformationen abzurufen.  
   
- Wenn der Wert, der `lockAge` `out` Parametersatz ist größer als die <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert, und dann die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Sperre für die Sitzung-Elementdaten, und ruft dann deaktivieren der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> -Methode erneut.  
+ Wenn der Wert, der `lockAge` `out` -Parameter festgelegt wird, überschreitet der <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert, die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft der <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Sperre für die Sitzungs-Element Daten, und ruft dann Löschen der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> -Methode erneut.  
   
- Die `actionFlags` Parameter wird verwendet, wenn sowohl die `cookieless` und `regenerateExpiredSessionId` Attribute werden festgelegt, um `true`. Ein `actionFlags` Wert festgelegt wird, um <xref:System.Web.SessionState.SessionStateActions.InitializeItem> gibt an, dass der Eintrag im Sitzungsdatenspeicher eine neue Sitzung, die die Initialisierung sind erforderlich. Nicht initialisiertes Einträge im Sitzungsdatenspeicher werden erstellt, durch einen Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode. Wenn das Element aus dem Datenspeicher für die Sitzung nicht initialisiert, ist die `actionFlags` Parameter auf 0 (null) festgelegt.  
+ Die `actionFlags` Parameter wird verwendet, wenn sowohl die `cookieless` und `regenerateExpiredSessionId` Attribute werden festgelegt, um `true`. Ein `actionFlags` Wert festgelegt wird, um <xref:System.Web.SessionState.SessionStateActions.InitializeItem> gibt an, dass der Eintrag im Sitzungsdatenspeicher eine neue Sitzung, die Initialisierung erforderlich ist. Nicht initialisierte Einträge im Sitzungsdatenspeicher werden erstellt, durch einen Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode. Wenn das Element aus dem Sitzungsdatenspeicher nicht initialisiert, ist die `actionFlags` Parameter auf 0 (null) festgelegt.  
   
- Benutzerdefinierte Sitzungszustandsspeicher-Implementierer, die Sitzungen ohne Cookies unterstützen sollten Festlegen der `actionFlags` `out` auf den Wert aus dem Datenspeicher der Sitzung für das aktuelle Element zurückgegeben. Wenn die `actionFlags` Parameterwert für die angeforderte Sitzung-Speicher gleich der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> -Enumerationswert, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode sollte legen Sie den Wert im Datenspeicher auf 0 (null), nach dem Festlegen der `actionFlags` `out` Parameter.  
+ Benutzerdefinierte Sitzungszustandsspeicher-Implementierungen, die Sitzungen ohne Cookies unterstützen sollten Festlegen der `actionFlags` `out` Parameter, um den Wert aus dem Sitzungsdatenspeicher für das aktuelle Element zurückgegeben. Wenn die `actionFlags` Wert für den angeforderten Speichern des Sitzungszustands-Element entspricht der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> -Enumerationswert, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode sollte den Wert festgelegt, in den Datenspeicher und 0 (null), nach dem Festlegen der `actionFlags` `out` Parameter.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -334,6 +341,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -360,18 +368,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode am Anfang einer Anforderung während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis, wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz zur `true`, dies ist die Standardeinstellung. Wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz zur `ReadOnly`, <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> -Methode zu Beginn einer Anforderung während der <xref:System.Web.HttpApplication.AcquireRequestState> Ereignis, wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz auf `true`, dies ist die Standardeinstellung. Wenn die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz auf `ReadOnly`, <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItem%2A> Methode.  
   
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode gibt ein <xref:System.Web.SessionState.SessionStateStoreData> Objekt, das mit Sitzungsinformationen aus dem Datenspeicher aufgefüllt aktualisiert das Ablaufdatum der gespeicherten Daten und sperrt die Sitzung Elementdaten im Datenspeicher für die Dauer der Anforderung. Wenn keine Sitzungselement Daten im Datenspeicher gefunden werden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode legt die `locked` `out` Parameter `false` und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode zum Erstellen eines neuen Sitzung-Elements im Datenspeicher. Wenn Sitzungselement Daten im Datenspeicher gefunden werden, aber die Daten gesperrt werden der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode legt die `locked` `out` Parameter `true`, legt der `lockAge` `out` Parameter für das aktuelle Datum und die Uhrzeit abzüglich des Datums und die Uhrzeit, wann das Element gesperrt wurde (die aus dem Datenspeicher abgerufen wird), legt die `lockId` `out` Parameter für den Sperrbezeichner abgerufen wird, aus dem Datenspeicher und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode erneut nach einer halben Sekunde Intervall versucht wird, rufen Sie die Sitzungselement Informationen und eine Sperre für die Daten zu erhalten. Wenn der Wert, der `lockAge` `out` Parametersatz überschreitet die <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert, und dann die <xref:System.Web.SessionState.SessionStateModule> Aufrufe der <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Sperre für die Sitzung-Elementdaten, und ruft dann deaktivieren der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> -Methode erneut.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode gibt eine <xref:System.Web.SessionState.SessionStateStoreData> -Objekt mit den Informationen aus dem Datenspeicher aktualisiert das Ablaufdatum der gespeicherten Daten und sperrt die Sitzungs-Element Daten im Datenspeicher für die Dauer der Anforderung. Wenn keine Sitzungs-Element Daten mit dem Datenspeicher gefunden werden. der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode legt die `locked` `out` Parameter, um `false` und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateNewStoreData%2A> Methode, um eine neue Sitzungs-Element im Datenspeicher zu erstellen. Wenn Sitzungselement Daten im Datenspeicher gefunden werden, aber die Daten gesperrt werden der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode wird die `locked` `out` Parameter, um `true`, legt der `lockAge` `out` Parameter, um das aktuelle Datum und Uhrzeit abzüglich des Datums und die Uhrzeit, wenn das Element gesperrt war (die aus dem Datenspeicher abgerufen wird), legt die `lockId` `out` Parameter auf den Sperrbezeichner abgerufen wird, aus dem Datenspeicher und gibt `null`. Dies bewirkt, dass die <xref:System.Web.SessionState.SessionStateModule> Objekt aufrufen, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode nach einem halben Sekunde-Intervall, um zu versuchen, die Sitzungselementinformationen abrufen und eine Sperre für die Daten erneut. Wenn der Wert, der `lockAge` `out` Parametersatz, überschreitet der <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert die <xref:System.Web.SessionState.SessionStateModule> Aufrufe der <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, um die Sperre für die Sitzungs-Element Daten, und ruft dann Löschen der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> -Methode erneut.  
   
- Die `actionFlags` Parameter wird verwendet, wenn die `cookieless` und `regenerateExpiredSessionId` Attribute festgelegt `true`. Ein `actionFlags` Wert festgelegt wird, um <xref:System.Web.SessionState.SessionStateActions.InitializeItem> gibt an, dass der Eintrag im Sitzungsdatenspeicher eine neue Sitzung, die die Initialisierung sind erforderlich. Nicht initialisiertes Einträge im Sitzungsdatenspeicher werden erstellt, durch einen Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode. Wenn das Element aus dem Datenspeicher für die Sitzung nicht initialisiert, ist die `actionFlags` Parameter auf 0 (null) festgelegt.  
+ Die `actionFlags` Parameter wird verwendet, wenn die `cookieless` und `regenerateExpiredSessionId` Attribute festgelegt sind `true`. Ein `actionFlags` Wert festgelegt wird, um <xref:System.Web.SessionState.SessionStateActions.InitializeItem> gibt an, dass der Eintrag im Sitzungsdatenspeicher eine neue Sitzung, die Initialisierung erforderlich ist. Nicht initialisierte Einträge im Sitzungsdatenspeicher werden erstellt, durch einen Aufruf der <xref:System.Web.SessionState.SessionStateStoreProviderBase.CreateUninitializedItem%2A> Methode. Wenn das Element aus dem Sitzungsdatenspeicher nicht initialisiert, ist die `actionFlags` Parameter auf 0 (null) festgelegt.  
   
- Benutzerdefinierte Sitzungszustandsspeicher-Implementierer, die Sitzungen ohne Cookies unterstützen sollten Festlegen der `actionFlags` `out` auf den Wert aus dem Datenspeicher der Sitzung für das aktuelle Element zurückgegeben. Wenn die `actionFlags` Parameterwert für die angeforderte Sitzung-Speicher gleich der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> -Enumerationswert, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode sollte legen Sie den Wert im Datenspeicher auf 0 (null), nach dem Festlegen der `actionFlags` `out` Parameter.  
+ Benutzerdefinierte Sitzungszustandsspeicher-Implementierungen, die Sitzungen ohne Cookies unterstützen sollten Festlegen der `actionFlags` `out` Parameter, um den Wert aus dem Sitzungsdatenspeicher für das aktuelle Element zurückgegeben. Wenn die `actionFlags` Wert für den angeforderten Speichern des Sitzungszustands-Element entspricht der <xref:System.Web.SessionState.SessionStateActions.InitializeItem> -Enumerationswert, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.GetItemExclusive%2A> Methode sollte den Wert festgelegt, in den Datenspeicher und 0 (null), nach dem Festlegen der `actionFlags` `out` Parameter.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -387,6 +395,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -402,12 +411,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.InitializeRequest%2A> Methode vor allen anderen <xref:System.Web.SessionState.SessionStateStoreProviderBase> Methode. Sie können die <xref:System.Web.SessionState.SessionStateStoreProviderBase.InitializeRequest%2A> Methode pro Anforderung Ihren Sitzungszustandsspeicher-Anbieter erforderlichen Initialisierungen.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.InitializeRequest%2A> Methode vor allen anderen <xref:System.Web.SessionState.SessionStateStoreProviderBase> Methode. Sie können die <xref:System.Web.SessionState.SessionStateStoreProviderBase.InitializeRequest%2A> Methode zum Ausführen von Initialisierungen pro Anforderung den Sitzungszustandsspeicher erforderlich.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -423,6 +432,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -442,16 +452,16 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode aktualisiert das Ablaufdatum und eine Sperre auf ein Element in der Sitzungsdatenspeicher freigibt. Er wird am Ende einer Anforderung aufgerufen, während die <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignisses, wenn Sitzungswerte nicht geändert werden. Wenn Sitzungswerte geändert wurden, die <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode zum Aktualisieren das Ablaufdatum und eine Sperre auf ein Element im Sitzungsdatenspeicher. Es wird am Ende einer Anforderung aufgerufen, während die <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignis, wenn die Sitzungs-Werte nicht geändert werden. Wenn die Sitzungs-Werte geändert wurden, die <xref:System.Web.SessionState.SessionStateModule> -Objekt stattdessen Ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode.  
   
- Die <xref:System.Web.SessionState.SessionStateModule> Objekt ruft auch die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, wenn eine Sperre für ein Element im Sitzungsdatenspeicher überschritten hat die <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert. Weitere Informationen zum Sperren und Details zu den Sperren-ID finden Sie unter "Sperren von Store-Sitzung Daten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> -Klassenübersicht.  
+ Die <xref:System.Web.SessionState.SessionStateModule> Objekt ruft auch die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode, wenn eine Sperre für ein Element im Sitzungsdatenspeicher überschritten hat die <xref:System.Web.Configuration.HttpRuntimeSection.ExecutionTimeout%2A> Wert. Weitere Informationen zum Sperren und Details zu den Sperrbezeichner finden Sie unter "Sperren von Sitzung-Store-Daten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> Übersicht über die Klasse.  
   
- Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode entfernt die Sperre nur eines Elements im Datenspeicher für die aktuelle Anwendung, die die angegebene Sitzung entspricht Sitzung `id` und `lockId` Werte. Wenn die `lockId` entspricht nicht der Struktur in den Datenspeicher, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode hat keine Funktion.  
+ Die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> -Methode entfernt die Sperre nur ein Element im Sitzungsdatenspeicher für die aktuelle Anwendung, die die angegebene Sitzung entspricht `id` und `lockId` Werte. Wenn die `lockId` entspricht nicht dem im Datenspeicher, der <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode führt keine Aktion.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -467,6 +477,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -488,12 +499,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode am Ende einer Anforderung während der <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignis, um die Daten für ein Sitzungselement aus dem Datenspeicher für die Sitzung zu löschen, wenn die <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> -Methode aufgerufen wurde. Nur Sitzungsdaten für die aktuelle Anwendung, die die angegebene Sitzung entspricht `id` und `lockId` Werte gelöscht wird. Weitere Informationen zum Sperren und Details zu den Sperren-ID finden Sie unter "Sperren von Store-Sitzung Daten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> -Klassenübersicht.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode am Ende einer Anforderung während der <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignis, um die Daten für ein Sitzungselement aus dem Datenspeicher für die Sitzung zu löschen, wenn die <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> -Methode aufgerufen wurde. Nur Daten für die aktuelle Anwendung, die die angegebene Sitzung entspricht `id` und `lockId` Werte gelöscht wird. Weitere Informationen zum Sperren und Details zu den Sperrbezeichner finden Sie unter "Sperren von Sitzung-Store-Daten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> Übersicht über die Klasse.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -509,6 +520,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -526,18 +538,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ResetItemTimeout%2A> Methode, um das Ablaufdatum und die Uhrzeit für eine Sitzung auf das aktuelle Datum und Zeit plus der Sitzung aktualisieren <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> Wert entweder:  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ResetItemTimeout%2A> Methode, um das Ablaufdatum und die Uhrzeit für eine Sitzung auf dem aktuellen Datum und-Uhrzeit sowie der Sitzung aktualisieren <xref:System.Web.SessionState.HttpSessionState.Timeout%2A> Wert fest, wenn entweder:  
   
--   die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attribut ist `true`, oder  
+-   die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> Attribut `true`, oder  
   
--   die Anforderung kein ausgelöst, die <xref:System.Web.HttpApplication.AcquireRequestState> und <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignisse aufgrund eines Fehlers.  
+-   die Anforderung hat nicht ausgelöst. die <xref:System.Web.HttpApplication.AcquireRequestState> und <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignisse aufgrund eines Fehlers.  
   
- Wenn eine ASP.NET-Seite angefordert wird und die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz zur `false`, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ResetItemTimeout%2A> Methode trotzdem aufgerufen, um das Ablaufdatum und die Uhrzeit der Daten in der Sitzungsdatenspeicher zu aktualisieren.  
+ Wenn eine ASP.NET-Seite angefordert wird und die <xref:System.Web.Configuration.PagesSection.EnableSessionState%2A> -Attributsatz auf `false`, <xref:System.Web.SessionState.SessionStateStoreProviderBase.ResetItemTimeout%2A> trotzdem aufgerufen, um das Ablaufdatum und die Uhrzeit der Daten im Sitzungsdatenspeicher zu aktualisieren.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -553,6 +565,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -577,16 +590,16 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode am Ende einer Anforderung während der <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignis, aktuelle Sitzungselement Informationen in den Datenspeicher eingefügt oder vorhandene Sitzungselement Informationen im Datenspeicher mit aktuellen Werten aktualisiert werden um die Ablaufzeit für das Element zu aktualisieren und die Sperre für die Daten. Nur Sitzungsdaten für die aktuelle Anwendung, die die angegebene Sitzung entspricht `id` und `lockId` Werte wird aktualisiert. Weitere Informationen zu sperren, finden Sie unter "Locking Store Sitzungsdaten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> -Klassenübersicht.  
+ Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode am Ende einer Anforderung während der <xref:System.Web.HttpApplication.ReleaseRequestState> Ereignis zum Einfügen von Informationen über die aktuelle Sitzung-Elemente in den Datenspeicher oder Aktualisieren von vorhandenen Sitzungselementinformationen im Datenspeicher mit aktuellen Werten um die Ablaufzeit für das Element zu aktualisieren, und die Sperre für die Daten. Nur Daten für die aktuelle Anwendung, die die angegebene Sitzung entspricht `id` und `lockId` Werte wird aktualisiert. Weitere Informationen zu sperren, finden Sie unter "Sperren der Sitzung Store-Daten" in der <xref:System.Web.SessionState.SessionStateStoreProviderBase> Übersicht über die Klasse.  
   
- Wenn die Sitzungswerte für die aktuelle Anforderung nicht geändert wurden, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode wird nicht aufgerufen. Stattdessen die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> -Methode aufgerufen wird.  
+ Wenn die Sitzungswerte für die aktuelle Anforderung nicht geändert wurden, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode wird nicht aufgerufen. Stattdessen die <xref:System.Web.SessionState.SessionStateStoreProviderBase.ReleaseItemExclusive%2A> Methode wird aufgerufen.  
   
- Wenn die <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> -Methode aufgerufen wurde, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode wird nicht aufgerufen. Stattdessen die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode Sitzungselement Daten aus der Datenquelle zu löschen.  
+ Wenn die <xref:System.Web.SessionState.HttpSessionState.Abandon%2A> Methode aufgerufen wurde, die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetAndReleaseItemExclusive%2A> Methode wird nicht aufgerufen. Stattdessen die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> Methode, um das Sitzungselement Daten aus der Datenquelle zu löschen.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
@@ -602,6 +615,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Web</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -619,14 +633,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetItemExpireCallback%2A> Methode, wenn das Modul initialisiert wird, um zu bestimmen, ob Aufrufe von der `Session_OnEnd` Ereignis werden unterstützt, indem Sie die <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung und zur Verknüpfung der <xref:System.Web.SessionState.SessionStateItemExpireCallback> mit der Delegieren`Session_OnEnd` Ereignis.  
+ Der <xref:System.Web.SessionState.SessionStateModule> -Objekt ruft der <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetItemExpireCallback%2A> Methode, wenn das Modul initialisiert wird, um zu bestimmen, ob Aufrufe von der `Session_OnEnd` Ereignis werden von unterstützt die <xref:System.Web.SessionState.SessionStateStoreProviderBase> Implementierung und zuzuordnen der <xref:System.Web.SessionState.SessionStateItemExpireCallback> mit der Delegieren`Session_OnEnd` Ereignis.  
   
- Benutzerdefinierte Sitzungszustandsspeicher Anbieterimplementierer sollten verwenden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetItemExpireCallback%2A> Methode, um Sie zu informieren der <xref:System.Web.SessionState.SessionStateModule> Objekt, ob Aufrufe von der `Session_OnEnd` Ereignis werden unterstützt und auf einen lokalen Verweis festgelegt werden soll die <xref:System.Web.SessionState.SessionStateItemExpireCallback> -Delegaten der `expireCallback` Parameter. Die benutzerdefinierte Implementierung muss entscheiden, wann der lokalen <xref:System.Web.SessionState.SessionStateItemExpireCallback> Delegat aufgerufen wird. Beispielsweise kann der Delegat aufgerufen werden, während des Aufrufs der <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> -Methode, die aufgerufen wird, wenn eine Sitzung beendet wird.  
+ Implementierungen von benutzerdefinierten Sitzungszustandsspeicher-Anbieter verwenden die <xref:System.Web.SessionState.SessionStateStoreProviderBase.SetItemExpireCallback%2A> Methode, um darüber zu informieren die <xref:System.Web.SessionState.SessionStateModule> Objekt, ob Aufrufe von der `Session_OnEnd` Ereignis verwendet werden und auf einen lokalen Verweis festgelegt werden soll die <xref:System.Web.SessionState.SessionStateItemExpireCallback> -Delegaten die `expireCallback` Parameter. Die benutzerdefinierte Implementierung muss entscheiden, wann der lokalen <xref:System.Web.SessionState.SessionStateItemExpireCallback> Delegat aufgerufen wird. Beispielsweise kann der Delegat aufgerufen werden, während des Aufrufs von der <xref:System.Web.SessionState.SessionStateStoreProviderBase.RemoveItem%2A> -Methode, die aufgerufen wird, wenn eine Sitzung abgebrochen wird.  
   
    
   
 ## Examples  
- Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [implementieren einen Sitzungszustands-Speicheranbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
+ Ein Beispiel für die Implementierung eines Sitzungszustandsspeicher-Anbieters, finden Sie unter [Implementieren eines Sitzungszustands-Store-Anbieters](http://msdn.microsoft.com/library/baadfec5-c881-468a-9681-7d8796b05a66).  
   
  ]]></format>
         </remarks>
