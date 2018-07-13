@@ -1,11 +1,11 @@
 <Type Name="ThreadStaticAttribute" FullName="System.ThreadStaticAttribute">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="2f904d03e9601bff0289dd66b529dc3e58854fe7" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="66bb19d680cff4f786183f9253e5b4970a5ea7ab" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36427997" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37727340" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class ThreadStaticAttribute : Attribute" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit ThreadStaticAttribute extends System.Attribute" />
@@ -24,6 +24,8 @@
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -49,28 +51,28 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein `static` mit markiertes Feld <xref:System.ThreadStaticAttribute> wird nicht zwischen Threads freigegeben. Jeder Ausführungsthread verfügt über eine separate Instanz des Felds, und unabhängig legt diese fest und ruft Werte für dieses Feld. Wenn Sie das Feld in einem anderen Thread aufrufen, wird es einen anderen Wert enthalten.  
+ Ein `static` mit markiertes Feld <xref:System.ThreadStaticAttribute> nicht mehreren Threads gemeinsam genutzt. Jeder Ausführungsthread besitzt eine eigene Instanz des Felds, und unabhängig voneinander legt diese fest und ruft Werte für dieses Feld. Wenn das Feld in einem anderen Thread zugegriffen wird, enthält er einen anderen Wert.  
   
- Beachten Sie, dass zusätzlich zum Anwenden der <xref:System.ThreadStaticAttribute> Attribut auf ein Feld, müssen Sie auch definieren ihn als einen `static` Feld (in c#) oder eine `Shared` Feld (in Visual Basic).  
+ Beachten Sie, dass zusätzlich zum Anwenden der <xref:System.ThreadStaticAttribute> Attribut auf ein Feld, Sie müssen außerdem definieren sie als eine `static` Feld (in c#) oder ein `Shared` Feld (in Visual Basic).  
   
 > [!NOTE]
->  Geben Sie keine Anfangswerten für Felder mit gekennzeichnet `ThreadStaticAttribute`, da solche Initialisierung erfolgt nur einmal auf, wenn der Klassenkonstruktor ausgeführt wird und daher wirkt sich nur ein Thread. Wenn Sie keinen Anfangswert angeben, können Sie das Feld auf den Standardwert initialisiert werden, wenn es sich um einen Werttyp handelt, oder auf verlassen `null` , wenn es ein Verweistyp ist.  
+>  Geben Sie keine ursprünglichen Werte für Felder mit gekennzeichnet `ThreadStaticAttribute`, da eine solche Initialisierung auftritt, nur einmal auf, wenn der Konstruktor der Klasse ausgeführt wird, und wirkt sich daher auf nur einen Thread. Wenn Sie keinen Anfangswert angeben, können Sie das Feld auf den Standardwert initialisiert wird, wenn es sich um einen Werttyp handelt, oder mit abhängig `null` , wenn es ein Verweistyp ist.  
   
- Verwenden Sie dieses Attribut entspricht, und führen Sie nicht ableiten.  
+ Verwenden Sie dieses Attribut aus, wie es ist, und leiten daraus nicht.  
   
  Weitere Informationen zum Verwenden von Attributen finden Sie unter [Attribute](~/docs/standard/attributes/index.md).  
   
    
   
 ## Examples  
- Im folgende Beispiel instanziiert einen Zufallszahlengenerator, zusätzlich zu den Hauptthread zehn Threads erstellt, und generiert dann zwei Millionen Zufallszahlen in jedem Thread. Er verwendet die <xref:System.ThreadStaticAttribute> Attribut, um die Summe und die Anzahl der zufälligen Zahlen pro Thread zu berechnen. Er definiert außerdem zwei zusätzliche threadspezifisches Felder `previous` und `abnormal`, ermöglicht es zu einer Beschädigung der vom Zufallszahlen-Generator zu erkennen.  
+ Das folgende Beispiel instanziiert einen Zufallszahlengenerator, erstellt zehn Threads zusätzlich zu den Hauptthread und generiert dann zwei Millionen zufällige Zahlen in jedem Thread. Er verwendet den <xref:System.ThreadStaticAttribute> Attribut zum Berechnen der Summe und die Anzahl von zufälligen Zahlen pro Thread. Sie definiert außerdem zwei zusätzliche pro-Thread-Felder, `previous` und `abnormal`, die eine Beschädigung der vom Zufallszahlen-Generator erkennen kann.  
   
  [!code-csharp[System.ThreadStaticAttribute#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threadstaticattribute/cs/threadsafe2a.cs#1)]
  [!code-vb[System.ThreadStaticAttribute#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threadstaticattribute/vb/threadsafe2a.vb#1)]  
   
- Im Beispiel wird die `lock` -Anweisung in c# und die `SyncLock` in Visual Basic zum Synchronisieren des Zugriffs auf den Zufallszahlen-Generator erstellen. Dies verhindert, dass eine Beschädigung der vom Zufallszahlen-Generator, das in der Regel die Rückgabe eines Werts 0 (null) für alle nachfolgenden Aufrufe ergibt.  
+ Im Beispiel wird die `lock` -Anweisung in c# und die `SyncLock` -Konstrukts in Visual Basic zum Synchronisieren des Zugriffs auf den Zufallszahlengenerator an. Dies verhindert eine Beschädigung der Zufallszahlen-Generators, die in der Regel führt die Rückgabe eines Werts 0 (null) für alle nachfolgenden Aufrufe.  
   
- Das Beispiel verwendet außerdem die <xref:System.Threading.CountdownEvent> Klasse, um sicherzustellen, dass jeder Thread abgeschlossen ist, Generieren von Zufallszahlen, bevor die Gesamtanzahl der Aufrufe angezeigt. Wenn der Haupt-Thread ausführen, bevor die zusätzlichen Threads abgeschlossen, die er erzeugt ist, wird hingegen einen fehlerhaften Wert für die Gesamtanzahl der Methodenaufrufe.  
+ Im Beispiel verwendet auch die <xref:System.Threading.CountdownEvent> Klasse, um sicherzustellen, dass jeder Thread abgeschlossen ist, Generieren von Zufallszahlen, bevor die Gesamtanzahl der Aufrufe angezeigt. Wenn der Hauptthread Ausführung vor der weiteren Threads abgeschlossen, die sie erzeugt ist, wird, andernfalls einen fehlerhaften Wert für die Gesamtzahl von Methodenaufrufen.  
   
  ]]></format>
     </remarks>
@@ -97,6 +99,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
