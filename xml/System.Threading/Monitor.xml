@@ -1,11 +1,11 @@
 <Type Name="Monitor" FullName="System.Threading.Monitor">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="04c73d8d6d8c0205db70235fd1bb85ce866c6212" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="90a2111b4e95ea3ea80a469c06f7334a9e6eac2b" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36606688" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37549129" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class Monitor" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Monitor extends System.Object" />
@@ -22,6 +22,8 @@
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -44,49 +46,49 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Threading.Monitor> -Klasse können Sie den Zugriff auf einen Codebereich synchronisieren, indem eine Sperre für ein bestimmtes Objekt durch Aufrufen der <xref:System.Threading.Monitor.Enter%2A?displayProperty=nameWithType>, <xref:System.Threading.Monitor.TryEnter%2A?displayProperty=nameWithType>, und <xref:System.Threading.Monitor.Exit%2A?displayProperty=nameWithType> Methoden. Objektsperren bieten die Möglichkeit, den Zugriff auf einen Codeblock, der so genannte eines kritischen Abschnitts einschränken. Während ein Thread die Sperre für ein Objekt besitzt, kann keine anderen Threads diese Sperre abzurufen. Sie können auch die <xref:System.Threading.Monitor> Klasse, um sicherzustellen, dass keine anderen Threads zugelassen wird, eine Anwendung Zugriff auf code, der Eigentümer der Sperre ausgeführt wird, es sei denn, der andere Thread den Code mithilfe eines anderen gesperrten Objekts ausgeführt wird.  
+ Die <xref:System.Threading.Monitor> Klasse können Sie den Zugriff auf einen Codebereich synchronisieren, indem eine Sperre für ein bestimmtes Objekt durch Aufrufen der <xref:System.Threading.Monitor.Enter%2A?displayProperty=nameWithType>, <xref:System.Threading.Monitor.TryEnter%2A?displayProperty=nameWithType>, und <xref:System.Threading.Monitor.Exit%2A?displayProperty=nameWithType> Methoden. Objektsperren bieten die Möglichkeit, den Zugriff auf einen Codeblock, im Allgemeinen bezeichnet einen kritischen Abschnitt beschränken. Während ein Thread die Sperre für ein Objekt besitzt, kann kein anderer Thread diese Sperre abrufen. Sie können auch die <xref:System.Threading.Monitor> Klasse, um sicherzustellen, dass kein anderer Thread zulässig ist, eine Anwendung Zugriff auf code von der Besitzer der Sperre ausgeführt wird, es sei denn, der andere Thread den Code mithilfe eines anderen gesperrten Objekts ausgeführt wird.  
   
  In diesem Artikel:  
   
- [Monitor-Klasse: Übersicht](#Overview)   
+ [Die Monitor-Klasse: eine Übersicht über die](#Overview)   
  [Das Sperrobjekt](#Lock)   
  [Der kritische Abschnitt](#CriticalSection)   
- [Pulse PulseAll und warten](#Pulse)   
+ [Pulse "," PulseAll ", und warten](#Pulse)   
  [Monitore und Wait-handles](#WaitHandles)  
   
 <a name="Overview"></a>   
-## <a name="the-monitor-class-an-overview"></a>Monitor-Klasse: Übersicht  
+## <a name="the-monitor-class-an-overview"></a>Die Monitor-Klasse: eine Übersicht über die  
  <xref:System.Threading.Monitor> bietet die folgenden Features:  
   
--   Es ist ein Objekt bei Bedarf zugeordnet.  
+-   Es ist ein Objekt nach Bedarf zugeordnet.  
   
--   Es ist nicht gebundenen, dies bedeutet, er kann direkt aus einem beliebigen Kontext aufgerufen werden.  
+-   Es wird aufgehoben, was bedeutet, dass direkt aus einem beliebigen Kontext aufgerufen werden kann.  
   
--   Eine Instanz von der <xref:System.Threading.Monitor> Klasse kann nicht erstellt werden; die Methoden der <xref:System.Threading.Monitor> Klasse sind alle statisch. Jede Methode übergeben das synchronisierte Objekt, das steuert den Zugriff auf den kritischen Abschnitt.  
+-   Eine Instanz von der <xref:System.Threading.Monitor> Klasse kann nicht erstellt werden; die Methoden der <xref:System.Threading.Monitor> Klasse sind alle statisch. Jede Methode übergeben wird das synchronisierte Objekt, das steuert den Zugriff auf den kritischen Abschnitt.  
   
 > [!NOTE]
->  Verwenden der <xref:System.Threading.Monitor> Klasse, um Objekte als Zeichenfolgen sperren (d. h. Referenztypen außer <xref:System.String>), nicht Werttypen. Einzelheiten finden Sie die Überladungen der <xref:System.Threading.Monitor.Enter%2A> Methode und [das Sperrenobjekt](#Lock) Abschnitt weiter unten in diesem Artikel.  
+>  Verwenden der <xref:System.Threading.Monitor> Klasse, um Objekte als Zeichenfolgen sperren (d. h. Referenztypen außer <xref:System.String>), nicht Werttypen. Ausführliche Informationen finden Sie die Überladungen der <xref:System.Threading.Monitor.Enter%2A> Methode und [das Sperrobjekt](#Lock) weiter unten in diesem Artikel.  
   
- Die folgende Tabelle beschreibt die Aktionen, die von Threads ausgeführt werden können, die Zugriff auf Objekte synchronisiert:  
+ Die folgende Tabelle beschreibt die Aktionen, die von Threads ausgeführt werden können, die synchronisierte Objekte zugreifen:  
   
 |Aktion|Beschreibung |  
 |------------|-----------------|  
-|<xref:System.Threading.Monitor.Enter%2A>, <xref:System.Threading.Monitor.TryEnter%2A>|Ruft eine Sperre für ein Objekt ab. Diese Aktion werden außerdem den Anfang eines kritischen Abschnitts. Keine anderen Threads kann den kritischen Abschnitt eingeben, es sei denn, sie die Anweisungen in den kritischen Abschnitt mithilfe eines anderen gesperrten Objekts ausgeführt wird.|  
-|<xref:System.Threading.Monitor.Wait%2A>|Gibt die Sperre für ein Objekt zum Zulassen von anderen Threads zu sperren, und greifen auf das Objekt frei. Der aufrufende Thread wartet, während ein anderer Thread das Objekt zugreift. Pulse Signale werden verwendet, um wartende Threads über Änderungen an der Status eines Objekts zu benachrichtigen.|  
-|<xref:System.Threading.Monitor.Pulse%2A> (dieses Signal) <xref:System.Threading.Monitor.PulseAll%2A>|Sendet ein Signal an einen oder mehrere wartende Threads. Das Signal benachrichtigt einen wartenden Thread, den der Zustand des gesperrten Objekts geändert wurde, und der Besitzer der Sperre ist bereit, um die Sperre aufzuheben. Des wartenden Threads befindet sich in die Warteschlange für abgearbeitete des Objekts, damit er die Sperre für das Objekt schließlich empfangen kann. Sobald der Thread die Sperre besitzt, kann es durch überprüfen den neuen Zustand des Objekts, um festzustellen, ob die erforderliche Status erreicht wurde.|  
-|<xref:System.Threading.Monitor.Exit%2A>|Hebt die Sperre für ein Objekt. Diese Aktion werden auch das Ende eines kritischen Abschnitts von gesperrten Objekts geschützt.|  
+|<xref:System.Threading.Monitor.Enter%2A>, <xref:System.Threading.Monitor.TryEnter%2A>|Ruft eine Sperre für ein Objekt ab. Diese Aktion werden auch den Anfang eines kritischen Abschnitts. Kein anderer Thread kann den kritischen Abschnitt eingeben, es sei denn, sie die Anweisungen in den kritischen Abschnitt, der mithilfe eines anderen gesperrten Objekts ausgeführt wird.|  
+|<xref:System.Threading.Monitor.Wait%2A>|Gibt die Sperre für ein Objekt zum Zulassen von anderen Threads zu sperren, und greifen auf das Objekt frei. Der aufrufende Thread wartet, während ein anderer Thread auf das Objekt zugreift. Pulse-Signale werden verwendet, um wartende Threads über Änderungen des Zustands eines Objekts zu benachrichtigen.|  
+|<xref:System.Threading.Monitor.Pulse%2A> (Signal) <xref:System.Threading.Monitor.PulseAll%2A>|Sendet ein Signal an einem oder mehreren wartenden Threads. Das Signal benachrichtigt einen wartenden Thread, den der Zustand des gesperrten Objekts geändert wurde, und der Besitzer der Sperre ist bereit, um die Sperre aufzuheben. Der wartende Thread befindet sich in der Warteschlange des Objekts, damit er die Sperre für das Objekt schließlich empfangen kann. Sobald der Thread die Sperre verfügt, kann es durch überprüfen den neuen Status des Objekts, um festzustellen, ob es sich bei der erforderliche Zustand erreicht wurde.|  
+|<xref:System.Threading.Monitor.Exit%2A>|Hebt die Sperre für ein Objekt. Diese Aktion werden auch das Ende eines kritischen Abschnitts von gesperrten Objekts geschützt werden.|  
   
- Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], es gibt zwei Sätze von Überladungen für die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.TryEnter%2A> Methoden. Eine Gruppe von Überladungen hat eine `ref` (in c#) oder `ByRef` (in Visual Basic) <xref:System.Boolean> Parameter, der atomar auf `true` Wenn die Sperre abgerufen wird, auch wenn eine Ausnahme ausgelöst wird, wenn die Sperre abrufen. Verwenden Sie diese Überladung, wenn es wichtig ist, die Sperre in allen Fällen, selbst wenn die Ressourcen, die die Sperre zu schützen, ist möglicherweise nicht in einem konsistenten Zustand.  
+ Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], es gibt zwei Sätze von Überladungen für die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.TryEnter%2A> Methoden. Hat eine Reihe von Überladungen einer `ref` (in c#) oder `ByRef` (in Visual Basic) <xref:System.Boolean> Parameter, die atomar, um festgelegt wird `true` , wenn die Sperre abgerufen wurde, auch wenn eine Ausnahme ausgelöst wird, wenn die Sperre abrufen,. Verwenden Sie diese Überladungen, wenn es wichtig ist, die Sperre in allen Fällen auch, wenn die Ressourcen, die die Sperre zu schützen, ist möglicherweise nicht in einem konsistenten Zustand.  
   
 <a name="Lock"></a>   
 ## <a name="the-lock-object"></a>Das Sperrobjekt  
- Monitor-Klasse besteht aus `static` (in c#) oder `Shared` (in Visual Basic) Methoden für ein Objekt, dass für den Zugriff auf den kritischen Abschnitt steuert.  Die folgende Informationen wird für jedes synchronisierte Objekt verwaltet:  
+ Die Monitor-Klasse besteht aus `static` (in c#) oder `Shared` (in Visual Basic) Methoden für ein Objekt, das Zugriff auf den kritischen Abschnitt steuert.  Die folgende Informationen werden für jedes synchronisierte Objekt verwaltet:  
   
--   Ein Verweis auf den Thread, der die Sperre enthält.  
+-   Ein Verweis auf den Thread, der derzeit die Sperre enthält.  
   
--   Ein Verweis auf eine Warteschlange, die Threads enthält, die die Sperre erhalten können.  
+-   Ein Verweis auf eine Warteschlange enthält die Threads, die die Sperre erhalten können.  
   
--   Ein Verweis auf eine Warteschlange, die die Threads enthält, die für die Benachrichtigung über eine Änderung in den Zustand des gesperrten Objekts warten.  
+-   Ein Verweis auf einer Warteschlange, die die Threads enthält, die für die Benachrichtigung über eine Änderung in den Zustand des gesperrten Objekts warten.  
   
  <xref:System.Threading.Monitor> sperrt Objekte (d. h. Referenztypen), nicht Werttypen. Sie können einen Werttyp an <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> übergeben. Dieser wird jedoch für jeden Aufruf separat geschachtelt. Da jeder Aufruf ein separates Objekt erstellt, bedingt <xref:System.Threading.Monitor.Enter%2A> nie eine Blockierung, und der Code, den die Methode eigentlich schützen soll, wird nicht wirklich synchronisiert. Darüber hinaus unterscheiden sich das an <xref:System.Threading.Monitor.Exit%2A> und das an <xref:System.Threading.Monitor.Enter%2A> übergebene Objekt, sodass <xref:System.Threading.Monitor> eine <xref:System.Threading.SynchronizationLockException> mit der folgenden Meldung auslöst: "Die Objektsynchronisationsmethode wurde von einem nicht synchronisierten Codeblock aufgerufen."  
   
@@ -102,71 +104,71 @@
  [!code-csharp[Conceptual.Monitors#3](~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.monitors/cs/badbox1.cs#3)]
  [!code-vb[Conceptual.Monitors#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.monitors/vb/badbox1.vb#3)]  
   
- Wenn ein Objekt für die Synchronisierung ausgewählt wird, sollten Sie nur auf private oder interne Objekte sperren. Sperren auf externe Objekte kommen Deadlocks, weil nicht verknüpfte Code So sperren Sie für unterschiedliche Zwecke auf dieselben Objekte auswählen kann.  
+ Wenn Sie ein Objekt auf die Synchronisierung auswählen zu können, sollten Sie nur auf private oder interne Objekte sperren. Sperren auf externe Objekte möglicherweise in Deadlocks führen, da es sich bei nicht verknüpfte Code So sperren Sie für unterschiedliche Zwecke auf dieselben Objekte auswählen kann.  
   
  Beachten Sie, die Sie für ein Objekt in mehreren Anwendungsdomänen synchronisieren können, wenn das für die Sperre verwendete Objekt abgeleitet <xref:System.MarshalByRefObject>.  
   
 <a name="CriticalSection"></a>   
 ## <a name="the-critical-section"></a>Der kritische Abschnitt  
- Verwenden der <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methoden, um Anfang und Ende eines kritischen Abschnitts zu markieren.  
+ Verwenden der <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methoden, um den Anfang und Ende eines kritischen Abschnitts zu markieren.  
   
 > [!NOTE]
->  Die Funktionalität von der <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methoden ist identisch mit derjenigen der [Sperre](~/docs/csharp/language-reference/keywords/lock-statement.md) -Anweisung in c# und die [SyncLock](~/docs/visual-basic/language-reference/statements/synclock-statement.md) -Anweisung in Visual Basic, außer dass die Sprachkonstrukte Wrap der <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29?displayProperty=nameWithType> -methodenüberladung und die <xref:System.Threading.Monitor.Exit%2A?displayProperty=nameWithType> Methode in einer `try`...`finally` Sperren, um sicherzustellen, dass der Monitor freigegeben wird.  
+>  Die Funktionalität von der <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methoden ist identisch mit derjenigen der [Sperre](~/docs/csharp/language-reference/keywords/lock-statement.md) -Anweisung in c# und die [SyncLock](~/docs/visual-basic/language-reference/statements/synclock-statement.md) -Anweisung in Visual Basic, außer dass die Sprachkonstrukte Wrap der <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29?displayProperty=nameWithType> -methodenüberladung, und die <xref:System.Threading.Monitor.Exit%2A?displayProperty=nameWithType> -Methode in einer `try`...`finally` Block, um sicherzustellen, dass der Monitor freigegeben wird.  
   
- Der kritische Abschnitt ist eine Reihe von zusammenhängenden Anweisungen, und klicken Sie dann auf die Sperre, die von der <xref:System.Threading.Monitor.Enter%2A> Methode stellt sicher, dass den eingeschlossenen Code mit gesperrten Objekts nur ein einzigen Thread ausgeführt werden kann. In diesem Fall wird empfohlen, dass Sie diesen Code in Platzieren einer `try` blockieren, und platzieren Sie den Aufruf von der <xref:System.Threading.Monitor.Exit%2A> Methode in einer `finally` Block. Dadurch ist sichergestellt, dass die Sperre aufgehoben wird, selbst wenn eine Ausnahme auftritt. Das folgende Codefragment veranschaulicht dieses Muster.  
+ Der kritische Abschnitt ist eine Reihe von zusammenhängenden Anweisungen, und klicken Sie dann auf Sperre, die von der <xref:System.Threading.Monitor.Enter%2A> Methode stellt sicher, dass nur ein einzelner Thread des eingeschlossenen Codes mit gesperrten Objekts ausführen kann. In diesem Fall wird empfohlen, dass Sie diesen Code in platzieren eine `try` blockieren, und platzieren Sie den Aufruf der <xref:System.Threading.Monitor.Exit%2A> -Methode in der ein `finally` Block. Dadurch ist sichergestellt, dass die Sperre aufgehoben wird, selbst wenn eine Ausnahme auftritt. Das folgende Codefragment veranschaulicht dieses Muster.  
   
  [!code-csharp[System.Threading.Monitor.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.class/cs/Pattern2.cs#2)]
  [!code-vb[System.Threading.Monitor.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.class/vb/Pattern2.vb#2)]  
   
  Diese Funktion wird normalerweise verwendet, um den Zugriff auf eine statische Methode oder Instanzmethode einer Klasse zu synchronisieren.  
   
- Ein kritischen Abschnitt eine gesamte Methode umfasst, kann die Sperre-Funktion erreicht werden, indem Platzieren der <xref:System.Runtime.CompilerServices.MethodImplAttribute?displayProperty=nameWithType> der Methode und Angeben der <xref:System.Runtime.CompilerServices.MethodImplOptions.Synchronized> Wert im Konstruktor der <xref:System.Runtime.CompilerServices.MethodImplAttribute?displayProperty=nameWithType>. Wenn Sie dieses Attribut verwenden die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methodenaufrufe sind nicht erforderlich. Das folgende Codefragment veranschaulicht dieses Muster:  
+ Ein kritischen Abschnitt eine gesamte Methode umfasst, kann das Sperre Gebäude erreicht werden, indem Sie platzieren die <xref:System.Runtime.CompilerServices.MethodImplAttribute?displayProperty=nameWithType> für die Methode, und geben Sie die <xref:System.Runtime.CompilerServices.MethodImplOptions.Synchronized> Wert im Konstruktor der <xref:System.Runtime.CompilerServices.MethodImplAttribute?displayProperty=nameWithType>. Wenn Sie dieses Attribut verwenden die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methodenaufrufe sind nicht erforderlich. Das folgende Codefragment veranschaulicht dieses Muster:  
   
  [!code-csharp[System.Threading.Monitor.Class#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.class/cs/Pattern2.cs#3)]
  [!code-vb[System.Threading.Monitor.Class#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.class/vb/Pattern2.vb#3)]  
   
- Beachten Sie, dass das Attribut bewirkt, den aktuellen Thread die Sperre dass, bis die Methode einen Wert zurückgibt. verwenden, wenn die Sperre früher freigegeben werden kann, die <xref:System.Threading.Monitor> Klasse, die C#- [Sperre](~/docs/csharp/language-reference/keywords/lock-statement.md) -Anweisung oder die Visual Basic [SyncLock](~/docs/visual-basic/language-reference/statements/synclock-statement.md) Anweisung innerhalb der Methode anstelle der Attributs.  
+ Beachten Sie, dass das Attribut der aktuelle Thread die Sperre wird, bis die Methode zurückgibt. Wenn die Sperre früher aufgehoben werden kann, verwenden Sie die <xref:System.Threading.Monitor> Klasse, die C#- [Sperre](~/docs/csharp/language-reference/keywords/lock-statement.md) -Anweisung oder in der Visual Basic [SyncLock](~/docs/visual-basic/language-reference/statements/synclock-statement.md) Anweisung innerhalb der Methode anstatt des Attributs.  
   
- Es ist zwar möglich, für die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Anweisungen, die Sperren und ein angegebenes Objekt Member und/oder gruppenübergreifende freigeben, dieses Vorgehen wird nicht empfohlen.  
+ Es ist zwar möglich, für die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Anweisungen, die Sperren und ein bestimmtes Objekt Cross-Element und/oder release, dies wird nicht empfohlen.  
   
 <a name="Pulse"></a>   
-## <a name="pulse-pulseall-and-wait"></a>Pulse PulseAll und warten  
- Sobald ein Thread die Sperre besitzt und hat den kritischen Abschnitt, der die Sperre schützt, rufen sie die <xref:System.Threading.Monitor.Wait%2A?displayProperty=nameWithType>, <xref:System.Threading.Monitor.Pulse%2A?displayProperty=nameWithType>, und <xref:System.Threading.Monitor.PulseAll%2A?displayProperty=nameWithType> Methoden.  
+## <a name="pulse-pulseall-and-wait"></a>Pulse "," PulseAll ", und warten  
+ Sobald ein Thread die Sperre besitzt und hat den kritischen Abschnitt, die die Sperre geschützt, können sie Aufrufen der <xref:System.Threading.Monitor.Wait%2A?displayProperty=nameWithType>, <xref:System.Threading.Monitor.Pulse%2A?displayProperty=nameWithType>, und <xref:System.Threading.Monitor.PulseAll%2A?displayProperty=nameWithType> Methoden.  
   
- <xref:System.Threading.Monitor.Wait%2A> Gibt die Sperre frei, falls diese gehalten wird, kann einen wartenden Thread oder Threads an, die die Sperre abrufen und den kritischen Abschnitt und wartet auf eine Benachrichtigung durch einen Aufruf der <xref:System.Threading.Monitor.Pulse%2A?displayProperty=nameWithType> oder <xref:System.Threading.Monitor.PulseAll%2A?displayProperty=nameWithType> Methode. Wurde <xref:System.Threading.Monitor.Wait%2A> benachrichtigt, führt die Methode einen Rücksprung aus und erhält erneut die Sperre.  
+ <xref:System.Threading.Monitor.Wait%2A> Hebt die Sperre, wenn aufrechterhalten wird, können einen wartenden Thread oder Threads, um die Sperre, und geben den kritischen Abschnitt und wartet auf eine Benachrichtigung durch einen Aufruf der <xref:System.Threading.Monitor.Pulse%2A?displayProperty=nameWithType> oder <xref:System.Threading.Monitor.PulseAll%2A?displayProperty=nameWithType> Methode. Wurde <xref:System.Threading.Monitor.Wait%2A> benachrichtigt, führt die Methode einen Rücksprung aus und erhält erneut die Sperre.  
   
  Sowohl <xref:System.Threading.Monitor.Pulse%2A> als auch <xref:System.Threading.Monitor.PulseAll%2A> signalisieren, dass der nächste Thread in der Warteschlange verarbeitet werden kann.  
   
 <a name="WaitHandles"></a>   
 ## <a name="monitors-and-wait-handles"></a>Monitore und Wait-handles  
- Es ist wichtig, den Unterschied zwischen der Verwendung von beachten die <xref:System.Threading.Monitor> Klasse und <xref:System.Threading.WaitHandle> Objekte.  
+ Es ist wichtig, beachten Sie den Unterschied zwischen der Verwendung von der <xref:System.Threading.Monitor> Klasse und <xref:System.Threading.WaitHandle> Objekte.  
   
--   Die <xref:System.Threading.Monitor> Klasse ist rein verwaltete, vollständig übertragbare und möglicherweise effizienter im Hinblick auf die ressourcenanforderungen des Betriebssystems.  
+-   Die <xref:System.Threading.Monitor> Klasse ist rein verwaltete, vollständig übertragbar und kann in Bezug auf die Anforderungen an die Betriebssystem-Ressourcen effizienter sein.  
   
 -   <xref:System.Threading.WaitHandle>-Objekte repräsentieren Objekte des Betriebssystems, die in der Lage sind, ihre Ausführung zu unterbrechen und zu warten. Sie sind für die Synchronisierung zwischen verwaltetem und nicht verwaltetem Code von Nutzen und machen einige höhere Betriebssystemfunktionen verfügbar, z. B. die Fähigkeit, auf viele Objekte gleichzeitig zu warten.  
   
    
   
 ## Examples  
- Im folgenden Beispiel wird die <xref:System.Threading.Monitor> Klasse zum Synchronisieren des Zugriffs auf eine einzelne Instanz eines Zufallszahlengenerators dargestellt durch die <xref:System.Random> Klasse. Das Beispiel erstellt die zehn Aufgaben, von die jede asynchron über einen Threadpoolthread ausgeführt wird. Jede Aufgabe 10.000 Zufallszahlen generiert, deren Mittelwert berechnet und zwei auf Prozedurebene-Variablen, die eine laufende Summe der Anzahl von Zufallszahlen generiert und deren Summe verwalten aktualisiert. Nachdem alle Aufgaben ausgeführt haben, werden diese beiden Werte berechnet den Mittelwert den insgesamt verwendet.  
+ Im folgenden Beispiel wird die <xref:System.Threading.Monitor> Klasse zum Synchronisieren des Zugriffs auf eine einzelne Instanz von einem Zufallszahlengenerator, dargestellt durch die <xref:System.Random> Klasse. Das Beispiel erstellt die zehn Aufgaben, von die jede auf einem Threadpool-Thread asynchron ausgeführt wird. Jede Aufgabe 10.000 Zufallszahlen generiert, deren Durchschnitt berechnet und aktualisiert zwei auf Prozedurebene-Variablen, die eine laufende Summe der Anzahl von Zufallszahlen generiert und deren Summe zu gewährleisten. Nachdem alle Aufgaben ausgeführt haben, werden diese beiden Werte zum Berechnen des gesamtmittelwerts verwendet.  
   
  [!code-csharp[System.Threading.Monitor.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.class/cs/example1.cs#1)]
  [!code-vb[System.Threading.Monitor.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.class/vb/example1.vb#1)]  
   
- Da sie von einer Aufgabe, die über einen Threadpoolthread ausgeführt zugegriffen werden können, der Zugriff auf die Variablen `total` und `n` müssen synchronisiert werden. Die <xref:System.Threading.Interlocked.Add%2A?displayProperty=nameWithType> Methode für diesen Zweck verwendet wird.  
+ Da sie von jeder Aufgabe, die auf einem Threadpoolthread ausgeführt zugegriffen werden kann, der Zugriff auf die Variablen `total` und `n` muss ebenfalls synchronisiert werden. Die <xref:System.Threading.Interlocked.Add%2A?displayProperty=nameWithType> Methode für diesen Zweck verwendet wird.  
   
- Im folgende Beispiel wird veranschaulicht, die kombinierte Verwendung von der <xref:System.Threading.Monitor> Klasse (implementiert mit der `lock` oder `SyncLock` Sprachkonstrukt), wird die <xref:System.Threading.Interlocked> -Klasse, und die <xref:System.Threading.AutoResetEvent> Klasse. Er definiert zwei `internal` (in c#) oder `Friend` (in Visual Basic) Klassen `SyncResource` und `UnSyncResource`, die entsprechend synchronisierten und nicht synchronisierten Zugriff auf eine Ressource bereitstellen. Um sicherzustellen, dass das Beispiel veranschaulicht den Unterschied zwischen dem synchronisierten und nicht synchronisierten Zugriff (das der Fall sein kann, wenn jeder Methodenaufruf schnell abgeschlossen wird), enthält die Methode eine zufällige Verzögerung: für threads, deren <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType> Eigenschaft geraden Wert hat, ist die Methodenaufrufe <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> um eine Verzögerung von 2.000 Millisekunden einzuführen. Beachten Sie Folgendes: Da die `SyncResource` Klasse ist nicht öffentlich ist, wird keines der Clientcode eine Sperre für die synchronisierte Ressource; die Sperre wird von die interne Klasse selbst ausgelöst. Dadurch wird verhindert, dass bösartiger Code eine Sperre für ein öffentliches Objekt auslöst.  
+ Das folgende Beispiel zeigt die kombinierte Verwendung der <xref:System.Threading.Monitor> Klasse (mit implementiert die `lock` oder `SyncLock` Sprachkonstrukt), wird die <xref:System.Threading.Interlocked> -Klasse, und die <xref:System.Threading.AutoResetEvent> Klasse. Es definiert zwei `internal` (in c#) oder `Friend` (in Visual Basic) Klassen `SyncResource` und `UnSyncResource`, die entsprechend synchronisierten und nicht synchronisierten Zugriff auf eine Ressource bereitstellen. Um sicherzustellen, dass das Beispiel veranschaulicht den Unterschied zwischen dem synchronisierten und nicht synchronisierten Zugriff (die der Fall sein kann, wenn jeder Methodenaufruf schnell abgeschlossen wird), die Methode umfasst eine zufällige Verzögerung: für threads, deren <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType> Eigenschaft gerade ist, die Methodenaufrufe <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> , tritt eine Verzögerung von 2.000 Millisekunden einzuführen. Beachten Sie, dass, weil die `SyncResource` Klasse ist nicht öffentlich, keiner der Clientcodes eine Sperre für die synchronisierte Ressource akzeptiert, die interne Klasse selbst sperrt. Dadurch wird verhindert, dass bösartiger Code eine Sperre für ein öffentliches Objekt auslöst.  
   
  [!code-csharp[Conceptual.Monitors#1](~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.monitors/cs/source.cs#1)]
  [!code-vb[Conceptual.Monitors#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.monitors/vb/source.vb#1)]  
   
- Im Beispiel wird eine Variable, `numOps`, definiert die Anzahl der Threads, die versucht, auf die Ressource zuzugreifen. Der Anwendungsthread Ruft die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode für synchronisierten und nicht synchronisierten Zugriff auf fünf Mal jedes. Die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode verfügt über einen einzelnen Parameter, ein Delegat, der keine Parameter akzeptiert und keinen Wert zurückgibt. Für synchronisierten Zugriff und ruft die `SyncUpdateResource` Methode für nicht synchronisierten Zugriff Ruft die `UnSyncUpdateResource` Methode. Nach jedem Satz von Methodenaufrufen, ruft der Anwendungsthread die [AutoResetEvent.WaitOne](xref:System.Threading.WaitHandle.WaitOne*) Methode, sodass, bis blockiert die <xref:System.Threading.AutoResetEvent> -Instanz signalisiert wird.  
+ Im Beispiel wird eine Variable, `numOps`, definiert die Anzahl der Threads, die auf die Ressource zuzugreifen versucht. Der Anwendungsthread Ruft die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode für synchronisierten und nicht synchronisierten Zugriff auf fünf Mal jedes. Die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode verfügt über einen einzelnen Parameter, ein Delegat, der keine Parameter akzeptiert und keinen Wert zurückgibt. Für synchronisierten Zugriff und ruft die `SyncUpdateResource` Methode für den nicht synchronisierten Zugriff Ruft die `UnSyncUpdateResource` Methode. Nach jedem Satz von Methodenaufrufen, ruft der Anwendungsthread die [AutoResetEvent.WaitOne](xref:System.Threading.WaitHandle.WaitOne*) Methode, sodass, bis blockiert die <xref:System.Threading.AutoResetEvent> -Instanz signalisiert wird.  
   
- Bei jedem Aufruf der `SyncUpdateResource` -Methode wird die interne `SyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode dekrementiert die `numOps` Leistungsindikator. Die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um den Zähler zu verringern, da andernfalls Sie nicht davon ausgehen können, dass ein zweiter Thread den Wert zugreift, vor ein ersten Thread dekrementiert Wert in der Variablen gespeichert wurde. Wenn die letzte synchronisierte Arbeitsthread dekrementiert den Zähler auf 0 (null), gibt an, dass alle synchronisierten Threads Zugriff auf die Ressource abgeschlossen haben die `SyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die den Hauptthread zu fortfahren signalisiert die Ausführung.  
+ Jeder Aufruf von der `SyncUpdateResource` -Methode wird die interne `SyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode zum Verringern der `numOps` Leistungsindikator. Die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um den Zähler verringert, da andernfalls Sie bestimmte nicht sein können, dass ein zweiter Thread den Wert zugreift, bevor Sie ein ersten Thread der dekrementierte Wert in der Variablen gespeichert wurde. Wenn die letzte Worker dekrementiert den Zähler auf 0 (null) synchronisiert, gibt an, dass alle synchronisierten Threads haben Zugriff auf die Ressource, die `SyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread, um den Vorgang fortzusetzen die Ausführung.  
   
- Bei jedem Aufruf der `UnSyncUpdateResource` -Methode wird die interne `UnSyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode dekrementiert die `numOps` Leistungsindikator. Noch einmal: die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um die dekrementiert des Zähler, um sicherzustellen, dass ein zweiter Thread nicht den Wert zugreift, bevor der Variablen dekrementierte Wert des ersten Threads zugewiesen wurde. Bei der letzten Worker dekrementiert den Zähler auf 0 (null) wurden nicht synchronisierte, gibt an, dass keine weiteren Threads nicht synchronisierten Zugriff auf die Ressource benötigen die `UnSyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread die Ausführung fortsetzen .  
+ Jeder Aufruf von der `UnSyncUpdateResource` -Methode wird die interne `UnSyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode zum Verringern der `numOps` Leistungsindikator. Auch hier die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um die verringert des Zähler, um sicherzustellen, dass ein zweiter Thread nicht den Wert zugreift, bevor der dekrementierte Wert des ersten Threads auf die Variable zugewiesen wurde. Bei der letzten dekrementiert Worker nicht den Zähler auf 0 (null) synchronisierte, gibt an, dass keine weiteren synchronisierten Threads Zugriff auf die Ressource, müssen die `UnSyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread die Ausführung fortsetzen .  
   
- Wie die Ausgabe des Beispiels zeigt, wird mit synchronisiertem Zugriff sichergestellt, dass der aufrufende Thread die geschützte Ressource beendet, bevor ein anderer Thread auf sie zugreifen kann. Jeder Thread wartet auf seinen Vorgänger. Andererseits, ohne die Sperre der `UnSyncResource.Access` Methode wird aufgerufen, in der Reihenfolge, in der Threads wird erreicht.  
+ Wie die Ausgabe des Beispiels zeigt, wird mit synchronisiertem Zugriff sichergestellt, dass der aufrufende Thread die geschützte Ressource beendet, bevor ein anderer Thread auf sie zugreifen kann. Jeder Thread wartet auf seinen Vorgänger. Andererseits, ohne die Sperre die `UnSyncResource.Access` Methode wird aufgerufen, in der Reihenfolge, in dem von Threads wird erreicht.  
   
  ]]></format>
     </remarks>
@@ -202,6 +204,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -227,11 +231,11 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Verwendung `Enter` beim Abrufen der <xref:System.Threading.Monitor> für das Objekt als Parameter übergeben. Wenn ein anderer Thread ausgeführt hat ein `Enter` für das Objekt jedoch noch nicht den entsprechenden ausgeführt wurde <xref:System.Threading.Monitor.Exit%2A>, wird der aktuelle Thread blockiert, bis der andere Thread das Objekt frei. Es ist zulässig, für den gleichen Thread aufzurufenden `Enter` mehr als einmal ohne er blockiert, aber eine gleiche Anzahl von `Exit` Aufrufe aufgerufen werden müssen, bevor die Blockierung von anderen Threads warten auf das Objekt aufgehoben werden.  
+ Verwendung `Enter` zum Abrufen der <xref:System.Threading.Monitor> für das Objekt, das als Parameter übergeben. Wenn ein anderer Thread ausgeführt wurde ein `Enter` für das Objekt aber noch nicht die entsprechenden ausgeführt wurde <xref:System.Threading.Monitor.Exit%2A>, der aktuelle Thread blockiert, bis der andere Thread das Objekt freigegeben. Es ist zulässig, dass im gleichen Thread Aufrufen `Enter` mehr als einmal ohne diese Blockierung jedoch eine gleiche Anzahl von `Exit` Aufrufe aufgerufen werden müssen, bevor Sie andere Threads warten auf das Objekt aufgehoben wird.  
   
- Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Wenn Sie eine Werttypvariable zu übergeben `Enter`, dieser wird als Objekt geschachtelt. Wenn Sie die gleiche Variable übergeben `Enter` erneut, dieser wird jedoch als separates Objekt geschachtelt und der Thread wird nicht blockiert. In diesem Fall wird der Code, `Monitor` ist eigentlich schützen soll, ist nicht geschützt. Darüber hinaus wird beim Übergeben der Variablen an `Exit`, noch ein anderes separates Objekt erstellt wird. Da das Objekt übergeben `Exit` unterscheidet sich von der an übergebene Objekt `Enter`, `Monitor` löst <xref:System.Threading.SynchronizationLockException>. Weitere Informationen finden Sie unter dem Thema [Monitore](xref:System.Threading.Monitor).  
+ Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Wenn Sie eine Werttypvariable zum übergeben `Enter`, wird Sie als ein Objekt geschachtelt. Wenn Sie die gleiche Variable übergeben `Enter` in diesem Fall wird als separates Objekt geschachtelt werden, und der Thread nicht blockiert. In diesem Fall ist der Code, `Monitor` ist die Methode eigentlich schützen ist nicht geschützt. Wenn Sie außerdem die Variable übergeben `Exit`, noch ein anderes Objekt erstellt. Da das Objekt an übergeben `Exit` unterscheidet sich von der an übergebene Objekt `Enter`, `Monitor` löst <xref:System.Threading.SynchronizationLockException>. Weitere Informationen finden Sie unter dem Thema [Monitore](xref:System.Threading.Monitor).  
   
- <xref:System.Threading.Thread.Interrupt%2A> können unterbrechen, Threads, die darauf warten, geben einen `Monitor` für ein Objekt. Ein <xref:System.Threading.ThreadInterruptedException> ausgelöst.  
+ <xref:System.Threading.Thread.Interrupt%2A> unterbrechen, können Threads, die darauf warten, geben einen `Monitor` für ein Objekt. Ein <xref:System.Threading.ThreadInterruptedException> ausgelöst.  
   
  Verwenden Sie eine C#- `try`...`finally` Block (`Try`...`Finally` in Visual Basic) stellen Sie sicher, dass den Monitor freigegeben wird, oder verwenden Sie die C#- `lock` Anweisung (`SyncLock` -Anweisung in Visual Basic), welche umschließt die <xref:System.Threading.Monitor.Enter%2A> und <xref:System.Threading.Monitor.Exit%2A> Methoden in einer `try`...`finally` Block.  
   
@@ -289,18 +293,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Verwendung `Enter` zum Abrufen der <xref:System.Threading.Monitor> für das Objekt übergeben, als die `obj` Parameter. Wenn ein anderer Thread ausgeführt hat ein `Enter` für das Objekt jedoch noch nicht den entsprechenden ausgeführt wurde <xref:System.Threading.Monitor.Exit%2A>, wird der aktuelle Thread blockiert, bis der andere Thread das Objekt frei. Es ist zulässig, für den gleichen Thread aufzurufenden `Enter` mehr als einmal ohne er blockiert, aber eine gleiche Anzahl von `Exit` Aufrufe aufgerufen werden müssen, bevor die Blockierung von anderen Threads warten auf das Objekt aufgehoben werden.  
+ Verwenden `Enter` zum Abrufen der <xref:System.Threading.Monitor> für das Objekt übergeben, als die `obj` Parameter. Wenn ein anderer Thread ausgeführt wurde ein `Enter` für das Objekt aber noch nicht die entsprechenden ausgeführt wurde <xref:System.Threading.Monitor.Exit%2A>, der aktuelle Thread blockiert, bis der andere Thread das Objekt freigegeben. Es ist zulässig, dass im gleichen Thread Aufrufen `Enter` mehr als einmal ohne diese Blockierung jedoch eine gleiche Anzahl von `Exit` Aufrufe aufgerufen werden müssen, bevor Sie andere Threads warten auf das Objekt aufgehoben wird.  
   
- Wenn die Sperre nicht angenommen wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` Parameter ist `false` nachdem diese Methode beendet. Dadurch wird das Programm in allen Fällen um zu bestimmen, ob die Sperre aufgehoben werden muss. Wenn diese Methode zurückgibt, ohne eine Ausnahme auszulösen, wird die Variable angegeben, für die `lockTaken` -Parameter ist immer `true`, und besteht keine Notwendigkeit zum Testen.  
+ Wenn die Sperre nicht erstellt wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` -Parameter ist `false` nach diese Methode beendet. Dadurch wird das Programm in allen Fällen, um zu bestimmen, ob es erforderlich, um die Sperre aufzuheben ist. Wenn diese Methode zurückgibt, ohne eine Ausnahme auszulösen, wird die Variable angegeben, für die `lockTaken` Parameter ist immer `true`, und es ist nicht erforderlich, um sie zu testen.  
   
- Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Wenn Sie eine Werttypvariable zu übergeben `Enter`, dieser wird als Objekt geschachtelt. Wenn Sie die gleiche Variable übergeben `Enter` erneut, dieser wird jedoch als separates Objekt geschachtelt und der Thread wird nicht blockiert. In diesem Fall wird der Code, `Monitor` ist eigentlich schützen soll, ist nicht geschützt. Darüber hinaus wird beim Übergeben der Variablen an `Exit`, ein weiteres separates Objekt erstellt wird. Da das Objekt übergeben `Exit` unterscheidet sich von der an übergebene Objekt `Enter`, `Monitor` löst <xref:System.Threading.SynchronizationLockException>. Weitere Informationen finden Sie unter dem Thema [Monitore](xref:System.Threading.Monitor).  
+ Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Wenn Sie eine Werttypvariable zum übergeben `Enter`, wird Sie als ein Objekt geschachtelt. Wenn Sie die gleiche Variable übergeben `Enter` in diesem Fall wird als separates Objekt geschachtelt werden, und der Thread nicht blockiert. In diesem Fall ist der Code, `Monitor` ist die Methode eigentlich schützen ist nicht geschützt. Wenn Sie außerdem die Variable übergeben `Exit`, einem anderen Objekt erstellt. Da das Objekt an übergeben `Exit` unterscheidet sich von der an übergebene Objekt `Enter`, `Monitor` löst <xref:System.Threading.SynchronizationLockException>. Weitere Informationen finden Sie unter dem Thema [Monitore](xref:System.Threading.Monitor).  
   
- <xref:System.Threading.Thread.Interrupt%2A> können unterbrechen, Threads, die darauf warten, geben einen `Monitor` für ein Objekt. Ein <xref:System.Threading.ThreadInterruptedException> ausgelöst.  
+ <xref:System.Threading.Thread.Interrupt%2A> unterbrechen, können Threads, die darauf warten, geben einen `Monitor` für ein Objekt. Ein <xref:System.Threading.ThreadInterruptedException> ausgelöst.  
   
    
   
 ## Examples  
- Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, selbst wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Überprüfen ist, ob die Sperre besitzt, werden veröffentlicht.  
+ Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, auch wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Testen ist, ob die Sperre sein veröffentlicht.  
   
  [!code-csharp[System.Threading.Monitor.Enter#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.enter/cs/example.cs#2)]
  [!code-vb[System.Threading.Monitor.Enter#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.enter/vb/example.vb#2)]  
@@ -328,6 +332,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -356,9 +362,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der aufrufende Thread muss Besitzer der Sperre auf die `obj` Parameter. Wenn der aufrufende Thread die Sperre für das angegebene Objekt besitzt und eine gleiche Anzahl von machte `Exit` und <xref:System.Threading.Monitor.Enter%2A> für das Objekt aufgerufen wird, und klicken Sie dann die Sperre aufgehoben wird. Wenn der aufrufende Thread nicht aufgerufen hat `Exit` so oft wie `Enter`, die Sperre wird nicht aufgehoben.  
+ Der aufrufende Thread die Sperre besitzen muss, auf die `obj` Parameter. Wenn der aufrufende Thread die Sperre für das angegebene Objekt besitzt, hat eine gleiche Anzahl von `Exit` und <xref:System.Threading.Monitor.Enter%2A> für das Objekt aufgerufen wird, und klicken Sie dann die Sperre aufgehoben wird. Wenn der aufrufende Thread nicht aufgerufen hat `Exit` so oft wie `Enter`, die Sperre wird nicht aufgehoben.  
   
- Wenn die Sperre wird aufgehoben, und andere Threads befinden sich in die Warteschlange für abgearbeitete für das Objekt, ruft die einem der Threads die Sperre ab. Wenn andere Threads in der Warteschlange darauf warten, die Sperre erhalten werden, sie werden nicht automatisch verschoben, die Warteschlange für abgearbeitete beim Aufrufen des Besitzers der Sperre `Exit`. Rufen Sie zum Verschieben einer oder mehrere wartende Threads in die Warteschlange für abgearbeitete <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> vor dem Aufrufen `Exit`.  
+ Wenn die Sperre wird aufgehoben, und andere Threads befinden sich in die Warteschlange für das Objekt, ruft einer der Threads die Sperre. Wenn andere Threads in der Warteschlange darauf warten, der eine Sperre sind, sie werden nicht automatisch verschoben in die Warteschlange, wenn der Besitzer der Sperre ruft `Exit`. Aufrufen, um eine oder mehrere wartende Threads in die Warteschlange zu verschieben, <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> vor dem Aufrufen `Exit`.  
   
    
   
@@ -420,9 +426,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode funktioniert nur bei Sperren, die mit den Methoden der erworben wurden die <xref:System.Threading.Monitor> Klasse oder mithilfe von C#- `lock` -Anweisung oder die Visual Basic `SyncLock` -Anweisung, die mit implementiert werden <xref:System.Threading.Monitor>.  
+ Diese Methode funktioniert nur für Sperren, die aktiviert werden, mithilfe der Methoden von der <xref:System.Threading.Monitor> -Klasse oder durch die Verwendung der C#- `lock` -Anweisung oder die Visual Basic `SyncLock` -Anweisung, die mit implementiert werden <xref:System.Threading.Monitor>.  
   
- Verwenden Sie diese Methode mit Diagnosetools wie z. B. die <xref:System.Diagnostics.Debug.Assert%2A> Methode und die <xref:System.Diagnostics.Contracts.Contract> -Klasse, um Probleme zu debuggen, bei denen, die <xref:System.Threading.Monitor> Klasse.  
+ Verwenden Sie diese Methode mit den Diagnosetools, z. B. die <xref:System.Diagnostics.Debug.Assert%2A> Methode und die <xref:System.Diagnostics.Contracts.Contract> -Klasse, um Probleme mit Datenbanksperren zu debuggen, bei denen die <xref:System.Threading.Monitor> Klasse.  
   
  ]]></format>
         </remarks>
@@ -447,6 +453,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -472,18 +480,18 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nur der aktuelle Besitzer der Sperre ein wartende mithilfe signalisieren kann `Pulse`.  
+ Nur der aktuelle Besitzer der Sperre ein warten mit signalisieren kann `Pulse`.  
   
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um der nächste Thread in der Zeile für die Sperre zu signalisieren. Nach dem Empfang der Pulse wird wird des wartenden Threads in die Warteschlange für abgearbeitete verschoben. Wenn der Thread aufgerufen `Pulse` hebt die Sperre der nächste Thread in die Warteschlange für abgearbeitete (Dies ist nicht notwendigerweise dem Thread, der Impuls empfangen hat) Ruft die Sperre ab.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um die nächsten Threads in der Zeile, für die Sperre zu signalisieren. Nach dem Empfang des Schritts, wird der wartende Thread in die Warteschlange verschoben. Wenn der Thread aufgerufen, die `Pulse` hebt die Sperre der nächste Thread in die Warteschlange (dies nicht unbedingt der Thread, der Impuls empfangen hat), ruft die Sperre.  
   
 > [!IMPORTANT]
->  Die <xref:System.Threading.Monitor> Klasse behält Status zeigt an, dass die <xref:System.Threading.Monitor.Pulse%2A> -Methode aufgerufen wurde. Daher beim Aufrufen <xref:System.Threading.Monitor.Pulse%2A> Wenn keine Threads warten, den nächsten Thread, der aufruft <xref:System.Threading.Monitor.Wait%2A> Blöcke wie <xref:System.Threading.Monitor.Pulse%2A> nie aufgerufen wurde. Wenn zwei Threads verwenden <xref:System.Threading.Monitor.Pulse%2A> und <xref:System.Threading.Monitor.Wait%2A> um interagieren, könnte dies zu einem Deadlock. Vergleichen Sie dies mit dem Verhalten von der <xref:System.Threading.AutoResetEvent> Klasse: Wenn Sie zu signalisieren ein <xref:System.Threading.AutoResetEvent> durch Aufrufen seiner <xref:System.Threading.EventWaitHandle.Set%2A> -Methode, und es sind keine Threads, die darauf warten, die <xref:System.Threading.AutoResetEvent> verbleibt jedoch in den signalisierten Zustand, bis ein Thread aufruft, <xref:System.Threading.WaitHandle.WaitOne%2A>, <xref:System.Threading.WaitHandle.WaitAny%2A>, oder <xref:System.Threading.WaitHandle.WaitAll%2A>. Die <xref:System.Threading.AutoResetEvent> dieser Thread freigibt und in den nicht signalisierten Zustand zurück.  
+>  Die <xref:System.Threading.Monitor> -Klasse verwaltet nicht den Status Gibt an, dass die <xref:System.Threading.Monitor.Pulse%2A> -Methode aufgerufen wurde. Daher Aufrufen <xref:System.Threading.Monitor.Pulse%2A> Wenn keine Threads warten, den aufrufende Thread nächsten <xref:System.Threading.Monitor.Wait%2A> Blöcke wie <xref:System.Threading.Monitor.Pulse%2A> noch nicht aufgerufen wurde. Wenn zwei Threads verwenden <xref:System.Threading.Monitor.Pulse%2A> und <xref:System.Threading.Monitor.Wait%2A> interagieren, könnte dies zu einem Deadlock. Vergleichen Sie dies mit dem Verhalten von der <xref:System.Threading.AutoResetEvent> Klasse:, wenn Sie zu signalisieren eine <xref:System.Threading.AutoResetEvent> durch Aufrufen der <xref:System.Threading.EventWaitHandle.Set%2A> -Methode, und es sind keine Threads warten, die <xref:System.Threading.AutoResetEvent> bleibt in einem signalisierten Zustand, bis ein Thread ruft <xref:System.Threading.WaitHandle.WaitOne%2A>, <xref:System.Threading.WaitHandle.WaitAny%2A>, oder <xref:System.Threading.WaitHandle.WaitAll%2A>. Die <xref:System.Threading.AutoResetEvent> gibt den Thread frei, und in den nicht signalisierten Zustand zurück.  
   
- Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise enthält, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange auf dem enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+ Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise, die einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält enthält, und einen Verweis auf die Warteschlange für abzuarbeitende, einschließlich der enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts darauf warten.  
   
  Die `Pulse`, <xref:System.Threading.Monitor.PulseAll%2A>, und <xref:System.Threading.Monitor.Wait%2A> Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Mehrere Threads signalisiert werden, verwenden die <xref:System.Threading.Monitor.PulseAll%2A> Methode.  
+ Mehrere Threads signalisiert werden, verwenden Sie die <xref:System.Threading.Monitor.PulseAll%2A> Methode.  
   
  ]]></format>
         </remarks>
@@ -509,6 +517,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -534,13 +544,13 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um alle Threads, die darauf warten, der eine Sperre für das Objekt zu signalisieren. Nach dem Senden des Signals werden die wartende Threads in die Warteschlange für abgearbeitete verschoben. Wenn der Thread aufgerufen `PulseAll` hebt die Sperre der nächste Thread in die Warteschlange für abgearbeitete Ruft die Sperre ab.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um alle Threads, die darauf warten, die Sperre für das Objekt zu signalisieren. Wenn das Signal gesendet wurde, werden den wartenden Threads in die Warteschlange verschoben. Wenn der Thread aufgerufen, die `PulseAll` hebt die Sperre der nächste Thread in die Warteschlange erfolgreich sperren.  
   
- Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise enthält, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange auf dem enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+ Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise, die einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält enthält, und einen Verweis auf die Warteschlange für abzuarbeitende, einschließlich der enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts darauf warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, `PulseAll`, und <xref:System.Threading.Monitor.Wait%2A> Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
  Verwenden Sie einen einzelnen Thread signalisiert werden, die `Pulse` Methode.  
   
@@ -579,6 +589,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -601,14 +613,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn erfolgreich ist, diese Methode eine exklusive Sperre für erhält die `obj` Parameter. Diese Methode gibt sofort zurück, unabhängig davon, ob die Sperre verfügbar wird.  
+ Wenn erfolgreich, diese Methode eine exklusive Sperre für Ruft die `obj` Parameter. Diese Methode gibt sofort zurück, ob die Sperre verfügbar ist.  
   
- Diese Methode ist vergleichbar mit <xref:System.Threading.Monitor.Enter%2A>, aber es wird nie blockiert den aktuellen Thread. Wenn der Thread ohne Blockierung eingegeben werden kann, gibt die Methode `false,`.  
+ Diese Methode ähnelt <xref:System.Threading.Monitor.Enter%2A>, aber es wird nie blockiert den aktuellen Thread. Wenn der Thread kann nicht ohne Blockierung eingegeben haben, gibt die Methode `false,`.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter der <xref:System.Threading.Monitor> Artikel.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Artikel.  
   
- Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in den kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in einem kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#1)]
  [!code-vb[System.Threading.Monitor.TryEnter#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#1)]  
@@ -667,16 +679,16 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn erfolgreich ist, diese Methode eine exklusive Sperre für erhält die `obj` Parameter. Diese Methode gibt sofort zurück, unabhängig davon, ob die Sperre verfügbar wird.  
+ Wenn erfolgreich, diese Methode eine exklusive Sperre für Ruft die `obj` Parameter. Diese Methode gibt sofort zurück, ob die Sperre verfügbar ist.  
   
- Wenn die Sperre nicht angenommen wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` Parameter ist `false` nachdem diese Methode beendet. Dadurch wird das Programm in allen Fällen um zu bestimmen, ob die Sperre aufgehoben werden muss.  
+ Wenn die Sperre nicht erstellt wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` -Parameter ist `false` nach diese Methode beendet. Dadurch wird das Programm in allen Fällen, um zu bestimmen, ob es erforderlich, um die Sperre aufzuheben ist.  
   
- Diese Methode ist vergleichbar mit <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29>, aber es wird nie blockiert den aktuellen Thread. Wenn der Thread nicht, ohne zu blockieren betreten kann, die `lockTaken` -Argument festgelegt wird `false` bei Rückgabe der Methode.  
+ Diese Methode ähnelt <xref:System.Threading.Monitor.Enter%28System.Object%2CSystem.Boolean%40%29>, aber es wird nie blockiert den aktuellen Thread. Wenn der Thread ohne Blockierung, eingeben kann nicht die `lockTaken` Argument nastaven NA hodnotu `false` bei Rückgabe der Methode.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie im Artikel <xref:System.Threading.Monitor>.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie im Artikel <xref:System.Threading.Monitor>.  
   
- Um sicherzustellen, dass der Thread ist nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in den kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread wird nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in einem kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#2)]
  [!code-vb[System.Threading.Monitor.TryEnter#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#2)]  
@@ -684,7 +696,7 @@
    
   
 ## Examples  
- Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.TryEnter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, selbst wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Überprüfen ist, ob die Sperre besitzt, werden veröffentlicht.  
+ Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.TryEnter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, auch wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Testen ist, ob die Sperre sein veröffentlicht.  
   
  [!code-csharp[System.Threading.Monitor.Enter#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.enter/cs/example.cs#3)]
  [!code-vb[System.Threading.Monitor.Enter#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.enter/vb/example.vb#3)]  
@@ -712,6 +724,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -736,12 +750,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die `millisecondsTimeout` entspricht <xref:System.Threading.Timeout.Infinite>, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.Enter%2A>. Wenn `millisecondsTimeout` gleich 0 ist, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.TryEnter%2A>.  
+ Wenn die `millisecondsTimeout` entspricht <xref:System.Threading.Timeout.Infinite>, diese Methode entspricht dem <xref:System.Threading.Monitor.Enter%2A>. Wenn `millisecondsTimeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%2A>.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter der <xref:System.Threading.Monitor> Artikel.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Artikel.  
   
- Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in den kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in einem kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#3)]
  [!code-vb[System.Threading.Monitor.TryEnter#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#3)]  
@@ -771,6 +785,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -795,12 +811,12 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Wert der `timeout` entspricht in Millisekunden konvertiert – 1, diese Methode ist äquivalent zu <xref:System.Threading.Monitor.Enter%2A>. Wenn der Wert der `timeout` gleich 0 ist, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.TryEnter%2A>.  
+ Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich – 1, ist diese Methode entspricht <xref:System.Threading.Monitor.Enter%2A>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%2A>.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Einzelheiten finden Sie in der <xref:System.Threading.Monitor> klassenthema.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Thema-Klasse.  
   
- Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in den kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread nicht auf den kritischen Abschnitt, sollten Sie untersuchen der Rückgabewert der Methode und führen Sie Code in einem kritischen Abschnitt nur, wenn der Rückgabewert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#5)]
  [!code-vb[System.Threading.Monitor.TryEnter#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#5)]  
@@ -853,14 +869,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die `millisecondsTimeout` entspricht <xref:System.Threading.Timeout.Infinite>, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn `millisecondsTimeout` gleich 0 ist, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
+ Wenn die `millisecondsTimeout` entspricht <xref:System.Threading.Timeout.Infinite>, diese Methode entspricht dem <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn `millisecondsTimeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
   
- Wenn die Sperre nicht angenommen wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` Parameter ist `false` nachdem diese Methode beendet. Dadurch wird das Programm in allen Fällen um zu bestimmen, ob die Sperre aufgehoben werden muss.  
+ Wenn die Sperre nicht erstellt wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` -Parameter ist `false` nach diese Methode beendet. Dadurch wird das Programm in allen Fällen, um zu bestimmen, ob es erforderlich, um die Sperre aufzuheben ist.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter der <xref:System.Threading.Monitor> klassenthema.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Thema-Klasse.  
   
- Um sicherzustellen, dass der Thread ist nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in den kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread wird nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in einem kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#4)]
  [!code-vb[System.Threading.Monitor.TryEnter#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#4)]  
@@ -868,7 +884,7 @@
    
   
 ## Examples  
- Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.TryEnter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, selbst wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Überprüfen ist, ob die Sperre besitzt, werden veröffentlicht.  
+ Der folgende Code zeigt das grundlegende Muster für die Verwendung der <xref:System.Threading.Monitor.TryEnter%28System.Object%2CSystem.Boolean%40%29> -methodenüberladung. Diese Überladung legt immer den Wert der Variablen, die an die `ref` Parameter (`ByRef` in Visual Basic) `lockTaken`, auch wenn die Methode eine Ausnahme auslöst, sodass der Wert der Variablen eine zuverlässige Möglichkeit zum Testen ist, ob die Sperre sein veröffentlicht.  
   
  [!code-csharp[System.Threading.Monitor.Enter#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.monitor.enter/cs/example.cs#4)]
  [!code-vb[System.Threading.Monitor.Enter#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.monitor.enter/vb/example.vb#4)]  
@@ -922,14 +938,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Wert der `timeout` entspricht in Millisekunden konvertiert – 1, diese Methode ist äquivalent zu <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn der Wert der `timeout` gleich 0 ist, diese Methode ist gleichbedeutend mit <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
+ Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich – 1, ist diese Methode entspricht <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
   
- Wenn die Sperre nicht angenommen wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` Parameter ist `false` nachdem diese Methode beendet. Dadurch wird das Programm in allen Fällen um zu bestimmen, ob die Sperre aufgehoben werden muss.  
+ Wenn die Sperre nicht erstellt wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` -Parameter ist `false` nach diese Methode beendet. Dadurch wird das Programm in allen Fällen, um zu bestimmen, ob es erforderlich, um die Sperre aufzuheben ist.  
   
 > [!NOTE]
->  Verwendung <xref:System.Threading.Monitor> zum Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter der <xref:System.Threading.Monitor> klassenthema.  
+>  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Thema-Klasse.  
   
- Um sicherzustellen, dass der Thread ist nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in den kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster für Instanzenmethoden verwendet. Beachten Sie, die Sie aufrufen sollte <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für die kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
+ Um sicherzustellen, dass der Thread wird nicht den kritischen Abschnitt eingeben, sollten Sie untersuchen, den Wert der `lockTaken` und Ausführen von Code in einem kritischen Abschnitt nur, wenn der Wert ist `true`. Das folgende Codefragment zeigt das Muster zum Aufrufen dieser Methode verwendet wird. Beachten Sie, die Sie aufrufen sollten <xref:System.Threading.Monitor.Exit%2A> in einer `finally` Block, um sicherzustellen, dass der aufrufende Thread die Sperre für den kritischen Abschnitt frei, wenn eine Ausnahme auftritt.  
   
  [!code-csharp[System.Threading.Monitor.TryEnter#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/cs/pattern1.cs#6)]
  [!code-vb[System.Threading.Monitor.TryEnter#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.Threading.Monitor.TryEnter/vb/pattern1.vb#6)]  
@@ -970,6 +986,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -992,19 +1010,19 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freizugeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer ist blockiert, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer auf eine Zustandsänderung warten, die als Ergebnis von einem anderen Thread ausgeführt werden muss.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freigeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer gesperrt, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer muss auf eine Zustandsänderung warten, die aufgrund von einem anderen Thread ausgeführt wird.  
   
- Wenn ein Thread aufruft, `Wait`, hebt die Sperre für das Objekt ist, und wechselt in die Warteschlange für das Objekt auf. Der nächste Thread in die Warteschlange für abgearbeitete des Objekts (sofern vorhanden) die Sperre erhält und bietet die exklusive Verwendung des Objekts. Alle Threads, die aufgerufen werden `Wait` in der Warteschlange verbleiben, bis sie ein Signal von empfangen <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>, vom Besitzer der Sperre gesendet. Wenn `Pulse` gesendet wird, wird nur der Thread am Anfang der Warteschlange für abzuarbeitende beeinflusst. Wenn `PulseAll` gesendet wird, werden alle Threads, die für das Objekt warten beeinflusst. Wenn das Signal empfangen wird, einen oder mehrere Threads die Warteschlange für abzuarbeitende lassen, und geben Sie die Warteschlange für abgearbeitete. Ein Thread in die Warteschlange für abgearbeitete ist zulässig, die Sperre erneut.  
+ Wenn ein Thread ruft `Wait`, es hebt die Sperre für das Objekt und gibt das Objekt in der Warteschlange. Der nächste Thread in die Warteschlange des Objekts (sofern vorhanden), ruft Sie die Sperre und verfügt über die exklusive Verwendung des Objekts. Alle Threads, die aufgerufen werden `Wait` in der Warteschlange verbleiben, bis sie ein Signal von empfangen <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>, durch den Besitzer der Sperre gesendet. Wenn `Pulse` gesendet wird, wird nur der Thread am Anfang der Warteschlange für abzuarbeitende betroffen ist. Wenn `PulseAll` gesendet wird, werden alle Threads, die für das Objekt darauf warten, sind betroffen. Das Signal empfangen wird, ein oder mehrere Threads verlassen die Warteschlange und geben Sie die Warteschlange. Ein Thread in die Warteschlange ist zulässig, die Sperre erneut zu erhalten.  
   
- Diese Methode gibt zurück, wenn der aufrufende Thread die Sperre für das Objekt erneut erhält. Beachten Sie, die diese Methode auf unbestimmte Zeit blockiert werden, wenn der Besitzer der Sperre nicht aufruft `Pulse` oder `PulseAll`.  
+ Diese Methode gibt zurück, wenn der aufrufende Thread die Sperre für das Objekt erneut erhält. Beachten Sie, die diese Methode wird auf unbestimmte Zeit blockiert, wenn der Besitzer der Sperre nicht aufruft `Pulse` oder `PulseAll`.  
   
- Der Aufrufer führt `Wait` einmal, unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Im Prinzip die `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer `Enter` für das Objekt und ruft `Exit` so oft wie nötig, um das gesperrte Objekt vollständig freizugeben. Der Aufrufer blockiert dann beim Warten auf das Objekt erneut abzurufen. Wenn der Aufrufer die Sperre erneut erhält, das System ruft `Enter` so oft wie nötig, um die gespeicherte wiederherstellen `Enter` Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, werden diese Sperren nicht aufgehoben.  
+ Der Aufrufer führt `Wait` , unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Vom Konzept her der `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer `Enter` für das Objekt und ruft `Exit` so oft wie nötig, um vollständig gesperrten Objekts freizugeben. Der Aufrufer ist dann beim Warten auf das Objekt erneut blockiert. Wenn der Aufrufer die Sperre erneut erhält, das System ruft `Enter` so oft wie nötig, um die gespeicherten wiederherstellen `Enter` Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, diese Sperren werden nicht aufgehoben.  
   
- Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise enthält, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange auf dem enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+ Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise, die einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält enthält, und einen Verweis auf die Warteschlange für abzuarbeitende, einschließlich der enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts darauf warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, <xref:System.Threading.Monitor.PulseAll%2A>, und `Wait` Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
  ]]></format>
         </remarks>
@@ -1031,6 +1049,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -1055,25 +1075,25 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt keinen zurück, bis er auf die erneut eine exklusive Sperre erhält die `obj` Parameter.  
+ Diese Methode wird nicht zurückgegeben, bis er eine exklusive Sperre auf erneut erhält die `obj` Parameter.  
   
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freizugeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer ist blockiert, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer auf eine Zustandsänderung warten, die als Ergebnis von einem anderen Thread ausgeführt werden muss.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freigeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer gesperrt, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer muss auf eine Zustandsänderung warten, die aufgrund von einem anderen Thread ausgeführt wird.  
   
- Das Timeout wird sichergestellt, dass der aktuelle Thread nicht unbegrenzt gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt auch den Thread in die Warteschlange für abgearbeitete Threads in der Warteschlange, damit er die Sperre früher zurückzuerhalten kann. Der Thread kann den Rückgabewert der Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die sie zur Eingabe des Wartevorgangs verursacht auswerten und, wenn notwendig Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut.  
+ Das Timeout stellt sicher, dass der aktuelle Thread nicht auf unbestimmte Zeit gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt außerdem den Thread auf die Warteschlange für abgearbeitete Threads in der Warteschlange, so, dass er die Sperre früher erneut abrufen kann. Der Thread kann den Rückgabewert von Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die die Wartezeit, geben verursacht hat auswerten und, wenn erforderlichen Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut auf.  
   
- Wenn ein Thread aufruft, `Wait`, hebt die Sperre für das Objekt ist, und wechselt in die Warteschlange für das Objekt auf. Der nächste Thread in die Warteschlange für abgearbeitete des Objekts (sofern vorhanden) die Sperre erhält und bietet die exklusive Verwendung des Objekts. Der Thread, der aufgerufen `Wait` aufruft, verbleibt in der Warteschlange, bis entweder ein Thread die Sperre <xref:System.Threading.Monitor.PulseAll%2A>, oder es das nächste in der Warteschlange ist und ein Thread die Sperre wird aufgerufen <xref:System.Threading.Monitor.Pulse%2A>. Jedoch wenn `millisecondsTimeout` verstreicht, bevor ein anderer Thread auf dieses Objekt aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> -Methode, den ursprünglichen Thread wird in die Warteschlange für abgearbeitete verschoben, um die Sperre erneut erhalten.  
-  
-> [!NOTE]
->  Wenn <xref:System.Threading.Timeout.Infinite> wird angegeben, für die `millisecondsTimeout` Parameter, diese Methode blockiert dauerhaft, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `millisecondsTimeout` gleich 0 ist, der aufrufende Thread `Wait` hebt die Sperre und gelangt anschließend direkt in die Warteschlange für abgearbeitete um die Sperre erneut erhalten.  
-  
- Der Aufrufer führt `Wait` einmal, unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Im Prinzip die `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um das gesperrte Objekt vollständig freizugeben. Der Aufrufer blockiert dann beim Warten auf das Objekt erneut abzurufen. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherte wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, werden diese Sperren nicht aufgehoben.  
+ Wenn ein Thread ruft `Wait`, es hebt die Sperre für das Objekt und gibt das Objekt in der Warteschlange. Der nächste Thread in die Warteschlange des Objekts (sofern vorhanden), ruft Sie die Sperre und verfügt über die exklusive Verwendung des Objekts. Der Thread, der aufgerufen `Wait` bleibt in der Warteschlange warten, bis ein Thread, der die Sperre aufrechterhält ruft <xref:System.Threading.Monitor.PulseAll%2A>, oder es ist die nächste in der Warteschlange und ruft Sie ein Thread, der die Sperre aufrechterhält <xref:System.Threading.Monitor.Pulse%2A>. Aber wenn `millisecondsTimeout` verstreicht, bevor ein anderer Thread auf dieses Objekts ruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> der ursprüngliche Thread-Methode wird in die Warteschlange verschoben, um die Sperre erneut erhalten.  
   
 > [!NOTE]
->  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange, die enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+>  Wenn <xref:System.Threading.Timeout.Infinite> angegeben ist, für die `millisecondsTimeout` Parameter dieser Methode blockiert unbegrenzt, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `millisecondsTimeout` gleich 0 ist, der aufrufende Thread `Wait` hebt die Sperre, und wird sofort in die Warteschlange um die Sperre erneut erhalten.  
+  
+ Der Aufrufer führt `Wait` , unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Vom Konzept her der `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um vollständig gesperrten Objekts freizugeben. Der Aufrufer ist dann beim Warten auf das Objekt erneut blockiert. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherten wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, diese Sperren werden nicht aufgehoben.  
+  
+> [!NOTE]
+>  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf der Warteschlange, enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, <xref:System.Threading.Monitor.PulseAll%2A>, und `Wait` Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
  ]]></format>
         </remarks>
@@ -1101,6 +1121,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -1125,25 +1147,25 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt keinen zurück, bis er auf die erneut eine exklusive Sperre erhält die `obj` Parameter.  
+ Diese Methode wird nicht zurückgegeben, bis er eine exklusive Sperre auf erneut erhält die `obj` Parameter.  
   
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freizugeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer ist blockiert, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer auf eine Zustandsänderung warten, die als Ergebnis von einem anderen Thread ausgeführt werden muss.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freigeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer gesperrt, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer muss auf eine Zustandsänderung warten, die aufgrund von einem anderen Thread ausgeführt wird.  
   
- Das Timeout wird sichergestellt, dass der aktuelle Thread nicht unbegrenzt gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt auch den Thread in die Warteschlange für abgearbeitete Threads in der Warteschlange, damit er die Sperre früher zurückzuerhalten kann. Der Thread kann den Rückgabewert der Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die sie zur Eingabe des Wartevorgangs verursacht auswerten und, wenn notwendig Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut.  
+ Das Timeout stellt sicher, dass der aktuelle Thread nicht auf unbestimmte Zeit gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt außerdem den Thread auf die Warteschlange für abgearbeitete Threads in der Warteschlange, so, dass er die Sperre früher erneut abrufen kann. Der Thread kann den Rückgabewert von Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die die Wartezeit, geben verursacht hat auswerten und, wenn erforderlichen Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut auf.  
   
- Wenn ein Thread aufruft, `Wait`, hebt die Sperre für das Objekt ist, und wechselt in die Warteschlange für das Objekt auf. Der nächste Thread in die Warteschlange für abgearbeitete des Objekts (sofern vorhanden) die Sperre erhält und bietet die exklusive Verwendung des Objekts. Der Thread, der aufgerufen `Wait` aufruft, verbleibt in der Warteschlange, bis entweder ein Thread die Sperre <xref:System.Threading.Monitor.PulseAll%2A>, oder es das nächste in der Warteschlange ist und ein Thread die Sperre wird aufgerufen <xref:System.Threading.Monitor.Pulse%2A>. Jedoch wenn `timeout` verstreicht, bevor ein anderer Thread auf dieses Objekt aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> -Methode, den ursprünglichen Thread wird in die Warteschlange für abgearbeitete verschoben, um die Sperre erneut erhalten.  
-  
-> [!NOTE]
->  Wenn eine <xref:System.TimeSpan> -1 Millisekunde angegeben ist, für die `timeout` Parameter, diese Methode blockiert dauerhaft, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `timeout` ist 0 Millisekunden, der aufrufende Thread `Wait` hebt die Sperre und gelangt anschließend direkt in die Warteschlange für abgearbeitete um die Sperre erneut erhalten.  
-  
- Der Aufrufer führt `Wait` einmal, unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Im Prinzip die `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um das gesperrte Objekt vollständig freizugeben. Der Aufrufer blockiert dann beim Warten auf das Objekt erneut abzurufen. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherte wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, werden diese Sperren nicht aufgehoben.  
+ Wenn ein Thread ruft `Wait`, es hebt die Sperre für das Objekt und gibt das Objekt in der Warteschlange. Der nächste Thread in die Warteschlange des Objekts (sofern vorhanden), ruft Sie die Sperre und verfügt über die exklusive Verwendung des Objekts. Der Thread, der aufgerufen `Wait` bleibt in der Warteschlange warten, bis ein Thread, der die Sperre aufrechterhält ruft <xref:System.Threading.Monitor.PulseAll%2A>, oder es ist die nächste in der Warteschlange und ruft Sie ein Thread, der die Sperre aufrechterhält <xref:System.Threading.Monitor.Pulse%2A>. Aber wenn `timeout` verstreicht, bevor ein anderer Thread auf dieses Objekts ruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> der ursprüngliche Thread-Methode wird in die Warteschlange verschoben, um die Sperre erneut erhalten.  
   
 > [!NOTE]
->  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange, die enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+>  Wenn eine <xref:System.TimeSpan> -1 Millisekunde angegeben ist, für die `timeout` Parameter dieser Methode blockiert unbegrenzt, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `timeout` ist 0 Millisekunden, der aufrufende Thread `Wait` hebt die Sperre, und wird sofort in die Warteschlange um die Sperre erneut erhalten.  
+  
+ Der Aufrufer führt `Wait` , unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Vom Konzept her der `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um vollständig gesperrten Objekts freizugeben. Der Aufrufer ist dann beim Warten auf das Objekt erneut blockiert. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherten wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, diese Sperren werden nicht aufgehoben.  
+  
+> [!NOTE]
+>  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf der Warteschlange, enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, <xref:System.Threading.Monitor.PulseAll%2A>, und `Wait` Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
  ]]></format>
         </remarks>
@@ -1164,6 +1186,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -1201,32 +1225,32 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt keinen zurück, bis er auf die erneut eine exklusive Sperre erhält die `obj` Parameter.  
+ Diese Methode wird nicht zurückgegeben, bis er eine exklusive Sperre auf erneut erhält die `obj` Parameter.  
   
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freizugeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer ist blockiert, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer auf eine Zustandsänderung warten, die als Ergebnis von einem anderen Thread ausgeführt werden muss.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freigeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer gesperrt, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer muss auf eine Zustandsänderung warten, die aufgrund von einem anderen Thread ausgeführt wird.  
   
- Das Timeout wird sichergestellt, dass der aktuelle Thread nicht unbegrenzt gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt auch den Thread in die Warteschlange für abgearbeitete Threads in der Warteschlange, damit er die Sperre früher zurückzuerhalten kann. Der Thread kann den Rückgabewert der Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die sie zur Eingabe des Wartevorgangs verursacht auswerten und, wenn notwendig Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut.  
+ Das Timeout stellt sicher, dass der aktuelle Thread nicht auf unbestimmte Zeit gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt außerdem den Thread auf die Warteschlange für abgearbeitete Threads in der Warteschlange, so, dass er die Sperre früher erneut abrufen kann. Der Thread kann den Rückgabewert von Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die die Wartezeit, geben verursacht hat auswerten und, wenn erforderlichen Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut auf.  
   
- Wenn ein Thread aufruft, `Wait`, er hebt die Sperre und die Warteschlange für abzuarbeitende eingibt. An diesem Punkt der nächste Thread in die Warteschlange für abgearbeitete (sofern vorhanden) kann die Steuerung der Sperre. Der Thread, der aufgerufen `Wait` aufruft, verbleibt in der Warteschlange, bis entweder ein Thread die Sperre <xref:System.Threading.Monitor.PulseAll%2A>, oder es das nächste in der Warteschlange ist und ein Thread die Sperre wird aufgerufen <xref:System.Threading.Monitor.Pulse%2A>. Jedoch wenn `millisecondsTimeout` verstreicht, bevor ein anderer Thread auf dieses Objekt aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> -Methode, den ursprünglichen Thread wird in die Warteschlange für abgearbeitete verschoben, um die Sperre erneut erhalten.  
-  
-> [!NOTE]
->  Wenn <xref:System.Threading.Timeout.Infinite> wird angegeben, für die `millisecondsTimeout` Parameter, diese Methode blockiert dauerhaft, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `millisecondsTimeout` gleich 0 ist, der aufrufende Thread `Wait` hebt die Sperre und gelangt anschließend direkt in die Warteschlange für abgearbeitete um die Sperre erneut erhalten.  
-  
- Der Aufrufer führt `Wait` einmal, unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Im Prinzip die `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um das gesperrte Objekt vollständig freizugeben. Der Aufrufer blockiert dann beim Warten auf das Objekt erneut abzurufen. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherte wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, werden diese Sperren nicht aufgehoben.  
+ Wenn ein Thread ruft `Wait`, es hebt die Sperre und die Warteschlange für abzuarbeitende eingibt. An diesem Punkt ist der nächste Thread in die Warteschlange (sofern vorhanden) zulässig, die Kontrolle über die Sperre zu übernehmen. Der Thread, der aufgerufen `Wait` bleibt in der Warteschlange warten, bis ein Thread, der die Sperre aufrechterhält ruft <xref:System.Threading.Monitor.PulseAll%2A>, oder es ist die nächste in der Warteschlange und ruft Sie ein Thread, der die Sperre aufrechterhält <xref:System.Threading.Monitor.Pulse%2A>. Aber wenn `millisecondsTimeout` verstreicht, bevor ein anderer Thread auf dieses Objekts ruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> der ursprüngliche Thread-Methode wird in die Warteschlange verschoben, um die Sperre erneut erhalten.  
   
 > [!NOTE]
->  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange, die enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+>  Wenn <xref:System.Threading.Timeout.Infinite> angegeben ist, für die `millisecondsTimeout` Parameter dieser Methode blockiert unbegrenzt, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `millisecondsTimeout` gleich 0 ist, der aufrufende Thread `Wait` hebt die Sperre, und wird sofort in die Warteschlange um die Sperre erneut erhalten.  
+  
+ Der Aufrufer führt `Wait` , unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Vom Konzept her der `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um vollständig gesperrten Objekts freizugeben. Der Aufrufer ist dann beim Warten auf das Objekt erneut blockiert. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherten wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, diese Sperren werden nicht aufgehoben.  
+  
+> [!NOTE]
+>  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf der Warteschlange, enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, <xref:System.Threading.Monitor.PulseAll%2A>, und `Wait` Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
 ## <a name="notes-on-exiting-the-context"></a>Hinweise zum Beenden des Kontexts  
- Die`exitContext` Parameter hat keine Auswirkungen, es sei denn, die <xref:System.Threading.Monitor.Wait%2A> Methode aus, in einem nicht standardmäßigen verwalteten Kontext aufgerufen wird. Dies kann geschehen, wenn der Thread in einem Aufruf mit einer Instanz einer Klasse abgeleitet ist <xref:System.ContextBoundObject>. Selbst wenn derzeit eine Methode einer Klasse ausgeführt werden, die nicht von abgeleitet ist <xref:System.ContextBoundObject>, z. B. <xref:System.String>, Sie kann in einem nicht standardmäßigen Kontext Wenn eine <xref:System.ContextBoundObject> befindet sich auf dem Stapel in der aktuellen Anwendungsdomäne.  
+ Die`exitContext` Parameter hat keine Auswirkungen, es sei denn, die <xref:System.Threading.Monitor.Wait%2A> Methode aus, in einem nicht standardmäßigen verwalteten Kontext aufgerufen wird. Dies kann auftreten, wenn der Thread in einem Aufruf an eine Instanz einer Klasse abgeleitet ist <xref:System.ContextBoundObject>. Selbst wenn derzeit eine Methode einer Klasse ausgeführt wird, die nicht von abgeleitet ist <xref:System.ContextBoundObject>, z. B. <xref:System.String>, werden in einem nicht standardmäßigen Kontext Wenn eine <xref:System.ContextBoundObject> ist auf dem Stapel in der aktuellen Anwendungsdomäne.  
   
- Beim Code in einem nicht standardmäßigen Kontext und ausgeführt wird die Angabe `true` für `exitContext` bewirkt, dass der Thread den nicht standardmäßigen verwalteten Kontext zu beenden (d. h. für den Übergang in den Standardkontext) vor dem Ausführen der <xref:System.Threading.Monitor.Wait%2A> Methode. Es gibt in den ursprünglich nicht standardmäßige nach dem Aufruf von der <xref:System.Threading.Monitor.Wait%2A> Methode abgeschlossen wird.  
+ Angeben, wenn der Code in einem nicht standardmäßigen Kontext ausgeführt wird, `true` für `exitContext` bewirkt, dass den Thread, der vom Standard abweichenden verwalteten Kontext zu beenden (d. h. für den Übergang in den Standardkontext) vor dem Ausführen der <xref:System.Threading.Monitor.Wait%2A> Methode. Nach dem Aufruf des ursprünglichen Kontexts der vom Standard abweichenden gibt die <xref:System.Threading.Monitor.Wait%2A> Methode abgeschlossen wird.  
   
- Dies kann nützlich sein, wenn die kontextgebundene-Klasse verfügt über die <xref:System.Runtime.Remoting.Contexts.SynchronizationAttribute> Attribut angewendet. In diesem Fall werden alle Aufrufe von Membern der Klasse werden automatisch synchronisiert, und die Synchronisierungsdomäne ist der gesamte Text der Code für die Klasse. Wenn Code in der Aufrufliste eines Members Ruft die <xref:System.Threading.Monitor.Wait%2A> Methode und gibt an, `true` für `exitContext`, der Thread beendet wird, die Synchronisierungsdomäne ermöglicht einen Thread, der bei einem Aufruf auf einen Member des Objekts zu fortfahren blockiert wird. Wenn die <xref:System.Threading.Monitor.Wait%2A> Methode zurückgegeben wird, der Thread, der der Aufruf muss warten, um die Synchronisierungsdomäne.  
+ Dies kann nützlich sein, wenn die kontextgebundene Klasse verfügt über die <xref:System.Runtime.Remoting.Contexts.SynchronizationAttribute> -Attribut. In diesem Fall werden alle Aufrufe von Membern der Klasse werden automatisch synchronisiert, und die Synchronisierungsdomäne ist die Kernstruktur des Codes für die Klasse. Wenn Code in der Aufrufliste eines Elements aufgerufen der <xref:System.Threading.Monitor.Wait%2A> Methode und gibt `true` für `exitContext`, der Thread beendet wird, die Synchronisierungsdomäne, sodass einen Thread, der bei einem Aufruf auf einen Member des Objekts, um den Vorgang fortzusetzen, blockiert wird. Wenn die <xref:System.Threading.Monitor.Wait%2A> Methode zurückgegeben wird, der Thread, der der Aufruf erfolgt, muss mit dem die Synchronisierungsdomäne warten.  
   
  ]]></format>
         </remarks>
@@ -1248,6 +1272,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -1280,32 +1306,32 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt keinen zurück, bis er auf die erneut eine exklusive Sperre erhält die `obj` Parameter.  
+ Diese Methode wird nicht zurückgegeben, bis er eine exklusive Sperre auf erneut erhält die `obj` Parameter.  
   
- Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freizugeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer ist blockiert, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer auf eine Zustandsänderung warten, die als Ergebnis von einem anderen Thread ausgeführt werden muss.  
+ Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um das Objekt freigeben, sodass ein anderer Thread darauf zugreifen kann. Der Aufrufer gesperrt, beim Warten auf die Sperre erneut abzurufen. Diese Methode wird aufgerufen, wenn der Aufrufer muss auf eine Zustandsänderung warten, die aufgrund von einem anderen Thread ausgeführt wird.  
   
- Das Timeout wird sichergestellt, dass der aktuelle Thread nicht unbegrenzt gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt auch den Thread in die Warteschlange für abgearbeitete Threads in der Warteschlange, damit er die Sperre früher zurückzuerhalten kann. Der Thread kann den Rückgabewert der Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die sie zur Eingabe des Wartevorgangs verursacht auswerten und, wenn notwendig Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut.  
+ Das Timeout stellt sicher, dass der aktuelle Thread nicht auf unbestimmte Zeit gesperrt wird, wenn ein anderer Thread die Sperre erst nach Aufrufen von der <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> Methode. Er verschiebt außerdem den Thread auf die Warteschlange für abgearbeitete Threads in der Warteschlange, so, dass er die Sperre früher erneut abrufen kann. Der Thread kann den Rückgabewert von Testen der <xref:System.Threading.Monitor.Wait%2A> Methode, um zu bestimmen, ob er vor dem Timeout der Sperre. Der Thread kann die Bedingungen, die die Wartezeit, geben verursacht hat auswerten und, wenn erforderlichen Aufruf der <xref:System.Threading.Monitor.Wait%2A> -Methode erneut auf.  
   
- Wenn ein Thread aufruft, `Wait`, er hebt die Sperre und die Warteschlange für abzuarbeitende eingibt. An diesem Punkt der nächste Thread in die Warteschlange für abgearbeitete (sofern vorhanden) kann die Steuerung der Sperre. Der Thread, der aufgerufen `Wait` aufruft, verbleibt in der Warteschlange, bis entweder ein Thread die Sperre <xref:System.Threading.Monitor.PulseAll%2A>, oder es das nächste in der Warteschlange ist und ein Thread die Sperre wird aufgerufen <xref:System.Threading.Monitor.Pulse%2A>. Jedoch wenn `timeout` Millisekunden verstreichen, bevor ein anderer Thread auf dieses Objekt aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> -Methode, den ursprünglichen Thread wird in die Warteschlange für abgearbeitete verschoben, um die Sperre erneut erhalten.  
-  
-> [!NOTE]
->  Wenn eine <xref:System.TimeSpan> -1 Millisekunde angegeben ist, für die `timeout` Parameter, diese Methode blockiert dauerhaft, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `timeout` ist 0 Millisekunden, der aufrufende Thread `Wait` hebt die Sperre und gelangt anschließend direkt in die Warteschlange für abgearbeitete um die Sperre erneut erhalten.  
-  
- Der Aufrufer führt `Wait` einmal, unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Im Prinzip die `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um das gesperrte Objekt vollständig freizugeben. Der Aufrufer blockiert dann beim Warten auf das Objekt erneut abzurufen. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherte wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, werden diese Sperren nicht aufgehoben.  
+ Wenn ein Thread ruft `Wait`, es hebt die Sperre und die Warteschlange für abzuarbeitende eingibt. An diesem Punkt ist der nächste Thread in die Warteschlange (sofern vorhanden) zulässig, die Kontrolle über die Sperre zu übernehmen. Der Thread, der aufgerufen `Wait` bleibt in der Warteschlange warten, bis ein Thread, der die Sperre aufrechterhält ruft <xref:System.Threading.Monitor.PulseAll%2A>, oder es ist die nächste in der Warteschlange und ruft Sie ein Thread, der die Sperre aufrechterhält <xref:System.Threading.Monitor.Pulse%2A>. Aber wenn `timeout` Millisekunden ablaufen, bevor ein anderer Thread auf dieses Objekts ruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A> der ursprüngliche Thread-Methode wird in die Warteschlange verschoben, um die Sperre erneut erhalten.  
   
 > [!NOTE]
->  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf die Warteschlange, die enthält die Threads, die für die Benachrichtigung über eine Änderung am Zustand des Objekts warten.  
+>  Wenn eine <xref:System.TimeSpan> -1 Millisekunde angegeben ist, für die `timeout` Parameter dieser Methode blockiert unbegrenzt, es sei denn, der Besitzer der Sperre aufruft <xref:System.Threading.Monitor.Pulse%2A> oder <xref:System.Threading.Monitor.PulseAll%2A>. Wenn `timeout` ist 0 Millisekunden, der aufrufende Thread `Wait` hebt die Sperre, und wird sofort in die Warteschlange um die Sperre erneut erhalten.  
+  
+ Der Aufrufer führt `Wait` , unabhängig davon, wie oft <xref:System.Threading.Monitor.Enter%2A> wurde für das angegebene Objekt aufgerufen. Vom Konzept her der `Wait` Methode speichert die Anzahl der Aufrufe der Aufrufer <xref:System.Threading.Monitor.Enter%2A> für das Objekt und ruft <xref:System.Threading.Monitor.Exit%2A> so oft wie nötig, um vollständig gesperrten Objekts freizugeben. Der Aufrufer ist dann beim Warten auf das Objekt erneut blockiert. Wenn der Aufrufer die Sperre erneut erhält, das System ruft <xref:System.Threading.Monitor.Enter%2A> so oft wie nötig, um die gespeicherten wiederherstellen <xref:System.Threading.Monitor.Enter%2A> Anzahl für den Aufrufer. Aufrufen von `Wait` hebt die Sperre für das angegebene Objekt nur, wenn der Aufrufer Besitzer von Sperren auf andere Objekte ist, diese Sperren werden nicht aufgehoben.  
+  
+> [!NOTE]
+>  Ein synchronisiertes Objekt enthält mehrere Verweise, darunter einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält, und einen Verweis auf der Warteschlange, enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts warten.  
   
  Die <xref:System.Threading.Monitor.Pulse%2A>, <xref:System.Threading.Monitor.PulseAll%2A>, und `Wait` Methoden aus einem synchronisierten Codeblock aufgerufen werden müssen.  
   
- Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode wird erläutert, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
+ Die Hinweise für die <xref:System.Threading.Monitor.Pulse%2A> Methode erklären, was geschieht, wenn <xref:System.Threading.Monitor.Pulse%2A> wird aufgerufen, wenn keine Threads warten.  
   
 ## <a name="notes-on-exiting-the-context"></a>Hinweise zum Beenden des Kontexts  
- Die`exitContext` Parameter hat keine Auswirkungen, es sei denn, die <xref:System.Threading.Monitor.Wait%2A> Methode aus, in einem nicht standardmäßigen verwalteten Kontext aufgerufen wird. Dies kann geschehen, wenn der Thread in einem Aufruf mit einer Instanz einer Klasse abgeleitet ist <xref:System.ContextBoundObject>. Selbst wenn derzeit eine Methode einer Klasse ausgeführt werden, die nicht von abgeleitet ist <xref:System.ContextBoundObject>, z. B. <xref:System.String>, Sie kann in einem nicht standardmäßigen Kontext Wenn eine <xref:System.ContextBoundObject> befindet sich auf dem Stapel in der aktuellen Anwendungsdomäne.  
+ Die`exitContext` Parameter hat keine Auswirkungen, es sei denn, die <xref:System.Threading.Monitor.Wait%2A> Methode aus, in einem nicht standardmäßigen verwalteten Kontext aufgerufen wird. Dies kann auftreten, wenn der Thread in einem Aufruf an eine Instanz einer Klasse abgeleitet ist <xref:System.ContextBoundObject>. Selbst wenn derzeit eine Methode einer Klasse ausgeführt wird, die nicht von abgeleitet ist <xref:System.ContextBoundObject>, z. B. <xref:System.String>, werden in einem nicht standardmäßigen Kontext Wenn eine <xref:System.ContextBoundObject> ist auf dem Stapel in der aktuellen Anwendungsdomäne.  
   
- Beim Code in einem nicht standardmäßigen Kontext und ausgeführt wird die Angabe `true` für `exitContext` bewirkt, dass der Thread den nicht standardmäßigen verwalteten Kontext zu beenden (d. h. für den Übergang in den Standardkontext) vor dem Ausführen der <xref:System.Threading.Monitor.Wait%2A> Methode. Es gibt in den ursprünglich nicht standardmäßige nach dem Aufruf von der <xref:System.Threading.Monitor.Wait%2A> Methode abgeschlossen wird.  
+ Angeben, wenn der Code in einem nicht standardmäßigen Kontext ausgeführt wird, `true` für `exitContext` bewirkt, dass den Thread, der vom Standard abweichenden verwalteten Kontext zu beenden (d. h. für den Übergang in den Standardkontext) vor dem Ausführen der <xref:System.Threading.Monitor.Wait%2A> Methode. Nach dem Aufruf des ursprünglichen Kontexts der vom Standard abweichenden gibt die <xref:System.Threading.Monitor.Wait%2A> Methode abgeschlossen wird.  
   
- Dies kann nützlich sein, wenn die kontextgebundene-Klasse verfügt über die <xref:System.Runtime.Remoting.Contexts.SynchronizationAttribute> Attribut angewendet. In diesem Fall werden alle Aufrufe von Membern der Klasse werden automatisch synchronisiert, und die Synchronisierungsdomäne ist der gesamte Text der Code für die Klasse. Wenn Code in der Aufrufliste eines Members Ruft die <xref:System.Threading.Monitor.Wait%2A> Methode und gibt an, `true` für `exitContext`, der Thread beendet wird, die Synchronisierungsdomäne ermöglicht einen Thread, der bei einem Aufruf auf einen Member des Objekts zu fortfahren blockiert wird. Wenn die <xref:System.Threading.Monitor.Wait%2A> Methode zurückgegeben wird, der Thread, der der Aufruf muss warten, um die Synchronisierungsdomäne.  
+ Dies kann nützlich sein, wenn die kontextgebundene Klasse verfügt über die <xref:System.Runtime.Remoting.Contexts.SynchronizationAttribute> -Attribut. In diesem Fall werden alle Aufrufe von Membern der Klasse werden automatisch synchronisiert, und die Synchronisierungsdomäne ist die Kernstruktur des Codes für die Klasse. Wenn Code in der Aufrufliste eines Elements aufgerufen der <xref:System.Threading.Monitor.Wait%2A> Methode und gibt `true` für `exitContext`, der Thread beendet wird, die Synchronisierungsdomäne, sodass einen Thread, der bei einem Aufruf auf einen Member des Objekts, um den Vorgang fortzusetzen, blockiert wird. Wenn die <xref:System.Threading.Monitor.Wait%2A> Methode zurückgegeben wird, der Thread, der der Aufruf erfolgt, muss mit dem die Synchronisierungsdomäne warten.  
   
  ]]></format>
         </remarks>
