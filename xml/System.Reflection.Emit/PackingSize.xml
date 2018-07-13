@@ -1,11 +1,11 @@
 <Type Name="PackingSize" FullName="System.Reflection.Emit.PackingSize">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="1e465e2e799b7ceeb957caa51c768952965c5bda" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="21ea1e717d55483377a92e4bde03b578f26091bd" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36642961" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37473577" />
   </Metadata>
   <TypeSignature Language="C#" Value="public enum PackingSize" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed PackingSize extends System.Enum" />
@@ -21,6 +21,8 @@
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -42,23 +44,23 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Komprimierungsgröße wirkt sich auf die Ausrichtung der Felder in Strukturen und Klassen, deren Organisation <xref:System.Runtime.InteropServices.LayoutKind.Sequential?displayProperty=nameWithType>. Die Komprimierungsgröße ist einer von zwei Faktoren, die den Offset eines Felds zu bestimmen, wenn die Struktur oder Klasse gemarshallt wird. der andere Faktor ist die effektive Größe des Felds. So bestimmen Sie den Offset eines Felds  
+ Packen die Größe wirkt sich auf die Ausrichtung der Felder in Strukturen und Klassen, deren Organisation <xref:System.Runtime.InteropServices.LayoutKind.Sequential?displayProperty=nameWithType>. Die Komprimierungsgröße ist einer von zwei Faktoren, die den Offset eines Felds zu bestimmen, wenn die Struktur oder Klasse gemarshallt wird. der andere Faktor ist die effektive Größe des Felds. So bestimmen Sie den Offset eines Felds:  
   
-1.  Berechnen Sie den Mindestwert für den Offset durch die Größe des vorhergehenden Felds den Offset des vorhergehenden Feldes hinzufügen.  
+1.  Berechnen Sie den minimalen Wert für den Offset, indem Sie die Größe des vorhergehenden Felds und den Offset des vorhergehenden Feldes addieren.  
   
-2.  Berechnen Sie die eigentliche Komprimierungsgröße für das Feld: Wenn das Feld einen einfachen Datentyp ist, verwenden Sie die Größe. Wenn das Feld ein Array ist, verwenden Sie die Größe eines Arrayelements. Wenn das Feld selbst eine Struktur ist, vergleichen Sie die Komprimierungsgröße dieser Struktur auf die Größe des größten Felds in der Struktur, und verwenden Sie den kleineren der beiden Werte.  
+2.  Die eigentliche Komprimierungsgröße für das Feld zu berechnen: Wenn das Feld einem einfachen Datentyp ist, verwenden Sie die Größe. Wenn das Feld ein Array ist, verwenden Sie die Größe eines Arrayelements. Wenn das Feld selbst eine Struktur ist, vergleichen Sie die Komprimierungsgröße des Struktur mit der Größe des größten Felds in dieser Struktur, und verwenden Sie den kleineren der beiden Werte.  
   
-3.  Vergleichen die Komprimierungsgröße, um die natürliche Komprimierungsgröße des Felds berechnet, die in Schritt 2, um die effektive Komprimierungsgröße zu berechnen. Verwenden Sie den kleineren der beiden Zahlen.  
+3.  Berechnen Sie die Komprimierungsgröße ist effektiver, indem die Komprimierungsgröße ist mit der eigentlichen Komprimierungsgröße des in Schritt 2 berechneten Felds vergleichen. Verwenden Sie den kleineren der beiden Zahlen.  
   
-4.  Den Offset zu berechnen. Der Offset ist die erste Speicheradresse, die gleich oder größer als der Mindestwert ist, und ein Vielfaches von die effektive Komprimierungsgröße in Schritt 3 berechnet.  
-  
-> [!NOTE]
->  Sobald für alle Felder in der Klasse oder Struktur Offsets berechnet wurden, wird die Auffüllung hinzugefügt, sodass die Gesamtgröße ein Vielfaches von die Komprimierungsgröße ist.  
-  
- Z. B. in einer Klasse mit einer `byte` und ein `long`mit Komprimierungsgröße `Size1`, den Offset des der `byte` Feld ist NULL (0) und den Offset des der `long` Feld ist eins (1). Wenn die Komprimierungsgröße `Size4`, die `long` Feld offset verfügt über vier (4). In einer Klasse mit zwei `short` Felder mit beliebiger Komprimierungsgröße der Offset des zweiten `short` Feld ist zwei (2).  
+4.  Den Offset zu berechnen. Der Offset ist die erste Speicheradresse, die gleich oder größer als der Mindestwert ist, und ein Vielfaches von die Komprimierungsgröße ist effektiv, die in Schritt 3 berechneten.  
   
 > [!NOTE]
->  Ändern die Komprimierungsgröße kann die Leistung beeinträchtigen, wenn er bewirkt, dass Felder für Offsets ausgerichtet werden, die ein Vielfaches von ihrer Größe nicht sind.  
+>  Nach der Offsets für alle Felder in der Klasse oder Struktur berechnet worden sind, wird die Auffüllung hinzugefügt, sodass die Gesamtgröße der ein Vielfaches von die Komprimierungsgröße ist.  
+  
+ Z. B. in einer Klasse mit einer `byte` und ein `long`Komprimierungsgröße Größe `Size1`, den Offset des der `byte` Feld ist NULL (0) und den Offset des der `long` Feld ist eins (1). Wenn die Komprimierungsgröße ist `Size4`, `long` Feld offset verfügt über vier (4). In einer Klasse mit zwei `short` Felder, die Komprimierungsgröße jeder, der Offset des zweiten `short` Feld ist zwei (2).  
+  
+> [!NOTE]
+>  Ändern die Komprimierungsgröße kann die Leistung beeinträchtigen, wenn er bewirkt, Felder dass, die Offsets ausgerichtet werden, die ein Vielfaches von ihrer Größe nicht sind.  
   
  ]]></format>
     </remarks>
@@ -80,6 +82,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -111,6 +115,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -142,6 +147,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -173,6 +180,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -204,6 +213,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -235,6 +245,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -266,6 +278,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -297,6 +310,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -328,6 +343,8 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
