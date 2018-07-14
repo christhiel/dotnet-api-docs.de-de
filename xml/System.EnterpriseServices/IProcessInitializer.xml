@@ -1,11 +1,11 @@
 <Type Name="IProcessInitializer" FullName="System.EnterpriseServices.IProcessInitializer">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="65909f2ec439d52a6e219ae1ac7909475679abd1" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="6928ecdc6b5be0c84dbb3a96fb6b93bc93a17072" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36563524" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37655138" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface IProcessInitializer" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IProcessInitializer" />
@@ -15,6 +15,8 @@
   <TypeSignature Language="F#" Value="type IProcessInitializer = interface" />
   <AssemblyInfo>
     <AssemblyName>System.EnterpriseServices</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
@@ -32,11 +34,11 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Implementieren der <xref:System.EnterpriseServices.IProcessInitializer> Schnittstellenmethoden auf serviced Components, wenn die Initialisierung ausgeführt werden soll oder Code für das Herunterfahren bei einem Serverprozess (Dllhost.exe) gestartet wird oder heruntergefahren wird, bzw..  
+ Implementieren der <xref:System.EnterpriseServices.IProcessInitializer> Schnittstellenmethoden für serviced Components, wenn die Initialisierung ausgeführt werden soll, oder Code für das Herunterfahren bei einem Serverprozess (Dllhost.exe) startet oder beendet wird, bzw..  
   
- COM+ enthält `Startup` und `Shutdown` Ereignisse aus, wenn Dllhost.exe beginnt und endet. Dieses Feature ermöglicht eine COM+-Komponenten, die in einer COM+-Serveranwendung (bezeichnet als Serverkomponenten nachstehend) zum Ausführen von angepasste Initialisierung von Steuerelementen und Code bereinigen installiert sind. Eine Instanz von jeder Komponente, implementiert die <xref:System.EnterpriseServices.IProcessInitializer> Schnittstelle wird erstellt und für die Dauer des Prozesses gespeichert und beim Starten und Herunterfahren für die Schnittstellenmethoden aufgerufen werden. Bei Implementierung in einer <xref:System.EnterpriseServices.ServicedComponent>, während der Registrierung der Komponente, die `InitializesServerApplication` Parameter in der `COMAdminCatalogObject` innerhalb der Komponenten Auflistung festgelegt ist `true`.  
+ COM+ bietet `Startup` und `Shutdown` Ereignisse aus, wenn Dllhost.exe beginnt und endet. Dieses Feature ermöglicht alle COM+-Komponenten, die in einer COM+-Serveranwendung (bezeichnet als Serverkomponenten genannt) zum Ausführen von benutzerdefinierten Initialisierung und Bereinigung Codes installiert sind. Eine Instanz jeder Komponente, die implementiert die <xref:System.EnterpriseServices.IProcessInitializer> Schnittstelle wird erstellt und für die Dauer des Prozesses gespeichert, und beim Starten und Herunterfahren für die Schnittstellenmethoden aufgerufen. Bei Implementierung in einer <xref:System.EnterpriseServices.ServicedComponent>, während der Registrierung der Komponente, die `InitializesServerApplication` Parameter in der `COMAdminCatalogObject` Auflistung innerhalb der Komponenten auf festgelegt ist `true`.  
   
- Mithilfe der `Startup` und `Shutdown` Ereignisse, können Sie Ressourcen zu initialisieren, Verbindungen zu erstellen, initialisieren auf freigegebene Daten und Ausführen von Bereinigungscode. Allerdings müssen Sie keine Zustände zugreifen, die für die COM+-spezifisch sind, da noch keine Instanzen von Serverkomponenten erstellt wurden. Darüber hinaus den Code in der `Startup` und `Shutdown` Ereignisse sollte so schnell wie möglich, zurückgeben, da das System nur 90 Sekunden für "Dllhost.exe" zur Vorbereitung der Aktivierungen annehmen wartet, nachdem das System den Prozess gestartet wird. Wenn Dllhost.exe nicht, dass es innerhalb von 90 Sekunden kann darauf hinweisen, beendet das System den Prozess an; Folglich alle Initialisierung verarbeitungsanforderungen innerhalb dieses Zeitrahmens ausgeführt werden. Jede Serverkomponente, die an der Initialisierung muss unterstützen die <xref:System.EnterpriseServices.IProcessInitializer> Schnittstelle. Beim Start DllHost.exe COM+ erstellt alle Serverkomponenten, die diesen Dienst angefordert `QueryInterface` für die <xref:System.EnterpriseServices.IProcessInitializer> -Schnittstelle, und ruft die <xref:System.EnterpriseServices.IProcessInitializer.Startup%2A> Funktion. Auf ähnliche Weise, wenn die DllHost.exe-Prozess heruntergefahren wird, ruft er die <xref:System.EnterpriseServices.IProcessInitializer.Shutdown%2A> Funktion auf den zuvor gespeicherten Schnittstellenzeiger auf.  
+ Mithilfe der `Startup` und `Shutdown` Ereignisse, können Sie Ressourcen zu initialisieren, Erstellen von Verbindungen, gemeinsam genutzte Daten initialisieren und Ausführen von Bereinigungscode. Allerdings müssen Sie keine Zustände zugreifen, die für die COM+-spezifisch sind, da noch keine Instanzen von Server-Komponenten erstellt wurden. Außerdem wird der Code in die `Startup` und `Shutdown` Ereignisse sollte so schnell wie möglich zurückgeben, da das System nur 90 Sekunden für "Dllhost.exe" zur Vorbereitung der Aktivierungen zu übernehmen wartet, sobald das System den Prozess gestartet. Wenn Dllhost.exe nicht signalisiert, dass sie innerhalb von 90 Sekunden bereit ist, beendet das System den Prozess an; daher alle Initialisierung verarbeitungsanforderungen innerhalb dieses Zeitraums abgeschlossen werden. Jeder Serverkomponente, die an der Initialisierung unterstützen muss die <xref:System.EnterpriseServices.IProcessInitializer> Schnittstelle. Beim Starten von DllHost.exe COM+ erstellt alle Serverkomponenten, mit denen dieser Dienst angefordert `QueryInterface` für die <xref:System.EnterpriseServices.IProcessInitializer> -Schnittstelle ab und ruft die <xref:System.EnterpriseServices.IProcessInitializer.Startup%2A> Funktion. Auf ähnliche Weise, wenn die DllHost.exe-Prozess beendet wird, ruft er die <xref:System.EnterpriseServices.IProcessInitializer.Shutdown%2A> Funktion auf den zuvor gespeicherten Schnittstellenzeiger auf.  
   
  ]]></format>
     </remarks>
@@ -52,6 +54,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.EnterpriseServices</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -80,6 +84,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.EnterpriseServices</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -95,9 +101,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Das Objekt verweist `punkProcessControl` implementiert eine <xref:System.EnterpriseServices.IProcessInitControl> Schnittstelle. <xref:System.EnterpriseServices.IProcessInitControl> unterstützt die einzige Methode <xref:System.EnterpriseServices.IProcessInitControl.ResetInitializerTimeout%2A>.  
+ Das Objekt, das auf `punkProcessControl` implementiert eine <xref:System.EnterpriseServices.IProcessInitControl> Schnittstelle. <xref:System.EnterpriseServices.IProcessInitControl> unterstützt die einzige Methode <xref:System.EnterpriseServices.IProcessInitControl.ResetInitializerTimeout%2A>.  
   
- Initialisierungscode in <xref:System.EnterpriseServices.IProcessInitializer.Startup%2A> aufrufen, können die <xref:System.EnterpriseServices.IProcessInitControl.ResetInitializerTimeout%2A>, bei das Timeout legen Sie auf die Anzahl der Sekunden vor dem Start von der Komponente ein Timeout eintritt.  
+ Der Initialisierungscode in <xref:System.EnterpriseServices.IProcessInitializer.Startup%2A> Aufrufen der <xref:System.EnterpriseServices.IProcessInitControl.ResetInitializerTimeout%2A>, bei das Timeout legen Sie auf die verbleibende Anzahl von Sekunden vor dem Start von Timeout der Komponente.  
   
  ]]></format>
         </remarks>

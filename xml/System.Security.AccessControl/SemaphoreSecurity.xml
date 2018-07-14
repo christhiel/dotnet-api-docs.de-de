@@ -1,11 +1,11 @@
 <Type Name="SemaphoreSecurity" FullName="System.Security.AccessControl.SemaphoreSecurity">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="02041a0b04c0b45af0a829d8bd9904736588668d" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="e6fcf47dcbc21e65bce3729b38ebcc579a40d7e0" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36532339" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37632946" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class SemaphoreSecurity : System.Security.AccessControl.NativeObjectSecurity" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit SemaphoreSecurity extends System.Security.AccessControl.NativeObjectSecurity" />
@@ -20,6 +20,7 @@
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -38,52 +39,52 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt gibt an, über Zugriffsrechte für ein benanntes Systemsemaphor und gibt außerdem an, wie Zugriffsversuche überwacht werden. Über die Zugriffsrechte für das Semaphor werden als Regeln ausgedrückt, mit jeder Zugriffsregel durch eine <xref:System.Security.AccessControl.SemaphoreAccessRule> Objekt. Jede Überwachungsregel wird dargestellt, indem ein <xref:System.Security.AccessControl.SemaphoreAuditRule> Objekt.  
+ Ein <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt gibt Zugriffsrechte für ein benanntes Systemsemaphor an und gibt auch an, wie Zugriffsversuche überwacht werden. Über die Zugriffsrechte für das Semaphor wird als Regeln, mit jeder Zugriffsregel durch eine <xref:System.Security.AccessControl.SemaphoreAccessRule> Objekt. Jede Überwachungsregel wird dargestellt, indem eine <xref:System.Security.AccessControl.SemaphoreAuditRule> Objekt.  
   
- Dies spiegelt den zugrunde liegenden Windows-Sicherheitssystem, in dem jedes sicherungsfähige Objekt verfügt über höchstens einen besitzerverwaltete Zugriffssteuerungsliste (DACL), steuert den Zugriff auf gesicherte Objekt und darf höchstens eine Systemzugriffssteuerungsliste (SACL), der angibt, denen der Zugriff Versuche werden überwacht. Die DACL und SACL sind Listen von Zugriffssteuerungseinträgen (ACE) sortiert, die Zugriff und die Überwachung für Benutzer und Gruppen angeben. Ein <xref:System.Security.AccessControl.SemaphoreAccessRule> oder <xref:System.Security.AccessControl.SemaphoreAuditRule> Objekt möglicherweise mehr als ein ACE darstellen.  
+ Dies ist eine Nachbildung des zugrunde liegenden Systems zur Windows-Sicherheit, in dem jedes sicherungsfähige Objekt verfügt über höchstens eine besitzerverwaltete Zugriffssteuerungsliste (DACL), die Steuerung des Zugriffs auf das gesicherte Objekt, und höchstens eine Systemzugriffssteuerungsliste (SACL), der angibt, denen der Zugriff Versuche werden überwacht. Die DACL und einer SACL werden Listen von Zugriffssteuerungseinträgen (ACE) sortiert, die Zugriff und die Überwachung für Benutzer und Gruppen angeben. Ein <xref:System.Security.AccessControl.SemaphoreAccessRule> oder <xref:System.Security.AccessControl.SemaphoreAuditRule> Objekt möglicherweise mehr als ein ACE darstellen.  
   
 > [!NOTE]
->  Ein <xref:System.Threading.Semaphore> Objekt kann ein lokales Semaphor oder ein benanntes Systemsemaphor darstellen. Windows-zugriffssteuerungssicherheit ist nur für System benannte Semaphoren sinnvoll.  
+>  Ein <xref:System.Threading.Semaphore> Objekt kann ein lokales Semaphor oder ein benanntes Systemsemaphor darstellen. Windows-zugriffssteuerungssicherheit ist nur für benanntes Semaphore Bedeutung.  
   
- Die <xref:System.Security.AccessControl.SemaphoreSecurity>, <xref:System.Security.AccessControl.SemaphoreAccessRule>, und <xref:System.Security.AccessControl.SemaphoreAuditRule> Klassen blenden die Implementierungsdetails von ACLs und ACEs. Sie können damit siebzehn verschiedenen ACE-Typen und die Komplexität der ordnungsgemäßen Verwaltung der Vererbung und Weitergabe von Zugriffsrechten ignorieren. Diese Objekte sind aber auch zu verhindern, dass die folgenden häufigen Zugriffssteuerungsfehler konzipiert:  
+ Die <xref:System.Security.AccessControl.SemaphoreSecurity>, <xref:System.Security.AccessControl.SemaphoreAccessRule>, und <xref:System.Security.AccessControl.SemaphoreAuditRule> Klassen Ausblenden der Details zur Implementierung von ACLs und ACEs. Sie können die siebzehn anderen ACE-Typen und der Komplexität der ordnungsgemäßen Verwaltung von vererbungs- und Weitergabeflags von Zugriffsrechten ignoriert werden sollen. Diese Objekte dienen auch die folgenden allgemeinen Zugriffssteuerungsfehler verhindern:  
   
--   Erstellen eine Sicherheitsbeschreibung mit einer null-DACL an. Ein null-Verweis auf eine DACL ermöglicht allen Benutzern auf ein Objekt, das potenziell erstellen einen Denial-of-Service-Angriff Zugriffsregeln hinzufügen. Ein neues <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt beginnt immer mit einer leeren DACL, die für alle Benutzer der Zugriff verweigert wird.  
+-   Eine Sicherheitsbeschreibung erstellt mit einem null-DACL. Ein null-Verweis auf eine DACL ermöglicht allen Benutzern das Hinzufügen von Regeln für den Zugriff auf ein Objekt, wodurch möglicherweise einen Denial-of-Service-Angriff. Ein neues <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt beginnt immer mit einer leeren DACL, die für alle Benutzer der Zugriff verweigert wird.  
   
--   Verletzung der die kanonische Reihenfolge der ACEs. Wenn die ACE-Liste in die DACL nicht kanonische Reihenfolge gehalten wird, möglicherweise versehentlich auf Benutzer Zugriff auf das gesicherte Objekt gewährt werden. Verweigerte Zugriffsrechte müssen z. B. immer vor zulässigen Zugriffsrechte aufgeführt werden. <xref:System.Security.AccessControl.SemaphoreSecurity> Objekte beibehalten die richtige Reihenfolge intern.  
+-   Verstoß gegen die kanonische Reihenfolge der ACEs aus. Wenn die ACE-Liste in der DACL nicht in die kanonische Reihenfolge beibehalten wird, möglicherweise versehentlich auf Benutzer Zugriff auf das gesicherte Objekt gewährt werden. Rechte für die Verweigerung des Zugriffs müssen z. B. immer vor zulässigen Zugriffsrechte angezeigt werden. <xref:System.Security.AccessControl.SemaphoreSecurity> Objekte werden die richtige Reihenfolge intern verwalten.  
   
 -   Bearbeiten von Security Descriptor Flags, die nur Ressourcen-Manager-gesteuert werden soll.  
   
--   Das Erstellen ungültiger Kombinationen von ACE-Flags.  
+-   Erstellen ungültige Optionskombinationen ACE-Flags.  
   
--   Bearbeiten von geerbten ACEs aus. Vererbung und Weitergabe werden von den Ressourcen-Manager als Reaktion auf Änderungen behandelt, die Sie Zugriffs-und Überwachungsregeln vornehmen.  
+-   Bearbeiten die vererbte-ACEs aufgehoben. Vererbungs- und Weitergabeflags werden vom Ressourcen-Manager als Reaktion auf Änderungen behandelt, die Sie an Zugriffs-und Überwachungsregeln.  
   
--   Einfügen von bedeutungslosen ACEs in ACLs aus.  
+-   Einfügen von bedeutungslosen ACEs in ACLs.  
   
- Die nur Funktionen, die nicht durch die Sicherheitsobjekte .NET unterstützt werden gefährliche Aktivitäten, die von der Mehrheit der Anwendungsentwickler, z. B. die folgenden vermieden werden sollte:  
+ Durch die .NET Security-Objekte nicht unterstützten. nur solche Funktionen sind gefährlich Aktivitäten, die von der Mehrheit der Anwendungsentwickler, wie z. B. die folgenden vermieden werden sollten:  
   
 -   Low-Level-Aufgaben, die normalerweise von den Ressourcen-Manager ausgeführt werden.  
   
--   Hinzufügen oder Entfernen von Zugriffssteuerungseinträgen Möglichkeiten, die die kanonische Reihenfolge nicht beibehalten.  
+-   Hinzufügen oder Entfernen von Zugriffssteuerungseinträgen in Methoden, die die kanonische Reihenfolge nicht beibehalten.  
   
- Zum Ändern der Windows-zugriffssteuerungssicherheit für ein benanntes Semaphor verwendet die <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> Methode zum Abrufen der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Ändern Sie das Sicherheitsobjekt durch Hinzufügen und Entfernen von Regeln, und verwenden Sie dann die <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> -Methode erneut an.  
+ Verwenden Sie zum Ändern der Windows-zugriffssteuerungssicherheit für ein benanntes Semaphor der <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> -Methode zum Abrufen der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Ändern Sie das Sicherheitsobjekt durch Hinzufügen und Entfernen von Regeln, und klicken Sie dann verwenden die <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> Methode, um ihn erneut anfügen.  
   
 > [!IMPORTANT]
->  Änderungen an einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt haben keinen Einfluss auf die Zugriffsebenen der das benannte Semaphor erst nach dem Aufruf der <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> Methode, um das benannte Semaphor geänderte Sicherheitsobjekts zuweisen.  
+>  Änderungen an einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt haben keine Auswirkungen auf die Zugriffsebenen der das benannte Semaphor bis zum Aufruf der <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> Methode, um das geänderte Security-Objekt das benannte Semaphor zuweisen.  
   
- Um zugriffssteuerungssicherheit aus einem Semaphor in einen anderen kopieren möchten, verwenden die <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> Methode zum Abrufen einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt, das die Zugriffs- und Überwachungsrichtlinien Regeln für das erste Semaphor darstellt, verwenden Sie die <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> Methode oder einen Konstruktor, der eine akzeptiert<xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, das zweite Semaphor diese Regeln zuweisen.  
+ Verwenden Sie zum Kopieren von zugriffssteuerungssicherheit aus einem Semaphor zu einem anderen die <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> -Methode zum Abrufen einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt, das die Regeln für Zugriffs- und Überwachungsregeln für das erste Semaphor darstellt, und verwenden Sie die <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType> Methode oder einen Konstruktor, der eine akzeptiert<xref:System.Security.AccessControl.SemaphoreSecurity> Objekt, das die Regeln auf die zweite Semaphore zuweisen.  
   
- Benutzer mit einer Investition in Security Descriptor Definition Language (SDDL) können die <xref:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm%2A> Methode, um die festgelegten Zugriffsregeln für ein benanntes Semaphor, und die <xref:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorSddlForm%2A> Methode, um eine Zeichenfolge abzurufen, die die Zugriffsregeln im SDDL-Format darstellt. Dies ist nicht für Neuentwicklungen empfohlen.  
+ Benutzer mit einer Investition in Security Descriptor Definition Language (SDDL) können die <xref:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm%2A> Methode zum Festlegen-Zugriffsregeln für ein benanntes Semaphor, und die <xref:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorSddlForm%2A> Methode, um eine Zeichenfolge zu erhalten, die den Zugriffsregeln im SDDL-Format darstellt. Dies wird nicht für Neuentwicklungen empfohlen.  
   
 > [!NOTE]
->  Sicherheit auf Synchronisierungsobjekte ist Windows 98 oder Windows Millennium Edition nicht unterstützt.  
+>  Sicherheit auf Synchronisierungsobjekte ist für Windows 98 oder Windows Millennium Edition nicht unterstützt.  
   
    
   
 ## Examples  
- Im folgenden Codebeispiel wird veranschaulicht, die Trennung zwischen <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln und <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln und die Kombination der Rechte auf kompatible Regeln anzeigt. Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu und zeigt das resultierende Paar von Regeln. Anschließend können Sie neue Rechte für den aktuellen Benutzer und das Ergebnis wird angezeigt, dass der neuen Rechte mit dem vorhandenen zusammengeführt werden <xref:System.Security.AccessControl.AccessControlType.Allow> Regel.  
+ Im folgenden Codebeispiel wird veranschaulicht, die Trennung zwischen <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln und <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln und die Kombination der Rechte auf kompatible Regeln anzeigt. Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu und zeigt das resultierende Paar von Regeln. Anschließend können Sie neue Rechte für den aktuellen Benutzer und das Ergebnis wird angezeigt, dass die neuen Rechte, mit dem vorhandenen zusammengeführt werden <xref:System.Security.AccessControl.AccessControlType.Allow> Regel.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.AddAccessRule#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.AddAccessRule/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.AddAccessRule#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.AddAccessRule/VB/source.vb#1)]  
@@ -121,6 +122,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -131,7 +133,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein neues <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt beginnt immer mit einer leeren freigegebenen Zugriffssteuerungsliste (DACL), die für alle Benutzer der Zugriff verweigert wird.  
+ Ein neues <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt beginnt immer mit einem leeren freigegebenen Zugriffssteuerungsliste (DACL), die für alle Benutzer der Zugriff verweigert wird.  
   
  ]]></format>
         </remarks>
@@ -153,6 +155,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -168,9 +171,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Mit diesem Konstruktor können Sie die zugriffssteuerungssicherheit für ein benanntes Systemsemaphor abrufen, ohne zuvor einen <xref:System.Threading.Semaphore> Objekt.  
+ Dieser Konstruktor ermöglicht das Abrufen der zugriffssteuerungssicherheit für ein benanntes Systemsemaphor ohne vorherige Erstellung einer <xref:System.Threading.Semaphore> Objekt.  
   
- Bei der Arbeit mit benannten Systemobjekte Vorsicht. Es ist ein Systemobjekt, das mit dem Namen `name` keine Semaphore ist, kann die Sicherheit der Steuerelement-Zugriff abgerufen werden.  
+ Vorsicht muss ausgeführt werden, bei der Arbeit mit benannte Systemobjekte. Es ist ein Objekt mit dem Namen `name` , die sich kein Semaphor, die Control-zugriffssicherheit abgerufen werden kann.  
   
  ]]></format>
         </remarks>
@@ -192,6 +195,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -205,7 +209,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> -Klasse überschreiben die <xref:System.Security.AccessControl.ObjectSecurity.AccessRightType%2A> -Eigenschaft und der Rückgabewert den Typ, die sie verwenden, um die Darstellung von Zugriffsrechten. Beim Arbeiten mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, den richtigen Enumerationstyp mit einzelnen Sicherheitsobjekts verwendet.  
+ Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> Klasse außer Kraft setzen der <xref:System.Security.AccessControl.ObjectSecurity.AccessRightType%2A> Eigenschaft und die Rückgabewerte der Typ, die sie verwenden, um Zugriffsrechte darstellt. Bei der Arbeit mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, den richtigen Enumerationstyp mit einzelnen Sicherheitsobjekts verwendet.  
   
  ]]></format>
         </remarks>
@@ -225,6 +229,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -252,10 +257,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die empfohlene Methode zum Erstellen von Zugriffssteuerungsregeln ist die Verwendung von den Konstruktoren für die <xref:System.Security.AccessControl.SemaphoreAccessRule> Klasse.  
+ Die empfohlene Methode zum Erstellen von Zugriffssteuerungsregeln wird mithilfe der Konstruktoren, der die <xref:System.Security.AccessControl.SemaphoreAccessRule> Klasse.  
   
 > [!NOTE]
->  Obwohl Vererbung und Weitergabe Flags für benannte Semaphoren bedeutungslos sind, ist es weiterhin möglich, geben sie dies nicht empfohlen, die da es unnötig die Verwaltung der Regeln, z. B. etwas komplizierter macht durch die Kombination von Regeln stören Andernfalls würde, die kompatibel sein.  
+>  Obwohl vererbungs-und Weitergabeflags besitzt keine Bedeutung für benannte Semaphoren sind, ist es weiterhin möglich, die angeben, die dies nicht empfohlen wird, da es unnötig die Verwaltung der Regeln, z. B. erschwert indem Funkfrequenzen gestört die Kombination von Regeln Dies würde andernfalls kompatibel sein.  
   
  ]]></format>
         </remarks>
@@ -281,6 +286,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -294,7 +300,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> -Klasse überschreiben die <xref:System.Security.AccessControl.ObjectSecurity.AccessRuleType%2A> Eigenschaft und die Rückgabewerte der Darstellung von Zugriffsregeln Typ. Bei der Arbeit mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, den richtigen Zugriffsregeltyp mit einzelnen Sicherheitsobjekts verwendet.  
+ Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> Klasse außer Kraft setzen der <xref:System.Security.AccessControl.ObjectSecurity.AccessRuleType%2A> Eigenschaft und die Rückgabewerte der Typ, die sie verwenden, um Zugriffsregeln darstellt. Bei der Arbeit mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, die richtige Zugriffsregeltyp mit einzelnen Sicherheitsobjekts verwendet.  
   
  ]]></format>
         </remarks>
@@ -315,6 +321,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -331,15 +338,15 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.AccessControl.SemaphoreSecurity.AddAccessRule%2A> Methode sucht Regeln mit dem gleichen Benutzer oder die Gruppe und die gleiche <xref:System.Security.AccessControl.AccessControlType> als `rule`. Wenn keiner gefunden werden, `rule` hinzugefügt wird. Wenn eine entsprechende Regel gefunden wird, wird die Rechte in `rule` mit einer vorhandenen Regel zusammengeführt werden.  
+ Die <xref:System.Security.AccessControl.SemaphoreSecurity.AddAccessRule%2A> Methode sucht nach den Regeln mit dem gleichen Benutzer oder die Gruppe und die gleiche <xref:System.Security.AccessControl.AccessControlType> als `rule`. Wenn keiner gefunden werden, `rule` hinzugefügt wird. Wenn eine übereinstimmende Regel gefunden wird, wird die Rechte in `rule` werden mit der vorhandenen zusammengeführt.  
   
    
   
 ## Examples  
- Im folgenden Codebeispiel wird veranschaulicht, die Trennung zwischen <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln und <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln und die Kombination der Rechte auf kompatible Regeln anzeigt. Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu und zeigt das resultierende Paar von Regeln. Anschließend können Sie neue Rechte für den aktuellen Benutzer und das Ergebnis wird angezeigt, dass der neuen Rechte mit dem vorhandenen zusammengeführt werden <xref:System.Security.AccessControl.AccessControlType.Allow> Regel.  
+ Im folgenden Codebeispiel wird veranschaulicht, die Trennung zwischen <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln und <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln und die Kombination der Rechte auf kompatible Regeln anzeigt. Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu und zeigt das resultierende Paar von Regeln. Anschließend können Sie neue Rechte für den aktuellen Benutzer und das Ergebnis wird angezeigt, dass die neuen Rechte, mit dem vorhandenen zusammengeführt werden <xref:System.Security.AccessControl.AccessControlType.Allow> Regel.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.AddAccessRule#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.AddAccessRule/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.AddAccessRule#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.AddAccessRule/VB/source.vb#1)]  
@@ -365,6 +372,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -381,7 +389,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.AccessControl.SemaphoreSecurity.AddAuditRule%2A> Methode sucht nach Regeln mit dem gleichen Benutzer oder Gruppe als `rule`. Wenn keiner gefunden werden, `rule` hinzugefügt wird. Wenn eine entsprechende Regel gefunden wird, werden die Flags in `rule` in die vorhandene Regel zusammengeführt.  
+ Die <xref:System.Security.AccessControl.SemaphoreSecurity.AddAuditRule%2A> -Methode sucht nach den Regeln mit den gleichen Benutzer oder Gruppe als `rule`. Wenn keiner gefunden werden, `rule` hinzugefügt wird. Wenn eine übereinstimmende Regel gefunden wird, werden die Flags in `rule` , die in die bestehende Regel zusammengeführt werden.  
   
  ]]></format>
         </remarks>
@@ -401,6 +409,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -428,10 +437,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die empfohlene Methode zum Erstellen von Überwachungsregeln ist die Verwendung von den Konstruktoren für die <xref:System.Security.AccessControl.SemaphoreAuditRule> Klasse.  
+ Die empfohlene Methode zum Erstellen von Überwachungsregeln ist die Verwendung von den Konstruktoren der <xref:System.Security.AccessControl.SemaphoreAuditRule> Klasse.  
   
 > [!NOTE]
->  Obwohl Vererbung und Weitergabe Flags für benannte Semaphoren bedeutungslos sind, ist es weiterhin möglich, anzugeben. Dies wird nicht empfohlen, da sie unnötig die Verwaltung der Regeln, z. B. kompliziert durch die Kombination von Regeln, die sonst kompatibel stören.  
+>  Obwohl vererbungs-und Weitergabeflags besitzt keine Bedeutung für benannte Semaphoren sind, ist es weiterhin möglich, die sie angeben. Dies wird nicht empfohlen, da es unnötig die Verwaltung der Regeln, z. B. kompliziert indem Funkfrequenzen gestört die Kombination aus Regeln, die andernfalls kompatibel wären.  
   
  ]]></format>
         </remarks>
@@ -457,6 +466,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -470,7 +480,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> -Klasse überschreiben die <xref:System.Security.AccessControl.ObjectSecurity.AuditRuleType%2A> -Eigenschaft und der Rückgabewert den Typ, die sie verwenden, um die Überwachung für die Darstellung. Bei der Arbeit mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, den richtigen Audit Regeltyp mit einzelnen Sicherheitsobjekts verwendet.  
+ Abgeleitete Klassen die <xref:System.Security.AccessControl.ObjectSecurity> Klasse außer Kraft setzen der <xref:System.Security.AccessControl.ObjectSecurity.AuditRuleType%2A> -Eigenschaft, und geben den Typ, die sie verwenden, um die Überwachung für die Darstellung zurück. Bei der Arbeit mit Arrays oder Auflistungen, die mehrere Typen der Sicherheitsobjekte enthalten, verwenden Sie diese Eigenschaft, um zu bestimmen, den richtigen Audit Regeltyp mit einzelnen Sicherheitsobjekts verwendet.  
   
  ]]></format>
         </remarks>
@@ -491,6 +501,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -509,20 +520,20 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird für eine Regel mit demselben Benutzer und die gleiche durchsucht <xref:System.Security.AccessControl.AccessControlType> als Wert `rule`. Wenn keine solche Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn Abgleichsregeln gefunden werden, werden ihre Kompatibilität und Vererbung-Flags für die Kompatibilität mit den Flags, die im angegebenen überprüft `rule`. Wenn keine kompatible Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn eine Regel mit kompatiblen Flags gefunden wird, wird die Rechte in angegebenen `rule` werden aus der kompatiblen Regel entfernt und die Methode gibt `true`. Wenn `rule` gibt die Rechte, die nicht in der kompatiblen Regel enthalten sind, in Bezug auf diese Rechte wird keine Aktion ausgeführt. Wenn alle Rechte aus der kompatiblen Regel entfernt werden, wird die gesamte Regel aus dem aktuellen entfernt <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
+ Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird für eine Regel mit demselben Benutzer und demselben durchsucht <xref:System.Security.AccessControl.AccessControlType> Wert wie `rule`. Wenn keine solche Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn Abgleichsregeln gefunden werden, werden ihre Kompatibilität und Vererbung Flags für die Kompatibilität mit den Flags, die im angegebenen überprüft `rule`. Wenn keine kompatible Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn eine Regel mit kompatiblen Flags gefunden wird, wird die Rechte in angegebenen `rule` aus der kompatiblen Regel entfernt werden und die Methode gibt `true`. Wenn `rule` gibt an, nicht in der kompatiblen Regel enthaltenen Rechte, die in Bezug auf diese Rechte wird keine Aktion ausgeführt. Wenn alle Rechte, die aus der kompatiblen Regel entfernt werden, wird die gesamte Regel aus dem aktuellen entfernt <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
   
 > [!IMPORTANT]
->  Obwohl Sie die Vererbung und Weitergabe Flags für Zugriffsregeln Semaphore, angeben können, erstellen sie mit der <xref:System.Security.AccessControl.SemaphoreSecurity.AccessRuleFactory%2A> -Methode, dies wird nicht empfohlen. Vererbung und Weitergabe haben keine Bedeutung für benannte Semaphoren, und sie machen die Wartung von Zugriffsregeln komplizierter.  
+>  Obwohl Sie vererbungs- und Weitergabeflags Flags für das Semaphor Zugriffsregeln angeben können, erstellen sie mit der <xref:System.Security.AccessControl.SemaphoreSecurity.AccessRuleFactory%2A> -Methode, dies wird nicht empfohlen. Besitzen keine Bedeutung für benannte Semaphore, vererbungs- und Weitergabeflags, und sie machen die Verwaltung von Zugriffsregeln komplizierter.  
   
    
   
 ## Examples  
- Das folgende Codebeispiel veranschaulicht die Verwendung von der <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule%2A> -Methode zum Entfernen von Berechtigungen eine <xref:System.Security.AccessControl.AccessControlType.Allow> Regel einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Darüber hinaus wird gezeigt, dass andere Rechte in `rule` werden ignoriert.  
+ Das folgende Codebeispiel veranschaulicht die Verwendung von der <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule%2A> -Methode zum Entfernen von Berechtigungen zu einer <xref:System.Security.AccessControl.AccessControlType.Allow> Regel in einer <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Es zeigt auch, dass andere Rechte in `rule` werden ignoriert.  
   
- Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu. Die Rechte gewährt: <xref:System.Security.AccessControl.SemaphoreRights.Modify>, <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions>, und <xref:System.Security.AccessControl.SemaphoreRights.Synchronize>. Das Beispiel erstellt dann eine neue Regel für den aktuellen Benutzer einschließlich <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions> und <xref:System.Security.AccessControl.SemaphoreRights.TakeOwnership> Rechte, und mithilfe der Regel mit der <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule%2A> -Methode zum Entfernen <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions> aus der <xref:System.Security.AccessControl.AccessControlType.Allow> -Regel in der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Die unnötige <xref:System.Security.AccessControl.SemaphoreRights.TakeOwnership> mit der rechten Maustaste im `rule` wird ignoriert.  
+ Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu. Die Rechte gewährt: <xref:System.Security.AccessControl.SemaphoreRights.Modify>, <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions>, und <xref:System.Security.AccessControl.SemaphoreRights.Synchronize>. Im Beispiel wird dann erstellt eine neue Regel für den aktuellen Benutzer, einschließlich <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions> und <xref:System.Security.AccessControl.SemaphoreRights.TakeOwnership> Rechte, und mithilfe der Regel mit der <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule%2A> Methode, um entfernen <xref:System.Security.AccessControl.SemaphoreRights.ReadPermissions> aus der <xref:System.Security.AccessControl.AccessControlType.Allow> Regel in der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt. Die unnötige <xref:System.Security.AccessControl.SemaphoreRights.TakeOwnership> direkt im `rule` wird ignoriert.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRule/VB/source.vb#1)]  
@@ -548,6 +559,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -564,17 +576,17 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt wird für Regeln mit demselben Benutzer und die gleiche durchsucht <xref:System.Security.AccessControl.AccessControlType> als Wert `rule`. Alle Rechte `rule` beim Ausführen dieser Suche werden ignoriert. Wenn keine übereinstimmenden Regeln gefunden werden, wird keine Aktion ausgeführt.  
+ Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> für Regeln mit demselben Benutzer und demselben Objekt durchsucht <xref:System.Security.AccessControl.AccessControlType> Wert wie `rule`. Alle Rechte `rule` werden ignoriert, wenn es sich bei dieser Suche ausführen. Wenn keine Übereinstimmungsregeln gefunden werden, ist keine Aktion ausgeführt.  
   
    
   
 ## Examples  
- Das folgende Codebeispiel zeigt, dass die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll%2A> -Methode entfernt alle Regeln, die Benutzer zu entsprechen und <xref:System.Security.AccessControl.AccessControlType>, Rechte ignoriert.  
+ Das folgende Codebeispiel zeigt, dass die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll%2A> -Methode entfernt alle Regeln, die Benutzer entsprechen und <xref:System.Security.AccessControl.AccessControlType>, Rechte zu ignorieren.  
   
- Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu und führt dann zusätzliche Rechte in der <xref:System.Security.AccessControl.AccessControlType.Allow> Regel. Das Beispiel erstellt dann eine neue Regel, die ermöglicht es dem aktuellen Benutzer in Besitz zu nehmen, und entfernen Sie mithilfe der Regel die <xref:System.Security.AccessControl.AccessControlType.Allow> Regel aus der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
+ Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu und führt dann zusätzliche Rechte in der <xref:System.Security.AccessControl.AccessControlType.Allow> Regel. Im Beispiel wird dann erstellt eine neue Regel, die den aktuellen Benutzer, den Besitz übernehmen kann, und mithilfe dieser Regel entfernt die <xref:System.Security.AccessControl.AccessControlType.Allow> Regel aus der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleAll/VB/source.vb#1)]  
@@ -600,6 +612,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -616,20 +629,20 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die Regel entfernt wird, nur dann, wenn sie genau `rule` in alle Details, einschließlich der Flags. Andere Regeln mit demselben Benutzer und <xref:System.Security.AccessControl.AccessControlType> sind nicht betroffen.  
+ Die Regel wird nur dann, wenn sie genau entfernt `rule` in alle Details, einschließlich der Flags. Andere Regeln mit demselben Benutzer und <xref:System.Security.AccessControl.AccessControlType> sind nicht betroffen.  
   
 > [!IMPORTANT]
->  Eine Regel darstellt, eine oder mehrere zugrunde liegenden Zugriffssteuerungseinträge (ACE), und diese Einträge werden aufgeteilt oder nach Bedarf kombiniert werden, wenn Sie die Zugriffsregeln für die Sicherheit für einen Benutzer ändern. Daher eine Regel ist nicht mehr vorhanden, in der bestimmten Form er hatte, als er hinzugefügt wurde, und klicken Sie in diesem Fall die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode nicht entfernen können.  
+>  Eine Regel darstellt, eine oder mehrere zugrunde liegenden Access Control Entries (ACE), und diese Einträge werden aufgeteilt oder nach Bedarf kombiniert werden, wenn Sie die Zugriffsregeln für die Sicherheit für einen Benutzer ändern. Daher eine Regel möglicherweise nicht mehr vorhanden, in der bestimmten Form, die sie hatte, als er hinzugefügt wurde, und klicken Sie in diesem Fall die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode nicht entfernen können.  
   
    
   
 ## Examples  
- Das folgende Codebeispiel zeigt, dass die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode erfordert eine genaue Übereinstimmung, um eine Regel zu entfernen und Regeln zum Zulassen und Verweigern von Berechtigungen sind unabhängig voneinander.  
+ Das folgende Codebeispiel zeigt, dass die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode erfordert eine genaue Übereinstimmung, um eine Regel zu entfernen, und Regeln zum Zulassen und Verweigern von Berechtigungen sind unabhängig voneinander.  
   
- Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu und führt dann zusätzliche Rechte in der <xref:System.Security.AccessControl.AccessControlType.Allow> Zugriffsregel. Im Beispiel übergibt dann die ursprüngliche <xref:System.Security.AccessControl.AccessControlType.Allow> -Regel an die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> -Methode, und zeigt die Ergebnisse, die anzeigt, dass nichts gelöscht wird. Im Beispiel wird dann eine Regel, die entspricht, erstellt der <xref:System.Security.AccessControl.AccessControlType.Allow> Regel "" die <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt und erfolgreich verwendet die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode, um die Regel zu entfernen.  
+ Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt, fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu und führt dann zusätzliche Rechte in der <xref:System.Security.AccessControl.AccessControlType.Allow> Zugriffsregel. Im Beispiel übergibt dann die ursprüngliche <xref:System.Security.AccessControl.AccessControlType.Allow> Regel, um die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> -Methode, und zeigt die Ergebnisse, die anzeigt, dass nichts gelöscht wird. Im Beispiel wird dann erstellt eine Regel, entspricht die <xref:System.Security.AccessControl.AccessControlType.Allow> Regel in der <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt und erfolgreich verwendet die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific%2A> Methode, um die Regel zu entfernen.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.RemoveAccessRuleSpecific/VB/source.vb#1)]  
@@ -655,6 +668,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -673,10 +687,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird eine Überwachungsregel, die denselben Benutzer wie gesucht `rule`. Wenn keine solche Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn Abgleichsregeln gefunden werden, werden ihre Kompatibilität und Vererbung-Flags für die Kompatibilität mit den Flags, die im angegebenen überprüft `rule`. Wenn keine kompatible Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn eine Regel mit kompatiblen Flags gefunden wird, wird die Rechte in angegebenen `rule` werden aus der kompatiblen Regel entfernt und die Methode gibt `true`. Wenn `rule` gibt die Rechte, die nicht in der kompatiblen Regel enthalten sind, in Bezug auf diese Rechte wird keine Aktion ausgeführt. Wenn alle Rechte aus der kompatiblen Regel entfernt werden, wird die gesamte Regel aus dem aktuellen entfernt <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
+ Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird nach einer Überwachungsregel, die demselben Benutzer wie durchsucht `rule`. Wenn keine solche Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn Abgleichsregeln gefunden werden, werden ihre Kompatibilität und Vererbung Flags für die Kompatibilität mit den Flags, die im angegebenen überprüft `rule`. Wenn keine kompatible Regel gefunden wird, wird keine Aktion ausgeführt, und die Methode gibt `false`. Wenn eine Regel mit kompatiblen Flags gefunden wird, wird die Rechte in angegebenen `rule` aus der kompatiblen Regel entfernt werden und die Methode gibt `true`. Wenn `rule` gibt an, nicht in der kompatiblen Regel enthaltenen Rechte, die in Bezug auf diese Rechte wird keine Aktion ausgeführt. Wenn alle Rechte, die aus der kompatiblen Regel entfernt werden, wird die gesamte Regel aus dem aktuellen entfernt <xref:System.Security.AccessControl.SemaphoreSecurity> Objekt.  
   
 > [!IMPORTANT]
->  Obwohl Sie die Vererbung und Weitergabe Flags für Überwachungsregeln Semaphore, angeben können, erstellen sie mit der <xref:System.Security.AccessControl.SemaphoreSecurity.AuditRuleFactory%2A> -Methode, dies wird nicht empfohlen. Vererbung und Weitergabe haben keine Bedeutung für benannte Semaphoren, und sie machen die Pflege Überwachungsregeln komplizierter.  
+>  Obwohl Sie vererbungs- und Weitergabeflags Flags für das Semaphor Überwachungsregeln, angeben können, erstellen sie mit der <xref:System.Security.AccessControl.SemaphoreSecurity.AuditRuleFactory%2A> -Methode, dies wird nicht empfohlen. Besitzen keine Bedeutung für benannte Semaphore, vererbungs- und Weitergabeflags, und sie machen die Wartung von Überwachungsregeln komplizierter.  
   
  ]]></format>
         </remarks>
@@ -699,6 +713,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -715,7 +730,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird gesucht Überwachungsregeln, die denselben Benutzer wie `rule`. Alle Rechte `rule` beim Ausführen dieser Suche werden ignoriert. Alle Abgleichsregeln werden entfernt. Wenn keine übereinstimmenden Regeln gefunden werden, wird keine Aktion ausgeführt.  
+ Die aktuelle <xref:System.Security.AccessControl.SemaphoreSecurity> wird durchsucht, für die Überwachungsregeln, die denselben Benutzer wie `rule`. Alle Rechte `rule` werden ignoriert, wenn es sich bei dieser Suche ausführen. Alle Abgleichsregeln werden entfernt. Wenn keine Übereinstimmungsregeln gefunden werden, ist keine Aktion ausgeführt.  
   
  ]]></format>
         </remarks>
@@ -738,6 +753,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -754,10 +770,10 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die Regel entfernt wird, nur dann, wenn sie genau `rule` in alle Details, einschließlich der Flags. Andere Überwachungsregeln für denselben Benutzer sind nicht betroffen.  
+ Die Regel wird nur dann, wenn sie genau entfernt `rule` in alle Details, einschließlich der Flags. Andere Überwachungsregeln für denselben Benutzer sind nicht betroffen.  
   
 > [!IMPORTANT]
->  Eine Regel darstellt, eine oder mehrere zugrunde liegenden Zugriffssteuerungseinträge (ACE), und diese Einträge werden aufgeteilt oder nach Bedarf kombiniert werden, wenn Sie die Überwachungssicherheitsregeln für einen Benutzer ändern. Daher eine Regel ist nicht mehr vorhanden, in der bestimmten Form er hatte, als er hinzugefügt wurde, und klicken Sie in diesem Fall die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAuditRuleSpecific%2A> Methode nicht entfernen können.  
+>  Eine Regel darstellt, eine oder mehrere zugrunde liegenden Access Control Entries (ACE), und diese Einträge werden aufgeteilt oder nach Bedarf kombiniert werden, wenn Sie die Überwachungssicherheitsregeln für einen Benutzer ändern. Daher eine Regel möglicherweise nicht mehr vorhanden, in der bestimmten Form, die sie hatte, als er hinzugefügt wurde, und klicken Sie in diesem Fall die <xref:System.Security.AccessControl.SemaphoreSecurity.RemoveAuditRuleSpecific%2A> Methode nicht entfernen können.  
   
  ]]></format>
         </remarks>
@@ -780,6 +796,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -796,17 +813,17 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn es keine Access-Regeln sind, deren Benutzer, die angegebene Regel übereinstimmt `rule` hinzugefügt wird.  
+ Wenn es keine Access-Regeln sind, deren Benutzer, die angegebene Regel übereinstimmt, `rule` hinzugefügt wird.  
   
    
   
 ## Examples  
- Im folgenden Codebeispiel wird veranschaulicht wie die <xref:System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule%2A> Methode ersetzt alle Regeln für den übereinstimmenden Benutzer durch die Regel für die Übereinstimmung angegeben.  
+ Das folgende Codebeispiel zeigt die <xref:System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule%2A> Methode ersetzt alle Regeln für den übereinstimmenden Benutzer mit der Regel für die Übereinstimmung angegeben.  
   
- Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu. Das Beispiel erstellt dann eine neue Regel, die der aktuelle Benutzer Vollzugriff, und mithilfe der <xref:System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule%2A> Methode, um sowohl die bestehenden Regeln mit der neuen Regel zu ersetzen.  
+ Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu. Im Beispiel wird dann erstellt eine neue Regel, die der aktuelle Benutzer Vollzugriff, und mithilfe der <xref:System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule%2A> Methode, um beide die vorhandenen Regeln mit der neuen Regel ersetzen.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.ResetAccessRule/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.ResetAccessRule#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.ResetAccessRule/VB/source.vb#1)]  
@@ -832,6 +849,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -848,19 +866,19 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die angegebene Regel hat <xref:System.Security.AccessControl.AccessControlType.Allow>, die Auswirkungen dieser Methode sind alle entfernen <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln für den angegebenen Benutzer, die sie durch die angegebene Regel ersetzt werden. Wenn die angegebene Regel hat <xref:System.Security.AccessControl.AccessControlType.Deny>, dass alle <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln für den angegebenen Benutzer durch die angegebene Regel ersetzt werden.  
+ Wenn die angegebene Regel verfügt <xref:System.Security.AccessControl.AccessControlType.Allow>, die Auswirkungen dieser Methode ist, entfernen Sie alle <xref:System.Security.AccessControl.AccessControlType.Allow> Regeln für den angegebenen Benutzer, die sie mit der angegebenen Regel ersetzt werden. Wenn die angegebene Regel verfügt <xref:System.Security.AccessControl.AccessControlType.Deny>, dass alle <xref:System.Security.AccessControl.AccessControlType.Deny> Regeln für den angegebenen Benutzer mit der angegebenen Regel ersetzt werden.  
   
- Wenn es keine Regeln, deren Benutzer sind und <xref:System.Security.AccessControl.AccessControlType> entsprechen die angegebene Regel `rule` hinzugefügt wird.  
+ Wenn keine Regeln vorhanden, deren Benutzer sind und <xref:System.Security.AccessControl.AccessControlType> entsprechen die angegebene Regel, `rule` hinzugefügt wird.  
   
    
   
 ## Examples  
- Im folgenden Codebeispiel wird veranschaulicht wie die <xref:System.Security.AccessControl.SemaphoreSecurity.SetAccessRule%2A> -Methode entfernt alle Regeln, die sowohl mit den Benutzer entsprechen und die <xref:System.Security.AccessControl.AccessControlType> von `rule`, ersetzen sie mit `rule`.  
+ Das folgende Codebeispiel zeigt wie die <xref:System.Security.AccessControl.SemaphoreSecurity.SetAccessRule%2A> -Methode entfernt alle Regeln, die sowohl mit den Benutzer entsprechen und die <xref:System.Security.AccessControl.AccessControlType> von `rule`, und Ersetzen Sie dabei mit `rule`.  
   
- Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und verweigern verschiedene Rechte für den aktuellen Benutzer hinzu. Das Beispiel erstellt dann eine neue Regel, die der aktuelle Benutzer Vollzugriff, und mithilfe der <xref:System.Security.AccessControl.SemaphoreSecurity.SetAccessRule%2A> Methode zum Ersetzen des vorhandenen Zulassungsregel mit der neuen Regel. Die Regel, die Zugriff ablehnt, wird nicht beeinflusst.  
+ Das Beispiel erstellt eine <xref:System.Security.AccessControl.SemaphoreSecurity> -Objekt und fügt die Regeln, die zulassen und Verweigern von verschiedenen Rechte für den aktuellen Benutzer hinzu. Im Beispiel wird dann erstellt eine neue Regel, die der aktuelle Benutzer Vollzugriff, und mithilfe der <xref:System.Security.AccessControl.SemaphoreSecurity.SetAccessRule%2A> Methode zum Ersetzen des vorhandenen Zulassungsregel, mit der neuen Regel. Die Regel, die Zugriff verweigert hat keine Auswirkungen.  
   
 > [!NOTE]
->  In diesem Beispiel wird das Sicherheitsobjekt, nicht angefügt ein <xref:System.Threading.Semaphore> Objekt. Beispiele, die Sicherheitsobjekte angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
+>  In diesem Beispiel wird das Sicherheitsobjekt ", nicht angefügt eine <xref:System.Threading.Semaphore> Objekt. Beispiele, die von Sicherheitsobjekten angefügt werden, finden Sie <xref:System.Threading.Semaphore.GetAccessControl%2A?displayProperty=nameWithType> und <xref:System.Threading.Semaphore.SetAccessControl%2A?displayProperty=nameWithType>.  
   
  [!code-csharp[System.Security.AccessControl.SemaphoreSecurity.SetAccessRule#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.SetAccessRule/CS/source.cs#1)]
  [!code-vb[System.Security.AccessControl.SemaphoreSecurity.SetAccessRule#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.AccessControl.SemaphoreSecurity.SetAccessRule/VB/source.vb#1)]  
@@ -886,6 +904,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -902,7 +921,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn es keine Überwachungsregeln sind, deren Benutzer, die angegebene Regel übereinstimmt `rule` hinzugefügt wird.  
+ Wenn es keine Überwachungsregeln sind, deren Benutzer, die angegebene Regel übereinstimmt, `rule` hinzugefügt wird.  
   
  ]]></format>
         </remarks>
