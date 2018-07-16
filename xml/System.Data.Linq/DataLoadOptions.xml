@@ -1,11 +1,11 @@
 <Type Name="DataLoadOptions" FullName="System.Data.Linq.DataLoadOptions">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="34c67048240be5b4d33ed067657848792722a711" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="4d7a1641f923121f7dc6f5ac9f8bc574e9cf05e1" />
+    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36689378" />
+    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
+    <Meta Name="ms.locfileid" Value="37680935" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class DataLoadOptions" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit DataLoadOptions extends System.Object" />
@@ -15,6 +15,7 @@
   <TypeSignature Language="F#" Value="type DataLoadOptions = class" />
   <AssemblyInfo>
     <AssemblyName>System.Data.Linq</AssemblyName>
+    <AssemblyVersion>3.5.0.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
@@ -29,19 +30,19 @@
 ## Remarks  
   
 ## <a name="general"></a>Allgemein  
- Wenn Sie eine Abfrage für ein Objekt durchführen, wird nur das angeforderte Objekt abgerufen. Die *verwandte* Objekte werden nicht automatisch zum gleichen Zeitpunkt abgerufen. (Weitere Informationen finden Sie unter [Beziehungsübergreifendes](~/docs/framework/data/adonet/sql/linq/querying-across-relationships.md).)  
+ Wenn Sie eine Abfrage für ein Objekt durchführen, wird nur das angeforderte Objekt abgerufen. Die *verwandte* Objekte werden nicht automatisch zur gleichen Zeit abgerufen. (Weitere Informationen finden Sie unter [Beziehungsübergreifendes](~/docs/framework/data/adonet/sql/linq/querying-across-relationships.md).)  
   
- Die <xref:System.Data.Linq.DataLoadOptions> Klasse bietet zwei Methoden zum unmittelbarem Laden des angegebenen verknüpften Daten zu erzielen. Die <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> Methode zum sofortigen Laden von Daten zum Hauptziel ermöglicht. Die <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> Methode ermöglicht das Filtern verwandter Objekte.  
+ Die <xref:System.Data.Linq.DataLoadOptions> Klasse bietet zwei Methoden zum Erreichen von unmittelbarem laden angegebenen verknüpfter Daten. Die <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> -Methode ermöglicht es, für das sofortige Laden von Daten zum Hauptziel. Die <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> Methode ermöglicht die Filterung von verknüpften Objekten.  
   
 ## <a name="rules"></a>Regeln  
- Beachten Sie die folgenden Regeln im Hinblick auf <xref:System.Data.Linq.DataLoadOptions> Verwendung:  
+ Beachten Sie die folgenden Regeln im Hinblick auf <xref:System.Data.Linq.DataLoadOptions> Nutzung:  
   
--   Zuweisen einer <xref:System.Data.Linq.DataLoadOptions> zu einem <xref:System.Data.Linq.DataContext> nach dem Ausführen der ersten Abfrage wird eine Ausnahme generiert.  
+-   Zuweisen einer <xref:System.Data.Linq.DataLoadOptions> auf eine <xref:System.Data.Linq.DataContext> nach die erste Abfrage ausgeführt wurde, wird eine Ausnahme generiert.  
   
--   Ändern einer <xref:System.Data.Linq.DataLoadOptions> nach dem er zugewiesen wurde eine <xref:System.Data.Linq.DataContext> wird eine Ausnahme generiert  
+-   Ändern einer <xref:System.Data.Linq.DataLoadOptions> nach dem er zugewiesen wurde eine <xref:System.Data.Linq.DataContext> generiert eine Ausnahme  
   
-## <a name="cycle-handling"></a>Behandlung von der Reihe nach  
- <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> und <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> -Direktiven dürfen keine Zyklen erstellen. Die folgenden stellen Beispiele für solche Diagramme dar:  
+## <a name="cycle-handling"></a>Zyklus-Verarbeitung  
+ <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> und <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> -Direktiven müssen keine Zyklen erstellen. Die folgenden stellen Beispiele für solche Diagramme dar:  
   
 -   : Beispiel 1 rekursive  
   
@@ -53,9 +54,9 @@
   
     -   `dlo.LoadWith <Order>(o => o.Customer);`  
   
--   Beispiel 3: Längere Zyklen  
+-   Beispiel 3: Länger Zyklen  
   
-     Obwohl dies nicht in einem ordnungsgemäß normalisierten Modell erfolgen soll, ist es möglich.  
+     Obwohl dies nicht in einem gut normalisierten Modell auftreten sollte, ist es möglich.  
   
     -   `dlo.LoadWith <A>(a => a.Bs);`  
   
@@ -67,7 +68,7 @@
   
     -   `dlo.AssociateWith<A>(a=>a.As.Where(a=>a.Id=33));`  
   
--   Beispiel 5: Längere Rekursive Unterabfragen  
+-   Beispiel 5: Länger Rekursive Unterabfragen  
   
     -   `dlo.AssociateWith<A>(a=>a.Bs.Where(b=>b.Id==3));`  
   
@@ -75,18 +76,18 @@
   
  Im folgenden sind einige allgemeine Regeln, die Ihnen helfen verstehen, was in diesen Szenarien wird.  
   
- **LoadWith Vorzeitiges** bei jedem Aufruf <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> überprüft, ob Zyklen Quellcodemodells eingeführt wurden. Wenn Sie vorhanden sind, wie in den Beispielen 1, ist 2 und 3, eine Ausnahme ausgelöst.  
+ **LoadWith** jeder Aufruf von <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> überprüft, ob Zyklen, in das Diagramm eingeführt wurden. Wenn Sie vorhanden sind, wie in den Beispielen 1, ist 2 und 3, eine Ausnahme ausgelöst.  
   
- **AssociateWith** das Modul zur Laufzeit aber nicht für die vorhandenen Unterabfrage-Klauseln der Beziehung innerhalb des Ausdrucks.  
+ **AssociateWith** die Engine zur Laufzeit wird nicht für die vorhandenen Unterabfrage-Klauseln der Beziehung innerhalb des Ausdrucks.  
   
--   In Beispiel 4 stellen die `Where` -Klausel ausgeführt wird, für alle `A`, nicht nur diejenigen vom gefiltert Unterabfrage-Ausdruck selbst (da es sich um eine, die rekursive handeln würde)  
+-   In Beispiel 4 wird die `Where` -Klausel ausgeführt wird, für alle `A`, nicht nur diejenigen, die vom gefiltert Unterabfrage-Ausdruck selbst (da dies rekursive wäre)  
   
--   In Beispiel 5 die erste `Where` -Klausel wird angewendet, um alle der `B`s, obwohl der Unterabfragen vorhanden sind, auf `B`. Die zweite `Where` -Klausel wird angewendet, um alle der `A`s, obwohl es sind in Unterabfragen `A`.  
+-   Im Beispiel 5 die erste `Where` -Klausel wird angewendet, um alle der `B`s, obwohl der Unterabfragen vorhanden sind, auf `B`. Die zweite `Where` -Klausel wird angewendet, um alle der `A`s, obwohl es sind in Unterabfragen `A`.  
   
    
   
 ## Examples  
- Beim Abrufen `Customers` aus der Northwind-Beispieldatenbank, können Sie <xref:System.Data.Linq.DataLoadOptions> angeben, dass `Orders` ist auch abgerufen werden sollen. Sie können auch angeben, welche Teilmenge der `Orders` abgerufen.  
+ Beim Abrufen `Customers` aus der Northwind-Beispieldatenbank, können Sie <xref:System.Data.Linq.DataLoadOptions> an, dass `Orders` ist auch abgerufen werden sollen. Sie können auch angeben, welche Teilmenge der `Orders` abrufen.  
   
  ]]></format>
     </remarks>
@@ -101,6 +102,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.Linq</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
@@ -119,6 +121,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.Linq</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -134,7 +137,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Im folgenden Beispiel die innere Schleife durchläuft nur die `Orders` , die noch nicht heute versendet wurden.  
+ Im folgenden Beispiel die innere Schleife durchläuft nur diejenigen `Orders` , die noch nicht heute versendet wurden.  
   
    
   
@@ -156,6 +159,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.Linq</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -168,19 +172,19 @@
         <Parameter Name="expression" Type="System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Object&gt;&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">Der Typ, der abgefragt wird.  Wenn der Typ nicht zugeordnet ist, wird eine Ausnahme ausgelöst.</typeparam>
+        <typeparam name="T">Der Typ, der für abgefragt wird.  Wenn der Typ nicht zugeordnet ist, wird eine Ausnahme ausgelöst.</typeparam>
         <param name="expression">Identifies the query to be used on a particular one-to-many field or property. Note the following:  If the expression does not start with a field or property that represents a one-to-many relationship, an exception is thrown.  If an operator other than a valid operator appears in the expression, an exception is thrown. Valid operators are as follows:  Where  OrderBy  ThenBy  OrderByDescending  ThenByDescending  Take</param>
         <summary>Filters objects retrieved for a particular relationship.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Weitere Informationen zur Vermeidung von Zyklen finden Sie unter <xref:System.Data.Linq.DataLoadOptions>.  
+ Weitere Informationen zur Verwendung, Zyklen zu vermeiden, finden Sie unter <xref:System.Data.Linq.DataLoadOptions>.  
   
    
   
 ## Examples  
- Im folgenden Beispiel die innere Schleife durchläuft nur die `Orders` , die noch nicht heute versendet wurden.  
+ Im folgenden Beispiel die innere Schleife durchläuft nur diejenigen `Orders` , die noch nicht heute versendet wurden.  
   
  [!code-csharp[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/csharp/VS_Snippets_Data/system.data.linq.dataloadoptions/cs/program.cs#1)]
  [!code-vb[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/visualbasic/VS_Snippets_Data/system.data.linq.dataloadoptions/vb/module1.vb#1)]  
@@ -249,6 +253,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.Linq</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -286,6 +291,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Data.Linq</AssemblyName>
+        <AssemblyVersion>3.5.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -298,14 +304,14 @@
         <Parameter Name="expression" Type="System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Object&gt;&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">Typ, der abgefragt wird.  Wenn dieser Typ aufgehoben wird, wird eine Ausnahme ausgelöst.</typeparam>
+        <typeparam name="T">Der Typ, der für abgefragt wird.  Wenn dieser Typ nicht zugeordnet ist, wird eine Ausnahme ausgelöst.</typeparam>
         <param name="expression">Identifies the field or property to be retrieved.  If the expression does not identify a field or property that represents a one-to-one or one-to-many relationship, an exception is thrown.</param>
         <summary>Specifies which sub-objects to retrieve when a query is submitted for an object of type T.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Sie können nicht angeben, das Laden von Beziehungen zwischen zwei Ebenen (z. B. `Orders.OrderDetails`). In diesen Szenarien müssen Sie zwei Separate angeben <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> Methoden.  
+ Sie können das Laden von zwei Ebenen von Beziehungen nicht angeben (z. B. `Orders.OrderDetails`). In diesen Szenarien müssen Sie zwei Separate angeben <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> Methoden.  
   
  Zur Vermeidung von Zyklen finden Sie unter "Hinweise" im Abschnitt <xref:System.Data.Linq.DataLoadOptions>.  
   
