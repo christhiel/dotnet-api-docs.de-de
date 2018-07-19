@@ -1,11 +1,11 @@
 <Type Name="DataflowBlock" FullName="System.Threading.Tasks.Dataflow.DataflowBlock">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="f558bf9a029763285a5fd334c30a979714b81d23" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="b1681b37f6256a345cba5980d6dd8e36899a63b3" />
+    <Meta Name="ms.sourcegitcommit" Value="44933aff38db926168781f50300446344189a04d" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36606935" />
+    <Meta Name="ms.lasthandoff" Value="07/16/2018" />
+    <Meta Name="ms.locfileid" Value="39064909" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class DataflowBlock" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit DataflowBlock extends System.Object" />
@@ -321,14 +321,14 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Encapsulate%2A> Methode erfordert zwei vorhandene Blöcke: ein Zielblock (eine Instanz einer Klasse, die implementiert <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601>) und ein Quellblock (eine Instanz einer Klasse, die implementiert <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601>). <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Encapsulate%2A> erstellt eine neue Instanz der eine interne Klasse, die eine Verbindung herstellt der <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Schnittstellenmember um die `target` Parameter und die <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Schnittstellenmember um die `source` Parameter.  Beide <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> und <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> abgeleitet <xref:System.Threading.Tasks.Dataflow.IDataflowBlock>. Block Abschluss wird explizit aus Quellen, Ziele übergeben. Aus diesem Grund die <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Complete%2A> und <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Fault%2A> Methoden verbunden sind, an das Ziel bei der <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Completion%2A> Eigenschaft mit der Datenquelle verbunden ist.  Sie müssen sicherstellen, dass beim Ziel Hälfte abgeschlossen ist, die Quelle Hälfte ruft wurde in die am besten geeignete Weise; Zum Beispiel:  
+ Die <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Encapsulate%2A> Methode erfordert zwei vorhandene Blöcke: ein Zielblock (eine Instanz einer Klasse, die implementiert <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601>) und ein Quellblock (eine Instanz einer Klasse, die implementiert <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601>). <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Encapsulate%2A> erstellt eine neue Instanz einer internen Klasse, die eine Verbindung herstellt der <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Schnittstellenmember, die `target` Parameter und die <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Schnittstellenmember, die `source` Parameter.  Beide <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> und <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> abgeleitet <xref:System.Threading.Tasks.Dataflow.IDataflowBlock>. Block-Abschluss wird explizit von Quellen an Ziele übergeben. Aus diesem Grund die <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Complete%2A> und <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Fault%2A> Methoden verbunden sind, an das Ziel bei der <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Completion%2A> Eigenschaft mit der Datenquelle verbunden ist.  Sie müssen sicherstellen, dass beim Ziel Hälfte abgeschlossen ist, die Hälfte abgeschlossen Ruft ab, auf die am besten geeignete Weise; Quelle Zum Beispiel:  
   
  `target.Completion.ContinueWith(completion => source.Complete());`  
   
- Oder, wenn Sie abschlusstyps weitergeben möchten, können Sie komplexere Code:  
+ Oder, wenn es sich bei abschlusstyps weitergegeben werden sollen, können Sie diesen höher entwickelten Code verwenden:  
   
 ```  
-target.Completion.ContinueWith(completion => { if (completion.IsFaulted) 3   
+target.Completion.ContinueWith(completion => { if (completion.IsFaulted)    
   
 ((IDataflowBlock)batchBlock).Fault(completion.Exception);   
 else   
@@ -337,7 +337,7 @@ batchBlock.Complete();
   
 ```  
   
- Sie müssen die Nachrichtenweitergabe vom Ziel zu Quelle auch explizit angeben. Der Vorteil dieser explizite Verbindung ist, dass es Ihnen die Freiheit gibt ermöglicht, die nicht eingeschränkte Verarbeitungsschritte zwischen den zwei gekapselten Blöcke auszuführen. Sie können dies tun codieren Sie die erforderliche Verarbeitung in den Blöcken Delegaten (sofern die Blöcke Delegate akzeptiert) oder durch das Einbetten von ein Subnetzwerk von Blöcken dazwischen. Einfachere Möglichkeit ist die Verwendung ein Blocks, das Delegaten akzeptiert; Verwenden Sie z. B. <xref:System.Threading.Tasks.Dataflow.ActionBlock%601>, <xref:System.Threading.Tasks.Dataflow.TransformBlock%602>, <xref:System.Threading.Tasks.Dataflow.TransformManyBlock%602> (falls zutreffend), oder einen benutzerdefinierten Block.  
+ Sie müssen die Nachrichtenweitergabe vom Ziel mit Quelle auch explizit angeben. Der Vorteil dieser explizite Verbindung ist, dass Sie die Freiheit gibt, die alle zwischen den beiden Blöcken des gekapselten uneingeschränkte Verarbeitungsschritte erhalten. Sie können dies tun, indem Sie die erforderliche Verarbeitung in die Blöcke Delegaten (wenn die Blöcke Delegaten in Anspruch nehmen) Codierung oder durch die Einbettung eine Subnetzwerk Blöcke zwischen ihnen. Die einfachste Methode ist die Verwendung ein Blocks, das Delegaten akzeptiert; Verwenden Sie z. B. <xref:System.Threading.Tasks.Dataflow.ActionBlock%601>, <xref:System.Threading.Tasks.Dataflow.TransformBlock%602>, <xref:System.Threading.Tasks.Dataflow.TransformManyBlock%602> (falls zutreffend), oder einen benutzerdefinierten Block.  
   
  ]]></format>
         </remarks>
@@ -589,7 +589,7 @@ batchBlock.Complete();
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt zurück, wenn der Zielblock sich entschieden hat, annehmen oder ablehnen. das Element, aber es sei denn, der andernfalls durch die spezielle Semantik von der Zielblock vorgegeben, Prinzipalserver wartet dabei nicht für das Element, das tatsächlich verarbeitet werden. Deutet, <xref:System.Threading.Tasks.Dataflow.ActionBlock%601> aus zurück <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Post%2A> , sobald sie das bereitgestellte Element in der Eingabewarteschlange gespeichert wurde). Aus der Perspektive der Verarbeitung des Blocks `Post` asynchron ist. Für Zielblöcke dieser Unterstützung zurück, die Nachrichten bereitgestellt oder für Blöcke, die weitere Verarbeitung ausführen können, in ihre `Post` Implementierung, erwägen Sie <xref:System.Threading.Tasks.Dataflow.DataflowBlock.SendAsync%2A>, die sofort zurück und ermöglicht das Ziel, die gesendete Nachricht zu verschieben. und später nach dafür `SendAsync` zurückgibt.  
+ Diese Methode gibt zurück, wenn der Zielblock hat entschieden, zum annehmen oder Ablehnen des Elements, aber es sei denn, die andernfalls durch die spezielle Semantik der Zielblock wird festgelegt, es wartet nicht auf das Element, das tatsächlich verarbeitet werden. Z. B. <xref:System.Threading.Tasks.Dataflow.ActionBlock%601> zurück <xref:System.Threading.Tasks.Dataflow.DataflowBlock.Post%2A> , sobald sie das bereitgestellte Element in der Eingabewarteschlange gespeichert hat). Aus der Perspektive der Verarbeitung des Blocks `Post` ist asynchron. Zielblöcke, Unterstützung angeboten von Nachrichten zurück, oder für die Blöcke, die weitere Verarbeitung ausführen können, in deren `Post` -Implementierung in Betracht <xref:System.Threading.Tasks.Dataflow.DataflowBlock.SendAsync%2A>, die sofort zurück und ermöglicht das Ziel, die gesendete Nachricht verschieben und höher nutzen ihn nach dem `SendAsync` zurückgibt.  
   
  ]]></format>
         </remarks>
@@ -664,7 +664,7 @@ batchBlock.Complete();
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die Quelle wurde erfolgreich ein Element, die durch diesen Vorgang empfangen wurde angeboten, wird dieses Element zurückgegeben, auch wenn eine gleichzeitige abbruchanforderung auftritt.  
+ Wenn die Quelle wurde erfolgreich ein Element, die durch diesen Vorgang empfangen wurde angeboten, wird dieses Element zurückgegeben, auch bei gleichzeitiger abbruchanforderungen.  
   
  ]]></format>
         </remarks>
@@ -709,7 +709,7 @@ batchBlock.Complete();
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die Quelle wurde erfolgreich ein Element, die durch diesen Vorgang empfangen wurde angeboten, wird dieses Element zurückgegeben, auch wenn ein gleichzeitige Timeout auftritt.  
+ Wenn die Quelle wurde erfolgreich ein Element, die durch diesen Vorgang empfangen wurde angeboten, wird dieses Element zurückgegeben, auch wenn ein gleichzeitiger Timeout auftritt.  
   
  ]]></format>
         </remarks>
@@ -757,7 +757,7 @@ batchBlock.Complete();
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die Quelle wurde erfolgreich ein Elementwert, die durch diesen Vorgang empfangen wurde angeboten, wird dieser Wert zurückgegeben, auch wenn eine gleichzeitige Anforderungen für Timeouts oder Abbruch auftritt.  
+ Wenn die Quelle wurde erfolgreich ein Elementwert, die durch diesen Vorgang empfangen wurde angeboten, wird dieser Wert zurückgegeben, auch bei eine gleichzeitige Timeout oder Abbruch der Anforderung.  
   
  ]]></format>
         </remarks>
@@ -1025,7 +1025,7 @@ batchBlock.Complete();
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wartet nicht, bis die Quelle ein Element bereitgestellt wurde.  
+ Diese Methode wartet nicht, bis die Quelle ein Elements zu bieten hat.  
   
  Es wird zurückgegeben, und zwar unabhängig davon, ob ein Element verfügbar war.  
   
