@@ -1,11 +1,11 @@
 <Type Name="SqlDataReader" FullName="System.Data.SqlClient.SqlDataReader">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="bedcf698791ee314d07e27319b54a5f52c202058" />
-    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
+    <Meta Name="ms.openlocfilehash" Value="49779e57a54711e1118eb45f3ef3293b4c3b4a74" />
+    <Meta Name="ms.sourcegitcommit" Value="65fc8d8b5a6c6a18be3191c2944c7fcc43f38fa6" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
-    <Meta Name="ms.locfileid" Value="37672664" />
+    <Meta Name="ms.lasthandoff" Value="07/18/2018" />
+    <Meta Name="ms.locfileid" Value="39118818" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class SqlDataReader : System.Data.Common.DbDataReader, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit SqlDataReader extends System.Data.Common.DbDataReader implements class System.Data.IDataReader, class System.Data.IDataRecord, class System.IDisposable" />
@@ -585,7 +585,7 @@
 ## Remarks  
  Gibt den Namen des Back-End-Datentyps zurück.  
   
- `numeric` : Spalte ist vom Typ `decimal`. `GetDataTypeName` : Spalte ist nicht vom Typ .  
+ `numeric` ist ein Synonym in SQL Server für die `decimal` -Datentyp. `GetDataTypeName` Gibt "decimal" für eine Spalte als decimal oder numeric definiert zurück.  
   
  ]]></format>
         </remarks>
@@ -632,7 +632,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Typ der Spalte unabhängig von der aktuellen <xref:System.DateTime> in der Verbindungszeichenfolge angegeben.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits sein ein <xref:System.DateTime> Objekt.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -678,7 +678,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Typ der Spalte unabhängig von der aktuellen <xref:System.DateTimeOffset> in der Verbindungszeichenfolge angegeben.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits sein ein <xref:System.DateTimeOffset> Objekt.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -728,7 +728,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Typ der Spalte unabhängig von der aktuellen <xref:System.Decimal> in der Verbindungszeichenfolge angegeben.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits sein ein <xref:System.Decimal> Objekt.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -778,7 +778,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Es werden keine Konvertierungen ausgeführt. Wenn  ist es sich nicht um ein numerischen Datentyp aufweisen, dies ist 255.  
+ Es werden keine Konvertierungen ausgeführt. Aus diesem Grund müssen die abgerufenen Daten bereits eine Gleitkommazahl mit doppelter Genauigkeit sein.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -821,7 +821,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn `foreach` DBTYPE_DECIMAL oder DBTYPE_NUMERIC, ist die Anzahl der Ziffern rechts vom Dezimaltrennzeichen an.  
+ Obwohl Sie diese Methode verwenden können, um einen expliziten Enumerator abzurufen, in Sprachen, unterstützen einen `foreach` Konstrukt, es ist einfacher, verwenden Sie das Schleifenkonstrukt direkt, um die Zeilen im Datenleser durchlaufen.  
   
  ]]></format>
         </remarks>
@@ -914,10 +914,10 @@
 |Boolesch|Byte|Char|DateTime|  
 |DateTimeOffset|Decimal|Double|Float|  
 |GUID|Int16|Int32|Int64|  
-|Gibt den anbieterspezifischen Datentyp der Spalte auf der Grundlage der  Schlüsselwort in der Verbindungszeichenfolge.|Wenn der Datentyp der Spalte von Zeile zu Zeile unterschiedlich ist, muss dieses Objekt sein.|SqlDateTime|UdtAssemblyQualifiedName|  
+|SqlBoolean|Value|SqlDateTime|SqlDecimal|  
 |SqlDouble|SqlGuid|SqlInt16|SqlInt32|  
-|SqlInt64|Wenn die Spalte einen benutzerdefinierten Typ (UDT) ist, ist dies der qualifizierte Name UDTs-Assembly gemäß .|Wenn die Spalte nicht um einen UDT ist, ist dies null.|Der Name der Datenbank, in denen die schemaauflistung für diese XML-Instanz befindet, wenn die Zeile mit Informationen zu einer XML-Spalte enthält.|  
-|Zeichenfolge|Dieser Wert ist <xref:Microsoft.SqlServer.Server.SqlUserDefinedTypeAttribute> ( in Visual Basic), wenn die Auflistung innerhalb der aktuellen Datenbank definiert ist.|||  
+|SqlInt64|SqlMoney|SqlSingle|SqlString|  
+|Zeichenfolge|UDT, der alle CLR-Typen werden kann, die mit markierten <xref:Microsoft.SqlServer.Server.SqlUserDefinedTypeAttribute>.|||  
   
  Weitere Informationen finden Sie unter [SqlClient-Streamingunterstützung](~/docs/framework/data/adonet/sqlclient-streaming-support.md).  
   
@@ -978,10 +978,10 @@
 |Boolesch|Byte|Char|DateTime|  
 |DateTimeOffset|Decimal|Double|Float|  
 |GUID|Int16|Int32|Int64|  
-|Gibt den anbieterspezifischen Datentyp der Spalte auf der Grundlage der  Schlüsselwort in der Verbindungszeichenfolge.|Wenn der Datentyp der Spalte von Zeile zu Zeile unterschiedlich ist, muss dieses Objekt sein.|SqlDateTime|UdtAssemblyQualifiedName|  
+|SqlBoolean|Value|SqlDateTime|SqlDecimal|  
 |SqlDouble|SqlGuid|SqlInt16|SqlInt32|  
-|SqlInt64|Wenn die Spalte einen benutzerdefinierten Typ (UDT) ist, ist dies der qualifizierte Name UDTs-Assembly gemäß .|Wenn die Spalte nicht um einen UDT ist, ist dies null.|Der Name der Datenbank, in denen die schemaauflistung für diese XML-Instanz befindet, wenn die Zeile mit Informationen zu einer XML-Spalte enthält.|  
-|Zeichenfolge|Dieser Wert ist <xref:Microsoft.SqlServer.Server.SqlUserDefinedTypeAttribute> ( in Visual Basic), wenn die Auflistung innerhalb der aktuellen Datenbank definiert ist.|||  
+|SqlInt64|SqlMoney|SqlSingle|SqlString|  
+|Zeichenfolge|UDT, der alle CLR-Typen werden kann, die mit markierten <xref:Microsoft.SqlServer.Server.SqlUserDefinedTypeAttribute>.|||  
   
  Weitere Informationen finden Sie unter [SqlClient-Streamingunterstützung](~/docs/framework/data/adonet/sqlclient-streaming-support.md).  
   
@@ -1037,7 +1037,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Es werden keine Konvertierungen ausgeführt. Der Name der schemaauflistung für diese XML-Instanz, wenn die Zeile mit Informationen zu einer XML-Spalte enthält.  
+ Es werden keine Konvertierungen ausgeführt. Aus diesem Grund müssen die abgerufenen Daten bereits eine Gleitkommazahl mit einfacher Genauigkeit sein.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -1087,7 +1087,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Wert null ist, ist die  und  Spalten sind ebenfalls null.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits eine GUID sein.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -1137,7 +1137,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Das besitzende relationale Schema, in denen die schemaauflistung für diese XML-Instanz gefunden wurde, ist, wenn die Zeile mit Informationen zu einer XML-Spalte enthält.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund muss die abgerufenen Daten bereits eine 16-Bit-Ganzzahl mit Vorzeichen.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -1187,7 +1187,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Um sicherzustellen, dass Metadatenspalten die richtigen Informationen zurückgeben, müssen Sie aufrufen  mit der  Parametersatz zu .  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund muss die abgerufenen Daten bereits eine 32-Bit-Ganzzahl mit Vorzeichen.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -1237,7 +1237,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert der Spalte als eine .  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund muss die abgerufenen Daten bereits eine 64-Bit-Ganzzahl mit Vorzeichen.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -1327,11 +1327,11 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- `GetOrdinal` führt zuerst eine Suche Groß-/Kleinschreibung beachtet. Es werden keine Konvertierungen ausgeführt; Daher muss die abgerufenen Daten müssen bereits eine binäre Struktur sein, oder wird eine Ausnahme generiert. Beim Vergleichen von Kultur-, Groß-/Kleinschreibung Regeln betroffen sind, können unerwartete Ergebnisse auftreten. Es werden keine Konvertierungen ausgeführt; aus diesem Grund wird die abgerufenen Daten müssen bereits ein boolescher Wert sein, oder wird eine Ausnahme generiert. Löst die Methode eine `IndexOutOfRange` -Ausnahme aus, wenn die nullbasierte Ordnungszahl der Spalte nicht gefunden wird.  
+ `GetOrdinal` führt zuerst eine Suche Groß-/Kleinschreibung beachtet. Wenn sie ein zweites, ein Fehler auftritt, tritt ein Groß-und Kleinschreibung gesucht, (Groß-/Kleinschreibung verglichen mit der Sortierung der Datenbank). Beim Vergleichen von Kultur-, Groß-/Kleinschreibung Regeln betroffen sind, können unerwartete Ergebnisse auftreten. Gibt z. B. im türkischen im folgenden Beispiel wird die falsche Ergebnisse da Dateisystem im türkischen nicht linguistische Schreibweise Regeln für den Buchstaben "i" in "File". Löst die Methode eine `IndexOutOfRange` -Ausnahme aus, wenn die nullbasierte Ordnungszahl der Spalte nicht gefunden wird.  
   
  `GetOrdinal` wird die Laufweite von Kana nicht unterschieden.  
   
- Da Nachschlagevorgänge auf der Basis Suchvorgänge effizienter als Nachschlagevorgänge nach Namen, ist es ineffizient, Sie rufen `GetOrdinal` innerhalb einer Schleife. Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits ein Byte sein, oder es wird eine Ausnahme generiert.  
+ Da Nachschlagevorgänge auf der Basis Suchvorgänge effizienter als Nachschlagevorgänge nach Namen, ist es ineffizient, Sie rufen `GetOrdinal` innerhalb einer Schleife. Sparen Sie Zeit durch Aufrufen von `GetOrdinal` einmal und die Ergebnisse auf eine ganzzahlige Variable für die Verwendung innerhalb der Schleife zuweisen.  
   
    
   
@@ -1483,29 +1483,29 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits eine 32-Bit-Ganzzahl mit Vorzeichen sein, oder es wird eine Ausnahme generiert.  
+ Für die <xref:System.Data.SqlClient.SqlDataReader.GetSchemaTable%2A> Methodenrückgabe Metadaten über jede Spalte in der folgenden Reihenfolge:  
   
 |DataReader-Spalte|Beschreibung |  
 |-----------------------|-----------------|  
-|AllowDBNull|Es werden keine Konvertierungen ausgeführt; aus diesem Grund die abgerufenen Daten müssen bereits eine 64-Bit-Ganzzahl mit Vorzeichen sein, oder wird eine Ausnahme generiert. Es werden keine Konvertierungen ausgeführt; aus diesem Grund werden die abgerufenen Daten muss bereits eine einzelne Gleitkommazahl mit doppelter Genauigkeit, oder wird eine Ausnahme generiert. Eine Spalte kann null-Werte enthalten, selbst wenn sie nicht auf den Wert null festgelegt werden kann.|  
-|BaseCatalogName|Der Name des Katalogs im Datenspeicher, der die Spalte enthält. Es werden keine Konvertierungen ausgeführt; aus diesem Grund werden die abgerufenen Daten müssen bereits eine Zeichenfolge sein, oder wird eine Ausnahme generiert. Der Standardwert für diese Spalte ist ein null-Wert.|  
-|BaseColumnName|Der Name der Spalte im Datenspeicher. Gibt den Datenwert in der angegebenen Spalte als SQL Server-Typ zurück. Ein null-Wert, wenn der Name der Basisspalte nicht bestimmt werden kann oder wenn die Spalte des Rowsets abgeleitet, jedoch nicht identisch ist, einer Spalte in den Daten gespeichert werden. Der Standardwert für diese Spalte ist ein null-Wert.|  
+|AllowDBNull|Festlegen Sie, wenn der Consumer die Spalte auf einen null-Wert festlegen kann oder wenn der Anbieter nicht bestimmen kann, ob der Consumer die Spalte auf einen null-Wert festlegen kann. Andernfalls nicht festgelegt. Eine Spalte kann null-Werte enthalten, selbst wenn sie nicht auf den Wert null festgelegt werden kann.|  
+|BaseCatalogName|Der Name des Katalogs im Datenspeicher, der die Spalte enthält. NULL, wenn der Name des Basiskatalogs nicht bestimmt werden kann. Der Standardwert für diese Spalte ist ein null-Wert.|  
+|BaseColumnName|Der Name der Spalte im Datenspeicher. Dies weicht möglicherweise den Namen der Spalte in der ColumnName-Spalte zurückgegeben, wenn ein Alias verwendet wurde. Ein null-Wert, wenn der Name der Basisspalte nicht bestimmt werden kann oder wenn die Spalte des Rowsets abgeleitet, jedoch nicht identisch ist, einer Spalte in den Daten gespeichert werden. Der Standardwert für diese Spalte ist ein null-Wert.|  
 |BaseSchemaName|Der Name des Schemas im Datenspeicher, der die Spalte enthält. Ein null-Wert, wenn der Name des Basisschemas nicht bestimmt werden kann. Der Standardwert für diese Spalte ist ein null-Wert.|  
-|Daten, die mithilfe der systemeigenen SQL Server-Typs zurückgegeben.|Zum Abrufen von Daten mithilfe von .NET Framework-Typen finden Sie unter <xref:System.Data.SqlClient.SqlDataReader>.|  
+|BaseServerName|Der Name der Instanz von Microsoft SQL Server ein, die die <xref:System.Data.SqlClient.SqlDataReader>.|  
 |"BaseTableName"|Der Name der Tabelle oder Sicht im Datenspeicher, der die Spalte enthält. Ein null-Wert, wenn der Name der Basistabelle nicht bestimmt werden kann. Der Standardwert für diese Spalte ist ein null-Wert.|  
-|Spaltenname|Der Name der Spalte; Dies ist nicht eindeutig ist. Ein Array von  in das die Werte kopiert. Die Spaltenwerte werden als SQL Server-Typen ausgedrückt.|  
+|Spaltenname|Der Name der Spalte; Dies ist nicht eindeutig ist. Wenn nicht bestimmt werden kann, wird ein null-Wert zurückgegeben. Dieser Name gibt immer die aktuellen Stand der Umbenennung der Spalte in der aktuellen Ansichts- oder Befehlstext wieder.|  
 |ColumnOrdinal|Die nullbasierte Ordnungszahl der Spalte. Diese Spalte kann nicht auf einen null-Wert enthalten.|  
-|ColumnSize|Die maximal mögliche Länge eines Werts in der Spalte. Für Spalten, die einen Datentyp mit fester Länge verwenden, ist dies die Größe des Datentyps. Füllt ein Array von `nvarchar(MAX)` , enthält die Werte für alle Spalten im Datensatz, ausgedrückt als SQL Server-Typen. Eine ganze Zahl, die die Anzahl der kopierten Spalten. Gibt die Werte für alle Spalten in den Datensatz in einem einzigen Aufruf der SQL-Typsystem anstelle von CLR-Typsystems zurück.  Die Länge der  Array muss nicht mit der Anzahl der Spalten im Datensatz übereinstimmen. Sie können übergeben eine `nvarchar` Array, das weniger als die Anzahl der Spalten, die der Datensatz enthält. Nur die Menge der Daten die  Array enthält, wird in das Array, beginnend mit der Spalte mit der Ordnungszahl 0 kopiert.|  
-|Alle übrigen Spalten werden unverändert.|Ruft den Wert der angegebenen Spalte als ein XML-Wert ab.|  
-|Ein  -Wert, den innerhalb des entsprechenden Felds gespeicherten XML-Code enthält.|`true`Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits ein XML-Wert sein.<br /><br /> `false`Der übergebene Index lag außerhalb des Bereichs von 0 bis `false` - 1|  
+|ColumnSize|Die maximal mögliche Länge eines Werts in der Spalte. Für Spalten, die einen Datentyp mit fester Länge verwenden, ist dies die Größe des Datentyps. Für `nvarchar(MAX)`, `varchar(MAX)`, und `varbinary(MAX)` Spalten gespeichert, die in einer SQL Server-Datenbank, die maximale Größe beträgt 2 GB. Wenn diese Spalten werden gespeichert und, die als Dateien abgerufen, die zulässige maximale Größe des Dateisystems auferlegt. Dieser Wert ändert sich bei Verwendung der `Type System Version` Schlüsselwort in der Verbindungszeichenfolge.  Für neue Typen werden sie als ältere Typen dargestellt. Die MAX-Datentypen zurück, die normale 4k für `nvarchar` und 8000 für `varchar`. Weitere Informationen finden Sie in der Transact-SQL-Referenz in SQL Server-Onlinedokumentation.|  
+|DataTypeName|Gibt eine Zeichenfolge, die den Datentyp der angegebenen Spalte darstellt.|  
+|IsAliased|`true`: Der Name der Spalte ist ein Alias.<br /><br /> `false`: Der Name der Spalte ist kein Alias.|  
 |IsAutoIncrement|`true`: Die Spalte neuen Zeilen in festen Schritten Werte zugewiesen.<br /><br /> `false`: Die Spalte ist keine neuen Zeilen in festen Schritten Werte zuweisen. Der Standardwert für diese Spalte ist `false`.|  
-|IsColumnSet|`true`Es wurde versucht, zu lesen, oder greifen Sie auf Spalten in einem geschlossenen `true`.|  
-|Die abgerufenen Daten ist nicht kompatibel mit der  Typ.|`true`Ruft ab, Binary, Image, Varbinary, UDT und variant-Datentypen als eine `true`.<br /><br /> `false`Der Standardwert ist der Wert des ; Sie können jedoch ändern  über .|  
-|NULL-Werte zurückgegeben als leer (null Byte) .|`true`Löst ein  Ausnahme bei der Verwendung für ein zurückgegebenes Objekt  beim  ist aktiviert.<br /><br /> `false`Ausnahmen ausgelöst werden, von  ausgelöst werden, als  Ausnahmen überprüfen Sie die innere Ausnahme für die .|  
-|Die folgenden  Mitglieder sind nicht verfügbar für die zurückgegebenen Objekte :|`true`BeginWrite<br /><br /> `false`EndWrite|  
-|IsKey|`true`: Die Spalte gehört zu einer Gruppe von Spalten im Rowset, die zusammen die Zeile eindeutig identifizieren. Suchen Es ist nicht erforderlich, dass dieser Satz von Spalten einen minimalen Satz von Spalten ist. Dieser Satz von Spalten kann über einen Primärschlüssel der Basistabelle, eine unique-Einschränkung oder einen eindeutigen Index generiert werden.<br /><br /> `false`: Die Spalte ist nicht erforderlich, um die Zeile eindeutig zu identifizieren.|  
-|IsLong|`true`SetLength WriteByte<br /><br /> `false`WriteTimeout|  
-|IsReadOnly|`true`Wenn die-Verbindungseigenschaft `true`,  unterstützt nur synchrone Datenabruf für beide sequenzielle () und nicht sequenzieller () zugreifen.<br /><br /> `false`: Die Spalte kann geändert werden.|  
+|IsColumnSet|`true`: Die Spalte ist eine sparsespalte, die bei einem Spaltensatz angehört.|  
+|IsExpression|`true`: Die Spalte ist ein Ausdruck.<br /><br /> `false`: Die Spalte ist kein Ausdruck.|  
+|"IsHidden"|`true`: Die Spalte wird ausgeblendet.<br /><br /> `false`: Die Spalte wird nicht ausgeblendet.|  
+|IsIdentity|`true`: Die Spalte ist eine Identity-Spalte.<br /><br /> `false`: Die Spalte ist keiner Identity-Spalte.|  
+|IsKey|`true`: Die Spalte gehört zu einer Gruppe von Spalten im Rowset, die zusammen die Zeile eindeutig identifizieren. Der Satz von Spalten mit `IsKey` festgelegt `true` muss eine Zeile im Rowset eindeutig identifizieren. Es ist nicht erforderlich, dass dieser Satz von Spalten einen minimalen Satz von Spalten ist. Dieser Satz von Spalten kann über einen Primärschlüssel der Basistabelle, eine unique-Einschränkung oder einen eindeutigen Index generiert werden.<br /><br /> `false`: Die Spalte ist nicht erforderlich, um die Zeile eindeutig zu identifizieren.|  
+|IsLong|`true`: Die Spalte enthält eine Binary Long Object (BLOB), die sehr lange Daten enthält. Die Definition der sehr lange Daten ist anbieterspezifisch.<br /><br /> `false`: Die Spalte enthält kein Binary Long Object (BLOB), die sehr lange Daten enthält.|  
+|IsReadOnly|`true`: Die Spalte werden nicht geändert.<br /><br /> `false`: Die Spalte kann geändert werden.|  
 |IsRowVersion|`true`: Die Spalte enthält einen permanenten Zeilenbezeichner, der geschrieben werden kann, und hat keinen inhaltlichen Wert die Identität die Zeile.<br /><br /> `false`: Die Spalte enthält keinen permanenten Zeilenbezeichner, der geschrieben werden kann, und hat keinen inhaltlichen Wert Identifizierung der Zeile.|  
 |IsUnique|`true`: Spalte ist vom Typ `timestamp`.<br /><br /> `false`: Spalte ist nicht vom Typ `timestamp`.|  
 |NonVersionedProviderType|Der Typ der Spalte unabhängig von der aktuellen `Type System Version` in der Verbindungszeichenfolge angegeben. Der zurückgegebene Wert ist von der <xref:System.Data.SqlDbType> Enumeration.|  
@@ -2523,7 +2523,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Typ der Spalte unabhängig von der aktuellen <xref:System.TimeSpan> in der Verbindungszeichenfolge angegeben.  
+ Es werden keine Konvertierungen ausgeführt; aus diesem Grund müssen die abgerufenen Daten bereits sein ein <xref:System.TimeSpan> Objekt.  
   
  Rufen Sie <xref:System.Data.SqlClient.SqlDataReader.IsDBNull%2A> für null-Werte zu überprüfen, bevor diese Methode aufgerufen.  
   
@@ -2993,7 +2993,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Eine Suche Groß-/Kleinschreibung beachtet wird zuerst ausgeführt. Wenn ein Fehler auftritt, erfolgt eine zweite Groß-und Kleinschreibung gesucht (Groß-/Kleinschreibung verglichen mit der Sortierung der Datenbank). Beim Vergleichen von Kultur-, Groß-/Kleinschreibung Regeln betroffen sind, können unerwartete Ergebnisse auftreten. Es werden keine Konvertierungen ausgeführt; aus diesem Grund wird die abgerufenen Daten müssen bereits ein boolescher Wert sein, oder wird eine Ausnahme generiert.  
+ Eine Suche Groß-/Kleinschreibung beachtet wird zuerst ausgeführt. Wenn ein Fehler auftritt, erfolgt eine zweite Groß-und Kleinschreibung gesucht (Groß-/Kleinschreibung verglichen mit der Sortierung der Datenbank). Beim Vergleichen von Kultur-, Groß-/Kleinschreibung Regeln betroffen sind, können unerwartete Ergebnisse auftreten. Gibt z. B. im türkischen im folgenden Beispiel wird die falsche Ergebnisse da Dateisystem im türkischen nicht linguistische Schreibweise Regeln für den Buchstaben "i" in "File".  
   
  Diese Methode ist die Laufweite von Kana nicht Akzent.  
   
@@ -3234,8 +3234,6 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Data.SqlClient.SqlDataReader.RecordsAffected%2A> Eigenschaft ist nicht festgelegt werden, bis alle Zeilen gelesen wurden, und Sie schließen die <xref:System.Data.SqlClient.SqlDataReader>.  
-  
  Der Wert dieser Eigenschaft ist kumulativ. Wenn im Modus "Batch", den Wert der zwei Datensätze eingefügt werden z. B. `RecordsAffected` werden zwei.  
   
  <xref:System.Data.SqlClient.SqlDataReader.IsClosed%2A> und <xref:System.Data.SqlClient.SqlDataReader.RecordsAffected%2A> sind die einzigen Eigenschaften, die Sie, nachdem aufrufen können die <xref:System.Data.SqlClient.SqlDataReader> geschlossen wird.  
