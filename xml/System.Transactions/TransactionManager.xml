@@ -1,11 +1,11 @@
 <Type Name="TransactionManager" FullName="System.Transactions.TransactionManager">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="94a7df2187676486db82e4651339fa18685001a3" />
-    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
+    <Meta Name="ms.openlocfilehash" Value="0ed5091b9916cf14169e9bf44326acc319defaca" />
+    <Meta Name="ms.sourcegitcommit" Value="01f28caab7b3f23878dd07b402a8dd48b9478c8c" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
-    <Meta Name="ms.locfileid" Value="37608480" />
+    <Meta Name="ms.lasthandoff" Value="07/19/2018" />
+    <Meta Name="ms.locfileid" Value="39141823" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class TransactionManager" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed TransactionManager extends System.Object" />
@@ -241,8 +241,8 @@
         <Parameter Name="manager" Type="System.Guid" Index="0" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="resourceManagerIdentifier">To be added.</param>
-        <param name="manager">To be added.</param>
+        <param name="resourceManagerIdentifier">Eine <see cref="T:System.Guid" />, die die Ressource eindeutig angibt, mit deren Hilfe die Wiederherstellung erfolgen soll.</param>
+        <param name="manager">Eine <see cref="T:System.Guid" />, die die Ressource eindeutig angibt, mit deren Hilfe die Wiederherstellung erfolgen soll.</param>
         <summary>Benachrichtigt den Transaktions-Manager, dass ein nach einem Fehler wiederhergestellter Ressourcen-Manager die Neueintragung in allen nicht aufgelösten Transaktionen fertig gestellt hat.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -250,7 +250,7 @@
 ## Remarks  
  Alle permanenten Ressourcen-Manager sollte Wiederherstellung beim start ausführen, sie zunächst durch Aufrufen der <xref:System.Transactions.TransactionManager.Reenlist%2A> -Methode für jede ausstehende Transaktion.  Nur, wenn alle der Reenlistments fertig sind, sollte der Ressourcen-Manager Aufrufen <xref:System.Transactions.TransactionManager.RecoveryComplete%2A>.  
   
- Weitere Informationen zur Wiederherstellung finden Sie unter [Performing Recovery](http://msdn.microsoft.com/library/d342c5c7-da64-4a4c-8e63-b52f4fbf2691).  
+ Weitere Informationen zur Wiederherstellung finden Sie unter [Performing Recovery](https://msdn.microsoft.com/library/d342c5c7-da64-4a4c-8e63-b52f4fbf2691).  
   
  **Beachten Sie** verwendet diese Methode <xref:System.Security.Permissions.SecurityAction.LinkDemand> , es wird verhindert, aufgerufen werden soll, vor nicht vertrauenswürdigem Code, nur der unmittelbaren Aufrufer muss allerdings besitzen die `FullTrust` Berechtigungssatz.  
   
@@ -299,15 +299,42 @@
         <Parameter Name="notification" Type="System.Transactions.IEnlistmentNotification" Index="2" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="resourceManagerIdentifier">To be added.</param>
-        <param name="manager">To be added.</param>
-        <param name="recoveryInformation">To be added.</param>
-        <param name="recoveryInfo">To be added.</param>
-        <param name="enlistmentNotification">To be added.</param>
-        <param name="notification">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="resourceManagerIdentifier">Eine <see cref="T:System.Guid" />, die den Ressourcen-Manager eindeutig angibt.</param>
+        <param name="manager">Eine <see cref="T:System.Guid" />, die den Ressourcen-Manager eindeutig angibt.</param>
+        <param name="recoveryInformation">Enthält zusätzliche Informationen zum Wiederherstellen.</param>
+        <param name="recoveryInfo">Enthält zusätzliche Informationen zum Wiederherstellen.</param>
+        <param name="enlistmentNotification">Ein Ressourcenobjekt, das <see cref="T:System.Transactions.IEnlistmentNotification" /> implementiert, um Benachrichtigungen zu empfangen.</param>
+        <param name="notification">Ein Ressourcenobjekt, das <see cref="T:System.Transactions.IEnlistmentNotification" /> implementiert, um Benachrichtigungen zu empfangen.</param>
+        <summary>Trägt einen stabilen Teilnehmer in einer Transaktion erneut ein.</summary>
+        <returns>Ein <see cref="T:System.Transactions.Enlistment" />, das den Eintrag beschreibt.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+Ein Ressourcen-Manager erleichtert das Auflösen dauerhafter Eintragungen in einer Transaktion, indem er den Transaktionsteilnehmer nach einem Fehler der Ressource neu einträgt.
+
+Die `resourceManagerIdentifier` Parameter wird verwendet, um die Teilnehmer an einer Transaktion im Falle eines Ressourcenfehlers konsistent zu bezeichnen. Beim Aufrufen der <xref:System.Transactions.TransactionManager.Reenlist%2A> -Methode, die Ressourcen-Manager muss bereitstellen identisch `resourceManagerIdentifier` beim ursprünglichen Aufrufen verwendet die <xref:System.Transactions.Transaction.EnlistDurable%2A> Methode während der Eintragung, oder ein <xref:System.Transactions.TransactionException> ausgelöst.
+
+Wenn ein Teilnehmer mit dieser Methode neu eingetragen wird, werden die <xref:System.Transactions.IEnlistmentNotification>-Methoden aus Phase 2, die dem Transaktionsergebnis entsprechen (d. h. <xref:System.Transactions.IEnlistmentNotification.Commit%2A>, <xref:System.Transactions.IEnlistmentNotification.Rollback%2A> oder <xref:System.Transactions.IEnlistmentNotification.InDoubt%2A>), aufgerufen.
+
+Nach dem Teilnehmer wurde erfolgreich neu eingetragen wurden, rufen Sie dann <xref:System.Transactions.TransactionManager.RecoveryComplete%2A> zum Abschließen der Wiederherstellung.
+
+Sie sollten diese Methode nur aufrufen, wenn ein Ressourcen-Manager nach einem Fehler neu gestartet wird. Tragen Sie außerdem nur nicht aufgelöste Transaktionen erneut ein, die von einem Ressourcen-Manager während der anfänglichen Vorbereitungsphase eines Zweiphasencommits protokolliert wurden. Bei jedem Versuch, diese Methode zu unzulässigen Zeitpunkten aufzurufen, können falsche Ergebnisse erzeugt werden.
+
+Der Ressourcen-Manager führt die Wiederherstellung nur kurze Zeit nach dem Sie aufgerufen, wenn der Transaktions-Manager Fehler der <xref:System.Transactions.PreparingEnlistment.Prepared%2A> Methode für eine Eintragung in Phase 1 des Zweiphasencommit-Protokolls, der Ressourcen-Manager möglicherweise entweder die <xref:System.Transactions.IEnlistmentNotification.InDoubt%2A> oder <xref:System.Transactions.IEnlistmentNotification.Rollback%2A> Rückruf.
+
+Weitere Informationen zur Wiederherstellung finden Sie unter [Performing Recovery](https://msdn.microsoft.com/library/d342c5c7-da64-4a4c-8e63-b52f4fbf2691).
+
+**Beachten Sie** verwendet diese Methode <xref:System.Security.Permissions.SecurityAction.LinkDemand> , es wird verhindert, aufgerufen werden soll, vor nicht vertrauenswürdigem Code, nur der unmittelbaren Aufrufer muss allerdings besitzen die `FullTrust` Berechtigungssatz.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="recoveryInformation" /> ist ungültig.  Oder: Die Informationen des Transaktions-Managers in <paramref name="recoveryInformation" /> stimmen nicht mit denen des konfigurierten Transaktions-Managers überein.  Oder: <paramref name="RecoveryInformation" /> wird von <see cref="N:System.Transactions" /> nicht erkannt.</exception>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="M:System.Transactions.TransactionManager.RecoveryComplete(System.Guid)" /> wurde bereits für den angegebenen <paramref name="resourceManagerIdentifier" /> aufgerufen. Die Neueintragung wird abgelehnt.</exception>
+        <exception cref="T:System.Transactions.TransactionException">Der <paramref name="resourceManagerIdentifier" /> stimmt nicht mit dem Inhalt der angegebenen Wiederherstellungsinformationen in <paramref name="recoveryInformation" /> überein.</exception>
       </Docs>
     </Member>
   </Members>
