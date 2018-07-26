@@ -1,11 +1,11 @@
 <Type Name="XslTransform" FullName="System.Xml.Xsl.XslTransform">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="bde6eef3e191bd0a25d4c462afa81d1cbfd131ba" />
-    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
+    <Meta Name="ms.openlocfilehash" Value="90f9aaa4f98d650b51fb98e9ae2d19d691591587" />
+    <Meta Name="ms.sourcegitcommit" Value="102d07546033d7818b72aa66d7a26c70235baedd" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
-    <Meta Name="ms.locfileid" Value="37733114" />
+    <Meta Name="ms.lasthandoff" Value="07/23/2018" />
+    <Meta Name="ms.locfileid" Value="39202244" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class XslTransform" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit XslTransform extends System.Object" />
@@ -740,8 +740,14 @@
   
  Es gibt verschiedene Möglichkeiten zum Bereitstellen von Beweisen. In der folgende Tabelle wird beschrieben, welche Art von Beweis gängigen Benutzerszenarien bereit.  
   
-    
+|Szenario|Bereitzustellender Beweistyp bereitstellen|  
+|--------------|---------------------------------|  
+|XSLT-Stylesheet ist eigenständig oder stammt aus einer Codebasis, die Sie vertrauen.|Verwenden Sie den Beweis aus der Assembly.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform(); &#13;&#10;xslt.Load(xslReader, resolver, this.GetType().Assembly.Evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist bekannt, und es ist eine überprüfbare URL.|Erstellen Sie einen Beweise mit der URL.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform();&#13;&#10; Evidence evidence = XmlSecureResolver.CreateEvidenceForUrl(stylesheetURL); &#13;&#10;xslt.Load(xslReader,resolver,evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt.|Legen Sie den Beweis auf `null` fest. Skriptblöcke werden nicht verarbeitet, die XSLT-Funktion `document()` wird nicht unterstützt, und privilegierte Erweiterungsobjekte sind nicht zulässig.<br /><br /> Darüber hinaus können Sie auch Festlegen der `resolver` Parameter `null`. Dadurch wird sichergestellt, dass `xsl:import` und `xsl:include` Elemente werden nicht verarbeitet.|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt, aber die Skriptunterstützung wird benötigt.|Fordern Sie einen Beweis vom Aufrufer an. Die API des Aufrufers muss die Möglichkeit, Beweise werden auch in der Regel bieten die <xref:System.Security.Policy.Evidence> Klasse.|  
   
+     
 ## Examples  
  Im folgenden Beispiel wird eine XSLT-Transformation, in denen `xsltReader` ist ein <xref:System.Xml.XmlReader> , enthält ein Stylesheet und `secureURL` ist eine vertrauenswürdige URL, die verwendet werden kann, erstellen <xref:System.Security.Policy.Evidence>. Die <xref:System.Xml.XmlSecureResolver.CreateEvidenceForUrl%2A?displayProperty=nameWithType> Methode dient zum Erstellen <xref:System.Security.Policy.Evidence> das auf das Stylesheet angewendet wird.  
   
@@ -804,7 +810,14 @@
   
  Es gibt verschiedene Möglichkeiten zum Bereitstellen von Beweisen. In der folgende Tabelle wird beschrieben, welche Art von Beweis gängigen Benutzerszenarien bereit.  
   
-  ]]></format>
+|Szenario|Bereitzustellender Beweistyp bereitstellen|  
+|--------------|---------------------------------|  
+|XSLT-Stylesheet ist eigenständig oder stammt aus einer Codebasis, die Sie vertrauen.|Verwenden Sie den Beweis aus der Assembly.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform(); &#13;&#10;xslt.Load(style sheet, resolver, this.GetType().Assembly.Evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist bekannt, und es ist eine überprüfbare URL.|Erstellen Sie einen Beweise mit der URL.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform(); &#13;&#10;Evidence evidence = XmlSecureResolver.CreateEvidenceForUrl(style sheetURL); &#13;&#10;xslt.Load(style sheet,resolver,evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt.|Legen Sie den Beweis auf `null` fest. Skriptblöcke werden nicht verarbeitet, die XSLT-Funktion `document()` wird nicht unterstützt, und privilegierte Erweiterungsobjekte sind nicht zulässig.<br /><br /> Darüber hinaus können Sie auch Festlegen der `resolver` Parameter `null`. Dadurch wird sichergestellt, dass `xsl:import` und `xsl:include` Elemente werden nicht verarbeitet.|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt, aber die Skriptunterstützung wird benötigt.|Fordern Sie einen Beweis vom Aufrufer an. Die API des Aufrufers muss die Möglichkeit, Beweise werden auch in der Regel bieten die <xref:System.Security.Policy.Evidence> Klasse.|  
+  
+ ]]></format>
         </remarks>
         <exception cref="T:System.Xml.Xsl.XsltCompileException">Die geladene Ressource ist kein gültiges Stylesheet.</exception>
         <exception cref="T:System.Security.SecurityException">Für das Stylesheet, auf das verwiesen wird, ist eine Funktion erforderlich, die für den bereitgestellten Beweis nicht zulässig ist.  Der Aufrufer versucht, Beweise zur Verfügung zu stellen, und verfügt nicht über die <see langword="ControlEvidence" />-Berechtigung.</exception>
@@ -861,11 +874,18 @@
   
  Es gibt verschiedene Möglichkeiten zum Bereitstellen von Beweisen. In der folgende Tabelle wird beschrieben, welche Art von Beweis gängigen Benutzerszenarien bereit.  
   
-    
+|Szenario|Bereitzustellender Beweistyp bereitstellen|  
+|--------------|---------------------------------|  
+|XSLT-Stylesheet ist eigenständig oder stammt aus einer Codebasis, die Sie vertrauen.|Verwenden Sie den Beweis aus der Assembly.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform(); &#13;&#10;xslt.Load(xslNav, resolver, this.GetType().Assembly.Evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist bekannt, und es ist eine überprüfbare URL.|Erstellen Sie einen Beweise mit der URL.<br /><br /> <pre><code class="lang-csharp">XsltTransform xslt = new XslTransform(); &#13;&#10;Evidence evidence = XmlSecureResolver.CreateEvidenceForUrl(style sheetURL); &#13;&#10;xslt.Load(xslNav,resolver,evidence);</code></pre>|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt.|Legen Sie den Beweis auf `null` fest. Skriptblöcke werden nicht verarbeitet, die XSLT-Funktion `document()` wird nicht unterstützt, und privilegierte Erweiterungsobjekte sind nicht zulässig.<br /><br /> Darüber hinaus können Sie auch Festlegen der `resolver` Parameter `null`. Dadurch wird sichergestellt, dass `xsl:import` und `xsl:include` Elemente werden nicht verarbeitet.|  
+|Das XSLT-Stylesheet stammt aus einer externen Quelle. Der Ursprung der Quelle ist unbekannt, aber die Skriptunterstützung wird benötigt.|Fordern Sie einen Beweis vom Aufrufer an. Die API des Aufrufers muss die Möglichkeit, Beweise werden auch in der Regel bieten die `Evidence` Klasse.|  
+  
+   
   
 ## Examples  
  Im folgenden Beispiel wird eine XSLT-Transformation, die mit einem Stylesheet aus einer externen Quelle. Da das Stylesheet aus einer nicht vertrauenswürdigen Quelle stammt die `resolver` und `evidence` Parameter werden festgelegt, um `null`.  
-  
+ 
  [!code-csharp[XslTransform.Load5#1](~/samples/snippets/csharp/VS_Snippets_Data/XslTransform.Load5/CS/trans_noev.cs#1)]
  [!code-vb[XslTransform.Load5#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XslTransform.Load5/VB/trans_noev.vb#1)]  
   
