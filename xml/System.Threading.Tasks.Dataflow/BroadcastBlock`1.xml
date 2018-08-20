@@ -1,11 +1,11 @@
 <Type Name="BroadcastBlock&lt;T&gt;" FullName="System.Threading.Tasks.Dataflow.BroadcastBlock&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="9f400ccf5fce9cd58a6827d264c907791c4dd243" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="668cfb9c5a1215cc037a527651c487e2ab185360" />
+    <Meta Name="ms.sourcegitcommit" Value="d877ae76e9e11799bf919379507239e2c4072742" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36606909" />
+    <Meta Name="ms.lasthandoff" Value="08/09/2018" />
+    <Meta Name="ms.locfileid" Value="39811466" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class BroadcastBlock&lt;T&gt; : System.Threading.Tasks.Dataflow.IPropagatorBlock&lt;T,T&gt;, System.Threading.Tasks.Dataflow.IReceivableSourceBlock&lt;T&gt;, System.Threading.Tasks.Dataflow.ISourceBlock&lt;T&gt;, System.Threading.Tasks.Dataflow.ITargetBlock&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit BroadcastBlock`1&lt;T&gt; extends System.Object implements class System.Threading.Tasks.Dataflow.IDataflowBlock, class System.Threading.Tasks.Dataflow.IPropagatorBlock`2&lt;!T, !T&gt;, class System.Threading.Tasks.Dataflow.IReceivableSourceBlock`1&lt;!T&gt;, class System.Threading.Tasks.Dataflow.ISourceBlock`1&lt;!T&gt;, class System.Threading.Tasks.Dataflow.ITargetBlock`1&lt;!T&gt;" />
@@ -40,6 +40,14 @@
       <InterfaceName>System.Threading.Tasks.Dataflow.ITargetBlock&lt;T&gt;</InterfaceName>
     </Interface>
   </Interfaces>
+  <Attributes>
+    <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1">
+      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebuggerDisplayContent,nq}")</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1">
+      <AttributeName>System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.Dataflow.BroadcastBlock`1/DebugView))</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <typeparam name="T">Gibt den Typ der Daten, die von diesen Datenflussblock gepuffert werden.</typeparam>
     <summary>Stellt einen Puffer für das Speichern von höchstens einem Element gleichzeitig bereit und überschreibt jede Meldung mit dem Text, während sie eingeht.</summary>
@@ -50,7 +58,7 @@
   
 [!INCLUDE [tpl-install-instructions](~/includes/tpl-install-instructions.md)]
   
- <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601> macht höchstens einem Element zu einem Zeitpunkt. Anders als bei <xref:System.Threading.Tasks.Dataflow.WriteOnceBlock%601>, dieses Element überschrieben werden, wie neue Elemente an den Block bereitgestellt werden. <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601> Stellt sicher, dass das aktuelle Element an alle verknüpften Ziele übermittelt wird, bevor Sie das Element, das überschrieben werden.  
+ <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601> gibt höchstens einem Element zu einem Zeitpunkt. Anders als bei <xref:System.Threading.Tasks.Dataflow.WriteOnceBlock%601>, dieses Element überschrieben werden, da neue Elemente an den Block bereitgestellt werden. <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601> Stellt sicher, dass das aktuelle Element an verknüpfte Ziele als Broadcast gesendet werden, bevor Sie das Element, das überschrieben werden können.  
   
  ]]></format>
     </remarks>
@@ -135,7 +143,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nach dem <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Complete%2A> wurde für einen Datenflussblock aufgerufen wird, diesen Block wird abgeschlossen, und die zugehörige <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe geben einen Endzustand aus, nachdem sie alle zuvor verfügbare Daten verarbeitet hat. <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Complete%2A> blockiert nicht warten auf Abschluss des Vorgangs ausgeführt werden, sondern vielmehr initiiert die Anforderung; Warten auf den Abschluss ausgeführt werden, die <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe verwendet werden kann.  
+ Nach dem <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Complete%2A> war aufgerufen wird, in einem Datenflussblock, der Block ausgeführt, und die zugehörige <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe wird einen abschließenden Zustand versetzt, nachdem sie alle zuvor verfügbare Daten verarbeitet hat. <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Complete%2A> wird nicht blockiert, die Abschluss vorgenommen wird, wartet aber stattdessen wird die Anforderung initiiert Warten, bis hin zu auftreten, die <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe kann verwendet werden.  
   
  ]]></format>
         </remarks>
@@ -169,7 +177,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein Datenflussblock wird als abgeschlossen betrachtet, wenn nicht gerade verarbeitet wird eine neue Meldung und wenn diese garantiert, dass keine weiteren Nachrichten verarbeitet werden. Das zurückgegebene <xref:System.Threading.Tasks.Task> Übergang zum Status "abgeschlossen" werden, nach Abschluss der zugeordneten Block. Es erfolgt ein Wechsel in den <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> Zustand, wenn der Block nach der Verarbeitung erfolgreich gemäß des Datenflussblock Abschluss definierte Semantik. Es erfolgt ein Wechsel in den <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.Faulted> Zustand, wenn der Datenflussblock Verarbeitung vorzeitig aufgrund einer nicht behandelten Ausnahme abgeschlossen wurde, und es ein in Wechsel erfolgt den <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.Canceled> Status nach Abschluss der Datenflussblock die Verarbeitung vorzeitig aufgrund eine abbruchanforderung empfängt. Wenn die Aufgabe abgeschlossen, in ist der <xref:System.Threading.Tasks.TaskStatus.Faulted> Zustand, seine `Exception` Eigenschaft zurückgegeben wird ein <xref:System.AggregateException> mit der eine oder mehrere Ausnahmen, die Fehlschlagen des Blockes verursacht hat.  
+ Ein Datenflussblock gilt als abgeschlossen, wenn er nicht gerade verarbeitet, eine Nachricht, und wenn diese garantiert, dass es keine weiteren Nachrichten nicht verarbeitet werden. Das zurückgegebene <xref:System.Threading.Tasks.Task> Übergang in Status "abgeschlossen" wird, wenn der zugeordnete Block abgeschlossen ist. Es erfolgt ein Wechsel in den <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> Status, wenn der Block die Verarbeitung gemäß des datenflussblocks erfolgreich abgeschlossen ist, definierte Semantik. Es erfolgt ein Wechsel in die <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.Faulted> Status, wenn der Datenflussblock Verarbeitung vorzeitig aufgrund einer nicht behandelten Ausnahme abgeschlossen ist, und es ein in Wechsel erfolgt den <xref:System.Threading.Tasks.TaskStatus> <xref:System.Threading.Tasks.TaskStatus.Canceled> Zustand nach Abschluss der Datenflussblock die Verarbeitung aufgrund von vorzeitig eine abbruchanforderung empfangen. Wenn die Aufgabe abgeschlossen, in ist der <xref:System.Threading.Tasks.TaskStatus.Faulted> Status, seine `Exception` Eigenschaft zurückgegeben wird ein <xref:System.AggregateException> mit der eine oder mehrere Ausnahmen, die Fehlschlagen des Blockes verursacht hat.  
   
  ]]></format>
         </remarks>
@@ -239,7 +247,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nach dem <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Fault%2A> wurde für einen Datenflussblock aufgerufen wird, diesen Block wird abgeschlossen, und die zugehörige <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe wird einen abschließenden Zustand versetzt. Fehlgeschlagene einen Block, bewirkt, dass als mit Abbrechen einen Block von gepufferten Nachrichten (unverarbeiteten Eingabenachrichten sowie unoffered Ausgabenachrichten) verloren.  
+ Nach dem <xref:System.Threading.Tasks.Dataflow.IDataflowBlock.Fault%2A> wurde für einen Datenflussblock aufgerufen wird, der Block ausgeführt, und die zugehörige <xref:System.Threading.Tasks.Dataflow.BroadcastBlock%601.Completion%2A> Aufgabe wird einen abschließenden Zustand versetzt. Fehler von einem Block, wird als mit Abbrechen eines Blocks gepufferte Nachrichten (nicht verarbeitet eingehende Nachrichten sowie unoffered ausgabemeldungen) verloren.  
   
  ]]></format>
         </remarks>
@@ -265,7 +273,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="items" Type="System.Collections.Generic.IList&lt;T&gt;&amp;" RefType="out" />
+        <Parameter Name="items" Type="System.Collections.Generic.IList&lt;T&gt;" RefType="out" />
       </Parameters>
       <Docs>
         <param name="items">Die von der Quelle empfangenen Elemente.</param>
@@ -276,7 +284,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird wartet auf die Quelle zum Bereitstellen von ein Element nicht blockiert werden.  
+ Diese Methode wird warten auf die Quelle, geben Sie ein Element nicht blockiert werden.  
   
  Es wird nach der Überprüfung für Elemente zurückgegeben, und zwar unabhängig davon, ob ein Element verfügbar war.  
   
@@ -292,7 +300,7 @@
       <MemberSignature Language="C++ CLI" Value=" virtual T System.Threading.Tasks.Dataflow.ISourceBlock&lt;T&gt;.ConsumeMessage(System::Threading::Tasks::Dataflow::DataflowMessageHeader messageHeader, System::Threading::Tasks::Dataflow::ITargetBlock&lt;T&gt; ^ target, [Runtime::InteropServices::Out] bool % messageConsumed) = System::Threading::Tasks::Dataflow::ISourceBlock&lt;T&gt;::ConsumeMessage;" />
       <MemberType>Method</MemberType>
       <Implements>
-        <InterfaceMember>M:System.Threading.Tasks.Dataflow.ISourceBlock`1.ConsumeMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader,System.Threading.Tasks.Dataflow.ITargetBlock{`0},System.Boolean@)</InterfaceMember>
+        <InterfaceMember>M:System.Threading.Tasks.Dataflow.ISourceBlock`1.ConsumeMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader,System.Threading.Tasks.Dataflow.ITargetBlock{`0},System.Boolean)</InterfaceMember>
       </Implements>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks.Dataflow</AssemblyName>
@@ -307,7 +315,7 @@
       <Parameters>
         <Parameter Name="messageHeader" Type="System.Threading.Tasks.Dataflow.DataflowMessageHeader" />
         <Parameter Name="target" Type="System.Threading.Tasks.Dataflow.ITargetBlock&lt;T&gt;" />
-        <Parameter Name="messageConsumed" Type="System.Boolean&amp;" RefType="out" />
+        <Parameter Name="messageConsumed" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
         <param name="messageHeader">
@@ -321,7 +329,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz können <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ConsumeMessage%2A>, und es darf nur nutzen verwendet werden <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor von dieser Quelle zum Ziel angeboten werden.  
+ Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz können <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ConsumeMessage%2A>, und muss nur verwendet werden, um nutzen <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor von dieser Quelle zum Ziel angeboten werden.  
   
  ]]></format>
         </remarks>
@@ -364,7 +372,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz können `ReleaseReservation`, und es muss nur freigeben verwendet werden <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor und erfolgreich vom Ziel reserviert.  
+ Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz können `ReleaseReservation`, und muss nur verwendet werden, um die release <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor und erfolgreich vom Ziel reserviert.  
   
  ]]></format>
         </remarks>
@@ -409,11 +417,11 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz Funkbereich <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReserveMessage%2A>, und darf nur reservieren verwendet werden <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor von dieser Quelle zum Ziel angeboten werden.  
+ Nur <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> Instanzen verknüpft wird, um diese <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601> Instanz können <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReserveMessage%2A>, und es darf nur verwendet, zu reservieren <xref:System.Threading.Tasks.Dataflow.DataflowMessageHeader> Instanzen, die zuvor von dieser Quelle zum Ziel angeboten werden.  
   
- Wenn `true` zurückgegeben wird, die <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> müssen anschließend rufen Sie entweder <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ConsumeMessage%2A> oder <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReleaseReservation%2A> für diese Nachricht. Bei unterlassen, möglicherweise in der Quelle kann weiteren Nachrichten mit diesem oder anderen Zielen weitergegeben wird.  
+ Wenn `true` zurückgegeben wird, die <xref:System.Threading.Tasks.Dataflow.ITargetBlock%601> muss anschließend rufen Sie entweder <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ConsumeMessage%2A> oder <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReleaseReservation%2A> für diese Nachricht. Bei unterlassen, möglicherweise in der Quelle nicht auf weiteren Nachrichten an diese oder andere Ziele weitergegeben werden.  
   
- <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReserveMessage%2A> darf nicht aufgerufen werden, während das Ziel internen Sperren enthalten ist. Auf diese Weise wird der Sperrhierarchie zum Vermeiden von Deadlocks in einem Datenflussnetzwerk verletzen.  
+ <xref:System.Threading.Tasks.Dataflow.ISourceBlock%601.ReserveMessage%2A> muss nicht aufgerufen werden, während das Ziel internen Sperren enthalten ist. Auf diese Weise wird der Sperrhierarchie erforderlich, um Deadlocks in einem Datenflussnetzwerk vermeiden verletzen.  
   
  ]]></format>
         </remarks>
@@ -512,7 +520,7 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="filter" Type="System.Predicate&lt;T&gt;" />
-        <Parameter Name="item" Type="T&amp;" RefType="out" />
+        <Parameter Name="item" Type="T" RefType="out" />
       </Parameters>
       <Docs>
         <param name="filter">Das Prädikat, das ein Wert erfolgreich übergeben muss, damit es empfangen wird.  Der <c>Filter</c> ist möglicherweise <see langword="null" />. Wenn dies der Fall ist, werden alle Elemente übergeben.</param>
@@ -524,9 +532,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird wartet auf die Quelle zum Bereitstellen von ein Element nicht blockiert werden.  
+ Diese Methode wird warten auf die Quelle, geben Sie ein Element nicht blockiert werden.  
   
- Es wird nach der Überprüfung nach einem Element zurückgegeben, und zwar unabhängig davon, ob ein Element verfügbar war.  
+ Es wird nach der Überprüfung für ein Element zurückgegeben, und zwar unabhängig davon, ob ein Element verfügbar war.  
   
  ]]></format>
         </remarks>
