@@ -1,10 +1,10 @@
 <Type Name="ParallelOptions" FullName="System.Threading.Tasks.ParallelOptions">
   <Metadata>
     <Meta Name="ms.openlocfilehash" Value="47d80a70cbbd4bd17560003c948e41ca31dca239" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.sourcegitcommit" Value="d0bb31ec8354fa58c62c2a646057eec11d3e2150" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.lasthandoff" Value="08/17/2018" />
     <Meta Name="ms.locfileid" Value="36606457" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class ParallelOptions" />
@@ -34,7 +34,7 @@
   <Docs>
     <summary>Speichert Optionen, die die Ausführung von Methoden für die <see cref="T:System.Threading.Tasks.Parallel" />-Klasse konfigurieren.</summary>
     <remarks>To be added.</remarks>
-    <threadsafe>Der Konstruktor ist threadsicher und kann verwendet werden durch mehrere Threads gleichzeitig mehrere Instanzen erstellen. Öffentliche Member sind nicht threadsicher.</threadsafe>
+    <threadsafe>Der Konstruktor ist threadsicher und kann gleichzeitig verwendet werden von mehreren Threads zum Erstellen von mehreren Instanzen. Keiner der anderen öffentlichen Member sind threadsicher.</threadsafe>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -65,9 +65,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dieser Konstruktor initialisiert die Instanz mit Standardwerten. <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> wird initialisiert,-1, gibt an, dass es ist kein Obergrenze festgelegt, wie viel Parallelismus verwendet werden soll. <xref:System.Threading.Tasks.ParallelOptions.CancellationToken%2A> wird mit einem Token nicht abbrechbare initialisiert und <xref:System.Threading.Tasks.ParallelOptions.TaskScheduler%2A> wird mit dem Standardplaner (TaskScheduler.Default initialisiert) initialisiert.  
+ Dieser Konstruktor initialisiert die Instanz mit den Standardwerten. <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> wird initialisiert,-1, gibt an, dass es ist kein Obergrenze festgelegt, wie viel Parallelismus verwendet werden soll. <xref:System.Threading.Tasks.ParallelOptions.CancellationToken%2A> wird mit einem nicht abbrechbaren-Token wird initialisiert und <xref:System.Threading.Tasks.ParallelOptions.TaskScheduler%2A> mit dem Standardplaner (TaskScheduler.Default initialisiert) initialisiert wird.  
   
- Alle diese Standardeinstellungen können mithilfe von Set-Accessoren der Eigenschaft für die Instanz überschrieben werden.  
+ Alle diese Standardwerte können mithilfe von Set-Accessoren der Eigenschaft für die Instanz überschrieben werden.  
   
  ]]></format>
         </remarks>
@@ -105,7 +105,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Bereitstellen einer <xref:System.Threading.CancellationToken> auf eine <xref:System.Threading.Tasks.Parallel> Methode können Sie den Vorgang zu einem frühen Zeitpunkt beendet werden. Code außerhalb der Vorgang kann das Token Abbrechen, und wenn der Vorgang das Festlegen des Tokens verwendet wird, kann es vorzeitig beendet werden, durch das Auslösen einer <xref:System.OperationCanceledException>.  
+ Bereitstellen einer <xref:System.Threading.CancellationToken> zu einem <xref:System.Threading.Tasks.Parallel> Methode können Sie den Vorgang zu einem frühen Zeitpunkt beendet werden. Code außerhalb der Vorgang kann das Token Abbrechen, und wenn der Vorgang das Festlegen des Tokens verwendet wird, kann es vorzeitig beendet werden, durch Auslösen einer <xref:System.OperationCanceledException>.  
   
  ]]></format>
         </remarks>
@@ -143,17 +143,17 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> Eigenschaft wirkt sich auf die Anzahl der gleichzeitigen Vorgänge ausführen, indem <xref:System.Threading.Tasks.Parallel> Methodenaufrufe, die dies übergeben werden <xref:System.Threading.Tasks.ParallelOptions> Instanz. Ein positive Eigenschaftswert schränkt die Anzahl der gleichzeitigen Vorgänge um den Wert festzulegen. Wenn Sie sie-1 ist, ist es gilt keine Beschränkung für die Anzahl der gleichzeitig ausgeführten Vorgänge.  
+ Die <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> Eigenschaft hat Auswirkungen auf die Anzahl der gleichzeitigen Vorgänge ausführen, indem <xref:System.Threading.Tasks.Parallel> Methodenaufrufe, die dies übergeben werden <xref:System.Threading.Tasks.ParallelOptions> Instanz. Ein positiver Eigenschaftswert beschränkt die Anzahl der gleichzeitigen Vorgänge auf den festgelegten Wert. Wenn sie-1 ist, besteht keine Beschränkung für die Anzahl der gleichzeitig ausgeführten Vorgängen.  
   
- Standardmäßig <xref:System.Threading.Tasks.Parallel.For%2A> und <xref:System.Threading.Tasks.Parallel.ForEach%2A> nutzt jedoch viele Threads der zugrunde liegenden Planer bereitstellt, so dass die Änderung, <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> von der Standardeinstellung nur beschränkt, wie viele gleichzeitige Aufgaben verwendet werden soll.  
+ In der Standardeinstellung <xref:System.Threading.Tasks.Parallel.For%2A> und <xref:System.Threading.Tasks.Parallel.ForEach%2A> werden verwendet, aber viele Threads der zugrunde liegenden Planer bereitstellt, so dass die Änderung, die <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> von der Standardeinstellung nur beschränkt, wie viele gleichzeitige Tasks verwendet werden.  
   
- Im Allgemeinen müssen Sie nicht diese Einstellung zu ändern. Sie können jedoch explizit in fortgeschrittenen Verwendungsszenarios solche festlegen:  
+ Im Allgemeinen müssen Sie nicht diese Einstellung zu ändern. Sie können jedoch sie explizit in erweiterten Szenarios wie diese festgelegt:  
   
--   Wenn Sie wissen, dass Sie einen bestimmten Algorithmus verwenden wird nicht über eine bestimmte Anzahl von Kernen skaliert werden. Sie können die Eigenschaft, die Zyklen auf zusätzliche Kerne Arbeitsbereichsordner festlegen.  
+-   Wenn Sie wissen, dass Sie einen bestimmten Algorithmus verwenden wird nicht auf mehr als eine bestimmte Anzahl von Kernen skalieren. Sie können die Eigenschaft, die Zyklen für zusätzliche Kerne verschwendet festlegen.  
   
--   Wenn Sie gleichzeitig mehrere Algorithmen ausführen und manuell definieren möchten wie viel des Systems, die jeder Algorithmus nutzen kann. Sie können festlegen, eine <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> für jeden Wert.  
+-   Wenn Sie gleichzeitig mehrere Algorithmen ausführen und manuell definieren möchten wie viel des Systems für jeden Algorithmus nutzen kann. Sie können festlegen, eine <xref:System.Threading.Tasks.ParallelOptions.MaxDegreeOfParallelism%2A> Wert für die einzelnen.  
   
--   Wenn der Threadpool Heuristik ist nicht die richtige Anzahl von Threads zur Verwendung zu ermitteln und zu viele Threads Räumen annehmen konnte. Beispielsweise in Text Schleifeniterationen lang andauernde und der Threadpool kann nicht in der Lage, den Unterschied zwischen angemessenen Fortschritt oder Livelock oder Deadlocks erkannt werden, möglicherweise nicht zum Freigeben von Threads, die hinzugefügt wurden, um die Leistung zu verbessern. In diesem Fall können Sie durch Festlegen der Eigenschaft aus, um sicherzustellen, dass Sie nicht mehr als eine angemessene Anzahl von Threads verwenden.  
+-   Wenn Heuristik beim Ermitteln der des Threadpools ist nicht möglich, um zu bestimmen, die richtige Anzahl von Threads zur Verwendung und kann am Ende einfügen zu viele Threads. Beispielsweise in Text Schleifeniterationen lang andauernde, Threadpool der Warteschleife hinzu möglicherweise nicht den Unterschied zwischen angemessenen ausgeführt oder Livelock oder Deadlocks erkennen, und kann möglicherweise nicht zum Freigeben von Threads, die hinzugefügt wurden, um die Leistung zu verbessern. In diesem Fall können Sie durch Festlegen die Eigenschaft, um sicherzustellen, dass Sie nicht mehr als eine angemessene Anzahl von Threads verwenden.  
   
  ]]></format>
         </remarks>
