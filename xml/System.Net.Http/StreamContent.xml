@@ -1,11 +1,11 @@
 <Type Name="StreamContent" FullName="System.Net.Http.StreamContent">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="0d1d48bc3fda43cf27223b86b5fde72690201412" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="b9c7223c51803aaf92218d5e9cf02cfc196c65d8" />
+    <Meta Name="ms.sourcegitcommit" Value="d877ae76e9e11799bf919379507239e2c4072742" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36552295" />
+    <Meta Name="ms.lasthandoff" Value="08/09/2018" />
+    <Meta Name="ms.locfileid" Value="39984054" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class StreamContent : System.Net.Http.HttpContent" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit StreamContent extends System.Net.Http.HttpContent" />
@@ -140,9 +140,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dieser Vorgang wird nicht blockiert. Das zurückgegebene <xref:System.Threading.Tasks.Task%601> Objekt wird abgeschlossen, nachdem alle Inhalte in den Speicherstream geschrieben wurden.  
+ Dieser Vorgang wird nicht blockiert. Das zurückgegebene <xref:System.Threading.Tasks.Task%601> Objekt wird abgeschlossen, nachdem der gesamte Inhalt in den arbeitsspeicherdatenstrom geschrieben wurden.  
   
- Die <xref:System.Net.Http.StreamContent.CreateContentReadStreamAsync%2A> Methode puffert den Inhalt in einen Speicherstream. Abgeleitete Klassen können dieses Verhalten überschreiben, wenn eine bessere Möglichkeit zum Abrufen des Inhalts als Datenstrom vorhanden ist. Deutet, ein Bytearray oder Zeichenfolge können eine effizientere Methode-Methode, z. B. ein nur-Lese-wrapping <xref:System.IO.MemoryStream> für die Bytes oder eine Zeichenfolge.)  
+ Die <xref:System.Net.Http.StreamContent.CreateContentReadStreamAsync%2A> Methode puffert den Inhalt in einen Speicherdatenstrom. Abgeleitete Klassen können dieses Verhalten überschreiben, wenn es eine bessere Möglichkeit zum Abrufen des Inhalts als Stream gibt. Z. B. ein Byte-Array oder eine Zeichenfolge können eine effizientere Methode-Methode, wie z. B. das Umschließen einer nur-Lese- <xref:System.IO.MemoryStream> rund um die Bytes oder eine Zeichenfolge.)  
   
  ]]></format>
         </remarks>
@@ -182,7 +182,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird aufgerufen, der öffentlich `Dispose()` Methode und die <xref:System.Object.Finalize%2A> Methode. `Dispose()` Ruft die geschützte `Dispose(Boolean)` Methode mit dem `disposing` Parametersatz auf `true`. <xref:System.Object.Finalize%2A> Ruft `Dispose` mit `disposing` festgelegt `false`. Wenn die `disposing` Parameter ist `true`, diese Methode sämtliche Ressourcen frei, die für verwaltete Objekte frei, die von diesem <xref:System.Net.Http.StreamContent> Verweise. Diese Methode ruft die `Dispose()`-Methode aller Objekte auf, auf die verwiesen wird.  
+ Diese Methode wird aufgerufen, von der öffentlichen `Dispose()` Methode und die <xref:System.Object.Finalize%2A> Methode. `Dispose()` Ruft die geschützte `Dispose(Boolean)` -Methode mit dem `disposing` Parametersatz zu `true`. <xref:System.Object.Finalize%2A> Ruft `Dispose` mit `disposing` festgelegt `false`. Wenn die `disposing` -Parameter ist `true`, gibt diese Methode alle Ressourcen frei, die für verwaltete Objekte, die dieses <xref:System.Net.Http.StreamContent> Verweise. Diese Methode ruft die `Dispose()`-Methode aller Objekte auf, auf die verwiesen wird.  
   
  ]]></format>
         </remarks>
@@ -223,7 +223,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dieser Vorgang wird nicht blockiert. Das zurückgegebene <xref:System.Threading.Tasks.Task> Objekt wird abgeschlossen, nachdem der gesamte Inhalt der Zieldatenstrom serialisiert wurde.  
+ Dieser Vorgang wird nicht blockiert. Das zurückgegebene <xref:System.Threading.Tasks.Task> Objekt wird abgeschlossen, nachdem der gesamte Inhalt in den Zielstream serialisiert wurde.  
   
  ]]></format>
         </remarks>
@@ -253,7 +253,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="length" Type="System.Int64&amp;" RefType="out" />
+        <Parameter Name="length" Type="System.Int64" RefType="out" />
       </Parameters>
       <Docs>
         <param name="length">Die Länge des Datenstrominhalts in Bytes.</param>
@@ -264,7 +264,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Net.Http.StreamContent.TryComputeLength%2A> -Methode HTTP-datenstrominhalt erhalten die Möglichkeit, die Länge des Inhalte zu berechnen. Dies ist hilfreich für Inhaltstypen, die die Inhaltslänge leicht berechnen können. Wenn berechnen den Content-Length ist nicht möglich oder teure (, müsste das System den gesamten Inhalt gepuffert werden sollen, in denen die Serialisierung teuer sein oder muss das System zu viel Arbeitsspeicher belegen würde), kann diese Methode zurückgeben `false`. Wenn diese Methode zurückgibt `false`, dies bedeutet, dass entweder aufgeteilte Übertragung erforderlich ist, oder der Inhalt muss vor dem Senden an den Server gepuffert.  
+ Die <xref:System.Net.Http.StreamContent.TryComputeLength%2A> Methode ermöglicht HTTP-Stream-Inhalte, die Länge des Inhalte zu berechnen. Dies ist nützlich für Inhaltstypen, die ganz einfach berechnen, die Länge des Inhalte sind. Wenn computing die Inhaltslänge ist nicht möglich oder teure (ist erforderlich, das System, den gesamten Inhalt zu Puffern, in dem die Serialisierung teuer sein oder muss das System zu viel Arbeitsspeicher belegen würde), die diese Methode zurückgeben kann `false`. Wenn diese Methode zurückgibt `false`, dies bedeutet, dass segmentierter erforderlich ist, oder der Inhalt muss vor dem Senden an den Server gepuffert.  
   
  ]]></format>
         </remarks>
