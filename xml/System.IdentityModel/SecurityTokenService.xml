@@ -1,10 +1,10 @@
 <Type Name="SecurityTokenService" FullName="System.IdentityModel.SecurityTokenService">
   <Metadata>
     <Meta Name="ms.openlocfilehash" Value="b5c8d93b898d628b70967d33278c8cd9f33a66bf" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.lasthandoff" Value="08/24/2018" />
     <Meta Name="ms.locfileid" Value="36479607" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class SecurityTokenService" />
@@ -27,29 +27,29 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- So erstellen einen STS, leiten Sie von, der <xref:System.IdentityModel.SecurityTokenService> Klasse. In der benutzerdefinierten Klasse müssen mindestens überschreiben Sie die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> und <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methoden. Diese Außerkraftsetzungen der STS erstellt haben, verwenden die standardmäßige Implementierung aller anderen Methoden in der Klasse definiert ist kann Ausstellen von Sicherheitstoken in Reaktion auf Sicherheit tokenanforderungen (RST). D. h. wird in der WS-Trust-Spezifikation definierte Problem Bindung implementiert. Diese Bindung implementiert die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Keine der anderen WS-Trust-Bindungen (erneuern, Abbrechen und überprüfen) im Standardfall implementiert werden, und ein entsprechenden Fehler wird an den Aufrufer zurückgegeben, wenn eine RST, die eine dieser Bindungen entspricht gefunden wird. Sie können natürlich überschreiben Sie die entsprechenden Methoden (<xref:System.IdentityModel.SecurityTokenService.Renew%2A>, <xref:System.IdentityModel.SecurityTokenService.Cancel%2A>, und <xref:System.IdentityModel.SecurityTokenService.Validate%2A>) diese Bindungen in Ihren STS zu implementieren.  
+ Erstellen Sie einen STS durch Ableiten von der <xref:System.IdentityModel.SecurityTokenService> Klasse. In Ihre benutzerdefinierte Klasse müssen mindestens überschreiben Sie die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> und <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methoden. Der STS erstellt haben, verwenden die standardmäßige Implementierung von den Methoden in der Klasse definiert wird mit diese überschreibungen auf kann Ausstellen von Sicherheitstoken in Reaktion auf Sicherheitsprobleme tokenanforderungen (RST). Die Issue-Bindung, die in der WS-Trust-Spezifikation definiert wird, also wie folgt implementiert. Diese Bindung wird implementiert, der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Keine der anderen WS-Trust-Bindungen (erneuern, Abbrechen und überprüfen) werden im Standardfall implementiert und ein entsprechenden Fehler wird an den Aufrufer zurückgegeben, wenn eine RST an, die eine dieser Anbindungen entspricht, gefunden wird. Sie können natürlich die entsprechenden Methoden überschreiben (<xref:System.IdentityModel.SecurityTokenService.Renew%2A>, <xref:System.IdentityModel.SecurityTokenService.Cancel%2A>, und <xref:System.IdentityModel.SecurityTokenService.Validate%2A>) diese Bindungen in Ihr STS zu implementieren.  
   
 > [!IMPORTANT]
->  Implementieren einen STS produktionsbereite umfasst eine sorgfältige Planung und erhebliche Ressourcen zum Verfügbarmachen von z. B. ein Dienst inhärenten potenzielle Sicherheitsrisiken zu minimieren. Die meisten Entwickler mithilfe von Windows Identity Foundation (WIF) werden werden Anwendungen entwickeln, die identitätsverwaltung zu einem Sicherheitstokendienst auszulagern, anstatt ein STS selbst entwickeln. WIF bietet eine Visual Studio-Erweiterung, die Identitäts- und Zugriffstool für Visual Studio 2012, Entwickler, die Lösungen in der Entwicklungsumgebung testen können. Dieses Tool enthält ein STS `LocalSTS`, die Sie konfigurieren können, um bestimmte Ansprüche an die Anwendung zu fungieren, die Sie entwickeln. Weitere Informationen über das Identitäts- und Zugriffs-Tool finden Sie unter [Identitäts- und Zugriffstool für Visual Studio 2012](~/docs/framework/security/identity-and-access-tool-for-vs.md). In einigen Szenarien `LocalSTS` möglicherweise nicht adäquat testen die Anwendung erforderliche Funktionen bieten, z. B., einen benutzerdefinierten token Handler für die Verwendung von einer Anwendung in einem Szenario, bei der, Entwicklung. In diesen Fällen können Sie ableiten von <xref:System.IdentityModel.SecurityTokenService> erstellen eine oder mehrere einfache Sicherheitstokendienste, die bereitgestellt werden kann, in der Entwicklungsumgebung und, die verwendet werden kann, um solche Funktionen in Ihrer Anwendung zu testen. Im restlichen Teil dieses Abschnitts liegt der Schwerpunkt auf die Methoden verfügbar gemacht werden, indem die <xref:System.IdentityModel.SecurityTokenService> Klasse, mit denen Sie zum Implementieren einer einfachen STS und erweitern das token anspruchsausstellungs-Pipeline.  
+>  Implementieren eine produktionsbereite STS erfordert eine sorgfältige Planung und beträchtliche Ressourcen zur Verringerung der potenziellen Sicherheitsrisiken, die sich einen solchen Dienst verfügbar zu machen. Die meisten Entwickler, die mit Windows Identity Foundation (WIF) werden Entwickeln von Anwendungen, die identitätsverwaltung zu einem Sicherheitstokendienst auszulagern, anstatt einen STS selbst entwickeln. WIF bietet Visual Studio-Erweiterung, die Identitäts- und Zugriffs-Tool für Visual Studio 2012, Entwickler, die Lösungen in der Entwicklungsumgebung testen können. Dieses Tool enthält einen STS, `LocalSTS`, die Sie konfigurieren können, um bestimmte Ansprüche an die Anwendung zu verarbeiten, die Sie entwickeln. Weitere Informationen zum Identitäts- und Zugriffs-Tool finden Sie unter [Identitäts- und Zugriffstool für Visual Studio 2012](~/docs/framework/security/identity-and-access-tool-for-vs.md). In einigen Szenarien `LocalSTS` möglicherweise nicht die erforderlichen Funktionen zur angemessen Testen Ihrer Anwendung bereit, z. B., einen benutzerdefinierten Tokenhandler für die Verwendung von einer Anwendung in einem Szenario, bei der, Entwicklung. In diesen Fällen ist es sind ableitungen von <xref:System.IdentityModel.SecurityTokenService> erstellen Sie eine oder mehrere einfache Sicherheitstokendienste (STS), die in der Entwicklungsumgebung bereitgestellt werden kann und die, die verwendet werden kann, um solche Features in Ihrer Anwendung zu testen. Im restlichen Teil dieses Abschnitts schwerpunktmäßig das vom verfügbar gemachten Methoden der <xref:System.IdentityModel.SecurityTokenService> Klasse, mit denen Sie eine einfache STS implementieren, und erweitern die Pipeline für die Ausstellung von token.  
   
- Die folgende Liste bietet eine kurze Übersicht über die Methoden von zentraler Bedeutung für dem Entwickler für die Verwendung in einer Test- oder Entwicklungsumgebung Umgebung.  
+ Die folgende Liste bietet eine kurze Übersicht über die Methoden der primären Bedeutung für dem Entwickler für die Verwendung in einer Test- oder Entwicklungsumgebung-Umgebung.  
   
--   Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A>-Methode. Diese Methode gibt ein <xref:System.IdentityModel.Scope> -Objekt, das Informationen über die vertrauende Seite enthält. Dieses Objekt wird in den Rest der Pipeline tokenausstellung verwendet und enthält Informationen über das Signieren und Verschlüsseln von Anmeldeinformationen in der Antwort verwenden, sowie die `AppliesTo` und `ReplyTo` (falls erforderlich) Adressen. Sie müssen diese Methode überschreiben.  
+-   Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A>-Methode. Diese Methode gibt eine <xref:System.IdentityModel.Scope> -Objekt, das Informationen über die vertrauende Seite enthält. Dieses Objekt wird in der Rest der Pipeline tokenausstellung verwendet und enthält Informationen über das Signieren und Verschlüsseln von Anmeldeinformationen in der Antwort verwenden, sowie die `AppliesTo` und `ReplyTo` (falls erforderlich) Adressen. Sie müssen diese Methode überschreiben.  
   
--   Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A>-Methode. Diese Methode gibt ein <xref:System.Security.Claims.ClaimsIdentity> Objekt, das die Ansprüche an die vertrauende Seite zurückzugebenden enthält. Sie müssen diese Methode überschreiben.  
+-   Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A>-Methode. Diese Methode gibt ein <xref:System.Security.Claims.ClaimsIdentity> -Objekt, das die Ansprüche an die RP zurückzugebenden enthält. Sie müssen diese Methode überschreiben.  
   
--   Die <xref:System.IdentityModel.SecurityTokenService.Issue%2A>-Methode. Diese Methode implementiert, die Anforderung eines Zugriffstokens Pipeline verarbeitet eine eingehende token Security-Anforderung (RST) und gibt eine Antwort (RSTR) an den Aufrufer, der ein Token enthält, die für die Authentifizierung bei einer vertrauenden Seite verwendet werden können. Viele der anderen Methoden definiert, der <xref:System.IdentityModel.SecurityTokenService> Klasse werden von dieser Methode aufgerufen einschließlich der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> und <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methoden. Sie müssen keine diese Methode überschreiben, aber ein Überblick über die Anforderung eines Zugriffstokens Pipeline implementiert kann hilfreich sein.  
+-   Die <xref:System.IdentityModel.SecurityTokenService.Issue%2A>-Methode. Diese Methode implementiert die tokenanforderung-Pipeline, verarbeitet eine eingehende sicherheitstokenanforderung (RST) und gibt eine Antwort (RSTR) an den Aufrufer, der ein Token enthält, die für die Authentifizierung bei einer RP verwendet werden können. Viele der anderen Methoden definiert, der <xref:System.IdentityModel.SecurityTokenService> Klasse von dieser Methode aufgerufen werden einschließlich der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> und <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methoden. Sie müssen keine diese Methode überschreiben, aber ein Überblick über die Anforderung eines Zugriffstokens-Pipeline, die er implementiert, kann hilfreich sein.  
   
- STS ist so konfiguriert, über die <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration> Klasse.  
+ Ein STS wird konfiguriert, über die <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration> Klasse.  
   
    
   
 ## Examples  
- Die Codebeispiele, die in verwendet werden die <xref:System.IdentityModel.SecurityTokenService> Themen stammen aus den `Custom Token` Beispiel. In diesem Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) sowie eine Implementierung von passiver STS, die können bedient ein SWT-Token ist. Ein Beispiel dafür, wie ein aktiver STS implementiert, sehen Sie die `Federation Metadata` Beispiel. Informationen über diese Beispiele und weitere Beispiele verfügbar für WIF und dazu, wo Sie sie herunterladen, finden Sie unter [WIF Beispiel Codeindex](~/docs/framework/security/wif-code-sample-index.md). Der folgende Code zeigt die Implementierung der passiver STS mithilfe der <xref:System.IdentityModel.SecurityTokenService> Klasse.  
+ Die Codebeispiele, die in verwendet werden die <xref:System.IdentityModel.SecurityTokenService> Themen stammen aus der `Custom Token` Beispiel. Dieses Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) zu ermöglichen, und enthält eine Implementierung eines passiven STS, die der ein SWT-Token bereitstellen kann. Ein Beispiel für ein aktives STS implementieren, finden Sie unter den `Federation Metadata` Beispiel. Weitere Informationen zu diesen Beispielen und andere Beispiele sind für WIF und wo Sie sie herunterladen, finden Sie unter [Index für WIF-Codebeispiele](~/docs/framework/security/wif-code-sample-index.md). Der folgende Code zeigt die Implementierung eines passiven STS über die <xref:System.IdentityModel.SecurityTokenService> Klasse.  
   
  [!code-csharp[WIFCustomTokenSTS#3](~/samples/snippets/csharp/VS_Snippets_Misc/wifcustomtokensts/cs/passivests/customsecuritytokenservice.cs#3)]  
   
- Der folgende Code zeigt, wie Sie einen benutzerdefinierten passive STS zum Verarbeiten einer WS-Verbund-Anforderung durch den Aufruf Aufrufen der <xref:System.IdentityModel.Services.FederatedPassiveSecurityTokenServiceOperations.ProcessRequest%28System.Web.HttpRequest%2CSystem.Security.Claims.ClaimsPrincipal%2CSystem.IdentityModel.SecurityTokenService%2CSystem.Web.HttpResponse%29?displayProperty=nameWithType> Methode aus der Code-behind in der `default.aspx.cs` Datei.  
+ Der folgende Code zeigt, wie Sie einen benutzerdefinierten passiven STS zum Verarbeiten einer WS-Verbund-Anforderung durch Aufrufen von Aufrufen der <xref:System.IdentityModel.Services.FederatedPassiveSecurityTokenServiceOperations.ProcessRequest%28System.Web.HttpRequest%2CSystem.Security.Claims.ClaimsPrincipal%2CSystem.IdentityModel.SecurityTokenService%2CSystem.Web.HttpResponse%29?displayProperty=nameWithType> Methode aus der Code-behind in die `default.aspx.cs` Datei.  
   
  [!code-csharp[WIFCustomTokenSTS#1](~/samples/snippets/csharp/VS_Snippets_Misc/wifcustomtokensts/cs/passivests/default.aspx.cs#1)]  
   
@@ -84,7 +84,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Verwenden Sie diesen Konstruktor, um bereichsanbieter und token Herausgeberzertifikat zu initialisieren.  
+ Verwenden Sie diesen Konstruktor, um bereichsanbieter und Tokenaussteller Zertifikat zu initialisieren.  
   
  ]]></format>
         </remarks>
@@ -124,7 +124,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -163,7 +163,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
   
  ]]></format>
         </remarks>
@@ -201,7 +201,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
   
  ]]></format>
         </remarks>
@@ -239,7 +239,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -277,7 +277,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -315,7 +315,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -350,7 +350,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -388,7 +388,10 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="request" /> ist <see langword="null" />.  Oder:  <paramref name="scope" /> ist <see langword="null" />.</exception>
+          <paramref name="request" /> ist <see langword="null" />.  
+  
+- oder -  
+ <paramref name="scope" /> ist <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="EndCancel">
@@ -418,7 +421,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -450,7 +453,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
   
  ]]></format>
         </remarks>
@@ -482,7 +485,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.NotImplementedException>.  
   
  ]]></format>
         </remarks>
@@ -515,7 +518,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -548,7 +551,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -581,7 +584,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -610,9 +613,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird aufgerufen, von der Standardeinstellung in token anspruchsausstellungs-Pipeline implementiert die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
+ Diese Methode wird aufgerufen, von der Standardeinstellung token anspruchsausstellungs-Pipeline implementiert wird, in der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
   
- Gibt die standardmäßige Implementierung der <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.TokenIssuerName%2A> Eigenschaft aus der Konfiguration erfolgt über die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenServiceConfiguration%2A> Eigenschaft.  
+ Die Standardimplementierung gibt das <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.TokenIssuerName%2A> Eigenschaft aus der Konfiguration erfolgt über die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenServiceConfiguration%2A> Eigenschaft.  
   
  ]]></format>
         </remarks>
@@ -648,23 +651,23 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methode wird aufgerufen, aus der tokenausstellung-Pipeline, die durch implementiert wird die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Gibt eine <xref:System.Security.Claims.ClaimsIdentity> , enthält die Ansprüche in das ausgegebene Sicherheitstoken basierend auf der anforderer des Tokens eingeschlossen werden sollen (die `principal` Parameter), eingehender RST (die `request` Parameter), und die vertrauende Seite für die das Token ist dafür vorgesehen, () die `scope` Parameter). Die Logik in dieser Methode wird hauptsächlich die folgenden Fragen beantworten:  
+ Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methode wird aufgerufen, aus der Ausstellung von token-Pipeline, die von implementiert ist die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Gibt eine <xref:System.Security.Claims.ClaimsIdentity> , enthält die Ansprüche in das ausgestellte Sicherheitstoken auf Grundlage der anforderer des Tokens eingeschlossen werden sollen (die `principal` Parameter), eingehender RST (die `request` Parameter), und die vertrauende Seite für die das Token ist für die Verwendung ( die `scope` Parameter). Die Logik in dieser Methode betrifft in erster Linie die folgenden Fragen beantworten:  
   
--   **Der claim-Typen sollten enthalten sein, in der Antwort basierend auf die vertrauende Seite für den sie bestimmt ist?** Dies ist in der Regel auf Basis pro RP aus Listen von Anspruchstypen, die erforderlich sind, für jede vertrauende Seite oder auf eine Anforderungsbasis sich entschieden, mithilfe der <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityToken.Claims%2A> -Eigenschaft der Anforderung. Die Logik und die Details zur Bestimmung der Ansprüche in die Antwort eingeschlossen ist jedoch vollständig bis zu Ihrer Implementierung.  
+-   **Die claim-Typen sollten in der Antwort basierend auf die vertrauende Seite für die es bestimmt ist enthalten sein?** Dies ist in der Regel auf einer pro-RP-Basis aus Listen von Anspruchstypen, die für jede vertrauende Seite erforderlich sind oder auf einer Basis pro Anforderung sich entschieden, anhand der <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityToken.Claims%2A> Eigenschaft in der Anforderung. Die Logik und die Details zum bestimmen die Ansprüche in der Antwort eingeschlossen ist jedoch vollständig bis zu Ihrer Implementierung.  
   
--   **Die Anspruchswerte sollten die Ansprüche in der Antwort zugewiesen werden?** Für Identitätsanbieter (IP-STS) bedeutet dies in der Regel verwenden einen oder mehrere Ansprüche in des anforderers <xref:System.Security.Claims.ClaimsPrincipal> (bereitgestellt von der `principal` Parameter) den Zugriff auf einen Speicher (oder andere Entität) zur Rückgabe von Werten für die erforderlichen Anspruchstypen. Für einen Verbund-Anbieter (R-STS) bedeutet dies in der Regel eine Art von Verarbeitung für eingehende Ansprüche des anforderers, zur Erfüllung der Anforderung ausführen; Ausführen von Filtern oder Transformation möglicherweise für einige Ansprüchen ab, die durch den anforderer beim Übergeben von Dritten über unverändert bereitgestellt. Wie bei der Entscheidung, welche Ansprüche in die Antwort eingeschlossen werden sollen, ist die Details und die Logik der Vorgehensweise zur Bestimmung der Werte dieser Ansprüche natürlich bis zu Ihrer Implementierung.  
+-   **Die Anspruchswerte sollten die Ansprüche in der Antwort zugewiesen werden?** Für einen Identitätsanbieter (IP-STS) in der Regel bedeutet dies eine oder mehrere Ansprüche in der anfordernden Person verwenden <xref:System.Security.Claims.ClaimsPrincipal> (bereitgestellt von der `principal` Parameter) den Zugriff auf einen Speicher (oder anderen Entitäten) zum Zurückgeben von Werten für die erforderlichen Anspruchstypen. Für einen Verbund-Anbieter (R-STS) bedeutet dies in der Regel eine Art von Verarbeitung ausgeführt, für eingehende Ansprüche des anforderers, zur Verarbeitung der Anforderung; Ausführen von z. B. filtern oder die Transformation für einige Ansprüchen vom anforderer, wobei Sie dritten über unverändert übergeben. Wie bei der Entscheidung, welche Ansprüche in der Antwort enthalten, ist die Details und die Logik der Vorgehensweise: Bestimmen Sie die Werte dieser Ansprüche natürlich bis zu Ihrer Implementierung.  
   
    
   
 ## Examples  
- Das Codebeispiel, das in diesem Thema dient stammt aus dem `Custom Token` Beispiel. In diesem Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) sowie eine Implementierung von passiver STS, die können bedient ein SWT-Token ist. Ein Beispiel dafür, wie ein aktiver STS implementiert, sehen Sie die `Federation Metadata` Beispiel. Informationen über diese Beispiele und weitere Beispiele verfügbar für WIF und dazu, wo Sie sie herunterladen, finden Sie unter [WIF Beispiel Codeindex](~/docs/framework/security/wif-code-sample-index.md). Der folgende Code veranschaulicht das Überschreiben der <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> für Ihren STS Anspruchsanbieter-Methode, um zurückzugeben. In diesem Beispiel wird die Nachricht anfordern Anforderungssicherheitstoken (RST) ignoriert, und eine Sammlung von Ansprüchen basierend auf dem Benutzer als an den STS authentifiziert wird zurückgegeben.  
+ Das Codebeispiel, das in diesem Thema werden stammt aus dem `Custom Token` Beispiel. Dieses Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) zu ermöglichen, und enthält eine Implementierung eines passiven STS, die der ein SWT-Token bereitstellen kann. Ein Beispiel für ein aktives STS implementieren, finden Sie unter den `Federation Metadata` Beispiel. Weitere Informationen zu diesen Beispielen und andere Beispiele sind für WIF und wo Sie sie herunterladen, finden Sie unter [Index für WIF-Codebeispiele](~/docs/framework/security/wif-code-sample-index.md). Der folgende Code veranschaulicht das Überschreiben der <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> -Methode zur Rückgabe von Ansprüchen für Ihren STS. In diesem Beispiel die Request Security Token (RST)-Nachricht wird ignoriert, und eine Sammlung von Ansprüchen basierend auf dem Benutzer, die an den STS authentifiziert wird zurückgegeben.  
   
  [!code-csharp[WIFCustomTokenSTS#6](~/samples/snippets/csharp/VS_Snippets_Misc/wifcustomtokensts/cs/passivests/customsecuritytokenservice.cs#6)]  
   
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>Überschreiben Sie diese Methode in der Implementierung von der <see cref="T:System.IdentityModel.SecurityTokenService" /> Klasse.</para>
+          <para>Sie müssen diese Methode überschreiben, in der Implementierung von der <see cref="T:System.IdentityModel.SecurityTokenService" /> Klasse.</para>
         </block>
         <altmember cref="T:System.IdentityModel.Scope" />
         <altmember cref="M:System.IdentityModel.SecurityTokenService.Issue(System.Security.Claims.ClaimsPrincipal,System.IdentityModel.Protocols.WSTrust.RequestSecurityToken)" />
@@ -697,14 +700,17 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird aufgerufen, von der Standardeinstellung in token anspruchsausstellungs-Pipeline implementiert die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
+ Diese Methode wird aufgerufen, von der Standardeinstellung token anspruchsausstellungs-Pipeline implementiert wird, in der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
   
- Die Standardimplementierung gibt einen Nachweis Deskriptor zurück oder löst eine entsprechende Ausnahme aus.  
+ Die Standardimplementierung gibt einen Proof-Deskriptor zurück oder löst eine entsprechende Ausnahme aus.  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="request" /> ist <see langword="null" />.  Oder:  <paramref name="scope" /> ist <see langword="null" />.</exception>
+          <paramref name="request" /> ist <see langword="null" />.  
+  
+- oder -  
+ <paramref name="scope" /> ist <see langword="null" />.</exception>
         <altmember cref="M:System.IdentityModel.SecurityTokenService.Issue(System.Security.Claims.ClaimsPrincipal,System.IdentityModel.Protocols.WSTrust.RequestSecurityToken)" />
       </Docs>
     </Member>
@@ -734,9 +740,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird aufgerufen, aus der <xref:System.IdentityModel.SecurityTokenService.GetProofToken%2A> Methode.  
+ Diese Methode wird aufgerufen, von der <xref:System.IdentityModel.SecurityTokenService.GetProofToken%2A> Methode.  
   
- Die standardmäßige Implementierung führt Folgendes aus. Gibt `null` , wenn keine Verschlüsselungstoken, die in der Anforderung angegeben ist (die <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityToken.ProofEncryption%2A?displayProperty=nameWithType> Eigenschaft ist `null`). Wenn das Token als angezeigt werden kann, andernfalls ein <xref:System.IdentityModel.Tokens.X509SecurityToken>, Anmeldeinformationen, die basierend auf dieses Token zurückgegeben. Wenn das Token als nicht auflösen kann ein <xref:System.IdentityModel.Tokens.X509SecurityToken>, eine <xref:System.IdentityModel.RequestFailedException> ausgelöst wird.  
+ Die Standardimplementierung führt Folgendes aus. Gibt `null` es ist keine Verschlüsselungstoken, die in der Anforderung angegeben (der <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityToken.ProofEncryption%2A?displayProperty=nameWithType> Eigenschaft `null`). Wenn sie das Token als erhalten kann, andernfalls ein <xref:System.IdentityModel.Tokens.X509SecurityToken>, Anmeldeinformationen, die anhand des Token zurückgegeben. Wenn sie das Token als nicht auflösen kann ein <xref:System.IdentityModel.Tokens.X509SecurityToken>, <xref:System.IdentityModel.RequestFailedException> ausgelöst.  
   
  ]]></format>
         </remarks>
@@ -772,9 +778,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> Methode wird aufgerufen, als der letzte Schritt aus der tokenausstellung-Pipeline, die durch implementiert wird die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Erstellt und gibt die Antwort (RSTR) mit der ursprünglichen eingehenden Anforderung (RST) und der token Deskriptor, der während des vorherigen Schritts in der Pipeline tokenausstellung aufgebaut wurde.  
+ Die <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> Methode als der letzte Schritt aufgerufen wird, aus der Ausstellung von token-Pipeline, die von implementiert ist die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode. Erstellt und gibt die Antwort (RSTR) mithilfe der ursprünglichen eingehende Anforderung (RST) und der Deskriptor des Tokens, der während der vorherigen Schritte in der Pipeline für die tokenausstellung aufgebaut wurde.  
   
- Die Standardimplementierung erstellt das RSTR durch Übergeben der RST in der Anforderungsparameter angegeben der <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityTokenResponse.%23ctor%28System.IdentityModel.Protocols.WSTrust.WSTrustMessage%29?displayProperty=nameWithType> -Konstruktor aufrufen der <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.ApplyTo%2A?displayProperty=nameWithType> Methode auf dem token Deskriptor übergebenen <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> anzuwendende seine Eigenschaften mit den neu erstellt RSTR, Festlegen der <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.AppliesTo%2A> -Eigenschaft für das RSTR mithilfe der <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.AppliesToAddress%2A> Eigenschaft auf dem token Deskriptor und schließlich Festlegen der <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.ReplyTo%2A> -Eigenschaft für das RSTR entsprechend der folgenden Tabelle:  
+ Die Standardimplementierung erstellt das RSTR durch Übergeben des RST angegeben, in dem-Parameter, die <xref:System.IdentityModel.Protocols.WSTrust.RequestSecurityTokenResponse.%23ctor%28System.IdentityModel.Protocols.WSTrust.WSTrustMessage%29?displayProperty=nameWithType> -Konstruktor aufrufen der <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.ApplyTo%2A?displayProperty=nameWithType> Methode für die token-Deskriptors übergebenen <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> anzuwendende zugehörigen Eigenschaften, um die neu erstellt RSTR, Festlegen der <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.AppliesTo%2A> Eigenschaft für das RSTR mithilfe der <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.AppliesToAddress%2A> Eigenschaft der tokendeskriptor, und schließlich die <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.ReplyTo%2A> Eigenschaft des RSTR gemäß der folgenden Tabelle:  
   
 |`RST.ReplyTo`-Eigenschaft|<xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.AppliesToAddress%2A?displayProperty=nameWithType>-Eigenschaft.|`RSTR.ReplyTo`-Eigenschaft|  
 |----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|  
@@ -816,25 +822,25 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methode wird aufgerufen, aus der Pipeline tokenausstellung nach der <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode und zurückgeben sollte ein <xref:System.IdentityModel.Scope> -Objekt für die eingehende Anforderung konfiguriert ist. (Die tokenausstellung Pipeline wird implementiert, der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.) Die <xref:System.IdentityModel.Scope> -Objekt kapselt Informationen über die vertrauende Seite der Security-token-Anforderung (RST) zugeordnet. Dies schließt Informationen zu den Anmeldeinformationen verschlüsselnden und signieren, mit der Anwendung der vertrauenden Seite und ob alle ausgestellten Token und/oder symmetrische Schlüssel in der Antwort verschlüsseln verwendet werden soll. Einige typische Aufgaben, die in der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methode sind:  
+ Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methode wird aufgerufen, aus der tokenausstellung Pipeline nach der <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode und zurückgeben sollte eine <xref:System.IdentityModel.Scope> Objekt, das für die eingehende Anforderung konfiguriert. (Die tokenausstellung Pipeline wird implementiert, der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.) Die <xref:System.IdentityModel.Scope> Objekt kapselt Informationen über die vertrauende Seite die sicherheitstokenanforderung (RST) zugeordnet. Dies umfasst Informationen zu den Anmeldeinformationen verschlüsselnden und signieren, die mit der Anwendung der vertrauenden Seite und ob zum Verschlüsseln aller ausgestellten Token und/oder der symmetrische Schlüssel in der Antwort verwendet werden. Einige typische Aufgaben, die in der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methode sind:  
   
--   Bestimmen Sie, ob die vertrauende Seite für die das Token vorgesehen ist, eine anerkannten RP ist. Wie dies erreicht wird, hängt von der Implementierung ab. Wenn die beabsichtigte vertrauende Seite ist keinem gültigen RP für dieses STS, löst die Methode sollte ein <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+-   Bestimmen Sie, ob die vertrauende Seite für den das Token vorgesehen ist, eine anerkannten vertrauenden Seite ist. Wie dies erreicht wird, hängt von Ihrer Implementierung ab. Wenn die beabsichtigte vertrauende Seite keine gültige vertrauende Seite für dieses STS, sollte die Methode Auslösen einer <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
--   Bestimmt die Signierung Anmeldeinformationen in der Antwort (RSTR) verwendet werden, und legen die <xref:System.IdentityModel.Scope.SigningCredentials%2A> Eigenschaft entsprechend.  
+-   Zu bestimmen, die Signatur Anmeldeinformationen zur Verwendung in der Antwort (RSTR) und legen Sie die <xref:System.IdentityModel.Scope.SigningCredentials%2A> Eigenschaft entsprechend.  
   
--   Bestimmen Sie, ob die Antwort- und/oder enthalten symmetrische Schlüssel verschlüsselt werden soll, und die Anmeldeinformationen für die Verschlüsselung verwendet werden. Legen Sie die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A>, <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A>, und <xref:System.IdentityModel.Scope.EncryptingCredentials%2A> Eigenschaften entsprechend.  
+-   Bestimmen Sie, ob der Antwort- und/oder enthalten symmetrische Schlüssel verschlüsselt werden soll und die Anmeldeinformationen für die Verschlüsselung verwendet werden. Legen Sie die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A>, <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A>, und <xref:System.IdentityModel.Scope.EncryptingCredentials%2A> Eigenschaften entsprechend.  
   
     > [!IMPORTANT]
-    >  Wird standardmäßig die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A> und <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A> Eigenschaften werden festgelegt, `true` um zu verhindern, dass der STS Ausstellen von Token, die nicht sicher sind. Es wird empfohlen, diese Eigenschaften nie festgelegt werden, um `false` in einer produktionsumgebung.  
+    >  In der Standardeinstellung die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A> und <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A> Eigenschaften werden festgelegt, `true` um zu verhindern, dass der STS Ausstellen von Token, die nicht sicher sind. Es wird empfohlen, diese Eigenschaften nie festgelegt werden, um `false` in einer produktionsumgebung.  
   
 -   Bestimmen Sie die Adresse, zu der die Antwort zurückgegeben werden sollen. Legen Sie entweder die <xref:System.IdentityModel.Scope.AppliesToAddress%2A> oder <xref:System.IdentityModel.Scope.ReplyToAddress%2A> Eigenschaft entsprechend.  
   
    
   
 ## Examples  
- Das Codebeispiel, das in diesem Thema dient stammt aus dem `Custom Token` Beispiel. In diesem Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) sowie eine Implementierung von passiver STS, die können bedient ein SWT-Token ist. Ein Beispiel dafür, wie ein aktiver STS implementiert, sehen Sie die `Federation Metadata` Beispiel. Informationen über diese Beispiele und weitere Beispiele verfügbar für WIF und dazu, wo Sie sie herunterladen, finden Sie unter [WIF Beispiel Codeindex](~/docs/framework/security/wif-code-sample-index.md).  
+ Das Codebeispiel, das in diesem Thema werden stammt aus dem `Custom Token` Beispiel. Dieses Beispiel enthält benutzerdefinierte Klassen, die Verarbeitung von Simple Web Token (SWT) zu ermöglichen, und enthält eine Implementierung eines passiven STS, die der ein SWT-Token bereitstellen kann. Ein Beispiel für ein aktives STS implementieren, finden Sie unter den `Federation Metadata` Beispiel. Weitere Informationen zu diesen Beispielen und andere Beispiele sind für WIF und wo Sie sie herunterladen, finden Sie unter [Index für WIF-Codebeispiele](~/docs/framework/security/wif-code-sample-index.md).  
   
- Im folgenden Codebeispiel wird eine Implementierung der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A>-Methode veranschaulicht. Diese Implementierung stellt sicher, dass die Anwendung die vertrauenden Seite das STS erkannt wird überprüft die <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.ReplyTo%2A> Adresse in der Anforderung und legt die <xref:System.IdentityModel.Scope.ReplyToAddress%2A?displayProperty=nameWithType> Eigenschaft entsprechend, und legt das Signieren und Verschlüsseln von Anmeldeinformationen für die Verwendung mit der Anwendung der vertrauenden Seite basierend auf Zertifikaten, die in der Datei sind hartcodiert.  
+ Im folgenden Codebeispiel wird eine Implementierung der <xref:System.IdentityModel.SecurityTokenService.GetScope%2A>-Methode veranschaulicht. Diese Implementierung stellt sicher, dass vom STS, die RP erkannt wird, überprüft der <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.ReplyTo%2A> Adresse in der Anforderung und legt die <xref:System.IdentityModel.Scope.ReplyToAddress%2A?displayProperty=nameWithType> Eigenschaft entsprechend, und legt das Signieren und Verschlüsseln von Anmeldeinformationen für die Verwendung mit der Anwendung der vertrauenden Seite basierend auf Zertifikaten, in der Datei sind hartcodiert.  
   
  [!code-csharp[WIFCustomTokenSTS#4](~/samples/snippets/csharp/VS_Snippets_Misc/wifcustomtokensts/cs/passivests/customsecuritytokenservice.cs#4)]  
 [!code-csharp[WIFCustomTokenSTS#5](~/samples/snippets/csharp/VS_Snippets_Misc/wifcustomtokensts/cs/passivests/customsecuritytokenservice.cs#5)]  
@@ -843,7 +849,7 @@
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>Überschreiben Sie diese Methode in der Implementierung von der <see cref="T:System.IdentityModel.SecurityTokenService" /> Klasse.</para>
+          <para>Sie müssen diese Methode überschreiben, in der Implementierung von der <see cref="T:System.IdentityModel.SecurityTokenService" /> Klasse.</para>
         </block>
         <altmember cref="T:System.IdentityModel.Scope" />
         <altmember cref="M:System.IdentityModel.SecurityTokenService.Issue(System.Security.Claims.ClaimsPrincipal,System.IdentityModel.Protocols.WSTrust.RequestSecurityToken)" />
@@ -875,9 +881,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In der Standardimplementierung Wenn `requestedTokenType` ist `null` oder eine leere Zeichenfolge, die Standardeinstellung Tokentyp aus der Konfiguration verwendet wird. Dadurch wird angegeben, indem die <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.DefaultTokenType%2A> Eigenschaft des Konfigurationsobjekts STS erfolgt über die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenServiceConfiguration%2A> Eigenschaft.  
+ In der Standardimplementierung Wenn `requestedTokenType` ist `null` oder eine leere Zeichenfolge, die standardmäßig Tokentyp aus der Konfiguration verwendet wird. Dadurch wird angegeben, indem die <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.DefaultTokenType%2A> -Eigenschaft des STS-Konfigurationsobjekts erfolgt über die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenServiceConfiguration%2A> Eigenschaft.  
   
- Diese Methode wird aufgerufen, von der Standardeinstellung in token anspruchsausstellungs-Pipeline implementiert die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
+ Diese Methode wird aufgerufen, von der Standardeinstellung token anspruchsausstellungs-Pipeline implementiert wird, in der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
   
  ]]></format>
         </remarks>
@@ -910,16 +916,16 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode wird normalerweise mit der Lebensdauer aufgerufen, die in das RST eingetroffen sind. In der Standardimplementierung wird die Lebensdauer des Tokens gemäß der folgenden Tabelle berechnet.  
+ Diese Methode wird normalerweise mit der Lebensdauer aufgerufen, die in das RST eingetroffen sind. In der Standardimplementierung wird die Lebensdauer des Tokens anhand der folgenden Tabelle berechnet.  
   
-|Erstellt (in)|Läuft ab (in)|Erstellt (in)|(Out) läuft ab|  
+|Erstellt (in)|Läuft ab (in)|Erstellt (in)|Läuft ab (out)|  
 |--------------------|--------------------|--------------------|---------------------|  
 |`null`|`null`|<xref:System.DateTime.UtcNow%2A?displayProperty=nameWithType>|<xref:System.DateTime.UtcNow%2A?displayProperty=nameWithType> + <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.DefaultTokenLifetime%2A?displayProperty=nameWithType>|  
 |C|`null`|C|C + <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration.DefaultTokenLifetime%2A?displayProperty=nameWithType>|  
 |`null`|E|<xref:System.DateTime.UtcNow%2A?displayProperty=nameWithType>|E|  
 |C|E|C|E|  
   
- Diese Methode wird aufgerufen, von der Standardeinstellung in token anspruchsausstellungs-Pipeline implementiert die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
+ Diese Methode wird aufgerufen, von der Standardeinstellung token anspruchsausstellungs-Pipeline implementiert wird, in der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode.  
   
  ]]></format>
         </remarks>
@@ -954,27 +960,27 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode implementiert die Problem-Bindung, die in der WS-Trust-Spezifikation definiert. Die standardmäßige Implementierung des der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode verarbeitet die eingehende Anforderung (RST) über eine Pipeline für die tokenausstellung (Ansprüche Ausstellung) und entweder eine Antwort zurückgibt (RSTR), die ein Sicherheitstoken mit den entsprechenden Ansprüchen Authentifizierung enthält der der anforderer die vertrauende Seite oder eine entsprechende Ausnahme. In der Standardimplementierung die tokenausstellung-Pipeline besteht aus Aufrufen der folgenden Methoden (von der <xref:System.IdentityModel.SecurityTokenService> Klasse).  
+ Diese Methode implementiert die Issue-Bindung, die in der WS-Trust-Spezifikation definiert. Die standardmäßige Implementierung der <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode verarbeitet die eingehende Anforderung (RST) über eine Pipeline für die Ausstellung von token (Ausstellung von Ansprüchen) und gibt entweder eine Antwort (RSTR), die ein Sicherheitstoken mit den entsprechenden Ansprüchen Authentifizierung enthält der der anforderer die vertrauende Seite oder eine entsprechende Ausnahme. Die Ausstellung von token-Pipeline in der Standardimplementierung besteht aus Aufrufe der folgenden Methoden (der die <xref:System.IdentityModel.SecurityTokenService> Klasse).  
   
 1.  Die <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode zum Überprüfen der Anforderung (RST).  
   
-2.  Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methode zum Abrufen einer <xref:System.IdentityModel.Scope> -Objekt, das Informationen über die vertrauende (RP) mit der Anforderung verknüpften enthält. Sie müssen diese Methode überschreiben. Wenn <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> gibt `null`, eine <xref:System.InvalidOperationException> ausgelöst wird.  
+2.  Die <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> -Methode zum Abrufen einer <xref:System.IdentityModel.Scope> -Objekt, das Informationen über die abhängige Partei (RP), die mit der Anforderung verknüpften enthält. Sie müssen diese Methode überschreiben. Wenn <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> gibt `null`, <xref:System.InvalidOperationException> ausgelöst.  
   
-3.  Die <xref:System.IdentityModel.SecurityTokenService.CreateSecurityTokenDescriptor%2A> Methode, um ein token Sicherheitsbeschreibung zurück auf der Grundlage von RST und die <xref:System.IdentityModel.Scope> Objekt im vorherigen Schritt zurückgegeben. Die Sicherheitsbeschreibung-token (<xref:System.IdentityModel.Tokens.SecurityTokenDescriptor>) enthält Informationen über die Anforderung in ein Formular, das von einem token Handler verwendet werden kann. Die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenDescriptor%2A?displayProperty=nameWithType> auf den Deskriptor, der vom Aufruf zurückgegebene Eigenschaft festgelegt ist. Wenn `null` zurückgegeben oder, wenn die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.SigningCredentials%2A> -Eigenschaft des Deskriptors ist `null`, wird eine <xref:System.InvalidOperationException> ausgelöst wird. Die Ausnahme wird auch ausgelöst, wenn die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A?displayProperty=nameWithType> Eigenschaft `true` aber die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.EncryptingCredentials%2A> -Eigenschaft in der zurückgegebenen Deskriptor ist `null`.  
+3.  Die <xref:System.IdentityModel.SecurityTokenService.CreateSecurityTokenDescriptor%2A> -Methode zur Rückgabe einer Sicherheitsbeschreibung token auf der Grundlage von RST und <xref:System.IdentityModel.Scope> -Objekt, die im vorherigen Schritt zurückgegeben. Der sicherheitstokendeskriptor (<xref:System.IdentityModel.Tokens.SecurityTokenDescriptor>) enthält Informationen über die Anforderung in ein Formular, das von einem token Handler verwendet werden kann. Die <xref:System.IdentityModel.SecurityTokenService.SecurityTokenDescriptor%2A?displayProperty=nameWithType> -Eigenschaftensatz auf den Deskriptor, der durch den Aufruf zurückgegeben wird. Wenn `null` wird zurückgegeben, oder wenn die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.SigningCredentials%2A> -Eigenschaft des Deskriptors ist `null`, eine <xref:System.InvalidOperationException> ausgelöst. Die Ausnahme wird auch ausgelöst, wenn die <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A?displayProperty=nameWithType> Eigenschaft `true` jedoch <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.EncryptingCredentials%2A> -Eigenschaft in der zurückgegebenen Deskriptor ist `null`.  
   
-4.  Die <xref:System.IdentityModel.SecurityTokenService.GetSecurityTokenHandler%2A> Methode zum Abrufen des entsprechenden Tokenhandler auf Grundlage der Art des angeforderten Tokens. Wenn `null` zurückgegeben wird, eine <xref:System.NotImplementedException> ausgelöst wird.  
+4.  Die <xref:System.IdentityModel.SecurityTokenService.GetSecurityTokenHandler%2A> -Methode zum Abrufen von des entsprechenden Tokenhandler auf Grundlage der Art des angeforderten Tokens. Wenn `null` zurückgegeben wird, eine <xref:System.NotImplementedException> ausgelöst.  
   
-5.  Die <xref:System.IdentityModel.SecurityTokenService.GetIssuerName%2A> Methode, um den Ausstellernamen für das Token abzurufen. Löst ein <xref:System.InvalidOperationException> ist der Name `null` oder leer ist; andernfalls die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.TokenIssuerName%2A> Eigenschaft für den Deskriptor.  
+5.  Die <xref:System.IdentityModel.SecurityTokenService.GetIssuerName%2A> Methode, um den Ausstellernamen für das Token abzurufen. Löst ein <xref:System.InvalidOperationException> ist der Name `null` oder leer ist; andernfalls der <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.TokenIssuerName%2A> Eigenschaft für den Deskriptor.  
   
-6.  Die <xref:System.IdentityModel.SecurityTokenService.GetTokenLifetime%2A> Methode zum Abrufen der Lebensdauer für die Token und stellt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Lifetime%2A> Eigenschaft für den Deskriptor.  
+6.  Die <xref:System.IdentityModel.SecurityTokenService.GetTokenLifetime%2A> -Methode zum Abrufen der Lebensdauer für das Token und legt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Lifetime%2A> Eigenschaft für den Deskriptor.  
   
-7.  Die <xref:System.IdentityModel.SecurityTokenService.GetProofToken%2A> Methode zum Abrufen des Prüftoken für das ausgestellte Token und legt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Proof%2A> Eigenschaft für den Deskriptor.  
+7.  Die <xref:System.IdentityModel.SecurityTokenService.GetProofToken%2A> -Methode zum Abrufen des prüftokens sollen im ausgestellten Token und legt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Proof%2A> Eigenschaft für den Deskriptor.  
   
-8.  Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> Methode zum Abrufen der Ansprüche für die ausgestellte Token und legt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Subject%2A> Eigenschaft für den Deskriptor. Sie müssen diese Methode überschreiben.  
+8.  Die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> -Methode zum Abrufen von Forderungen an den enthalten im ausgestellten Token und legt die <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Subject%2A> Eigenschaft für den Deskriptor. Sie müssen diese Methode überschreiben.  
   
-9. Die <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> Methode zum Erstellen einer Antwort (RSTR), die das ausgestellte Token enthält.  
+9. Die <xref:System.IdentityModel.SecurityTokenService.GetResponse%2A> Methode, um eine Antwort (RSTR) zu erstellen, die das ausgestellte Token enthält.  
   
- Sie überschreiben können die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode für die Implementierung einer benutzerdefinierten token anspruchsausstellungs-Pipeline; dies in der Regel nicht in der Entwicklungs- und testumgebungen, für welche die meisten benutzerdefinierten Implementierungen der erforderlich ist jedoch der <xref:System.IdentityModel.SecurityTokenService> Klasse vorgesehen sind. In vielen Fällen überschreiben Sie die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> und <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methoden und optional außer Kraft setzen die <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode, um eines zu wartenden STS für Ihre Umgebung bereitzustellen. Wenn weitere Anpassung erforderlich ist können Sie häufig bereitstellen durch Außerkraftsetzen der Methoden, die jeder Phase des Standardwerts, die token anspruchsausstellungs-Pipeline implementieren oben aufgelistet sind.  
+ Können Sie überschreiben die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode zum Implementieren einer benutzerdefinierten tokenausstellungs-Pipeline, die in der Regel nicht erforderlich, in der Entwicklungs- und testumgebungen für die meisten benutzerdefinierten Implementierungen des ist jedoch die <xref:System.IdentityModel.SecurityTokenService> Klasse vorgesehen sind. In vielen Fällen überschreiben Sie die <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> und <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> Methoden optional außer Kraft setzen, und die <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode, um eines zu wartenden STS für Ihre Umgebung bereitzustellen. Wenn die weitere Anpassung erforderlich ist können Sie häufig bereitstellen sie durch Überschreiben der Methoden, die jeder Phase des Standards zu, die token anspruchsausstellungs-Pipeline implementieren oben aufgeführt.  
   
  ]]></format>
         </remarks>
@@ -1030,7 +1036,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -1150,7 +1156,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die standardmäßige Implementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
+ Die Standardimplementierung dieser Methode löst eine <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.  
   
  ]]></format>
         </remarks>
@@ -1181,14 +1187,23 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode wird aufgerufen, aus der Pipeline tokenausstellung (die <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode) zum Überprüfen eingehenden RST. Das Anforderungssicherheitstoken anhand der Anforderungen (Richtlinie) des STS überprüft und eine entsprechende Ausnahme wird ausgelöst, wenn er ungültig ist.  
+ Die <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> Methode wird aufgerufen, aus der Pipeline für die Ausstellung von token (das <xref:System.IdentityModel.SecurityTokenService.Issue%2A> Methode) zum Überprüfen eingehenden RST. Das Anforderungssicherheitstoken wird überprüft, auf die Anforderungen der STS (Richtlinie) und eine entsprechende Ausnahme wird ausgelöst, wenn er nicht gültig ist.  
   
- Die standardmäßige Implementierung des der <xref:System.IdentityModel.SecurityTokenService> Klasse unterstützt nur das RST-RSTR-Muster und nur die Bindung Problem der WS-Trust-Spezifikation (die <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.RequestType%2A> Eigenschaft der Anforderung muss festgelegt werden, um <xref:System.IdentityModel.Protocols.WSTrust.RequestTypes.Issue?displayProperty=nameWithType>). Die standardmäßige Implementierung dieser Methode erzwingt diese Anforderungen (und anderen dar, die im Abschnitt für Ausnahmen). Wenn Sie unterschiedliche Prüfungsanforderungen für Ihren benutzerdefinierten STS erzwingen müssen, können Sie diese Methode überschreiben.  
+ Die standardmäßige Implementierung der <xref:System.IdentityModel.SecurityTokenService> Klasse unterstützt nur das RST-RST-Antwort-Muster und nur die Issue-Bindung der WS-Trust-Spezifikation (die <xref:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.RequestType%2A> Eigenschaft in der Anforderung muss festgelegt werden, um <xref:System.IdentityModel.Protocols.WSTrust.RequestTypes.Issue?displayProperty=nameWithType>). Die Standardimplementierung dieser Methode erzwingt diese Anforderungen (und andere im Abschnitt mit Ausnahmen angegeben). Sie können diese Methode überschreiben, wenn Sie unterschiedliche Prüfungsanforderungen für einen benutzerdefinierten STS erzwingen müssen.  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.IdentityModel.Protocols.WSTrust.InvalidRequestException">
-          <paramref name="request" /> ist <see langword="null" />.  Oder:  Die <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.RequestType" />-Eigenschaft der Anforderung ist nicht auf <see cref="F:System.IdentityModel.Protocols.WSTrust.RequestTypes.Issue" /> festgelegt.  Oder:  Die <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.KeyType" />-Eigenschaft der Anforderung ist weder <see langword="null" /> noch eine der Konstanten, die in der <see cref="T:System.IdentityModel.Protocols.WSTrust.KeyTypes" />-Klasse definiert sind.  Oder:  Der <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.KeyType" /> der Anforderung ist <see cref="F:System.IdentityModel.Protocols.WSTrust.KeyTypes.Bearer" /> und das <see langword="KeySize" />-Element ist vorhanden, aber sein Wert ist ungleich 0 (null).</exception>
+          <paramref name="request" /> ist <see langword="null" />.  
+  
+- oder -  
+Die <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.RequestType" />-Eigenschaft der Anforderung ist nicht auf <see cref="F:System.IdentityModel.Protocols.WSTrust.RequestTypes.Issue" /> festgeleget.  
+  
+- oder -  
+Die <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.KeyType" />-Eigenschaft der Anforderung ist weder <see langword="null" /> noch eine der Konstanten, die in der <see cref="T:System.IdentityModel.Protocols.WSTrust.KeyTypes" />-Klasse definiert sind.  
+  
+- oder -  
+Der <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.KeyType" /> der Anforderung ist <see cref="F:System.IdentityModel.Protocols.WSTrust.KeyTypes.Bearer" /> und das <see langword="KeySize" />-Element ist vorhanden, aber sein Wert ist ungleich 0 (null).</exception>
         <exception cref="T:System.IdentityModel.UnsupportedTokenTypeBadRequestException">Der STS unterstützt den Anforderungstokentyp nicht (auf Grundlage des Werts der <see cref="P:System.IdentityModel.Protocols.WSTrust.WSTrustMessage.TokenType" />-Eigenschaft der Anforderung).</exception>
         <altmember cref="M:System.IdentityModel.SecurityTokenService.Issue(System.Security.Claims.ClaimsPrincipal,System.IdentityModel.Protocols.WSTrust.RequestSecurityToken)" />
       </Docs>

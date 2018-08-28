@@ -1,10 +1,10 @@
 <Type Name="MachineKeySessionSecurityTokenHandler" FullName="System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler">
   <Metadata>
     <Meta Name="ms.openlocfilehash" Value="2e1500621297c35468613c40c867ef1dbf001263" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
+    <Meta Name="ms.lasthandoff" Value="08/24/2018" />
     <Meta Name="ms.locfileid" Value="36482353" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class MachineKeySessionSecurityTokenHandler : System.IdentityModel.Tokens.SessionSecurityTokenHandler" />
@@ -27,22 +27,22 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wird standardmäßig die <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> -Klasse verwendet die <xref:System.IdentityModel.ProtectedDataCookieTransform> -Klasse, die Data Protection API (DPAPI) verwendet, um das Sitzungstoken zu schützen. Die DPAPI bietet Schutz mithilfe der Anmeldeinformationen für Benutzer oder Computer und speichert die Schlüsseldaten im Benutzerprofil. Dies bedeutet, die ein Sitzungstoken signiert und verschlüsselt auf einem Computer kann nicht überprüft oder auf einem anderen Computer entschlüsselt werden.  
+ In der Standardeinstellung die <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> -Klasse verwendet die <xref:System.IdentityModel.ProtectedDataCookieTransform> -Klasse, die der Data Protection API (DPAPI) verwendet, um das Sitzungstoken, das zu schützen. Die DPAPI bietet Schutz mithilfe der Anmeldeinformationen für Benutzer oder Computer und speichert die Schlüsseldaten im Benutzerprofil. Dies bedeutet, die ein Sitzungstoken signiert und verschlüsselt auf einem Computer kann nicht überprüft werden oder auf einem anderen Computer entschlüsselt werden.  
   
- Im Gegensatz dazu, die <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> -Klasse verwendet die <xref:System.IdentityModel.Services.MachineKeyTransform> -Klasse, die die Cookie-Sitzungsdaten schützt das kryptografische Material, das im angegebenen mit der `<machineKey>` Element in der Konfigurationsdatei. Dies bedeutet, dass die gleichen Schlüssel (und Sitzungstoken) auf mehreren Computern verwendet werden können. Dies ist besonders wichtig, wenn eine Anwendung in einer Webfarm bereitgestellt wird. Weitere Informationen zur Verwendung von Windows Identity Foundation zum Schutz von Anwendungen, die in einer Webfarm bereitgestellt werden, finden Sie unter [WIF und Webfarmen](~/docs/framework/security/wif-and-web-farms.md).  
+ Im Gegensatz dazu die <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> -Klasse verwendet die <xref:System.IdentityModel.Services.MachineKeyTransform> -Klasse, die Cookiedaten der Sitzung mit das kryptografische Material, das im angegebenen schützt die `<machineKey>` Element in der Konfigurationsdatei. Dies bedeutet, dass die gleichen Schlüssel (und das Sitzungstoken) auf mehreren Computern verwendet werden können. Dies ist besonders wichtig, wenn eine Anwendung in einer Webfarm bereitgestellt wird. Weitere Informationen zur Verwendung von Windows Identity Foundation zum Schützen von Anwendungen, die in einer Webfarm bereitgestellt werden, finden Sie unter [WIF und Webfarmen](~/docs/framework/security/wif-and-web-farms.md).  
   
- Konfigurieren Sie die Anwendung für die Verwendung der <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler>, indem Sie sie zur Auflistung der Tokenhandler hinzufügen. Entfernen Sie zuerst die <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> (oder alle aus der <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler>-Klasse abgeleiteten Handler) aus der Auflistung der Tokenhandler, wenn ein solcher Handler vorhanden ist. Grund hierfür ist, <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> leitet sich von <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> und eine Auflistung Tokenhandler dürfen nicht mehrere Handler eines angegebenen Typs.  
+ Konfigurieren Sie die Anwendung für die Verwendung der <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler>, indem Sie sie zur Auflistung der Tokenhandler hinzufügen. Entfernen Sie zuerst die <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> (oder alle aus der <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler>-Klasse abgeleiteten Handler) aus der Auflistung der Tokenhandler, wenn ein solcher Handler vorhanden ist. Grund hierfür ist, <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> leitet sich von <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> und eine Auflistung der Tokenhandler dürfen nicht mehrere Handler eines beliebigen angegebenen Typs.  
   
    
   
 ## Examples  
- Das folgende XML zeigt, wie die ASP.NET `<machineKey>` Element in der Konfiguration zum Signieren und verschlüsseln explizit anzugeben. Die `<machineKey>` Element wird angegeben, unter der `<system.web>` Element in einer Konfigurationsdatei.  
+ Das folgende XML zeigt, wie Sie mit ASP.NET `<machineKey>` Element in der Konfiguration explizit angeben, Signatur-und Verschlüsselungsschlüsseln. Die `<machineKey>` Element wird angegeben, unter dem `<system.web>` Element in einer Konfigurationsdatei.  
   
 ```xml  
 <machineKey compatibilityMode="Framework45" decryptionKey="CC510D … 8925E6" validationKey="BEAC8 … 6A4B1DE" />  
 ```  
   
- Das folgende XML zeigt das Hinzufügen der <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> zu einer Auflistung von Tokenhandler. Die Standardeinstellung <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> zuerst aus der Auflistung entfernt wird. Tokenhandler konfiguriert sind, unter der [ &lt;SecurityTokenHandlers&gt; ](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/securitytokenhandlers.md) Element.  
+ Das folgende XML zeigt das Hinzufügen der <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> zu einer Auflistung von Tokenhandler. Der Standardwert <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> zuerst aus der Auflistung entfernt wird. Tokenhandler sind so konfiguriert, unter dem [ &lt;SecurityTokenHandlers&gt; ](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/securitytokenhandlers.md) Element.  
   
 ```xml  
 <securityTokenHandlers>  

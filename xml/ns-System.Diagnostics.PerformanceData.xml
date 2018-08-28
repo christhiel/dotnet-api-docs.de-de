@@ -1,10 +1,10 @@
 <Namespace Name="System.Diagnostics.PerformanceData">
   <Metadata>
     <Meta Name="ms.openlocfilehash" Value="8813c8ce03149b4c97305ad0ee10d1cdd88ce604" />
-    <Meta Name="ms.sourcegitcommit" Value="3907f9a5780957d9c85af2e54c0a5bc2a5bf19ab" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/14/2018" />
+    <Meta Name="ms.lasthandoff" Value="08/24/2018" />
     <Meta Name="ms.locfileid" Value="34173736" />
   </Metadata>
   <Docs>
@@ -13,47 +13,47 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die Klassen in diesem Namespace unterstützen die neue Architektur (Version 2.0) für Leistungsindikatoren, die in Windows Vista eingeführt wurde. In der neuen Architektur der Anbieter reagiert nicht mehr direkt Consumeranforderungen jedoch stattdessen einfach verwaltet die Leistungsindikatordaten. Das System injiziert einen Thread in den Prozess des Anbieters ein, wenn der Anbieter eine Instanz des Indikatorensatzes erstellt; der Thread ist verantwortlich für die Verarbeitung von Consumeranforderungen.  
+ Die Klassen in diesem Namespace unterstützen die neue Architektur (Version 2.0) für die Leistungsindikatoren, die in Windows Vista eingeführt wurde. In der neuen Architektur und der Anbieter nicht mehr direkt auf Consumeranforderungen antwortet, jedoch stattdessen einfach die Indikatordaten verwaltet. Das System Fügt einen Thread in den Prozess des Anbieters, wenn der Anbieter eine Instanz des Indikatorensatzes erstellt; der Thread ist verantwortlich für die Verarbeitung von Consumeranforderungen.  
   
- Die folgenden Schritte zeigen das Verfahren zum Schreiben eines Anbieters Leistungsindikatoren.  
+ Die folgenden Schritte zeigen den Prozess zum Schreiben eines Anbieters Leistungsindikatoren.  
   
-1.  Die Indikatoren, die vom Anbieter wird in einem XML-basierte Manifest definiert. Die Leistungsindikatoren werden in Indikatorensätzen logisch gruppiert. Die Leistungsindikatoren in einem Indikatorensatz werden durch einen numerischen Bezeichner identifiziert, die innerhalb der Indikatorensatz eindeutig ist. Ein Anbieter kann eine oder mehrere Indikatorensätze definieren. Einem Indikatorensatz wird durch eine Guid identifiziert, die zu einem Anbieter eindeutig ist. Beachten Sie, dass, wenn Sie diese Klassen zum Schreiben von Ihrem Anbieters verwenden:  
+1.  Die Leistungsindikatoren, die vom Anbieter wird in ein XML-basierten Manifest definiert ist. Die Leistungsindikatoren werden in Indikatorensätzen logisch gruppiert. Die Indikatoren in einem Indikatorensatz werden durch einen numerischen Bezeichner identifiziert, die innerhalb der Indikatorensatz eindeutig ist. Ein Anbieter kann eine oder mehrere Indikatorensätze definieren. Ein Indikatorensatz wird durch eine Guid identifiziert, die an einen Anbieter eindeutig ist. Beachten Sie, dass, wenn Sie diese Klassen verwenden, um Ihres Anbieters zu schreiben:  
   
-    -   Das Rückrufattribut des Anbieterelements wird ignoriert.  
+    -   Die Rückrufattribut des Anbieterelements wird ignoriert.  
   
     -   Der Verweiswert für das Namensattribut des CounterAttribute-Elements wird ignoriert.  
   
-     Weitere Informationen zum Schreiben des Manifests, finden Sie unter [Leistung Leistungsindikatorenschema](https://msdn.microsoft.com/library/windows/desktop/aa373092\(v=vs.85\).aspx).  
+     Weitere Informationen zum Schreiben des Manifests finden Sie unter [Leistung Leistungsindikatorenschema](https://msdn.microsoft.com/library/windows/desktop/aa373092\(v=vs.85\).aspx).  
   
-2.  Verwenden Sie nach dem Schreiben des Manifests, das [CTRPP](https://msdn.microsoft.com/library/windows/desktop/aa372128\(v=vs.85\).aspx) Tool, um das Manifest (Ctrpp provider.man) zu kompilieren. Das Tool generiert vier Dateien: h "," c "," RC, und * _r.h. Sie können die h- und .c-Dateien ignorieren. Die RC-Datei enthält die lokalisierten Zeichenfolgen im Manifest definiert. Sie verwenden die RC- und die Datei * _r.h-Dateien, um die kompilierte Ressourcendatei (res) zu erstellen, die Sie in Ihrem Projekt einschließen. Der folgende Aufruf zeigt, wie die Ressourcendatei zu kompilieren:  
+2.  Verwenden Sie nach dem Schreiben des Manifests die [CTRPP](https://msdn.microsoft.com/library/windows/desktop/aa372128\(v=vs.85\).aspx) Tool, um das Manifest (Ctrpp provider.man) zu kompilieren. Das Tool generiert vier Dateien: h "," c "," RC, und * _r.h. Sie können die h- und c-Dateien ignorieren. Die RC-Datei enthält die lokalisierten Zeichenfolgen, die in Ihrem Manifest definiert. Sie verwenden die RC- und die Datei * _r.h-Dateien, um die kompilierte Ressourcendatei (. res) zu erstellen, die in Ihrem Projekt enthalten. Der folgende Aufruf veranschaulicht, wie die Ressourcendatei zu kompilieren:  
   
     ```console  
     rc /r /i "c:\Program Files\Microsoft SDKs\Windows\v6.0\Include" provider.rc  
     ```  
   
-     Wenn Sie eine Fehlermeldung erhalten, die auf sal.h verweist, kopieren Sie die sal.h-Datei aus Ihrem Microsoft Visual Studio, Visual C#-Includeverzeichnis in das Verzeichnis, das Sie für die/i-Option angeben.  
+     Wenn Sie eine Fehlermeldung erhalten, die sal.h verweist, kopieren Sie die sal.h-Datei aus Ihrer Microsoft Visual Studio, Visual C# include-Verzeichnis in das Verzeichnis, das Sie für den Schalter/i angeben.  
   
-     Fügen Sie einen Pfad zu die kompilierte Ressourcendatei (res) zur Anwendung-Eigenschaftenseite des Projekts hinzu.  
+     Fügen Sie einen Pfad zu die kompilierte Ressourcendatei (. res) auf der Seite der Anwendungseigenschaften des Projekts hinzu.  
   
 3.  Schreiben Sie den Anbieter. Die folgenden Schritte zeigen die Aufrufe von einem Anbieter:  
   
-    1.  Rufen Sie die <xref:System.Diagnostics.PerformanceData.CounterSet.%23ctor%2A?displayProperty=nameWithType> Konstruktor, um den Indikatorensatz zu definieren. Rufen Sie diese Methode für jeden Leistungsindikator im Manifest definierten festgelegt.  
+    1.  Rufen Sie die <xref:System.Diagnostics.PerformanceData.CounterSet.%23ctor%2A?displayProperty=nameWithType> Konstruktor zum Definieren eines Leistungsindikators. Rufen Sie diese Methode für jeden Leistungsindikator im Manifest definierten festgelegt.  
   
-    2.  Für jeden Leistungsindikator, rufen Sie eine von der <xref:System.Diagnostics.PerformanceData.CounterSet.AddCounter%2A?displayProperty=nameWithType> Methoden, um die Indikatoren hinzufügen. Rufen Sie diese Methode für jeden Leistungsindikator in der Indikatorensatz definiert.  
+    2.  Für jeden Leistungsindikator, rufen Sie eine der der <xref:System.Diagnostics.PerformanceData.CounterSet.AddCounter%2A?displayProperty=nameWithType> Methoden, um die Indikatoren hinzufügen. Rufen Sie diese Methode für jeden Indikator in der Indikatorensatz definiert.  
   
-    3.  Rufen Sie die <xref:System.Diagnostics.PerformanceData.CounterSet.CreateCounterSetInstance%2A?displayProperty=nameWithType> Methode, um eine Instanz des Indikatorensatzes erstellen (eine Instanz enthält die Indikatordaten). Rufen Sie für einzelne Instanz von Indikatorensätzen diese Methode einmal an. Rufen Sie diese Methode für jede Instanz für die müssen Sie Leistungsindikatordaten angeben (verwenden Sie einen eindeutigen Namen für jede Instanz), für mehrere Instanz Indikatorensätze.  
+    3.  Rufen Sie die <xref:System.Diagnostics.PerformanceData.CounterSet.CreateCounterSetInstance%2A?displayProperty=nameWithType> Methode, um eine Instanz des Indikatorensatzes erstellen (eine Instanz enthält die Indikatordaten). Rufen Sie für einzelne Instanz von Indikatorensätzen diese Methode nur einmal. Rufen Sie diese Methode für jede Instanz, die für die Sie um Zählerdaten bereitzustellen (verwenden einen eindeutigen Namen für jede Instanz) müssen für mehrere Instanz Indikatorensätze.  
   
-    4.  Verwenden der <xref:System.Diagnostics.PerformanceData.CounterSetInstance.Counters%2A?displayProperty=nameWithType> Eigenschaft aufgerufen und der Leistungsindikatordaten für den Leistungsindikator festgelegt.  
+    4.  Verwenden der <xref:System.Diagnostics.PerformanceData.CounterSetInstance.Counters%2A?displayProperty=nameWithType> Eigenschaft, um Zugriff auf und setzen Sie den Indikator für den Leistungsindikator.  
   
-4.  Nachdem Sie Ihren Anbieter abgeschlossen haben, verwenden Sie das Tool LodCtr zum Registrieren der Leistungsindikatoren auf dem Computer. Ein auf ein Objekt angewendeter  
+4.  Nachdem Sie Ihren Anbieter haben, verwenden Sie des LodCtr-Tools, um die Leistungsindikatoren auf dem Computer zu registrieren. Ein auf ein Objekt angewendeter  
   
     ```console  
     lodctr /m:provider.man  
     ```  
   
-     Im Beispiel wird vorausgesetzt, das Manifest und ausführbare Datei im aktuellen Verzeichnis sind. Ausführliche Informationen zur Verwendung der LodCtr finden Sie unter [Microsoft Technet](Http://Go.Microsoft.Com/FWLink/?LinkId=84000).  
+     Im Beispiel wird vorausgesetzt, das Manifest, und ausführbaren Datei befinden sich im aktuellen Verzeichnis. Ausführliche Informationen zur Verwendung der LodCtr finden Sie unter [Microsoft Technet](Http://Go.Microsoft.Com/FWLink/?LinkId=84000).  
   
- Sie können die Klassen in diesem Namespace auf Computern, auf denen Windows Vista und höheren Betriebssystemen ausgeführt.  
+ Sie können die Klassen in diesem Namespace auf Computern verwenden, die die Windows Vista und späteren Betriebssystemen ausgeführt werden.  
   
    
   
