@@ -1,11 +1,11 @@
 <Type Name="ThreadPoolBoundHandle" FullName="System.Threading.ThreadPoolBoundHandle">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="961a8fb7abc8eaeeddeeea04c397e2f12cf020dd" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="65ff656956141c60abfbc4761eb75463e9356eba" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36605414" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39778439" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class ThreadPoolBoundHandle : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ThreadPoolBoundHandle extends System.Object implements class System.IDisposable" />
@@ -36,7 +36,7 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute>
+    <Attribute FrameworkAlternate="netstandard-2.0">
       <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
     </Attribute>
   </Attributes>
@@ -77,8 +77,11 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-4.7.1;netframework-4.7.2;netstandard-2.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -95,7 +98,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der nicht verwaltete Zeiger, die von dieser Methode zurückgegebene kann für das Betriebssystem im überlappenden e/a-Vorgänge übergeben werden. Die <xref:System.Threading.NativeOverlapped> ist eine feste Struktur im physikalischen Arbeitsspeicher, bis die <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> -Methode aufgerufen wird.  
+ Der nicht verwaltete Zeiger, die von dieser Methode zurückgegebene kann für das Betriebssystem in überlappende e/a-Vorgängen übergeben werden. Die <xref:System.Threading.NativeOverlapped> ist eine feste Struktur im physischen Speicher, bis die <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> Methode wird aufgerufen.  
   
  ]]></format>
         </remarks>
@@ -103,7 +106,10 @@
           <paramref name="preAllocated" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="preAllocated" /> wird aktuell für andere E/A-Vorgänge verwendet.</exception>
-        <exception cref="T:System.ObjectDisposedException">Diese Methode wurde aufgerufen, nachdem das <see cref="T:System.Threading.ThreadPoolBoundHandle" />-Objekt freigegeben wurde.  Oder:  Diese Methode wurde aufgerufen, nachdem das <paramref name="preAllocated" />-Objekt verfügbar gemacht wurde.</exception>
+        <exception cref="T:System.ObjectDisposedException">Diese Methode wurde aufgerufen, nachdem das <see cref="T:System.Threading.ThreadPoolBoundHandle" />-Objekt freigegeben wurde.  
+  
+- oder -  
+Diese Methode wurde aufgerufen, nachdem das <paramref name="preAllocated" />-Objekt verfügbar gemacht wurde.</exception>
         <altmember cref="T:System.Threading.PreAllocatedOverlapped" />
       </Docs>
     </Member>
@@ -129,8 +135,11 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-4.7.1;netframework-4.7.2;netstandard-2.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -175,6 +184,11 @@
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Threading.ThreadPoolBoundHandle</ReturnType>
       </ReturnValue>
@@ -191,14 +205,23 @@
 ## Remarks  
  Diese Methode sollte einmal pro Handle aufgerufen werden.  
   
- Die <xref:System.Threading.ThreadPoolBoundHandle> Objekt übernimmt den Besitz von `handle`; bleibt der Verantwortung des Aufrufers Aufrufen <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A>.  
+ Die <xref:System.Threading.ThreadPoolBoundHandle> Objekt akzeptiert nicht den Besitz der `handle`, bleibt der Verantwortung des Aufrufers, rufen Sie <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A>.  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="handle" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="handle" /> wurde verworfen.  Oder:  <paramref name="handle" /> verweist nicht auf ein gültiges E/A-Handle.  Oder:  <paramref name="handle" /> verweist auf ein Handle, das nicht für die überlappende E/A offen ist.  Oder:  <paramref name="handle" /> verweist auf ein Handle, das bereits gebunden wurde.</exception>
+          <paramref name="handle" /> wurde verworfen.  
+  
+- oder -  
+ <paramref name="handle" /> verweist nicht auf ein gültiges E/A-Handle.  
+  
+- oder -  
+ <paramref name="handle" /> verweist auf ein Handle, das nicht für die überlappende E/A offen ist.  
+  
+- oder -  
+ <paramref name="handle" /> verweist auf ein Handle, das bereits gebunden wurde.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -257,8 +280,11 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-4.7.1;netframework-4.7.2;netstandard-2.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -276,7 +302,7 @@
 ## Remarks  
   
 > [!CAUTION]
->  Rufen Sie die <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> -Methode genau einmal für jede <xref:System.Threading.NativeOverlapped> nicht verwalteter Zeiger zugewiesen, mit der <xref:System.Threading.ThreadPoolBoundHandle.AllocateNativeOverlapped%2A> Methode. Wenn Sie nicht Aufrufen der <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> -Methode wird Speicherverlust. Beim Aufrufen der <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> Methode mehr als einmal auf dem gleichen <xref:System.Threading.NativeOverlapped> nicht verwalteter Zeiger Arbeitsspeicher beschädigt werden.  
+>  Rufen Sie die <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> -Methode genau einmal für jede <xref:System.Threading.NativeOverlapped> nicht verwalteter Zeiger zugewiesen werden, mithilfe der <xref:System.Threading.ThreadPoolBoundHandle.AllocateNativeOverlapped%2A> Methode. Wenn Sie nicht Aufrufen der <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> -Methode, Sie verlieren Arbeitsspeicher. Aufrufen der <xref:System.Threading.ThreadPoolBoundHandle.FreeNativeOverlapped%2A> Methode-Methode, die mehr als einmal auf dem gleichen <xref:System.Threading.NativeOverlapped> nicht verwalteter Zeiger Speicher beschädigt werden.  
   
  ]]></format>
         </remarks>
@@ -307,8 +333,11 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-4.7.1;netframework-4.7.2;netstandard-2.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -348,6 +377,11 @@
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.7.1;netframework-4.7.2">
+          <AttributeName>get: System.Security.SecurityCritical</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Runtime.InteropServices.SafeHandle</ReturnType>
       </ReturnValue>
