@@ -1,11 +1,11 @@
 <Type Name="InstanceStore" FullName="System.Runtime.DurableInstancing.InstanceStore">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="d14fb4c0552691179d47eb6e214410054e826b0f" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="8972e8c961043629bb8c0c72a45e02d752733a77" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36540125" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39993462" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class InstanceStore" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit InstanceStore extends System.Object" />
@@ -32,7 +32,7 @@
  Dauerhaftigkeitsanbieter dürfen "InstanceHandle.Free" für an "TryCommand" übergebene Handles auch nach Abschluss der Befehlsausführung aufrufen. Starke Verweise auf InstanceHandle- bzw. InstanceOwner-Objekte dürfen von Dauerhaftigkeitsanbietern jedoch nicht verwaltet werden, da so möglicherweise verhindert wird, dass die Garbage Collection für "InstanceStore" durchgeführt wird.  
   
 > [!WARNING]
->  Workflowdefinitionen für beibehaltene Workflows können nicht geändert werden. Wenn eine Workflowdefinition geändert wird, nachdem es beibehalten wird, stürzt die Workflowlaufzeit, wenn der Workflow geladen wird.  
+>  Workflowdefinitionen für beibehaltene Workflows können nicht geändert werden. Wenn eine Workflowdefinition geändert wird, nachdem es gespeichert wird, stürzt die Workflowlaufzeit beim erneuten des Workflows laden.  
   
  ]]></format>
     </remarks>
@@ -132,7 +132,7 @@
  Wenn der Befehl ausgeführt werden kann, ruft der Dauerhaftigkeitsanbieter relevante Methoden für "InstancePersistenceContext" auf, um die Ergebnisse des Befehls bereitzustellen.  
   
 > [!WARNING]
->  Obwohl diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
+>  Auch wenn diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
   
  ]]></format>
         </remarks>
@@ -289,6 +289,14 @@
         <AssemblyName>System.Runtime.DurableInstancing</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Runtime.DurableInstancing.InstanceOwner</ReturnType>
       </ReturnValue>
@@ -304,7 +312,7 @@
  Für die DefaultInstanceOwner-Eigenschaft muss NULL festgelegt werden, wenn sie nicht mehr benötigt wird. Für InstanceStore-Objekte wird möglicherweise keine Garbage Collection durchgeführt, wenn "DefaultInstanceOwner" nicht NULL ist.  
   
 > [!WARNING]
->  Obwohl diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
+>  Auch wenn diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
   
  ]]></format>
         </remarks>
@@ -370,7 +378,7 @@
 ## Remarks  
   
 > [!WARNING]
->  Obwohl diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
+>  Auch wenn diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
   
  ]]></format>
         </remarks>
@@ -434,9 +442,9 @@
  Ein Host ruft die <xref:System.Runtime.DurableInstancing.InstanceStore.Execute%2A>-Methode auf, um asynchron einen Dauerhaftigkeitsbefehl für einen Instanzhandle auszuführen, den der Host durch Aufruf der <xref:System.Runtime.DurableInstancing.InstanceStore.CreateInstanceHandle%2A>-Methode erhält. Der Instanzhandle ist möglicherweise an Entitäten gebunden, die den Kontext und das Subjekt des Befehls darstellen, beispielsweise eine Instanz, einen Instanzbesitzer oder eine Instanzsperre.  Es kann nur jeweils ein Befehl für einen Instanzhandle ausgegeben werden.  
   
 > [!WARNING]
->  Bei der Ausführung dieser Methode mit einem <xref:System.Activities.DurableInstancing.CreateWorkflowOwnerCommand>, erstellt jedoch eine <xref:System.Runtime.DurableInstancing.InstanceOwner> und binden es an die Instanz. Dies bedeutet, dass kein anderer Prozess auf diesem Workflow zugreifen kann; Wenn der Prozess beendet wird, ist der Workflow kann nicht wiederhergestellt oder ausgeführt. Wenn Sie ein Workflow dieser Art erneut ausgeführt wird eine <xref:System.Runtime.DurableInstancing.InstanceLockedException> ausgelöst.  
+>  Wenn diese Methode mit ausgeführt wird ein <xref:System.Activities.DurableInstancing.CreateWorkflowOwnerCommand>, wird ein <xref:System.Runtime.DurableInstancing.InstanceOwner> und an die Instanz zu binden. Dies bedeutet, dass kein anderer Prozess auf diesen Workflow zugreifen kann; Wenn der Prozess beendet wird, kann nicht der Workflow wiederhergestellt oder ausgeführt werden. Wenn ein solcher Workflow, das in diesem Fall ausgeführt wird eine <xref:System.Runtime.DurableInstancing.InstanceLockedException> ausgelöst.  
 >   
->  Wenn <xref:System.Activities.DurableInstancing.CreateWorkflowOwnerCommand> wird nicht verwendet, der Instanzspeicher erstellt eine temporäre <xref:System.Runtime.DurableInstancing.InstanceOwner> , werden am Ende des Prozesses gelöscht werden. Jedoch, wenn der Prozess vor dem letzten Persistenzpunkt der Workflow beendet wird, dieser wird ausgelöst, es sei denn, in der Zeitraum angegeben die **von HostLockRenewalPeriod** Parameter ist abgelaufen.  
+>  Wenn <xref:System.Activities.DurableInstancing.CreateWorkflowOwnerCommand> wird nicht verwendet wird, der Instanzspeicher erstellt eine temporäre <xref:System.Runtime.DurableInstancing.InstanceOwner> , die am Ende des Prozesses gelöscht werden. Allerdings, wenn der Vorgang vor dem letzten Persistenzpunkt des Workflows beendet wird, diese Ausnahme ausgelöst, es sei denn, der der Zeitraum in angegeben die **von HostLockRenewalPeriod** Parameter ist abgelaufen.  
   
  ]]></format>
         </remarks>
