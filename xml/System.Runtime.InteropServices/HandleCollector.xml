@@ -1,11 +1,11 @@
 <Type Name="HandleCollector" FullName="System.Runtime.InteropServices.HandleCollector">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="7d25b758dfdf5b33c91e5ce511c71cb29dd83726" />
-    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
+    <Meta Name="ms.openlocfilehash" Value="9fcb273235acc414d31f162f613eb4a5fc977f08" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
-    <Meta Name="ms.locfileid" Value="37637100" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39781591" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class HandleCollector" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit HandleCollector extends System.Object" />
@@ -38,7 +38,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Tracks outstanding handles and forces a garbage collection when the specified threshold is reached.</summary>
+    <summary>Verfolgt ausstehende Handles nach und erzwingt bei Erreichen des angegebenen Schwellenwerts eine Garbage Collection.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -77,16 +77,21 @@
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <Parameters>
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="initialThreshold" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="name">A name for the collector. This parameter allows you to name collectors that track handle types separately.</param>
-        <param name="initialThreshold">A value that specifies the point at which collections should begin.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.HandleCollector" /> class using a name and a threshold at which to begin handle collection.</summary>
+        <param name="name">Ein Name für den Collector. Dieser Parameter ermöglicht Ihnen das Benennen von Collectors, die Typen von Handles separat verfolgen.</param>
+        <param name="initialThreshold">Ein Wert, der den Punkt angibt, bei dem die Erfassung beginnen soll.</param>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Runtime.InteropServices.HandleCollector" />-Klasse mit einem Namen und einem Schwellenwert, an dem die Handle-Erfassung beginnen soll.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="initialThreshold" /> parameter is less than 0.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="initialThreshold" />-Parameter ist kleiner als 0.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -123,13 +128,16 @@
         <Parameter Name="maximumThreshold" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="name">A name for the collector.  This parameter allows you to name collectors that track handle types separately.</param>
-        <param name="initialThreshold">A value that specifies the point at which collections should begin.</param>
-        <param name="maximumThreshold">A value that specifies the point at which collections must occur. This should be set to the maximum number of available handles.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.HandleCollector" /> class using a name, a threshold at which to begin handle collection, and a threshold at which handle collection must occur.</summary>
+        <param name="name">Ein Name für den Collector.  Dieser Parameter ermöglicht Ihnen das Benennen von Collectors, die Typen von Handles separat verfolgen.</param>
+        <param name="initialThreshold">Ein Wert, der den Punkt angibt, bei dem die Erfassung beginnen soll.</param>
+        <param name="maximumThreshold">Ein Wert, der den Punkt angibt, bei dem Erfassungen auftreten müssen. Dieser muss auf die maximale Anzahl verfügbarer Handles festgelegt werden.</param>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Runtime.InteropServices.HandleCollector" />-Klasse mit einem Namen, einem Schwellenwert für den Beginn der Handle-Erfassung sowie einem Schwellenwert, ab dem die Handle-Erfassung auftreten muss.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="initialThreshold" /> parameter is less than 0.  -or-  The <paramref name="maximumThreshold" /> parameter is less than 0.</exception>
-        <exception cref="T:System.ArgumentException">The <paramref name="maximumThreshold" /> parameter is less than the <paramref name="initialThreshold" /> parameter.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="initialThreshold" />-Parameter ist kleiner als 0.  
+  
+- oder -  
+Der <paramref name="maximumThreshold" />-Parameter ist kleiner als 0.</exception>
+        <exception cref="T:System.ArgumentException">Der <paramref name="maximumThreshold" />-Parameter ist kleiner als der <paramref name="initialThreshold" />-Parameter.</exception>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -165,9 +173,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Increments the current handle count.</summary>
+        <summary>Erhöht die aktuelle Anzahl der Handles.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Runtime.InteropServices.HandleCollector.Count" /> property is less than 0.</exception>
+        <exception cref="T:System.InvalidOperationException">Die <see cref="P:System.Runtime.InteropServices.HandleCollector.Count" />-Eigenschaft ist kleiner als 0 (null).</exception>
       </Docs>
     </Member>
     <Member MemberName="Count">
@@ -198,11 +206,16 @@
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of handles collected.</summary>
+        <summary>Ruft die Anzahl der erfassten Handles ab.</summary>
         <value>Die Anzahl der erfassten Handles.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -235,12 +248,17 @@
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that specifies the point at which collections should begin.</summary>
-        <value>Ein Wert, der den Punkt angibt, an dem Erfassung beginnen soll.</value>
+        <summary>Ruft einen Wert ab, der den Punkt angibt, bei dem die Erfassung beginnen soll.</summary>
+        <value>Ein Wert, der den Punkt angibt, bei dem die Erfassung beginnen soll.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -272,11 +290,16 @@
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that specifies the point at which collections must occur.</summary>
+        <summary>Ruft einen Wert ab, der den Punkt angibt, bei dem Erfassungen auftreten müssen.</summary>
         <value>Ein Wert, der den Punkt angibt, bei dem Erfassungen auftreten müssen.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -309,12 +332,17 @@
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the name of a <see cref="T:System.Runtime.InteropServices.HandleCollector" /> object.</summary>
-        <value>Dies <see cref="P:System.Runtime.InteropServices.HandleCollector.Name" /> -Eigenschaft ermöglicht Ihnen das Benennen von Collectors, die Typen von Handles separat verfolgen.</value>
+        <summary>Ruft den Namen eines <see cref="T:System.Runtime.InteropServices.HandleCollector" />-Objekts ab.</summary>
+        <value>Diese <see cref="P:System.Runtime.InteropServices.HandleCollector.Name" />-Eigenschaft ermöglicht Ihnen das Benennen von Collectors, die Typen von Handles separat verfolgen.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -351,9 +379,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Decrements the current handle count.</summary>
+        <summary>Verringert die aktuelle Anzahl der Handles.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.InvalidOperationException">The <see cref="P:System.Runtime.InteropServices.HandleCollector.Count" /> property is less than 0.</exception>
+        <exception cref="T:System.InvalidOperationException">Die <see cref="P:System.Runtime.InteropServices.HandleCollector.Count" />-Eigenschaft ist kleiner als 0 (null).</exception>
       </Docs>
     </Member>
   </Members>

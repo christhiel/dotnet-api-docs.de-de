@@ -1,11 +1,11 @@
 <Type Name="SafeHandle" FullName="System.Runtime.InteropServices.SafeHandle">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="a48931738181122e75f0ec0a410b8d3e63a6436d" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="d62707b9b460c2a6a8386dd68959d7c9d58100ef" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36537782" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39782264" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class SafeHandle : System.Runtime.ConstrainedExecution.CriticalFinalizerObject, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi abstract beforefieldinit SafeHandle extends System.Runtime.ConstrainedExecution.CriticalFinalizerObject implements class System.IDisposable" />
@@ -19,6 +19,7 @@
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <AssemblyVersion>2.0.5.0</AssemblyVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
@@ -46,41 +47,41 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute>
+    <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <AttributeName>System.Security.SecurityCritical</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Represents a wrapper class for operating system handles. This class must be inherited.</summary>
+    <summary>Stellt eine Wrapperklasse für Betriebssystemhandles dar. Die Klasse muss geerbt werden.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Runtime.InteropServices.SafeHandle> -Klasse stellt Kritische Finalisierung Handleressourcen, verhindern von Handles vorzeitig, durch die Garbagecollection wieder zugänglich gemacht wird und von Windows zum das unbeabsichtigten nicht verwaltete Objekte verweisen wiederverwendet wird.  
+ Die <xref:System.Runtime.InteropServices.SafeHandle> -Klasse stellt Kritische Finalisierung der Handleressourcen, die verhindert, dass Ziehpunkte vorzeitig, durch die Garbagecollection und von Windows zu nicht beabsichtigten nicht verwaltete Objekte verweisen wiederverwendet wird.  
   
  Dieses Thema enthält die folgenden Abschnitte:  
   
  [Warum SafeHandle?](#Why)   
- [Leistungsumfang von SafeHandle](#Does)   
+ [Funktionsweise von SafeHandle](#Does)   
  [Von SafeHandle abgeleitete Klassen](#Derived)  
   
 <a name="Why"></a>   
 ## <a name="why-safehandle"></a>Warum SafeHandle?  
- Bevor Sie .NET Framework, Version 2.0, alle Betriebssystem Ziehpunkte konnte nur in gekapselt werden die <xref:System.IntPtr> verwaltete Wrapper-Objekt. Während dies eine einfache Möglichkeit, die Interoperabilität mit systemeigenem Code war, konnte Handles von asynchronen Ausnahmen, z. B. ein Thread wird unerwartet abgebrochen oder ein Stapelüberlauf geheim bleiben. Diese asynchrone Ausnahmen sind ein Hindernis für das Bereinigen von Ressourcen des Betriebssystems und nahezu überall in Ihrer Anwendung auftreten können.  
+ Bevor Sie .NET Framework, Version 2.0, alle Handles können nur in gekapselt Betriebssystem die <xref:System.IntPtr> verwalteten Wrapper-Objekt. Dies war eine einfache Möglichkeit, die Interoperabilität mit systemeigenem Code können durch asynchrone Ausnahmen, z. B. ein Thread unerwartet abgebrochen oder ein Stapelüberlauf Handles verloren gehen. Diese asynchronen Ausnahmen sind ein Hindernis für das Bereinigen von Ressourcen des Betriebssystems und praktisch von überall in Ihrer Anwendung auftreten können.  
   
- Obwohl Außerkraftsetzungen für die <xref:System.Object.Finalize%2A?displayProperty=nameWithType> Methode ermöglichen die Bereinigung von nicht verwalteten Ressourcen, wenn ein Objekt mit Garbage Collection, in einigen Fällen wird, um finalisierbare Objekte können freigegeben werden, durch die Garbagecollection während der Ausführung einer Methode in einer Plattform aufrufen aufrufen. Wenn ein Finalizer das Handle für diese Plattform übergeben freigegeben Plattformaufrufs, könnte dies um zu Beschädigungen zu behandeln. Das Handle kann auch freigegeben werden, während die Methode während eines Plattformaufrufs blockiert ist aufrufen, z. B. beim Lesen einer Datei.  
+ Obwohl außer Kraft gesetzt werden die <xref:System.Object.Finalize%2A?displayProperty=nameWithType> Methode Cleanup von nicht verwalteten Ressourcen ermöglichen, wenn ein Objekt mit Garbage Collection, in einigen Fällen wird, finalisierbare Objekte freigegeben werden können, durch die Garbagecollection während der Ausführung einer Methode in einer Plattform aufrufen Rufen Sie. Wenn ein Finalizer das Handle für diese Plattform übergeben frei Plattformaufrufs, konnte dies um zu einer Beschädigung zu behandeln. Das Handle kann auch freigegeben werden, während Ihre Methode, während eine Plattform blockiert wird Plattformaufrufs, z. B. beim Lesen einer Datei.  
   
- Da Windows Handles aggressiv wiederverwendet wird, konnte ein Handle genügend Systemressourcen vorhanden, werden wiederverwendet und zeigen Sie auf eine andere Ressource, die möglicherweise vertrauliche Daten enthalten. Dies kann wird als eine Wiederverwendung-Angriff bezeichnet und Daten beschädigt werden und ein Sicherheitsrisiko sein.  
+ Da Windows aggressiv wiederverwendet Steuerpunkte wird, kann ein Handle Kritischer, wiederverwendet und zeigen Sie auf eine andere Ressource, die möglicherweise vertrauliche Daten enthalten. Dies kann wird als einen wiederverwendungsbeschränkungs-Angriff bezeichnet und Daten beschädigt werden und werden ein Sicherheitsrisiko darstellen.  
   
 <a name="Does"></a>   
-## <a name="what-safehandle-does"></a>Leistungsumfang von SafeHandle  
- Die <xref:System.Runtime.InteropServices.SafeHandle> Klasse vereinfacht die mehrere der folgenden Probleme mit der Objektlebensdauer und Plattform integriert aufrufen, damit keine Ressourcen des Betriebssystems weitergegeben werden. Die <xref:System.Runtime.InteropServices.SafeHandle> Klasse löst Probleme mit der Objektlebensdauer, indem Sie Handles ohne Unterbrechung zuweisen und freigeben. Er enthält einen kritischen Finalizer, der sicherstellt, dass das Handle geschlossen ist, und sichergestellt, dass wird während der unerwarteten ausgeführt <xref:System.AppDomain> entladen wird, sogar in Fällen, wenn der Plattformaufruf wird davon ausgegangen, dass in einem beschädigten Zustand befindet.  
+## <a name="what-safehandle-does"></a>Funktionsweise von SafeHandle  
+ Die <xref:System.Runtime.InteropServices.SafeHandle> Klasse vereinfacht einige dieser Probleme mit der Objektlebensdauer und ist in die Plattform integriert aufrufen, damit Ressourcen des Betriebssystems nicht verloren. Die <xref:System.Runtime.InteropServices.SafeHandle> Klasse löst Probleme mit der Objektlebensdauer, indem Sie Handles ohne Unterbrechung zuweist und freigibt. Sie enthält einen kritischen Finalizer, der sicherstellt, dass das Handle geschlossen ist, und garantiert ausgeführt ist, während unerwartete <xref:System.AppDomain> wird angenommen, dass entladen wird, auch in Fällen, wenn der Plattformaufruf als beschädigt angezeigt werden.  
   
- Da <xref:System.Runtime.InteropServices.SafeHandle> erbt von <xref:System.Runtime.ConstrainedExecution.CriticalFinalizerObject>, die nicht kritische Finalizer vor den kritischen Finalizer aufgerufen. Die Finalizer werden für Objekte aufgerufen, die während der gleichen Garbage Collection-Durchgangs nicht mehr aktiv sind. Z. B. eine <xref:System.IO.FileStream> ausführen-Objekts einen normalen Finalizer vorhandene gepufferte Daten ohne das Risiko des Handles Durchsickern oder wiederverwendet wird geleert. Diese sehr schwachen Sortierung zwischen kritisch "und" nicht kritischen Finalizer ist nicht zur allgemeinen Verwendung vorgesehen. Er vorhanden ist, in erster Linie um bei der Migration der vorhandenen Bibliotheken unterstützen, indem Sie diese Bibliotheken verwenden <xref:System.Runtime.InteropServices.SafeHandle> ohne ihre Semantik zu ändern. Darüber hinaus die kritischen Finalizer und sonstigen Aktionen er aufgerufen wird, wie z. B. die <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle?displayProperty=nameWithType> -Methode muss in einem eingeschränkten Ausführungsbereich sein. Dies erzwingt Einschränkungen für Code innerhalb der Finalizer Aufrufdiagramm geschrieben werden kann.  
+ Da <xref:System.Runtime.InteropServices.SafeHandle> erbt <xref:System.Runtime.ConstrainedExecution.CriticalFinalizerObject>, alle nicht kritischen Finalizer vor den kritischen Finalizer aufgerufen. Für Objekte, die im gleichen Garbage Collection Durchlauf nicht mehr aktiv sind, werden die Finalizer aufgerufen. Z. B. eine <xref:System.IO.FileStream> Objekt kann einen normalen Finalizer geleert werden vorhandene gepufferte Daten ohne das Risiko von das Handle verloren oder wiederverwendet wird ausgeführt. Diese sehr schwachen Sortierung zwischen kritisch "und" nicht kritischen Finalizer ist nicht zur allgemeinen Verwendung vorgesehen. Vorhanden ist, in erster Linie um bei der Migration von vorhandenen Bibliotheken unterstützen, indem Sie diese Bibliotheken können mit <xref:System.Runtime.InteropServices.SafeHandle> ohne ihre Semantik zu verändern. Darüber hinaus die kritischen Finalizer und alles, was sie aufruft, z. B. die <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle?displayProperty=nameWithType> -Methode muss in einem eingeschränkten Ausführungsbereich. Dies erzwingt Einschränkungen für Code innerhalb des Finalizers Aufrufdiagramm geschrieben werden kann.  
   
- Plattformaufruf Vorgänge automatisch inkrementiert den Verweiszähler des gekapselten Handles eine <xref:System.Runtime.InteropServices.SafeHandle> und nach dem Abschluss zu verringern. Dadurch wird sichergestellt, dass das Handle nicht wiederverwendet oder unerwartet geschlossen.  
+ Plattformaufruf Vorgänge automatisch inkrementiert den Verweiszähler des Handles, die durch gekapselte eine <xref:System.Runtime.InteropServices.SafeHandle> und verringern sie nach Abschluss. Dadurch wird sichergestellt, dass das Handle nicht wiederverwendet oder wurde unerwartet geschlossen.  
   
- Sie können den Besitz des zugrunde liegenden Handles angeben, zum Erstellen von <xref:System.Runtime.InteropServices.SafeHandle> Objekte durch Bereitstellen eines Werts, der `ownsHandle` Argument in der <xref:System.Runtime.InteropServices.SafeHandle> Klassenkonstruktor. Diese Eigenschaft steuert, ob die <xref:System.Runtime.InteropServices.SafeHandle> Objekt wird das Handle freigegeben, nachdem das Objekt verworfen wurde.  Dies ist hilfreich für Handles Lebensdauer spezielle Anforderungen oder für die Nutzung von ein Handle, dessen Lebensdauer von jemand anderem gesteuert wird.  
+ Sie können den Besitz der zugrunde liegende Handle angeben, beim Erstellen <xref:System.Runtime.InteropServices.SafeHandle> Objekte, indem der Wert, der `ownsHandle` -Argument in der <xref:System.Runtime.InteropServices.SafeHandle> Klassenkonstruktor. Steuert, ob die <xref:System.Runtime.InteropServices.SafeHandle> Objekt wird das Handle freizugeben, nachdem das Objekt verworfen wurde.  Dies ist nützlich für Handles spezielle Lebensdauer Anforderungen oder für die Nutzung eines Handles, deren Lebensdauer durch eine andere Person gesteuert wird.  
   
 <a name="Derived"></a>   
 ## <a name="classes-derived-from-safehandle"></a>Von SafeHandle abgeleitete Klassen  
@@ -98,20 +99,20 @@
   
 -   Prozesse (die <xref:Microsoft.Win32.SafeHandles.SafeProcessHandle> Klasse).  
   
--   Registrierungsschlüssel (das <xref:Microsoft.Win32.SafeHandles.SafeRegistryHandle> Klasse).  
+-   Registrierungsschlüssel (die <xref:Microsoft.Win32.SafeHandles.SafeRegistryHandle> Klasse).  
   
 -   Wait-Handles (die <xref:Microsoft.Win32.SafeHandles.SafeWaitHandle> Klasse).  
   
    
   
 ## Examples  
- Das folgende Codebeispiel erstellt ein benutzerdefiniertes sicheres Handle für ein Betriebssystem-Dateihandle, ableiten von <xref:Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid>. Liest Bytes aus einer Datei, und ihre Hexadezimalwerte angezeigt. Er enthält zudem eine Fehlertoleranz Harness testen, wodurch der Abbruch des Threads, aber der Handlewert wird freigegeben.  Bei Verwendung einer <xref:System.IntPtr> um Handles darzustellen, wird das Handle gelegentlich aufgrund der asynchronen Threadabbruch verloren.  
+ Das folgende Codebeispiel erstellt ein benutzerdefiniertes sicheres Handle für ein Betriebssystem-Dateihandle, ableiten von <xref:Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid>. Er liest Bytes aus einer Datei und zeigt ihre Hexadezimalwerte. Es enthält auch einen Fehler, die testumgebung zu testen, die bewirkt, dass der Thread abgebrochen, aber der Wert des Handles wird freigegeben.  Bei Verwendung einer <xref:System.IntPtr> um Handles darzustellen, geht das Handle gelegentlich aufgrund der asynchronen Threadabbruch verloren.  
   
- Sie benötigen eine Textdatei im gleichen Ordner wie die kompilierte Anwendung. Vorausgesetzt, dass Sie die Anwendung "HexViewer" benennen, wird die Verwendung der Befehlszeile:  
+ Sie benötigen eine Textdatei im gleichen Ordner wie die kompilierte Anwendung. Vorausgesetzt, dass Sie die Anwendung "HexViewer" Namen verwenden, ist die Verwendung der Befehlszeile aus:  
   
  `HexViewer <filename> -Fault`  
   
- Geben Sie optional `-Fault` absichtlich versucht, das Handle verbreiten, die durch das Abbrechen von Threads in einem bestimmten Fenster. Verwenden Sie das Windows-Perform.exe-Tool, um Handle Anzahlen während Fehler überwachen.  
+ Geben Sie optional `-Fault` an, um das Handle zur Offenlegung durch das Abbrechen von Threads in einem bestimmten Fenster absichtlich. Verwenden Sie das Tool Windows Perform.exe Handle Anzahl während Fehler überwachen.  
   
  [!code-csharp[SafeHandle#1](~/samples/snippets/csharp/VS_Snippets_CLR/SafeHandle/CS/program.cs#1)]  
   
@@ -120,7 +121,7 @@
     <permission cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand">für volle Vertrauenswürdigkeit für erben. Dieser Member kann nicht von teilweise vertrauenswürdigem Code nicht vererbt werden.</permission>
     <permission cref="T:System.Security.SecurityCriticalAttribute">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer. Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</permission>
     <block subset="none" type="overrides">
-      <para>Zum Erstellen einer Klasse abgeleitet <see cref="T:System.Runtime.InteropServices.SafeHandle" />, benötigen Sie zum Erstellen und ein Betriebssystem-Handle freigeben. Dieser Vorgang unterscheidet sich für die unterschiedlichen Handletypen, da einige [CloseHandle] verwenden (https://msdn.microsoft.com/library/windows/desktop/ms724211.aspx) -Funktion, während andere spezifische Funktionen, z. B. [UnmapViewOfFile] verwenden (https://msdn.microsoft.com/library/windows/desktop/aa366882.aspx) oder [FindClose] (https://msdn.microsoft.com/library/windows/desktop/aa364413.aspx). Aus diesem Grund müssen Sie eine abgeleitete Klasse erstellen <see cref="T:System.Runtime.InteropServices.SafeHandle" /> für jeden Typ der Betriebssystem-Handle, das in einem SafeHandle umbrochen werden soll.  Wenn Sie von <see cref="T:System.Runtime.InteropServices.SafeHandle" /> erben, müssen die folgenden Member überschrieben werden: <see cref="P:System.Runtime.InteropServices.SafeHandle.IsInvalid" /> und <see cref="M:System.Runtime.InteropServices.SafeHandle.ReleaseHandle" />.  Außerdem sollten Sie einen Standardkonstruktor, der den Basiskonstruktor mit einem Wert, der einen ungültigen Handlewert darstellen aufruft bereitstellen und ein <see cref="T:System.Boolean" /> Wert, der angibt, ob das systemeigene Handle gehört die <see cref="T:System.Runtime.InteropServices.SafeHandle" /> und sollten daher beim freigegeben werden <see cref="T:System.Runtime.InteropServices.SafeHandle" /> wurde verworfen.</para>
+      <para>Erstellen Sie eine Klasse, die von abgeleiteten <see cref="T:System.Runtime.InteropServices.SafeHandle" />, Sie müssen wissen, wie zum Erstellen und Freigeben von einem Betriebssystemhandle. Dieser Prozess unterscheidet sich für die unterschiedlichen Handletypen, weil einige verwenden, die ["CloseHandle"](https://msdn.microsoft.com/library/windows/desktop/ms724211.aspx) funktionieren, während andere spezifischere Funktionen, z. B. verwenden [UnmapViewOfFile](https://msdn.microsoft.com/library/windows/desktop/aa366882.aspx) oder [FindClose](https://msdn.microsoft.com/library/windows/desktop/aa364413.aspx). Aus diesem Grund müssen Sie eine abgeleitete Klasse von erstellen <see cref="T:System.Runtime.InteropServices.SafeHandle" /> für jeden Typ von Handles, die in einem SafeHandle umschlossen werden sollen.  Wenn Sie von <see cref="T:System.Runtime.InteropServices.SafeHandle" /> erben, müssen die folgenden Member überschrieben werden: <see cref="P:System.Runtime.InteropServices.SafeHandle.IsInvalid" /> und <see cref="M:System.Runtime.InteropServices.SafeHandle.ReleaseHandle" />.  Außerdem sollten Sie bereitstellen, einen Standardkonstruktor, der den Basiskonstruktor mit einem Wert an, die darstellen, einen ungültigen Handlewert, aufruft und ein <see cref="T:System.Boolean" /> Wert, der angibt, ob das systemeigene Handle gehört die <see cref="T:System.Runtime.InteropServices.SafeHandle" /> und sollte daher beim freigegeben werden <see cref="T:System.Runtime.InteropServices.SafeHandle" /> wurde verworfen.</para>
     </block>
     <altmember cref="N:Microsoft.Win32.SafeHandles" />
     <altmember cref="T:System.Runtime.InteropServices.CriticalHandle" />
@@ -158,6 +159,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -176,7 +178,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
         </Attribute>
       </Attributes>
@@ -185,19 +187,19 @@
         <Parameter Name="ownsHandle" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="invalidHandleValue">The value of an invalid handle (usually 0 or -1).  Your implementation of <see cref="P:System.Runtime.InteropServices.SafeHandle.IsInvalid" /> should return <see langword="true" /> for this value.</param>
+        <param name="invalidHandleValue">Der Wert eines ungültigen Handles (normalerweise 0 (null) oder -1).  Die Implementierung von <see cref="P:System.Runtime.InteropServices.SafeHandle.IsInvalid" /> muss <see langword="true" /> für diesen Wert zurückgeben.</param>
         <param name="ownsHandle">
-          <see langword="true" /> to reliably let <see cref="T:System.Runtime.InteropServices.SafeHandle" /> release the handle during the finalization phase; otherwise, <see langword="false" /> (not recommended).</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.SafeHandle" /> class with the specified invalid handle value.</summary>
+          <see langword="true" />, wenn <see cref="T:System.Runtime.InteropServices.SafeHandle" /> das Handle während der Abschlussphase zuverlässig freigeben soll, andernfalls <see langword="false" /> (dies wird nicht empfohlen).</param>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Klasse mit dem angegebenen ungültigen Handlewert.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn die `ownsHandle` Parameter ist `false`, <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> wird nie aufgerufen werden; es ist daher nicht empfohlen, diesen Parameterwert zu verwenden, wie Code Ressourcen verbreiten, die möglicherweise.  
+ Wenn die `ownsHandle` Parameter `false`, <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> wird niemals aufgerufen; es wird daher nicht empfohlen, den Wert dieses Parameters verwenden, wie Sie Ihren Code zu Ressourcenverlusten kommen kann.  
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.TypeLoadException">The derived class resides in an assembly without unmanaged code access permission.</exception>
+        <exception cref="T:System.TypeLoadException">Die abgeleitete Klasse befindet sich in einer Assembly ohne Berechtigung für den Zugriff auf nicht verwalteten Code.</exception>
         <permission cref="F:System.Security.Permissions.SecurityAction.InheritanceDemand">für volle Vertrauenswürdigkeit für erben. Dieser Member kann nicht von teilweise vertrauenswürdigem Code nicht vererbt werden.</permission>
         <permission cref="T:System.Security.SecurityCriticalAttribute">erfordert volle Vertrauenswürdigkeit für den unmittelbaren Aufrufer. Dieser Member kann nicht von teilweise vertrauenswürdigem oder transparentem Code verwendet werden.</permission>
       </Docs>
@@ -212,6 +214,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -225,10 +228,10 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
@@ -237,17 +240,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Marks the handle for releasing and freeing resources.</summary>
+        <summary>Markiert das Handle für das Freigeben und Verfügbarmachen von Ressourcen.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Aufrufen der <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode ermöglicht die Ressourcen freigegeben werden. Dies möglicherweise nicht sofort ausgeführt, wenn andere Threads dasselbe Objekt SafeHandle verwenden, jedoch erfolgt, sobald das nicht mehr der Fall ist. Obwohl die meisten Klassen, die verwenden die <xref:System.Runtime.InteropServices.SafeHandle> Klasse erübrigt sich einen Finalizer bereitstellen, dies ist manchmal erforderlich (z. B. zum leeren Dateipuffer oder Schreiben von Daten zurück in den Arbeitsspeicher). In diesem Fall kann die Klasse einen Finalizer, der zum Ausführen vor unbedingt Bereitstellen der <xref:System.Runtime.InteropServices.SafeHandle> kritischen Finalizer ausgeführt wird.  
+ Aufrufen der <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode kann die Ressourcen freigegeben werden. Dies möglicherweise nicht sofort ausgeführt, wenn andere Threads dasselbe Objekt SafeHandle verwenden, aber es erfolgt, sobald Sie dies nicht mehr der Fall ist. Obwohl die meisten Klassen, die verwenden der <xref:System.Runtime.InteropServices.SafeHandle> Klasse müssen sich nicht um einen Finalizer bereitstellen, dies ist manchmal notwendig (z. B. zum Dateipuffer leeren oder Schreiben von Daten zurück in den Speicher). In diesem Fall kann die Klasse einen Finalizer, der garantiert wird, bevor bieten die <xref:System.Runtime.InteropServices.SafeHandle> kritischen Finalizer ausgeführt wird.  
   
  Rufen Sie die <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode, wenn Sie fertig sind mit den <xref:System.Runtime.InteropServices.SafeHandle> Objekt.  
   
 > [!NOTE]
->  Rufen Sie immer <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> , bevor Sie den letzten Verweis auf Freigeben der <xref:System.Runtime.InteropServices.SafeHandle> Objekt. Andernfalls bleiben die verwendeten Ressourcen reserviert, bis die Garbage Collection die <xref:System.Runtime.InteropServices.SafeHandle>-Methode des <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A>-Objekts aufruft.  
+>  Rufen Sie immer <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> bereits vor der Veröffentlichung des letzten Verweis auf die <xref:System.Runtime.InteropServices.SafeHandle> Objekt. Andernfalls bleiben die verwendeten Ressourcen reserviert, bis die Garbage Collection die <xref:System.Runtime.InteropServices.SafeHandle>-Methode des <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A>-Objekts aufruft.  
   
  ]]></format>
         </remarks>
@@ -268,6 +271,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -286,28 +290,31 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="success" Type="System.Boolean&amp;" RefType="ref" />
+        <Parameter Name="success" Type="System.Boolean" RefType="ref" />
       </Parameters>
       <Docs>
         <param name="success">
-          <see langword="true" /> if the reference counter was successfully incremented; otherwise, <see langword="false" />.</param>
-        <summary>Manually increments the reference counter on <see cref="T:System.Runtime.InteropServices.SafeHandle" /> instances.</summary>
+          <see langword="true" />, wenn der Verweiszähler erfolgreich inkrementiert wurde, andernfalls <see langword="false" />.</param>
+        <summary>Inkrementiert manuell den Verweiszähler für <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Instanzen.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Methode wird verhindert, dass die common Language Runtime von einem Handle verwendete Arbeitsspeicher freigibt (Dies tritt ein, wenn die Laufzeit ruft der <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> Methode). Sie können diese Methode manuell erhöhen, die den Verweiszähler für eine <xref:System.Runtime.InteropServices.SafeHandle> Instanz. <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Gibt einen booleschen Wert mithilfe einer `ref` Parameter (`success`), der angibt, ob der Verweiszähler erfolgreich inkrementiert wurde. Dadurch wird die Programmlogik, die bei einem Ausfall wieder ausgelesen. Sie sollten festlegen `success` auf `false` vor dem Aufruf <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. Wenn `success` ist `true`, vermeiden Sie nach dem Aufruf von übereinstimmenden Ressourcenverluste <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> mit einem entsprechenden Aufruf von <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A>.  
+ Die <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Methode verhindert das Freigeben von Arbeitsspeicher, die von einem Handle verwendet die common Language Runtime (Dies geschieht, wenn die Runtime Ruft die <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> Methode). Sie können diese Methode manuell erhöhen, die den Verweiszähler für eine <xref:System.Runtime.InteropServices.SafeHandle> Instanz. <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Gibt einen booleschen Wert mithilfe einer `ref` Parameter (`success`), der angibt, ob der Verweiszähler erfolgreich inkrementiert wurde. Dadurch wird die Programmlogik, die bei einem Fehler zurück. Sie sollten festlegen `success` zu `false` vor dem Aufruf <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. Wenn `success` ist `true`, Ressourcenverluste zu vermeiden, indem Sie den Aufruf von übereinstimmenden <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> mit einem entsprechenden Aufruf von <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A>.  
   
 > [!CAUTION]
->  Diese Methode wird für erfahrene Benutzer vorgesehen und muss immer sorgfältig verwendet werden. Um zu vermeiden, Handleressourcen, rufen Sie diese Methode immer in einem eingeschränkten Ausführungsbereich (CER), in dem ein Abbruch des Threads Verarbeitung unterbrochen werden kann.  
+>  Diese Methode ist für erfahrene Benutzer vorgesehen und muss immer sorgfältig verwendet werden. Um zu vermeiden, Handleressourcen, rufen Sie diese Methode immer innerhalb einer eingeschränkten Ausführungsbereich (CER), wobei ein Threadabbruchs Verarbeitung unterbrochen werden kann.  
   
  ]]></format>
         </remarks>
@@ -329,6 +336,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -347,8 +355,11 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
+          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -356,16 +367,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the value of the <see cref="F:System.Runtime.InteropServices.SafeHandle.handle" /> field.</summary>
-        <returns>An <see langword="IntPtr" /> representing the value of the <see cref="F:System.Runtime.InteropServices.SafeHandle.handle" /> field. If the handle has been marked invalid with <see cref="M:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid" />, this method still returns the original handle value, which can be a stale value.</returns>
+        <summary>Gibt den Wert des <see cref="F:System.Runtime.InteropServices.SafeHandle.handle" />-Felds zurück.</summary>
+        <returns>Ein <see langword="IntPtr" />, der den Wert des <see cref="F:System.Runtime.InteropServices.SafeHandle.handle" />-Felds darstellt. Wenn das Handle mit <see cref="M:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid" /> als ungültig markiert ist, gibt diese Methode dennoch den ursprünglichen Handlewert zurück, bei dem es sich um einen veralteten Wert handeln kann.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Verwenden Sie diese Methode zum Abrufen des tatsächlichen Handlewerts von einer Instanz von der <xref:System.Runtime.InteropServices.SafeHandle> abgeleitete Klasse. Diese Methode ist für die Abwärtskompatibilität erforderlich, da viele Eigenschaften in .NET Framework zurückgeben `IntPtr` Typen verarbeiten. `IntPtr` Handletypen sind Clientplattform-spezifische Typen zur Darstellung von Zeigern und ein Handle.  
+ Sie können diese Methode verwenden, zum Abrufen des tatsächlichen Handlewerts von einer Instanz von der <xref:System.Runtime.InteropServices.SafeHandle> abgeleitete Klasse. Diese Methode ist für die Abwärtskompatibilität erforderlich, da viele Eigenschaften in .NET Framework zurückgeben `IntPtr` Typen verarbeiten. `IntPtr` Typen von Handles sind Clientplattform-spezifische Typen verwendet, um einen Zeiger oder ein Handle darstellen.  
   
 > [!CAUTION]
->  Mithilfe der <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> Methode kann ein Sicherheitsrisiko da, wenn das Handle als ungültig markiert wurde <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A>, <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> weiterhin den ursprünglichen, möglicherweise veralteten Handlewert zurück. Das zurückgegebene Handle kann auch zu einem beliebigen Zeitpunkt wiederverwendet werden. Bestenfalls, bedeutet dies, dass das Handle bestenfalls möglicherweise. Im schlimmsten Fall, wenn das Handle oder der Ressource, die das Handle darstellt, die in nicht vertrauenswürdigen Code verfügbar ist, kann dies zu recycling Sicherheitsangriffe wiederverwendete oder zurückgegebene Handle führen. Beispielsweise kann ein nicht vertrauenswürdiger Aufrufer Abfragen zurückgegebene Daten auf das Handle, das nur und Empfangen von Informationen für eine völlig andere Ressource. Finden Sie unter der <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> und <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Methoden für Weitere Informationen zum Verwenden der <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> System.Runtime.InteropServices.SafeHandle.DangerousRelease-Methode.  
+>  Mithilfe der <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> Methode bergen Sicherheitsrisiken, da, wenn das Handle als ungültig gekennzeichnet wurde <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A>, <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> immer noch die ursprünglichen, möglicherweise veraltete Handlewert zurück. Das zurückgegebene Handle kann auch zu einem beliebigen Zeitpunkt wiederverwendet werden. Im besten Fall bedeutet dies, dass das Handle bestenfalls könnte. Wenn das Handle oder die Ressource, die das Handle darstellt, der nicht vertrauenswürdigen Code verfügbar gemacht wird, kann dies im schlimmsten Fall prozesswiederverwendung Angriffsfläche auf dem wiederverwendete oder zurückgegebene Handle führen. Ein nicht vertrauenswürdiger Aufrufer kann z. B. Abfragen von Daten auf den Ziehpunkt nur zurückgegeben, und erhalten Informationen für eine völlig andere Ressource. Finden Sie unter den <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> und <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Methoden für die Weitere Informationen zur Verwendung der <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> System.Runtime.InteropServices.SafeHandle.DangerousRelease-Methode.  
   
  ]]></format>
         </remarks>
@@ -386,6 +397,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -404,8 +416,11 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -413,15 +428,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Manually decrements the reference counter on a <see cref="T:System.Runtime.InteropServices.SafeHandle" /> instance.</summary>
+        <summary>Dekrementiert manuell den Verweiszähler für eine <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Instanz.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Methode ist das Gegenstück zum <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. Sie sollte immer einen Aufruf von entsprechen den <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Methode mit einem erfolgreichen Aufruf von <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>.  
+ Die <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Methode ist das Gegenstück zur <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. Sie sollten immer einen Aufruf von Abgleichen der <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> -Methode mit einem erfolgreichen Aufruf <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>.  
   
 > [!CAUTION]
->  Diese Methode wird für erfahrene Benutzer vorgesehen und muss immer sorgfältig verwendet werden. Um zu vermeiden, Handleressourcen, rufen Sie diese Methode immer in einem eingeschränkten Ausführungsbereich (CER), in dem ein Abbruch des Threads Verarbeitung unterbrochen werden kann. In der gleichen Weise nicht übereinstimmende <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Aufrufe können dazu führen, dass nicht übereinstimmende Ressourcenverluste <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Aufrufe Ungültiges Handle für andere Threads sichtbar werden Statuswerte verursachen können. Machen Sie nicht <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Aufrufen von nicht vertrauenswürdigen Code.  
+>  Diese Methode ist für erfahrene Benutzer vorgesehen und muss immer sorgfältig verwendet werden. Um zu vermeiden, Handleressourcen, rufen Sie diese Methode immer innerhalb einer eingeschränkten Ausführungsbereich (CER), wobei ein Threadabbruchs Verarbeitung unterbrochen werden kann. In der gleichen Weise, dass nicht übereinstimmende <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> Aufrufe können bewirken, dass Ressourcenverluste, nicht übereinstimmende <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Aufrufe können bewirken, dass Ungültiges Handle-Zustände für andere Threads sichtbar werden. Machen Sie nicht <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> Aufrufe von nicht vertrauenswürdigem Code.  
   
  ]]></format>
         </remarks>
@@ -435,7 +450,7 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Releases the resources used by the <see cref="T:System.Runtime.InteropServices.SafeHandle" /> class.</summary>
+        <summary>Gibt die von der <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Klasse verwendeten Ressourcen frei.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="Dispose">
@@ -455,6 +470,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -473,10 +489,10 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
         </Attribute>
       </Attributes>
@@ -485,17 +501,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases all resources used by the <see cref="T:System.Runtime.InteropServices.SafeHandle" /> class.</summary>
+        <summary>Gibt alle von der <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Klasse verwendeten Ressourcen frei.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Aufrufen der <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode ermöglicht die Ressourcen freigegeben werden. Dies möglicherweise nicht sofort ausgeführt, wenn andere Threads dieselbe Instanz des SafeHandle verwenden, jedoch erfolgt, sobald das nicht mehr der Fall ist. Obwohl die meisten Klassen <xref:System.Runtime.InteropServices.SafeHandle> nicht um einen Finalizer bereitstellen müssen, dies ist in einigen Fällen (z. B. Dateipuffer leeren oder um Daten zurück in den Arbeitsspeicher zu schreiben) erforderlich. In diesem Fall können sie einen Finalizer, der zum Ausführen vor unbedingt bieten die <xref:System.Runtime.InteropServices.SafeHandle> kritischen Finalizer ausgeführt wird.  
+ Aufrufen der <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode kann die Ressourcen freigegeben werden. Dies möglicherweise nicht sofort ausgeführt, wenn andere Threads dieselbe Instanz von SafeHandle verwenden, aber es erfolgt, sobald Sie dies nicht mehr der Fall ist. Obwohl die meisten Klassen <xref:System.Runtime.InteropServices.SafeHandle> müssen Sie sich nicht um einen Finalizer bereitstellen, dies ist manchmal notwendig ist (z. B. Dateipuffer leeren oder um die Daten zurück in den Arbeitsspeicher zu schreiben). In diesem Fall können sie einen Finalizer, der garantiert ist, führen Sie vor dem Bereitstellen der <xref:System.Runtime.InteropServices.SafeHandle> kritischen Finalizer ausgeführt wird.  
   
  Rufen Sie die <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode, wenn Sie fertig sind mit den <xref:System.Runtime.InteropServices.SafeHandle> Objekt. Die <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> -Methode bewirkt, dass die <xref:System.Runtime.InteropServices.SafeHandle> Objekt in einem nicht verwendbaren Zustand.  
   
 > [!NOTE]
->  Rufen Sie immer die <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> -Methode auf, bevor Sie den letzten Verweis auf Freigeben der <xref:System.Runtime.InteropServices.SafeHandle> Objekt. Andernfalls bleiben die verwendeten Ressourcen reserviert, bis die Garbage Collection die <xref:System.Runtime.InteropServices.SafeHandle>-Methode des <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A>-Objekts aufruft.  
+>  Rufen Sie immer die <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> oder <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode, die bereits vor der Veröffentlichung des letzten Verweis auf die <xref:System.Runtime.InteropServices.SafeHandle> Objekt. Andernfalls bleiben die verwendeten Ressourcen reserviert, bis die Garbage Collection die <xref:System.Runtime.InteropServices.SafeHandle>-Methode des <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A>-Objekts aufruft.  
   
  ]]></format>
         </remarks>
@@ -516,6 +532,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -534,10 +551,10 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
@@ -549,13 +566,13 @@
       </Parameters>
       <Docs>
         <param name="disposing">
-          <see langword="true" /> for a normal dispose operation; <see langword="false" /> to finalize the handle.</param>
-        <summary>Releases the unmanaged resources used by the <see cref="T:System.Runtime.InteropServices.SafeHandle" /> class specifying whether to perform a normal dispose operation.</summary>
+          <see langword="true" /> für einen normalen Freigabevorgang, <see langword="false" />, um das Handle zu beenden.</param>
+        <summary>Gibt die von der <see cref="T:System.Runtime.InteropServices.SafeHandle" />-Klasse verwendeten, nicht verwalteten Ressourcen frei und gibt an, ob ein normaler Freigabevorgang ausgeführt werden soll.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Rufen Sie niemals explizit die <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode mit der `disposing` Parametersatz auf `false`.  
+ Sie sollten niemals explizit aufrufen, die <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> -Methode mit dem `disposing` Parametersatz zu `false`.  
   
  ]]></format>
         </remarks>
@@ -576,6 +593,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -594,7 +612,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Security.SecuritySafeCritical</AttributeName>
         </Attribute>
       </Attributes>
@@ -603,7 +621,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Frees all resources associated with the handle.</summary>
+        <summary>Gibt alle dem Handle zugeordneten Ressourcen frei.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -630,6 +648,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -651,7 +670,7 @@
         <ReturnType>System.IntPtr</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Specifies the handle to be wrapped.</summary>
+        <summary>Gibt das zu umschließende Handle an.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -676,6 +695,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -694,26 +714,29 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
+          <AttributeName>get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value indicating whether the handle is closed.</summary>
+        <summary>Ruft einen Wert ab, der angibt, ob das Handle geschlossen ist.</summary>
         <value>
           <see langword="true" />, wenn das Handle geschlossen ist, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> Methodenrückgabe ein Wert, der angibt, ob die <xref:System.Runtime.InteropServices.SafeHandle> Handle des Objekts ist nicht mehr eine systemeigene Ressource zugeordnet. Dies unterscheidet sich von der Definition der <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> -Eigenschaft, die berechnet, ob ein bestimmtes Handle immer als ungültig betrachtet wird. Die <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> Methode gibt ein `true` Wert in den folgenden Fällen:  
+ Der <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> Methode gibt einen Wert, der angibt, ob die <xref:System.Runtime.InteropServices.SafeHandle> Handle des Objekts ist nicht mehr eine systemeigene Ressource zugeordnet. Dies unterscheidet sich von der Definition der <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> -Eigenschaft, die berechnet, ob ein bestimmtes Handle immer als ungültig angesehen wird. Die <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> Methode gibt eine `true` Wert in den folgenden Fällen:  
   
--   Die <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> -Methode wurde aufgerufen.  
+-   Die <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> Methode wurde aufgerufen.  
   
--   Die <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode oder <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> Methode wurde aufgerufen, und es werden keine Verweise auf die <xref:System.Runtime.InteropServices.SafeHandle> Objekt für andere Threads.  
+-   Die <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> Methode oder <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> Methode wurde aufgerufen, und es sind keine Verweise auf die <xref:System.Runtime.InteropServices.SafeHandle> Objekt in anderen Threads.  
   
  ]]></format>
         </remarks>
@@ -734,6 +757,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -752,7 +776,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
         </Attribute>
       </Attributes>
@@ -760,21 +784,21 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>When overridden in a derived class, gets a value indicating whether the handle value is invalid.</summary>
+        <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse einen Wert ab, der angibt, ob dieses Handle ungültig ist.</summary>
         <value>
           <see langword="true" />, wenn der Handlewert ungültig ist, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Abgeleitete Klassen müssen implementieren die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft, damit die common Language Runtime ermitteln kann, ob Handleressourcen erforderlich ist. Abgeleitete Klassen müssen eine Implementierung, die den allgemeinen Typ der Handle passt sie unterstützen bereitstellen (0 oder-1 ist ungültig). Diese Klassen können dann weitere für bestimmte SafeHandle-Typen abgeleitet werden.  
+ Müssen abgeleitete Klassen implementieren die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft, damit die common Language Runtime ermitteln kann, ob kritische Finalisierung erforderlich ist. Abgeleitete Klassen müssen eine Implementierung, die den allgemeinen Typ des Handles geeignet ist, sie unterstützen, bereitstellen (0 oder-1 ist ungültig). Diese Klassen können dann weitere für bestimmte SafeHandle-Typen abgeleitet werden.  
   
- Im Gegensatz zu der <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> -Eigenschaft, die meldet, ob die <xref:System.Runtime.InteropServices.SafeHandle> Objekt nicht mehr verwendet das zugrunde liegende Handle der <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> -Eigenschaft berechnet, ob der angegebene Handlewert immer als ungültig betrachtet wird. Aus diesem Grund die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft gibt immer den gleichen Wert für einen einzelnen Handlewert zurück.  
+ Im Gegensatz zu der <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> -Eigenschaft, die meldet, ob die <xref:System.Runtime.InteropServices.SafeHandle> -Objekts abgeschlossen ist, verwenden das zugrunde liegende Handle, der <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft berechnet, ob der Wert des angegebenen Handles immer als ungültig eingestuft wird. Aus diesem Grund die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft gibt immer den gleichen Wert für einen beliebigen Wert ein Handle zurück.  
   
    
   
 ## Examples  
- Im folgende Beispiel wird überprüft, ob eine Datei erfolgreich geöffnet wurde. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.Runtime.InteropServices.SafeHandle> Klasse.  
+ Im folgende Beispiel wird überprüft, ob eine Datei wurde erfolgreich geöffnet wurde. Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.Runtime.InteropServices.SafeHandle> Klasse.  
   
  [!code-csharp[SafeHandle#2](~/samples/snippets/csharp/VS_Snippets_CLR/SafeHandle/CS/program.cs#2)]  
   
@@ -797,6 +821,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -815,7 +840,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
         </Attribute>
       </Attributes>
@@ -824,20 +849,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+        <summary>Führt beim Überschreiben in einer abgeleiteten Klasse den Code aus, der für das Freigeben des Handles erforderlich ist.</summary>
         <returns>
-          <see langword="true" /> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false" />. In this case, it generates a [releaseHandleFailed](~/docs/framework/debug-trace-profile/releasehandlefailed-mda.md) Managed Debugging Assistant.</returns>
+          <see langword="true" />, wenn das Handle erfolgreich freigegeben wurde, andernfalls im Fall eines schwerwiegenden Fehlers <see langword="false" />. In diesem Fall wird ein [releaseHandleFailed](~/docs/framework/debug-trace-profile/releasehandlefailed-mda.md)-Assistent für verwaltetes Debuggen (Managed Debugging Assistant, MDA) generiert.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> Methode ist garantiert aufgerufen werden, nur einmal und nur, wenn das Handle gültig gemäß der Definition von ist die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft. Implementieren Sie diese Methode in Ihrer <xref:System.Runtime.InteropServices.SafeHandle> abgeleitete Klassen, um Code auszuführen, die zum Freigeben des Handles erforderlich ist. Da eine der Funktionen von <xref:System.Runtime.InteropServices.SafeHandle> wird zum Gewährleisten der Vermeidung von Ressourcenverlusten, den Code in der Implementierung von <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> müssen nie ein Failover auf. Der Garbage Collector ruft <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> nach normale Finalizer für Objekte ausgeführt wurden, die Garbage collection gleichzeitig waren. Der Garbage Collector garantiert die Ressourcen zum Aufrufen dieser Methode und, dass die Methode nicht wird, während er unterbrochen werden ausgeführt wird. Diese Methode wird zur Entwurfszeit (sowie alle Methoden in seiner statisch bestimmbare Aufrufdiagramm) Instanz als einem eingeschränkten Ausführungsbereich (CER) vorbereitet werden. Obwohl dies verhindert, dass ein Thread Abort Interrupts, noch achten Sie nicht, um alle Fehler Pfade in der überschriebenen einzuführen <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> Methode. Wenden Sie insbesondere die <xref:System.Runtime.ConstrainedExecution.ReliabilityContractAttribute> -Attribut auf alle Methoden, die Sie von Aufrufen <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A>. In den meisten Fällen sollte dieser Code sein:  
+ Die <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> -Methode wird aufgerufen werden, nur einmal und nur, wenn der Handle gültig gemäß ist garantiert, dass die <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid%2A> Eigenschaft. Implementieren Sie diese Methode in Ihrer <xref:System.Runtime.InteropServices.SafeHandle> abgeleiteten Klassen, um Code auszuführen, der zum Freigeben des Handles erforderlich ist. Da eine der Funktionen der <xref:System.Runtime.InteropServices.SafeHandle> ist, die Vermeidung von Ressourcenverlusten, den Code in der Implementierung von gewährleisten <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> muss niemals Fehler verursachen. Der Garbage Collector ruft <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> nach normale Finalizer für Objekte ausgeführt wurden, die Garbage Collection zur selben Zeit durchgeführt wurden. Der Garbage Collector garantiert, dass die Ressourcen zum Aufrufen dieser Methode und wird ausgeführt, dass die Methode während nicht unterbrochen wird. Diese Methode wird bei der Instanz Konstruktion (zusammen mit allen Methoden in der statisch bestimmbare Aufrufdiagramm) als einen eingeschränkten Ausführungsbereich (CER) vorbereitet werden. Obwohl dies verhindert, dass ein Thread abgebrochen Interrupts, immer noch achten Sie keine Einführung in die überschriebene Pfaden Fehler <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> Methode. Wenden Sie insbesondere die <xref:System.Runtime.ConstrainedExecution.ReliabilityContractAttribute> Attribut auf alle Methoden, die Sie aus aufrufen <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A>. In den meisten Fällen sollte dieser Code sein:  
   
  `ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)`  
   
- Darüber hinaus für eine einfache Bereinigung (z. B. durch Aufruf der Win32-API `CloseHandle` für ein Dateihandle) überprüfen Sie den Rückgabewert, für die einzelnen Plattformaufruf. Bei einer komplexen Bereinigung müssen Sie möglicherweise viel Programmlogik und viele Methodenaufrufe, von die einige möglicherweise fehlschlagen. Sie müssen sicherstellen, dass die Programmlogik für jeden dieser Fälle fallback Code verfügt.  
+ Darüber hinaus für eine einfache Bereinigung (z. B. durch Aufruf der Win32-API `CloseHandle` auf ein Dateihandle) sehen Sie den Rückgabewert für die einzelnen Plattformaufruf. Für die Bereinigung der komplexen müssen Sie möglicherweise viel Programmlogik und viele Methodenaufrufe, von die einige möglicherweise fehlschlagen. Sie müssen sicherstellen, dass die Programmlogik fallback-Code für die einzelnen Fälle verfügt.  
   
- Wenn <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> gibt `false` aus irgendeinem Grund generiert eine [ReleaseHandleFailed](~/docs/framework/debug-trace-profile/releasehandlefailed-mda.md) -Assistent für verwaltetes Debuggen.  Dadurch können Sie die Fälle zu erkennen, der Versuch, Ressourcen freizugeben, in dem ein Fehler auftritt.  
+ Wenn <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> gibt `false` generiert aus irgendeinem Grund ein [ReleaseHandleFailed](~/docs/framework/debug-trace-profile/releasehandlefailed-mda.md) -Assistent für verwaltetes Debuggen.  Dadurch können Sie die Fälle zu erkennen, der Versuch, Ressourcen freizugeben, in denen ein Fehler auftritt.  
   
    
   
@@ -865,6 +890,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -883,8 +909,11 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
+          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -894,13 +923,13 @@
         <Parameter Name="handle" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="handle">The pre-existing handle to use.</param>
-        <summary>Sets the handle to the specified pre-existing handle.</summary>
+        <param name="handle">Das bereits vorhandene Handle, das verwendet werden soll.</param>
+        <summary>Legt das Handle für das angegebene, bereits vorhandene Handle fest.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Verwenden der <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> Methode nur, wenn Sie ein bereits vorhandenes Handle unterstützt werden (beispielsweise, wenn das Handle in einer Struktur zurückgegeben wird), weil die .NET Framework-COM-Interop-Infrastruktur keine Marshalling unterstützt müssen Ausgabe Handles in einer Struktur.  
+ Verwenden der <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> Methode nur, wenn ein bereits vorhandenes Handle (beispielsweise, wenn das Handle in einer Struktur zurückgegeben wird) unterstützt, weil die .NET Framework-COM-Interop-Infrastruktur Marshallen von nicht unterstützt werden müssen, Ausgabe Handles in einer Struktur.  
   
  ]]></format>
         </remarks>
@@ -921,6 +950,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
@@ -939,8 +969,11 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName>System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
+          <AttributeName>System.Security.SecurityCritical</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -948,14 +981,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Marks a handle as no longer used.</summary>
+        <summary>Markiert ein Handle als nicht mehr verwendet.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Rufen Sie die <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> Methode, nur, wenn Sie wissen, dass das Handle nicht mehr auf eine Ressource verweist. Dadurch ändert sich nicht auf den Wert, der die <xref:System.Runtime.InteropServices.SafeHandle.handle> Feld; er nur markiert das Handle als geschlossen. Das Handle kann dann möglicherweise veralteten Wert enthalten. Der Effekt dieses Aufrufs ist, dass kein Versuch unternommen wird, um die Ressourcen freizugeben.  
+ Rufen Sie die <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> Methode nur, wenn Sie wissen, dass das Handle nicht mehr auf eine Ressource verweist. Dadurch ändert sich nicht auf den Wert des der <xref:System.Runtime.InteropServices.SafeHandle.handle> Feld; nur markiert das Handle als geschlossen. Das Handle kann dann möglicherweise veralteten Wert enthalten. Der Effekt dieses Aufrufs ist, dass kein Versuch unternommen wird, um die Ressourcen freizugeben.  
   
- Wie bei der <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> -Methode <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> nur, wenn Sie ein bereits vorhandenes Handle unterstützen müssen.  
+ Wie bei der <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> -Methode ist, <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> nur, wenn Sie ein bereits vorhandenes Handle unterstützen müssen.  
   
  ]]></format>
         </remarks>
