@@ -1,11 +1,11 @@
 <Type Name="BufferManager" FullName="System.ServiceModel.Channels.BufferManager">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="7b5cc292983bcc7fe3d3baa880329a56441698fc" />
-    <Meta Name="ms.sourcegitcommit" Value="5a49536d99d2d0b54e4cb7280870903e043272df" />
+    <Meta Name="ms.openlocfilehash" Value="684df0618b4f7ebd8dfd2d1c98eee8f618fe6a9e" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="07/03/2018" />
-    <Meta Name="ms.locfileid" Value="37622286" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39803214" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class BufferManager" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit BufferManager extends System.Object" />
@@ -30,7 +30,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Many Windows Communication Foundation (WCF) features require the use of buffers, which are expensive to create and destroy. You can use the <see cref="T:System.ServiceModel.Channels.BufferManager" /> class to manage a buffer pool. The pool and its buffers are created when you instantiate this class and destroyed when the buffer pool is reclaimed by garbage collection. Every time you need to use a buffer, you take one from the pool, use it, and return it to the pool when done. This process is much faster than creating and destroying a buffer every time you need to use one.</summary>
+    <summary>Viele WCF-Features erfordern die Verwendung von Puffern, deren Erstellung und Löschung kostenaufwändig ist. Mit der <see cref="T:System.ServiceModel.Channels.BufferManager" />-Klasse können Sie einen Pufferpool verwalten. Der Pool und die zugehörigen Puffer werden beim Instanziieren dieser Klasse erstellt und nach der Freigabe von der Garbage Collection wieder zerstört. Wenn Sie einen Puffer verwenden möchten, können Sie einen aus dem Pool nehmen und nach Abschluss der Arbeit wieder im Pool ablegen. Dieser Vorgang ist wesentlich schneller, als jedes Mal, wenn Sie einen Puffer benötigen, eine neuen zu erstellen und wieder zu zerstören.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -60,9 +60,14 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName>System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")</AttributeName>
+        </Attribute>
+      </Attributes>
       <Parameters />
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.Channels.BufferManager" /> class.</summary>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.ServiceModel.Channels.BufferManager" />-Klasse.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -98,7 +103,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases the buffers currently cached in the manager.</summary>
+        <summary>Gibt die derzeit im Manager zwischengespeicherten Puffer frei.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -130,10 +135,10 @@
         <Parameter Name="maxBufferSize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="maxBufferPoolSize">The maximum size of the pool.</param>
-        <param name="maxBufferSize">The maximum size of an individual buffer.</param>
-        <summary>Creates a new BufferManager with a specified maximum buffer pool size and a maximum size for each individual buffer in the pool.</summary>
-        <returns>Returns a <see cref="T:System.ServiceModel.Channels.BufferManager" /> object with the specified parameters.</returns>
+        <param name="maxBufferPoolSize">Die maximale Größe des Pools.</param>
+        <param name="maxBufferSize">Die maximale Größe eines einzelnen Puffers.</param>
+        <summary>Erstellt einen neuen Puffermanager mit einer angegebenen maximalen Pufferpoolgröße und einer maximalen Größe für jeden einzelnen Puffer im Pool</summary>
+        <returns>Gibt ein <see cref="T:System.ServiceModel.Channels.BufferManager" />-Objekt mit den angegebenen Parametern zurück.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -144,10 +149,12 @@
         </remarks>
         <exception cref="T:System.InsufficientMemoryException">
           <block subset="none" type="note">
-            <para> In the [.NET for Windows Store apps](http://go.microsoft.com/fwlink/?LinkID=247912) or the [Portable Class Library](~/docs/standard/cross-platform/cross-platform-development-with-the-portable-class-library.md), catch the base class exception, <see cref="T:System.OutOfMemoryException" />, instead.  </para>
-          </block>  There was insufficient memory to create the requested buffer pool.</exception>
+            <para>Fangen Sie in [.NET für Windows Store-Apps](http://go.microsoft.com/fwlink/?LinkID=247912) oder [Portable Klassenbibliothek](~/docs/standard/cross-platform/cross-platform-development-with-the-portable-class-library.md) stattdessen die Basisklassenausnahme <see cref="T:System.OutOfMemoryException" /> ab.  </para>
+          </block>  
+  
+Der Arbeitsspeicher reichte nicht aus, um den angeforderten Pufferpool zu erstellen.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="maxBufferPoolSize" /> or <paramref name="maxBufferSize" /> was less than zero.</exception>
+          <paramref name="maxBufferPoolSize" /> oder <paramref name="maxBufferSize" /> war kleiner als 0 (Null).</exception>
       </Docs>
     </Member>
     <Member MemberName="ReturnBuffer">
@@ -177,8 +184,8 @@
         <Parameter Name="buffer" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="buffer">A reference to the buffer being returned.</param>
-        <summary>Returns a buffer to the pool.</summary>
+        <param name="buffer">Ein Verweis auf den Puffer, der zurückgegeben wird.</param>
+        <summary>Gibt einen Puffer an den Pool zurück.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -188,8 +195,8 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="buffer" /> reference cannot be <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">Length of <paramref name="buffer" /> does not match the pool's buffer length property.</exception>
+          <paramref name="buffer" />-Verweis darf nicht <see langword="null" /> sein.</exception>
+        <exception cref="T:System.ArgumentException">Die Länge des <paramref name="buffer" /> entspricht nicht der Pufferlängeneigenschaft des Pools.</exception>
       </Docs>
     </Member>
     <Member MemberName="TakeBuffer">
@@ -219,9 +226,9 @@
         <Parameter Name="bufferSize" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="bufferSize">The size, in bytes, of the requested buffer.</param>
-        <summary>Gets a buffer of at least the specified size from the pool.</summary>
-        <returns>A byte array that is the requested size of the buffer.</returns>
+        <param name="bufferSize">Die Größe des angeforderten Puffers in Byte.</param>
+        <summary>Ruft einen Puffer mit mindestens der angegebenen Größe aus dem Pool ab.</summary>
+        <returns>Ein Bytearray, das der angeforderten Größe des Puffers entspricht.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -231,7 +238,7 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="bufferSize" /> cannot be less than zero.</exception>
+          <paramref name="bufferSize" /> darf nicht kleiner 0 (null) sein.</exception>
       </Docs>
     </Member>
   </Members>
