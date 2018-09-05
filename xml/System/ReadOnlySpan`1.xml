@@ -1,11 +1,11 @@
 <Type Name="ReadOnlySpan&lt;T&gt;" FullName="System.ReadOnlySpan&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="7e0feb74debd27988fa190cdd4fc23848bb487d3" />
-    <Meta Name="ms.sourcegitcommit" Value="6a0b904069161bbaec4ffd02aa7d9cf38c61e72e" />
+    <Meta Name="ms.openlocfilehash" Value="12357179192b89232e7d5799ab47b00a99fb8e1d" />
+    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="06/24/2018" />
-    <Meta Name="ms.locfileid" Value="36428533" />
+    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
+    <Meta Name="ms.locfileid" Value="39986309" />
   </Metadata>
   <TypeSignature Language="C#" Value="public struct ReadOnlySpan&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ReadOnlySpan`1&lt;T&gt; extends System.ValueType" />
@@ -29,17 +29,21 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute>
+    <Attribute FrameworkAlternate="netcore-2.1">
       <AttributeName>System.Runtime.CompilerServices.IsByRefLike</AttributeName>
     </Attribute>
-    <Attribute>
+    <Attribute FrameworkAlternate="netcore-2.1">
       <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">Der Typ der Elemente in der <see cref="System.ReadOnlySpan`1" />.</typeparam>
+    <summary>Dieser enthält eine typ- und arbeitsspeichersichere schreibgeschützte Darstellung einer zusammenhängenden Region von beliebigem Arbeitsspeicher.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[`ReadOnlySpan<T>` ist eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type) , die auf dem Stapel zugeordnet, und es kann nie ESC, um den im verwalteten Heap. Ref Struct-Typen haben eine Reihe von Einschränkungen, um sicherzustellen, dass sie, die den verwalteten Heap heraufgestuft werden, einschließlich der, dass sie können nicht in Lambda-Ausdrücken in Variablen des Typs zugewiesen aufgezeichnet verschachtelt werden, <xref:System.Object>, zugewiesen an `dynamic` Variablen, und Sie können nicht auf einen beliebigen anderen Schnittstellentyp implementieren.
+
+Ein `ReadOnlySpan<T>` Instanz wird häufig verwendet, um die Elemente eines Arrays oder einen Teil eines Arrays zu verweisen. Im Gegensatz zu einem Array, jedoch eine `ReadOnlySpan<T>` Instanz kann auf verwalteten Speicher, systemeigenen Speicher oder Arbeitsspeicher verwaltet, auf dem Stapel.]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -62,9 +66,11 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">Das Array, aus dem <see cref="T:System.ReadOnlySpan`1" /> erstellt werden soll.</param>
+        <summary>Erstellt ein neues <see cref="T:System.ReadOnlySpan`1" /> über das gesamte angegebene Array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Wenn das Array auf null festgelegt ist, gibt dieses Konstruktors Null zurück `ReadOnlySpan<T>`.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -83,7 +89,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.1">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -92,10 +98,16 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="pointer">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="pointer">Ein Zeiger auf die Startadresse einer angegebenen Anzahl von <paramref name="T" />-Objekten im Arbeitsspeicher.</param>
+        <param name="length">Die Anzahl der einzubeziehenden <paramref name="T" />-Objekte.</param>
+        <summary>Erstellt ein neues <see cref="T:System.ReadOnlySpan`1" /> aus einer angegebenen Anzahl von Bytes. Dabei wird an der angegebenen Speicheradresse begonnen.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Dieser Konstruktor sollte mit Bedacht, verwendet werden, weil er eine willkürlich typisierte `T`aus einen Speicherblock.]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> ist ein Verweistyp oder enthält Verweise und kann deshalb nicht in nicht verwaltetem Arbeitsspeicher gespeichert werden.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="length" /> ist ein negativer Wert.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -115,10 +127,14 @@
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="start">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="array">Das Array, aus dem <see cref="T:System.ReadOnlySpan`1" /> erstellt werden soll.</param>
+        <param name="start">Der Startindex, bei dem das schreibgeschützte Span-Element beginnen soll.</param>
+        <summary>Erstellt ein neues <see cref="T:System.ReadOnlySpan`1" /> aus einem Array, das an einer angegebenen Indexposition beginnt und bis zum Ende des Arrays fortgesetzt wird.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" /> ist kleiner als 0 oder größer als die Länge des Arrays.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="array" /> ist NULL.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -143,11 +159,15 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="array">Das Array, aus dem <see cref="T:System.ReadOnlySpan`1" /> erstellt werden soll.</param>
+        <param name="start">Der Index des ersten einzubeziehenden Elements.</param>
+        <param name="length">Die Anzahl der einzubeziehenden Elemente.</param>
+        <summary>Erstellt ein neues <see cref="T:System.ReadOnlySpan`1" />, das eine angegebene Anzahl von Elementen aus einem Array enthält. Dabei wird an einem angegebenen Index begonnen.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="array" /> ist gleich <see langword="null" />, aber <paramref name="start" /> oder <paramref name="length" /> ist nicht 0 (null).<p />
+– oder –<p /><paramref name="start" /> liegt außerhalb der Grenzen des Arrays. <p />
+– oder –<p /><paramref name="start" /> und <paramref name="length" /> überschreiten die Anzahl von Elementen im Array.</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -173,9 +193,13 @@
         <Parameter Name="destination" Type="System.Span&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="destination">Der Bereich, in den Elemente kopiert werden sollen.</param>
+        <summary>Kopiert die Inhalte dieses <see cref="System.ReadOnlySpan`1" />-Elements in ein <see cref="System.Span`1" />-Zielelement.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Wenn die `source` und `destination` überlappen, während des gesamten Entwicklungsprozesses `source` wird behandelt, als ob es in ein temporäres Verzeichnis kopiert wurde, bevor es in kopiert wird `destination`.]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> ist kürzer als das <see cref="System.ReadOnlySpan`1" />-Quellelement.</exception>
       </Docs>
     </Member>
     <Member MemberName="DangerousCreate">
@@ -199,16 +223,22 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="obj" Type="System.Object" />
-        <Parameter Name="objectData" Type="T&amp;" RefType="ref" />
+        <Parameter Name="objectData" Type="T" RefType="ref" />
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="objectData">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="obj">Ein verwaltetes Objekt mit den Daten, die der Bereich abdeckt.</param>
+        <param name="objectData">Ein Verweis auf Daten im Objekt.</param>
+        <param name="length">Die Anzahl der <paramref name="T" />-Elemente, die zum Bereich gehören sollen.</param>
+        <summary>Erstellt ein neues <see cref="T:System.ReadOnlySpan`1" /> über einen Teil eines regulären verwalteten Objekts.</summary>
+        <returns>Ein <see cref="T:System.ReadOnlySpan`1" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Diese Methode ist gefährlich, da es **überprüft nicht,** für die folgenden Fehler:
+
+- Der `length`-Parameter ist ungültig.
+- Der `obj`-Parameter ist null.
+- Die Objekte `obj` verweist, können einen unformatierten Zeiger enthalten.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DangerousGetPinnableReference">
@@ -228,9 +258,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt einen Verweis auf das Element von <see cref="T:System.ReadOnlySpan`1" /> zurück, das sich am Index 0 befindet. Wenn das schreibgeschützte Span-Element leer ist, wird der Verweis auf die Stelle im Arbeitsspeicher zurückgegeben, an der das erste Element gespeichert worden wäre.</summary>
+        <returns>Ein Verweis auf das erste Element von <see cref="T:System.ReadOnlySpan`1" />am Index 0.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Diese Methode gibt eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type). Es kann verwendet werden, für das Fixieren von einem <xref:System.ReadOnlySpan`1> im Arbeitsspeicher. Es ist erforderlich, um die Verwendung von unterstützen eine <xref:System.ReadOnlySpan`1> innerhalb einer [behoben](~/docs/csharp/language-reference/keywords/fixed-statement.md) Anweisung.
+
+Dieser Verweis wird verwendet, für das Fixieren und muss nicht dereferenziert werden.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Empty">
@@ -253,8 +287,8 @@
         <ReturnType>System.ReadOnlySpan&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gibt ein leeres <see cref="T:System.ReadOnlySpan`1" /> zurück.</summary>
+        <value>Gibt ein leeres <see cref="T:System.ReadOnlySpan`1" /> zurück.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -275,10 +309,10 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1">
           <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1">
           <AttributeName>System.Obsolete("Equals() on ReadOnlySpan will always throw an exception. Use == instead.")</AttributeName>
         </Attribute>
       </Attributes>
@@ -289,10 +323,13 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="obj">Wird nicht unterstützt.</param>
+        <summary>Wird nicht unterstützt. Löst eine <see cref="T:System.NotSupportedException" /> aus.</summary>
+        <returns>Wird nicht unterstützt.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Wird nicht unterstützt.]]></format>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">Wird stets durch diese Methode ausgelöst.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -312,9 +349,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt einen Enumerator für dieses <see cref="T:System.ReadOnlySpan`1" />-Element zurück.</summary>
+        <returns>Ruft einen Enumerator für dieses schreibgeschützte Span-Element ab.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Statt die <xref:System.ReadOnlySpan%601.GetEnumerator%2A> Methode direkt verwenden, können Sie die C#- `foreach` -Anweisung und die Visual Basic `For Each`... `Next` -Konstrukt zum Aufzählen einer <xref:System.ReadOnlySpan%601>.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -334,10 +373,10 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1">
           <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1">
           <AttributeName>System.Obsolete("GetHashCode() on ReadOnlySpan will always throw an exception.")</AttributeName>
         </Attribute>
       </Attributes>
@@ -346,9 +385,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Wird nicht unterstützt. Löst eine <see cref="T:System.NotSupportedException" /> aus.</summary>
+        <returns>Wird nicht unterstützt.</returns>
+        <remarks>Wird nicht unterstützt.</remarks>
+        <exception cref="T:System.NotSupportedException">Wird stets durch diese Methode ausgelöst.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetPinnableReference">
@@ -369,7 +409,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>System.T&amp;</ReturnType>
+        <ReturnType>T@</ReturnType>
         <Attributes>
           <Attribute>
             <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
@@ -378,9 +418,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt einen Verweis auf das Element von <see cref="T:System.ReadOnlySpan`1" /> zurück, das sich am Index 0 befindet. Gibt <see langword="null" /> zurück, wenn das schreibgeschützte Span-Element leer ist.</summary>
+        <returns>Ein Verweis auf das Element von <see cref="T:System.ReadOnlySpan`1" /> am Index 0, oder <see langword="null" />, wenn <see cref="M:System.ReadOnlySpan`1.IsEmpty" /> gleich <see langword="true" /> ist.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Die `GetPinnableReference` Methode gibt eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type). Es kann verwendet werden, für das Fixieren von einem <xref:System.ReadOnlySpan%601> im Arbeitsspeicher. Es ist erforderlich, um die Verwendung von unterstützen eine <xref:System.ReadOnlySpan%601> innerhalb einer [behoben](~/docs/csharp/language-reference/keywords/fixed-statement.md) Anweisung.
+
+Dieser Verweis wird verwendet, für das Fixieren und muss nicht dereferenziert werden.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
@@ -403,14 +447,15 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gibt einen Wert zurück, der angibt, dass das aktuelle schreibgeschützte Span-Element leer ist.</summary>
+        <value>
+          <see langword="true" /> Wenn die aktuelle Spanne leer ist; andernfalls <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Item">
       <MemberSignature Language="C#" Value="public T&amp; this[int index] { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.T&amp; modreq(System.Runtime.InteropServices.InAttribute) Item(int32)" />
+      <MemberSignature Language="ILAsm" Value=".property instance T&amp; modreq(System.Runtime.InteropServices.InAttribute) Item(int32)" />
       <MemberSignature Language="DocId" Value="P:System.ReadOnlySpan`1.Item(System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Default Public ReadOnly Property Item(index As Integer) As T&amp;" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property T&amp; ^ default[int] { T&amp; ^ get(int index); };" />
@@ -425,21 +470,23 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="netcore-2.1">
           <AttributeName>System.Runtime.CompilerServices.IsReadOnly</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>System.T&amp;</ReturnType>
+        <ReturnType>T&amp;</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <param name="index">Der nullbasierte Index des abzurufenden Elements.</param>
+        <summary>Ruft ein Element aus dem schreibgeschützten Span-Element am angegebenen nullbasierten Index ab.</summary>
+        <value>Das Element aus der schreibgeschützten Spanne.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.IndexOutOfRangeException">
+          <paramref name="index" /> ist kleiner als 0 (null) oder größer oder gleich <see cref="P:System.ReadOnlySpan`1.Length" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -462,8 +509,8 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Die Anzahl der Elemente im schreibgeschützten Span-Element.</summary>
+        <value>Eine -Anzahl von Elementen.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -491,11 +538,14 @@
         <Parameter Name="right" Type="System.ReadOnlySpan&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="left">Das erste zu vergleichende Span-Element.</param>
+        <param name="right">Das zweite zu vergleichende Span-Element.</param>
+        <summary>Gibt einen Wert zurück, der angibt, ob zwei <see cref="T:System.ReadOnlySpan`1" />-Instanzen gleich sind.</summary>
+        <returns>
+          <see langword="true" />, wenn die beiden <see cref="T:System.ReadOnlySpan`1" />-Instanzen gleich sind, andernfalls <see langword="false" /></returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Auf diese Weise getestet, ob zwei <xref:System.ReadOnlySpan`1> Instanzen zeigen Sie auf die denselben Speicherbereich ab, und weist den gleichen <xref:System.ReadOnlySpan`1.Length> Werte. Vergleicht dies nicht der Inhalt von zwei <xref:System.ReadOnlySpan`1> Instanzen.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -521,9 +571,9 @@
         <Parameter Name="array" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="array">Das Array, das in <see cref="T:System.ReadOnlySpan`1" /> konvertiert werden soll.</param>
+        <summary>Definiert eine implizite Konvertierung eines Arrays in <see cref="T:System.ReadOnlySpan`1" />.</summary>
+        <returns>Das schreibgeschützte Span-Element, das <paramref name="array" /> entspricht.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -555,10 +605,10 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" Index="0" FrameworkAlternate="netcore-2.1" />
       </Parameters>
       <Docs>
-        <param name="arraySegment">To be added.</param>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="arraySegment">Das Segment des Arrays, das in <see cref="T:System.ReadOnlySpan`1" /> konvertiert werden soll.</param>
+        <param name="segment">Das Segment des Arrays, das in <see cref="T:System.ReadOnlySpan`1" /> konvertiert werden soll.</param>
+        <summary>Definiert eine implizite Konvertierung von <see cref="T:System.ArraySegment`1" /> in <see cref="T:System.ReadOnlySpan`1" />.</summary>
+        <returns>Ein schreibgeschütztes Span-Element, das dem Arraysegment entspricht.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -586,11 +636,14 @@
         <Parameter Name="right" Type="System.ReadOnlySpan&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="left">Das erste zu vergleichende schreibgeschützte Span-Element.</param>
+        <param name="right">Das zweite zu vergleichende schreibgeschützte Span-Element.</param>
+        <summary>Gibt einen Wert zurück, der angibt, ob zwei <see cref="T:System.ReadOnlySpan`1" />-Instanzen ungleich sind.</summary>
+        <returns>
+          <see langword="true" />, wenn die beiden <see cref="T:System.ReadOnlySpan`1" />-Instanzen ungleich sind, andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Zwei <xref:System.ReadOnlySpan%601> -Instanzen ungleich sind, wenn sie unterschiedlich lang sind oder wenn die entsprechenden Elemente der `left` und `right` zeigen Sie auf die verschiedenen Speicherorten.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -616,10 +669,12 @@
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">Der Index, an dem der Slice beginnen soll.</param>
+        <summary>Bildet einen Slice aus dem aktuellen schreibgeschützten Span-Element, das an einem angegebenen Index beginnt.</summary>
+        <returns>Ein Span-Element, das aus allen Elementen des aktuellen Span-Elements von <paramref name="index" /> bis zum Ende des Span-Elements besteht.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" /> ist größer als die Anzahl der Elemente im schreibgeschützten Span-Element.</exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -646,11 +701,13 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">Der Index, an dem dieser Slice beginnen soll.</param>
+        <param name="length">Die gewünschte Länge des Slices.</param>
+        <summary>Bildet einen Slice aus dem aktuellen schreibgeschützten Span-Element. Dabei wird an einem angegebenen Index für eine angegebene Länge begonnen.</summary>
+        <returns>Ein schreibgeschütztes Span-Element besteht aus <paramref name="length" />-Elementen des aktuellen Span-Elements. Dabei wird bei <paramref name="index" /> begonnen.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="start" /> ist kleiner als 0 (null) oder größer oder gleich <see cref="T:System.Span`1.Length" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToArray">
@@ -674,9 +731,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Kopiert die Inhalte dieses schreibgeschützten Span-Elements in ein neues Array.</summary>
+        <returns>Ein Array das die Daten des aktuellen Span-Elements enthält.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Diese Methode führt eine Heap-Zuordnung und die Daten kopieren und kann aus diesem Grund sollte möglichst vermieden werden. Es manchmal notwendig, wenn Unterstützung für APIs, die <xref:System.ReadOnlySpan%601> nicht verfügbar sind, aber die APIs, die Arbeit mit Arrays sind.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -696,9 +755,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt die Zeichenfolgendarstellung für dieses <see cref="T:System.ReadOnlySpan`1" /> zurück.</summary>
+        <returns>Die Zeichenfolgendarstellung dieser Instanz.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Für eine `ReadOnlySpan<Char>`, `ToString` Methode gibt eine <xref:System.String> , die die Zeichen, verweist der Spanne enthält. Andernfalls wird eine <xref:System.String> mit dem Namen des Typs und die Anzahl der Elemente, die die Spanne enthält.]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryCopyTo">
@@ -724,10 +785,15 @@
         <Parameter Name="destination" Type="System.Span&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">Das Ziel des Kopiervorgangs.</param>
+        <summary>Versucht, den Inhalt dieses <see cref="System.ReadOnlySpan`1" /> in ein <see cref="System.Span`1" /> zu kopieren und gibt einen Wert zurück, der angibt, ob der Vorgang erfolgreich war oder nicht.</summary>
+        <returns>
+          <see langword="true" />, wenn der Kopiervorgang erfolgreich war; andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[Wenn die `source` und `destination` überlappen, während des gesamten Entwicklungsprozesses `source` wird behandelt, als ob es in ein temporäres Verzeichnis kopiert wurde, bevor es in kopiert wird `destination`.
+
+Wenn die `destination` Länge ist kürzer als `source`, es werden keine Elemente kopiert, und die Methode gibt `false`.]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
