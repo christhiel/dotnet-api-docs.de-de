@@ -1,11 +1,11 @@
 <Type Name="HttpClient" FullName="System.Net.Http.HttpClient">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="293f37daee8fffe2b290b14746ec3af85db7d76c" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="e5eec269a5b6b2dd2306a26615bf7156cdc95518" />
+    <Meta Name="ms.sourcegitcommit" Value="1699faabfa691bcec226e9c5879fdae10a86b548" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
-    <Meta Name="ms.locfileid" Value="39871451" />
+    <Meta Name="ms.lasthandoff" Value="09/26/2018" />
+    <Meta Name="ms.locfileid" Value="47189080" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class HttpClient : System.Net.Http.HttpMessageInvoker" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpClient extends System.Net.Http.HttpMessageInvoker" />
@@ -39,7 +39,7 @@
   
  Die <xref:System.Net.Http.HttpClient> fungiert außerdem als Basisklasse für spezifischere HTTP-Clients. Ein Beispiel wäre eine FacebookHttpClient zusätzliche Methoden für ein Facebook-Webdienst (ein GetFriends-Methode, z. B.). Abgeleitete Klassen sollten nicht die virtuellen Methoden in der Klasse überschreiben. Verwenden Sie stattdessen eine Überladung des Konstruktors, die akzeptiert <xref:System.Net.Http.HttpMessageHandler> so konfigurieren Sie alle Pre oder POST-Anforderung verarbeitet stattdessen.
   
- In der Standardeinstellung <xref:System.Net.HttpWebRequest> wird verwendet, um die Anforderungen an den Server gesendet. Dieses Verhalten kann geändert werden, durch einen anderen Kanal in einem der Konstruktorüberladungen, die die Angabe einer <xref:System.Net.Http.HttpMessageHandler> Instanz als Parameter. Wenn Funktionen wie Authentifizierung oder die Zwischenspeicherung erforderlich sind, werden <xref:System.Net.Http.WebRequestHandler> kann verwendet werden, um Einstellungen zu konfigurieren und die Instanz kann an den Konstruktor übergeben werden. Der zurückgegebene Handler übergeben werden kann, eines der Konstruktorüberladungen, die eine <xref:System.Net.Http.HttpMessageHandler> Parameter.  
+ Wird standardmäßig auf .NET Framework und Mono <xref:System.Net.HttpWebRequest> wird verwendet, um die Anforderungen an den Server gesendet. Dieses Verhalten kann geändert werden, durch einen anderen Kanal in einem der Konstruktorüberladungen, die die Angabe einer <xref:System.Net.Http.HttpMessageHandler> Instanz als Parameter. Wenn Funktionen wie Authentifizierung oder die Zwischenspeicherung erforderlich sind, werden <xref:System.Net.Http.WebRequestHandler> kann verwendet werden, um Einstellungen zu konfigurieren und die Instanz kann an den Konstruktor übergeben werden. Der zurückgegebene Handler übergeben werden kann, eines der Konstruktorüberladungen, die eine <xref:System.Net.Http.HttpMessageHandler> Parameter.  
   
  Wenn eine app mit <xref:System.Net.Http.HttpClient> und verwandte Klassen im der <xref:System.Net.Http> Namespace beabsichtigt, um große Mengen von Daten (50 MB oder mehr) herunterzuladen, und klicken Sie dann die app sollte diesen Downloads zu streamen, und nicht die standardmäßige Pufferung. Wenn die standardmäßige Pufferung verwendet wird die Auslastung des Speichers erhalten sehr groß, was möglicherweise wesentlich zu einer Beeinträchtigung der Leistung.  
   
@@ -65,18 +65,17 @@
   
  <xref:System.Net.Http.HttpClient> soll einmal instanziiert und über die gesamte Lebensdauer einer Anwendung wiederverwendet werden. Instanziieren eine HttpClient-Klasse für jede Anforderung erschöpft die Anzahl der verfügbaren starker Auslastung Sockets. Dies führt zu SocketException-Fehlern. Im folgenden finden ein Beispiel zur Verwendung von "HttpClient" ordnungsgemäß.  
   
-```csharp  
-public class GoodController : ApiController  
-{  
-    // OK  
-    private static readonly HttpClient HttpClient;  
-  
-    static GoodController()  
-    {  
-        HttpClient = new HttpClient();  
-    }  
-}  
-  
+```csharp
+public class GoodController : ApiController
+{
+    // OK
+    private static readonly HttpClient HttpClient;
+
+    static GoodController()
+    {
+        HttpClient = new HttpClient();
+    }
+}
 ```  
   
 Die <xref:System.Net.Http.HttpClient> ist eine allgemeine API, die dient als Wrapper für die verfügbaren Low-Level-Funktionen auf jeder Plattform, wo es ausgeführt wird.
@@ -106,6 +105,7 @@ Beginnend mit .NET Core 2.1, die <xref:System.Net.Http.SocketsHttpHandler?displa
 ```csharp
 AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
 ```
+
 ```vb
 AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
 ``` 
@@ -117,6 +117,11 @@ AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
  
  ]]></format>
     </remarks>
+    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkID=245696">Herstellen einer Verbindung mit einem Webdienst</related>
+    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245697">Schnellstart: Verbindungsherstellung mithilfe einer "HttpClient"</related>
+    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245699">Gewusst wie: Verwenden von "HttpClient"-Handler</related>
+    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=245698">Wie Sie sichere Verbindungen von "HttpClient"</related>
+    <related type="ExternalDocumentation" href="http://go.microsoft.com/fwlink/?LinkId=242550">HttpClient Sample (HttpClient-Beispiel)</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -211,7 +216,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="handler" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="handler" /> ist <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -244,7 +250,8 @@ public class GoodController : ApiController
           <see langword="true" />, wenn der innere Handler von [HttpClient.Dispose](xref:System.Net.Http.HttpMessageInvoker.Dispose) verworfen werden soll. <see langword="false" />, wenn Sie beabsichtigen, den inneren Handler wiederzuverwenden.</param>
         <summary>Initialisiert eine neue Instanz der <see cref="T:System.Net.Http.HttpClient" />-Klasse mit einem bestimmten Handler.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="handler" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="handler" /> ist <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="BaseAddress">
@@ -405,7 +412,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -448,7 +456,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -492,7 +501,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -536,7 +546,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -642,7 +653,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -684,7 +696,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -728,7 +741,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -771,7 +785,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -815,7 +830,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -858,7 +874,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -903,7 +920,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -948,7 +966,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1014,7 +1033,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1061,7 +1081,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1127,7 +1148,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1174,7 +1196,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1240,7 +1263,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1287,7 +1311,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1325,9 +1350,9 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der angegebene Größe ist kleiner als oder gleich 0 (null).</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Die angegebene Größe ist kleiner oder gleich 0 (null).</exception>
         <exception cref="T:System.InvalidOperationException">Es wurde bereits ein Vorgang für die aktuelle Instanz gestartet.</exception>
-        <exception cref="T:System.ObjectDisposedException">Die aktuelle Instanz wurde bereits verworfen.</exception>
+        <exception cref="T:System.ObjectDisposedException">Die aktuelle Instanz wurde verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
@@ -1341,6 +1366,9 @@ public class GoodController : ApiController
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
@@ -1369,6 +1397,9 @@ public class GoodController : ApiController
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
@@ -1394,6 +1425,9 @@ public class GoodController : ApiController
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
@@ -1422,6 +1456,9 @@ public class GoodController : ApiController
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
@@ -1499,7 +1536,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1543,7 +1581,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1588,7 +1627,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1633,7 +1673,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1696,7 +1737,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1740,7 +1782,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1785,7 +1828,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1830,7 +1874,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="requestUri" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="requestUri" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
     </Member>
@@ -1842,7 +1887,7 @@ public class GoodController : ApiController
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Senden Sie eine HTTP-Anforderung als asynchroner Vorgang.</summary>
+        <summary>Senden Sie eine HTTP-Anforderung als asynchronen Vorgang.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1881,7 +1926,7 @@ public class GoodController : ApiController
       </Parameters>
       <Docs>
         <param name="request">Die zu sendende HTTP-Anforderungsmeldung.</param>
-        <summary>Senden Sie eine HTTP-Anforderung als asynchroner Vorgang.</summary>
+        <summary>Senden Sie eine HTTP-Anforderung als asynchronen Vorgang.</summary>
         <returns>Das Aufgabenobjekt, das den asynchronen Vorgang darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1891,7 +1936,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="request" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="request" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -1926,7 +1972,7 @@ public class GoodController : ApiController
       <Docs>
         <param name="request">Die zu sendende HTTP-Anforderungsmeldung.</param>
         <param name="completionOption">Wann der Vorgang abgeschlossen werden sollte (sobald eine Antwort verfügbar ist, oder nach dem Lesen des gesamten Inhalts der Antwort).</param>
-        <summary>Senden Sie eine HTTP-Anforderung als asynchroner Vorgang.</summary>
+        <summary>Senden Sie eine HTTP-Anforderung als asynchronen Vorgang.</summary>
         <returns>Das Aufgabenobjekt, das den asynchronen Vorgang darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1936,7 +1982,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="request" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="request" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -1970,7 +2017,7 @@ public class GoodController : ApiController
       <Docs>
         <param name="request">Die zu sendende HTTP-Anforderungsmeldung.</param>
         <param name="cancellationToken">Das Abbruchtoken, um den Vorgang abzubrechen.</param>
-        <summary>Senden Sie eine HTTP-Anforderung als asynchroner Vorgang.</summary>
+        <summary>Senden Sie eine HTTP-Anforderung als asynchronen Vorgang.</summary>
         <returns>Das Aufgabenobjekt, das den asynchronen Vorgang darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1980,7 +2027,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="request" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="request" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -2016,7 +2064,7 @@ public class GoodController : ApiController
         <param name="request">Die zu sendende HTTP-Anforderungsmeldung.</param>
         <param name="completionOption">Wann der Vorgang abgeschlossen werden sollte (sobald eine Antwort verfügbar ist, oder nach dem Lesen des gesamten Inhalts der Antwort).</param>
         <param name="cancellationToken">Das Abbruchtoken, um den Vorgang abzubrechen.</param>
-        <summary>Senden Sie eine HTTP-Anforderung als asynchroner Vorgang.</summary>
+        <summary>Senden Sie eine HTTP-Anforderung als asynchronen Vorgang.</summary>
         <returns>Das Aufgabenobjekt, das den asynchronen Vorgang darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2026,7 +2074,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Die <paramref name="request" /> ist <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="request" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die Anforderungsnachricht wurde bereits von der <see cref="T:System.Net.Http.HttpClient" />-Instanz gesendet.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">Die Anforderung konnte wg. eines zugrunde liegenden Problems wie Netzwerkkonnektivität, DNS-Fehler, Überprüfung des Serverzertifikats oder Timeout nicht durchgeführt werden.</exception>
       </Docs>
@@ -2071,8 +2120,8 @@ public class GoodController : ApiController
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der angegebene Timout ist kleiner oder gleich 0 (null) und nicht <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</exception>
-        <exception cref="T:System.InvalidOperationException">Ein Vorgang ist bereits in der aktuellen Instanz gestartet worden.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der angegebene Timeoutwert ist kleiner oder gleich 0 (null) und nicht <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</exception>
+        <exception cref="T:System.InvalidOperationException">Es wurde bereits ein Vorgang für die aktuelle Instanz gestartet.</exception>
         <exception cref="T:System.ObjectDisposedException">Die aktuelle Instanz wurde verworfen.</exception>
       </Docs>
     </Member>
