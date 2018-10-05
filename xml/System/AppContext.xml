@@ -1,11 +1,11 @@
 <Type Name="AppContext" FullName="System.AppContext">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="22baeef40fafd807844df877ee179199629f82f1" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="c2c4803637c97019a9a061ec4bca736535264ba3" />
+    <Meta Name="ms.sourcegitcommit" Value="9dda17222b9f7d3edf130133bfb1370d5b410a4b" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
-    <Meta Name="ms.locfileid" Value="39909629" />
+    <Meta Name="ms.lasthandoff" Value="09/22/2018" />
+    <Meta Name="ms.locfileid" Value="46621008" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class AppContext" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit AppContext extends System.Object" />
@@ -111,7 +111,7 @@
 ## <a name="appcontext-for-library-consumers"></a>AppContext für Consumer  
  Wenn Sie mit der Consumer einer Bibliothek, sind die <xref:System.AppContext> Klasse können Sie eine Bibliothek oder Bibliotheksmethode des abwahlmechanismus für neue Funktionen nutzen.   Bestimmte Schalter, die aktivieren oder deaktivieren ein neues Verhalten definieren, einzelne Methoden der Klassenbibliothek, die Sie aufrufen. Der Wert des Schalters ist ein boolescher Wert. Ist dies `false`, die normalerweise der Standardwert ist, wird das neue Verhalten aktiviert ist; wenn es sich handelt `true`, die das neue Verhalten ist deaktiviert und das Element verhält sich wie zuvor.  
   
- Sie können den Wert eines Schalters auf drei Arten festlegen:  
+ Sie können den Wert eines Schalters auf vier Arten festlegen:  
   
 -   Durch Aufrufen der <xref:System.AppContext.SetSwitch%28System.String%2CSystem.Boolean%29?displayProperty=nameWithType> Methode im Code.  Die `switchName` Argument definiert den Namen des Switches, und die `isEnabled` Eigenschaft definiert den Wert des Schalters. Da <xref:System.AppContext> ist eine statische Klasse, ist es auf einer Basis pro Anwendungsdomäne verfügbar.  
   
@@ -133,12 +133,21 @@
 -   Durch das Hinzufügen eines String-Wert, dessen Name der Name des Schalters ist, der `HKLM\SOFTWARE\Microsoft\.NETFramework\AppContext` -Schlüssel in der Registrierung. Muss sein Wert die Zeichenfolgendarstellung einer <xref:System.Boolean> , die analysiert werden kann, indem die <xref:System.Boolean.Parse%2A?displayProperty=nameWithType> -Methode, d. h., es muss "True", "true", "False" oder "false". Wenn die Runtime einen anderen Wert auftritt, wird den Schalter ignoriert.  
   
      Verwenden die Registrierung zum Definieren einer <xref:System.AppContext> Switch verfügt über die Computerebene, d. h., sie wirkt sich auf jede Anwendung, die auf dem Computer ausgeführt.  
-  
+
+- Für ASP.NET-Anwendungen, fügen Sie eine [ \<hinzufügen >](~/docs/framework/configure-apps/file-schema/appsettings/add-element-for-appsettings.md) Element der [ \<AppSettings >](~/docs/framework/configure-apps/file-schema/appsettings/index.md) -Abschnitt der Datei "Web.config". Zum Beispiel:
+
+   ```xml
+   <appSettings>
+      <add key="AppContext.SetSwitch:switchName1" value="switchValue1" />
+      <add key="AppContext.SetSwitch:switchName2" value="switchValue2" />
+   </appSettings>
+   ```
+   
  Wenn Sie den gleichen Switch auf mehrere Weise festlegen, ist die Reihenfolge zu bestimmen, welche Einstellung die anderen überschreibt:  
   
 1.  Die programmgesteuerte Einstellung.  
   
-2.  Die Einstellung in der Datei "App.config".  
+2.  Die Einstellung in der Datei "App.config" oder die Datei "Web.config".  
   
 3.  Die registrierungseinstellung.  
   
@@ -161,6 +170,8 @@
 
  ]]></format>
     </remarks>
+    <related type="Article" href="http://msdn.microsoft.com/library/1eb2fae3-de4b-45b6-852f-517c39b751bd">&lt;Common Language Runtime&gt; Element</related>
+    <related type="Article" href="http://msdn.microsoft.com/library/4ce07f47-7ddb-4d91-b067-501bd8b88752">&lt;AppContextSwitchOverrides&gt; Element</related>
   </Docs>
   <Members>
     <Member MemberName="BaseDirectory">
