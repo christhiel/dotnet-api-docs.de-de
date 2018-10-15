@@ -1,0 +1,2 @@
+> [!IMPORTANT]
+> Das Verwenden einer Instanz dieses Objekts mit nicht vertrauenswürdigen Daten stellt ein Sicherheitsrisiko dar. Verwenden Sie dieses Objekt nur mit vertrauenswürdigen Daten. Weitere Informationen finden Sie unter [Data Validation (Datenüberprüfung)](https://www.owasp.org/index.php/Data_Validation).

@@ -1,0 +1,2 @@
+> [!IMPORTANT]
+> Das Aufrufen von Methoden aus Klassen, die diese Schnittstelle mit nicht vertrauenswürdigen Daten implementieren, stellt ein Sicherheitsrisiko dar. Rufen Sie die Methoden aus Klassen auf, die diese Schnittstelle nur mit vertrauenswürdigen Daten implementieren. Weitere Informationen finden Sie unter [Data Validation (Datenüberprüfung)](https://www.owasp.org/index.php/Data_Validation).
