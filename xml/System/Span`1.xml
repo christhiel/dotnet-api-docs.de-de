@@ -1,11 +1,11 @@
 <Type Name="Span&lt;T&gt;" FullName="System.Span&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="ed04128e65524eee587eec2d84c3879e4073a91a" />
-    <Meta Name="ms.sourcegitcommit" Value="9dda17222b9f7d3edf130133bfb1370d5b410a4b" />
+    <Meta Name="ms.openlocfilehash" Value="882e05e21dfecfb02fbc683ac8abfa9b1e46c5c7" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="09/22/2018" />
-    <Meta Name="ms.locfileid" Value="46640996" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51310910" />
   </Metadata>
   <TypeSignature Language="C#" Value="public struct Span&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Span`1&lt;T&gt; extends System.ValueType" />
@@ -42,9 +42,51 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
 
-`Span<T>` ist eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type) , die auf dem Stapel und nicht auf dem verwalteten Heap zugeordnet ist. Ref Struct-Typen haben eine Reihe von Einschränkungen, um sicherzustellen, dass sie können nicht auf den verwalteten Heap, einschließlich der, dass nicht geschachtelt werden, und sie nicht werden, die Variablen vom Typ zugewiesen können heraufgestuft werden <xref:System.Object>, `dynamic`, und klicken Sie auf einen beliebigen anderen Schnittstellentyp.
+`Span<T>` ist eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type) , die auf dem Stapel und nicht auf dem verwalteten Heap zugeordnet ist. Ref Struct-Typen haben eine Reihe von Einschränkungen, um sicherzustellen, dass sie können nicht auf den verwalteten Heap, einschließlich der, dass sie die nicht geschachtelt werden können, sie können nicht zugewiesen werden, die Variablen vom Typ heraufgestuft werden <xref:System.Object>, `dynamic` oder auf einen beliebigen anderen Schnittstellentyp, können sie nicht werden Felder in einem Verweistyp, und sie können nicht verwendet werden, über `await` und `yield` Grenzen. Darüber hinaus Aufrufe von zwei Methoden, <xref:System.Span%601.Equals(System.Object)> und <xref:System.Span%601.GetHashCode%2A>, lösen eine <xref:System.NotSupportedException>. 
 
-Ein `Span<T>` Instanz wird häufig verwendet, um die Elemente eines Arrays oder einen Teil eines Arrays zu speichern. Im Gegensatz zu einem Array, jedoch eine `Span<T>` Instanz kann auf verwalteten Speicher, systemeigenen Speicher oder Arbeitsspeicher verwaltet, auf dem Stapel.
+> [!IMPORTANT]
+> Da es sich um einen Typ ausschließlich stapelbezogene ist `Span<T>` für viele Szenarien, die erfordern, Speichern von Verweisen auf Puffer auf dem Heap nicht geeignet ist. Dies gilt, z. B. von Routinen, die Methodenaufrufe Asynchrous vornehmen. Für solche Scenarious, können Sie die kostenlose <xref:System.Memory%601?displayProperty=nameWithType> und <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> Typen.
+
+Verwenden Sie für Span-Elemente, die unveränderliche oder schreibgeschützte Strukturen darstellen, <xref:System.ReadOnlySpan%601?displayProperty=nameWithType>.
+
+## <a name="spant-and-memory"></a>Spanne\<T > und Arbeitsspeicher
+
+Ein `Span<T>` stellt einen zusammenhängenden Bereich von beliebigen Speichers dar. Ein `Span<T>` Instanz wird häufig verwendet, um die Elemente eines Arrays oder einen Teil eines Arrays zu speichern. Im Gegensatz zu einem Array, jedoch eine `Span<T>` Instanz kann auf verwalteten Speicher, systemeigenen Speicher oder Arbeitsspeicher verwaltet, auf dem Stapel. Das folgende Beispiel erstellt eine `Span<Byte>` aus einem Array:
+
+[!code-csharp[Creating a Span\<Byte> from an array](~/samples/snippets/csharp/api/system/span/program.cs#1)]
+     
+Das folgende Beispiel erstellt eine `Span<Byte>` zwischen 100 Byte des systemeigenen Speicher:
+
+[!code-csharp[Creating a Span\<Byte> from native memory](~/samples/snippets/csharp/api/system/span/program.cs#2)]
+
+Im folgenden Beispiel wird die C# ["stackalloc"](~/docs/csharp/language-reference/keywords/stackalloc.md) Schlüsselwort, um 100 Bytes im Arbeitsspeicher auf dem Stapel zugeordnet:
+
+[!code-csharp[Creating a Span\<Byte> from stack-allocated memory](~/samples/snippets/csharp/api/system/span/program.cs#3)]
+
+Da `Span<T>` ist eine Abstraktion über ein beliebiger Speicherblock, Methoden der `Span<T>` -Klasse und Methoden mit `Span<T>` Parameter ausgeführt werden, auf einem `Span<T>` Objekt unabhängig von der Art des Arbeitsspeichers, die diese kapselt. Beispielsweise zeigt jede separate Abschnitte des Codes, die die Spanne zu initialisieren und zu berechnen, dass die Summe der Elemente in die einmalige Initialisierung und Berechnungsmethoden, wie im folgenden Beispiel geändert werden kann:
+
+[!code-csharp[Creating a Span\<Byte> from stack-allocated memory](~/samples/snippets/csharp/api/system/span/program.cs#4)]
+
+## <a name="spant-and-arrays"></a>Spanne\<T > und Arrays
+
+Wenn es dient als Wrapper für ein Array, `Span<T>` kann ein ganzes Array, umschließen, wie zuvor in den Beispielen in den [Spanne\<T > und Arbeitsspeicher](#spant-and-memory) Abschnitt. Da es unterstützt das Aufteilen in Slices, `Span<T>` können auch auf alle zusammenhängenden Bereich innerhalb des Arrays zeigen.  
+
+Das folgende Beispiel erstellt einen Slice von der mittleren fünf Elemente eines Arrays aus 10 Elementen ganze Zahl. Beachten Sie, dass der Code die Werte der jede Ganzzahl im Segment verdoppelt. Die Ausgabe zeigt, werden die Änderungen durch die Spanne in die Werte des Arrays angezeigt.
+
+[!code-csharp[Creating a slice from a portion of a span](~/samples/snippets/csharp/api/system/span/slice/program.cs)]
+
+## <a name="spant-and-slices"></a>Spanne\<T > und Slices
+
+`Span\<T>` enthält zwei Überladungen der <xref:System.Span%601.Slice%2A> Methode, die einen Slice aus der aktuellen Spanne zu bilden, die an einem angegebenen Index beginnt. Dies ermöglicht es, behandeln die Daten in eine `Span\<T>` als einen Satz von logischen Segmente, die verarbeitet werden können, wie Teile eine datenverarbeitungspipeline mit Auswirkungen auf die minimale Leistung benötigt. Da moderne Serverprotokolle häufig textbasiert sind, ist z. B. Bearbeiten von Zeichenfolgen und Teilzeichenfolgen besonders wichtig. In der <xref:System.String> Klasse, die wichtige Methode für das Extrahieren von Teilzeichenfolgen ist <xref:System.String.Substring%2A>. Für Datenpipelines, die auf umfangreichen zeichenfolgenbearbeitung basieren, bietet die Verwendung einige Leistungseinbußen zur Folge haben, da sie:
+
+1. Erstellt eine neue Zeichenfolge zum Speichern der Teilzeichenfolge.
+
+2. Kopiert eine Teilmenge der Zeichen aus der ursprünglichen Zeichenfolge in die neue Zeichenfolge.
+
+Dieser Vorgang Zuordnung und kopieren kann behoben werden, indem Sie entweder `Span\<T>` oder <xref:System.ReadOnlySpan%601>, wie im folgende Beispiel gezeigt:
+
+[!code-csharp[Creating a slice from a substring](~/samples/snippets/csharp/api/system/span/slice2/program.cs)]
+
 
       ]]></format>
     </remarks>

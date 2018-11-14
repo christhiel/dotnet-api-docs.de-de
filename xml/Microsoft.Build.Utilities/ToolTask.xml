@@ -1,11 +1,11 @@
 <Type Name="ToolTask" FullName="Microsoft.Build.Utilities.ToolTask">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="33f36b3fd7b88547fbf2d436637320109ef7ec23" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="57c54120a16bf1466b84eaa1dd29666f08c6c05e" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48771425" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51312457" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class ToolTask : Microsoft.Build.Utilities.Task, Microsoft.Build.Framework.ICancelableTask" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ToolTask extends Microsoft.Build.Utilities.Task implements class Microsoft.Build.Framework.ICancelableTask, class Microsoft.Build.Framework.ITask" />
@@ -31,6 +31,9 @@
   <Interfaces>
     <Interface>
       <InterfaceName>Microsoft.Build.Framework.ICancelableTask</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>Microsoft.Build.Framework.ITask</InterfaceName>
     </Interface>
   </Interfaces>
   <Docs>
@@ -143,7 +146,7 @@
       <Docs>
         <param name="taskResources">Der <see cref="T:System.Resources.ResourceManager" /> für Aufgabenressourcen.</param>
         <param name="helpKeywordPrefix">Das Hilfeschlüsselwort für Meldungen, die von der Aufgabe ausgelöst werden.</param>
-        <summary>Initialisiert eine neue Instanz der <see cref="T:Microsoft.Build.Utilities.ToolTask" />-Klasse mit dem angegebenen <see cref="T:System.Resources.ResourceManager" /> und dem angegebenen Hilfeschlüsselwort.</summary>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:Microsoft.Build.Utilities.ToolTask" />-Klasse mit dem angegebenen <see cref="T:System.Resources.ResourceManager" /> und Hilfsschlüsselwortpräfix.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -329,16 +332,16 @@ using System.Collections.Specialized;
 /// </summary>  
 abstract class CustomToolTask : ToolTask  
 {  
-      protected override StringDictionary EnvironmentOverride  
-      {  
-            get  
-            {  
-                  string newPath = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process) + @";C:\MyDirectory";  
-                  StringDictionary result = new StringDictionary();  
-                  result.Add("Path", newPath);  
-                  return result;  
-            }  
-      }  
+      protected override StringDictionary EnvironmentOverride  
+      {  
+            get  
+            {  
+                  string newPath = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process) + @";C:\MyDirectory";  
+                  StringDictionary result = new StringDictionary();  
+                  result.Add("Path", newPath);  
+                  return result;  
+            }  
+      }  
 }  
   
 ```  
@@ -849,7 +852,7 @@ abstract class CustomToolTask : ToolTask
       </Parameters>
       <Docs>
         <param name="singleLine">Eine einzelne zu analysierende Textzeile für die Methode.</param>
-        <param name="messageImportance">Ein Wert von <see cref="T:Microsoft.Build.Framework.MessageImportance" />, der die Wichtigkeitsstufe angibt, mit der die Meldung zu protokollieren ist.</param>
+        <param name="messageImportance">Ein Wert von <see cref="T:Microsoft.Build.Framework.MessageImportance" />, der die Wichtigkeitsstufe für die Protokollierung der Meldung angibt.</param>
         <summary>Analysiert eine einzelne Textzeile, um Fehler oder Warnungen im kanonischen Format zu identifizieren.</summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1037,7 +1040,7 @@ abstract class CustomToolTask : ToolTask
       <Docs>
         <summary>Gibt an, ob die Ausführung der Aufgabe übersprungen werden soll.</summary>
         <returns>
-          <see langword="true" />, um Ausführung der Aufgabe zu überspringen, andernfalls <see langword="false" />.</returns>
+          <see langword="true" />, um die Ausführung der Aufgabe zu überspringen, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1167,8 +1170,8 @@ abstract class CustomToolTask : ToolTask
         <ReturnType>Microsoft.Build.Framework.MessageImportance</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> für die Fehlerprotokollierung ab.</summary>
-        <value>Die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> für die Fehlerprotokollierung.</value>
+        <summary>Ruft die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> ab, mit der Fehler protokolliert werden.</summary>
+        <value>Die <see cref="T:Microsoft.Build.Framework.MessageImportance" />, mit der Fehler protokolliert werden.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1291,8 +1294,8 @@ abstract class CustomToolTask : ToolTask
         <ReturnType>Microsoft.Build.Framework.MessageImportance</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> für die Fehlerprotokollierung ab.</summary>
-        <value>Die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> für die Fehlerprotokollierung.</value>
+        <summary>Ruft die <see cref="T:Microsoft.Build.Framework.MessageImportance" /> ab, mit der Fehler protokolliert werden.</summary>
+        <value>Die <see cref="T:Microsoft.Build.Framework.MessageImportance" />, mit der Fehler protokolliert werden.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
