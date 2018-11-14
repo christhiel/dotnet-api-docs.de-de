@@ -1,11 +1,11 @@
 <Type Name="TransactionScope" FullName="System.Transactions.TransactionScope">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="a82d108607f3f18ca21c7c9b6212a340a2a97bc3" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="45dd699021cf8a33b96b1b8974ed6335d84a9f52" />
+    <Meta Name="ms.sourcegitcommit" Value="610a413147ca5b230ff99a6df778612e165a6cdf" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48705978" />
+    <Meta Name="ms.lasthandoff" Value="11/10/2018" />
+    <Meta Name="ms.locfileid" Value="51506173" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class TransactionScope : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit TransactionScope extends System.Object implements class System.IDisposable" />
@@ -754,11 +754,11 @@ Bei Verwendung der `transactionOptions` Parameter, um eine <xref:System.Transact
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Das Aufrufen dieser Methode markiert das Ende des Transaktionsbereichs. Wenn die <xref:System.Transactions.TransactionScope> Objekt erstellt, die Transaktion und <xref:System.Transactions.TransactionScope.Complete%2A> aufgerufen wurde, auf den Bereich der <xref:System.Transactions.TransactionScope> Objekt versucht, die Transaktion ausführen, wenn diese Methode aufgerufen wird.  
+ Das Aufrufen dieser Methode markiert das Ende des Transaktionsbereichs. Wenn die <xref:System.Transactions.TransactionScope> Objekt erstellt, die Transaktion und <xref:System.Transactions.TransactionScope.Complete%2A> aufgerufen wurde, auf den Bereich der <xref:System.Transactions.TransactionScope> Objekt versucht, die Transaktion ausführen, wenn diese Methode aufgerufen wird. In diesem Fall diese Methode blockiert bis der ersten Phase der Verarbeitung von Transaktionen ist abgeschlossen. Die erste Phase nach der alle Ressourcen-Manager beendet und Eintragungen in der Transaktion für das Transaktionsergebnis gewählt haben und die <xref:System.Transactions.TransactionManager> beschloss dauerhaft einen commit oder Abbruch der Transaktion. Die zweite Phase der Verarbeitung ist immer asynchron. Daher besteht keine Garantie, dass Daten nur von innerhalb einer bestimmten Transaktion ein Commit unmittelbar danach werden, wenn eine andere Transaktion nicht verwenden, um diese Daten anzuzeigen.  
   
  Die Verwendung der C#- `using` Konstruktion sicherstellt, dass diese Methode aufgerufen wird, auch wenn eine Ausnahme auftritt. Ausnahmen, die nach dem Aufrufen dieser Methode eintreten, beeinflussen die Transaktion möglicherweise nicht. Diese Methode wird auch die ambient-Transaktion, darauf ursprünglichen Status. Ein <xref:System.Transactions.TransactionAbortedException> wird ausgelöst, wenn die Transaktion nicht tatsächlich ein Commit ausgeführt wurde.  
   
- Diese Methode ist synchron und blockiert, bis die Transaktion ein Commit ausgeführt oder abgebrochen wurde. Aus diesem Grund sollten Sie äußerst vorsichtig bei Verwendung dieser Methode in einer Windows Forms (WinForm-Anwendung)-Anwendung sein, oder ein Deadlock auftreten kann. Wenn Sie diese Methode eine WinForm-Steuerelement-Ereignis (z. B. durch Klicken auf eine Schaltfläche) aufrufen, und verwenden Sie die synchrone <xref:System.Windows.Forms.Control.Invoke%2A> Methode, um das Steuerelement auf der Benutzeroberfläche (z. B. Farben zu ändern) während der Verarbeitung der Transaktions auszuführen leiten eine Deadlock erfolgt. Grund hierfür ist die <xref:System.Windows.Forms.Control.Invoke%2A> -Methode ist synchron und den Thread blockiert, bis der UI-Thread beendet wurde. In diesem Szenario im UI-Thread allerdings auch wartet der Arbeitsthread die Transaktion ein commit auf. Das Ergebnis ist, dass keine können den Vorgang fortsetzen und der Bereich wartet, des Commits abgeschlossen. Verwenden Sie <xref:System.Windows.Forms.Control.BeginInvoke%2A> statt <xref:System.Windows.Forms.Control.Invoke%2A> wo immer dies möglich, da es sich um asynchrone und weniger anfällig für Deadlocks handelt.  
+ Da diese Methode blockiert, bis die erste Phase der Verarbeitung von Transaktionen abgeschlossen ist, ist äußerst vorsichtig vor, bei Verwendung dieser Methode in einer Windows Forms (WinForm-Anwendung)-Anwendung oder ein Deadlock auftreten können. Wenn Sie diese Methode eine WinForm-Steuerelement-Ereignis (z. B. durch Klicken auf eine Schaltfläche) aufrufen, und verwenden Sie die synchrone <xref:System.Windows.Forms.Control.Invoke%2A> Methode, um das Steuerelement auf der Benutzeroberfläche (z. B. Farben zu ändern) während der Verarbeitung der Transaktions auszuführen leiten eine Deadlock erfolgt. Grund hierfür ist die <xref:System.Windows.Forms.Control.Invoke%2A> -Methode ist synchron und den Thread blockiert, bis der UI-Thread beendet wurde. In diesem Szenario im UI-Thread allerdings auch wartet der Arbeitsthread die Transaktion ein commit auf. Das Ergebnis ist, dass keine können den Vorgang fortsetzen und der Bereich wartet, des Commits abgeschlossen. Verwenden Sie <xref:System.Windows.Forms.Control.BeginInvoke%2A> statt <xref:System.Windows.Forms.Control.Invoke%2A> wo immer dies möglich, da es sich um asynchrone und weniger anfällig für Deadlocks handelt.  
   
  Weitere Informationen zur Verwendung dieser Methode finden Sie unter den [Implementing An Implicit Transaction mithilfe von Transaktion Scope](~/docs/framework/data/transactions/implementing-an-implicit-transaction-using-transaction-scope.md) Thema.  
   
