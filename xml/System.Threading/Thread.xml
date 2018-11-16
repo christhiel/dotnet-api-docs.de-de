@@ -1,11 +1,11 @@
 <Type Name="Thread" FullName="System.Threading.Thread">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="7c33ebbf7fda315ea7cdcd851f00c29b10d280bd" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="38eda2875476a401d6a3442e5e40cebc592a4863" />
+    <Meta Name="ms.sourcegitcommit" Value="996ba67625b61917bcf75bfefe6dcb016019c2d8" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48741629" />
+    <Meta Name="ms.lasthandoff" Value="11/02/2018" />
+    <Meta Name="ms.locfileid" Value="50965473" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class Thread : System.Runtime.ConstrainedExecution.CriticalFinalizerObject, System.Runtime.InteropServices._Thread" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Thread extends System.Runtime.ConstrainedExecution.CriticalFinalizerObject implements class System.Runtime.InteropServices._Thread" />
@@ -142,7 +142,11 @@
 <a name="Culture"></a>   
 ## <a name="culture-and-threads"></a>Kultur und threads  
  Jeder Thread hat eine Kultur, dargestellt durch die <xref:System.Threading.Thread.CurrentCulture%2A> -Eigenschaft und eine Benutzeroberflächenkultur, dargestellt durch die <xref:System.Threading.Thread.CurrentUICulture%2A> Eigenschaft.  Die aktuelle Kultur unterstützt kulturabhängige Vorgänge wie Analyse und Formatierung, Zeichenfolgenvergleich und-Sortierung und steuert auch die Schriftsystems und Kalenders, die von einem Thread verwendet. Die aktuelle Benutzeroberflächenkultur bietet für kulturabhängige-Abruf von Ressourcen in Ressourcendateien.  
-  
+
+> [!IMPORTANT]
+> Die <xref:System.Threading.Thread.CurrentCulture> und <xref:System.Threading.Thread.CurrentUICulture> Eigenschaften nicht zuverlässig funktionieren, wenn für einen beliebigen Thread als den aktuellen Thread verwendet. In .NET Framework ist lesen diese Eigenschaften zuverlässig und auch das Festlegen dieser Eigenschaften für einen Thread als den aktuellen Thread nicht ist. .NET Core ein <xref:System.InvalidOperationException> wird ausgelöst, wenn ein Thread versucht, das Lesen und Schreiben diese Eigenschaften in einem anderen Thread.
+> Wir empfehlen die Verwendung der <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> und <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> Eigenschaften zum Abrufen und Festlegen der aktuellen Kultur.
+
  Wenn ein neuer Thread instanziiert wird, werden die Kultur und Benutzeroberflächenkultur definiert, durch die aktuelle Systemkultur und UI-Kultur, und nicht von der Kultur und Benutzeroberflächenkultur des Threads aus der der neue Thread erstellt wird. Also, z. B. wenn die aktuelle Systemkultur Englisch (Vereinigte Staaten ist) und der aktuellen Kultur des Threads primäranwendung Französisch (Frankreich), die Kultur eines neuen Threads erstellt durch Aufrufen der <xref:System.Threading.Thread.%23ctor%28System.Threading.ParameterizedThreadStart%29> Konstruktor aus dem primären Thread ist nicht Französisch (Frankreich) und Englisch (USA). Weitere Informationen finden Sie im Abschnitt "Kultur und Threads", der die <xref:System.Globalization.CultureInfo> Thema-Klasse.  
   
 > [!IMPORTANT]
@@ -153,9 +157,9 @@
 -   Können Sie übergeben eine <xref:System.Globalization.CultureInfo> -Objekt, das diese Kultur entspricht der <xref:System.Threading.ParameterizedThreadStart> delegieren oder <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%2CSystem.Object%29?displayProperty=nameWithType> Methode.  
   
 -   Für apps, die unter der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] und höheren Versionen können Sie definieren, die Kultur und Benutzeroberflächenkultur, die für alle Threads in einer Anwendungsdomäne erstellt, durch Festlegen des Werts der zugewiesen werden soll die <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture%2A?displayProperty=nameWithType> und <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture%2A?displayProperty=nameWithType> Eigenschaften. Beachten Sie, dass es sich um eine pro-AppDomain-Einstellung handelt.  
-  
- Weitere Informationen und Beispiele finden Sie im Abschnitt "Kultur und Threads", der die <xref:System.Globalization.CultureInfo> Thema-Klasse.  
-  
+
+ Weitere Informationen und Beispiele finden Sie im Abschnitt "Kultur und Threads", der die <xref:System.Globalization.CultureInfo> Thema-Klasse.
+
 <a name="Properties"></a>   
 ## <a name="getting-information-about-and-controlling-threads"></a>Abrufen von Informationen zu und Steuern von threads  
  Sie können eine Anzahl von Eigenschaftswerten abrufen, die Informationen über einen Thread zu bieten. In einigen Fällen können Sie auch diese Eigenschaftswerte, die Ausführung des Threads steuern festlegen. Zu diesen Threadeigenschaften zählen:  
@@ -167,7 +171,7 @@
 -   Ein Thread-ID. Der Wert der Read-only <xref:System.Threading.Thread.ManagedThreadId%2A> Eigenschaft wird von der Laufzeit zugewiesen und einen Thread innerhalb des Prozesses eindeutig identifiziert.  
   
     > [!NOTE]
-    >  Eine Betriebssystem-[ThreadId](https://msdn.microsoft.com/library/windows/desktop/ms683233.aspx) hat keine feste Beziehung zu einem verwalteten Thread, da ein nicht verwalteter Host die Beziehung zwischen verwalteten und nicht verwalteten Threads steuern kann. Ein komplexer Host können insbesondere die [CLR Hosting-API](https://msdn.microsoft.com/library/ms404385.aspx) um viele verwaltete Threads für die gleiche Betriebssystemthread zu planen oder um einen verwalteten Thread zwischen verschiedenen Betriebssystemthreads zu verschieben.  
+    >  Eine Betriebssystem- [ThreadId](https://msdn.microsoft.com/library/windows/desktop/ms683233.aspx) hat keine feste Beziehung zu einem verwalteten Thread, da ein nicht verwalteter Host die Beziehung zwischen verwalteten und nicht verwalteten Threads steuern kann. Ein komplexer Host können insbesondere die [CLR Hosting-API](https://msdn.microsoft.com/library/ms404385.aspx) um viele verwaltete Threads für die gleiche Betriebssystemthread zu planen oder um einen verwalteten Thread zwischen verschiedenen Betriebssystemthreads zu verschieben.  
   
 -   Der Thread den aktuellen Status. Für die Dauer der vorhanden ist, ein Thread ist immer in einer oder mehreren der Zustände von definiert die <xref:System.Threading.ThreadState> Eigenschaft.  
   
@@ -1104,13 +1108,15 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
   
 ## Remarks  
  Die <xref:System.Globalization.CultureInfo> Objekt, das von dieser Eigenschaft zusammen mit seiner zugeordneten Objekte, zurückgegeben wird zu bestimmen, das Standardformat für Datum, Uhrzeit, Zahlen, Currency-Werte, die Sortierreihenfolge des Texts, Groß-/ Kleinschreibungskonventionen und Zeichenfolgenvergleichen. Finden Sie unter den <xref:System.Globalization.CultureInfo> Klasse, um Informationen über Kulturnamen und Bezeichner, die Unterschiede zwischen invarianten, neutrale und spezifische Kulturen und wirkt sich die kulturinformationen für die Möglichkeit, Threads und Anwendungsdomänen. Finden Sie unter den <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> Eigenschaft, um zu erfahren, wie die Kultur eines Threads Standardwert festgelegt wird und wie Benutzer Informationen zur Kultur für ihre Computer festgelegt.  
-  
+
+> [!IMPORTANT]
+> Die <xref:System.Threading.Thread.CurrentCulture> Eigenschaft nicht zuverlässig funktionieren, wenn für einen beliebigen Thread als den aktuellen Thread verwendet. In .NET Framework wird beim Lesen der Eigenschaft zuverlässiger, ist, obwohl es diese einzustellen für einen Thread als den aktuellen Thread nicht ist. .NET Core ein <xref:System.InvalidOperationException> wird ausgelöst, wenn ein Thread versucht, das Lesen und Schreiben der <xref:System.Threading.Thread.CurrentCulture> Eigenschaft in einem anderen Thread.
+> Wir empfehlen die Verwendung der <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> Eigenschaft zum Abrufen und Festlegen der aktuellen Kultur.
+
  Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], Sie können festlegen, die <xref:System.Threading.Thread.CurrentCulture%2A> Eigenschaft, um eine neutrale Kultur. Grund hierfür ist, das Verhalten von der <xref:System.Globalization.CultureInfo> Klasse hat sich geändert: Wenn sie eine neutrale Kultur, die Eigenschaftswerte darstellt (insbesondere die <xref:System.Globalization.CultureInfo.Calendar%2A>, <xref:System.Globalization.CultureInfo.CompareInfo%2A>, <xref:System.Globalization.CultureInfo.DateTimeFormat%2A>, <xref:System.Globalization.CultureInfo.NumberFormat%2A>, und <xref:System.Globalization.CultureInfo.TextInfo%2A> Eigenschaften) jetzt entsprechend die spezifische Kultur, die die neutrale Kultur zugeordnet ist. In früheren Versionen von .NET Framework die <xref:System.Threading.Thread.CurrentCulture%2A> Eigenschaft hat einen <xref:System.NotSupportedException> Ausnahme aus, wenn eine neutrale Kultur zugewiesen wurde.  
   
-   
-  
 ## Examples  
- Das folgende Codebeispiel zeigt die threading-Anweisung, die können die Benutzeroberfläche einer Windows Forms in der Kultur angezeigt, die in der Systemsteuerung festgelegt wird. Es ist zusätzlicher Code erforderlich.  
+ Das folgende Beispiel zeigt die threading-Anweisung, die können die Benutzeroberfläche einer Windows Forms-Anwendung in der Kultur angezeigt, die in der Systemsteuerung festgelegt wird. Es ist zusätzlicher Code erforderlich.  
   
  [!code-cpp[System.Threading.Thread.Culture#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Thread.Culture/CPP/source.cpp#1)]
  [!code-csharp[System.Threading.Thread.Culture#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Thread.Culture/CS/source.cs#1)]
@@ -1119,6 +1125,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Die Eigenschaft ist auf <see langword="null" /> festgelegt.</exception>
+        <exception cref="T:System.InvalidOperationException">Nur .NET Core: Das Lesen oder Schreiben der Kultur eines Threads aus einem anderen Thread wird nicht unterstützt.</exception>
         <permission cref="T:System.Security.Permissions.SecurityPermission">zum Festlegen der Eigenschaft an. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.ControlThread" /></permission>
       </Docs>
     </Member>
@@ -1281,7 +1288,11 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
   
 ## Remarks  
  Die Benutzeroberflächenkultur gibt die Ressourcen, die eine Anwendung Benutzer ein- und Ausgaben unterstützen muss, die und in der Standardeinstellung ist identisch mit dem Betriebssystem-Kultur, an. Finden Sie unter den <xref:System.Globalization.CultureInfo> Klasse, um Informationen über Kulturnamen und Bezeichner, die Unterschiede zwischen invarianten, neutrale und spezifische Kulturen und wirkt sich die kulturinformationen für die Möglichkeit, Threads und Anwendungsdomänen. Finden Sie unter den <xref:System.Globalization.CultureInfo.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft, um zu erfahren, wie die Standard-Benutzeroberflächenkultur eines Threads bestimmt wird.  
-  
+
+> [!IMPORTANT]
+> Die <xref:System.Threading.Thread.CurrentUICulture> Eigenschaft nicht zuverlässig funktionieren, wenn für einen beliebigen Thread als den aktuellen Thread verwendet. In .NET Framework wird beim Lesen der Eigenschaft zuverlässiger, ist, obwohl es diese einzustellen für einen Thread als den aktuellen Thread nicht ist. .NET Core ein <xref:System.InvalidOperationException> wird ausgelöst, wenn ein Thread versucht, das Lesen und Schreiben der <xref:System.Threading.Thread.CurrentUICulture> Eigenschaft in einem anderen Thread.
+> Wir empfehlen die Verwendung der <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> Eigenschaft zum Abrufen und Festlegen der aktuellen Kultur.
+
  Die <xref:System.Globalization.CultureInfo> von dieser Eigenschaft zurückgegebene eine neutrale Kultur sein können. Neutrale Kulturen sollte nicht verwendet werden, z. B. Formatierungsmethoden <xref:System.String.Format%28System.IFormatProvider%2CSystem.String%2CSystem.Object%5B%5D%29?displayProperty=nameWithType>, <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType>, und <xref:System.Convert.ToString%28System.Char%2CSystem.IFormatProvider%29?displayProperty=nameWithType>. Verwenden Sie die <xref:System.Globalization.CultureInfo.CreateSpecificCulture%2A?displayProperty=nameWithType> Methode, um eine bestimmte Kultur abrufen oder verwenden Sie die <xref:System.Threading.Thread.CurrentCulture%2A> Eigenschaft.  
   
 > [!NOTE]
@@ -1305,6 +1316,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
         </remarks>
         <exception cref="T:System.ArgumentNullException">Die Eigenschaft ist auf <see langword="null" /> festgelegt.</exception>
         <exception cref="T:System.ArgumentException">Die Eigenschaft ist auf einen Kulturnamen festgelegt, der nicht zum Suchen einer Ressourcendatei verwendet werden kann. Ressourcendateinamen dürfen nur Buchstaben, Zahlen, Bindestriche oder Unterstriche enthalten.</exception>
+        <exception cref="T:System.InvalidOperationException">Nur .NET Core: Das Lesen oder Schreiben der Kultur eines Threads aus einem anderen Thread wird nicht unterstützt.</exception>
       </Docs>
     </Member>
     <Member MemberName="DisableComObjectEagerCleanup">
@@ -2138,7 +2150,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
+        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die entsprechende <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
         <permission cref="T:System.Security.Permissions.SecurityPermission">für erweiterte Vorgänge in Threads. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.ControlThread" /></permission>
         <altmember cref="T:System.Threading.ThreadState" />
         <related type="Article" href="~/docs/standard/threading/pausing-and-resuming-threads.md">Anhalten und Unterbrechen von Threads</related>
@@ -2738,7 +2750,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
  ]]></format>
         </remarks>
         <exception cref="T:System.Threading.ThreadStateException">Der Thread hat einen Endzustand erreicht, z. B. <see cref="F:System.Threading.ThreadState.Aborted" />.</exception>
-        <exception cref="T:System.ArgumentException">Der für eine Set-Operation angegebene Wert ist kein gültiger <see cref="T:System.Threading.ThreadPriority" />-Wert.</exception>
+        <exception cref="T:System.ArgumentException">Der für einen SET-Vorgang festgelegte Wert ist kein gültiger <see cref="T:System.Threading.ThreadPriority" />-Wert.</exception>
         <altmember cref="T:System.Threading.ThreadPriority" />
         <related type="Article" href="~/docs/standard/threading/scheduling-threads.md">Scheduling von Threads</related>
       </Docs>
@@ -2849,7 +2861,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
         </remarks>
         <exception cref="T:System.PlatformNotSupportedException">Nur .NET Core: Dieser Member wird nicht unterstützt.</exception>
         <exception cref="T:System.Threading.ThreadStateException">Der Thread wurde nicht gestartet, ist deaktiviert oder befindet sich nicht im angehaltenen Zustand.</exception>
-        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
+        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die entsprechende <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
         <permission cref="T:System.Security.Permissions.SecurityPermission">für erweiterte Vorgänge in Threads. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.ControlThread" /></permission>
         <related type="Article" href="~/docs/standard/threading/pausing-and-resuming-threads.md">Anhalten und Unterbrechen von Threads</related>
         <related type="Article" href="~/docs/standard/threading/managed-thread-states.md">Zustände von verwalteten Threads</related>
@@ -3443,7 +3455,7 @@ Wichtig   Für teilweise vertrauenswürdigen Code wird <c>maxStackSize</c> ig
         </remarks>
         <exception cref="T:System.PlatformNotSupportedException">Nur .NET Core: Dieser Member wird nicht unterstützt.</exception>
         <exception cref="T:System.Threading.ThreadStateException">Der Thread wurde nicht gestartet oder reagiert nicht.</exception>
-        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
+        <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die entsprechende <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
         <permission cref="T:System.Security.Permissions.SecurityPermission">für erweiterte Vorgänge in Threads. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.SecurityPermissionFlag.ControlThread" /></permission>
         <related type="Article" href="~/docs/standard/threading/pausing-and-resuming-threads.md">Anhalten und Unterbrechen von Threads</related>
         <related type="Article" href="~/docs/standard/threading/managed-thread-states.md">Zustände von verwalteten Threads</related>

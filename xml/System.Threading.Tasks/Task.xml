@@ -1,11 +1,11 @@
 <Type Name="Task" FullName="System.Threading.Tasks.Task">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="6cfe53b143f6f0c764bd7f748baf43b43b40f26e" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="c16340e471c95a0473b0f16f55090f971e888200" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48668167" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51308310" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class Task : IAsyncResult, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Task extends System.Object implements class System.IAsyncResult, class System.IDisposable" />
@@ -121,7 +121,7 @@
  [!code-csharp[System.Threading.Tasks.Task#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.tasks.task/cs/Wait2.cs#9)]
  [!code-vb[System.Threading.Tasks.Task#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/Wait2.vb#9)]  
   
- Sie können auch ein Abbruchtoken angeben, durch den Aufruf der <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> und <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> Methoden. Wenn des Tokens des <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> -Eigenschaft ist `true`, der Wartevorgang abgebrochen wird, und wenn es sich bei "true" wird die <xref:System.Threading.Tasks.Task.Wait%2A> Methode beendet.  
+ Sie können auch ein Abbruchtoken angeben, durch den Aufruf der <xref:System.Threading.Tasks.Task.Wait%28System.Threading.CancellationToken%29> und <xref:System.Threading.Tasks.Task.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> Methoden. Wenn des Tokens <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> Eigenschaft `true` oder `true` während der <xref:System.Threading.Tasks.Task.Wait%2A> Methode ausgeführt wird, löst die Methode eine <xref:System.OperationCanceledException>.  
   
  In einigen Fällen möchten Sie möglicherweise warten, für die ersten einer Reihe von Ausführen von Aufgaben abgeschlossen, aber sorgfältig auf die diese Aufgabe ist.  Zu diesem Zweck können Sie eine der Überladungen von Aufrufen der <xref:System.Threading.Tasks.Task.WaitAll%2A?displayProperty=nameWithType> Methode.  Das folgende Beispiel erstellt drei Aufgaben, von denen jeder im Ruhezustand ist für ein Intervall bestimmen, indem Sie einen Zufallszahlengenerator. Die <xref:System.Threading.Tasks.Task.WaitAny%28System.Threading.Tasks.Task%5B%5D%29> Methode wartet, bis die erste Aufgabe ausführen. Das Beispiel zeigt anschließend Informationen über den Status aller drei Aufgaben.  
   
@@ -279,7 +279,7 @@
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits verworfen.</exception>
         <exception cref="T:System.ArgumentNullException">Das <paramref name="action" />-Argument ist null.</exception>
       </Docs>
     </Member>
@@ -927,7 +927,7 @@
       <Docs>
         <param name="continuationAction">Eine Aktion, die entsprechend der in <c>continuationOptions</c> angegebenen Bedingung ausgeführt wird. Bei der Ausführung wird dem Delegaten die abgeschlossene Aufgabe als Argument übergeben.</param>
         <param name="continuationOptions">Optionen für die Planung und das Verhalten der Fortsetzung. Dazu zählen Kriterien wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.OnlyOnCanceled" /> und Ausführungsoptionen wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously" />.</param>
-        <summary>Erstellt eine Fortsetzung, die, sobald der Zieltask abgeschlossen ist, entsprechend den Angaben in <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> ausgeführt wird.</summary>
+        <summary>Erstellt eine Fortsetzung, die, sobald die Zielaufgabe abgeschlossen ist, entsprechend den Angaben in <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> ausgeführt wird.</summary>
         <returns>Ein neuer Fortsetzungs-<see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1091,7 +1091,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Das <paramref name="continuationAction" />-Argument lautet <see langword="null" />.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="ContinueWith">
@@ -1239,7 +1239,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
         <param name="cancellationToken">Das <see cref="P:System.Threading.Tasks.TaskFactory.CancellationToken" />, das der neuen Fortsetzungsaufgabe zugewiesen wird.</param>
         <param name="continuationOptions">Optionen für die Planung und das Verhalten der Fortsetzung. Dazu zählen Kriterien wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.OnlyOnCanceled" /> und Ausführungsoptionen wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously" />.</param>
         <param name="scheduler">Das <see cref="T:System.Threading.Tasks.TaskScheduler" />, das der Fortsetzungsaufgabe zugeordnet und für ihre Ausführung verwendet werden soll.</param>
-        <summary>Erstellt eine Fortsetzung, die, sobald der Zieltask abgeschlossen ist, entsprechend den Angaben in <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> ausgeführt wird. Die Fortsetzung empfängt ein Abbruchtoken und verwendet einen angegebenen Zeitplan.</summary>
+        <summary>Erstellt eine Fortsetzung, die, sobald die Zielaufgabe abgeschlossen ist, entsprechend den Angaben in <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> ausgeführt wird. Die Fortsetzung empfängt ein Abbruchtoken und verwendet einen angegebenen Zeitplan.</summary>
         <returns>Ein neuer Fortsetzungs-<see cref="T:System.Threading.Tasks.Task" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1352,7 +1352,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Das <paramref name="scheduler" />-Argument lautet <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Das <paramref name="continuationOptions" />-Argument gibt einen ungültigen Wert für <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> an.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="ContinueWith&lt;TResult&gt;">
@@ -1698,7 +1698,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Das <paramref name="continuationFunction" />-Argument lautet <see langword="null" />.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="ContinueWith&lt;TResult&gt;">
@@ -1744,7 +1744,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
         <param name="continuationFunction">Eine Funktion, die ausgeführt werden soll, wenn das <see cref="T:System.Threading.Tasks.Task" /> abgeschlossen ist. Bei der Ausführung werden dem Delegaten die abgeschlossene Aufgabe und das vom Aufrufer angegebene Zustandsobjekt als Argumente übergeben.</param>
         <param name="state">Ein Objekt, das Daten darstellt, die von der Fortsetzungsfunktion verwendet werden sollen.</param>
         <param name="continuationOptions">Optionen für die Planung und das Verhalten der Fortsetzung. Dazu zählen Kriterien wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.OnlyOnCanceled" /> und Ausführungsoptionen wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously" />.</param>
-        <summary>Erstellt eine Fortsetzung, die entsprechend den angegebenen Taskfortsetzungsoptionen ausgeführt wird, wenn der Ziel-<see cref="T:System.Threading.Tasks.Task" /> abgeschlossen ist. Die Fortsetzung empfängt vom Aufrufer bereitgestellte Zustandsinformationen.</summary>
+        <summary>Erstellt eine Fortsetzung, die entsprechend den angegebenen Aufgabenfortsetzungsoptionen ausgeführt wird, wenn der Ziel-<see cref="T:System.Threading.Tasks.Task" /> abgeschlossen ist. Die Fortsetzung empfängt vom Aufrufer bereitgestellte Zustandsinformationen.</summary>
         <returns>Ein neuer Fortsetzungs-<see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1934,7 +1934,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
         <param name="cancellationToken">Das <see cref="T:System.Threading.CancellationToken" />, das der neuen Fortsetzungsaufgabe zugewiesen wird.</param>
         <param name="continuationOptions">Optionen für die Planung und das Verhalten der Fortsetzung. Dazu zählen Kriterien wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.OnlyOnCanceled" /> und Ausführungsoptionen wie <see cref="F:System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously" />.</param>
         <param name="scheduler">Das <see cref="T:System.Threading.Tasks.TaskScheduler" />, das der Fortsetzungsaufgabe zugeordnet und für ihre Ausführung verwendet werden soll.</param>
-        <summary>Erstellt eine Fortsetzung, die entsprechend den angegebenen Taskfortsetzungsoptionen ausgeführt wird, wenn der Ziel-<see cref="T:System.Threading.Tasks.Task" /> abgeschlossen ist, und gibt einen Wert zurück. Die Fortsetzung empfängt vom Aufrufer bereitgestellte Zustandsinformationen sowie ein Abbruchtoken und verwendet den angegebenen Zeitplan.</summary>
+        <summary>Erstellt eine Fortsetzung, die entsprechend den angegebenen Aufgabenfortsetzungsoptionen ausgeführt wird, wenn der Ziel-<see cref="T:System.Threading.Tasks.Task" /> abgeschlossen ist, und gibt einen Wert zurück. Die Fortsetzung empfängt vom Aufrufer bereitgestellte Zustandsinformationen sowie ein Abbruchtoken und verwendet den angegebenen Zeitplan.</summary>
         <returns>Ein neuer Fortsetzungs-<see cref="T:System.Threading.Tasks.Task`1" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1946,7 +1946,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Das <paramref name="scheduler" />-Argument lautet <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Das <paramref name="continuationOptions" />-Argument gibt einen ungültigen Wert für <see cref="T:System.Threading.Tasks.TaskContinuationOptions" /> an.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <see cref="T:System.Threading.CancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreationOptions">
@@ -2076,7 +2076,7 @@ Das <paramref name="scheduler" />-Argument ist null.</exception>
       </Parameters>
       <Docs>
         <param name="millisecondsDelay">Die Anzahl der Millisekunden, die gewartet wird, bevor die zurückgegebene Aufgabe abgeschlossen wird, oder -1, um unbegrenzt zu warten.</param>
-        <summary>Erstellt eine Aufgabe, die nach einer Verzögerung abgeschlossen wird.</summary>
+        <summary>Erstellt eine Aufgabe, die nach Ablauf einer festgelegten Anzahl an Millisekunden abgeschlossen wird.</summary>
         <returns>Eine Aufgabe, die die Verzögerung darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2210,8 +2210,8 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
       </Parameters>
       <Docs>
         <param name="millisecondsDelay">Die Anzahl der Millisekunden, die gewartet wird, bevor die zurückgegebene Aufgabe abgeschlossen wird, oder -1, um unbegrenzt zu warten.</param>
-        <param name="cancellationToken">Das Abbruchtoken, das vor dem Abschließen der zurückgegebenen Aufgabe geprüft wird.</param>
-        <summary>Erstellt eine abzubrechende Aufgabe, die nach einer Verzögerung abgeschlossen wird.</summary>
+        <param name="cancellationToken">Ein Abbruchtoken, das beim Warten auf den Abschluss der Aufgabe überwacht werden soll.</param>
+        <summary>Erstellt eine stornierbare Aufgabe, die nach Ablauf einer festgelegten Anzahl an Millisekunden abgeschlossen wird.</summary>
         <returns>Eine Aufgabe, die die Verzögerung darstellt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2235,7 +2235,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">Das <paramref name="millisecondsDelay" />-Argument ist kleiner als -1.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">Die Aufgabe wurde abgebrochen.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <paramref name="cancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <paramref name="cancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <Member MemberName="Delay">
@@ -2273,7 +2273,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
       </Parameters>
       <Docs>
         <param name="delay">Die Zeitspanne, die abgewartet werden soll, bevor die zurückgegebene Aufgabe abgeschlossen wird, oder <see langword="TimeSpan.FromMilliseconds(-1)" />, um unbegrenzt zu warten.</param>
-        <param name="cancellationToken">Das Abbruchtoken, das vor dem Abschließen der zurückgegebenen Aufgabe geprüft wird.</param>
+        <param name="cancellationToken">Ein Abbruchtoken, das beim Warten auf den Abschluss der Aufgabe überwacht werden soll.</param>
         <summary>Erstellt eine abzubrechende Aufgabe, die nach Ablauf einer festgelegten Zeitspanne abgeschlossen wird.</summary>
         <returns>Eine Aufgabe, die die Verzögerung darstellt.</returns>
         <remarks>
@@ -2289,7 +2289,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
    
   
 ## Examples  
- Im folgende Beispiel startet eine Aufgabe, die einen Aufruf, umfasst die <xref:System.Threading.Tasks.Task.Delay%28System.TimeSpan%2CSystem.Threading.CancellationToken%29> -Methode mit einer Verzögerung von 1 und – etwa Sekunde. Bevor das Verzögerungsintervall verstrichen ist, wird das Token abgebrochen. Die Ausgabe im Beispiel wird veranschaulicht, wie daher, ein <xref:System.Threading.Tasks.TaskCanceledException> ausgelöst wird, und die Tasks' <xref:System.Threading.Tasks.Task.Status%2A> -Eigenschaftensatz auf <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
+ Im folgende Beispiel startet eine Aufgabe, die einen Aufruf, umfasst die <xref:System.Threading.Tasks.Task.Delay%28System.TimeSpan%2CSystem.Threading.CancellationToken%29> -Methode mit einer Verzögerung von 1,5 Sekunden. Bevor das Verzögerungsintervall verstrichen ist, wird das Token abgebrochen. Die Ausgabe im Beispiel wird veranschaulicht, wie daher, ein <xref:System.Threading.Tasks.TaskCanceledException> ausgelöst wird, und die Tasks' <xref:System.Threading.Tasks.Task.Status%2A> -Eigenschaftensatz auf <xref:System.Threading.Tasks.TaskStatus.Canceled>.  
   
  [!code-csharp[System.Threading.Tasks.Task.Delay#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.tasks.task.delay/cs/delay4.cs#4)]
  [!code-vb[System.Threading.Tasks.Task.Delay#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task.delay/vb/delay4.vb#4)]  
@@ -2308,7 +2308,7 @@ Task t Status: RanToCompletion, Result: 42
 - oder -  
 Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds" />-Eigenschaft des Arguments ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.Threading.Tasks.TaskCanceledException">Die Aufgabe wurde abgebrochen.</exception>
-        <exception cref="T:System.ObjectDisposedException">Das angegebene <paramref name="cancellationToken" /> wurde bereits freigegeben.</exception>
+        <exception cref="T:System.ObjectDisposedException">Das angegebene <paramref name="cancellationToken" /> wurde bereits verworfen.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -2890,7 +2890,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob diese <see cref="T:System.Threading.Tasks.Task" />-Instanz die Ausführung aufgrund eines Abbruchs abgeschlossen hat.</summary>
         <value>
-          <see langword="true" /> wenn die Aufgabe aufgrund eines Abbruchs beendet wurde, andernfalls <see langword="false" />.</value>
+          <see langword="true" />, wenn die Aufgabe aufgrund eines Abbruchs beendet wurde, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3029,7 +3029,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob die <see cref="T:System.Threading.Tasks.Task" /> aufgrund einer nicht behandelten Ausnahme abgeschlossen wurde.</summary>
         <value>
-          <see langword="true" /> wenn die Aufgabe einen Ausnahmefehler ausgelöst hat, andernfalls <see langword="false" />.</value>
+          <see langword="true" />, wenn die Aufgabe einen Ausnahmefehler ausgelöst hat, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3050,7 +3050,7 @@ Die <paramref name="delay" /> der <see cref="P:System.TimeSpan.TotalMilliseconds
         <AssemblyVersion>4.0.10.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Fügt die angegebene Verarbeitung zur Ausführung im Threadpool der Warteschlange hinzu und gibt ein Task- oder <see cref="T:System.Threading.Tasks.Task`1" />-Handle für diese Aufgabe zurück.</summary>
+        <summary>Fügt die angegebene Verarbeitung zur Ausführung im Threadpool der Warteschlange hinzu und gibt ein Aufgaben- oder <see cref="T:System.Threading.Tasks.Task`1" />-Handle für diese Aufgabe zurück.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -4542,7 +4542,7 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
 - oder -  
 Während der Ausführung mindestens einer der <see cref="T:System.Threading.Tasks.Task" />-Instanzen wurde eine Ausnahme ausgelöst.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="timeout" /> ist eine negative Zahl ungleich -1 Millisekunden, die ein unendliches Timeout darstellt. 
+          <paramref name="timeout" /> ist eine negative Zahl ungleich „-1 Millisekunden“, die ein unendliches Timeout darstellt. 
 - oder -  
  <paramref name="timeout" /> ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.ArgumentException">Das <paramref name="tasks" />-Argument enthält ein NULL-Element.  
@@ -4953,8 +4953,8 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">Die <paramref name="tasks" />-Auflistung enthält eine <see langword="null" />-Aufgabe.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">Die <paramref name="tasks" />-Auflistung enthielt eine <see langword="null" />-Aufgabe.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAll">
@@ -5027,7 +5027,7 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">Das <paramref name="tasks" />-Array enthielt eine <see langword="null" />-Aufgabe.</exception>
       </Docs>
     </Member>
@@ -5098,8 +5098,8 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">Die <paramref name="tasks" />-Auflistung enthält eine <see langword="null" />-Aufgabe.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">Die <paramref name="tasks" />-Auflistung enthielt eine <see langword="null" />-Aufgabe.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAll&lt;TResult&gt;">
@@ -5173,7 +5173,7 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">Das <paramref name="tasks" />-Array enthielt eine <see langword="null" />-Aufgabe.</exception>
       </Docs>
     </Member>
@@ -5232,7 +5232,7 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">Das Array <paramref name="tasks" /> enthielt eine NULL-Aufgabe oder war leer.</exception>
       </Docs>
     </Member>
@@ -5340,7 +5340,7 @@ Das <paramref name="tasks" />-Argument ist ein leeres Array.</exception>
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument war <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Das <paramref name="tasks" />-Argument lautete <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">Das Array <paramref name="tasks" /> enthielt eine NULL-Aufgabe oder war leer.</exception>
       </Docs>
     </Member>

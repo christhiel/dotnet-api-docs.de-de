@@ -1,11 +1,11 @@
 <Type Name="MemoryMarshal" FullName="System.Runtime.InteropServices.MemoryMarshal">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="5a0d1a21d9569a50c48df42c8cd2be3042ccc554" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="c9bee59e8ded948e4d3f1729df63219d06920318" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
-    <Meta Name="ms.locfileid" Value="39966552" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51315200" />
   </Metadata>
   <TypeSignature Language="C#" Value="public static class MemoryMarshal" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit MemoryMarshal extends System.Object" />
@@ -23,7 +23,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Stellt Methoden für die Interoperabilität mit <see cref="T:System.Memory`1" />, <see cref="T:System.ReadOnlyMemory`1" />, <see cref="T:System.Span`1" /> und <see cref="T:System.ReadOnlySpan`1" /> bereit.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -56,11 +56,22 @@
         <Parameter Name="span" Type="System.ReadOnlySpan&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der Spanne schreibgeschützt.</typeparam>
+        <param name="span">Der zu konvertierende Quellslice.</param>
+        <summary>Wandelt ein <see cref="T:System.ReadOnlySpan`1" /> eines primitiven Typs, <paramref name="T" />, in ein <see langword="ReadOnlySpan&lt;Byte&gt;" /> um.</summary>
+        <returns>Der schreibgeschützte Span des Typs <see cref="T:System.Byte" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. `T` wird zur Laufzeit überprüft, um die typsicherheit beibehalten.  
+
+      ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> enthält Verweise oder Zeiger.</exception>
+        <exception cref="T:System.OverflowException">Die <see cref="P:System.ReadOnlySpan`1.Length" />-Eigenschaft des neuen <see cref="T:System.ReadOnlySpan`1" /> würde <see cref="F:System.Int32.MaxValue" /> überschreiten.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsBytes&lt;T&gt;">
@@ -92,11 +103,22 @@
         <Parameter Name="span" Type="System.Span&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der Spanne.</typeparam>
+        <param name="span">Der zu konvertierende Quellslice.</param>
+        <summary>Wandelt ein <see cref="T:System.Span`1" /> eines primitiven Typs, <paramref name="T" />, in ein <see langword="Span&lt;Byte&gt;" /> um.</summary>
+        <returns>Ein Span des Typs <see cref="T:System.Byte" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. `T` wird zur Laufzeit überprüft, um die typsicherheit beibehalten.  
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> enthält Verweise oder Zeiger.</exception>
+        <exception cref="T:System.OverflowException">Die <see cref="P:System.Span`1.Length" />-Eigenschaft des neuen <see cref="T:System.Span`1" /> würde <see cref="F:System.Int32.MaxValue" /> überschreiten.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsMemory&lt;T&gt;">
@@ -122,11 +144,19 @@
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="memory">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der schreibgeschützten Speicher-Puffer.</typeparam>
+        <param name="memory">Der schreibgeschützte Speicherpuffer.</param>
+        <summary>Erstellt eine <see cref="T:System.Memory`1" />-Instanz aus einem <see cref="T:System.ReadOnlyMemory`1" />.</summary>
+        <returns>Ein Speicherblock, der denselben Speicher darstellt wie <see cref="T:System.ReadOnlyMemory`1" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Diese Methode muss mit äußerster Vorsicht verwendet werden. <xref:System.ReadOnlyMemory%601> wird verwendet, um darzustellen, unveränderliche Daten und andere Speicher, der nicht geschrieben werden soll. <xref:System.Memory%601> von dieser Methode erstellte Instanzen sollte, nicht geschrieben werden. Der Zweck dieser Methode ist, können Variablen mit <xref:System.Memory%601> jedoch nur für Lesevorgänge verwendet, zum Speichern einer <xref:System.ReadOnlyMemory%601>. 
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Cast&lt;TFrom,TTo&gt;">
@@ -165,12 +195,24 @@
         <Parameter Name="span" Type="System.ReadOnlySpan&lt;TFrom&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="TFrom">To be added.</typeparam>
-        <typeparam name="TTo">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TFrom">Der Typ, der die Quellspanne.</typeparam>
+        <typeparam name="TTo">Der Typ, der die zielspanne.</typeparam>
+        <param name="span">Der zu konvertierende Quellslice.</param>
+        <summary>Wandelt einen schreibgeschützten Span eines primitiven Typs in einen schreibgeschützten Span eines anderen primitiven Typs um.</summary>
+        <returns>Die konvertierte schreibgeschützte Span.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Weder `TFrom` noch `TTo` können Zeiger oder Verweise enthalten. `TFrom` und `TTo` werden zur Laufzeit überprüft, um die typsicherheit beibehalten.  
+
+Diese Methode wird nur auf Plattformen, die falsch ausgerichtete Speicherzugriff unterstützen unterstützt, oder wenn der Speicher blockieren mithilfe anderer Methoden ausgerichtet ist.
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="TFrom" /> oder <paramref name="TTo" /> enthält Verweise oder Zeiger.</exception>
       </Docs>
     </Member>
     <Member MemberName="Cast&lt;TFrom,TTo&gt;">
@@ -209,12 +251,26 @@
         <Parameter Name="span" Type="System.Span&lt;TFrom&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="TFrom">To be added.</typeparam>
-        <typeparam name="TTo">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TFrom">Der Typ, der die Quellspanne.</typeparam>
+        <typeparam name="TTo">Der Typ, der die zielspanne.</typeparam>
+        <param name="span">Der zu konvertierende Quellslice.</param>
+        <summary>Wandelt einen Span eines primitiven Typs in einen Span eines anderen primitiven Typs um.</summary>
+        <returns>Der konvertierte Span.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Weder `TFrom` noch `TTo` können Zeiger oder Verweise enthalten. `TFrom` und `TTo` werden zur Laufzeit überprüft, um die typsicherheit beibehalten.  
+
+Die Umwandlung erfolgt in einem nicht geprüften Kontext. Wenn der Bereich von `TTo` ist kleiner als der Bereich von `TFrom`, können Datenverluste auftreten. Z. B. wenn `TFrom` ist <xref:System.Int64>möglich von der `ReadOnlySpan<Int32>` ist 0x100001111110F0F, und `TTo` ist <xref:System.Int32>, der resultierende Wert wird 11110F0F.
+
+Diese Methode wird nur auf Plattformen, die falsch ausgerichtete Speicherzugriff unterstützen unterstützt, oder wenn der Speicher blockieren mithilfe anderer Methoden ausgerichtet ist.
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="TFrom" /> oder <paramref name="TTo" /> enthält Verweise oder Zeiger.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromPinnedArray&lt;T&gt;">
@@ -241,13 +297,24 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="array">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ des Arrays.</typeparam>
+        <param name="array">Das bereits angeheftete Quellarray.</param>
+        <param name="start">Der Index von <paramref name="array" />, bei dem der Speicherblock begonnen wird.</param>
+        <param name="length">Die Anzahl der Elemente, die in den Speicherblock eingeschlossen werden sollen.</param>
+        <summary>Erstellt einen neuen Speicherpuffer über dem Abschnitt des bereits angehefteten Zielarrays, der beim Index <paramref name="start" /> beginnt und aus <paramref name="length" />-Elementen besteht.</summary>
+        <returns>Ein Speicherblock über die angegebenen Elemente von <paramref name="array" />. Wenn <paramref name="array" /><see langword="null" /> ist, oder wenn <paramref name="start" /> und <paramref name="length" /> 0 sind, gibt die Methode eine <see cref="T:System.Memory`1" /> Instanz von <see cref="System.Memory`1.Length" /> Null wieder.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Das Array muss bereits angeheftet werden, bevor diese Methode wird aufgerufen, und dieses Array muss nicht gelöst, während die <xref:System.Memory%601> Puffer, die zurückgegeben wird, nach wie vor. Aufrufen dieser Methode für nicht fixierte Bytearray könnte Speicherschäden führen.
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">
+          <paramref name="array" /> ist kovariant, und den Typ von <paramref name="array" /> ist nicht genau <paramref name="T[]" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="start" />- oder der Endindex liegt nicht im Bereich von 0 bis <see cref="P:System.Array.Length" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateReadOnlySpan&lt;T&gt;">
@@ -274,12 +341,23 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="reference">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Datenelemente.</typeparam>
+        <param name="reference">Ein Verweis auf Daten.</param>
+        <param name="length">Die Anzahl der <paramref name="T" />-Elemente, die in <paramref name="reference" /> enthalten sind.</param>
+        <summary>Erstellt ein neues schreibgeschützten Span über einen Teil eines regulären verwalteten Objekts.</summary>
+        <returns>Ein schreibgeschützter Span.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Diese Methode kann nützlich sein, wenn Teil eines verwalteten Objekts ein Array fester Größe darstellt. 
+
+> [!WARNING]
+> Diese Methode sollte mit Vorsicht verwendet werden. Ist kritisch, da die `length` Argument nicht überprüft. Darüber hinaus wird die Lebensdauer der zurückgegebene Spanne nicht für die Sicherheit von Span-fähige Sprachen überprüft.
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateSpan&lt;T&gt;">
@@ -306,12 +384,23 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="reference">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Datenelemente.</typeparam>
+        <param name="reference">Ein Verweis auf Daten.</param>
+        <param name="length">Die Anzahl der <paramref name="T" />-Elemente, die in <paramref name="reference" /> enthalten sind.</param>
+        <summary>Erstellt einen neuen Span über einen Teil eines regulären verwalteten Objekts.</summary>
+        <returns>Ein Span.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Diese Methode kann nützlich sein, wenn Teil eines verwalteten Objekts ein Array fester Größe darstellt. 
+
+> [!WARNING]
+> Diese Methode sollte mit Vorsicht verwendet werden. Ist kritisch, da die `length` Argument nicht überprüft. Darüber hinaus wird die Lebensdauer der zurückgegebene Spanne nicht für die Sicherheit von Span-fähige Sprachen überprüft.
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetReference&lt;T&gt;">
@@ -336,11 +425,19 @@
         <Parameter Name="span" Type="System.ReadOnlySpan&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der Spanne.</typeparam>
+        <param name="span">Der schreibgeschützte Span, aus dem der Verweis abgerufen wird.</param>
+        <summary>Gibt einen Verweis auf das Element des schreibgeschützten Span bei Index 0 zurück.</summary>
+        <returns>Ein Verweis auf das Element bei Index 0.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Wenn die schreibgeschützte Spanne leer ist, gibt diese Methode einen Verweis auf den Speicherort, in dem das Element am Index 0 gespeichert worden wären. Ein solchen Verweis kann oder möglicherweise nicht `null`. Der zurückgegebene Verweis für das Fixieren von verwendet werden kann, aber es muss nicht dereferenziert werden.
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetReference&lt;T&gt;">
@@ -365,11 +462,19 @@
         <Parameter Name="span" Type="System.Span&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="span">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der Spanne.</typeparam>
+        <param name="span">Der Span, aus dem der Verweis abgerufen wird.</param>
+        <summary>Gibt einen Verweis auf das Element des Span bei Index 0 zurück.</summary>
+        <returns>Ein Verweis auf das Element bei Index 0.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Wenn die Spanne leer ist, gibt diese Methode einen Verweis auf den Speicherort, in dem das Element am Index 0 gespeichert worden wären. Ein solchen Verweis kann oder möglicherweise nicht `null`. Der zurückgegebene Verweis für das Fixieren von verwendet werden kann, aber es muss nicht dereferenziert werden.
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Read&lt;T&gt;">
@@ -401,11 +506,23 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ des Elements, das aus der schreibgeschützten Spanne abzurufen.</typeparam>
+        <param name="source">Ein schreibgeschützter Span.</param>
+        <summary>Liest eine Struktur des Typ <param name="T" /> aus dem schreibgeschützten Bytes-Span.</summary>
+        <returns>Die aus dem schreibgeschützten Span abgerufene Struktur.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. "Es wird zur Laufzeit überprüft, um typsicherheit zu erhalten.  
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> enthält Verweise oder Zeiger.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <param name="source" /> ist kleiner als <param name="T" /></exception>
       </Docs>
     </Member>
     <Member MemberName="ToEnumerable&lt;T&gt;">
@@ -431,11 +548,19 @@
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="memory">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Elemente in der schreibgeschützten Speicher-Puffer.</typeparam>
+        <param name="memory">Ein schreibgeschützter Speicherpuffer.</param>
+        <summary>Erstellt eine <see cref="T:System.Collections.Generic.IEnumerable`1" />-Ansicht des angegebenen schreibgeschützten Speicherpuffers.</summary>
+        <returns>Eine aufzählbare Ansicht <param name="memory" />sein.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Mit dieser Methode können Sie einen schreibgeschützten Speicherpuffer in vorhandenen APIs verwendet werden, die einen Parameter vom Typ erfordern <xref:System.Collections.Generic.IEnumerable%601>. 
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetArray&lt;T&gt;">
@@ -462,11 +587,12 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="memory">To be added.</param>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">Der Typ der Elemente in der schreibgeschützten Speicher-Puffer.</typeparam>
+        <param name="memory">Ein schreibgeschützter Speicherpuffer.</param>
+        <param name="segment">Wenn diese Methode ein Ergebnis zurückgibt, enthält sie das Arraysegment, das aus dem zugrunde liegenden schreibgeschützten Speicherpuffer abgerufen wurde. Wenn die Methode fehlschlägt, gibt die Methode ein Standardarraysegment zurück.</param>
+        <summary>Versucht, ein Arraysegment aus dem zugrunde liegenden Speicherpuffer abzurufen. Der Rückgabewert gibt den Erfolg des Vorgangs an.</summary>
+        <returns>
+          <see langword="true" />, wenn der Aufruf der Methode erfolgreich ist; andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -499,12 +625,13 @@
         <Parameter Name="manager" Type="TManager" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <typeparam name="TManager">To be added.</typeparam>
-        <param name="memory">To be added.</param>
-        <param name="manager">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">Der Typ der Elemente in der schreibgeschützten Speicher-Puffer.</typeparam>
+        <typeparam name="TManager">Der Typ des der <see cref="T:System.Buffers.MemoryManager`1" /> abrufen.</typeparam>
+        <param name="memory">Der schreibgeschützten Speicherpuffer, für den der Speicher-Manager abgerufen werden soll.</param>
+        <param name="manager">Wenn die Methode ein Ergebnis zurückgibt, der Manager von <param name="memory" />sein.</param>
+        <summary>Versucht, den <see cref="T:System.Buffers.MemoryManager`1" /> aus dem zugrunde liegenden schreibgeschützten Speicherpuffer abzurufen.</summary>
+        <returns>
+          <see langword="true" />, wenn die Methode den Speicher-Manager abruft, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -539,14 +666,15 @@
         <Parameter Name="length" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <typeparam name="TManager">To be added.</typeparam>
-        <param name="memory">To be added.</param>
-        <param name="manager">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">Der Typ der Elemente in der schreibgeschützten Speicher-Puffer.</typeparam>
+        <typeparam name="TManager">Der Typ des der <see cref="T:System.Buffers.MemoryManager`1" /> abrufen.</typeparam>
+        <param name="memory">Der schreibgeschützten Speicherpuffer, für den der Speicher-Manager abgerufen werden soll.</param>
+        <param name="manager">Wenn die Methode ein Ergebnis zurückgibt, der Manager von <param name="memory" />sein.</param>
+        <param name="start">Wenn die Methode ein Ergebnis zurückgibt, der Versatz <param name="manager" /> den der <param name="memory" /> repräsentiert.</param>
+        <param name="length">Wenn die Methode ein Ergebnis zurückgibt, die Länge von <param name="manager" /> den der <param name="memory" /> repräsentiert.</param>
+        <summary>Versucht, den <see cref="T:System.Buffers.MemoryManager`1" />, den Startindex und die Länge aus dem zugrunde liegenden schreibgeschützten Speicherpuffer abzurufen.</summary>
+        <returns>
+          <see langword="true" />, wenn die Methode erfolgreich ausgeführt wurde, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -573,12 +701,13 @@
         <Parameter Name="length" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="memory">To be added.</param>
-        <param name="text">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="memory">Schreibgeschützter Speicher mit einem Block an Zeichen.</param>
+        <param name="text">Wenn die Methode ein Ergebnis zurückgibt, die Zeichenfolge im Speicherpuffer.</param>
+        <param name="start">Die Anfangsposition in <param name="text" />sein.</param>
+        <param name="length">Die Anzahl von Zeichen in <param name="text" />sein.</param>
+        <summary>Versucht, die zugrunde liegenden Zeichenfolge aus einem <see langword="System.ReadOnlyMemory&lt;Char&gt;" /> abzurufen.</summary>
+        <returns>
+          <see langword="true" />, wenn die Methode die zugrunde liegende Zeichenfolge erfolgreich abruft, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -612,12 +741,23 @@
         <Parameter Name="value" Type="T" RefType="out" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="source">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Struktur abrufen.</typeparam>
+        <param name="source">Ein schreibgeschützter Bytes-Span.</param>
+        <param name="value">Wenn die Methode ein Ergebnis zurückgibt, eine Instanz von <param name="T" />sein.</param>
+        <summary>Versucht, eine Struktur des Typs <param name="T" /> aus einem schreibgeschützten Bytes-Span zu lesen.</summary>
+        <returns>
+          <see langword="true" />, wenn die Methode erfolgreich eine Instanz der Struktur abruft, andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. "Es wird zur Laufzeit überprüft, um typsicherheit zu erhalten.  
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> enthält Verweise oder Zeiger.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryWrite&lt;T&gt;">
@@ -650,12 +790,23 @@
         <Parameter Name="value" Type="T" RefType="ref" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="destination">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Struktur.</typeparam>
+        <param name="destination">Der Bytes-Span, der die Struktur enthält.</param>
+        <param name="value">Die Struktur, die in den Span geschrieben werden soll.</param>
+        <summary>Versucht, eine Struktur des Typs <param name="T" /> in einen Bytes-Span zu schreiben.</summary>
+        <returns>
+          <see langword="true" />, wenn der Schreibvorgang erfolgreich ausgeführt wurde, andernfalls <see langword="false" />. Die Methode gibt <see langword="false" /> zurück, wenn der Span zu klein ist für <param name="T" />sein.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. "Es wird zur Laufzeit überprüft, um typsicherheit zu erhalten.  
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="TFrom" /> oder <paramref name="TTo" /> enthält Verweise oder Zeiger.</exception>
       </Docs>
     </Member>
     <Member MemberName="Write&lt;T&gt;">
@@ -688,11 +839,23 @@
         <Parameter Name="value" Type="T" RefType="ref" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="destination">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ der Struktur.</typeparam>
+        <param name="destination">Der Bytes-Span, der die Struktur enthält.</param>
+        <param name="value">Die Struktur, die in den Span geschrieben werden soll.</param>
+        <summary>Schreibt eine Struktur des Typs <param name="T" /> in einen Bytes-Span.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+`T` darf keine Zeiger oder Verweise enthalten. "Es wird zur Laufzeit überprüft, um typsicherheit zu erhalten.  
+
+       ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> enthält Verweise oder Zeiger.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="destination" /> ist zu klein für <paramref name="value" />.</exception>
       </Docs>
     </Member>
   </Members>

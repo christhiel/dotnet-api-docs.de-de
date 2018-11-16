@@ -1,11 +1,11 @@
 <Type Name="IMemoryOwner&lt;T&gt;" FullName="System.Buffers.IMemoryOwner&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="b491445174eaa9f5b6e7e520853b5be5b27ec3f7" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="891577a0c3fb5be4a19d18ed9374211c9ee0c900" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/24/2018" />
-    <Meta Name="ms.locfileid" Value="36715105" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51317293" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface IMemoryOwner&lt;T&gt; : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IMemoryOwner`1&lt;T&gt; implements class System.IDisposable" />
@@ -17,6 +17,9 @@
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Memory</AssemblyName>
+  </AssemblyInfo>
   <TypeParameters>
     <TypeParameter Name="T" />
   </TypeParameters>
@@ -26,9 +29,25 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">Der Typ der Elemente im Speicher gespeichert werden.</typeparam>
+    <summary>Identifiziert den Besitzer eines Speicherblocks, der für die ordnungsgemäße Freigabe des zugrunde liegenden Speichers verantwortlich ist.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+Die `IMemoryOwner<T>` Schnittstelle wird verwendet, zum Definieren des verantwortlich für die Verwaltung der Prozesslebensdauer des Besitzers einer <xref:System.Memory%601> Puffer. Eine Instanz von der `IMemoryOwner<T>` -Schnittstelle wird von der < xef:System.Buffers.MemoryPool%601.Rent%2A?displayProperty=nameWithType >-Methode zurückgegeben. 
+
+Während ein Puffers über mehrere Consumer verfügen kann, kann es zu jedem Zeitpunkt nur einen einzigen Besitzer verfügen. Der Besitzer kann:
+
+- Erstellen des Puffers an, entweder direkt oder durch Aufrufen einer Factorymethode.
+
+- Übertragen des Besitzes zu einem anderen Consumer. In diesem Fall sollte der vorherige Besitzer nicht mehr auf den Puffer verwenden.
+
+- Den Puffer zu zerstören, wenn sie nicht mehr verwendet wird.
+
+Da die `IMemoryOwner<T>` -Objekt implementiert die <xref:System.IDisposable> -Schnittstelle, rufen Sie die <xref:System.IDisposable.Dispose%2A> Methode erst, nachdem der Speicherpuffer nicht mehr benötigt wird und Sie haben es zerstört. Sollten Sie *nicht* verwerfen der `IMemoryOnwer<T>` Objekt ein Verweis auf seinen Arbeitsspeicher zur Verfügung steht. Dies bedeutet, dass den Typ, in dem `IMemoryOwner<T>` deklariert dürfen keine <xref:System.Object.Finalize%2A> Methode.
+
+   ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Memory">
@@ -43,12 +62,15 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Ruft den zu diesem Besitzer gehörenden Speicher ab.</summary>
+        <value>Der Arbeitsspeicher, die diesem Besitzer gehören.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -1,11 +1,11 @@
 <Type Name="ThreadState" FullName="System.Threading.ThreadState">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="5caa2caa6d22a6bccdc3cfc010bb3f89f6737e58" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="b0f3e8d9dab97678b690e340db3f71242cb82e32" />
+    <Meta Name="ms.sourcegitcommit" Value="723b8a6d92667ba86fcda96190bad3b4a03283b3" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48595338" />
+    <Meta Name="ms.lasthandoff" Value="11/09/2018" />
+    <Meta Name="ms.locfileid" Value="51314876" />
   </Metadata>
   <TypeSignature Language="C#" Value="public enum ThreadState" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed ThreadState extends System.Enum" />
@@ -55,30 +55,38 @@
  <xref:System.Threading.ThreadState> definiert einen Satz aller möglichen Ausführungszustände für Threads. Sobald ein Thread erstellt wurde, ist es in mindestens einem der Zustände, bis er beendet wird. Threads, die in der common Language Runtime erstellt werden anfänglich in der `Unstarted` Zustand, während externe Threads, die in die Laufzeit stammen befinden sich bereits in der `Running` Zustand. Ein `Unstarted` Thread gewechselt wird, in der `Running` Status durch den Aufruf <xref:System.Threading.Thread.Start%2A>. Nicht alle Kombinationen von `ThreadState` Werte sind gültig; z. B. ein Thread kann nicht sowohl die `Aborted` und `Unstarted` Zustände.  
   
 > [!IMPORTANT]
->  Es gibt zwei Auflistungen für die Thread-Status,<xref:System.Threading.ThreadState?displayProperty=nameWithType> und <xref:System.Diagnostics.ThreadState?displayProperty=nameWithType>.  
+>  Es gibt zwei Auflistungen von Thread-Status: <xref:System.Threading.ThreadState?displayProperty=nameWithType> und <xref:System.Diagnostics.ThreadState?displayProperty=nameWithType>.  
   
  Die folgende Tabelle zeigt die Aktionen, die dazu führen, eine Änderung des Zustands dass.  
   
 |Aktion|ThreadState|  
 |------------|-----------------|  
-|Ein Thread wird in der common Language Runtime erstellt.|Nicht gestartete|  
-|Ein anderer Thread Ruft die <xref:System.Threading.Thread.Start%2A?displayProperty=nameWithType> Methode auf den neuen Thread, und der Aufruf zurückgegeben.<br /><br /> Die <xref:System.Threading.Thread.Start%2A> Methode wird nicht zurückgegeben, bis der neue Thread gestartet. Es gibt keine Möglichkeit herauszufinden, an welchem Punkt der neue Thread gestartet wird ausgeführt, während des Aufrufs von <xref:System.Threading.Thread.Start%2A>.|Running|  
-|Der Thread Ruft <xref:System.Threading.Thread.Sleep%2A>|WaitSleepJoin|  
-|Der Thread ruft <xref:System.Threading.Monitor.Wait%2A> auf einem anderen Objekt auf.|WaitSleepJoin|  
-|Der Thread ruft <xref:System.Threading.Thread.Join%2A> auf einem anderen Thread auf.|WaitSleepJoin|  
-|Ein anderer Thread Ruft <xref:System.Threading.Thread.Interrupt%2A>|Wird ausgeführt|  
-|Ein anderer Thread Ruft <xref:System.Threading.Thread.Suspend%2A>|SuspendRequested|  
-|Der Thread reagiert auf eine <xref:System.Threading.Thread.Suspend%2A>-Anforderung.|Angehalten|  
-|Ein anderer Thread Ruft <xref:System.Threading.Thread.Resume%2A>|Wird ausgeführt|  
-|Ein anderer Thread Ruft <xref:System.Threading.Thread.Abort%2A>|AbortRequested|  
-|Der Thread reagiert auf eine <xref:System.Threading.Thread.Abort%2A>-Anforderung.|Beendet|  
+|Ein Thread wird in der common Language Runtime erstellt.|<xref:System.Threading.ThreadState.Unstarted>|  
+|Ein anderer Thread Ruft die <xref:System.Threading.Thread.Start%2A?displayProperty=nameWithType> Methode auf den neuen Thread, und der Aufruf zurückgegeben.<br /><br /> Die <xref:System.Threading.Thread.Start%2A> Methode wird nicht zurückgegeben, bis der neue Thread gestartet. Es gibt keine Möglichkeit herauszufinden, an welchem Punkt der neue Thread gestartet wird ausgeführt, während des Aufrufs von <xref:System.Threading.Thread.Start%2A>.|<xref:System.Threading.ThreadState.Running>|  
+|Der Thread Ruft <xref:System.Threading.Thread.Sleep%2A>|<xref:System.Threading.ThreadState.WaitSleepJoin>|  
+|Der Thread ruft <xref:System.Threading.Monitor.Wait%2A> auf einem anderen Objekt auf.|<xref:System.Threading.ThreadState.WaitSleepJoin>|  
+|Der Thread ruft <xref:System.Threading.Thread.Join%2A> auf einem anderen Thread auf.|<xref:System.Threading.ThreadState.WaitSleepJoin>|  
+|Ein anderer Thread Ruft <xref:System.Threading.Thread.Interrupt%2A>|<xref:System.Threading.ThreadState.Running>|  
+|Ein anderer Thread Ruft <xref:System.Threading.Thread.Suspend%2A>|<xref:System.Threading.ThreadState.SuspendRequested>|  
+|Der Thread reagiert auf eine <xref:System.Threading.Thread.Suspend%2A>-Anforderung.|<xref:System.Threading.ThreadState.Suspended>|  
+|Ein anderer Thread Ruft <xref:System.Threading.Thread.Resume%2A>|<xref:System.Threading.ThreadState.Running>|  
+|Ein anderer Thread Ruft <xref:System.Threading.Thread.Abort%2A>|<xref:System.Threading.ThreadState.AbortRequested>|  
+|Der Thread reagiert auf eine <xref:System.Threading.Thread.Abort%2A>-Anforderung.|<xref:System.Threading.ThreadState.Stopped>|  
 |Ein Thread wird beendet.|Beendet|  
   
- Zusätzlich zu den oben aufgeführten Zuständen, es gibt auch die `Background` Zustand, der angibt, ob der Thread im Hintergrund oder im Vordergrund ausgeführt wird.  
+ Zusätzlich zu den oben aufgeführten Zuständen, es gibt auch die <xref:System.Threading.ThreadState.Background> Zustand, der angibt, ob der Thread im Hintergrund oder im Vordergrund ausgeführt wird.  
   
- Ein Thread kann zu einem bestimmten Zeitpunkt in mehreren Zuständen befinden. Angenommen, ein Thread blockiert wird, bei einem Aufruf von <xref:System.Threading.Monitor.Wait%2A>, und ein anderer Thread ruft <xref:System.Threading.Thread.Abort%2A> der blockierte Thread wird für den blockierten Thread, sowohl die `WaitSleepJoin` und `AbortRequested` Zustände zur gleichen Zeit. In diesem Fall ist, sobald der Thread aus dem Aufruf von zurück <xref:System.Threading.Monitor.Wait%2A> oder unterbrochen wird, erhält er die <xref:System.Threading.ThreadAbortException> um abgebrochen zu beginnen.  
+ Ein Thread kann zu einem bestimmten Zeitpunkt in mehreren Zuständen befinden. Angenommen, ein Thread blockiert wird, bei einem Aufruf von <xref:System.Threading.Monitor.Wait%2A>, und ein anderer Thread ruft <xref:System.Threading.Thread.Abort%2A> der blockierte Thread wird für den blockierten Thread, sowohl die <xref:System.Threading.ThreadState.WaitSleepJoin> und <xref:System.Threading.ThreadState.AbortRequested> Zustände zur gleichen Zeit. In diesem Fall ist, sobald der Thread aus dem Aufruf von zurück <xref:System.Threading.Monitor.Wait%2A> oder unterbrochen wird, erhält er die <xref:System.Threading.ThreadAbortException> um abgebrochen zu beginnen.  
   
- Die <xref:System.Threading.Thread.ThreadState%2A?displayProperty=nameWithType> Eigenschaft eines Threads stellt den aktuellen Status eines Threads bereit. Anwendungen müssen eine Bitmaske verwenden, um festzustellen, ob ein Thread ausgeführt wird. Da der Wert für `Running` ist 0 (null), testen, ob ein Thread ausgeführt wird, mithilfe von c#-Code wie z. B. `(myThread.ThreadState & (ThreadState.Stopped | ThreadState.Unstarted)) == 0` oder Visual Basic-Code, z. B. `(myThread.ThreadState And (ThreadState.Stopped Or ThreadState.Unstarted)) = 0`.  
+ Die <xref:System.Threading.Thread.ThreadState%2A?displayProperty=nameWithType> Eigenschaft eines Threads stellt den aktuellen Status eines Threads bereit. Anwendungen müssen eine Bitmaske verwenden, um festzustellen, ob ein Thread ausgeführt wird. Da der Wert für <xref:System.Threading.ThreadState.Running> ist 0 (null), testen, ob ein Thread ausgeführt wird, mit dem folgenden Code:
+
+```csharp
+(myThread.ThreadState & (ThreadState.Stopped | ThreadState.Unstarted)) == 0
+```
+
+```vb
+(myThread.ThreadState And (ThreadState.Stopped Or ThreadState.Unstarted)) = 0
+```
   
  ]]></format>
     </remarks>
@@ -215,7 +223,7 @@
       </ReturnValue>
       <MemberValue>0</MemberValue>
       <Docs>
-        <summary>Der Thread wurde gestartet, er wird nicht blockiert, und es ist keine ausstehende <see cref="T:System.Threading.ThreadAbortException" /> vorhanden.</summary>
+        <summary>Der Thread wurde gestartet und noch nicht beendet.</summary>
       </Docs>
     </Member>
     <Member MemberName="Stopped">
