@@ -1,11 +1,11 @@
 <Type Name="ResourceManager" FullName="System.Resources.ResourceManager">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="fb79a80752ee9d1cf7dfab2c8cf824a1b04335f5" />
-    <Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" />
+    <Meta Name="ms.openlocfilehash" Value="a0604beca350dee3c9ad9f1eb2d9f351e0be0b67" />
+    <Meta Name="ms.sourcegitcommit" Value="16d2d159872fd213cae4b8f371d7ae9c8b027c89" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="10/04/2018" />
-    <Meta Name="ms.locfileid" Value="48711293" />
+    <Meta Name="ms.lasthandoff" Value="11/17/2018" />
+    <Meta Name="ms.locfileid" Value="51907596" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class ResourceManager" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit ResourceManager extends System.Object" />
@@ -89,7 +89,7 @@
 ### <a name="creating-resources"></a>Erstellen von Ressourcen  
  Wenn Sie eine Ressource-basierte Anwendung entwickeln, speichern Sie Informationen zu Ressourcen in Textdateien (Dateien, die eine Erweiterung ".txt" oder ".restext") oder XML-Dateien (Dateien, die Erweiterung ".resx"). Kompilieren Sie dann den Text oder XML-Dateien mit der [Resource File Generator (Resgen.exe)](~/docs/framework/tools/resgen-exe-resource-file-generator.md) eine binäre RESOURCES-Datei erstellen. Anschließend können Sie die resultierende RESOURCES-Datei in eine ausführbare Datei oder einbetten, wie z. B. mithilfe einer Compileroption `/resources` für die C#- und Visual Basic-Compiler, oder Sie es in eine Satellitenassembly mit einbetten können die. Wenn Sie eine RESX-Datei in Visual Studio-Projekts einschließen, wird Visual Studio kümmert sich um die Kompilierung und Einbetten von standardmäßigen und lokalisierte Ressourcen automatisch als Teil des Buildprozesses.  
   
- Im Idealfall, erstellen Sie Ressourcen für jede Sprache Ihre app unterstützt, oder zumindest für eine sinnvolle Teilmenge der einzelnen Sprachen. Die binäre RESOURCES-Dateinamen folgen der Namenskonvention *Basename*.* CultureName*Resources, wobei *Basename* ist der Name der app oder den Namen einer Klasse, je nach der gewünschten Detailebene. Die <xref:System.Globalization.CultureInfo.Name%2A?displayProperty=nameWithType> Eigenschaft wird verwendet, um zu bestimmen, *CultureName*. Eine Ressource für die Standardkultur der app heißen *Basename*Resources.  
+ Im Idealfall, erstellen Sie Ressourcen für jede Sprache Ihre app unterstützt, oder zumindest für eine sinnvolle Teilmenge der einzelnen Sprachen. Die binäre RESOURCES-Dateinamen folgen der Namenskonvention *Basename*. *CultureName*Resources, wobei *Basename* ist der Name der app oder den Namen einer Klasse, je nach der gewünschten Detailebene. Die <xref:System.Globalization.CultureInfo.Name%2A?displayProperty=nameWithType> Eigenschaft wird verwendet, um zu bestimmen, *CultureName*. Eine Ressource für die Standardkultur der app heißen *Basename*Resources.  
   
  Nehmen wir beispielsweise an, dass eine Assembly in einer Ressourcendatei verfügt über mehrere Ressourcen, die den Basisnamen MyResources verfügt. Diese Ressourcendateien müssen die Namen z. B. MyResources.ja-JP.resources für die Kultur Japan (Japanisch) MyResources.de.resources für die deutschen Kultur MyResources.zh-CHS.resources für die Kultur für vereinfachtes Chinesisch, und MyResources.fr-BE.resources für die Kultur Französisch (Belgien). Die Ressourcendatei sollten MyResources.resources benannt werden. Die kulturspezifischen Ressourcendateien werden häufig in Satellitenassemblys für jede Kultur gepackt. Die Ressourcendatei sollte in die Hauptassembly der Anwendung eingebettet werden.  
   
@@ -269,20 +269,20 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
  Für ausführbare Dateien, die bereitgestellt und von einer Website (HREF .exe-Dateien), führen Sie die <xref:System.Resources.ResourceManager> Objekt kann eine Überprüfung auf Satellitenassemblys über das Web, wodurch die Leistung Ihrer Anwendung beeinträchtigt werden kann. Um das Leistungsproblem zu vermeiden, können Sie einschränken, diese Überprüfung auf Satellitenassemblys, die Sie mit der app bereitgestellt haben. Zu diesem Zweck erstellen Sie eine `<satelliteassemblies>` Knoten in Ihrer app-Konfigurationsdatei, um anzugeben, dass Sie einen bestimmten Satz von Kulturen, für Ihre app, und bereitgestellt haben die <xref:System.Resources.ResourceManager> Objekt sollten nicht versuchen, nach einer Kultur gesucht werden soll, die in diesem Knoten nicht aufgeführt ist.  
   
 > [!NOTE]
->  Die bevorzugte Alternative zum Erstellen einer `<satelliteassemblies>` Knoten ist die Verwendung der [ClickOnce-Bereitstellungsmanifest](http://msdn.microsoft.com/library/8457e615-e3b6-4990-8dcf-11bc590e4e9b) Feature.  
+>  Die bevorzugte Alternative zum Erstellen einer `<satelliteassemblies>` Knoten ist die Verwendung der [ClickOnce-Bereitstellungsmanifest](https://msdn.microsoft.com/library/8457e615-e3b6-4990-8dcf-11bc590e4e9b) Feature.  
   
  Erstellen Sie einen Abschnitt in Ihrer app-Konfigurationsdatei etwa wie folgt:  
   
 ```  
 <?xml version ="1.0"?>  
 <configuration>  
-    <satelliteassemblies>  
-        <assembly name="MainAssemblyName, Version=versionNumber, Culture=neutral, PublicKeyToken=null|yourPublicKeyToken">  
-            <culture>cultureName1</culture>  
-            <culture>cultureName2</culture>  
-            <culture>cultureName3</culture>  
-        </assembly>  
-    </satelliteassemblies>  
+    <satelliteassemblies>  
+        <assembly name="MainAssemblyName, Version=versionNumber, Culture=neutral, PublicKeyToken=null|yourPublicKeyToken">  
+            <culture>cultureName1</culture>  
+            <culture>cultureName2</culture>  
+            <culture>cultureName3</culture>  
+        </assembly>  
+    </satelliteassemblies>  
 </configuration>  
 ```  
   
@@ -306,7 +306,7 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
 ## <a name="includewin8appnamelongincludeswin8-appname-long-mdmd-apps"></a>[!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)]-Apps  
   
 > [!IMPORTANT]
->  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](http://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
+>  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
   
  Für [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -apps, die <xref:System.Resources.ResourceManager> Klasse ruft Ressourcen aus dem Paket ressourcenindexdateien (PRI). Eine einzelne PRI-Datei (die Anwendung Paket PRI-Datei) enthält die Ressourcen für die Standardkultur und alle Kulturen lokalisiert. Sie verwenden das MakePRI-Hilfsprogramm, um eine PRI-Datei aus einem oder mehreren Ressourcendateien zu erstellen, die im XML-Ressource (.resw) Format vorliegen. Für Ressourcen, die in Visual Studio-Projekt enthalten sind, wird Visual Studio erstellen und Packen die PRI-Datei automatisch. Anschließend können Sie die .NET Framework <xref:System.Resources.ResourceManager> Klasse, um die app oder Bibliothek zugreifen.  
   
@@ -384,7 +384,7 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
     <altmember cref="T:System.Globalization.CultureInfo" />
     <altmember cref="P:System.Globalization.CultureInfo.CurrentUICulture" />
     <altmember cref="T:System.Resources.SatelliteContractVersionAttribute" />
-    <related type="Article" href="http://msdn.microsoft.com/library/8ad495d4-2941-40cf-bf64-e82e85825890">Ressourcen in Anwendungen</related>
+    <related type="Article" href="https://msdn.microsoft.com/library/8ad495d4-2941-40cf-bf64-e82e85825890">Ressourcen in Anwendungen</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -494,7 +494,7 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
 ## <a name="includewin8appnamelongincludeswin8-appname-long-mdmd-apps"></a>[!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)]-Apps  
   
 > [!IMPORTANT]
->  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](http://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
+>  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
   
  In [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps <xref:System.Resources.ResourceManager> verwendet die `resourceSource` Parameter Ableiten von der Assembly, Basisnamen und dem Namespace, in dem die Ressourcenelemente in der app-Paket (paketressourcenindex) Ressourcendatei gefunden werden können. Angenommen, einen Typ, der mit dem Namen Firma.Produkt.Typ, die in definierten `MyAssembly`, der Ressourcen-Manager sucht nach eine Ressource mit dem Namen MyAssembly Bezeichner festgelegt, und sucht nach einem Bereich Firma.Produkt.Typ innerhalb dieses Ressourcensatzes. Der Ressourcen-Manager sucht nach Ressourcenelemente unter den Standardkontext (aktuelle Kultur, aktuelle Einstellung von hohem Kontrast usw.) innerhalb dieses Bereichs.  
   
@@ -601,7 +601,7 @@ al /out:ru-RU\Greet.resources.dll /culture:ru-RU /embed: GreetingResources.ru-RU
 ## <a name="includewin8appnamelongincludeswin8-appname-long-mdmd-apps"></a>[!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)]-Apps  
   
 > [!IMPORTANT]
->  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](http://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
+>  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
   
  In [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -apps, die Ressourcen-Manager verwendet den einfachen Namen der `assembly` Parametersatz, um eine passende Ressource zu suchen, in der app-Paket (paketressourcenindex) Ressourcendatei. Die `baseName` Parameter wird verwendet, um ein Ressourcenelement innerhalb der Ressourcenmenge zu suchen. Beispielsweise ist der Stammname PortableLibrary1.Resource1.de-DE.resources PortableLibrary1.Resource1.  
   
@@ -1602,7 +1602,7 @@ csc GetStream.cs /resource:AppResources.resources
 ## <a name="includewin8appnamelongincludeswin8-appname-long-mdmd-apps"></a>[!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)]-Apps  
   
 > [!IMPORTANT]
->  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](http://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
+>  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
   
  In [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -apps, die <xref:System.Resources.ResourceManager.GetString%28System.String%29> -Methode gibt den Wert von der `name` Zeichenfolgenressource, die für die aktuelle UI-kultureinstellungen des Aufrufers lokalisiert. Die Liste der Kulturen wird aus der Liste des Betriebssystems der bevorzugten Benutzeroberfläche Sprache abgeleitet. Wenn der Ressourcen-Manager keine Übereinstimmung `name`, gibt die Methode zurück `null`.  
   
@@ -1647,7 +1647,7 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
         <threadsafe>Die <see cref="M:System.Resources.ResourceManager.GetString(System.String)" /> Methode ist threadsicher.</threadsafe>
         <altmember cref="T:System.Globalization.CultureInfo" />
         <related type="Article" href="~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md">Verpacken und Bereitstellen von Ressourcen</related>
-        <related type="Article" href="http://msdn.microsoft.com/library/eca16922-1c46-4f68-aefe-e7a12283641f">Abrufen von Ressourcen in Satellitenassemblys</related>
+        <related type="Article" href="https://msdn.microsoft.com/library/eca16922-1c46-4f68-aefe-e7a12283641f">Abrufen von Ressourcen in Satellitenassemblys</related>
       </Docs>
     </Member>
     <Member MemberName="GetString">
@@ -1710,7 +1710,7 @@ al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.res
 ## <a name="includewin8appnamelongincludeswin8-appname-long-mdmd-apps"></a>[!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)]-Apps  
   
 > [!IMPORTANT]
->  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](http://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
+>  Obwohl die <xref:System.Resources.ResourceManager> Klasse wird von unterstützt [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps sollten nicht die Verwendung. Verwenden Sie diese Klasse nur beim Entwickeln von [!INCLUDE[net_portable](~/includes/net-portable-md.md)] Projekte, die mit verwendet werden können [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps. Zum Abrufen von Ressourcen aus [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] apps verwenden die [Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) stattdessen.  
   
  In [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -apps, die <xref:System.Resources.ResourceManager.GetString%28System.String%2CSystem.Globalization.CultureInfo%29> -Methode gibt den Wert von der `name` Zeichenfolgenressource, die für die durch angegebene Kultur lokalisiert die `culture` Parameter. Wenn die Ressource nicht, für lokalisiert ist die `culture` Kultur, die Suche verwendet die gesamte [!INCLUDE[win8](~/includes/win8-md.md)] Language-fallback-Liste, und nicht nach der Suche in der Standardkultur. Wenn der Ressourcen-Manager keine Übereinstimmung `name`, gibt die Methode zurück `null`.  
   
