@@ -1,11 +1,11 @@
 <Type Name="Conversion" FullName="Microsoft.VisualBasic.Conversion">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="cc0120340cfb097270b9032d2692b053057366ea" />
-    <Meta Name="ms.sourcegitcommit" Value="9e06b87bcfa4347dbbaaa4b3cc36b43b93b5badb" />
+    <Meta Name="ms.openlocfilehash" Value="65720e28354cf9fe68efb56839ebd7d07c6348ef" />
+    <Meta Name="ms.sourcegitcommit" Value="c0c07dbd19cd7017243f9ac36915755f79bc8da6" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/20/2018" />
-    <Meta Name="ms.locfileid" Value="52242782" />
+    <Meta Name="ms.lasthandoff" Value="11/27/2018" />
+    <Meta Name="ms.locfileid" Value="52381415" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class Conversion" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Conversion extends System.Object" />
@@ -306,7 +306,7 @@ End Class
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="Fix">
@@ -330,9 +330,9 @@ End Class
         <Parameter Name="Number" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Decimal" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -341,9 +341,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
-  
-   
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
@@ -393,9 +391,9 @@ End Class
         <Parameter Name="Number" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -404,9 +402,14 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
-  
-   
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
+
+Beginnend mit Visual Basic 15.8, die Leistung der `Double`-zu-ganzzahlige Konvertierung ist optimiert, wenn Sie den Rückgabewert von übergeben die `Fix` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder, wenn die `Double`Rückgabewert `Fix` wird implizit in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) festgelegt `Off`. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Das folgende Beispiel veranschaulicht diese eine optimierte Konvertierung:
+
+```vb
+Dim d As Double = 173.7619
+Dim i1 As Integer = CInt(Fix(d))           ' Result: 173
+```  
   
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
@@ -456,9 +459,9 @@ End Class
         <Parameter Name="Number" Type="System.Int16" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Short" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -467,7 +470,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -519,9 +522,9 @@ End Class
         <Parameter Name="Number" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Integer" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -530,7 +533,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -582,9 +585,9 @@ End Class
         <Parameter Name="Number" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Long" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -593,7 +596,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -645,9 +648,9 @@ End Class
         <Parameter Name="Number" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Object" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -656,9 +659,16 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
-  
-   
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
+
+Beginnend mit Visual Basic-15.8, falls die `Number` Argument ist ein Objekt, deren Laufzeittyp `Double` oder `Single`, die Leistung der Konvertierung von Gleitkomma-point-in Ganzzahlwerte ist optimiert, wenn Sie den Rückgabewert von übergeben die `Fix` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder wenn der Rückgabewert von `Fix` wird automatisch in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) auf Off festgelegt ist. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Zum Beispiel:
+
+```vb
+Dim d As Object = 173.7619
+Dim i1 As Integer = CInt(Fix(d))           ' Result: 173
+Dim s As Object = 173.7619F
+Dim i2 As Integer = CInt(Fix(s))           ' Result: 173
+```     
   
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
@@ -708,9 +718,9 @@ End Class
         <Parameter Name="Number" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Single" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -719,10 +729,15 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
+Beginnend mit Visual Basic 15.8, die Leistung der `Single`-zu-ganzzahlige Konvertierung ist optimiert, wenn Sie den Rückgabewert von übergeben die `Fix` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder, wenn die `Single`Rückgabewert `Fix` wird automatisch in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) auf Off festgelegt ist. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Das folgende Beispiel veranschaulicht diese eine optimierte Konvertierung:
    
-  
+```vb
+Dim s As Single = 173.7619
+Dim i2 As Integer = CInt(Fix(s))           ' Result: 173
+```
+
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
   
@@ -789,10 +804,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -845,10 +860,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -901,10 +916,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -957,10 +972,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1013,10 +1028,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1073,10 +1088,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1134,10 +1149,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1195,10 +1210,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1256,10 +1271,10 @@ End Class
 ## Remarks  
  Wenn `Number` ist nicht bereits eine ganze Zahl ist, wird der Wert vor der Auswertung auf die nächste ganze Zahl gerundet.  
   
-|Wenn `Number` ist|Hex gibt zurück|  
+|+0, wenn `Number` +0 ist.|Hex gibt zurück|  
 |-|-|  
-|Empty|Null (0)|  
-|Jeden beliebigen numerischen Wert|Bis zu 16 hexadezimale Zeichen|  
+|Empty|0 (Null).|  
+|Ein numerischer Wert.|Bis zu 16 hexadezimale Zeichen|  
   
  Sie können den hexadezimale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&H`. Z. B. `&H10` decimal 16 in Hexadezimalschreibweise darstellt.  
   
@@ -1289,7 +1304,7 @@ End Class
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="Int">
@@ -1313,9 +1328,9 @@ End Class
         <Parameter Name="Number" Type="System.Decimal" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Decimal" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1324,9 +1339,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
-  
-   
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
@@ -1376,9 +1389,9 @@ End Class
         <Parameter Name="Number" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1387,9 +1400,14 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
-   
+Visual Basic-15.8 ab, die Leistung von doppelten Werten in ganzzahlige Konvertierung wird optimiert, wenn Sie, den Rückgabewert übergeben von der `Int` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder wenn der Double-Wert zurückgegebenes `Int` wird automatisch in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) auf Off festgelegt ist. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Das folgende Beispiel veranschaulicht diese eine optimierte Konvertierung:
+
+```vb
+Dim dbl As Double = 175.7619
+Dim i3 As Integer = CInt(Int(dbl))         ' Result: 175
+```  
   
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
@@ -1439,9 +1457,9 @@ End Class
         <Parameter Name="Number" Type="System.Int16" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Short" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1450,7 +1468,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -1502,9 +1520,9 @@ End Class
         <Parameter Name="Number" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Integer" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1513,7 +1531,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -1565,9 +1583,9 @@ End Class
         <Parameter Name="Number" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Long" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1576,7 +1594,7 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
    
   
@@ -1628,9 +1646,9 @@ End Class
         <Parameter Name="Number" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Object" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1639,10 +1657,17 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
-   
-  
+Beginnend mit Visual Basic-15.8, falls die `Number` Argument ist ein Objekt, deren Laufzeittyp `Double` oder `Single`, die Leistung der Konvertierung von Gleitkomma-point-in Ganzzahlwerte ist optimiert, wenn Sie den Rückgabewert von übergeben die `Int` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder wenn der Rückgabewert von `Int` wird automatisch in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) auf Off festgelegt ist. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Zum Beispiel:
+
+```vb
+Dim d As Object = 173.7619
+Dim i1 As Integer = CInt(Int(d))           ' Result: 173
+Dim s As Object = 173.7619F
+Dim i2 As Integer = CInt(Int(s))           ' Result: 173
+```
+
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
   
@@ -1691,9 +1716,9 @@ End Class
         <Parameter Name="Number" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Double" /> oder ein beliebiger gültiger numerischer Ausdruck. Wenn <paramref name="Number" /><see langword="Nothing" /> enthält, wird <see langword="Nothing" /> zurückgegeben.</param>
-        <summary>Gibt den ganzzahligen Anteil einer Zahl zurück.</summary>
-        <returns>Gibt den ganzzahligen Anteil einer Zahl zurück.</returns>
+        <param name="Number">Erforderlich. Eine Zahl vom Typ <see langword="Single" /> oder ein beliebiger gültiger numerischer Ausdruck.</param>
+        <summary>Gibt den Integeranteil einer Zahl zurück.</summary>
+        <returns>Der Integeranteil einer Zahl.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1702,10 +1727,15 @@ End Class
   
  Der Unterschied zwischen `Int` und `Fix` Funktionen ist, dass wenn `Number` negativ ist, `Int` gibt der ersten negativen ganze Zahl kleiner als oder gleich `Number`hingegen `Fix` gibt die erste negative ganze Zahl größer als oder gleich `Number`. Z. B. `Int` 8,4 9, und `Fix` 8,4 in-8 konvertiert.  
   
- `Fix(number)` ist gleich `Sign(number) * Int(Abs(number)).`  
+ `Fix(number)``Sign(number) * Int(Abs(number)).` entspricht .  
   
-   
-  
+Beginnend mit Visual Basic 15.8, die Leistung der `Single`-zu-ganzzahlige Konvertierung ist optimiert, wenn Sie den Rückgabewert von übergeben die `Int` Methode, um eines der [ganzzahligen Konvertierungsfunktionen](~/docs/visual-basic/language-reference/functions/conversion-functions.md), oder, wenn die `Single`Rückgabewert `Int` wird automatisch in eine Ganzzahl mit Vorzeichen konvertiert [Option Strict](~/docs/visual-basic/language-reference/statements/option-strict-statement.md) auf Off festgelegt ist. Diese Optimierung kann Code ausführen schneller – bis zu zweimal so schnell für Code, der eine große Anzahl von Konvertierungen in ganzzahlige Typen. Das folgende Beispiel veranschaulicht diese eine optimierte Konvertierung:
+
+```vb
+Dim sng As Single = 175.7619
+Dim i3 As Integer = CInt(Fix(sng))         ' Result: 175
+```
+
 ## Examples  
  In diesem Beispiel wird veranschaulicht, wie die `Int` und `Fix` Funktionen geben Ganzzahlbereiche von Zahlen zurück. Bei einem negativen Number-Argument das `Int` Funktionsergebnis ist der ersten negativen ganze Zahl kleiner oder gleich der Zahl; die `Fix` Funktion gibt die erste negative ganze Zahl größer als oder gleich der Anzahl. Das folgende Beispiel muss Ihnen die Angabe `Option Strict Off` Da implizite typkonvertierungen aus `Double` eingeben `Integer` dürfen nicht unter `Option Strict On`:  
   
@@ -1774,7 +1804,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -1830,7 +1860,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -1886,7 +1916,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -1942,7 +1972,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -1998,7 +2028,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -2058,7 +2088,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -2119,7 +2149,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -2180,7 +2210,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -2241,7 +2271,7 @@ End Class
   
 |Wenn die Anzahl ist|Oct-Rückgabe|  
 |-|-|  
-|Empty|Null (0)|  
+|Empty|0 (Null).|  
 |Jede andere Zahl|Bis zu 22 oktale Zeichen|  
   
  Sie können die oktale Zahlen darstellen, direkt vom vorherigen Zahlen in den richtigen Bereich mit `&O`. Z. B. `&O10` der Oktalnotation für decimal 8 ist.  
@@ -2354,46 +2384,43 @@ End Class
       <Docs>
         <param name="Expression">Erforderlich. Jeder gültige <see langword="String" />-Ausdruck, jede gültige <see langword="Object" />-Variable, jeder gültige <see langword="Char" />-Wert. Wenn <paramref name="Expression" /> den Typ <see langword="Object" /> aufweist, muss der Wert in <see langword="String" /> konvertierbar sein, sonst tritt ein <see cref="T:System.ArgumentException" />-Fehler auf.</param>
         <summary>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</summary>
-        <returns>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</returns>
+        <returns>Die in einer Zeichenfolge enthaltenen Zahlen als numerischer Wert eines geeigneten Typs.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die `Val` Funktion stoppt das Lesen der Zeichenfolge mit dem ersten Zeichen, die nicht als Teil einer Zahl erkannt. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
+ `Val` Funktion stoppt das Lesen der Zeichenfolge beim ersten Zeichen, das nicht als Teil einer Zahl erkannt wird. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
   
  Der folgende Aufruf gibt den Wert 1615198 zurück.  
   
-```  
-  
+```vb  
 Val(" 1615 198th Street N.E.")   
 ```  
   
- Der folgende Aufruf gibt den decimal-Wert-1.  
+Der folgende Aufruf gibt den decimal-Wert-1.  
   
-```  
-  
+```vb  
 Val("&HFFFF")   
 ```  
   
 > [!NOTE]
 >  Die `Val` Funktion erkennt nur den Punkt (`.`) als gültige Dezimaltrennzeichen. Wenn verschiedene Dezimaltrennzeichen, wie in internationale Anwendungen verwendet werden, verwenden Sie `CDbl` oder `CInt` stattdessen zum Konvertieren einer Zeichenfolge in eine Zahl. Um die angegebene Zeichenfolgendarstellung einer Zahl in einer bestimmten Kultur in einen numerischen Wert zu konvertieren, verwenden Sie des numerischen Typs `Parse(String, IFormatProvider)` Methode. Verwenden Sie z. B. <xref:System.Double.Parse%2A?displayProperty=nameWithType> beim Konvertieren einer Zeichenfolge zu einer `Double`.  
   
-> [!NOTE]
->  Ein <xref:System.InvalidCastException> Ausnahme kann ausgelöst werden, als Reaktion auf bestimmte ungewöhnliche Zahlenformate. Im folgenden Code wird beispielsweise diese Ausnahme ausgelöst.  
->   
->  `' These examples cause run-time errors.`  
->   
->  `'Console.WriteLine(Val("1.34%"))`  
->   
->  `'Console.WriteLine(Val("1.34&"))`  
->   
->  Der Konflikt zwischen der Anzahl als formatiert eine `Double` und die `Integer` und `Long` Typzeichen würde vom Compiler erkannt werden, wenn es in einer Zeichenfolge nicht enthalten waren.  
->   
->  `' These examples cause compiler errors.`  
->   
->  `'Dim m = 1.34%`  
->   
->  `'Dim n = 1.34&`  
+Ein <xref:System.InvalidCastException> Ausnahme als Reaktion auf bestimmte ungewöhnliche Zahlenformate ausgelöst werden kann. Der folgende Code generiert beispielsweise diese Ausnahme.  
+
+```vb
+' These examples cause run-time errors.  
+Console.WriteLine(Val("1.34%"))  
+Console.WriteLine(Val("1.34&"))  
+```
+
+Der Konflikt zwischen der Anzahl als formatiert eine `Double` und die `Integer` und `Long` Typzeichen würde vom Compiler erkannt werden, wenn es in einer Zeichenfolge nicht enthalten waren.  
+
+```vb
+' These examples cause compiler errors.  
+Dim m = 1.34%  
+Dim n = 1.34&
+```  
   
    
   
@@ -2438,24 +2465,22 @@ Val("&HFFFF") 
       <Docs>
         <param name="Expression">Erforderlich. Jeder gültige <see langword="String" />-Ausdruck, jede gültige <see langword="Object" />-Variable, jeder gültige <see langword="Char" />-Wert. Wenn <paramref name="Expression" /> den Typ <see langword="Object" /> aufweist, muss der Wert in <see langword="String" /> konvertierbar sein, sonst tritt ein <see cref="T:System.ArgumentException" />-Fehler auf.</param>
         <summary>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</summary>
-        <returns>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</returns>
+        <returns>Die in einer Zeichenfolge enthaltenen Zahlen als numerischer Wert eines geeigneten Typs.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die `Val` Funktion stoppt das Lesen der Zeichenfolge mit dem ersten Zeichen, die nicht als Teil einer Zahl erkannt. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
+ `Val` Funktion stoppt das Lesen der Zeichenfolge beim ersten Zeichen, das nicht als Teil einer Zahl erkannt wird. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
   
  Der folgende Aufruf gibt den Wert 1234123 zurück.  
   
-```  
-  
+```vb  
 Val(" 1234 123th Street N.E.")   
 ```  
   
- Der folgende Aufruf gibt den decimal-Wert-1.  
+Der folgende Aufruf gibt den decimal-Wert-1.  
   
-```  
-  
+```vb  
 Val("&HFFFF")   
 ```  
   
@@ -2463,7 +2488,7 @@ Val("&HFFFF") 
 >  Die `Val` Funktion erkennt nur den Punkt (`.`) als gültige Dezimaltrennzeichen. Verwenden Sie bei anderen Dezimaltrennzeichen, wie in internationale Anwendungen verwendet werden, `CDbl` oder `CInt` stattdessen zum Konvertieren einer Zeichenfolge in eine Zahl. Um die angegebene Zeichenfolgendarstellung einer Zahl in einer bestimmten Kultur in einen numerischen Wert zu konvertieren, verwenden Sie des numerischen Typs `Parse(String, IFormatProvider)` Methode. Verwenden Sie z. B. <xref:System.Double.Parse%2A?displayProperty=nameWithType> beim Konvertieren einer Zeichenfolge zu einer `Double`.  
   
 > [!NOTE]
->  Ein <xref:System.InvalidCastException> Ausnahme kann ausgelöst werden, als Reaktion auf bestimmte ungewöhnliche Zahlenformate. Im folgenden Code wird beispielsweise diese Ausnahme ausgelöst.  
+>  Ein <xref:System.InvalidCastException> Ausnahme als Reaktion auf bestimmte ungewöhnliche Zahlenformate ausgelöst werden kann. Der folgende Code generiert beispielsweise diese Ausnahme.  
 >   
 >  `' These examples cause run-time errors.`  
 >   
@@ -2522,24 +2547,22 @@ Val("&HFFFF") 
       <Docs>
         <param name="InputStr">Erforderlich. Jeder gültige <see langword="String" />-Ausdruck, jede gültige <see langword="Object" />-Variable, jeder gültige <see langword="Char" />-Wert. Wenn <paramref name="Expression" /> den Typ <see langword="Object" /> aufweist, muss der Wert in <see langword="String" /> konvertierbar sein, sonst tritt ein <see cref="T:System.ArgumentException" />-Fehler auf.</param>
         <summary>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</summary>
-        <returns>Gibt die in einer Zeichenfolge enthaltenen Zahlen als numerischen Wert eines geeigneten Typs zurück.</returns>
+        <returns>Die in einer Zeichenfolge enthaltenen Zahlen als numerischer Wert eines geeigneten Typs.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die `Val` Funktion stoppt das Lesen der Zeichenfolge mit dem ersten Zeichen, die nicht als Teil einer Zahl erkannt. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
+ `Val` Funktion stoppt das Lesen der Zeichenfolge beim ersten Zeichen, das nicht als Teil einer Zahl erkannt wird. Symbole und Zeichen, die häufig als Teil von numerischen Werten, z. B. Währungssymbole und Kommas, erkannt werden, werden nicht erkannt. Die Funktion erkennt jedoch die Basispräfixe `&O` (für oktal) und `&H` (für hexadezimal). Leerzeichen, Tabulatoren und Zeilenvorschubzeichen werden aus dem Argument entfernt.  
   
  Der folgende Aufruf gibt den Wert 1234123 zurück.  
   
-```  
-  
+```vb  
 Val(" 1234 123th Street N.E.")   
 ```  
   
- Der folgende Aufruf gibt den decimal-Wert-1.  
+Der folgende Aufruf gibt den decimal-Wert-1.  
   
-```  
-  
+```vb  
 Val("&HFFFF")   
 ```  
   
@@ -2547,7 +2570,7 @@ Val("&HFFFF") 
 >  Die `Val` Funktion erkennt nur den Punkt (`.`) als gültige Dezimaltrennzeichen. Verwenden Sie bei anderen Dezimaltrennzeichen, wie in internationale Anwendungen verwendet werden, `CDbl` oder `CInt` stattdessen zum Konvertieren einer Zeichenfolge in eine Zahl. Um die angegebene Zeichenfolgendarstellung einer Zahl in einer bestimmten Kultur in einen numerischen Wert zu konvertieren, verwenden Sie des numerischen Typs `Parse(String, IFormatProvider)` Methode. Verwenden Sie z. B. <xref:System.Double.Parse%2A?displayProperty=nameWithType> beim Konvertieren einer Zeichenfolge zu einer `Double`.  
   
 > [!NOTE]
->  Ein <xref:System.InvalidCastException> Ausnahme kann ausgelöst werden, als Reaktion auf bestimmte ungewöhnliche Zahlenformate. Im folgenden Code wird beispielsweise diese Ausnahme ausgelöst.  
+>  Ein <xref:System.InvalidCastException> Ausnahme kann ausgelöst werden, als Reaktion auf bestimmte ungewöhnliche Zahlenformate. Der folgende Code generiert beispielsweise diese Ausnahme.  
 >   
 >  `' These examples cause run-time errors.`  
 >   

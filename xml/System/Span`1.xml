@@ -1,11 +1,11 @@
 <Type Name="Span&lt;T&gt;" FullName="System.Span&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="6348ca48e2f74be9e672b6f8b005472eeb3f48ce" />
-    <Meta Name="ms.sourcegitcommit" Value="9e06b87bcfa4347dbbaaa4b3cc36b43b93b5badb" />
+    <Meta Name="ms.openlocfilehash" Value="d86be55e57011989fcd82d06e43b6ac95c5bf8fb" />
+    <Meta Name="ms.sourcegitcommit" Value="c902e847cd05ac37d93eca981b0fb009aae0a790" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/20/2018" />
-    <Meta Name="ms.locfileid" Value="52213361" />
+    <Meta Name="ms.lasthandoff" Value="11/28/2018" />
+    <Meta Name="ms.locfileid" Value="52454583" />
   </Metadata>
   <TypeSignature Language="C#" Value="public struct Span&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Span`1&lt;T&gt; extends System.ValueType" />
@@ -42,7 +42,7 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
 
-`Span<T>` ist eine [Referenzstruktur](~/docs/csharp/reference-semantics-with-value-types.md#ref-struct-type) , die auf dem Stapel und nicht auf dem verwalteten Heap zugeordnet ist. Ref Struct-Typen haben eine Reihe von Einschränkungen, um sicherzustellen, dass sie können nicht auf den verwalteten Heap, einschließlich der, dass sie die nicht geschachtelt werden können, sie können nicht zugewiesen werden, die Variablen vom Typ heraufgestuft werden <xref:System.Object>, `dynamic` oder auf einen beliebigen anderen Schnittstellentyp, können sie nicht werden Felder in einem Verweistyp, und sie können nicht verwendet werden, über `await` und `yield` Grenzen. Darüber hinaus Aufrufe von zwei Methoden, <xref:System.Span%601.Equals(System.Object)> und <xref:System.Span%601.GetHashCode%2A>, lösen eine <xref:System.NotSupportedException>. 
+`Span<T>` ist eine [Referenzstruktur](~/docs/csharp/language-reference/keywords/ref.md#ref-struct-types) , die auf dem Stapel und nicht auf dem verwalteten Heap zugeordnet ist. Ref Struct-Typen haben eine Reihe von Einschränkungen, um sicherzustellen, dass sie können nicht auf den verwalteten Heap, einschließlich der, dass sie die nicht geschachtelt werden können, sie können nicht zugewiesen werden, die Variablen vom Typ heraufgestuft werden <xref:System.Object>, `dynamic` oder auf einen beliebigen anderen Schnittstellentyp, können sie nicht werden Felder in einem Verweistyp, und sie können nicht verwendet werden, über `await` und `yield` Grenzen. Darüber hinaus Aufrufe von zwei Methoden, <xref:System.Span%601.Equals(System.Object)> und <xref:System.Span%601.GetHashCode%2A>, lösen eine <xref:System.NotSupportedException>. 
 
 > [!IMPORTANT]
 > Da es sich um einen Typ ausschließlich stapelbezogene ist `Span<T>` für viele Szenarien, die erfordern, Speichern von Verweisen auf Puffer auf dem Heap nicht geeignet ist. Dies gilt, z. B. von Routinen, die Methodenaufrufe Asynchrous vornehmen. Für solche Scenarious, können Sie die kostenlose <xref:System.Memory%601?displayProperty=nameWithType> und <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> Typen.
@@ -77,13 +77,13 @@ Das folgende Beispiel erstellt einen Slice von der mittleren fünf Elemente eine
 
 ## <a name="spant-and-slices"></a>Spanne\<T > und Slices
 
-`Span\<T>` enthält zwei Überladungen der <xref:System.Span%601.Slice%2A> Methode, die einen Slice aus der aktuellen Spanne zu bilden, die an einem angegebenen Index beginnt. Dies ermöglicht es, behandeln die Daten in eine `Span\<T>` als einen Satz von logischen Segmente, die verarbeitet werden können, wie Teile eine datenverarbeitungspipeline mit Auswirkungen auf die minimale Leistung benötigt. Da moderne Serverprotokolle häufig textbasiert sind, ist z. B. Bearbeiten von Zeichenfolgen und Teilzeichenfolgen besonders wichtig. In der <xref:System.String> Klasse, die wichtige Methode für das Extrahieren von Teilzeichenfolgen ist <xref:System.String.Substring%2A>. Für Datenpipelines, die auf umfangreichen zeichenfolgenbearbeitung basieren, bietet die Verwendung einige Leistungseinbußen zur Folge haben, da sie:
+`Span<T>` enthält zwei Überladungen der <xref:System.Span%601.Slice%2A> Methode, die einen Slice aus der aktuellen Spanne zu bilden, die an einem angegebenen Index beginnt. Dies ermöglicht es, behandeln die Daten in eine `Span<T>` als einen Satz von logischen Segmente, die verarbeitet werden können, wie Teile eine datenverarbeitungspipeline mit Auswirkungen auf die minimale Leistung benötigt. Da moderne Serverprotokolle häufig textbasiert sind, ist z. B. Bearbeiten von Zeichenfolgen und Teilzeichenfolgen besonders wichtig. In der <xref:System.String> Klasse, die wichtige Methode für das Extrahieren von Teilzeichenfolgen ist <xref:System.String.Substring%2A>. Für Datenpipelines, die auf umfangreichen zeichenfolgenbearbeitung basieren, bietet die Verwendung einige Leistungseinbußen zur Folge haben, da sie:
 
 1. Erstellt eine neue Zeichenfolge zum Speichern der Teilzeichenfolge.
 
 2. Kopiert eine Teilmenge der Zeichen aus der ursprünglichen Zeichenfolge in die neue Zeichenfolge.
 
-Dieser Vorgang Zuordnung und kopieren kann behoben werden, indem Sie entweder `Span\<T>` oder <xref:System.ReadOnlySpan%601>, wie im folgende Beispiel gezeigt:
+Dieser Vorgang Zuordnung und kopieren kann behoben werden, indem Sie entweder `Span<T>` oder <xref:System.ReadOnlySpan%601>, wie im folgende Beispiel gezeigt:
 
 [!code-csharp[Creating a slice from a substring](~/samples/snippets/csharp/api/system/span/slice2/program.cs)]
 
@@ -164,32 +164,6 @@ Wenn `array` ist `null`, diesen Konstruktor gibt eine `null` `Span<T>`.
           <paramref name="T" /> ist ein Verweistyp oder enthält Zeiger und kann deshalb nicht in nicht verwaltetem Arbeitsspeicher gespeichert werden.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="length" /> ist ein negativer Wert.</exception>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Span (T[] array, int start);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, int32 start) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0[],System.Int32)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), start As Integer)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Span(cli::array &lt;T&gt; ^ array, int start);" />
-      <MemberSignature Language="F#" Value="new Span&lt;'T&gt; : 'T[] * int -&gt; Span&lt;'T&gt;" Usage="new System.Span&lt;'T&gt; (array, start)" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="array" Type="T[]" />
-        <Parameter Name="start" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="array">Das Quellarray.</param>
-        <param name="start">Der Index des ersten Elements im Array, das in das <see cref="T:System.Span`1" />-Objekt eingeschlossen werden soll.</param>
-        <summary>Erstellt ein neues <see cref="T:System.Span`1" />-Objekt aus einem angegebenen Array. Die Erstellung beginnt an einer angegebenen Indexposition und wird bis zum Ende des Arrays fortgesetzt.</summary>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -292,64 +266,6 @@ Diese Methode kopiert alle `source` zu `destination` selbst wenn `source` und `d
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="destination" /> ist kürzer als das <see cref="System.Span`1" />-Quellelement.</exception>
-      </Docs>
-    </Member>
-    <Member MemberName="DangerousCreate">
-      <MemberSignature Language="C#" Value="public static Span&lt;T&gt; DangerousCreate (object obj, ref T objectData, int length);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Span`1&lt;!T&gt; DangerousCreate(object obj, !T&amp; objectData, int32 length) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Span`1.DangerousCreate(System.Object,`0@,System.Int32)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function DangerousCreate (obj As Object, ByRef objectData As T, length As Integer) As Span(Of T)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static Span&lt;T&gt; DangerousCreate(System::Object ^ obj, T % objectData, int length);" />
-      <MemberSignature Language="F#" Value="static member DangerousCreate : obj *  * int -&gt; Span&lt;'T&gt;" Usage="System.Span&lt;'T&gt;.DangerousCreate (obj, objectData, length)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Span&lt;T&gt;</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="obj" Type="System.Object" />
-        <Parameter Name="objectData" Type="T" RefType="ref" />
-        <Parameter Name="length" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="obj">To be added.</param>
-        <param name="objectData">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DangerousGetPinnableReference">
-      <MemberSignature Language="C#" Value="public T DangerousGetPinnableReference ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !T DangerousGetPinnableReference() cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Span`1.DangerousGetPinnableReference" />
-      <MemberSignature Language="VB.NET" Value="Public Function DangerousGetPinnableReference () As T" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; T % DangerousGetPinnableReference();" />
-      <MemberSignature Language="F#" Value="member this.DangerousGetPinnableReference : unit -&gt; " Usage="span.DangerousGetPinnableReference " />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Runtime</AssemblyName>
-      </AssemblyInfo>
-      <ReturnValue RefType="Ref">
-        <ReturnType>T</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Empty">
