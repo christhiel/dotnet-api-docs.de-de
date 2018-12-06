@@ -1,11 +1,11 @@
 <Type Name="XmlSchemaDatatype" FullName="System.Xml.Schema.XmlSchemaDatatype">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="74bc8e0e2454425283232d342b277674583e9a17" />
-    <Meta Name="ms.sourcegitcommit" Value="9dda17222b9f7d3edf130133bfb1370d5b410a4b" />
+    <Meta Name="ms.openlocfilehash" Value="fd74f89cbe9b2982b49752ff9b6b16016e220713" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="09/22/2018" />
-    <Meta Name="ms.locfileid" Value="46595373" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52589580" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class XmlSchemaDatatype" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit XmlSchemaDatatype extends System.Object" />
@@ -39,7 +39,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Examples  
- Das folgende Beispiel zeigt die Verwendung der <xref:System.Xml.Schema.XmlSchemaDatatype> Klasse.  
+ Im folgenden Beispiel wird die <xref:System.Xml.Schema.XmlSchemaDatatype>-Klasse gezeigt.  
   
  [!code-cpp[Classic Webdata XmlSchemaDatatype Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic Webdata XmlSchemaDatatype Example/CPP/datatype.cpp#1)]
  [!code-csharp[Classic Webdata XmlSchemaDatatype Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic Webdata XmlSchemaDatatype Example/CS/datatype.cs#1)]
@@ -287,7 +287,7 @@
   
  Der konvertierte Wert wird dann zurückgegeben, als ein <xref:System.Object> und können problemlos in dem vom zurückgegebenen Typ umgewandelt werden die <xref:System.Xml.Schema.XmlSchemaDatatype.ValueType%2A> Eigenschaft.  
   
- Wenn die <xref:System.Xml.Schema.XmlSchemaDatatype> Objekt einen Listentyp, der die Eingabe darstellt `string` Wert wird in eine Liste von ein oder mehrere Objekte konvertiert. Wenn die <xref:System.Xml.Schema.XmlSchemaDatatype> -Objekt einen Listentyp darstellt, es wird versucht, den Eingabewert als einen Membertyp der Union zu analysieren. Wenn der Versuch fehlschlägt, wird der Konvertierungsversuch mit dem nächsten Member der Union bis die Analyse erfolgreich ist, oder es keine anderen Membertypen sind analysiert. Wenn die Analyse nicht erfolgreich ist, wird eine Ausnahme ausgelöst.  
+ Wenn die <xref:System.Xml.Schema.XmlSchemaDatatype> Objekt einen Listentyp, der die Eingabe darstellt `string` Wert wird in eine Liste von ein oder mehrere Objekte konvertiert. Wenn das <xref:System.Xml.Schema.XmlSchemaDatatype>-Objekt einen Union-Typ darstellt, wird versucht, den Eingabewert als einen Membertyp der Union zu interpretieren. Wenn der Versuch fehlschlägt, wird der Konvertierungsversuch mit dem nächsten Member der Union bis die Analyse erfolgreich ist, oder es keine anderen Membertypen sind analysiert. Wenn die Analyse nicht erfolgreich ist, wird eine Ausnahme ausgelöst.  
   
    
   
@@ -335,12 +335,31 @@
         <Parameter Name="nsmgr" Type="System.Xml.XmlNamespaceManager" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="nameTable">To be added.</param>
-        <param name="nsmgr">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="s">Die Zeichenfolge, die anhand des einfachen Typs überprüft werden soll.</param>
+        <param name="nameTable">Die <see cref="T:System.Xml.XmlNameTable" />, die bei der Analyse der Zeichenfolge für die Atomisierung verwendet werden soll, wenn dieses <see cref="T:System.Xml.Schema.XmlSchemaDatatype" />-Objekt den xs:NCName-Typ darstellt.</param>
+        <param name="nsmgr">Das <see cref="T:System.Xml.XmlNamespaceManager" />-Objekt, das bei der Analyse der Zeichenfolge verwendet werden soll, wenn dieses <see cref="T:System.Xml.Schema.XmlSchemaDatatype" />-Objekt den xs:QName-Typ darstellt.</param>
+        <summary>Überprüft beim Überschreiben in einer abgeleiteten Klasse die angegebene Zeichenfolge anhand eines integrierten oder benutzerdefinierten einfachen Typs.</summary>
+        <returns>Ein <see cref="T:System.Object" />, das auf sichere Weise in den von der <see cref="P:System.Xml.Schema.XmlSchemaDatatype.ValueType" />-Eigenschaft zurückgegebenen Typ umgewandelt werden kann.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Die <xref:System.Xml.Schema.XmlSchemaDatatype.ParseValue%2A> Methode überprüft, ob die angegebene Zeichenfolge anhand eines integrierten oder benutzerdefinierten einfachen Typs. Z. B., wenn diese <xref:System.Xml.Schema.XmlSchemaDatatype> darstellt, den Typ xs: Date, und klicken Sie dann auf einer Instanz von <xref:System.DateTime> zurückgegeben wird.
+
+Im folgenden sind die Schritte, die während der <xref:System.Xml.Schema.XmlSchemaDatatype.ParseValue%2A> Überprüfungsprozess-Methode.
+
+1. Konvertiert die angegebene Zeichenfolge in den entsprechenden Typ der Common Language Runtime (CLR).
+
+2. Stellen Sie sicher, dass der Wert keine Facets verletzt, die für den einfachen Typ definiert sind.
+
+Der konvertierte Wert wird dann zurückgegeben, als ein <xref:System.Object> und sicher in den Typ der von zurückgegebene umgewandelt werden kann die <xref:System.Xml.Schema.XmlSchemaDatatype.ValueType> Eigenschaft.
+
+Wenn das <xref:System.Xml.Schema.XmlSchemaDatatype>-Objekt einen Listentyp darstellt, konvertiert das Objekt den Wert der Eingabezeichenfolge in eine Liste aus einem oder mehreren Objekten. Wenn das <xref:System.Xml.Schema.XmlSchemaDatatype>-Objekt einen Union-Typ darstellt, wird versucht, den Eingabewert als einen Membertyp der Union zu interpretieren. Wenn der Versuch fehlschlägt, wird der Konvertierungsversuch mit dem nächsten Member der Union bis die Analyse erfolgreich ist, oder es keine anderen Membertypen sind analysiert. Wenn die Analyse nicht erfolgreich ist, wird eine Ausnahme ausgelöst.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.Xml.Schema.XmlSchemaValidationException">Der Eingabewert ist keine gültige Instanz dieses W3C-XML-Schematyps.</exception>
+        <exception cref="T:System.ArgumentNullException">Der zu analysierende Wert kann nicht NULL sein („Nothing“ in Visual Basic).</exception>
       </Docs>
     </Member>
     <Member MemberName="TokenizedType">
@@ -379,23 +398,23 @@
 ## Remarks  
  Ermöglicht die `string` als bestimmten XML-Typ, z. B. einen CDATA-Abschnittstyp gelesen werden.  
   
- Die folgende Tabelle zeigt die Typen von Sicherheitstoken.  
+ In der folgenden Tabelle werden die Werttypen in C# angegeben.  
   
 |XmlTokenizedType|Beschreibung |  
 |----------------------|-----------------|  
-|`CDATA`|CDATA-Typ|  
-|`ID`|ID-Typ|  
-|`IDREF`|IDREF-Typ|  
-|`IDREFS`|IDREFS-Typ|  
+|`CDATA`|CDATA-Typ.|  
+|`ID`|ID-Typ.|  
+|`IDREF`|IDREF-Typ.|  
+|`IDREFS`|IDREFS-Typ.|  
 |`ENTITY`|Entitätstyp|  
-|`ENTITIES`|ENTITIES-Typ|  
-|`NMTOKEN`|NMTOKEN-Typ|  
-|`NMTOKENS`|NMTOKENS-Typ|  
-|`NOTATION`|NOTATION-Datentyp|  
+|`ENTITIES`|ENTITIES-Typ.|  
+|`NMTOKEN`|NMTOKEN-Typ.|  
+|`NMTOKENS`|NMTOKENS-Typ.|  
+|`NOTATION`|NOTATION-Typ.|  
 |`ENUMERATION`|Enumerationstyp|  
-|`QName`|QName-Typ|  
-|`NCName`|NCName-Typ|  
-|`None`|Kein Typ|  
+|`QName`|QName-Typ.|  
+|`NCName`|NCName-Typ.|  
+|`None`|Kein Typ.|  
   
  ]]></format>
         </remarks>
