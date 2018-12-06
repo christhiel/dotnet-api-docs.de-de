@@ -1,11 +1,11 @@
 <Type Name="XmlTextReader" FullName="System.Xml.XmlTextReader">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="90c77f83b2fbfa6e63a1bd5b61d10dfe1d19eaf4" />
-    <Meta Name="ms.sourcegitcommit" Value="9e06b87bcfa4347dbbaaa4b3cc36b43b93b5badb" />
+    <Meta Name="ms.openlocfilehash" Value="5cb88eb979766bf7bddf81d0b3c1e58bf53f76d8" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/20/2018" />
-    <Meta Name="ms.locfileid" Value="52244277" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52602333" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class XmlTextReader : System.Xml.XmlReader, System.Xml.IXmlLineInfo, System.Xml.IXmlNamespaceResolver" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit XmlTextReader extends System.Xml.XmlReader implements class System.Xml.IXmlLineInfo, class System.Xml.IXmlNamespaceResolver" />
@@ -111,7 +111,7 @@ Ab .NET Framework 2.0 sollten Sie stattdessen die <see cref="T:System.Xml.XmlRea
     <block subset="none" type="overrides">
       <para>Diese Klasse verfügt über eine vererbungsanforderung. Volle Vertrauenswürdigkeit ist erforderlich, um die von erben <see langword="XmlTextReader" />.</para>
     </block>
-    <related type="Article" href="https://msdn.microsoft.com/library/e695047f-3c0f-4045-8708-5baea91cc380">XML-Dokumente und XML-Daten</related>
+    <related type="Article" href="~/docs/standard/data/xml/index.md">XML-Dokumente und XML-Daten</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -1353,7 +1353,25 @@ Beim Verarbeiten der Anforderung ist ein Fehler aufgetreten.</exception>
  Zur Veranschaulichung des Unterschieds zwischen der Entität berücksichtigen Modi der folgenden XML-Code:  
   
 ```  
-<!DOCTYPE doc [<!ENTITY num "123"]]></format>
+<!DOCTYPE doc [<!ENTITY num "123">]>  
+    <doc> &#65; &num; </doc>  
+```  
+  
+ Wenn `EntityHandling` nastaven NA hodnotu `ExpandEntities` der Elementknoten "Doc" enthält einen Textknoten mit dem Text der erweiterten Entität:  
+  
+|Tiefe|Knotentyp|name|Wert|  
+|-----------|---------------|----------|-----------|  
+|1|`Text`||A 123|  
+  
+ Wenn `EntityHandling` nastaven NA hodnotu `ExpandCharEntites`, und <xref:System.Xml.XmlTextReader.WhitespaceHandling%2A> nastaven NA hodnotu `Significant` oder `All`, das "Doc"-Element die Zeichenentität wird erweitert, und gibt die allgemeine Entität als ein Knoten:  
+  
+|Tiefe|Knotentyp|name|Wert|  
+|-----------|---------------|----------|-----------|  
+|1|`Text`||A|  
+|1|`EntityReference`|num||  
+|1|`SignificantWhitespace`|||  
+  
+ ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.XmlReader" />
       </Docs>
@@ -4073,9 +4091,17 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
         <ReturnType>System.Xml.XmlReaderSettings</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Ruft das zum Erstellen dieser <see cref="T:System.Xml.XmlReaderSettings" />-Instanz verwendete <see cref="T:System.Xml.XmlTextReader" />-Objekt ab.</summary>
+        <value>Das <see cref="T:System.Xml.XmlReaderSettings" />-Objekt, mit dessen Hilfe diese <see cref="T:System.Xml.XmlTextReader" />-Instanz erstellt wird. <see langword="null" />, wenn der Reader nicht mit der <see cref="Overload:System.Xml.XmlReader.Create" />-Methode erstellt wurde.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+> Die empfohlene Vorgehensweise für [!INCLUDE[dnprdnext](~/includes/dnprdnext-md.md)] besteht im Erstellen von <xref:System.Xml.XmlReader>-Instanzen mithilfe der <xref:System.Xml.XmlReaderSettings>-Klasse und der <xref:System.Xml.XmlReader.Create%2A>-Methode. Dadurch können Sie alle Vorteile der in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] eingeführten neuen Funktionen uneingeschränkt nutzen. Weitere Informationen finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Skip">
@@ -4160,9 +4186,17 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Eine Beschreibung dieses Elements finden Sie unter <see cref="M:System.Xml.IXmlLineInfo.HasLineInfo" />.</summary>
+        <returns>
+          <see langword="true" />, wenn <see cref="P:System.Xml.IXmlLineInfo.LineNumber" /> und <see cref="P:System.Xml.IXmlLineInfo.LinePosition" /> angegeben werden können, andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Bei diesem Member handelt es sich um eine explizite Schnittstellenmemberimplementierung. Er kann nur verwendet werden, wenn die <xref:System.Xml.XmlTextReader>-Instanz in eine <xref:System.Xml.IXmlLineInfo>-Schnittstelle umgewandelt wird.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Xml.IXmlNamespaceResolver.GetNamespacesInScope">

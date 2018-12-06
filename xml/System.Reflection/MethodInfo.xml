@@ -1,11 +1,11 @@
 <Type Name="MethodInfo" FullName="System.Reflection.MethodInfo">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="365d65db1c7b36cbed15b07e5b2d6a7d6e0e31ba" />
-    <Meta Name="ms.sourcegitcommit" Value="16d2d159872fd213cae4b8f371d7ae9c8b027c89" />
+    <Meta Name="ms.openlocfilehash" Value="7cac9e186e446ab240ca469ac048ef85a355e3e0" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/17/2018" />
-    <Meta Name="ms.locfileid" Value="51879899" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52599486" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class MethodInfo : System.Reflection.MethodBase, System.Runtime.InteropServices._MethodInfo" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract serializable beforefieldinit MethodInfo extends System.Reflection.MethodBase implements class System.Runtime.InteropServices._MethodInfo" />
@@ -53,8 +53,8 @@
     <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
       <AttributeName>System.Runtime.InteropServices.ComVisible(true)</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8">
-      <AttributeName>Serializable</AttributeName>
+    <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+      <AttributeName>System.Serializable</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -150,9 +150,47 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Ruft einen Wert ab, der angibt, ob eine generische Methode nicht zugewiesene generische Typparameter enthält.</summary>
+        <value>
+          <see langword="true" />, wenn die aktuelle <see cref="T:System.Reflection.MethodInfo" /> nicht zugewiesene generische Typparameter enthält, andernfalls <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Um eine generische Methode aufzurufen, muss keine generische Typdefinitionen oder offenen konstruierten Typen, die in die Typargumente der Methode selbst oder in alle einschließenden Typen vorhanden sein. Diese rekursiven Entscheidung treffen kann schwierig sein. Der Einfachheit halber und die fehlerwahrscheinlichkeit, reduzieren die `ContainsGenericParameters` Eigenschaft bietet eine standardisierte Möglichkeit zur Unterscheidung von geschlossener konstruierter Methoden, die aufgerufen werden kann, und öffnen Sie erstellt, Methoden, die nicht. Wenn die `ContainsGenericParameters` Eigenschaft gibt true zurück, die Methode kann nicht aufgerufen werden.
+
+Die `ContainsGenericParameters` Eigenschaft sucht rekursiv nach Typparameter. Es gibt z. B. `true` für jede Methode in einen offenen Typ `A<T>` (`A(Of T)` in Visual Basic), auch wenn die Methode selbst nicht generisch ist. Vergleichen Sie dies mit dem Verhalten von der <xref:System.Reflection.MethodInfo.IsGenericMethod> -Eigenschaft, die gibt `false` für eine solche Methode.
+
+Eine Liste der invarianten Bedingungen für Begriffe, die spezifisch für generische Methoden, finden Sie unter den <xref:System.Reflection.MethodInfo.IsGenericMethod> Eigenschaft. Eine Liste der invarianten Bedingungen für andere Begriffe in Reflektion mit generischen Methoden verwendet, finden Sie unter den <xref:System.Type.IsGenericType> Eigenschaft.
+
+## Examples  
+Im folgenden Codebeispiel wird die `ContainsGenericParameters` Eigenschaft zum Anzeigen einer Meldung aufgefordert, ob eine <xref:System.Reflection.MethodInfo> ist eine offene generische Methode ist (d. h., ob er Ungebundene Typparameter aufweist).
+
+In diesem Beispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.Reflection.MethodInfo.MakeGenericMethod%2A> Methode.
+
+```vb
+Console.WriteLine(vbTab _
+    & "Does it have unassigned generic parameters? {0}", _
+    mi.ContainsGenericParameters)
+```
+
+```csharp
+Console.WriteLine("\tDoes it have unassigned generic parameters? {0}", 
+    mi.ContainsGenericParameters);
+```
+
+```cpp
+Console::WriteLine("\tDoes it have unassigned generic parameters? {0}", 
+    mi->ContainsGenericParameters);
+```
+
+]]></format>
+        </remarks>
+        <altmember cref="M:System.Reflection.MethodInfo.MakeGenericMethod(System.Type[])" />
+        <altmember cref="P:System.Reflection.MethodInfo.IsGenericMethod" />
+        <altmember cref="P:System.Reflection.MethodInfo.IsGenericMethodDefinition" />
+        <related type="Article" href="~/docs/framework/reflection-and-codedom/reflection-and-generic-types.md">Reflektion und generische Typen</related>
+        <related type="Article" href="~/docs/csharp/programming-guide/generics/introduction-to-generics.md">Einführung in Generika (C#-Programmierhandbuch)</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateDelegate">
@@ -731,9 +769,124 @@ public:
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Ruft einen Wert ab, der angibt, ob die aktuelle <see cref="T:System.Reflection.MethodInfo" /> die Definition einer generischen Methode darstellt.</summary>
+        <value>
+          <see langword="true" />, wenn das <see cref="T:System.Reflection.MethodInfo" />-Objekt die Definition einer generischen Methode darstellt, andernfalls <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Wenn die aktuelle <xref:System.Reflection.MethodInfo> eine generische Methodendefinition darstellt:
+
+  - `IsGenericMethodDefinition` gibt `true` zurück.
+
+  - Für jede <xref:System.Type> Objekt im Array zurückgegeben werden, indem die <xref:System.Reflection.MethodInfo.GetGenericArguments> Methode:
+
+      - Die <xref:System.Type.IsGenericParameter?displayProperty=nameWithType>-Eigenschaft gibt `true` zurück.
+
+      - Die <xref:System.Type.DeclaringMethod?displayProperty=nameWithType> gibt das aktuelle <xref:System.Reflection.MethodInfo>.
+
+      - Die <xref:System.Type.GenericParameterPosition?displayProperty=nameWithType> Eigenschaft ist identisch mit die Position des der <xref:System.Type> Objekt im Array.
+
+Verwenden der `IsGenericMethodDefinition` Eigenschaft, um zu bestimmen, ob die Typargumente an die Typparameter einer generischen Methode zugewiesen wurden. Wenn Argumente des Typs zugewiesen wurden, die `IsGenericMethodDefinition` Eigenschaft "false" zurückgibt, auch wenn einige der Typargumente sind <xref:System.Type> Objekte, die Typparameter von einschließenden Typen darstellen. Betrachten Sie beispielsweise die folgende C\#, Visual Basic und C++-Code:
+
+    ```cs
+    class C
+    {
+        T N<T,U>(T t, U u) {...}
+        public V M<V>(V v)
+        {
+            return N<V,int>(v, 42);
+        }
+    }
+    ```
+
+    ```vb
+    Class C
+        Public Function N(Of T,U)(ByVal ta As T, ByVal ua As U) As T
+            ...
+        End Function
+        Public Function M(Of V)(ByVal va As V ) As V
+            Return N(Of V, Integer)(va, 42)
+        End Function
+    End Class
+    ```
+
+    ```cpp
+    ref class C
+    {
+    private:
+        generic <typename T, typename U> T N(T t, U u) {...}
+    public:
+        generic <typename V> V M(V v)
+        {
+            return N<V, int>(v, 42);
+        }
+    };
+    ```
+
+Der Methodentext m enthält einen Aufruf der Methode N, M und der Typ den Typparameter angeben <xref:System.Int32>. Die `IsGenericMethodDefinition` Eigenschaft "false" für die Methode gibt `N<V,int>`.
+
+> [!NOTE]
+> Obwohl die Open Methode konstruiert `N<V,int>` wird nicht gefunden, bei der Reflektion über die Klasse C, es muss generiert werden <xref:System.Reflection.MethodInfo.MakeGenericMethod%2A> um C als einer dynamischen Klasse ausgegeben.
+
+
+Wenn eine generische Methodendefinition generische Parametern des deklarierenden Typs enthält, fallen in eine generische Methodendefinition für jeden konstruierten Typ. Betrachten Sie beispielsweise die folgende C\# und Visual Basic-Code:
+
+    ```csharp
+    class B<U,V> {}
+    class C<T> { public B<T,S> M<S>() {...}}
+    ```
+
+    ```vb
+    Class B(Of U, V)
+    End Class
+    Class C(Of T)
+        Public Function M(Of S)() As B(Of T, S)
+            ...
+        End Function
+    End Class
+    ```
+
+    ```cpp
+    generic <typename U, typename V> ref class B {};
+    generic <typename T> ref class C
+    {
+    public:
+        generic <typename S> B<T,S>^ M() {...};
+    };
+    ```
+
+In den konstruierten Typ `C<int>` (`C(Of Integer)` in Visual Basic), gibt die generische Methode M `B<int, S>`. Offenen Typ `C<T>`, M gibt `B<T, S>`. In beiden Fällen die `IsGenericMethodDefinition` -Eigenschaft gibt `true` für die <xref:System.Reflection.MethodInfo> , M darstellt.
+
+Eine Liste der invarianten Bedingungen für Begriffe, die spezifisch für generische Methoden, finden Sie unter den <xref:System.Reflection.MethodInfo.IsGenericMethod> Eigenschaft. Eine Liste der invarianten Bedingungen für andere Begriffe in Reflektion mit generischen Methoden verwendet, finden Sie unter den <xref:System.Type.IsGenericType> Eigenschaft.
+
+## Examples  
+Im folgenden Codebeispiel wird die `IsGenericMethodDefinition` Eigenschaft zum Anzeigen einer Meldung aufgefordert, ob eine <xref:System.Reflection.MethodInfo> eine generische Methodendefinition darstellt.
+
+In diesem Beispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.Reflection.MethodInfo.MakeGenericMethod%2A> Methode.
+
+```vb
+Console.WriteLine(vbTab _
+    & "Is this a generic method definition? {0}", _
+    mi.IsGenericMethodDefinition)
+```
+
+```csharp
+Console.WriteLine("\tIs this a generic method definition? {0}", 
+    mi.IsGenericMethodDefinition);
+```
+
+```cpp
+Console::WriteLine("\tIs this a generic method definition? {0}", 
+    mi->IsGenericMethodDefinition);
+```
+
+]]></format>
+        </remarks>
+        <altmember cref="M:System.Reflection.MethodInfo.MakeGenericMethod(System.Type[])" />
+        <related type="Article" href="~/docs/framework/reflection-and-codedom/reflection-and-generic-types.md">Reflektion und generische Typen</related>
+        <related type="Article" href="~/docs/csharp/programming-guide/generics/introduction-to-generics.md">Einführung in Generika (C#-Programmierhandbuch)</related>
       </Docs>
     </Member>
     <Member MemberName="MakeGenericMethod">
