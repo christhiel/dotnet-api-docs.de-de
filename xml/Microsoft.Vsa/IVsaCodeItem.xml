@@ -1,11 +1,11 @@
 <Type Name="IVsaCodeItem" FullName="Microsoft.Vsa.IVsaCodeItem">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="3d52b4e13d62d9a7363590361d0bd20b652f28e6" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="02ffa3d80165d4caa3178d3b714320a67262d734" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
-    <Meta Name="ms.locfileid" Value="39791000" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52610022" />
   </Metadata>
   <TypeSignature Language="C#" Value="public interface IVsaCodeItem : Microsoft.Vsa.IVsaItem" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IVsaCodeItem implements class Microsoft.Vsa.IVsaItem" />
@@ -35,8 +35,19 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Stellt ein von der Skript-Engine zu kompilierendes Codeelement dar.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Das angegebene Codeelement kann es sich um Klassen, Module oder andere Quelltext enthalten.
+
+Es sind keine Berechtigungen zum Aufrufen der Member der Schnittstelle IVsaCodeItem erforderlich.
+
+Die Skript-Engine implementiert diese Schnittstelle, um Codeelemente hinzuzufügen.
+
+]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="AddEventSource">
@@ -60,10 +71,27 @@
         <Parameter Name="eventSourceType" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="eventSourceName">To be added.</param>
-        <param name="eventSourceType">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="eventSourceName">Ein programmgesteuerter Name der Ereignisquelle.</param>
+        <param name="eventSourceType">Der Typname der Ereignisquelle.</param>
+        <summary>Fügt dem Codeelement eine Ereignisquelle hinzu. Das Codeelement verwendet die Ereignisquelle, um ein Ereignis mit der benannten Ereignisquelle zu verknüpfen, indem es die vom Host implementierte IVsaSite.GetEventSourceInstance-Methode aufruft.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Die Skript-Engine verwendet die Informationen, die von der Methode AddEventSource bereitgestellte zum Verknüpfen von Ereignissen mit der benannten Ereignisquelle. Er erhält Ereignisquellen durch Aufrufen der IVsaSite.GetEventSourceInstance-Methode, die vom Host implementiert wird. Die AddEventSource-Methode erstellt eine Klasse, die von einem Host bereitgestellten Objekt ausgelösten Ereignisse behandelt.
+
+> [!NOTE]
+> Diese Methode unterstützt die nicht von der Skript-Engine für JScript .NET. In Fällen, in dem die Engine JScript .NET Verknüpfung eines Ereignisses müssen, müssen Sie ein globales Element verwenden. Anstatt Ereignisquellen und die JScript .NET-Engine verwendet die work Item Types "AppGlobal". Weitere Informationen finden Sie unter VsaItemType.
+
+
+Innerhalb des Codeelements können Sie das Ereignisquellenobjekt Namen zugreifen, und sobald zugegriffen wird, können Sie Ereignishandler für das Objekt schreiben. Der Quelltyp des Ereignisses wird durch nicht verwaltete Hosts nicht als ein Typobjekt, um die Implementierung von Ereignisquellen zu vereinfachen, sondern als Zeichenfolge übergeben werden.
+
+Der Compiler verwendet den EventSourceType-Parameter zum Binden an die Methoden, die durch den Typ bereitgestellt. Es wird auch später verwendet, wenn das Skriptmodul IVsaSite.GetEventSourceInstance-Methode zum Anfordern einer Instanz des Typ-Objekts aufruft.
+
+Weitere Informationen über die Mechanismen zum Verknüpfen von Ereignissen für die Skript-Engine finden Sie unter IVsaSite.GetEventSourceInstance-Methode.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AppendSourceText">
@@ -86,9 +114,18 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="text">Der an das Codeelement anzufügende Text.</param>
+        <summary>Fügt den angegebenen Text an das Ende des Codeelements an.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Angefügte Quelltext wird keine Validierung durchgeführt. Aus diesem Grund werden Fehler auftreten, falls vorhanden, der beim nächsten Aufruf der IVsaEngine.Compile-Methode auftreten.
+
+Der angefügte Quelltext wird als einzelne Zeichenfolge bereitgestellt. Sollte die Zeichenfolge erfordern keine Formatierung anwenden, müssen Sie dies selbst angeben.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CodeDOM">
@@ -108,9 +145,16 @@
         <ReturnType>System.CodeDom.CodeObject</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Ruft das im Codeelement dargestellte CodeDOM (Code Document Object Model) ab.</summary>
+        <value>Gibt das CodeDOM für das Codeelement zurück.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Die CodeDOM-Eigenschaft wird in der Regel als Teil der Kompilierungsschritt von der Skript-Engine generiert, sodass es nicht erst verfügbar, nachdem bei einem Aufruf an die IVsaEngine.Compile-Methode. Einige VSA-Implementierungen möglicherweise CodeDOM dynamisch, ohne eine explizite Kompilierungsschritt, bieten jedoch Hosts können nicht zu diesem Verhalten basieren. Dieses Verhalten unterstützt eine Skript-Engines, z. B. die JScript .NET Skript-Engine nicht.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoveEventSource">
@@ -133,9 +177,16 @@
         <Parameter Name="eventSourceName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="eventSourceName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="eventSourceName">Der programmgesteuerte Name der zu entfernenden Ereignisquelle.</param>
+        <summary>Entfernt die angegebene Ereignisquelle aus dem Codeelement.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Das Entfernen einer Ereignisquelle ist nicht des zugrunde liegenden-Ereignishandler aus dem Quelltext. Stattdessen lösen Ereignisse nicht mehr Benachrichtigungen an den Ereignishandler. Aus diesem Grund erhalten Sie einen Compilerfehler, wenn Sie eine Ereignisquelle löschen, aber lassen Sie die zugrunde liegende Funktion im Quellcode.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SourceText">
@@ -155,9 +206,20 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Legt den Text für ein angegebenes Codeelement (ggf. einschließlich automatisch generiertem Code) fest oder ruft diesen ab.</summary>
+        <value>Gibt den Quelltext des Codeelements zurück.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Wenn Sie diese Eigenschaft festlegen, wird der Text nicht zur Überprüfung unterzogen. Aus diesem Grund werden Fehler auftreten, falls vorhanden, der beim nächsten Aufruf der IVsaEngine.Compile-Methode auftreten.
+
+Die Eigenschaft SourceText gibt zurück, der Quelltext in eine große Zeichenfolge, einschließlich Formatierungszeichen wie Wagenrücklauf.
+
+Rufen Sie diese Eigenschaft die Engine muss nicht geschlossen werden. Zum Festlegen dieser Eigenschaft der Engine muss nicht geschlossen werden, und das Modul muss nicht ausgeführt werden.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

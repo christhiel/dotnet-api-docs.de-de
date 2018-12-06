@@ -1,11 +1,11 @@
 <Type Name="XmlNodeReader" FullName="System.Xml.XmlNodeReader">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="d4c1798c265677dd4fdc6e5c8f499fd8c7b5ac27" />
-    <Meta Name="ms.sourcegitcommit" Value="9dda17222b9f7d3edf130133bfb1370d5b410a4b" />
+    <Meta Name="ms.openlocfilehash" Value="ab2104775ed2c8b474493654fb02bbd656d9dbf2" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="09/22/2018" />
-    <Meta Name="ms.locfileid" Value="46619249" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52612720" />
   </Metadata>
   <TypeSignature Language="C#" Value="public class XmlNodeReader : System.Xml.XmlReader, System.Xml.IXmlNamespaceResolver" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit XmlNodeReader extends System.Xml.XmlReader implements class System.Xml.IXmlNamespaceResolver" />
@@ -844,7 +844,7 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der aktuelle Knoten ein leeres Element ist (z.B. <c>&lt;MyElement/&gt;</c>).</summary>
         <value>
-          <see langword="true" /> Wenn der aktuelle Knoten ein Element ist (<see cref="P:System.Xml.XmlNodeReader.NodeType" /> gleich <see langword="XmlNodeType.Element" />) und endet mit <c> / &gt; </c>ist, andernfalls <see langword="false" />.</value>
+          <see langword="true" /> Wenn der aktuelle Knoten ein Element ist (<see cref="P:System.Xml.XmlNodeReader.NodeType" /> gleich <see langword="XmlNodeType.Element" />) und endet mit <c>/ &gt;</c>ist, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -899,10 +899,23 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
         <Parameter Name="i" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="i">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <param name="i">Der Index des Attributs.</param>
+        <summary>Ruft den Wert des Attributs mit dem angegebenen Index ab.</summary>
+        <value>Der Wert des angegebenen Attributs.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+> [!NOTE]
+> Die empfohlene Vorgehensweise für [!INCLUDE[dnprdnext](~/includes/dnprdnext-md.md)] besteht im Erstellen von <xref:System.Xml.XmlReader>-Instanzen mithilfe der <xref:System.Xml.XmlReaderSettings>-Klasse und der <xref:System.Xml.XmlReader.Create%2A>-Methode. Dadurch können Sie alle Vorteile der in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] eingeführten neuen Funktionen uneingeschränkt nutzen. Weitere Informationen finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite.
+
+Diese Eigenschaft den Reader nicht bewegen.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="i" />-Parameter ist kleiner als 0 (null) oder größer als oder gleich <see cref="P:System.Xml.XmlNodeReader.AttributeCount" />.</exception>
+        <altmember cref="Overload:System.Xml.XmlNodeReader.GetAttribute" />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -930,10 +943,129 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <param name="name">Der qualifizierte Name des Attributs.</param>
+        <summary>Ruft den Wert des Attributs mit dem angegebenen Namen ab.</summary>
+        <value>Der Wert des angegebenen Attributs. Wenn das Attribut nicht gefunden wurde, wird <see langword="null" /> zurückgegeben.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+> [!NOTE]
+> Die empfohlene Vorgehensweise für [!INCLUDE[dnprdnext](~/includes/dnprdnext-md.md)] besteht im Erstellen von <xref:System.Xml.XmlReader>-Instanzen mithilfe der <xref:System.Xml.XmlReaderSettings>-Klasse und der <xref:System.Xml.XmlReader.Create%2A>-Methode. Dadurch können Sie alle Vorteile der in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] eingeführten neuen Funktionen uneingeschränkt nutzen. Weitere Informationen finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite.
+
+Diese Eigenschaft den Reader nicht bewegen.
+
+Wenn der Reader auf einem DocumentType-Knoten positioniert ist, kann diese Methode zum Abrufen der PUBLIC und SYSTEM Literale, z. B. Reader\["PUBLIC"\].
+
+## Examples  
+Im folgende Beispiel ruft den Wert des Attributs ISBN-Nummer ab.
+
+```vb
+Imports System
+Imports System.IO
+Imports System.Xml
+
+Public Class Sample
+
+    Public Shared Sub Main()
+        Dim reader As XmlNodeReader = Nothing
+        Try
+            'Create and load the XML document.
+            Dim doc As New XmlDocument()
+            doc.LoadXml("<book genre='novel' ISBN='1-861003-78' publicationdate='1987'>" & _
+                        "</book>")
+
+            ' Load the XmlNodeReader 
+            reader = New XmlNodeReader(doc)
+
+            'Read the ISBN attribute.
+            reader.MoveToContent()
+            Dim isbn As String = reader("ISBN")
+            Console.WriteLine("The ISBN value: " & isbn)
+        Finally
+            If Not (reader Is Nothing) Then
+                reader.Close()
+            End If
+        End Try
+    End Sub 'Main 
+End Class 'Sample
+```
+
+```csharp
+using System;
+using System.IO;
+using System.Xml;
+
+public class Sample 
+{
+  public static void Main()
+  {
+    XmlNodeReader reader = null;
+
+    try
+    {
+       //Create and load the XML document.
+       XmlDocument doc = new XmlDocument();
+       doc.LoadXml("<book genre='novel' ISBN='1-861003-78' publicationdate='1987'> " +
+                   "</book>"); 
+
+       // Load the XmlNodeReader 
+       reader = new XmlNodeReader(doc);
+
+       //Read the ISBN attribute.
+       reader.MoveToContent();
+       string isbn =reader["ISBN"];
+       Console.WriteLine("The ISBN value: " + isbn);
+
+     } 
+
+     finally 
+     {
+        if (reader != null)
+          reader.Close();
+      }
+  }
+
+} // End class
+```
+
+```cpp
+#using <System.Xml.dll>
+
+using namespace System;
+using namespace System::IO;
+using namespace System::Xml;
+
+int main()
+{
+   XmlNodeReader^ reader = nullptr;
+   try
+   {
+
+      //Create and load the XML document.
+      XmlDocument^ doc = gcnew XmlDocument;
+      doc->LoadXml( "<book genre='novel' ISBN='1-861003-78' publicationdate='1987'></book>" );
+
+      // Load the XmlNodeReader 
+      reader = gcnew XmlNodeReader( doc );
+
+      //Read the ISBN attribute.
+      reader->MoveToContent();
+      String^ isbn = reader[ "ISBN" ];
+      Console::WriteLine( "The ISBN value: {0}", isbn );
+   }
+   finally
+   {
+      if ( reader != nullptr )
+            reader->Close();
+   }
+}
+```
+
+]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Xml.XmlNodeReader.GetAttribute" />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -962,11 +1094,23 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
         <Parameter Name="namespaceURI" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="namespaceURI">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <param name="name">Der lokale Name des Attributs.</param>
+        <param name="namespaceURI">Der Namespace-URI dieses Attributs.</param>
+        <summary>Ruft den Wert des Attributs mit dem angegebenen lokalen Namen und Namespace-URI ab.</summary>
+        <value>Der Wert des angegebenen Attributs. Wenn das Attribut nicht gefunden wurde, wird <see langword="null" /> zurückgegeben.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+> [!NOTE]
+> Die empfohlene Vorgehensweise für [!INCLUDE[dnprdnext](~/includes/dnprdnext-md.md)] besteht im Erstellen von <xref:System.Xml.XmlReader>-Instanzen mithilfe der <xref:System.Xml.XmlReaderSettings>-Klasse und der <xref:System.Xml.XmlReader.Create%2A>-Methode. Dadurch können Sie alle Vorteile der in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] eingeführten neuen Funktionen uneingeschränkt nutzen. Weitere Informationen finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite.
+
+Diese Eigenschaft den Reader nicht bewegen.
+
+]]></format>
+        </remarks>
+        <altmember cref="Overload:System.Xml.XmlNodeReader.GetAttribute" />
       </Docs>
     </Member>
     <Member MemberName="LocalName">
@@ -998,7 +1142,7 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
       </ReturnValue>
       <Docs>
         <summary>Ruft den lokalen Namen des aktuellen Knotens ab.</summary>
-        <value>Der Name des aktuellen Knotens ohne das Präfix. Z. B. <see langword="LocalName" /> ist <see langword="book" /> für das Element <c> &lt;bk: book&gt;</c>.  
+        <value>Der Name des aktuellen Knotens ohne das Präfix. Z. B. <see langword="LocalName" /> ist <see langword="book" /> für das Element <c>&lt;bk: book&gt;</c>.  
   
 Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment" /> usw. gibt diese Eigenschaft String.Empty zurück.</value>
         <remarks>
@@ -1438,7 +1582,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
       </ReturnValue>
       <Docs>
         <summary>Ruft den gekennzeichneten Namen des aktuellen Knotens ab.</summary>
-        <value>Der gekennzeichnete Name des aktuellen Knotens. Z. B. <see langword="Name" /> ist <see langword="bk:book" /> für das Element <c> &lt;bk: book&gt;</c>.  
+        <value>Der gekennzeichnete Name des aktuellen Knotens. Z. B. <see langword="Name" /> ist <see langword="bk:book" /> für das Element <c>&lt;bk: book&gt;</c>.  
   
 Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlNodeReader.NodeType" /> des Knotens ab. Die folgenden Knotentypen geben die jeweils aufgeführten Werte zurück. Alle anderen Knotentypen geben eine leere Zeichenfolge zurück.  
   
@@ -1708,9 +1852,18 @@ Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlNodeReader.NodeTy
         <ReturnType>System.Char</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Ruft das Anführungszeichen ab, mit dem der Wert eines Attributknotens eingeschlossen wird.</summary>
+        <value>XmlNodeReader verwendet immer doppeltes Anführungszeichen (").</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+
+> [!NOTE]
+>  Die empfohlene Vorgehensweise für [!INCLUDE[dnprdnext](~/includes/dnprdnext-md.md)] besteht im Erstellen von <xref:System.Xml.XmlReader>-Instanzen mithilfe der <xref:System.Xml.XmlReaderSettings>-Klasse und der <xref:System.Xml.XmlReader.Create%2A>-Methode. Dadurch können Sie alle Vorteile der in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] eingeführten neuen Funktionen uneingeschränkt nutzen. Weitere Informationen finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Read">

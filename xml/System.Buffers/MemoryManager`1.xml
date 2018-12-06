@@ -1,11 +1,11 @@
 <Type Name="MemoryManager&lt;T&gt;" FullName="System.Buffers.MemoryManager&lt;T&gt;">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="5047a443f74813c69439bd383ddec25478572d83" />
-    <Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" />
+    <Meta Name="ms.openlocfilehash" Value="ce1f4dd9e0f3e75e828feeef7ffb2401986c3572" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="08/25/2018" />
-    <Meta Name="ms.locfileid" Value="39835918" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52614683" />
   </Metadata>
   <TypeSignature Language="C#" Value="public abstract class MemoryManager&lt;T&gt; : System.Buffers.IMemoryOwner&lt;T&gt;, System.Buffers.IPinnable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit MemoryManager`1&lt;T&gt; extends System.Object implements class System.Buffers.IMemoryOwner`1&lt;!T&gt;, class System.Buffers.IPinnable, class System.IDisposable" />
@@ -16,6 +16,9 @@
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Memory</AssemblyName>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter Name="T" />
@@ -30,11 +33,23 @@
     <Interface>
       <InterfaceName>System.Buffers.IPinnable</InterfaceName>
     </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
   </Interfaces>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">Der Typ der Elemente in der Speicherpuffer, die von diesem Speicher-Manager verwaltet werden.</typeparam>
+    <summary>Eine abstrakte Basisklasse, die zum Ersetzen der Implementierung von <see cref="T:System.Memory`1" /> verwendet wird.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+Die `MemoryManager<T>` Klasse wird verwendet, um dem Wissen von Typen zu erweitern, die <xref:System.Memory%601> darstellen kann. Sie können z. B. Ableiten aus `MemoryManager<T>` können <xref:System.Memory%601> durch unterstützt werden eine <xref:System.Runtime.InteropServices.SafeHandle>.
+
+> [!NOTE]
+> Die `MemoryManager<T>` Klasse ist für erweiterte Szenarien vorgesehen. Die meisten Entwickler müssen nicht verwenden.
+
+       ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -48,9 +63,12 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Buffers.MemoryManager`1" />-Klasse.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -66,6 +84,9 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
@@ -73,9 +94,9 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="length">Die Anzahl der Elemente im Speicherpuffer, beginnend am Offset 0 (null).</param>
+        <summary>Gibt einen Speicherpuffer zurück, der aus einer angegebenen Anzahl an Elementen aus dem Speicher besteht, der vom aktuellen Speicher-Manager verwaltet wird.</summary>
+        <returns>Ein Arbeitsspeicherpuffer</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -91,6 +112,9 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
@@ -99,10 +123,10 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="start">Der Offset zum Element, an dem der zurückgegebene Speicherpuffer beginnt.</param>
+        <param name="length">Die Anzahl von Elementen, die in den zurückgegebenen Speicherpuffer eingeschlossen werden sollen.</param>
+        <summary>Gibt einen Speicherpuffer zurück, der aus einer angegebenen Anzahl an Elementen (beginnend an einem angegebenen Offset) aus dem Speicher besteht, der vom aktuellen Speicher-Manager verwaltet wird.</summary>
+        <returns>Ein Speicherpuffer, der aus <paramref name="length" />-Elementen besteht, beginnend am Offset <paramref name="start" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -118,6 +142,9 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -125,8 +152,9 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disposing">
+          <see langword="true" />, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben, <see langword="false" />, um ausschließlich nicht verwaltete Ressourcen freizugeben.</param>
+        <summary>Gibt alle von dem aktuellen Speicher-Manager verwendeten Ressourcen frei.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -142,13 +170,16 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gibt einen Speicherbereich zurück, der den zugrunde liegenden Speicherpuffer umschließt.</summary>
+        <returns>Ein Speicherbereich, der den zugrunde liegenden Speicherpuffer umschließt.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -167,12 +198,15 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Ruft den Speicherblock ab, der von diesem <see cref="T:System.Buffers.MemoryManager`1" /> verarbeitet wird.</summary>
+        <value>Der Speicherblock verarbeitet von dieser <see cref="T:System.Buffers.MemoryManager`1" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -190,6 +224,9 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Buffers.MemoryHandle</ReturnType>
       </ReturnValue>
@@ -197,9 +234,9 @@
         <Parameter Name="elementIndex" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="elementIndex">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="elementIndex">Der Offset zum Element im Arbeitsspeicherpuffer, auf das der zurückgegebene <see cref="T:System.Buffers.MemoryHandle" /> zeigt.</param>
+        <summary>Gibt ein Handle für den Speicher zurück, das angeheftet wurde und dessen Adresse verwendet werden kann.</summary>
+        <returns>Ein Handle für den Speicher, das angeheftet wurde.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -217,13 +254,16 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gibt alle vom Speicher-Manager verwendeten Ressourcen frei.</summary>
+        <remarks>Diese Methode stellt des Speichermanager <see cref="M:System.IDisposable.Dispose" /> Implementierung.</remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetArray">
@@ -238,6 +278,9 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -245,10 +288,11 @@
         <Parameter Name="segment" Type="System.ArraySegment&lt;T&gt;" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="segment">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="segment">Das Arraysegment, in das geschrieben werden soll.</param>
+        <summary>Gibt ein Arraysegment zurück.</summary>
+        <returns>
+          <see langword="true" />, wenn mit der Methode erfolgreich ein Arraysegment abgerufen werden konnte; andernfalls <see langword="false" />.</returns>
+        <remarks>Wenn diese Methode nicht überschrieben wird, wird das Standardsegment für das Array zurückgegeben.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Unpin">
@@ -266,12 +310,15 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Löst den angehefteten Speicher, damit der Garbage Collector ausgeführt werden kann.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
