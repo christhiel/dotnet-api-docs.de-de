@@ -1,11 +1,11 @@
 <Type Name="BufferedStream" FullName="System.IO.BufferedStream">
   <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="844e045e034922791bd6f5c66770ed7166f90a00" />
-    <Meta Name="ms.sourcegitcommit" Value="9e06b87bcfa4347dbbaaa4b3cc36b43b93b5badb" />
+    <Meta Name="ms.openlocfilehash" Value="9cf5c6dc99590b2f24b7725c166fa854be4af0d8" />
+    <Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" />
     <Meta Name="ms.translationtype" Value="HT" />
     <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/20/2018" />
-    <Meta Name="ms.locfileid" Value="52255080" />
+    <Meta Name="ms.lasthandoff" Value="11/29/2018" />
+    <Meta Name="ms.locfileid" Value="52598914" />
   </Metadata>
   <TypeSignature Language="C#" Value="public sealed class BufferedStream : System.IO.Stream" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit BufferedStream extends System.IO.Stream" />
@@ -51,7 +51,7 @@
  Ein Puffer ist, einen Block von Bytes im Arbeitsspeicher, der zum Zwischenspeichern von Daten, wodurch die Anzahl der Aufrufe des Betriebssystems verwendet wird. Puffer verbessern lesen und schreiben die Leistung. Ein Puffer kann für entweder lesen oder schreiben, aber nicht beides gleichzeitig verwendet werden. Die <xref:System.IO.BufferedStream.Read%2A> und <xref:System.IO.BufferedStream.Write%2A> Methoden `BufferedStream` automatisch verwalten den Puffer.  
   
 > [!IMPORTANT]
->  Dieser Typ implementiert die <xref:System.IDisposable> Schnittstelle. Wenn Sie mit dem Typ haben, sollten Sie es entweder direkt oder indirekt freigeben. Damit des Typs direkt freigegeben werden, rufen Sie die <xref:System.IDisposable.Dispose%2A> -Methode in einer `try` / `catch` Block. Um sie indirekt löschen, verwenden Sie ein Sprachkonstrukt wie `using` (in c#) oder `Using` (in Visual Basic). Weitere Informationen finden Sie im Abschnitt "mithilfe von ein-Objekt, das implementiert" IDisposable "" in der <xref:System.IDisposable> schnittstellenthema.  
+>  Der Typ implementiert die <xref:System.IDisposable>-Schnittstelle. Wenn Sie mit dem Typ haben, sollten Sie es entweder direkt oder indirekt freigeben. Damit des Typs direkt freigegeben werden, rufen Sie die <xref:System.IDisposable.Dispose%2A> -Methode in einer `try` / `catch` Block. Um sie indirekt löschen, verwenden Sie ein Sprachkonstrukt wie `using` (in c#) oder `Using` (in Visual Basic). Weitere Informationen finden Sie im Abschnitt "mithilfe von ein-Objekt, das implementiert" IDisposable "" in der <xref:System.IDisposable> schnittstellenthema.  
   
  `BufferedStream` können auf bestimmte Arten von Streams zusammengesetzt werden. Es stellt Implementierungen für das Lesen und Schreiben von Bytes in einer zugrunde liegenden Datenquelle oder das Repository bereit. Verwendung <xref:System.IO.BinaryReader> und <xref:System.IO.BinaryWriter> lesen und Schreiben von anderen Datentypen. `BufferedStream` Dient zum verhindern, dass des Puffers ein- und Ausgabe verlangsamen, wenn der Puffer nicht erforderlich ist. Wenn Sie immer lesen und schreiben dann für die Größen, die größer als die Größe des internen Puffers `BufferedStream` möglicherweise nicht den internen Puffer selbst zugeordnet. `BufferedStream` puffert auch Lese- und Schreibvorgänge in einem freigegebenen Puffer. Es wird vorausgesetzt, dass Sie fast immer werden eine Reihe von Lese- und Schreibvorgänge ausführen, aber nur selten zwischen diesen beiden wechseln.  
   
@@ -316,7 +316,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In der .NET Framework 4 und früheren Versionen erforderlich, wie z. B. <xref:System.IO.Stream.BeginWrite%2A> und <xref:System.IO.Stream.EndWrite%2A> , asynchrone Datei-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
+ In .NET Framework 4 und vorherigen Versionen müssen Sie Methoden wie <xref:System.IO.Stream.BeginWrite%2A> und <xref:System.IO.Stream.EndWrite%2A> verwenden, um asynchrone E/A-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
   
  <xref:System.IO.BufferedStream.EndWrite%2A> muss genau einmal aufgerufen werden, für jede <xref:System.IAsyncResult> aus <xref:System.IO.BufferedStream.BeginWrite%2A>. <xref:System.IO.BufferedStream.EndWrite%2A> blockiert, bis der e/a-Vorgang abgeschlossen ist.  
   
@@ -568,8 +568,52 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Schließt den Stream und gibt alle Ressourcen frei (insbesondere Systemressourcen wie Sockets und Dateihandles), die dem aktuellen Pufferstream zugeordnet sind.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks  
+Alle Daten, die zuvor in den Puffer geschrieben werden auf dem zugrunde liegenden Datenquelle oder das Repository kopiert, bevor der gepufferte Stream geschlossen ist. Daher ist es nicht notwendig, <xref:System.IO.BufferedStream.Flush> vor dem Schließen aufrufen. Nach einem Aufruf schließen können alle Vorgänge für den gepufferten Datenstrom Ausnahmen auslösen.
+
+Das Leeren der Datenstrom wird die zugrunde liegende Encoder nicht geleert, es sei denn, Sie explizit aufrufen, <xref:System.IO.BufferedStream.Flush> oder schließen. Festlegen von <xref:System.IO.StreamWriter.AutoFlush> auf "Wahr", die Daten werden in den Stream, aus dem Puffer geleert werden, aber der Encoderzustand wird nicht geleert. Dadurch wird den Encoder auf seinen Zustand (partielle Zeichen) beibehalten, sodass den nächsten Block Zeichen richtig codiert werden können. Dieses Szenario betrifft, UTF8 und UTF7, in denen bestimmte Zeichen nur verschlüsselt werden können, nachdem der Encoder das bzw. der angrenzenden Zeichen empfangen.
+
+Es wird versucht, einen Stream bearbeiten, nachdem es geschlossen wurde möglicherweise ausgelöst ein <xref:System.ObjectDisposedException>.
+
+## Examples  
+Dieses Codebeispiel ist Teil eines umfangreicheren Beispiels für die <xref:System.IO.BufferedStream> Klasse.
+
+```vb
+' When bufStream is closed, netStream is in turn 
+' closed, which in turn shuts down the connection 
+' and closes clientSocket.
+Console.WriteLine(vbCrLf & "Shutting down the connection.")
+bufStream.Close()
+```
+
+```csharp
+// When bufStream is closed, netStream is in turn
+// closed, which in turn shuts down the connection
+// and closes clientSocket.
+Console.WriteLine("\nShutting down the connection.");
+bufStream.Close();
+```
+
+```cpp
+// When bufStream is closed, netStream is in turn closed,
+// which in turn shuts down the connection and closes
+// clientSocket.
+Console::WriteLine( "\nShutting down connection." );
+bufStream->Close();
+
+```
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">Beim Schließend des Streams ist ein Fehler aufgetreten.</exception>
+        <altmember cref="M:System.IO.BufferedStream.Flush" />
+        <related type="Article" href="~/docs/standard/io/index.md">Datei- und Stream-E/A</related>
+        <related type="Article" href="~/docs/standard/io/how-to-read-text-from-a-file.md">Gewusst wie: Lesen aus einer Textdatei</related>
+        <related type="Article" href="~/docs/standard/io/how-to-write-text-to-a-file.md">Gewusst wie: Schreiben von Text in eine Datei</related>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -650,7 +694,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In der .NET Framework 4 und früheren Versionen erforderlich, wie z. B. <xref:System.IO.Stream.BeginRead%2A> und <xref:System.IO.Stream.EndRead%2A> , asynchrone Datei-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
+ In .NET Framework 4 und vorherigen Versionen müssen Sie Methoden wie <xref:System.IO.Stream.BeginRead%2A> und <xref:System.IO.Stream.EndRead%2A> verwenden, um asynchrone E/A-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
   
  <xref:System.IO.BufferedStream.EndRead%2A> muss aufgerufen werden, dabei <xref:System.IAsyncResult> zu ermitteln, wie viele Bytes gelesen wurden.  
   
@@ -699,7 +743,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- In der .NET Framework 4 und früheren Versionen erforderlich, wie z. B. <xref:System.IO.Stream.BeginWrite%2A> und <xref:System.IO.Stream.EndWrite%2A> , asynchrone Datei-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
+ In .NET Framework 4 und vorherigen Versionen müssen Sie Methoden wie <xref:System.IO.Stream.BeginWrite%2A> und <xref:System.IO.Stream.EndWrite%2A> verwenden, um asynchrone E/A-Vorgänge zu implementieren. Diese Methoden sind weiterhin verfügbar, in der [!INCLUDE[net_v45](~/includes/net-v45-md.md)] zur Unterstützung von legacy-Code, jedoch die neuen Async-Methoden, wie z. B. <xref:System.IO.BufferedStream.ReadAsync%2A>, <xref:System.IO.BufferedStream.WriteAsync%2A>, und <xref:System.IO.BufferedStream.FlushAsync%2A>, Hilfe, die Sie asynchrone Dateivorgänge leichter implementieren.  
   
  <xref:System.IO.BufferedStream.EndWrite%2A> muss genau einmal aufgerufen werden, für jeden Aufruf von <xref:System.IO.BufferedStream.BeginRead%2A>. Fehler beim Beenden eines Prozesses lesen, bevor Sie beginnen kann einem anderen Lesevorgang Deadlocks oder anderen unerwünschten Verhalten führen.  
   
@@ -1149,7 +1193,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn `offset` negativ ist, liegt die die neue Position um die durch `origin` angegebene Anzahl von Bytes vor der durch `offset` angegebenen Position. Wenn `offset` ist 0, ist die neue Position der angegebenen Position `origin`. Wenn `offset` positiv ist, liegt die neue Position um die durch `origin` angegebene Anzahl an Bytes hinter der durch `offset` angegebenen Position.  
+ Wenn `offset` negativ ist, liegt die die neue Position um die durch `origin` angegebene Anzahl von Bytes vor der durch `offset` angegebenen Position. Wenn `offset` 0 (null) ist, ist die neue Position die durch `origin` angegebene Position. Wenn `offset` positiv ist, liegt die neue Position um die durch `origin` angegebene Anzahl an Bytes hinter der durch `offset` angegebenen Position.  
   
  Wenn eine <xref:System.IO.BufferedStream> Objekt ist der basisdatenstrom für eine <xref:System.IO.StreamReader> Objekt Aufrufen der <xref:System.IO.BufferedStream.Seek%2A> Methode kann dazu führen, dass die Position im Stream um die Position des internen Puffers im Reader nicht mehr übereinstimmen. Rufen Sie zum Zurücksetzen des internen Puffers der <xref:System.IO.StreamReader.DiscardBufferedData%2A?displayProperty=nameWithType> Methode jedoch diese Methode wird, verlangsamt sich, und nur wenn unbedingt nötig aufgerufen werden soll.  
   
