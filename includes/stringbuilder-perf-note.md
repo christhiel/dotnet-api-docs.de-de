@@ -12,7 +12,7 @@ Wenn Leistungsprobleme auftreten, wenn Sie die zeichenbasierte Indizierung mit <
 
 - Konvertieren Sie die <xref:System.Text.StringBuilder>-Instanz zu <xref:System.String>, indem Sie die <xref:System.Text.StringBuilder.ToString%2A>-Methode aufrufen. Greifen Sie dann auf die Zeichen in der Zeichenfolge zu.
 
-- Kopieren Sie die Inhalte des vorhandenen <xref:System.Text.StringBuilder>-Objekts in ein neues <xref:System.Text.StringBuilder>-Objekt mit vorab festgelegter Größe. Die Leistung verbessert sich, da das neue <xref:System.Text.StringBuilder>-Objekt nicht „blockweise“ strukturiert ist. Zum Beispiel:
+- Kopieren Sie die Inhalte des vorhandenen <xref:System.Text.StringBuilder>-Objekts in ein neues <xref:System.Text.StringBuilder>-Objekt mit vorab festgelegter Größe. Die Leistung verbessert sich, da das neue <xref:System.Text.StringBuilder>-Objekt nicht „blockweise“ strukturiert ist. Beispiel:
 
    ```csharp
    // sbOriginal is the existing StringBuilder object
