@@ -1,1 +1,1 @@
-<span data-ttu-id="7109e-101">Microsoft Ajax</span><span class="sxs-lookup"><span data-stu-id="7109e-101">Microsoft Ajax</span></span>
+<span data-ttu-id="5d9a6-101">Microsoft Ajax</span><span class="sxs-lookup"><span data-stu-id="5d9a6-101">Microsoft Ajax</span></span>
