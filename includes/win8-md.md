@@ -1,1 +1,1 @@
-<span data-ttu-id="842c1-101">Windows 8</span><span class="sxs-lookup"><span data-stu-id="842c1-101">Windows 8</span></span>
+<span data-ttu-id="4cce5-101">Windows 8</span><span class="sxs-lookup"><span data-stu-id="4cce5-101">Windows 8</span></span>
