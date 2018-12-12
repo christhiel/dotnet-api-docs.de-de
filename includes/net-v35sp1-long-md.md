@@ -1,1 +1,1 @@
-<span data-ttu-id="5fb39-101">.NET Framework 3.5 Service Pack 1</span><span class="sxs-lookup"><span data-stu-id="5fb39-101">.NET Framework 3.5 Service Pack 1</span></span>
+<span data-ttu-id="b3dea-101">.NET Framework 3.5 Service Pack 1</span><span class="sxs-lookup"><span data-stu-id="b3dea-101">.NET Framework 3.5 Service Pack 1</span></span>

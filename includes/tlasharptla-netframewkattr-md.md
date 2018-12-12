@@ -1,1 +1,1 @@
-<span data-ttu-id="4f50c-101">.NET Framework-Attribut</span><span class="sxs-lookup"><span data-stu-id="4f50c-101">.NET Framework attribute</span></span>
+<span data-ttu-id="90cb3-101">.NET Framework-Attribut</span><span class="sxs-lookup"><span data-stu-id="90cb3-101">.NET Framework attribute</span></span>

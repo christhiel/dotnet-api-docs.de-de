@@ -1,1 +1,1 @@
-<span data-ttu-id="059c2-101">Secure-Hash-Algorithmus Version 1.0 (SHA-1)</span><span class="sxs-lookup"><span data-stu-id="059c2-101">Secure Hash Algorithm version 1.0 (SHA1)</span></span>
+<span data-ttu-id="15022-101">Secure-Hash-Algorithmus Version 1.0 (SHA-1)</span><span class="sxs-lookup"><span data-stu-id="15022-101">Secure Hash Algorithm version 1.0 (SHA1)</span></span>

@@ -1,1 +1,1 @@
-<span data-ttu-id="eb3f6-101">Windows 2000</span><span class="sxs-lookup"><span data-stu-id="eb3f6-101">Windows 2000</span></span>
+<span data-ttu-id="7a933-101">Windows 2000</span><span class="sxs-lookup"><span data-stu-id="7a933-101">Windows 2000</span></span>

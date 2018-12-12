@@ -1,1 +1,1 @@
-<span data-ttu-id="d3be5-101">Schnittstelle für mehrere Dokumente (Multiple-Document Interfacce, MDI)</span><span class="sxs-lookup"><span data-stu-id="d3be5-101">multiple-document interface (MDI)</span></span>
+<span data-ttu-id="fedc3-101">Schnittstelle für mehrere Dokumente (Multiple-Document Interfacce, MDI)</span><span class="sxs-lookup"><span data-stu-id="fedc3-101">multiple-document interface (MDI)</span></span>

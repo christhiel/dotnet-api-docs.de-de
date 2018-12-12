@@ -1,1 +1,1 @@
-<span data-ttu-id="fda21-101">.NET Framework-Attribute</span><span class="sxs-lookup"><span data-stu-id="fda21-101">.NET Framework attributes</span></span>
+<span data-ttu-id="18b1a-101">.NET Framework-Attribute</span><span class="sxs-lookup"><span data-stu-id="18b1a-101">.NET Framework attributes</span></span>

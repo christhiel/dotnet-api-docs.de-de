@@ -1,1 +1,1 @@
-<span data-ttu-id="77706-101">Microsoft Silverlight 3</span><span class="sxs-lookup"><span data-stu-id="77706-101">Microsoft Silverlight 3</span></span>
+<span data-ttu-id="ed1ff-101">Microsoft Silverlight 3</span><span class="sxs-lookup"><span data-stu-id="ed1ff-101">Microsoft Silverlight 3</span></span>

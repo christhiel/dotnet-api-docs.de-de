@@ -1,1 +1,1 @@
-<span data-ttu-id="aff4f-101">Graphische Benutzeroberfläche (Graphical User Interface, GUI)</span><span class="sxs-lookup"><span data-stu-id="aff4f-101">graphical user interface (GUI)</span></span>
+<span data-ttu-id="27087-101">Graphische Benutzeroberfläche (Graphical User Interface, GUI)</span><span class="sxs-lookup"><span data-stu-id="27087-101">graphical user interface (GUI)</span></span>

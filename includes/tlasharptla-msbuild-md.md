@@ -1,1 +1,1 @@
-<span data-ttu-id="1bf58-101">Microsoft-Buildmodul (MSBuild)</span><span class="sxs-lookup"><span data-stu-id="1bf58-101">Microsoft build engine (MSBuild)</span></span>
+<span data-ttu-id="d91cd-101">Microsoft-Build-Engine (MSBuild)</span><span class="sxs-lookup"><span data-stu-id="d91cd-101">Microsoft build engine (MSBuild)</span></span>

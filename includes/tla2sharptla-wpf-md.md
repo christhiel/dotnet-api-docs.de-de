@@ -1,1 +1,1 @@
-<span data-ttu-id="9f652-101">WPF</span><span class="sxs-lookup"><span data-stu-id="9f652-101">WPF</span></span>
+<span data-ttu-id="5d10d-101">WPF</span><span class="sxs-lookup"><span data-stu-id="5d10d-101">WPF</span></span>

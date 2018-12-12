@@ -1,1 +1,1 @@
-<span data-ttu-id="53467-101">Windows Forms</span><span class="sxs-lookup"><span data-stu-id="53467-101">Windows Forms</span></span>
+<span data-ttu-id="aeb07-101">Windows Forms</span><span class="sxs-lookup"><span data-stu-id="aeb07-101">Windows Forms</span></span>
