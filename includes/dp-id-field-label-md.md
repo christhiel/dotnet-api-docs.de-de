@@ -1,1 +1,1 @@
-<span data-ttu-id="f495a-101">Bezeichnerfeld für die Abhängigkeitseigenschaft:</span><span class="sxs-lookup"><span data-stu-id="f495a-101">Dependency property identifier field:</span></span>
+<span data-ttu-id="1bb24-101">Bezeichnerfeld für die Abhängigkeitseigenschaft:</span><span class="sxs-lookup"><span data-stu-id="1bb24-101">Dependency property identifier field:</span></span>
