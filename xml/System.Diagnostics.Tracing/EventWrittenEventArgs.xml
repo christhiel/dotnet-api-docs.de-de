@@ -1,13 +1,5 @@
 <Type Name="EventWrittenEventArgs" FullName="System.Diagnostics.Tracing.EventWrittenEventArgs">
-  <Metadata>
-    <Meta Name="ms.openlocfilehash" Value="46860fca723a945b6916f0d8377e0f4796e46365" />
-    <Meta Name="ms.sourcegitcommit" Value="9e06b87bcfa4347dbbaaa4b3cc36b43b93b5badb" />
-    <Meta Name="ms.translationtype" Value="HT" />
-    <Meta Name="ms.contentlocale" Value="de-DE" />
-    <Meta Name="ms.lasthandoff" Value="11/20/2018" />
-    <Meta Name="ms.locfileid" Value="52240039" />
-  </Metadata>
-  <TypeSignature Language="C#" Value="public class EventWrittenEventArgs : EventArgs" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="6267829fa563f5420f5249f7a6248c140d093992" /><Meta Name="ms.sourcegitcommit" Value="9d1bf7e4c6d697123f26c810c1a049a755634634" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/06/2018" /><Meta Name="ms.locfileid" Value="52981967" /></Metadata><TypeSignature Language="C#" Value="public class EventWrittenEventArgs : EventArgs" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit EventWrittenEventArgs extends System.EventArgs" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.Tracing.EventWrittenEventArgs" />
   <TypeSignature Language="VB.NET" Value="Public Class EventWrittenEventArgs&#xA;Inherits EventArgs" />
@@ -37,7 +29,29 @@
   <Interfaces />
   <Docs>
     <summary>Stellt Daten für den <see cref="M:System.Diagnostics.Tracing.EventListener.OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs)" />-Rückruf bereit.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Jedes Mal, wenn ein Ereignis an verteilt ist ein <xref:System.Diagnostics.Tracing.EventListener>, <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> Callback-Methode aufgerufen wird. Übergabe einer `EventWrittenEventArgs` -Instanz, die dem Ereignis zugeordnete Informationen enthält. Alle Eigenschaftswerte der `EventWrittenEventArgs` Klasse gültig sind, nur während des Rückrufs. 
+
+Die folgenden Abschnitte enthalten weitere Informationen zu einzelnen `EventWrittenEventArgs` Eigenschaften.
+
+### <a name="activityid-property"></a>Aktivitäts-ID-Eigenschaft
+
+Bei Verwendung <xref:System.Activities.Activity?displayProperty=nameWithType> und davon abgeleiteten Klassen, die Threads können mit einer zugehörigen Aktivität markiert werden. Die `ActivityId` Eigenschaft gibt die Aktivitäts-ID des Threads, der das Ereignis protokolliert. Beachten Sie, dass Threads nicht unbedingt müssen eine Aktivität, in diesem Fall diese Eigenschaft gibt <xref:System.Guid.Empty?displayProperty=nameWithType>.
+
+### <a name="osthreadid-and-timestamp-properties"></a>OSThreadId und TimeStamp-Eigenschaften 
+
+Beginnend mit .NET Core 2.2 <xref:System.Diagnostics.Tracing.EventListener> Objekte können native-Runtime-Ereignisse (z. B. JIT-Kompilierung, GC und Threadpool-Ereignisse) zusätzlich zum Ereignisse ausgegeben werden abonnieren <xref:System.Diagnostics.Tracing.EventSource> Objekte. In früheren Versionen von .NET Core und alle Versionen von .NET Framework, das Thead-ID und den Zeitstempel können erfasst werden über die Umgebung, da sie weitergeleitet werden synchron auf dem gleichen Thread, der sie ausgegeben. Nicht alle native-Runtime-Ereignisse können jedoch synchron verteilt werden. Einige Ereignisse, z. B. GC-Ereignisse werden ausgegeben, wenn verwaltete die Threadausführung wird angehalten. Diese Ereignisse, die in nativem Code gepuffert werden und werden durch einen Dispatcher-Thread verteilt, sobald der verwaltete Code erneut ausführen können. Da diese Ereignisse gepuffert werden, kann nicht die Umgebung verwendet werden, um den Thread-ID und den Zeitstempel zuverlässig abzurufen. Aus diesem Grund beginnend mit .NET Core 2.2, thread-ID und Timestampinformationen finden Sie als Mitglied der `EventWrittenEventArgs` Klasse.
+
+### <a name="relatedactivityid-property"></a>RelatedActivityId-Eigenschaft
+
+ Eine verwandte Aktivität ist eine Aktivität, die stark mit der aktuellen Aktivität verknüpft ist. Normalerweise ist entweder der Aktivität, die die aktuelle Aktivität verursacht hat (Ereignisse mit der `Start` Opcode in der Regel dazu) oder eine Aktivität, die die aktuelle Anwendung erstellt wurde (Ereignisse mit der `Send` Opcode in der Regel dazu). Wenn sie verwendet wird, die `RelatedActivityID` explizit übergeben wird, von der Methode, die die Protokollierung durchführen. Übergeben Sie nicht viele Ereignisse eine `RelatedActivityId`, in diesem Fall gibt diese Eigenschaft zurück <xref:System.Guid.Empty?displayProperty=nameWithType>.
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="ActivityId">
@@ -76,18 +90,7 @@
       <Docs>
         <summary>Ruft die Aktivität ID auf dem Thread ab, auf den das Ereignis geschrieben wurde.</summary>
         <value>Die Aktivität ID auf dem Thread, auf den das Ereignis geschrieben wurde.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Abrufen des Werts der <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> Eigenschaft zugreift, threadlokalen Speicher. Dies hat folgenden Auswirkungen:  
-  
--   Die <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> Feld gilt nur für die Dauer der <xref:System.Diagnostics.Tracing.EventListener.OnEventWritten%2A?displayProperty=nameWithType> Rückruf.  
-  
--   Wenn die Aktivitäts-ID, die während des Rückrufs geändert wird, wird die Aktivitäts-ID zurückgegeben, durch die <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> -Eigenschaft ist ungültig.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Tracing.EventWrittenEventArgs.RelatedActivityId" />
         <altmember cref="M:System.Diagnostics.Tracing.EventSource.SetCurrentThreadActivityId(System.Guid)" />
       </Docs>
@@ -390,8 +393,8 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Ruft den Threadbezeichner für den Betriebssystemthread ab, der das Ereignis geschrieben hat. (Nur .NET Core 2.2 und höher)</summary>
+        <value>Der Threadbezeichner für die BS-Thread, der das Ereignis geschrieben werden soll.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -499,14 +502,7 @@
       <Docs>
         <summary>Ruft den Bezeichner einer Aktivität ab, die zur Aktivität verknüpft ist, die von der aktuellen - Instanz dargestellt wird.</summary>
         <value>Der Bezeichner der zugehörigen Aktivität oder <see cref="F:System.Guid.Empty" />, wenn es keine zugehörige Aktivität gibt.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.RelatedActivityId%2A> ist ein untergeordnetes Element von der <xref:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId%2A> Eigenschaft. Eine Aktivitäts-ID kann mehrere verwandte Aktivitäts-IDs zugeordnet werden.  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Tracing.EventWrittenEventArgs.ActivityId" />
         <altmember cref="M:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityId(System.Int32,System.Guid,System.Object[])" />
       </Docs>
@@ -601,8 +597,8 @@
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Ruft den Zeitpunkt als <see cref="System.DateTime" />-Zeitstempel ab, zu dem das Ereignis ursprünglich generiert wurde. (Nur .NET Core 2.2 und höher)</summary>
+        <value>Das Datum und Uhrzeit, wann das Ereignis protokolliert wurde. Das System versucht, die so präzise wie möglich sein.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
