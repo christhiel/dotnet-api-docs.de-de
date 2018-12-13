@@ -1,1 +1,1 @@
-<span data-ttu-id="ede17-101">Bezeichner (ID)</span><span class="sxs-lookup"><span data-stu-id="ede17-101">identifiers (IDs)</span></span>
+<span data-ttu-id="f0f20-101">Bezeichner (ID)</span><span class="sxs-lookup"><span data-stu-id="f0f20-101">identifiers (IDs)</span></span>
