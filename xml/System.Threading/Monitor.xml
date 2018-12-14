@@ -1,5 +1,5 @@
 <Type Name="Monitor" FullName="System.Threading.Monitor">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="df70f7cc62e1ef013835d69cf0220d9e8b42bc5a" /><Meta Name="ms.sourcegitcommit" Value="0ec122ee5f3681159b8460ab15b409fd6e3d3ae0" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="10/04/2018" /><Meta Name="ms.locfileid" Value="48729799" /></Metadata><TypeSignature Language="C#" Value="public static class Monitor" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="e925d576d52267c0e301b6428f677609e99940d3" /><Meta Name="ms.sourcegitcommit" Value="adc8598fd19d91438cacaa8fa7ce613e28c8218e" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/11/2018" /><Meta Name="ms.locfileid" Value="53230740" /></Metadata><TypeSignature Language="C#" Value="public static class Monitor" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Monitor extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Threading.Monitor" />
   <TypeSignature Language="VB.NET" Value="Public Class Monitor" />
@@ -42,14 +42,14 @@
   
  In diesem Artikel:  
   
- [Die Monitor-Klasse: eine Übersicht über die](#Overview)   
+ [Die Monitor-Klasse: Eine Übersicht über die](#Overview)   
  [Das Sperrobjekt](#Lock)   
  [Der kritische Abschnitt](#CriticalSection)   
  [Pulse "," PulseAll ", und warten](#Pulse)   
  [Monitore und Wait-handles](#WaitHandles)  
   
 <a name="Overview"></a>   
-## <a name="the-monitor-class-an-overview"></a>Die Monitor-Klasse: eine Übersicht über die  
+## <a name="the-monitor-class-an-overview"></a>Die Monitor-Klasse: Eine Übersicht über die  
  <xref:System.Threading.Monitor> bietet die folgenden Features:  
   
 -   Es ist ein Objekt nach Bedarf zugeordnet.  
@@ -149,18 +149,18 @@
   
  Da sie von jeder Aufgabe, die auf einem Threadpoolthread ausgeführt zugegriffen werden kann, der Zugriff auf die Variablen `total` und `n` muss ebenfalls synchronisiert werden. Die <xref:System.Threading.Interlocked.Add%2A?displayProperty=nameWithType> Methode für diesen Zweck verwendet wird.  
   
- Das folgende Beispiel zeigt die kombinierte Verwendung der <xref:System.Threading.Monitor> Klasse (mit implementiert die `lock` oder `SyncLock` Sprachkonstrukt), wird die <xref:System.Threading.Interlocked> -Klasse, und die <xref:System.Threading.AutoResetEvent> Klasse. Es definiert zwei `internal` (in c#) oder `Friend` (in Visual Basic) Klassen `SyncResource` und `UnSyncResource`, die entsprechend synchronisierten und nicht synchronisierten Zugriff auf eine Ressource bereitstellen. Um sicherzustellen, dass das Beispiel veranschaulicht den Unterschied zwischen dem synchronisierten und nicht synchronisierten Zugriff (die der Fall sein kann, wenn jeder Methodenaufruf schnell abgeschlossen wird), die Methode umfasst eine zufällige Verzögerung: für threads, deren <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType> Eigenschaft gerade ist, die Methodenaufrufe <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> , tritt eine Verzögerung von 2.000 Millisekunden einzuführen. Beachten Sie, dass, weil die `SyncResource` Klasse ist nicht öffentlich, keiner der Clientcodes eine Sperre für die synchronisierte Ressource akzeptiert, die interne Klasse selbst sperrt. Dadurch wird verhindert, dass bösartiger Code eine Sperre für ein öffentliches Objekt auslöst.  
+ Das folgende Beispiel zeigt die kombinierte Verwendung der <xref:System.Threading.Monitor> Klasse (mit implementiert die `lock` oder `SyncLock` Sprachkonstrukt), wird die <xref:System.Threading.Interlocked> -Klasse, und die <xref:System.Threading.AutoResetEvent> Klasse. Im Beispiel werden zwei `internal`- (in C#) oder `Friend`-Klassen (in Visual Basic), `SyncResource` und `UnSyncResource`, definiert, die entsprechend synchronisierten und nicht synchronisierten Zugriff auf eine Ressource bereitstellen. Damit sichergestellt ist, dass der Unterschied zwischen dem synchronisierten und dem nicht synchronisierten Zugriff im Beispiel deutlich wird (was der Fall sein kann, wenn jeder Methodenaufruf schnell abgeschlossen wird), enthält die Methode eine zufällige Verzögerung: Für Threads, deren <xref:System.Threading.Thread.ManagedThreadId%2A?displayProperty=nameWithType>-Eigenschaft einen geraden Wert hat, ruft die Methode die <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType>-Methode auf, um eine Verzögerung von 2.000 Millisekunden einzuführen. Weil die `SyncResource`-Klasse nicht öffentlich ist, löst keiner der Clientcodes eine Sperre für die synchronisierte Ressource aus, sondern die Sperre wird von der internen Klasse selbst ausgelöst. Dadurch wird verhindert, dass bösartiger Code eine Sperre für ein öffentliches Objekt auslöst.  
   
  [!code-csharp[Conceptual.Monitors#1](~/samples/snippets/csharp/VS_Snippets_CLR/conceptual.monitors/cs/source.cs#1)]
  [!code-vb[Conceptual.Monitors#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.monitors/vb/source.vb#1)]  
   
- Im Beispiel wird eine Variable, `numOps`, definiert die Anzahl der Threads, die auf die Ressource zuzugreifen versucht. Der Anwendungsthread Ruft die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode für synchronisierten und nicht synchronisierten Zugriff auf fünf Mal jedes. Die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType> Methode verfügt über einen einzelnen Parameter, ein Delegat, der keine Parameter akzeptiert und keinen Wert zurückgibt. Für synchronisierten Zugriff und ruft die `SyncUpdateResource` Methode für den nicht synchronisierten Zugriff Ruft die `UnSyncUpdateResource` Methode. Nach jedem Satz von Methodenaufrufen, ruft der Anwendungsthread die [AutoResetEvent.WaitOne](xref:System.Threading.WaitHandle.WaitOne*) Methode, sodass, bis blockiert die <xref:System.Threading.AutoResetEvent> -Instanz signalisiert wird.  
+ Im Beispiel wird eine Variable, `numOps`, definiert, mit der die Anzahl von Threads festgelegt wird, die versuchen, auf die Ressource zuzugreifen. Der Anwendungsthread ruft die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType>-Methode jeweils fünf Mal für synchronisierten und nicht synchronisierten Zugriff auf. Die <xref:System.Threading.ThreadPool.QueueUserWorkItem%28System.Threading.WaitCallback%29?displayProperty=nameWithType>-Methode hat einen einzigen Parameter: ein Delegat, der keine Parameter akzeptiert und keinen Wert zurückgibt. Für synchronisierten Zugriff und ruft die Methode die `SyncUpdateResource`Methode auf, für nicht synchronisierten Zugriff ruft sie die `UnSyncUpdateResource`-Methode auf. Nach jedem Satz von Methodenaufrufen, ruft der Anwendungsthread die [AutoResetEvent.WaitOne](xref:System.Threading.WaitHandle.WaitOne*) Methode, sodass, bis blockiert die <xref:System.Threading.AutoResetEvent> -Instanz signalisiert wird.  
   
- Jeder Aufruf von der `SyncUpdateResource` -Methode wird die interne `SyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode zum Verringern der `numOps` Leistungsindikator. Die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um den Zähler verringert, da andernfalls Sie bestimmte nicht sein können, dass ein zweiter Thread den Wert zugreift, bevor Sie ein ersten Thread der dekrementierte Wert in der Variablen gespeichert wurde. Wenn die letzte Worker dekrementiert den Zähler auf 0 (null) synchronisiert, gibt an, dass alle synchronisierten Threads haben Zugriff auf die Ressource, die `SyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread, um den Vorgang fortzusetzen die Ausführung.  
+ Bei jedem Aufruf der `SyncUpdateResource`-Methode wird die interne `SyncResource.Access`-Methode und dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType>-Methode aufgerufen, um den `numOps`-Zähler zu dekrementieren. Die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um den Zähler verringert, da andernfalls Sie bestimmte nicht sein können, dass ein zweiter Thread den Wert zugreift, bevor Sie ein ersten Thread der dekrementierte Wert in der Variablen gespeichert wurde. Wenn die letzte Worker dekrementiert den Zähler auf 0 (null) synchronisiert, gibt an, dass alle synchronisierten Threads haben Zugriff auf die Ressource, die `SyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread, um den Vorgang fortzusetzen die Ausführung.  
   
- Jeder Aufruf von der `UnSyncUpdateResource` -Methode wird die interne `UnSyncResource.Access` -Methode und ruft dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode zum Verringern der `numOps` Leistungsindikator. Auch hier die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um die verringert des Zähler, um sicherzustellen, dass ein zweiter Thread nicht den Wert zugreift, bevor der dekrementierte Wert des ersten Threads auf die Variable zugewiesen wurde. Bei der letzten dekrementiert Worker nicht den Zähler auf 0 (null) synchronisierte, gibt an, dass keine weiteren synchronisierten Threads Zugriff auf die Ressource, müssen die `UnSyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread die Ausführung fortsetzen .  
+ Bei jedem Aufruf der `UnSyncUpdateResource`-Methode wird die interne `UnSyncResource.Access`-Methode und dann die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType>-Methode aufgerufen, um den `numOps`-Zähler zu dekrementieren. Auch hier die <xref:System.Threading.Interlocked.Decrement%2A?displayProperty=nameWithType> Methode wird verwendet, um die verringert des Zähler, um sicherzustellen, dass ein zweiter Thread nicht den Wert zugreift, bevor der dekrementierte Wert des ersten Threads auf die Variable zugewiesen wurde. Bei der letzten dekrementiert Worker nicht den Zähler auf 0 (null) synchronisierte, gibt an, dass keine weiteren synchronisierten Threads Zugriff auf die Ressource, müssen die `UnSyncUpdateResource` Methodenaufrufe der <xref:System.Threading.EventWaitHandle.Set%2A?displayProperty=nameWithType> -Methode, die signalisiert den Hauptthread die Ausführung fortsetzen .  
   
- Wie die Ausgabe des Beispiels zeigt, wird mit synchronisiertem Zugriff sichergestellt, dass der aufrufende Thread die geschützte Ressource beendet, bevor ein anderer Thread auf sie zugreifen kann. Jeder Thread wartet auf seinen Vorgänger. Andererseits, ohne die Sperre die `UnSyncResource.Access` Methode wird aufgerufen, in der Reihenfolge, in dem von Threads wird erreicht.  
+ Wie die Ausgabe des Beispiels zeigt, wird mit synchronisiertem Zugriff sichergestellt, dass der aufrufende Thread die geschützte Ressource beendet, bevor ein anderer Thread auf sie zugreifen kann. Jeder Thread wartet auf seinen Vorgänger. Andererseits, ohne die Sperre, wird die `UnSyncResource.Access`-Methode in der Reihenfolge aufgerufen, in der sie von Threads erreicht wird.  
   
  ]]></format>
     </remarks>
@@ -491,7 +491,7 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
  Der Thread, der derzeit im Besitz der Sperre für das angegebene Objekt ruft diese Methode, um die nächsten Threads in der Zeile, für die Sperre zu signalisieren. Nach dem Empfang des Schritts, wird der wartende Thread in die Warteschlange verschoben. Wenn der Thread aufgerufen, die `Pulse` hebt die Sperre der nächste Thread in die Warteschlange (dies nicht unbedingt der Thread, der Impuls empfangen hat), ruft die Sperre.  
   
 > [!IMPORTANT]
->  Die <xref:System.Threading.Monitor> -Klasse verwaltet nicht den Status Gibt an, dass die <xref:System.Threading.Monitor.Pulse%2A> -Methode aufgerufen wurde. Daher Aufrufen <xref:System.Threading.Monitor.Pulse%2A> Wenn keine Threads warten, den aufrufende Thread nächsten <xref:System.Threading.Monitor.Wait%2A> Blöcke wie <xref:System.Threading.Monitor.Pulse%2A> noch nicht aufgerufen wurde. Wenn zwei Threads verwenden <xref:System.Threading.Monitor.Pulse%2A> und <xref:System.Threading.Monitor.Wait%2A> interagieren, könnte dies zu einem Deadlock. Vergleichen Sie dies mit dem Verhalten von der <xref:System.Threading.AutoResetEvent> Klasse:, wenn Sie zu signalisieren eine <xref:System.Threading.AutoResetEvent> durch Aufrufen der <xref:System.Threading.EventWaitHandle.Set%2A> -Methode, und es sind keine Threads warten, die <xref:System.Threading.AutoResetEvent> bleibt in einem signalisierten Zustand, bis ein Thread ruft <xref:System.Threading.WaitHandle.WaitOne%2A>, <xref:System.Threading.WaitHandle.WaitAny%2A>, oder <xref:System.Threading.WaitHandle.WaitAll%2A>. Die <xref:System.Threading.AutoResetEvent> gibt den Thread frei, und in den nicht signalisierten Zustand zurück.  
+>  Die <xref:System.Threading.Monitor> -Klasse verwaltet nicht den Status Gibt an, dass die <xref:System.Threading.Monitor.Pulse%2A> -Methode aufgerufen wurde. Daher Aufrufen <xref:System.Threading.Monitor.Pulse%2A> Wenn keine Threads warten, den aufrufende Thread nächsten <xref:System.Threading.Monitor.Wait%2A> Blöcke wie <xref:System.Threading.Monitor.Pulse%2A> noch nicht aufgerufen wurde. Wenn zwei Threads verwenden <xref:System.Threading.Monitor.Pulse%2A> und <xref:System.Threading.Monitor.Wait%2A> interagieren, könnte dies zu einem Deadlock. Vergleichen Sie dies mit dem Verhalten von der <xref:System.Threading.AutoResetEvent> Klasse: Wenn Sie darauf hinweisen ein <xref:System.Threading.AutoResetEvent> durch Aufrufen der <xref:System.Threading.EventWaitHandle.Set%2A> -Methode, und es sind keine Threads warten, die <xref:System.Threading.AutoResetEvent> bleibt in einem signalisierten Zustand, bis ein Thread ruft <xref:System.Threading.WaitHandle.WaitOne%2A>, <xref:System.Threading.WaitHandle.WaitAny%2A>, oder <xref:System.Threading.WaitHandle.WaitAll%2A>. Die <xref:System.Threading.AutoResetEvent> gibt den Thread frei, und in den nicht signalisierten Zustand zurück.  
   
  Beachten Sie, dass ein synchronisiertes Objekt mehrere Verweise, die einen Verweis auf den Thread, der derzeit enthält, die Sperre, die einen Verweis auf die Warteschlange, die die Threads, die die Sperre erhalten können enthält enthält, und einen Verweis auf die Warteschlange für abzuarbeitende, einschließlich der enthält die Threads, die für die Benachrichtigung über eine Änderung in den Zustand des Objekts darauf warten.  
   
@@ -825,14 +825,14 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
       </Parameters>
       <Docs>
         <param name="obj">Das Objekt, für das die Sperre erhalten werden soll.</param>
-        <param name="timeout">Eine <see cref="T:System.TimeSpan" />, die die Zeitspanne darstellt, für die auf die Sperre gewartet werden soll. Ein Wert von -1 Millisekunde gibt eine unbegrenzte Wartezeit an.</param>
+        <param name="timeout">Eine <see cref="T:System.TimeSpan" />, die die Zeitspanne darstellt, für die auf die Sperre gewartet werden soll. Ein Wert von –1 Millisekunde gibt eine unbegrenzte Wartezeit an.</param>
         <summary>Versucht über einen angegebenen Zeitraum hinweg, eine exklusive Sperre für das angegebene Objekt zu erhalten.</summary>
         <returns><see langword="true" />, wenn der aktuelle Thread die Sperre erhält, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich – 1, ist diese Methode entspricht <xref:System.Threading.Monitor.Enter%2A>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%2A>.  
+ Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich-1 ist, diese Methode entspricht dem <xref:System.Threading.Monitor.Enter%2A>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%2A>.  
   
 > [!NOTE]
 >  Verwendung <xref:System.Threading.Monitor> Sperren von Objekten (d. h. Referenztypen), nicht Werttypen. Weitere Informationen finden Sie unter den <xref:System.Threading.Monitor> Thema-Klasse.  
@@ -845,7 +845,7 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="obj" />-Parameter ist <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> in Millisekunden ist negativ und nicht gleich <see cref="F:System.Threading.Timeout.Infinite" /> (-1 Millisekunde) oder ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> in Millisekunden ist negativ und nicht gleich <see cref="F:System.Threading.Timeout.Infinite" /> (–1 Millisekunde) oder ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <altmember cref="T:System.Threading.Thread" />
         <related type="Article" href="~/docs/standard/threading/index.md">Verwaltetes Threading</related>
       </Docs>
@@ -965,14 +965,14 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
       </Parameters>
       <Docs>
         <param name="obj">Das Objekt, für das die Sperre erhalten werden soll.</param>
-        <param name="timeout">Die Zeitspanne, für die auf die Sperre gewartet werden soll. Ein Wert von -1 Millisekunde gibt eine unbegrenzte Wartezeit an.</param>
+        <param name="timeout">Die Zeitspanne, für die auf die Sperre gewartet werden soll. Ein Wert von –1 Millisekunde gibt eine unbegrenzte Wartezeit an.</param>
         <param name="lockTaken">Das Ergebnis des Versuchs, die Sperre abzurufen, übergeben als Verweis. Die Eingabe muss <see langword="false" /> sein. Die Ausgabe ist <see langword="true" />, wenn die Sperre abgerufen wurde. Andernfalls ist die Ausgabe <see langword="false" />. Die Ausgabe wird auch dann festgelegt, wenn eine Ausnahme bei dem Versuch auftritt, die Sperre abzurufen.</param>
         <summary>Versucht für die angegebene Dauer, eine exklusive Sperre für das angegebene Objekt zu erhalten, und legt atomar einen Wert fest, der angibt, ob die Sperre angenommen wurde.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich – 1, ist diese Methode entspricht <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
+ Wenn der Wert des der `timeout` Parameter, die in Millisekunden konvertiert gleich-1 ist, diese Methode entspricht dem <xref:System.Threading.Monitor.Enter%28System.Object%29>. Wenn der Wert des `timeout` gleich 0 ist, diese Methode entspricht <xref:System.Threading.Monitor.TryEnter%28System.Object%29>.  
   
  Wenn die Sperre nicht erstellt wurde, da eine Ausnahme ausgelöst wurde, wird die Variable angegeben, für die `lockTaken` -Parameter ist `false` nach diese Methode beendet. Dadurch wird das Programm in allen Fällen, um zu bestimmen, ob es erforderlich, um die Sperre aufzuheben ist.  
   
@@ -988,7 +988,7 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
         </remarks>
         <exception cref="T:System.ArgumentException">Die Eingabe für <paramref name="lockTaken" /> ist <see langword="true" />.</exception>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="obj" />-Parameter ist <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> in Millisekunden ist negativ und nicht gleich <see cref="F:System.Threading.Timeout.Infinite" /> (-1 Millisekunde) oder ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> in Millisekunden ist negativ und nicht gleich <see cref="F:System.Threading.Timeout.Infinite" /> (–1 Millisekunde) oder ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <altmember cref="T:System.Threading.Thread" />
         <related type="Article" href="~/docs/standard/threading/index.md">Verwaltetes Threading</related>
       </Docs>
@@ -1223,7 +1223,7 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
         <exception cref="T:System.ArgumentNullException">Der <paramref name="obj" />-Parameter ist <see langword="null" />.</exception>
         <exception cref="T:System.Threading.SynchronizationLockException">Der aufrufende Thread besitzt keine Sperre für das angegebene Objekt.</exception>
         <exception cref="T:System.Threading.ThreadInterruptedException">Der Thread, der <see langword="Wait" /> aufruft, wird später im Wartezustand unterbrochen. Dies geschieht, wenn ein anderer Thread die <see cref="M:System.Threading.Thread.Interrupt" />-Methode dieses Threads aufruft.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert des <paramref name="timeout" />-Parameters in Millisekunden ist negativ und stellt nicht <see cref="F:System.Threading.Timeout.Infinite" /> (-1 Millisekunde) dar, oder er ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der Wert des <paramref name="timeout" />-Parameters in Millisekunden ist negativ und stellt nicht <see cref="F:System.Threading.Timeout.Infinite" /> (–1 Millisekunde) dar, oder er ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <altmember cref="T:System.Threading.Thread" />
         <altmember cref="T:System.Threading.Monitor" />
         <related type="Article" href="~/docs/standard/threading/index.md">Verwaltetes Threading</related>
@@ -1388,7 +1388,7 @@ Hinweis   Wenn keine Ausnahme auftritt, ist die Ausgabe dieser Methode immer 
         <exception cref="T:System.ArgumentNullException">Der <paramref name="obj" />-Parameter ist <see langword="null" />.</exception>
         <exception cref="T:System.Threading.SynchronizationLockException"><see langword="Wait" /> wird nicht aus einem synchronisierten Codeblock aufgerufen.</exception>
         <exception cref="T:System.Threading.ThreadInterruptedException">Der Thread, der „Wait“ aufruft, wird später im Wartezustand unterbrochen. Dies geschieht, wenn ein anderer Thread die <see cref="M:System.Threading.Thread.Interrupt" />-Methode dieses Threads aufruft.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="timeout" />-Parameter ist negativ und stellt nicht <see cref="F:System.Threading.Timeout.Infinite" /> dar (-1 Millisekunde), oder er ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="timeout" />-Parameter ist negativ und stellt nicht <see cref="F:System.Threading.Timeout.Infinite" /> dar (–1 Millisekunde), oder er ist größer als <see cref="F:System.Int32.MaxValue" />.</exception>
         <altmember cref="T:System.Threading.Thread" />
         <altmember cref="T:System.Threading.Monitor" />
         <related type="Article" href="~/docs/standard/threading/index.md">Verwaltetes Threading</related>
