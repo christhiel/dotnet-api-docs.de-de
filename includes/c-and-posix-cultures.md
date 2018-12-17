@@ -1,0 +1,2 @@
+> [!NOTE]
+> **Ausführen von .NET Core nur auf Linux- und macOS-Systemen:** Beim Sortierungsverhalten für die C- und Posix-Kulturen ist immer die Groß-/Kleinschreibung zu beachten, weil diese Kulturen nicht die erwartete Unicode-Sortierreihenfolge verwenden. Bei der Durchführung kulturrelevanter Sortiervorgänge ohne Unterscheidung von Groß-/Kleinschreibung wird empfohlen, eine andere Kultur als C oder Posix zu verwenden.  
