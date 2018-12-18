@@ -1,5 +1,5 @@
 <Type Name="SqlConnection" FullName="System.Data.SqlClient.SqlConnection">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="ed56cc88bc32094f4264b8e07b94abd5de84e4d0" /><Meta Name="ms.sourcegitcommit" Value="adc8598fd19d91438cacaa8fa7ce613e28c8218e" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/11/2018" /><Meta Name="ms.locfileid" Value="53227022" /></Metadata><TypeSignature Language="C#" Value="public sealed class SqlConnection : System.Data.Common.DbConnection, ICloneable, IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="ce49addd00616aba9450acfe9913a5198d3edfbb" /><Meta Name="ms.sourcegitcommit" Value="9e3550fb2088d4faf2043f0acb29da4555519937" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/12/2018" /><Meta Name="ms.locfileid" Value="53291274" /></Metadata><TypeSignature Language="C#" Value="public sealed class SqlConnection : System.Data.Common.DbConnection, ICloneable, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit SqlConnection extends System.Data.Common.DbConnection implements class System.Data.IDbConnection, class System.ICloneable, class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Data.SqlClient.SqlConnection" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class SqlConnection&#xA;Inherits DbConnection&#xA;Implements ICloneable, IDisposable" />
@@ -831,19 +831,26 @@ Das <paramref name="newPassword" /> ist länger als 128 Zeichen.</exception>
       <Docs>
         <param name="connectionString">Verbindungszeichenfolge mit den notwendigen Informationen, um eine Verbindung mit dem Server herzustellen. Die Verbindungszeichenfolge darf keines der folgenden Schlüsselwörter für Verbindungszeichenfolgen enthalten: <see langword="Integrated Security = true" />, <see langword="UserId" /> oder <see langword="Password" /> oder <see langword="ContextConnection = true" />.</param>
         <param name="credential">Ein <see cref="T:System.Data.SqlClient.SqlCredential" />-Objekt.</param>
-        <param name="newPassword">To be added.</param>
-        <param name="newSecurePassword">To be added.</param>
+        <param name="newPassword">Das neue Kennwort <paramref name="newPassword" /> muss schreibgeschützt sein. Das Kennwort muss auch allen auf dem Server festgelegten Sicherheitsrichtlinien für Kennwörter entsprechen, (zum Beispiel der Mindestlänge und erforderlicher Sonderzeichen).</param>
+        <param name="newSecurePassword">Das neue Kennwort. <paramref name="newSecurePassword" /> muss schreibgeschützt sein. Das Kennwort muss auch allen auf dem Server festgelegten Sicherheitsrichtlinien für Kennwörter entsprechen, (zum Beispiel der Mindestlänge und erforderlicher Sonderzeichen).</param>
         <summary>Ändert das SQL Server-Kennwort für den Benutzer, der im <see cref="T:System.Data.SqlClient.SqlCredential" />-Objekt angegeben wird.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentException">1.  Die Verbindungszeichenfolge enthält jede Kombination von <see langword="UserId" />, <see langword="Password" /> oder <see langword="Integrated Security=true" />.  
-  
-2.  Die Verbindungszeichenfolge enthält <see langword="Context Connection=true" />.  
-  
-3.  <paramref name="newSecurePassword" /> ist länger als 128 Zeichen.  
-  
-4.  <paramref name="newSecurePassword" /> ist nicht schreibgeschützt.  
-  
-5.  <paramref name="newSecurePassword" /> ist eine leere Zeichenfolge.</exception>
+        <exception cref="T:System.ArgumentException">Die Verbindungszeichenfolge enthält jede Kombination von <see langword="UserId" />, <see langword="Password" /> oder <see langword="Integrated Security=true" />.
+
+- oder -  
+Die Verbindungszeichenfolge enthält <see langword="Context Connection=true" />.  
+
+- oder - 
+
+<paramref name="newSecurePassword" /> (oder <paramref name="newPassword" />) ist länger als 128 Zeichen.
+
+- oder - 
+
+<paramref name="newSecurePassword" /> (oder <paramref name="newPassword" />) ist nicht schreibgeschützt.
+
+- oder - 
+
+<paramref name="newSecurePassword" /> (oder <paramref name="newPassword" />) ist eine leere Zeichenfolge.</exception>
         <exception cref="T:System.ArgumentNullException">Einer der Parameter (<paramref name="connectionString" />, <paramref name="credential" /> oder <paramref name="newSecurePassword" />) ist null.</exception>
         <related type="Article" href="~/docs/framework/data/adonet/ado-net-overview.md">Übersicht über ADO.NET</related>
       </Docs>
@@ -1278,7 +1285,7 @@ Das <paramref name="newPassword" /> ist länger als 128 Zeichen.</exception>
 |Max Pool Size|100|Die maximale Anzahl von Verbindungen im Pool zulässig sind.<br /><br /> Gültige Werte sind größer als oder gleich 1. Werte, die kleiner als **Min Pool Size** ein Fehler generiert.|  
 |Min Pool Size|0|Die minimale Anzahl von Verbindungen im Pool zulässig sind.<br /><br /> Gültige Werte sind größer als oder gleich 0. In diesem Feld NULL (0) bedeutet, dass es sich bei anfänglich keine minimale Verbindungen geöffnet werden.<br /><br /> Werte, die größer sind als **Max Pool Size** ein Fehler generiert.|  
 |MultipleActiveResultSets|"false"|Wenn `true`, eine Anwendung kann mehrere aktive Resultsets (MARS) verwalten. Wenn `false`, eine Anwendung verarbeiten muss, oder alle Resultsets aus einem Batch abzubrechen, bevor sie einen anderen Batch über diese Verbindung ausgeführt werden kann.<br /><br /> Gültige Werte sind `true` und `false`.<br /><br /> Weitere Informationen finden Sie unter [Multiple Active Result Sets (MARS)](~/docs/framework/data/adonet/sql/multiple-active-result-sets-mars.md).|  
-|`MultiSubnetFailover`|false|Geben Sie immer `multiSubnetFailover=True` beim Verbinden mit der verfügbarkeitsgruppe von einem SQL Server 2012 (oder höher)-Listener verfügbarkeitsgruppe oder einer SQL Server 2012 (oder höher) Failoverclusterinstanz. `multiSubnetFailover=True` konfiguriert die SqlClient um schnellere Erkennung und Verbindung mit dem (gerade) aktiven Server bereitzustellen. Mögliche Werte sind `Yes` und `No`, `True` und `False` oder `1` und `0`. Zum Beispiel:<br /><br /> `MultiSubnetFailover=True`<br /><br /> Die Standardeinstellung ist `False`. Weitere Informationen zu SqlClients-Unterstützung für immer für Verfügbarkeitsgruppen, finden Sie unter [SqlClient-Unterstützung für hohe Verfügbarkeit, Notfallwiederherstellung](~/docs/framework/data/adonet/sql/sqlclient-support-for-high-availability-disaster-recovery.md).|  
+|`MultiSubnetFailover`|false|Geben Sie immer `multiSubnetFailover=True` beim Verbinden mit der verfügbarkeitsgruppe von einem SQL Server 2012 (oder höher)-Listener verfügbarkeitsgruppe oder einer SQL Server 2012 (oder höher) Failoverclusterinstanz. `multiSubnetFailover=True` konfiguriert die SqlClient um schnellere Erkennung und Verbindung mit dem (gerade) aktiven Server bereitzustellen. Mögliche Werte sind `Yes` und `No`, `True` und `False` oder `1` und `0`. Zum Beispiel:<br /><br /> `MultiSubnetFailover=True`<br /><br /> Der Standardwert ist `False`. Weitere Informationen zu SqlClients-Unterstützung für immer für Verfügbarkeitsgruppen, finden Sie unter [SqlClient-Unterstützung für hohe Verfügbarkeit, Notfallwiederherstellung](~/docs/framework/data/adonet/sql/sqlclient-support-for-high-availability-disaster-recovery.md).|  
 |Network Library<br /><br /> - oder - <br /><br /> Netzwerk<br /><br /> - oder - <br /><br /> NET|Nicht zutreffend|Die Netzwerkbibliothek, die zum Herstellen einer Verbindung mit einer Instanz von SQL Server verwendet wird. Unterstützte Werte sind:<br /><br /> Dbnmpntw ' (Named Pipes)<br /><br /> Dbmsrpcn (Multiprotocol, Windows-RPC)<br /><br /> Dbmsadsn (AppleTalk)<br /><br /> Dbmsgnet (VIA)<br /><br /> Dbmslpcn (Shared Memory)<br /><br /> Dbmsspxn (IPX/SPX)<br /><br /> Dbmssocn (TCP/IP)<br /><br /> Dbmsvinn Banyan Vines)<br /><br /> Die entsprechende Netzwerk-DLL muss auf dem System installiert werden, mit dem Sie eine Verbindung herstellen. Wenn Sie ein Netzwerk nicht angeben und Sie einen lokalen Server verwenden (z. B. "." oder "(local)"), freigegebener Speicher verwendet. In diesem Beispiel handelt es sich um die Netzwerkbibliothek Win32 Winsock TCP/IP (dbmssocn), wobei der Port 1433 verwendet wird.<br /><br /> `Network Library=dbmssocn;Data Source=000.000.000.000,1433;`|  
 |Packet Size|8000|Größe in Bytes der Netzwerkpakete, die für die Kommunikation mit einer Instanz von SQL Server.<br /><br /> Die Paketgröße kann größer als oder gleich 512 sein und kleiner als oder gleich 32768.|  
 |Kennwort<br /><br /> - oder - <br /><br /> PWD|Nicht zutreffend|Das Kennwort für das SQL Server-Konto anmelden. Nicht empfohlen. Um ein hohes Maß an Sicherheit zu gewährleisten, wird dringend empfohlen, die Sie verwenden die `Integrated Security` oder `Trusted_Connection` Schlüsselwort stattdessen. <xref:System.Data.SqlClient.SqlCredential> ist eine sicherere Möglichkeit zum Angeben von Anmeldeinformationen für eine Verbindung, die SQL Server-Authentifizierung verwendet.<br /><br /> Das Kennwort muss 128 Zeichen oder weniger.|  
