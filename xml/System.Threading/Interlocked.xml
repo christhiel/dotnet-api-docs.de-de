@@ -1,5 +1,5 @@
 <Type Name="Interlocked" FullName="System.Threading.Interlocked">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="a8c91429c4211b1e1da8ab9a2544c92e96f992ae" /><Meta Name="ms.sourcegitcommit" Value="1654a92bac785a221098172d9cacd405ceaac9b7" /><Meta Name="ms.translationtype" Value="HT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/01/2018" /><Meta Name="ms.locfileid" Value="52732250" /></Metadata><TypeSignature Language="C#" Value="public static class Interlocked" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="3b2fdb41b1e5f8614494e0d69b0a97131cab338e" /><Meta Name="ms.sourcegitcommit" Value="662f143e6be46d519ff8ab4451d543d91e651478" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/18/2018" /><Meta Name="ms.locfileid" Value="53567029" /></Metadata><TypeSignature Language="C#" Value="public static class Interlocked" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Interlocked extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Threading.Interlocked" />
   <TypeSignature Language="VB.NET" Value="Public Class Interlocked" />
@@ -526,7 +526,7 @@
 ## Remarks
 
 > [!IMPORTANT]
-> Ab .NET Framework 2.0 die <xref:System.Threading.Interlocked.CompareExchange%60%601%28%60%600%40%2C%60%600%2C%60%600%29> -methodenüberladung, bietet eine typsichere Alternative für Verweistypen zulässig. Es wird empfohlen, dass Sie anstelle dieser Überladung aufgerufen werden.
+> Ab .NET Framework 2.0 bietet die Überladung der <xref:System.Threading.Interlocked.CompareExchange%60%601%28%60%600%40%2C%60%600%2C%60%600%29>-Methoden eine typsichere Alternative für Verweistypen. Es wird empfohlen, dass Sie anstelle dieser Überladung aufgerufen werden.
 
 Wenn `comparand` und das Objekt in `location1` werden dann als Verweis gleich `value` befindet sich in `location1`. Andernfalls wird kein Vorgang ausgeführt. Die Vergleichs- und Austauschvorgang als atomischen Vorgang erfolgen. Der Rückgabewert von <xref:System.Threading.Interlocked.CompareExchange%2A> ist der ursprüngliche Wert in `location1`, unabhängig davon, ob der Austausch ausgeführt wird.  
 
@@ -741,7 +741,7 @@ Wenn `comparand` und das Objekt in `location1` werden dann als Verweis gleich `v
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode verarbeitet Überlaufmodus durch das wrapping: Wenn `location`  =  <xref:System.Int32.MinValue?displayProperty=nameWithType>, `location` – 1 = <xref:System.Int32.MaxValue?displayProperty=nameWithType>. Es werden keine Ausnahmen ausgelöst.  
+ Diese Methode behandelt Überlaufmodus durch Umschließen: Wenn `location`  =  <xref:System.Int32.MinValue?displayProperty=nameWithType>, `location` – 1 = <xref:System.Int32.MaxValue?displayProperty=nameWithType>. Es werden keine Ausnahmen ausgelöst.  
   
    
   
@@ -1093,7 +1093,7 @@ Wenn `comparand` und das Objekt in `location1` werden dann als Verweis gleich `v
 ## Remarks
 
 > [!IMPORTANT]
-> Ab .NET Framework 2.0 die <xref:System.Threading.Interlocked.Exchange%60%601%28%60%600%40%2C%60%600%29> -methodenüberladung, bietet eine typsichere Alternative für Verweistypen zulässig. Es wird empfohlen, dass Sie anstelle dieser Überladung aufgerufen werden.
+> Ab .NET Framework 2.0 bietet die Überladung der <xref:System.Threading.Interlocked.Exchange%60%601%28%60%600%40%2C%60%600%29>-Methoden eine typsichere Alternative für Verweistypen. Es wird empfohlen, dass Sie anstelle dieser Überladung aufgerufen werden.
 
  ]]></format>
         </remarks>
@@ -1395,7 +1395,7 @@ Wenn `comparand` und das Objekt in `location1` werden dann als Verweis gleich `v
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Synchronisiert den Speicherzugriff wie folgt: Der Prozessor, der den aktuellen Thread ausführt, kann Anweisungen nicht so neu anordnen, dass Speicherzugriffe vor dem Aufruf von <see cref="M:System.Threading.Interlocked.MemoryBarrier" /> nach Speicherzugriffen ausgeführt werden, die nach dem Aufruf <see cref="M:System.Threading.Interlocked.MemoryBarrier" /> erfolgen.</summary>
+        <summary>Synchronisiert den Speicherzugriff wie folgt: Der Prozessor, der den aktuellen Thread ausführt, kann Anweisungen nicht so neu anordnen, dass Speicherzugriffe vor dem Aufruf von <see cref="M:System.Threading.Interlocked.MemoryBarrier" /> nach Speicherzugriffen ausgeführt werden, die nach dem Aufruf von <see cref="M:System.Threading.Interlocked.MemoryBarrier" /> erfolgen.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1434,8 +1434,24 @@ Wenn `comparand` und das Objekt in `location1` werden dann als Verweis gleich `v
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Bietet eine prozessübergreifende Arbeitsspeicherbarriere, die verhindert, dass Lese- und Schreibvorgänge von CPUs über die Barriere hinaus verschoben werden.</summary>
+        <remarks>  
+          <format type="text/markdown"><![CDATA[  
+
+Die `MemoryBarrierProcessWide` Methode unterscheidet sich von der "Normal" <xref:System.Threading.Interlocked.MemoryBarrier%2A> -Methode wie folgt:
+
+- Die normale Arbeitsspeicherbarriere wird sichergestellt, dass die Lese- und Schreibvorgänge von der aktuellen CPU über die Grenze nicht verschoben werden können. Die prozessübergreifende Arbeitsspeicherbarriere wird sichergestellt, dass Lese- oder Schreibvorgang aus jeder CPU verwendet wird, in dem Prozess kann nicht verschoben werden über die Grenze.
+
+- Die normale Arbeitsspeicherbarriere angemessenen SAS ermöglicht, wenn *jeder* Thread den Zugriff auf die Daten verwendet, sperren. Der Speicher für prozessübergreifende Grenze erzwingt *andere CPUs* mit Prozessspeicher (z. B. leeren Puffer zu schreiben, und Synchronisieren von schreibgeschützten Puffer) synchronisiert wird. Dies ermöglicht für nicht-Interlock-Vorgänge für einige Threads und weiterhin sinnvolle freigegeben haben Zugriff. 
+
+- Die normale Arbeitsspeicherbarriere erzwingt nur sehr wenig Aufwand; normale interlocked-Vorgänge Kosten wahrscheinlich weniger als 100 Zyklen. Die prozessübergreifende Arbeitsspeicherbarriere ist sehr aufwändig. Jede CPU des Prozesses erzwungen hat durchführen, um etwas zu wahrscheinlichen Kosten von Tausenden von Zyklen. 
+
+Die `MemoryBarrierProcessWide` Methode weist auch alle feinheiten der Programmierung sperrfrei. Diese Methode kann trotzdem äußerst nützlich sein, wenn wirklich, nenne, selten sein sollte.
+
+Diese Methode umschließt einen Aufruf von [FlushProcessWriteBuffers](/windows/desktop/api/processthreadsapi/nf-processthreadsapi-flushprocesswritebuffers) auf Windows und [Sys_membarrier](https://lore.kernel.org/patchwork/patch/188708/) unter Linux.
+
+         ]]></format>
+         </remarks>
       </Docs>
     </Member>
     <Member MemberName="Read">
