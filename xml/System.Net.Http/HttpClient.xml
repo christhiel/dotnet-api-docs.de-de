@@ -1,5 +1,5 @@
 <Type Name="HttpClient" FullName="System.Net.Http.HttpClient">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="3b44ea987abd73ea55c4988dbcf16b845d245596" /><Meta Name="ms.sourcegitcommit" Value="adc8598fd19d91438cacaa8fa7ce613e28c8218e" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/11/2018" /><Meta Name="ms.locfileid" Value="53233093" /></Metadata><TypeSignature Language="C#" Value="public class HttpClient : System.Net.Http.HttpMessageInvoker" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="50674ebbb7fa95260ef9df597b4c302873920ae6" /><Meta Name="ms.sourcegitcommit" Value="8c966994f39ffe6e7c21611e9ec1b91247a68500" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/26/2019" /><Meta Name="ms.locfileid" Value="55084693" /></Metadata><TypeSignature Language="C#" Value="public class HttpClient : System.Net.Http.HttpMessageInvoker" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpClient extends System.Net.Http.HttpMessageInvoker" />
   <TypeSignature Language="DocId" Value="T:System.Net.Http.HttpClient" />
   <TypeSignature Language="VB.NET" Value="Public Class HttpClient&#xA;Inherits HttpMessageInvoker" />
@@ -74,34 +74,55 @@ Die <xref:System.Net.Http.HttpClient> ist eine allgemeine API, die dient als Wra
 
 Auf jeder Plattform <xref:System.Net.Http.HttpClient> versucht, den besten Transport verwenden:
 
-| **Host/Runtime**            | **Back-End**                                                                               |
+| **Host/Runtime**            | **Backend**                                                                               |
 | --------------------------- | ----------------------------------------------------------------------------------------- |
 | Windows/.NET Framework      | <xref:System.Net.HttpWebRequest>                                                          |
 | Windows/Mono                | <xref:System.Net.HttpWebRequest>                                                          |
 | Windows/UWP                 | Windows-Native <xref:System.Net.Http.WinHttpHandler> (kann HTTP 2.0)                   |
-| Windows/.NET Core           | Windows-Native <xref:System.Net.Http.WinHttpHandler> (kann HTTP 2.0)                   |
+| Windows/.NET Core 1.0-2.0   | Windows-Native <xref:System.Net.Http.WinHttpHandler> (kann HTTP 2.0)                   |
 | Android/Xamarin             | Zum Zeitpunkt der Erstellung ausgewählt. Kann entweder <xref:System.Net.HttpWebRequest> oder zur Verwendung von Android-Native konfiguriert werden [`HttpURLConnection`](https://developer.xamarin.com/api/type/Java.Net.HttpURLConnection/) |
 | iOS, tvOS, watchOS/Xamarin  | Zum Zeitpunkt der Erstellung ausgewählt. Kann entweder <xref:System.Net.HttpWebRequest> oder Apple Verwendung konfiguriert werden [ `NSUrlSession` ](https://developer.xamarin.com/api/type/MonoTouch.Foundation.NSUrlSession/) (kann HTTP 2.0) |
 | macOS/Xamarin               | Zum Zeitpunkt der Erstellung ausgewählt. Kann entweder <xref:System.Net.HttpWebRequest> oder Apple Verwendung konfiguriert werden [ `NSUrlSession` ](https://developer.xamarin.com/api/type/MonoTouch.Foundation.NSUrlSession/) (kann HTTP 2.0) |
-| MacOS/Mono                  | <xref:System.Net.HttpWebRequest>                                                                          |
-| Mac OS und .NET Core             | `libcurl`-basierte HTTP-Transport (kann HTTP 2.0)                                         |
+| macOS/Mono                  | <xref:System.Net.HttpWebRequest>                                                          |
+| macOS/.NET Core 1.0-2.0     | `libcurl`-basierte HTTP-Transport (kann HTTP 2.0)                                         |
 | Linux/Mono                  | <xref:System.Net.HttpWebRequest>                                                          |
-| Linux bzw. .NET Core             | `libcurl`-basierte HTTP-Transport (kann HTTP 2.0)                                         |
-
+| Linux und .NET Core 1.0 – 2.0     | `libcurl`-basierte HTTP-Transport (kann HTTP 2.0)                                         |
+| .NET Core 2.1 und höher     | <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType>                    |
 Benutzer können auch konfigurieren, einen bestimmten Transport für <xref:System.Net.Http.HttpClient> durch Aufrufen der <xref:System.Net.Http.HttpClient.%23ctor*> Konstruktor, eine <xref:System.Net.Http.HttpMessageHandler>.
 
 ### <a name="httpclient-and-net-core"></a>"HttpClient" und .NET Core
 
-Beginnend mit .NET Core 2.1, die <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> -Klasse anstelle von `HttpClientHandler` stellt die Implementierung von auf höherer Ebene HTTP-Netzwerkklassen verwendet z. B. `HttpClient`. Sie können konfigurieren, dass Ihre Anwendung mit dem älteren <xref:System.Net.Http.HttpClientHandler?displayProperty=nameWithType> stattdessen durch den Aufruf der <xref:System.AppContext.SetSwitch%2A> -Methode wie folgt:
+Beginnend mit .NET Core 2.1, die <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> -Klasse anstelle von `HttpClientHandler` stellt die Implementierung von auf höherer Ebene HTTP-Netzwerkklassen verwendet z. B. `HttpClient`. Die Verwendung von <xref:System.Net.Http.SocketsHttpHandler> bietet eine Reihe von Vorteilen:
 
-```csharp
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
-```
+- Eine beträchtliche Leistungssteigerung im Vergleich zur früheren Implementierung.
 
-```vb
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
-``` 
+- Die Beseitigung von plattformabhängigkeiten, die Bereitstellung und Wartung vereinfacht. Z. B. `libcurl` ist nicht mehr eine Abhängigkeit von .NET Core für MacOS und .NET Core für Linux.
+
+- Konsistentes Verhalten auf allen Plattformen für .NET.
+
+Wenn diese Änderung nicht erwünscht ist, können Sie konfigurieren, dass Ihre Anwendung mit dem älteren <xref:System.Net.Http.HttpClientHandler?displayProperty=nameWithType> stattdessen in eine Reihe von Möglichkeiten:
+
+- Durch Aufrufen der <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> -Methode wie folgt:
+
+   ```csharp
+   AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
+   ```
+
+   ```vb
+   AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
+   ``` 
+- Durch die Definition der `System.Net.Http.useSocketsHttpHandler` wechseln Sie der *. netcore.runtimeconfig.json* Konfigurationsdatei:
+
+  ```json
+  "runtimeOptions": {
+    "configProperties": {
+        "System.Net.Http.useSocketsHttpHandler": false
+    }
+  }
+  ```
   
+- Definieren Sie eine Umgebungsvariable namens `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` auf entweder festlegen `false` oder 0.
+
 ## Examples  
  [!code-csharp[System.Net.Http.HttpClient#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclient/cs/source.cs#1)]  
   
