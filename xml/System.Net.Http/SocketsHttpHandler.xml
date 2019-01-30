@@ -1,5 +1,5 @@
 <Type Name="SocketsHttpHandler" FullName="System.Net.Http.SocketsHttpHandler">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="231b43b22ff6ee232f5083c5679b2c62b173f6f8" /><Meta Name="ms.sourcegitcommit" Value="19b66619a469ee45c85c618f8a605859882eb638" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/10/2019" /><Meta Name="ms.locfileid" Value="54183745" /></Metadata><TypeSignature Language="C#" Value="public sealed class SocketsHttpHandler : System.Net.Http.HttpMessageHandler" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="7cdbdc2743b0187f9b503ec7761a417e979bc862" /><Meta Name="ms.sourcegitcommit" Value="8c966994f39ffe6e7c21611e9ec1b91247a68500" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/26/2019" /><Meta Name="ms.locfileid" Value="55084589" /></Metadata><TypeSignature Language="C#" Value="public sealed class SocketsHttpHandler : System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit SocketsHttpHandler extends System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="DocId" Value="T:System.Net.Http.SocketsHttpHandler" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class SocketsHttpHandler&#xA;Inherits HttpMessageHandler" />
@@ -14,8 +14,43 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary><span data-ttu-id="ee01b-101">Stellt den Standardnachrichtenhandler bereit, der von <see cref="T:System.Net.Http.HttpClient" /> in .NET Core 2.1 und höher verwendet wird.</span><span class="sxs-lookup"><span data-stu-id="ee01b-101">Provides the default message handler used by <see cref="T:System.Net.Http.HttpClient" /> in .NET Core 2.1 and later.</span></span></summary>
+        <remarks>  
+          <format type="text/markdown"><![CDATA[  
+
+<span data-ttu-id="ee01b-102">Beginnend mit .NET Core 2.1, die `SocketsHttpHandler` -Klasse enthält die Implementierung von auf höherer Ebene HTTP-Netzwerkklassen verwendet z. B. <xref:System.Net.Http.HttpClient>.</span><span class="sxs-lookup"><span data-stu-id="ee01b-102">Starting with .NET Core 2.1, the `SocketsHttpHandler` class provides the implementation used by higher-level HTTP networking classes such as <xref:System.Net.Http.HttpClient>.</span></span> <span data-ttu-id="ee01b-103">Die Verwendung von `SocketsHttpHandler` bietet eine Reihe von Vorteilen:</span><span class="sxs-lookup"><span data-stu-id="ee01b-103">The use of `SocketsHttpHandler` offers a number of advantages:</span></span>
+
+- <span data-ttu-id="ee01b-104">Eine beträchtliche Leistungssteigerung im Vergleich zur früheren Implementierung.</span><span class="sxs-lookup"><span data-stu-id="ee01b-104">A significant performance improvement when compared with the previous implementation.</span></span>
+
+- <span data-ttu-id="ee01b-105">Die Beseitigung von plattformabhängigkeiten, die Bereitstellung und Wartung vereinfacht.</span><span class="sxs-lookup"><span data-stu-id="ee01b-105">The elimination of platform dependencies, which simplifies deployment and servicing.</span></span> <span data-ttu-id="ee01b-106">Z. B. `libcurl` ist nicht mehr eine Abhängigkeit von .NET Core für MacOS und .NET Core für Linux.</span><span class="sxs-lookup"><span data-stu-id="ee01b-106">For example, `libcurl` is no longer a dependency on .NET Core for macOS and .NET Core for Linux.</span></span>
+
+- <span data-ttu-id="ee01b-107">Konsistentes Verhalten auf allen Plattformen für .NET.</span><span class="sxs-lookup"><span data-stu-id="ee01b-107">Consistent behavior across all .NET platforms.</span></span>
+
+<span data-ttu-id="ee01b-108">Wenn diese Änderung nicht erwünscht ist, können Sie konfigurieren, dass Ihre Anwendung mit dem älteren <xref:System.Net.Http.HttpClientHandler?displayProperty=nameWithType> Klasse stattdessen in eine Reihe von Möglichkeiten:</span><span class="sxs-lookup"><span data-stu-id="ee01b-108">If this change is undesirable, you can configure your application to use the older <xref:System.Net.Http.HttpClientHandler?displayProperty=nameWithType> class instead in a number of ways:</span></span>
+
+- <span data-ttu-id="ee01b-109">Durch Aufrufen der <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> -Methode wie folgt:</span><span class="sxs-lookup"><span data-stu-id="ee01b-109">By calling the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method as follows:</span></span>
+
+   ```csharp
+   AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
+   ```
+
+   ```vb
+   AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
+   ``` 
+- <span data-ttu-id="ee01b-110">Durch die Definition der `System.Net.Http.useSocketsHttpHandler` wechseln Sie der *. netcore.runtimeconfig.json* Konfigurationsdatei:</span><span class="sxs-lookup"><span data-stu-id="ee01b-110">By defining the `System.Net.Http.useSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:</span></span>
+
+  ```json
+  "runtimeOptions": {
+    "configProperties": {
+        "System.Net.Http.useSocketsHttpHandler": false
+    }
+  }
+  ```
+  
+- <span data-ttu-id="ee01b-111">Definieren Sie eine Umgebungsvariable namens `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` auf entweder festlegen `false` oder 0.</span><span class="sxs-lookup"><span data-stu-id="ee01b-111">By defining an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and setting it to either `false` or 0.</span></span>
+
+         ]]></format>
+         </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -306,10 +341,10 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary><span data-ttu-id="bacb3-101">Ruft ab oder legt fest, wie lange sich eine Verbindung im Leerlauf im Pool befinden kann, damit sie als wiederverwendbar eingestuft wird.</span><span class="sxs-lookup"><span data-stu-id="bacb3-101">Gets or sets how long a connection can be idle in the pool to be considered reusable.</span></span></summary>
-        <value><span data-ttu-id="bacb3-102">Die maximale Leerlaufzeit für eine Verbindung im Pool.</span><span class="sxs-lookup"><span data-stu-id="bacb3-102">The maximum idle time for a connection in the pool.</span></span> <span data-ttu-id="bacb3-103">Der Standardwert für diese Eigenschaft ist 2 Minuten.</span><span class="sxs-lookup"><span data-stu-id="bacb3-103">The default value for this property is 2 minutes.</span></span></value>
+        <summary><span data-ttu-id="ee01b-112">Ruft ab oder legt fest, wie lange sich eine Verbindung im Leerlauf im Pool befinden kann, damit sie als wiederverwendbar eingestuft wird.</span><span class="sxs-lookup"><span data-stu-id="ee01b-112">Gets or sets how long a connection can be idle in the pool to be considered reusable.</span></span></summary>
+        <value><span data-ttu-id="ee01b-113">Die maximale Leerlaufzeit für eine Verbindung im Pool.</span><span class="sxs-lookup"><span data-stu-id="ee01b-113">The maximum idle time for a connection in the pool.</span></span> <span data-ttu-id="ee01b-114">Der Standardwert für diese Eigenschaft ist 2 Minuten.</span><span class="sxs-lookup"><span data-stu-id="ee01b-114">The default value for this property is 2 minutes.</span></span></value>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException"><span data-ttu-id="bacb3-104">Der angegebene Wert ist kleiner als <see cref="F:System.TimeSpan.Zero" /> oder gleich <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</span><span class="sxs-lookup"><span data-stu-id="bacb3-104">The value specified is less than <see cref="F:System.TimeSpan.Zero" /> or is equal to <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</span></span></exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><span data-ttu-id="ee01b-115">Der angegebene Wert ist kleiner als <see cref="F:System.TimeSpan.Zero" /> oder gleich <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</span><span class="sxs-lookup"><span data-stu-id="ee01b-115">The value specified is less than <see cref="F:System.TimeSpan.Zero" /> or is equal to <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" />.</span></span></exception>
       </Docs>
     </Member>
     <Member MemberName="PooledConnectionLifetime">
