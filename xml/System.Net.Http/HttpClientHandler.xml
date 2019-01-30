@@ -1,5 +1,5 @@
 <Type Name="HttpClientHandler" FullName="System.Net.Http.HttpClientHandler">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="ba3ed49c9a90efc55711df6801abd12d767b3a33" /><Meta Name="ms.sourcegitcommit" Value="9e3550fb2088d4faf2043f0acb29da4555519937" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/12/2018" /><Meta Name="ms.locfileid" Value="53291599" /></Metadata><TypeSignature Language="C#" Value="public class HttpClientHandler : System.Net.Http.HttpMessageHandler" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="4e4378873f3a5fa6c23c6de9bded7f111e986d3e" /><Meta Name="ms.sourcegitcommit" Value="8c966994f39ffe6e7c21611e9ec1b91247a68500" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/26/2019" /><Meta Name="ms.locfileid" Value="55084615" /></Metadata><TypeSignature Language="C#" Value="public class HttpClientHandler : System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpClientHandler extends System.Net.Http.HttpMessageHandler" />
   <TypeSignature Language="DocId" Value="T:System.Net.Http.HttpClientHandler" />
   <TypeSignature Language="VB.NET" Value="Public Class HttpClientHandler&#xA;Inherits HttpMessageHandler" />
@@ -22,24 +22,37 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Der von <see cref="T:System.Net.Http.HttpClient" /> verwendete Standardmeldungshandler.</summary>
+    <summary>Den Standardnachrichtenhandler, der von <see cref="T:System.Net.Http.HttpClient" /> in .NET Framework und .NET Core 2.0 und früheren Versionen verwendet wird.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Net.Http.HttpClientHandler> -Klasse und davon abgeleitete Klassen können Entwickler eine Vielzahl von Optionen, die von Proxys bis hin zu Authentifizierung konfigurieren.  
+ Die `HttpClientHandler` -Klasse und davon abgeleitete Klassen können Entwickler eine Vielzahl von Optionen, die von Proxys bis hin zu Authentifizierung konfigurieren.  
   
 ### <a name="httpclienthandler-in-net-core"></a>HttpClientHandler in .NET Core
 
-Beginnend mit .NET Core 2.1, die <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> -Klasse anstelle von `HttpClientHandler` stellt die Implementierung von Netzwerk-APIs auf höherer Ebene-HTTP-verwendet. Sie können konfigurieren, dass Ihre Anwendung zur Verwendung `HttpClientHandler` stattdessen durch den Aufruf der <xref:System.AppContext.SetSwitch%2A> -Methode wie folgt:
+Beginnend mit .NET Core 2.1, die <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> -Klasse anstelle von `HttpClientHandler` stellt die Implementierung von Netzwerk-APIs auf höherer Ebene-HTTP-verwendet. Sie können konfigurieren, dass Ihre Anwendung zur Verwendung `HttpClientHandler` stattdessen in einem der folgenden Methoden:
 
-```csharp
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
-```
-```vb
-AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
-``` 
+- Durch Aufrufen der <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> -Methode wie folgt:
+
+  ```csharp
+  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", false);
+  ```
+  ```vb
+  AppContext.SetSwitch("System.Net.Http.useSocketsHttpHandler", False)
+  ``` 
+Durch die Definition der `System.Net.Http.useSocketsHttpHandler` wechseln Sie der *. netcore.runtimeconfig.json* Konfigurationsdatei:
+
+  ```json
+  "runtimeOptions": {
+    "configProperties": {
+        "System.Net.Http.useSocketsHttpHandler": false
+    }
+  }
+  ```
   
+- Definieren Sie eine Umgebungsvariable namens `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` auf entweder festlegen `false` oder 0.
+
 ## Examples  
  [!code-csharp[System.Net.Http.HttpClientHandler#1](~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclienthandler/cs/source.cs#1)]  
   
@@ -911,7 +924,7 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der Handler Konfigurationseinstellungen für die Eigenschaften <see cref="P:System.Net.Http.HttpClientHandler.AllowAutoRedirect" /> und <see cref="P:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections" /> unterstützt.</summary>
-        <value><see langword="true" />, wenn der Handler Konfigurationseinstellungen für die Eigenschaften <see cref="P:System.Net.Http.HttpClientHandler.AllowAutoRedirect" /> und <see cref="P:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections" /> unterstützt, andernfalls <see langword="false" />. Der Standardwert ist <see langword="true" />.</value>
+        <value><see langword="true" />, wenn der Handler Konfigurationseinstellungen für die Eigenschaften <see cref="P:System.Net.Http.HttpClientHandler.AllowAutoRedirect" /> und <see cref="P:System.Net.Http.HttpClientHandler.MaxAutomaticRedirections" /> unterstützt, andernfalls <see langword="false" />. Der Standardwert ist <see langword="true" />sein.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -969,7 +982,7 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der steuert, ob vom Handler mit den Anforderungen Standardanmeldeinformationen gesendet werden, oder legt diesen fest.</summary>
-        <value><see langword="true" />, wenn die Standardanmeldeinformationen verwendet werden, andernfalls <see langword="false" />. Der Standardwert ist <see langword="false" />.</value>
+        <value><see langword="true" />, wenn die Standardanmeldeinformationen verwendet werden, andernfalls <see langword="false" />. Der Standardwert ist <see langword="false" />sein.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1005,7 +1018,7 @@ handler.ServerCertificateCustomValidationCallback = httpClientHandler.DangerousA
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der Handler einen Proxy für Anforderungen verwendet, oder legt diesen Wert fest.</summary>
-        <value><see langword="true" />, wenn der Handler einen Proxy für Anforderungen verwenden soll, andernfalls <see langword="false" />. Der Standardwert ist <see langword="true" />.</value>
+        <value><see langword="true" />, wenn der Handler einen Proxy für Anforderungen verwenden soll, andernfalls <see langword="false" />. Der Standardwert ist <see langword="true" />sein.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

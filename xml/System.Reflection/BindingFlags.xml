@@ -1,5 +1,5 @@
 <Type Name="BindingFlags" FullName="System.Reflection.BindingFlags">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="73fce1aa21d20f45653df555c778b466bca7fbbb" /><Meta Name="ms.sourcegitcommit" Value="c0c07dbd19cd7017243f9ac36915755f79bc8da6" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="11/27/2018" /><Meta Name="ms.locfileid" Value="52368181" /></Metadata><TypeSignature Language="C#" Value="public enum BindingFlags" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="61b76576a70d04513a7283ac5ace3dbd7521f391" /><Meta Name="ms.sourcegitcommit" Value="a489a0c68ea6b109393f1400bbd772073b4befd4" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/20/2019" /><Meta Name="ms.locfileid" Value="54416955" /></Metadata><TypeSignature Language="C#" Value="public enum BindingFlags" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed BindingFlags extends System.Enum" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.BindingFlags" />
   <TypeSignature Language="VB.NET" Value="Public Enum BindingFlags" />
@@ -50,7 +50,7 @@
 ## Remarks  
  Diese `BindingFlags` steuern Binden einer großen Anzahl von Klassen im der `System`, `System.Reflection`, und `System.Runtime` Namespaces, die aufzurufen, erstellen, abrufen, festlegen und Membern und Typen zu finden.  
   
- `BindingFlags` werden verwendet, in der folgenden <xref:System.Type> Methoden sowie an anderen Stellen z. B. <xref:System.Reflection.MethodBase.Invoke%2A?displayProperty=nameWithType> :  
+ `BindingFlags` werden verwendet, in der folgenden <xref:System.Type> Methoden sowie an anderen Stellen z. B. <xref:System.Reflection.MethodBase.Invoke%2A?displayProperty=nameWithType>:  
   
 -   <xref:System.Reflection.MethodBase.Invoke%2A?displayProperty=nameWithType>  
   
@@ -95,7 +95,7 @@
 > [!NOTE]
 >  Sie müssen angeben, `Instance` oder `Static` zusammen mit `Public` oder `NonPublic` oder keine Elemente zurückgegeben werden.  
   
- In der folgende Tabelle werden die Umwandlungen aufgelistet, die ausgeführt werden, die standardmäßig <xref:System.Reflection.Binder.ChangeType%2A?displayProperty=nameWithType>. Diese Tabelle gilt insbesondere für die `ExactBinding` Bindungsflags.  
+ In der folgende Tabelle werden die Umwandlungen aufgelistet, die ausgeführt werden, die standardmäßig <xref:System.Reflection.Binder.ChangeType%2A?displayProperty=nameWithType>. Diese Tabelle gilt insbesondere für die `BindingFlags.ExactBinding` Bindungsflags. Im Allgemeinen gilt, die <xref:System.Reflection.Binder.ChangeType%2A> nur Erweiterungsumwandlungen keine Daten verloren gehen durchführen sollte. Ein Beispiel für eine erweiternde Konvertierung ist eine Umwandlung, die eine 32-Bit-Ganzzahl mit Vorzeichen in einen Wert, der eine 64-Bit-Ganzzahl mit Vorzeichen ist. Dies ist über eine einschränkende Konvertierung, unterschieden, die Daten verloren gehen können. Ein Beispiel für eine einschränkende Konvertierung ist eine 64-Bit-Ganzzahl mit Vorzeichen in eine 32-Bit-Ganzzahl mit Vorzeichen Koersion. 
   
 |Quelltyp|Zieltyp|  
 |-----------------|-----------------|  
@@ -112,8 +112,13 @@
 |`Int64`|`Single`, `Double`|  
 |`Single`|`Double`|  
 |Ohne Verweis|Per-Verweis.|  
+
+Wenn die `BindingFlags.ExactBinding` Bindungsflag wird verwendet, Reflektion modelliert die Zugriffsregeln des allgemeinen Typsystems. Wenn der Aufrufer in der gleichen Assembly ist, wird z. B. spezielle Berechtigungen von der Aufrufer nicht für interne Member benötigt. Andernfalls, benötigt der Aufrufer <xref:System.Security.Permissions.ReflectionPermission>. Dies ist konsistent mit der Suche nach Elementen, die geschützt werden, private und so weiter.  
   
    
+  
+   
+     
   
 ## Examples  
  Das folgende Beispiel veranschaulicht viele der Bindungsflags.  
@@ -312,19 +317,7 @@ Dieses Flag wird an eine <see langword="InvokeMember" />-Methode übergeben, um 
       </ReturnValue>
       <MemberValue>65536</MemberValue>
       <Docs>
-        <summary>Gibt an, dass die Typen der angegebenen Argumente genau mit den Typen der entsprechenden formalen Parameter übereinstimmen müssen. Die Reflektion löst eine Ausnahme aus, wenn der Aufrufer ein <see langword="Binder" />-Objekt liefert, das ungleich Null ist, da dies impliziert, dass der Aufrufer <see langword="BindToXXX" />-Implementierungen bereitstellt, die die entsprechende Methode aufnehmen.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Reflektion modelliert die Zugriffsregeln des allgemeinen Typsystems. Wenn der Aufrufer in der gleichen Assembly ist, wird z. B. spezielle Berechtigungen von der Aufrufer nicht für interne Member benötigt. Andernfalls, benötigt der Aufrufer <xref:System.Security.Permissions.ReflectionPermission>. Dies ist konsistent mit der Suche nach Membern, die geschützt werden, private und so weiter.  
-  
- Im Allgemeinen gilt, die <xref:System.Reflection.Binder.ChangeType%2A> nur Erweiterungsumwandlungen keine Daten verloren gehen durchführen sollte. Ein Beispiel für eine erweiternde Konvertierung ist eine Umwandlung, die eine 32-Bit-Ganzzahl mit Vorzeichen in einen Wert, der eine 64-Bit-Ganzzahl mit Vorzeichen ist. Dies ist über eine einschränkende Konvertierung, unterschieden, die Daten verloren gehen können. Ein Beispiel für eine einschränkende Konvertierung ist eine 64-Bit-Ganzzahl mit Vorzeichen in eine 32-Bit-Ganzzahl mit Vorzeichen Koersion.  
-  
- Der Standardbinder ignoriert dieses Flag an, während der benutzerdefinierten Binder die Semantik dieses Flags implementieren können.  
-  
- ]]></format>
-        </remarks>
+        <summary>Gibt an, dass die Typen der angegebenen Argumente genau mit den Typen der entsprechenden formalen Parameter übereinstimmen müssen. Die Reflektion löst eine Ausnahme aus, wenn der Aufrufer ein <see langword="Binder" />-Objekt liefert, das ungleich Null ist, da dies impliziert, dass der Aufrufer <see langword="BindToXXX" />-Implementierungen bereitstellt, die die entsprechende Methode aufnehmen. Die Standardbindung ignoriert dieses Flag, während benutzerdefinierte Bindungen die Semantik dieses Flags implementieren können.</summary>
       </Docs>
     </Member>
     <Member MemberName="FlattenHierarchy">
@@ -679,15 +672,7 @@ Dieses Flag wird an eine <see langword="InvokeMember" />-Methode übergeben, um 
       </ReturnValue>
       <MemberValue>262144</MemberValue>
       <Docs>
-        <summary>Gibt die Menge der Member zurück, deren Parameteranzahl mit der Anzahl der bereitgestellten Argumente übereinstimmt. Dieses Bindungsflag wird für Methoden mit Parametern verwendet, die Standardwerte besitzen, und für Methoden mit variablen Argumenten (varargs). Dieses Flag sollte nur mit <see cref="M:System.Type.InvokeMember(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])" /> verwendet werden.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Parameter mit Standardwerten werden nur in Aufrufen verwendet, in denen nachfolgende Argumente ausgelassen. Sie müssen die letzten Argumente sein.  
-  
- ]]></format>
-        </remarks>
+        <summary>Gibt die Menge der Member zurück, deren Parameteranzahl mit der Anzahl der bereitgestellten Argumente übereinstimmt. Dieses Bindungsflag wird für Methoden mit Parametern verwendet, die Standardwerte besitzen, und für Methoden mit variablen Argumenten (varargs). Dieses Flag sollte nur mit <see cref="M:System.Type.InvokeMember(System.String,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object,System.Object[],System.Reflection.ParameterModifier[],System.Globalization.CultureInfo,System.String[])" /> verwendet werden.<br /><br />Parameter mit Standardwerten werden nur in Aufrufen verwendet, in denen nachfolgende Argumente ausgelassen werden. Sie müssen die letzten Argumente sein.</summary>
       </Docs>
     </Member>
     <Member MemberName="Public">
