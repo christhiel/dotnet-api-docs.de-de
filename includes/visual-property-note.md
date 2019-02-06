@@ -1,0 +1,3 @@
+> [!NOTE]
+>  Das Festlegen einer visuellen Eigenschaft erzielt nur einen Effekt, wenn sich diese Eigenschaft in der Standardvorlage des Steuerelements befindet und zusätzlich mithilfe von [TemplateBinding](~/docs/framework/wpf/advanced/templatebinding-markup-extension.md) festgelegt wurde. Eine Liste der visuellen Eigenschaften finden Sie im Abschnitt [Ändern der visuellen Struktur eines Steuerelements](~/docs/framework/wpf/controls/customizing-the-appearance-of-an-existing-control.md#changing-the-visual-structure-of-a-control) im Artikel [Anpassen der Darstellung eines vorhandenen Steuerelements durch Erstellen einer ControlTemplate](~/docs/framework/wpf/controls/customizing-the-appearance-of-an-existing-control.md).
+  
