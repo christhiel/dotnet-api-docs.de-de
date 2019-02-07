@@ -1,5 +1,5 @@
 <Type Name="StackOverflowException" FullName="System.StackOverflowException">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="1f6d3a4b551412dd113545524fabdb90f2a0abd9" /><Meta Name="ms.sourcegitcommit" Value="0e1f030650a307c745ee84ed547ef858acaea587" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="11/29/2018" /><Meta Name="ms.locfileid" Value="52606077" /></Metadata><TypeSignature Language="C#" Value="public sealed class StackOverflowException : SystemException" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="991aa9f4b94575c2f58703680ad95ac0d43e46c1" /><Meta Name="ms.sourcegitcommit" Value="9cee676b7864fa9dcb91319dcf5c339f3a724fbf" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/07/2019" /><Meta Name="ms.locfileid" Value="55828886" /></Metadata><TypeSignature Language="C#" Value="public sealed class StackOverflowException : SystemException" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable sealed beforefieldinit StackOverflowException extends System.SystemException" />
   <TypeSignature Language="DocId" Value="T:System.StackOverflowException" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class StackOverflowException&#xA;Inherits SystemException" />
@@ -39,21 +39,25 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.StackOverflowException> für Stapelüberlaufs, in der Regel bei der eine sehr tiefe oder unbegrenzte Rekursion ausgelöst.  
+ `StackOverflowException` für Stapelüberlaufs, in der Regel bei der eine sehr tiefe oder unbegrenzte Rekursion ausgelöst. So stellen Sie sicher, dass Ihr Code eine Endlosschleife oder unendliche Rekursion nicht.
   
- <xref:System.StackOverflowException> verwendet das HRESULT COR_E_STACKOVERFLOW mit dem Wert 0x800703E9. Die <xref:System.Reflection.Emit.OpCodes.Localloc> Zwischensprache (IL)-Anweisung löst <xref:System.StackOverflowException>. Eine Liste der anfänglichen Eigenschaftswerte für eine <xref:System.StackOverflowException> Objekt, finden Sie unter den <xref:System.StackOverflowException.%23ctor%2A> Konstruktoren.  
+ `StackOverflowException` verwendet das HRESULT COR_E_STACKOVERFLOW mit dem Wert 0x800703E9. Die <xref:System.Reflection.Emit.OpCodes.Localloc> Zwischensprache (IL)-Anweisung löst `StackOverflowException`. Eine Liste der anfänglichen Eigenschaftswerte für eine `StackOverflowException` Objekt, finden Sie unter den <xref:System.StackOverflowException.%23ctor%2A> Konstruktoren.  
   
-## <a name="version-considerations"></a>Version-Überlegungen  
- In .NET Framework 1.0 und 1.1 konnten Sie Abfangen einer <xref:System.StackOverflowException> Objekt (z. B. Wiederherstellen einer ungebundenen Rekursion). Ab .NET Framework 2.0 können Sie nicht Abfangen einer <xref:System.StackOverflowException> Objekt mit einer `try` / `catch` Block, und den entsprechenden Prozess standardmäßig beendet. Daher sollten Sie Ihren Code, um zu erkennen und zu verhindern, dass einen Stapelüberlauf schreiben. Beispielsweise wenn Ihre app von der Rekursion abhängig ist, verwenden Sie einen Indikator oder ein Zustand die rekursive Schleife zu beenden. Im folgenden Beispiel wird einen Zähler, um sicherzustellen, dass die Anzahl der rekursiven Aufrufe der `Execute` Methode definiert, durch die Konstante MAX_RECURSIVE_CALLS höchstens nicht überschreiten.  
+ Ab .NET Framework 2.0 können Sie nicht Abfangen einer `StackOverflowException` Objekt mit einer `try` / `catch` Block, und den entsprechenden Prozess standardmäßig beendet. Daher sollten Sie Ihren Code, um zu erkennen und zu verhindern, dass einen Stapelüberlauf schreiben. Beispielsweise wenn Ihre app von der Rekursion abhängig ist, verwenden Sie einen Indikator oder ein Zustand die rekursive Schleife zu beenden.
+Im Abschnitt finden Sie (Examples)(#examples) diese Technik veranschaulicht.
+ 
+> [!NOTE]
+>  Anwenden der <xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute> -Attribut auf eine Methode, die auslöst, ein `StackOverflowException` hat keine Auswirkungen. Sie können nicht immer noch die Ausnahme im Benutzercode behandeln.
+
+ Wenn Ihre app die common Language Runtime (CLR) hostet, können sie angeben, dass die Anwendungsdomäne, in denen die Stapelüberlauf-Ausnahme tritt auf, und führen Sie den entsprechenden Vorgang weiterhin, die CLR entladen werden soll. Weitere Informationen finden Sie unter [ICLRPolicyManager-Schnittstelle](~/docs/framework/unmanaged-api/hosting/iclrpolicymanager-interface.md).
+
+## Examples
+
+ Im folgenden Beispiel wird einen Zähler, um sicherzustellen, dass die Anzahl der rekursiven Aufrufe der `Execute` Methode definiert, durch die Konstante MAX_RECURSIVE_CALLS höchstens nicht überschreiten.
   
  [!code-csharp[System.StackOverflowException.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.stackoverflowexception.class/cs/example1a.cs#1)]
  [!code-vb[System.StackOverflowException.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.stackoverflowexception.class/vb/example1a.vb#1)]  
-  
-> [!NOTE]
->  Anwenden der <xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute> -Attribut auf eine Methode, die auslöst, ein <xref:System.StackOverflowException> hat keine Auswirkungen. Sie können nicht immer noch die Ausnahme im Benutzercode behandeln.  
-  
- Wenn Ihre app die common Language Runtime (CLR) hostet, können sie angeben, dass die Anwendungsdomäne, in denen die Stapelüberlauf-Ausnahme tritt auf, und führen Sie den entsprechenden Vorgang weiterhin, die CLR entladen werden soll. Weitere Informationen finden Sie unter [ICLRPolicyManager-Schnittstelle](~/docs/framework/unmanaged-api/hosting/iclrpolicymanager-interface.md).  
-  
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Exception" />
