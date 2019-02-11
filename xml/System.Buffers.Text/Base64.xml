@@ -1,5 +1,5 @@
 <Type Name="Base64" FullName="System.Buffers.Text.Base64">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="bd26f05d3faf0be64d011b599382cd4414c163b6" /><Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="08/25/2018" /><Meta Name="ms.locfileid" Value="39792214" /></Metadata><TypeSignature Language="C#" Value="public static class Base64" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="6e867549bad18c4e522116cc020182629a8708f6" /><Meta Name="ms.sourcegitcommit" Value="9cee676b7864fa9dcb91319dcf5c339f3a724fbf" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/07/2019" /><Meta Name="ms.locfileid" Value="55828989" /></Metadata><TypeSignature Language="C#" Value="public static class Base64" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Base64 extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Buffers.Text.Base64" />
   <TypeSignature Language="VB.NET" Value="Public Class Base64" />
@@ -15,7 +15,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Konvertiert zwischen binären Daten und UTF-8-codiertem Text, der als Base64 dargestellt wird.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -42,14 +42,27 @@
         <Parameter Name="isFinalBlock" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="utf8">To be added.</param>
-        <param name="bytes">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <param name="isFinalBlock">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="utf8">Der Eingabebereich, der UTF-8-codierten Text in Base64-Darstellung enthält, der decodiert werden muss.</param>
+        <param name="bytes">Der Ausgabebereich, der das Ergebnis des Vorgangs enthält, d.h. die decodierten binären Daten.</param>
+        <param name="bytesConsumed">Die Anzahl der während des Vorgangs verwendeten eingegebenen Bytes. Dies kann verwendet werden, um die Eingabe ggf. für nachfolgende Aufrufe zu unterteilen.</param>
+        <param name="bytesWritten">Die Anzahl der in den Ausgabebereich geschriebenen Bytes. Dies kann verwendet werden, um die Ausgabe ggf. für nachfolgende Aufrufe zu unterteilen.</param>
+        <param name="isFinalBlock"><see langword="true" /> (Standard), wenn der Eingabebereich die gesamten zu decodierenden Daten enthält. <see langword="false" />, wenn der Eingabebereich Teildaten enthält, auf die weitere Daten folgen.</param>
+        <summary>Decodiert den Bereich des UTF-8-codierten Texts in Base64-Darstellung in binäre Daten. Wenn die Eingabe kein Vielfaches von 4 ist, wird so viel wie möglich bis zum nächsten Vielfachen von 4 decodiert.</summary>
+        <returns>Einer der Enumerationswerte, der den Status der Decodierung anzeigt.</returns>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Der Rückgabewert kann folgendermaßen aussehen:
+
+- <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Verarbeitung der gesamten Eingabe Spanne war erfolgreich.
+- <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: Es ist nicht genügend Speicherplatz in der Ausgabe Spanne, die decodierte Eingabe zu schreiben.
+- <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>: `isFinalBlock` ist `false` und die Eingabe ist kein Vielfaches von 4. Andernfalls gilt der teileingabe <xref:System.Buffers.OperationStatus.InvalidData>.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: Die Eingabe Bytes außerhalb des erwarteten base-64-Bereichs enthält, ist ungültig oder mehr als zwei Füllzeichen ein Zeichen oder ist unvollständig (d. h. kein Vielfaches von 4) und `isFinalBlock` ist `true`.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DecodeFromUtf8InPlace">
@@ -73,11 +86,24 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Der Eingabebereich, der Base64-Text enthält, der decodiert werden muss.</param>
+        <param name="bytesWritten">Die Anzahl der in den Puffer geschriebenen Bytes.</param>
+        <summary>Decodiert den Bereich des UTF-8-codierten Texts in Base64-Darstellung (direkt) in binäre Daten. Die Ausgabe des decodierten binären Texts ist kleiner als die Textdaten, die in der Eingabe enthalten sind (der Vorgang verkleinert die Daten). Wenn die Eingabe kein Vielfaches von 4 ist, decodiert die Methode keine Daten.</summary>
+        <returns>Einer der Enumerationswerte, der den Status der Decodierung anzeigt.</returns>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Der Rückgabewert kann folgendermaßen aussehen:
+
+- <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Verarbeitung der gesamten Eingabe Spanne war erfolgreich.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: Die Eingabe Bytes außerhalb des erwarteten base-64-Bereichs enthält, ist ungültig oder mehr als zwei Füllzeichen ein Zeichen oder ist unvollständig (d. h. kein Vielfaches von 4).
+
+Diese Methode kann nicht zurückgeben, die <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType> und <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType> Werte.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EncodeToUtf8">
@@ -103,14 +129,29 @@
         <Parameter Name="isFinalBlock" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="bytes">To be added.</param>
-        <param name="utf8">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <param name="isFinalBlock">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="bytes">Der Eingabebereich, der Binärdaten enthält, die codiert werden müssen.</param>
+        <param name="utf8">Der Ausgabebereich, der das Ergebnis des Vorgangs enthält, d.h. den UTF-8-codierten Text in Base64-Darstellung.</param>
+        <param name="bytesConsumed">Die Anzahl der während des Vorgangs verwendeten eingegebenen Bytes. Dies kann verwendet werden, um die Eingabe ggf. für nachfolgende Aufrufe zu unterteilen.</param>
+        <param name="bytesWritten">Die Anzahl der in den Ausgabebereich geschriebenen Bytes. Dies kann verwendet werden, um die Ausgabe ggf. für nachfolgende Aufrufe zu unterteilen.</param>
+        <param name="isFinalBlock"><see langword="true" /> (Standard), wenn der Eingabebereich die gesamten zu codierenden Daten enthält. <see langword="false" />, wenn der Eingabebereich Teildaten enthält, auf die weitere Daten folgen.</param>
+        <summary>Codiert den Bereich der binären Daten in UTF-8-codierten Text in Base64-Darstellung.</summary>
+        <returns>Einer der Enumerationswerte, der den Status der Codierung anzeigt.</returns>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Der Rückgabewert kann folgendermaßen aussehen:
+
+- <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Verarbeitung der gesamten Eingabe Spanne war erfolgreich.
+- <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: Nicht genügend Speicherplatz in der Ausgabe Spanne an die codierte Eingabe anpassen.
+- <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>: `isFinalBlock` is `false`. Andernfalls gilt: Wenn `isFinalBlock` ist `true`, die Ausgabe wird aufgefüllt, wenn die Eingabe kein Vielfaches von 3 ist.
+
+Diese Methode kann nicht zurückgeben, <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType> , da dies nicht möglich, dass die Base64-Codierung ist.
+
+ ]]></format>
+        </remarks>
+
       </Docs>
     </Member>
     <Member MemberName="EncodeToUtf8InPlace">
@@ -135,12 +176,25 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="dataLength">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Der Eingabebereich, der Binärdaten enthält, die codiert werden müssen. Da die Methode eine direkte Konvertierung ausführt, muss sie groß genug zum Speichern des Ergebnisses des Vorgangs sein.</param>
+        <param name="dataLength">Die Anzahl der Bytes aus Binärdaten, die im Puffer enthalten sind, der codiert werden muss. Dieser Wert muss kleiner als die Pufferlänge sein.</param>
+        <param name="bytesWritten">Die Anzahl der in den Puffer geschriebenen Bytes.</param>
+        <summary>Codiert den Bereich der binären Daten (direkt) in UTF-8-codierten Text in Base64-Darstellung. Die Ausgabe des codierten Texts ist größer als die binären Daten, die in der Eingabe enthalten sind (der Vorgang vergrößert die Daten).</summary>
+        <returns>Einer der Enumerationswerte, der den Status der Codierung anzeigt.</returns>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Der Rückgabewert kann folgendermaßen aussehen:
+
+- <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Verarbeitung des gesamten Puffers war erfolgreich.
+- <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: Nicht genügend Speicherplatz im Puffer nach `dataLength` passen Sie das Ergebnis der Codierung der Eingabesets.
+
+Diese Methode kann nicht zurückgeben, <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType> und <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetMaxDecodedFromUtf8Length">
@@ -164,9 +218,10 @@
       </Parameters>
       <Docs>
         <param name="length">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Gibt die maximale Länge (in Bytes) des Ergebnisses zurück, wenn Sie Base64-codierten Text innerhalb eines Bytebereichs der Größe <paramref name="length" /> decodieren würden.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="length" /> ist kleiner als 0.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetMaxEncodedToUtf8Length">
@@ -190,9 +245,10 @@
       </Parameters>
       <Docs>
         <param name="length">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Gibt die maximale Länge (in Bytes) des Ergebnisses zurück, wenn Sie binäre Daten innerhalb eines Bytebereichs der Größe <paramref name="length" /> codieren würden.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="length" /> ist kleiner als 0 oder größer als 1.610.612.733 (da Codieren die Daten mit dem Faktor 4/3 vergrößert).</exception>
       </Docs>
     </Member>
   </Members>
