@@ -1,5 +1,5 @@
 <Type Name="OutOfMemoryException" FullName="System.OutOfMemoryException">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="ec18427a0764fda1ab02daf3ffecee3e6f4e2dee" /><Meta Name="ms.sourcegitcommit" Value="d8bd5d494445ce3fcad1321267cb87548d23a45b" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/15/2018" /><Meta Name="ms.locfileid" Value="53449540" /></Metadata><TypeSignature Language="C#" Value="public class OutOfMemoryException : SystemException" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="7b05f4026a0945a8550337ea6763feda0be457fd" /><Meta Name="ms.sourcegitcommit" Value="8bc3ac200cc1c4fb5daa8f9787e66801575530d2" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/21/2019" /><Meta Name="ms.locfileid" Value="56583042" /></Metadata><TypeSignature Language="C#" Value="public class OutOfMemoryException : SystemException" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit OutOfMemoryException extends System.SystemException" />
   <TypeSignature Language="DocId" Value="T:System.OutOfMemoryException" />
   <TypeSignature Language="VB.NET" Value="Public Class OutOfMemoryException&#xA;Inherits SystemException" />
@@ -43,8 +43,16 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Ein <xref:System.OutOfMemoryException> Ausnahme hat zwei wesentliche Gründe:  
+## Remarks
+
+<xref:System.OutOfMemoryException> verwendet das HRESULT `COR_E_OUTOFMEMORY`, die über den Wert 0x8007000E verfügt.  
+  
+Eine Liste der anfänglichen Eigenschaftswerte für eine Instanz von <xref:System.OutOfMemoryException>, finden Sie unter den <xref:System.OutOfMemoryException.%23ctor%2A> Konstruktoren.  
+  
+> [!NOTE]
+>  Der Wert des geerbten <xref:System.Exception.Data%2A> Eigenschaft ist immer `null`.  
+  
+Ein <xref:System.OutOfMemoryException> Ausnahme hat zwei wesentliche Gründe:  
   
 -   Sie versuchen, erweitern eine <xref:System.Text.StringBuilder> Objekt mehr als die Länge von definiert die <xref:System.Text.StringBuilder.MaxCapacity%2A?displayProperty=nameWithType> Eigenschaft.  
   
@@ -57,81 +65,81 @@
   
  Einige der die Bedingungen, unter dem die Ausnahme wird ausgelöst, und die Aktionen, die Sie ergreifen können, um es zu beseitigen, umfassen Folgendes:  
   
- Sie sind Aufrufen der <xref:System.Text.StringBuilder.Insert%2A?displayProperty=nameWithType> Methode.  
- Sie versuchen, erhöhen Sie die Länge des eine <xref:System.Text.StringBuilder> Objekt mehr als die Größe, die gemäß der <xref:System.Text.StringBuilder.MaxCapacity%2A?displayProperty=nameWithType> Eigenschaft. Das folgende Beispiel veranschaulicht die <xref:System.OutOfMemoryException> Ausnahme durch einen Aufruf der <xref:System.Text.StringBuilder.Insert%28System.Int32%2CSystem.String%2CSystem.Int32%29?displayProperty=nameWithType> Methode, wenn im Beispiel wird versucht, eine Zeichenfolge einzufügen, die des Objekts verursachen würde <xref:System.Text.StringBuilder.Length%2A> -Eigenschaft überschreitet die maximale Kapazität.  
+**Sie sind Aufrufen der <xref:System.Text.StringBuilder.Insert%2A?displayProperty=nameWithType> Methode.**  
+
+Sie versuchen, erhöhen Sie die Länge des eine <xref:System.Text.StringBuilder> Objekt mehr als die Größe, die gemäß der <xref:System.Text.StringBuilder.MaxCapacity%2A?displayProperty=nameWithType> Eigenschaft. Das folgende Beispiel veranschaulicht die <xref:System.OutOfMemoryException> Ausnahme durch einen Aufruf der <xref:System.Text.StringBuilder.Insert%28System.Int32%2CSystem.String%2CSystem.Int32%29?displayProperty=nameWithType> Methode, wenn im Beispiel wird versucht, eine Zeichenfolge einzufügen, die des Objekts verursachen würde <xref:System.Text.StringBuilder.Length%2A> -Eigenschaft überschreitet die maximale Kapazität.  
   
- [!code-csharp[System.OutOfMemoryException#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/sb_example1.cs#1)]
- [!code-vb[System.OutOfMemoryException#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/sb_example1.vb#1)]  
+[!code-csharp[System.OutOfMemoryException#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/sb_example1.cs#1)]
+[!code-vb[System.OutOfMemoryException#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/sb_example1.vb#1)]  
   
- Sie können zum Beheben dieses Fehlers die folgenden Möglichkeiten:  
+Sie können zum Beheben dieses Fehlers die folgenden Möglichkeiten:  
   
 -   Ersetzen Sie den Aufruf von der <xref:System.Text.StringBuilder.%23ctor%28System.Int32%2CSystem.Int32%29?displayProperty=nameWithType> Konstruktor mit einem Aufruf einer anderen <xref:System.Text.StringBuilder> Überladung des Konstruktors. Die maximale Kapazität Ihrer <xref:System.Text.StringBuilder> Objektsatz wird auf den Standardwert, d.h. <xref:System.Int32.MaxValue?displayProperty=nameWithType>.  
-  
+
 -   Rufen Sie die <xref:System.Text.StringBuilder.%23ctor%28System.Int32%2CSystem.Int32%29?displayProperty=nameWithType> Konstruktor mit einer `maxCapacity` Wert, der groß genug für alle Erweiterungen, die <xref:System.Text.StringBuilder> Objekt.  
   
- Ihre app als 32-Bit-Prozess ausgeführt wird.  
- 32-Bit-Prozesse können bis zu 2 GB virtuellen Benutzermodus-Speicher auf 32-Bit-Systeme und 4 GB Arbeitsspeicher der virtuellen Benutzer-Modus auf 64-Bit-Systemen zuordnen. Dies kann erschweren es für die common Language Runtime genügend zusammenhängenden Arbeitsspeicher zugewiesen werden, wenn eine große Belegung benötigt wird. Im Gegensatz dazu können 64-Bit-Prozesse bis zu 8 TB an virtuellem Arbeitsspeicher zuordnen. Um diese Ausnahme zu beheben, kompilieren Sie Ihre app, um eine 64-Bit-Zielplattform neu. Weitere Informationen dazu, für bestimmte Plattformen in Visual Studio, finden Sie unter [Vorgehensweise: Konfigurieren von Projekten für Zielplattformen](https://msdn.microsoft.com/library/845302fc-273d-4f81-820a-7296ce91bd76).  
+**Ihre app als 32-Bit-Prozess ausgeführt wird.**
+
+32-Bit-Prozesse können bis zu 2 GB virtuellen Benutzermodus-Speicher auf 32-Bit-Systeme und 4 GB Arbeitsspeicher der virtuellen Benutzer-Modus auf 64-Bit-Systemen zuordnen. Dies kann erschweren es für die common Language Runtime genügend zusammenhängenden Arbeitsspeicher zugewiesen werden, wenn eine große Belegung benötigt wird. Im Gegensatz dazu können 64-Bit-Prozesse bis zu 8 TB an virtuellem Arbeitsspeicher zuordnen. Um diese Ausnahme zu beheben, kompilieren Sie Ihre app, um eine 64-Bit-Zielplattform neu. Weitere Informationen dazu, für bestimmte Plattformen in Visual Studio, finden Sie unter [Vorgehensweise: Konfigurieren von Projekten für Zielplattformen](https://msdn.microsoft.com/library/845302fc-273d-4f81-820a-7296ce91bd76).  
   
- Ihre app wird nicht verwaltete Ressourcen Verlust.  
- Obwohl der Garbage Collector den verwalteten Typen belegten Arbeitsspeicher freizugeben kann, wird sie nicht verwaltet Speichermenge, die für die nicht verwaltete Ressourcen wie z. B. Betriebssystem behandelt (einschließlich Handles für Dateien, Speicherabbilddateien, Pipes, Registrierungsschlüssel und Wait-Handles) und Speicherblöcke wie z. B. zugeordnet werden direkt von Windows-API-Aufrufe oder durch Aufrufe von speicherbelegungsfunktionen `malloc`. Typen, die nicht verwaltete Ressourcen zu nutzen, implementieren die <xref:System.IDisposable> Schnittstelle.  
+**Ihre app wird nicht verwaltete Ressourcen Verlust.** 
+
+Obwohl der Garbage Collector den verwalteten Typen belegten Arbeitsspeicher freizugeben kann, wird sie nicht verwaltet Speichermenge, die für die nicht verwaltete Ressourcen wie z. B. Betriebssystem behandelt (einschließlich Handles für Dateien, Speicherabbilddateien, Pipes, Registrierungsschlüssel und Wait-Handles) und Speicherblöcke wie z. B. zugeordnet werden direkt von Windows-API-Aufrufe oder durch Aufrufe von speicherbelegungsfunktionen `malloc`. Typen, die nicht verwaltete Ressourcen zu nutzen, implementieren die <xref:System.IDisposable> Schnittstelle.  
+
+Wenn Sie einen Typ, die nicht verwaltete Ressourcen verwendet verwenden, sollten Sie Sie aufrufen, werden die <xref:System.IDisposable.Dispose%2A?displayProperty=nameWithType> Methode, wenn Sie ihn nicht mehr benötigen. (Einige Typen auch implementieren eine `Close` -Methode, die in der Funktion, die identisch ist eine `Dispose` Methode.) Weitere Informationen finden Sie unter den [mithilfe von Objekten, implementieren "IDisposable"](~/docs/standard/garbage-collection/using-objects.md) Thema.  
+
+Wenn Sie einen Typ, der nicht verwaltete Ressourcen verwendet erstellt haben, stellen Sie sicher, dass die Implementieren des Dispose-Musters und, bei Bedarf einen Finalizer angegeben Schritte aus. Weitere Informationen finden Sie unter [Implementieren einer Dispose-Methode](~/docs/standard/garbage-collection/implementing-dispose.md) und <xref:System.Object.Finalize%2A?displayProperty=nameWithType>.  
   
- Wenn Sie einen Typ, die nicht verwaltete Ressourcen verwendet verwenden, sollten Sie Sie aufrufen, werden die <xref:System.IDisposable.Dispose%2A?displayProperty=nameWithType> Methode, wenn Sie ihn nicht mehr benötigen. (Einige Typen auch implementieren eine `Close` -Methode, die in der Funktion, die identisch ist eine `Dispose` Methode.) Weitere Informationen finden Sie unter den [mithilfe von Objekten, implementieren "IDisposable"](~/docs/standard/garbage-collection/using-objects.md) Thema.  
+**Sie versuchen, ein großes Array in einem 64-Bit-Prozess zu erstellen.**
+
+Standardmäßig lässt die common Language Runtime in .NET Framework, nicht einzelne Objekte zu, deren Größe über 2 GB überschreitet. Um diese Standardeinstellung zu überschreiben, können Sie die [ \<GcAllowVeryLargeObjects >](~/docs/framework/configure-apps/file-schema/runtime/gcallowverylargeobjects-element.md) konfigurationsdateieinstellung um Arrays zu aktivieren, deren Gesamtgröße größer 2 GB als. .NET Core unterstützt für Arrays mit mehr als 2 GB ist standardmäßig aktiviert. 
   
- Wenn Sie einen Typ, der nicht verwaltete Ressourcen verwendet erstellt haben, stellen Sie sicher, dass die Implementieren des Dispose-Musters und, bei Bedarf einen Finalizer angegeben Schritte aus. Weitere Informationen finden Sie unter [Implementieren einer Dispose-Methode](~/docs/standard/garbage-collection/implementing-dispose.md) und <xref:System.Object.Finalize%2A?displayProperty=nameWithType>.  
-  
- Sie versuchen, ein großes Array in einem 64-Bit-Prozess zu erstellen.  
- Standardmäßig lässt die common Language Runtime nicht einzelne Objekte zu, deren Größe über 2 GB überschreitet. Um diese Standardeinstellung zu überschreiben, können Sie die Konfigurationseinstellung für die Datei um Arrays zu aktivieren, deren Gesamtgröße 2 GB überschreitet.  
-  
- Sie arbeiten mit sehr großen Mengen von Daten (z. B. Arrays, Auflistungen oder Datenbank-Datasets) im Arbeitsspeicher.  
- Wenn Datenstrukturen oder Datasets, die im Arbeitsspeicher befinden sich so groß werden, dass die common Language Runtime nicht genügend zusammenhängenden Arbeitsspeicher für sie ist ein <xref:System.OutOfMemoryException> Ausnahme führt.  
-  
- Um zu verhindern, dass die <xref:System.OutOfMemoryException> Ausnahmen, müssen Sie Ihre Anwendung ändern, sodass weniger Daten im Speicher gehalten werden, oder die Daten in Segmenten, die eine geringere speicherbelegung erfordern aufgeteilt werden. Beispiel:  
-  
+**Sie arbeiten mit sehr großen Mengen von Daten (z. B. Arrays, Auflistungen oder Datenbank-Datasets) im Arbeitsspeicher.**
+
+Wenn Datenstrukturen oder Datasets, die im Arbeitsspeicher befinden sich so groß werden, dass die common Language Runtime nicht genügend zusammenhängenden Arbeitsspeicher für sie ist ein <xref:System.OutOfMemoryException> Ausnahme führt.  
+
+Um zu verhindern, dass die <xref:System.OutOfMemoryException> Ausnahmen, müssen Sie Ihre Anwendung ändern, sodass weniger Daten im Speicher gehalten werden, oder die Daten in Segmenten, die eine geringere speicherbelegung erfordern aufgeteilt werden. Beispiel:  
+
 -   Wenn Sie alle Daten aus einer Datenbank abrufen und Filtern sie dann in Ihrer app, um Roundtrips zum Server zu minimieren, sollten Sie Ihre Abfragen, um nur die Teilmenge der Daten zurückzugeben, die deine app braucht dringend ändern. Bei der Arbeit mit großen Tabellen mehrere Abfragen sind fast immer mehr effizient als das Abrufen aller Daten in einer einzelnen Tabelle aus, und bearbeiten es dann.  
-  
+
 -   Wenn Sie Abfragen, die Benutzer dynamisch zu erstellen ausführen, sollten Sie sicherstellen, dass die Anzahl der von der Abfrage zurückgegebenen Datensätze beschränkt ist.  
-  
+
 -   Wenn Sie mit großen Arrays oder andere Auflistung Objekte, deren Größe führt zu einer <xref:System.OutOfMemoryException> Ausnahme, sollten Sie die Anwendung, die Daten in Teilmengen zu arbeiten, anstatt alle gleichzeitig zu arbeiten ändern.  
   
- Im folgenden Beispiel wird ein Array, das besteht aus 200 Millionen Gleitkommazahlen-Punktwerte und ihrem Mittelwert berechnet. Die Ausgabe im Beispiel wird veranschaulicht, wie, da im Beispiel werden das gesamte Array im Arbeitsspeicher gespeichert, bevor der Mittelwert berechnet eine <xref:System.OutOfMemoryException> wird ausgelöst.  
+Im folgenden Beispiel wird ein Array, das besteht aus 200 Millionen Gleitkommazahlen-Punktwerte und ihrem Mittelwert berechnet. Die Ausgabe im Beispiel wird veranschaulicht, wie, da im Beispiel werden das gesamte Array im Arbeitsspeicher gespeichert, bevor der Mittelwert berechnet eine <xref:System.OutOfMemoryException> wird ausgelöst.  
+
+[!code-csharp[System.OutOfMemoryException#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data1.cs#3)]
+[!code-vb[System.OutOfMemoryException#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data1.vb#3)]  
   
- [!code-csharp[System.OutOfMemoryException#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data1.cs#3)]
- [!code-vb[System.OutOfMemoryException#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data1.vb#3)]  
+Im folgende Beispiel entfernt der <xref:System.OutOfMemoryException> Ausnahme durch die Verarbeitung der eingehenden Daten ohne das gesamte Dataset im Arbeitsspeicher Serialisieren der Daten in eine Datei, falls erforderlich, um weitere Verarbeitung zu ermöglichen (diese Zeilen auskommentiert werden im Beispiel speichern Da in diesem Fall sie erzeugen eine Datei, deren Größe größer als 1 GB ist), und den Mittelwert der berechneten und die Anzahl von Fällen an die aufrufende Routine zurückgegeben.  
+
+[!code-csharp[System.OutOfMemoryException#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data2.cs#4)]
+[!code-vb[System.OutOfMemoryException#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data2.vb#4)]  
   
- Im folgende Beispiel entfernt der <xref:System.OutOfMemoryException> Ausnahme durch die Verarbeitung der eingehenden Daten ohne das gesamte Dataset im Arbeitsspeicher Serialisieren der Daten in eine Datei, falls erforderlich, um weitere Verarbeitung zu ermöglichen (diese Zeilen auskommentiert werden im Beispiel speichern Da in diesem Fall sie erzeugen eine Datei, deren Größe größer als 1 GB ist), und den Mittelwert der berechneten und die Anzahl von Fällen an die aufrufende Routine zurückgegeben.  
+**Sie werden wiederholt große Zeichenfolgen verketten.** 
+
+Da Zeichenfolgen unveränderlich sind, wird jede zeichenkettenverkettungsvorgang eine neue Zeichenfolge erstellt. Für kurze Zeichenfolgen oder für eine kleine Anzahl von Verkettungsvorgänge, ist unerheblich. Für große Zeichenfolgen oder eine sehr große Anzahl von Verkettungsvorgänge, zeichenfolgenverkettung kann jedoch zu führen eine große Anzahl von speicherbelegungen und Fragmentierung des Arbeitsspeichers, die Leistung negativ beeinflussen und möglicherweise <xref:System.OutOfMemoryException> Ausnahmen.  
+
+Bei langen Zeichenfolgen verketten oder eine große Anzahl von Verkettungsvorgänge ausführen, sollten Verwendung der <xref:System.Text.StringBuilder> -Klasse anstelle der <xref:System.String> Klasse. Wenn Sie fertig sind, bearbeiten die Zeichenfolge, konvertieren Sie die <xref:System.Text.StringBuilder> Instanz in eine Zeichenfolge durch Aufrufen der <xref:System.Text.StringBuilder.ToString%2A?displayProperty=nameWithType> Methode.  
   
- [!code-csharp[System.OutOfMemoryException#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data2.cs#4)]
- [!code-vb[System.OutOfMemoryException#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data2.vb#4)]  
-  
- Sie werden wiederholt große Zeichenfolgen verketten.  
- Da Zeichenfolgen unveränderlich sind, wird jede zeichenkettenverkettungsvorgang eine neue Zeichenfolge erstellt. Für kurze Zeichenfolgen oder für eine kleine Anzahl von Verkettungsvorgänge, ist unerheblich. Für große Zeichenfolgen oder eine sehr große Anzahl von Verkettungsvorgänge, zeichenfolgenverkettung kann jedoch zu führen eine große Anzahl von speicherbelegungen und Fragmentierung des Arbeitsspeichers, die Leistung negativ beeinflussen und möglicherweise <xref:System.OutOfMemoryException> Ausnahmen.  
-  
- Bei langen Zeichenfolgen verketten oder eine große Anzahl von Verkettungsvorgänge ausführen, sollten Verwendung der <xref:System.Text.StringBuilder> -Klasse anstelle der <xref:System.String> Klasse. Wenn Sie fertig sind, bearbeiten die Zeichenfolge, konvertieren Sie die <xref:System.Text.StringBuilder> Instanz in eine Zeichenfolge durch Aufrufen der <xref:System.Text.StringBuilder.ToString%2A?displayProperty=nameWithType> Methode.  
-  
- Heften Sie eine große Anzahl von Objekten im Arbeitsspeicher.  
- Befestigen eine große Anzahl von Objekten im Speicher für lange Zeiträume kann für den Garbage Collector zusammenhängende Speicherblöcke zuweisen erschweren. Wenn Sie eine große Anzahl von Objekten im Arbeitsspeicher, z. B. mit angeheftet haben die `fixed` -Anweisung in c# oder durch Aufrufen der <xref:System.Runtime.InteropServices.GCHandle.Alloc%28System.Object%2CSystem.Runtime.InteropServices.GCHandleType%29?displayProperty=nameWithType> Methode mit einem Handle <xref:System.Runtime.InteropServices.GCHandleType.Pinned?displayProperty=nameWithType>, Sie können folgendermaßen an Adresse der <xref:System.OutOfMemoryException> Ausnahme.  
+**Heften Sie eine große Anzahl von Objekten im Arbeitsspeicher.**  
+ 
+Befestigen eine große Anzahl von Objekten im Speicher für lange Zeiträume kann für den Garbage Collector zusammenhängende Speicherblöcke zuweisen erschweren. Wenn Sie eine große Anzahl von Objekten im Arbeitsspeicher, z. B. mit angeheftet haben die `fixed` -Anweisung in c# oder durch Aufrufen der <xref:System.Runtime.InteropServices.GCHandle.Alloc%28System.Object%2CSystem.Runtime.InteropServices.GCHandleType%29?displayProperty=nameWithType> Methode mit einem Handle <xref:System.Runtime.InteropServices.GCHandleType.Pinned?displayProperty=nameWithType>, Sie können folgendermaßen an Adresse der <xref:System.OutOfMemoryException> Ausnahme.  
   
 -   Bewerten Sie, ob jedes Objekt tatsächlich fixiert werden muss,  
-  
+
 -   Stellen Sie sicher, dass jedes Objekt so bald wie möglich gelöst ist.  
-  
+
 -   Stellen Sie sicher, dass jeder Aufruf der <xref:System.Runtime.InteropServices.GCHandle.Alloc%28System.Object%2CSystem.Runtime.InteropServices.GCHandleType%29?displayProperty=nameWithType> Methode, um die Pin-Speicher hat einen zugehörigen Aufruf an die <xref:System.Runtime.InteropServices.GCHandle.Free%2A?displayProperty=nameWithType> Methode, um Speicher zu lösen.  
+
+Die folgenden Microsoft intermediate (MSIL)-Anweisungen Auslösen einer <xref:System.OutOfMemoryException> Ausnahme:  
   
- Die folgenden Microsoft intermediate (MSIL)-Anweisungen Auslösen einer <xref:System.OutOfMemoryException> Ausnahme:  
-  
--   [Feld](https://msdn.microsoft.com/library/system.reflection.emit.opcodes.box.aspx)  
-  
+-   [box](https://msdn.microsoft.com/library/system.reflection.emit.opcodes.box.aspx)  
 -   [newarr](https://msdn.microsoft.com/library/system.reflection.emit.opcodes.newarr.aspx)  
-  
+
 -   [newobj](https://msdn.microsoft.com/library/system.reflection.emit.opcodes.newobj.aspx)newobj  
-  
- <xref:System.OutOfMemoryException> verwendet das HRESULT `COR_E_OUTOFMEMORY`, die über den Wert 0x8007000E verfügt.  
-  
- Eine Liste der anfänglichen Eigenschaftswerte für eine Instanz von <xref:System.OutOfMemoryException>, finden Sie unter den <xref:System.OutOfMemoryException.%23ctor%2A> Konstruktoren.  
-  
-> [!NOTE]
->  Der Wert des geerbten <xref:System.Exception.Data%2A> Eigenschaft ist immer `null`.  
-  
+
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Exception" />

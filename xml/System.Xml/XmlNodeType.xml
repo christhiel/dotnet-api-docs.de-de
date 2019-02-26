@@ -1,5 +1,5 @@
 <Type Name="XmlNodeType" FullName="System.Xml.XmlNodeType">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="beb49da4e5041683aa68e9c41480c99fdd1e4848" /><Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="08/24/2018" /><Meta Name="ms.locfileid" Value="37481770" /></Metadata><TypeSignature Language="C#" Value="public enum XmlNodeType" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="b05b4d833b750ad3465979433432a1ac25d30904" /><Meta Name="ms.sourcegitcommit" Value="8e213bb5e6801f6e29861ba72664978ad00e34fa" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/18/2019" /><Meta Name="ms.locfileid" Value="56372582" /></Metadata><TypeSignature Language="C#" Value="public enum XmlNodeType" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed XmlNodeType extends System.Enum" />
   <TypeSignature Language="DocId" Value="T:System.Xml.XmlNodeType" />
   <TypeSignature Language="VB.NET" Value="Public Enum XmlNodeType" />
@@ -28,8 +28,37 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>Gibt die Art des Knotens an.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Gibt den Typ des Knotens an.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+
+Die folgende Tabelle enthält zusätzliche Informationen zu XML-Knoten als auch deren übergeordneten und untergeordneten Knoten.
+
+| Feld | Beschreibung  | Kann untergeordnete Knoten haben: | Ein untergeordneter Knoten des sind möglich: |
+|---|---|---|---|
+|`Attribute`| |`EntityReference`, `Text`|Keine Gilt dies keinen untergeordneter Knoten von einem `Element`.|
+|`CDATA`| CDATA-Abschnitte werden verwendet, von Textblöcken mit Escapezeichen versehen, die andernfalls als Markup erkannt würden.|Keine|`DocumentFragment`, `EntityReference`und `Element`|
+|`Comment`| | Keine |`Document`, `DocumentFragment`, `EntityReference`|
+|`Document`| |`XmlDeclaration`, `Element` (maximal eine), `ProcessingInstruction`, `Comment`, `DocumentType`|None|
+|`DocumentFragment`|Ordnet einen Knoten oder eine Teilstruktur mit einem Dokument, ohne tatsächlich innerhalb des Dokuments enthalten wird.|`Element`, `ProcessingInstruction`, `Comment`, `Text`, `CDATA`, `EntityReference`|Keine 
+|`DocumentType`| |`Notation`, `Entity`|None|
+|`Element`| |`Element`, `Text`, `Comment`, `ProcessingInstruction`, `CDATA`, `EntityReference`| `Document`, `DocumentFragment`, `EntityReference`, `Element`|
+|`EndElement`|Zurückgegeben wird, wenn die <xref:System.Xml.XmlReader> Ruft am Ende eines Elements ab.| | |   
+|`EndEntity`| | | |
+|`Entity`| |Untergeordnete Knoten, die die erweiterte Entität darstellen (z. B. `Text` und `EntityReference` Knoten) |`DocumentType`|
+|`EntityReference`| |`Element`, `ProcessingInstruction`, `Comment`, `Text`, `CDATA`, `EntityReference` |`Attribute`, `DocumentFragment`, `Element`, `EntityReference` |
+|`None`| | | |
+|`Notation`| | None | `DocumentType`| 
+|`ProcessingInstruction`| | None | `Document`, `DocumentFragment`, `Element`, `EntityReference`|
+|`SignificantWhitespace`| | | |
+|`Text`| | None | `Attribute`, `DocumentFragment`, `Element`, `EntityReference` |
+|`Whitespace`| | | |
+|`XmlDeclaration`| Muss der erste Knoten im Dokument. Es kann Attribute aufweisen, die Versions- und Codierungsinformationen bereitstellen. |None|`Document`|
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Attribute">
@@ -65,14 +94,6 @@
       <MemberValue>2</MemberValue>
       <Docs>
         <summary>Ein Attribut (z.B. <c>id='123'</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Attribute` Knoten haben die folgenden Typen von untergeordneter Knoten: `Text` und `EntityReference`. Die `Attribute` Knoten nicht als untergeordneter Knoten von einem anderen Knotentyp angezeigt. Gilt dies keinen untergeordneter Knoten von einem `Element`.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CDATA">
@@ -108,14 +129,6 @@
       <MemberValue>4</MemberValue>
       <Docs>
         <summary>Ein CDATA-Abschnitt (z.B. <c>&lt;![CDATA[mein geschützter Text]]&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- CDATA-Abschnitte werden verwendet, von Textblöcken mit Escapezeichen versehen, die andernfalls als Markup erkannt würden. Ein `CDATA` Knoten kann keiner untergeordnete Knoten aufweisen. Es kann angezeigt werden, als untergeordnetes Element der `DocumentFragment`, `EntityReference`, und `Element` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Comment">
@@ -151,14 +164,6 @@
       <MemberValue>8</MemberValue>
       <Docs>
         <summary>Ein Kommentar (z.B. <c>&lt;!-- mein Kommentar --&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Comment` Knoten kann keiner untergeordnete Knoten aufweisen. Es kann angezeigt werden, als untergeordnetes Element der `Document`, `DocumentFragment`, `Element`, und `EntityReference` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Document">
@@ -194,14 +199,6 @@
       <MemberValue>9</MemberValue>
       <Docs>
         <summary>Ein Dokumentobjekt, das als Stamm der Dokumentstruktur Zugriff auf das gesamte XML-Dokument gewährt.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Document` Knoten haben die folgenden Typen von untergeordneter Knoten: `XmlDeclaration`, `Element` (maximum eines), `ProcessingInstruction`, `Comment`, und `DocumentType`. Es kann nicht als untergeordnetes Element eines alle Knotentypen angezeigt.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DocumentFragment">
@@ -237,14 +234,6 @@
       <MemberValue>11</MemberValue>
       <Docs>
         <summary>Ein Dokumentfragment.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `DocumentFragment` Knoten ordnet einen Knoten oder eine Teilstruktur mit einem Dokument, ohne tatsächlich innerhalb des Dokuments enthalten wird. Ein `DocumentFragment` Knoten haben die folgenden Typen von untergeordneter Knoten: `Element`, `ProcessingInstruction`, `Comment`, `Text`, `CDATA`, und `EntityReference`. Es kann nicht als untergeordnetes Element eines alle Knotentypen angezeigt.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DocumentType">
@@ -280,14 +269,6 @@
       <MemberValue>10</MemberValue>
       <Docs>
         <summary>Die vom folgenden Tag angegebene Dokumenttypdeklaration (z.B. <c>&lt;!DOCTYPE...&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `DocumentType` Knoten haben die folgenden Typen von untergeordneter Knoten: `Notation` und `Entity`. Es kann angezeigt werden, als untergeordnetes Element der `Document` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Element">
@@ -323,14 +304,6 @@
       <MemberValue>1</MemberValue>
       <Docs>
         <summary>Ein Element (z.B. <c>&lt;item&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Element` Knoten haben die folgenden Typen von untergeordneter Knoten: `Element`, `Text`, `Comment`, `ProcessingInstruction`, `CDATA`, und `EntityReference`. Es kann sein, das untergeordnete Element die `Document`, `DocumentFragment`, `EntityReference`, und `Element` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EndElement">
@@ -366,14 +339,6 @@
       <MemberValue>15</MemberValue>
       <Docs>
         <summary>Ein Endelementtag (z.B. <c>&lt;/item&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- `EndElement` Knoten werden zurückgegeben, wenn <xref:System.Xml.XmlReader> Ruft am Ende eines Elements ab.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EndEntity">
@@ -444,14 +409,6 @@
       <MemberValue>6</MemberValue>
       <Docs>
         <summary>Eine Entitätsdeklaration (z.B. <c>&lt;!ENTITY...&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Entity` Knoten kann über untergeordnete Knoten, die die erweiterte Entität darstellen verfügen (z. B. `Text` und `EntityReference` Knoten). Es kann angezeigt werden, als untergeordnetes Element der `DocumentType` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EntityReference">
@@ -487,14 +444,6 @@
       <MemberValue>5</MemberValue>
       <Docs>
         <summary>Ein Verweis auf eine Entität (z.B. <c>&amp;num;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `EntityReference` Knoten haben die folgenden Typen von untergeordneter Knoten: `Element`, `ProcessingInstruction`, `Comment`, `Text`, `CDATA`, und `EntityReference`. Es kann angezeigt werden, als untergeordnetes Element der `Attribute`, `DocumentFragment`, `Element`, und `EntityReference` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="None">
@@ -565,14 +514,6 @@
       <MemberValue>12</MemberValue>
       <Docs>
         <summary>Eine Notation in der Dokumenttypdeklaration (z.B. <c>&lt;!NOTATION...&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `Notation` Knoten kann keiner untergeordnete Knoten aufweisen. Es kann angezeigt werden, als untergeordnetes Element der `DocumentType` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ProcessingInstruction">
@@ -608,14 +549,6 @@
       <MemberValue>7</MemberValue>
       <Docs>
         <summary>Eine Verarbeitungsanweisung (z.B. <c>&lt;?pi test?&gt;</c>).</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Ein `ProcessingInstruction` Knoten kann keiner untergeordnete Knoten aufweisen. Es kann angezeigt werden, als untergeordnetes Element der `Document`, `DocumentFragment`, `Element`, und `EntityReference` Knoten.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SignificantWhitespace">
