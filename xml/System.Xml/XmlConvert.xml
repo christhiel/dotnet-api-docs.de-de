@@ -1,5 +1,5 @@
 <Type Name="XmlConvert" FullName="System.Xml.XmlConvert">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="9b7119391e323f3222e36605a2de5c38872895dc" /><Meta Name="ms.sourcegitcommit" Value="756d085f27705e86604f1bba5f2086ee23761acf" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="01/30/2019" /><Meta Name="ms.locfileid" Value="55360654" /></Metadata><TypeSignature Language="C#" Value="public class XmlConvert" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="b86397231d641d04128f41bea17f071284ac0a64" /><Meta Name="ms.sourcegitcommit" Value="8e213bb5e6801f6e29861ba72664978ad00e34fa" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/18/2019" /><Meta Name="ms.locfileid" Value="56398727" /></Metadata><TypeSignature Language="C#" Value="public class XmlConvert" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit XmlConvert extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Xml.XmlConvert" />
   <TypeSignature Language="VB.NET" Value="Public Class XmlConvert" />
@@ -141,7 +141,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">Der zu transformierende Name.</param>
+        <param name="name">Der umzuwandelnde Name.</param>
         <summary>Decodiert einen Namen. Diese Methode ist die Umkehrung der <see cref="M:System.Xml.XmlConvert.EncodeName(System.String)" />-Methode und der <see cref="M:System.Xml.XmlConvert.EncodeLocalName(System.String)" />-Methode.</summary>
         <returns>Der decodierte Name.</returns>
         <remarks>
@@ -150,14 +150,14 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
 ## Remarks  
  Die Namen decodiert werden, mithilfe der folgenden Regeln:  
   
--   Namen werden von links nach rechts decodiert.  
+- Namen werden von links nach rechts decodiert.  
   
--   Jeder Sequenz _x `HHHH_` (, in denen HHHH steht für eine gültige, vier Ziffern hexadezimale UCS-2-Code), die nicht decodiert wurden in das entsprechende Unicode 2.1 (3.0 Unicode, wenn von der Anwendung unterstützt wird) transformiert Zeichen.  
+- Eine beliebige Sequenz \_x*HHHH* \_ (wobei HHHH für einen gültigen, vierstellige hexadezimale UCS-2-Code steht), die nicht decodierte wird umgewandelt in das entsprechende Unicode 2.1 (Unicode-3.0, wenn vom unterstützt die Anwendung) Zeichen.  
   
--   Kurzformen werden erkannt. Sie werden ohne Übersetzung übergeben. _X20\_ oder __ nicht decodiert werden.  
+- Kurzformen werden erkannt. Sie werden ohne Übersetzung übergeben. Z. B. \_X20\_ oder \_ \_ nicht decodiert werden.
   
 > [!NOTE]
->  Der tatsächlichen Codierung des Zeichens ist anwendungsspezifisch. So wird z. B. Order_x0020_Details Order Details. Sogar Escapezeichen, die in XML-Namen ungültig sind, werden erkannt und decodiert werden.  
+> Der tatsächlichen Codierung des Zeichens ist anwendungsspezifisch. Sortieren Sie z. B.\_X0020\_Details wird die Order Details. Sogar Escapezeichen, die in XML-Namen ungültig sind, werden erkannt und decodiert werden.  
   
    
   
@@ -220,9 +220,9 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
 ## Remarks  
  Diese Methode ähnelt der <xref:System.Xml.XmlConvert.EncodeName%2A> Methode, außer dass sie codiert den Doppelpunkt, dadurch wird sichergestellt, dass die Namen als den lokalen namensanteil des Namespaces eines qualifizierten Namens verwendet werden kann.  
   
- Angenommen, Sie übergeben diese Methode an, den ungültigen Name einer: b wird a_x003a_b, dies ist ein gültiger lokaler Name.  
+ Angenommen, Sie übergeben diese Methode an, den ungültigen Name eine: b wird eine\_x003a\_b, der ein gültiger lokaler Name ist.  
   
- Wenn `name` ist `null` oder `String.Empty` erhalten Sie auf den gleichen Wert zurückgegeben.  
+ Wenn `name` ist `null` oder <xref:System.String.Empty?displayProperty=fullName>, die Methode gibt den gleichen Wert zurück.  
   
    
   
@@ -287,9 +287,9 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
 ## Remarks  
  Diese Methode übersetzt die ungültige Zeichen wie Leerzeichen oder Katakana-Zeichen halber Breite, die XML-Namen ohne die Unterstützung oder das Vorhandensein von Schemas zugeordnet werden müssen. Die ungültigen Zeichen werden in geschützte numerische Entitäten umgewandelt.  
   
- Das Escapezeichen ist "_". Alle Zeichen der XML-Namen, die nicht entspricht der [XML 1.0-Spezifikation (fourth Edition) Recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/) wird als _xHHHH mit Escapezeichen versehen\_. Die Zeichenfolge HHHH steht für den vierstelligen hexadezimalen UCS-2-Code für das Zeichen in die wichtigsten Bitfolge. Der Name Order Details wird beispielsweise als Order_x0020_Details codiert.  
+ Das Escapezeichen ist "\_". Alle Zeichen der XML-Namen, die nicht entspricht der [XML 1.0-Spezifikation (fourth Edition) Recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/) wird als mit Escapezeichen versehen \_xHHHH\_. Die Zeichenfolge HHHH steht für den vierstelligen hexadezimalen UCS-2-Code für das Zeichen in die wichtigsten Bitfolge. Beispielsweise wird dem Namen Order Details als Reihenfolge codiert\_X0020\_Details.  
   
- Der Unterstrich muss nicht geschützt werden, es sei denn, er wird von einer Zeichensequenz gefolgt, die beim Decodieren des Namens zusammen mit dem Unterstrich als Escapezeichenfolge fehlinterpretiert werden kann. Order_Details ist beispielsweise nicht codiert, Order_x0020_ ist jedoch als Order_x005f_x0020_ codiert. Kurzformen sind zulässig. Die Formulare _x20\_ und __ nicht generiert.  
+ Der Unterstrich muss nicht geschützt werden, es sei denn, er wird von einer Zeichensequenz gefolgt, die beim Decodieren des Namens zusammen mit dem Unterstrich als Escapezeichenfolge fehlinterpretiert werden kann. Sortieren Sie z. B.\_Details wird nicht codiert, aber die Reihenfolge\_X0020\_ als Reihenfolge codiert\_x005f\_X0020\_. Kurzformen sind zulässig. Die Formulare _x20\_ und \_ \_ werden nicht generiert.  
   
  Diese Methode stellt sicher, dass der Name gemäß der XML-Spezifikation gültig ist. Sie erlaubt einen Doppelpunkt an beliebiger Position, d. h. der Name möglicherweise immer noch ungültige gemäß werden der [Namespace-Spezifikation von W3C](https://www.w3.org/TR/REC-xml-names/). Um sicherzustellen, dass ein gültiger Namespace qualifizierten Namen verwenden <xref:System.Xml.XmlConvert.EncodeLocalName%2A> für das Präfix und den lokalen Namen der Teile und verbinden Sie das Ergebnis mit einem Doppelpunkt.  
   
@@ -354,7 +354,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode stellt sicher, dass der Name gemäß der XML-Spezifikation gültig ist. Z. B. Wenn Sie diese Methode auf einen ungültigen Namen 70 übergeben, wird der 70_x002b_ ein gültiger XML-Name ist.  
+ Diese Methode stellt sicher, dass der Name gemäß der XML-Spezifikation gültig ist. Beispielsweise, wenn Sie diese Methode auf einen ungültigen Namen 70 übergeben, gibt es 70\_x002b\_ ist ein gültiger XML-Name.  
   
  Wenn `name` ist `null` oder String.Empty abrufen den gleichen Wert zurückgegeben.  
   
@@ -504,7 +504,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="ch">Das Zeichen, das validiert werden soll.</param>
-        <summary>Überprüft, ob das übergebene Zeichen ein gültiges XML-Leerraumzeichen ist.</summary>
+        <summary>Überprüft, ob das übergebene Zeichen ein gültiges XML-Leerzeichen ist.</summary>
         <returns><see langword="true" />, wenn das übergebene Zeichen ein gültiges XML-Leerraumzeichen ist, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -630,7 +630,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Boolean" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Boolean" />-Äquivalent.</summary>
         <returns>Ein <see langword="Boolean" />-Wert, d. h. <see langword="true" /> oder <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -679,7 +679,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Byte" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Byte" />-Äquivalent.</summary>
         <returns>Ein <see langword="Byte" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -721,8 +721,8 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <Parameter Name="s" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="s">Die Zeichenfolge, die ein einzelnes zu konvertierendes Zeichen enthält.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Char" />-Äquivalent.</summary>
+        <param name="s">Die Zeichenfolge mit dem einzelnen Zeichen, das konvertiert werden soll.</param>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Char" />-Äquivalent.</summary>
         <returns>Ein <see langword="Char" />, das für das einzelne Zeichen steht.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">Der Wert des <paramref name="s" />-Parameters ist <see langword="null" />.</exception>
@@ -736,7 +736,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ToDateTime">
@@ -764,7 +764,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;netcore-3.0">
           <AttributeName>System.Obsolete("Use XmlConvert.ToDateTime() that takes in XmlDateTimeSerializationMode")</AttributeName>
         </Attribute>
       </Attributes>
@@ -776,7 +776,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
         <returns>Ein <see langword="DateTime" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -838,8 +838,8 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <param name="format">Die auf das konvertierte <see langword="DateTime" /> anzuwendende Formatstruktur. Zu den gültigen Format zählt „yyyy-MM-ddTHH:mm:sszzzzzz“ und dessen Teilmengen. Es wird validiert, ob die Zeichenfolge dieses Format aufweist.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
+        <param name="format">Die auf das konvertierte <see langword="DateTime" /> anzuwendende Formatstruktur. Ein gültiges Format ist yyyy-MM-ddTHH:mm:sszzzzzz und die Teilmengen davon. Es wird validiert, ob die Zeichenfolge dieses Format aufweist.</param>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
         <returns>Ein <see langword="DateTime" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -881,8 +881,8 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <param name="formats">Ein Array, das die Formatstrukturen enthält, die auf das konvertierte <see langword="DateTime" /> angewendet werden sollen. Zu den gültigen Format zählt „yyyy-MM-ddTHH:mm:sszzzzzz“ und dessen Teilmengen.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
+        <param name="formats">Ein Array, das die Formatstrukturen enthält, die auf das konvertierte <see langword="DateTime" /> angewendet werden sollen. Ein gültiges Format ist yyyy-MM-ddTHH:mm:sszzzzzz und die Teilmengen davon.</param>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.DateTime" />-Äquivalent.</summary>
         <returns>Ein <see langword="DateTime" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -933,8 +933,8 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       <Docs>
         <param name="s">Der zu konvertierende <see cref="T:System.String" />-Wert.</param>
         <param name="dateTimeOption">Einer der Enumerationswerte, die angeben, ob das Datum in die Ortszeit konvertiert oder als UTC-Zeit (Coordinated Universal Time) beibehalten werden soll, falls es sich um ein UTC-Datum handelt.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> mithilfe von <see cref="T:System.Xml.XmlDateTimeSerializationMode" /> in eine <see cref="T:System.DateTime" />-Struktur.</summary>
-        <returns>Ein <see cref="T:System.DateTime" />-Äquivalent von <see cref="T:System.String" />.</returns>
+        <summary>Konvertiert die <see cref="T:System.String" /> mithilfe von <see cref="T:System.DateTime" /> in eine <see cref="T:System.Xml.XmlDateTimeSerializationMode" />-Struktur.</summary>
+        <returns>Ein <see cref="T:System.DateTime" />-Äquivalent der <see cref="T:System.String" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NullReferenceException"><paramref name="s" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentNullException"><paramref name="dateTimeOption" /> ist <see langword="null" />.</exception>
@@ -1061,7 +1061,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <param name="format">Das Format, aus dem <paramref name="s" /> konvertiert wird. Der Formatparameter kann eine beliebige Teilmenge der W3C-Empfehlung für den XML-DateTime-Typ sein. (Weitere Informationen finden Sie im <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see>-Abschnitt der XML-Schemaspezifikation.) Die Gültigkeit der Zeichenfolge <paramref name="s" /> wird anhand dieses Formats überprüft.</param>
+        <param name="format">Das Format, aus dem <paramref name="s" /> konvertiert wird. Der Formatparameter kann eine beliebige Teilmenge der W3C-Empfehlung für den XML-DateTime-Typ sein. (Weitere Informationen finden Sie im <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see>-Abschnitt der XML-Schemaspezifikation.) Es wird validiert, ob die Zeichenfolge <paramref name="s" /> dieses Format aufweist.</param>
         <summary>Konvertiert den angegebenen <see cref="T:System.String" /> in ein <see cref="T:System.DateTimeOffset" />-Äquivalent.</summary>
         <returns>Das <see cref="T:System.DateTimeOffset" />-Äquivalent der angegebenen Zeichenfolge.</returns>
         <remarks>
@@ -1135,7 +1135,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <param name="formats">Ein Array von Formaten, aus denen <paramref name="s" /> konvertiert werden kann. Jedes Format in <paramref name="formats" /> kann eine beliebige Teilmenge der W3C-Empfehlung für den XML-DateTime-Typ sein. (Weitere Informationen finden Sie im <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see>-Abschnitt der XML-Schemaspezifikation.) Die Gültigkeit der Zeichenfolge <paramref name="s" /> wird im Vergleich mit einem dieser Formate überprüft.</param>
+        <param name="formats">Ein Array von Formaten, aus denen <paramref name="s" /> konvertiert werden kann. Jedes Format in <paramref name="formats" /> kann eine beliebige Teilmenge der W3C-Empfehlung für den XML-DateTime-Typ sein. (Weitere Informationen finden Sie im <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see>-Abschnitt der XML-Schemaspezifikation.) Es wird validiert, ob die Zeichenfolge <paramref name="s" /> eines dieser Formate aufweist.</param>
         <summary>Konvertiert den angegebenen <see cref="T:System.String" /> in ein <see cref="T:System.DateTimeOffset" />-Äquivalent.</summary>
         <returns>Das <see cref="T:System.DateTimeOffset" />-Äquivalent der angegebenen Zeichenfolge.</returns>
         <remarks>
@@ -1207,7 +1207,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Decimal" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Decimal" />-Äquivalent.</summary>
         <returns>Ein <see langword="Decimal" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -1250,7 +1250,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Double" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Double" />-Äquivalent.</summary>
         <returns>Ein <see langword="Double" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1315,7 +1315,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Guid" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Guid" />-Äquivalent.</summary>
         <returns>Ein <see langword="Guid" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -1355,7 +1355,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Int16" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Int16" />-Äquivalent.</summary>
         <returns>Ein <see langword="Int16" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -1398,7 +1398,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Int32" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Int32" />-Äquivalent.</summary>
         <returns>Ein <see langword="Int32" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -1441,7 +1441,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Int64" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Int64" />-Äquivalent.</summary>
         <returns>Ein <see langword="Int64" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -1477,7 +1477,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -1489,7 +1489,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.SByte" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.SByte" />-Äquivalent.</summary>
         <returns>Ein <see langword="SByte" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -1532,7 +1532,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.Single" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.Single" />-Äquivalent.</summary>
         <returns>Ein <see langword="Single" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1558,7 +1558,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Konvertiert stark typisierte Daten in eine gleichbedeutende <see cref="T:System.String" />-Darstellung.</summary>
+        <summary>Konvertiert stark typisierten Daten in eine <see cref="T:System.String" />-Entsprechung.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ToString">
@@ -1597,7 +1597,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       <Docs>
         <param name="value">Der zu konvertierende Wert.</param>
         <summary>Konvertiert das <see cref="T:System.Boolean" />-Element in eine <see cref="T:System.String" />.</summary>
-        <returns>Eine Zeichenfolgendarstellung von <see langword="Boolean" />, d. h. „true“ oder „false“.</returns>
+        <returns>Eine Zeichenfolgendarstellung von <see langword="Boolean" />, d. h. "true" oder "false".</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1705,7 +1705,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-2.0;netcore-2.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;netcore-3.0">
           <AttributeName>System.Obsolete("Use XmlConvert.ToString() that takes in XmlDateTimeSerializationMode")</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1721,7 +1721,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       <Docs>
         <param name="value">Der zu konvertierende Wert.</param>
         <summary>Konvertiert das <see cref="T:System.DateTime" />-Element in eine <see cref="T:System.String" />.</summary>
-        <returns>Eine Zeichenfolgendarstellung von <see langword="DateTime" /> im Format „yyyy-MM-ddTHH:mm:ss , wobei „T“ ein konstantes Literal ist.</returns>
+        <returns>Eine Zeichenfolgendarstellung von <see langword="DateTime" /> im Format yyyy-MM-ddTHH:mm:ss , wobei "T" ein konstantes Literal ist.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2080,7 +2080,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2213,7 +2213,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2258,7 +2258,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2303,7 +2303,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2353,7 +2353,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="value">Der zu konvertierende Wert.</param>
-        <param name="format">Die Formatstruktur, die die Anzeige der konvertierten Zeichenfolge definiert. Zu den gültigen Format zählt „yyyy-MM-ddTHH:mm:sszzzzzz“ und dessen Teilmengen.</param>
+        <param name="format">Die Formatstruktur, die die Anzeige der konvertierten Zeichenfolge definiert. Ein gültiges Format ist yyyy-MM-ddTHH:mm:sszzzzzz und die Teilmengen davon.</param>
         <summary>Konvertiert das <see cref="T:System.DateTime" />-Element in eine <see cref="T:System.String" />.</summary>
         <returns>Eine Zeichenfolgendarstellung von <see langword="DateTime" /> im angegebenen Format.</returns>
         <remarks>
@@ -2405,8 +2405,8 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       <Docs>
         <param name="value">Der zu konvertierende <see cref="T:System.DateTime" />-Wert.</param>
         <param name="dateTimeOption">Einer der <see cref="T:System.Xml.XmlDateTimeSerializationMode" />-Werte, die angeben, wie der <see cref="T:System.DateTime" />-Wert behandelt wird.</param>
-        <summary>Konvertiert die <see cref="T:System.DateTime" />-Struktur mithilfe von <see cref="T:System.Xml.XmlDateTimeSerializationMode" /> in eine <see cref="T:System.String" />.</summary>
-        <returns>Ein <see cref="T:System.String" />-Äquivalent von <see cref="T:System.DateTime" />.</returns>
+        <summary>Konvertiert die <see cref="T:System.DateTime" />-Struktur mithilfe von <see cref="T:System.String" /> in eine <see cref="T:System.Xml.XmlDateTimeSerializationMode" />.</summary>
+        <returns>Ein <see cref="T:System.String" />-Äquivalent der <see cref="T:System.DateTime" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">Der <paramref name="dateTimeOption" />-Wert ist nicht zulässig.</exception>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="value" />-Wert oder der <paramref name="dateTimeOption" />-Wert ist <see langword="null" />.</exception>
@@ -2448,7 +2448,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       <Docs>
         <param name="value">Der zu konvertierende <see cref="T:System.DateTimeOffset" />.</param>
         <param name="format">Das Format, in das <paramref name="s" /> konvertiert wird. Der Formatparameter kann eine beliebige Teilmenge der W3C-Empfehlung für den XML-DateTime-Typ sein. (Weitere Informationen finden Sie im <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see>-Abschnitt der XML-Schemaspezifikation.)</param>
-        <summary>Konvertiert den angegebenen <see cref="T:System.DateTimeOffset" /> in einen <see cref="T:System.String" /> im angegebenen Format.</summary>
+        <summary>Konvertiert den angegebenen <see cref="T:System.DateTimeOffset" /> im angegebenen Format in einen <see cref="T:System.String" />.</summary>
         <returns>Eine <see cref="T:System.String" />-Darstellung im angegebenen Format des bereitgestellten <see cref="T:System.DateTimeOffset" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -2498,7 +2498,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge. Das Format der Zeichenfolge muss dem W3C XML-Schema Teil 2 entsprechen: „Datentypempfehlungen für Dauer“.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.TimeSpan" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.TimeSpan" />-Äquivalent.</summary>
         <returns>Ein <see langword="TimeSpan" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.FormatException"><paramref name="s" /> hat nicht das richtige Format zum Darstellen eines <see langword="TimeSpan" />-Werts.</exception>
@@ -2532,7 +2532,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2544,7 +2544,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.UInt16" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.UInt16" />-Äquivalent.</summary>
         <returns>Ein <see langword="UInt16" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -2580,7 +2580,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2592,7 +2592,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.UInt32" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.UInt32" />-Äquivalent.</summary>
         <returns>Ein <see langword="UInt32" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -2628,7 +2628,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2">
+        <Attribute FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8;netcore-2.2;dotnet-uwp-10.0;netcore-3.0">
           <AttributeName>System.CLSCompliant(false)</AttributeName>
         </Attribute>
       </Attributes>
@@ -2640,7 +2640,7 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
       </Parameters>
       <Docs>
         <param name="s">Die zu konvertierende Zeichenfolge.</param>
-        <summary>Konvertiert den <see cref="T:System.String" /> in ein <see cref="T:System.UInt64" />-Äquivalent.</summary>
+        <summary>Konvertiert die <see cref="T:System.String" /> in ein <see cref="T:System.UInt64" />-Äquivalent.</summary>
         <returns>Ein <see langword="UInt64" />-Äquivalent der Zeichenfolge.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="s" /> ist <see langword="null" />.</exception>
@@ -2757,7 +2757,7 @@ catch(Exception e)
       </Parameters>
       <Docs>
         <param name="name">Der zu überprüfende Name.</param>
-        <summary>Überprüft, ob der Name ein gültiger <see langword="NCName" /> gemäß der W3C-Empfehlung für XML (Extended Markup Language) ist. Ein <see langword="NCName" /> darf keinen Doppelpunkt enthalten.</summary>
+        <summary>Überprüft, ob der Name ein gültiger <see langword="NCName" /> gemäß der W3C-Empfehlung für XML (Extended Markup Language) ist. Ein <see langword="NCName" /> kann keinen Doppelpunkt enthalten.</summary>
         <returns>Der Name, wenn dieser ein gültiger NCName ist.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="name" /> ist <see langword="null" /> oder <c>String.Empty</c>.</exception>
@@ -2965,7 +2965,7 @@ catch(Exception e) {
       </Parameters>
       <Docs>
         <param name="content">Der zu überprüfende <see cref="T:System.String" />.</param>
-        <summary>Gibt die übergebene Zeichenfolgeninstanz zurück, wenn alle Zeichen im Zeichenfolgenargument gültige Leerraumzeichen sind.</summary>
+        <summary>Gibt die übergebene Zeichenfolgeninstanz zurück, wenn alle Zeichen im Zeichenfolgenargument gültige Leerzeichen sind.</summary>
         <returns>Die übergebene Zeichenfolgeninstanz, wenn alle Zeichen im Zeichenfolgenargument gültige Leerraumzeichen sind, andernfalls <see langword="null" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
