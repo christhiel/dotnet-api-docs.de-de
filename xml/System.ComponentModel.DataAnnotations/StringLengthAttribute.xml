@@ -1,5 +1,5 @@
 <Type Name="StringLengthAttribute" FullName="System.ComponentModel.DataAnnotations.StringLengthAttribute">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="51d331bc16db945d74a534119894a67783c52523" /><Meta Name="ms.sourcegitcommit" Value="8e213bb5e6801f6e29861ba72664978ad00e34fa" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/18/2019" /><Meta Name="ms.locfileid" Value="56387768" /></Metadata><TypeSignature Language="C#" Value="public class StringLengthAttribute : System.ComponentModel.DataAnnotations.ValidationAttribute" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="c5702fa8b42a49316d32fa07f8c2ec6567d686d5" /><Meta Name="ms.sourcegitcommit" Value="bac13a81377b1c4ebf3990e3287a6f1700f73751" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/19/2019" /><Meta Name="ms.locfileid" Value="57936536" /></Metadata><TypeSignature Language="C#" Value="public class StringLengthAttribute : System.ComponentModel.DataAnnotations.ValidationAttribute" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit StringLengthAttribute extends System.ComponentModel.DataAnnotations.ValidationAttribute" />
   <TypeSignature Language="DocId" Value="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" />
   <TypeSignature Language="VB.NET" Value="Public Class StringLengthAttribute&#xA;Inherits ValidationAttribute" />
@@ -38,9 +38,10 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- ASP.NET Dynamic Data können CRUD (Create, Read, Update und Delete)-Vorgänge in einem Datenmodell. Sie können die minimale und maximale Länge von Zeichen für jedes Feld angeben, wenn Daten eingefügt oder aktualisiert. Für Zeichen-Datentypen die <xref:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength%2A> und <xref:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength%2A> Eigenschaften identifizieren die größte Anzahl von Bytes, die erforderlich sind, um eine Zeichenfolge zu speichern.  
-  
-   
+ ASP.NET Dynamic Data können CRUD (Create, Read, Update und Delete)-Vorgänge in einem Datenmodell. Sie können die minimale und maximale Länge von Zeichen für jedes Feld angeben, wenn Daten eingefügt oder aktualisiert. Für Zeichen-Datentypen die <xref:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength%2A> und <xref:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength%2A> Eigenschaften identifizieren die größte Anzahl von Bytes, die erforderlich sind, um eine Zeichenfolge zu speichern.
+ 
+Sie können [kombinierte Formatierung](~/docs/standard/base-types/composite-formatting.md) Platzhalter in der Fehlermeldung: {0} ist der Name der Eigenschaft; {1} ist die maximale Länge und {2} ist die minimale Länge.
+Die Platzhalter zu entsprechen, den Argumenten, die übergeben werden, die <xref:System.String.Format%2A?displayProperty=nameWithType> Methode zur Laufzeit.   
   
 ## Examples  
  Das folgende Beispiel zeigt, wie Sie die Anzahl der Zeichen in einem Feld beschränken. Dieses Beispiel funktioniert mit dem ThumbnailPhotoFileName-Feld in der Tabelle "Products" in der AdventureWorksLT-Datenbank. Das Feld ist 4 Zeichen beschränkt durch Anwenden der <xref:System.ComponentModel.DataAnnotations.StringLengthAttribute> -Attribut auf die partielle Klasse, die die Product-Entität darstellt.  
@@ -59,6 +60,10 @@ public class ProductMetadata
     [StringLength(4, ErrorMessage = "The ThumbnailPhotoFileName value cannot exceed 4 characters. ")]  
     public object ThumbnailPhotoFileName;  
   
+    [ScaffoldColumn(true)]  
+    [StringLength(4, ErrorMessage = "The {0} value cannot exceed {1} characters. ")]  
+    public object PhotoFileName;  
+
 }  
 ```  
   
@@ -73,6 +78,10 @@ Public Class ProductMetadata
     <ScaffoldColumn(True)> _   
     <StringLength(4, ErrorMessage := "The ThumbnailPhotoFileName value cannot exceed 4 characters. ")> _   
     Public ThumbnailPhotoFileName As Object   
+  
+    <ScaffoldColumn(True)> _   
+    <StringLength(4, ErrorMessage := "The {0} value cannot exceed {1} characters. ")> _   
+    Public PhotoFileName As Object   
   
 End Class  
 ```  
