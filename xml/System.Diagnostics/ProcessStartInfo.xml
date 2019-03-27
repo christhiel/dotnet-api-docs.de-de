@@ -1,5 +1,5 @@
 <Type Name="ProcessStartInfo" FullName="System.Diagnostics.ProcessStartInfo">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="e29164c9c15cf68d07935ec9ee9ae939cae76006" /><Meta Name="ms.sourcegitcommit" Value="8e213bb5e6801f6e29861ba72664978ad00e34fa" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/18/2019" /><Meta Name="ms.locfileid" Value="56389185" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProcessStartInfo" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="bc25ef95ea680c41d6e7234eae9ea21bd20943a2" /><Meta Name="ms.sourcegitcommit" Value="c181255cb311fdd498458b3f12418f773c97254a" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/21/2019" /><Meta Name="ms.locfileid" Value="58320823" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProcessStartInfo" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ProcessStartInfo extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.ProcessStartInfo" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ProcessStartInfo" />
@@ -146,7 +146,7 @@
         <Parameter Name="fileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">Eine Anwendung oder ein Dokument, mit der bzw. dem ein Prozess gestartet wird.</param>
+        <param name="fileName">Eine Anwendung oder ein Dokument, mit dem ein Prozess gestartet wird.</param>
         <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.ProcessStartInfo" />-Klasse und gibt einen Dateinamen an, mit dem der Prozess gestartet werden soll, z. B. eine Anwendung oder ein Dokument.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -765,7 +765,7 @@ Argumente werden von der Zielanwendung analysiert und interpretiert und müssen 
       </ReturnValue>
       <Docs>
         <summary>Ruft die zu startende Anwendung oder das zu startende Dokument ab oder legt die Anwendung bzw. das Dokument fest.</summary>
-        <value>Der Name der zu startenden Anwendung oder der Dokumentname eines einer Anwendung zugeordneten Dateityps, für den eine Standard-Öffnen-Aktion verfügbar ist. Der Standardwert ist eine leere Zeichenfolge ("").</value>
+        <value>Der Name der zu startenden Anwendung oder der Dokumentname eines einer Anwendung zugeordneten Dateityps, für den eine Standard-Open-Aktion verfügbar ist. Der Standardwert ist eine leere Zeichenfolge ("").</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -995,7 +995,7 @@ Argumente werden von der Zielanwendung analysiert und interpretiert und müssen 
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft einen Wert ab, der angibt, ob die Fehlerausgabe einer Anwendung in den <see cref="P:System.Diagnostics.Process.StandardError" />-Datenstrom geschrieben wird, oder legt diesen fest.</summary>
+        <summary>Ruft einen Wert ab, der angibt, ob die Fehlerausgabe einer Anwendung in den <see cref="P:System.Diagnostics.Process.StandardError" />-Stream geschrieben wird, oder legt diesen fest.</summary>
         <value><see langword="true" />, wenn die Fehlerausgabe in <see cref="P:System.Diagnostics.Process.StandardError" /> geschrieben werden soll; andernfalls <see langword="false" />. Die Standardeinstellung ist <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1011,47 +1011,25 @@ Argumente werden von der Zielanwendung analysiert und interpretiert und müssen 
  Im Gegensatz dazu <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> startet asynchrone Lesevorgänge auf dem <xref:System.Diagnostics.Process.StandardError%2A> Stream. Diese Methode ermöglicht es einen angegebenen Ereignishandler für die Streamausgabe und gibt sofort zurück, an den Aufrufer und der andere Aufgaben durchführen kann, während die Streamausgabe an den Ereignishandler geleitet wird.  
   
 > [!NOTE]
->  Die Anwendung, die die asynchrone Ausgabe verarbeitet aufrufen, sollte die <xref:System.Diagnostics.Process.WaitForExit%2A> Methode, um sicherzustellen, dass der Ausgabepuffer geleert wurde.  
+>  Die Anwendung, die die asynchrone Ausgabe verarbeitet aufrufen, sollte die <xref:System.Diagnostics.Process.WaitForExit%2A?displayProperty=nameWithType> Methode, um sicherzustellen, dass der Ausgabepuffer geleert wurde.  
   
  Synchrone Lesevorgänge verursachen eine Abhängigkeit zwischen dem Aufrufer, die beim Lesen aus der <xref:System.Diagnostics.Process.StandardError%2A> Stream und dem untergeordneten Element verarbeitet das Schreiben in den Stream. Diese Abhängigkeiten können dazu führen, dass Deadlock-Bedingungen. Wenn der Aufrufer aus dem umgeleiteten Stream von einem untergeordneten Prozess liest, ist es das untergeordnete Element abhängig. Der Aufrufer wartet den Lesevorgang, bis das untergeordnete Element in den Stream schreibt oder den Stream schließt. Wenn der untergeordnete Prozess genügend Daten zum Füllen von seinen umgeleiteten-Streams schreibt, ist es vom übergeordneten Element abhängig. Der untergeordnete Prozess wartet der nächste Schreibvorgang, bis das übergeordnete Element aus der vollständige Stream gelesen oder den Stream schließt. Die Deadlockbedingung entsteht, wenn es sich bei dem Aufrufer und dem untergeordneten Prozess, der jeweils anderen zum Abschließen eines Vorgangs warten, und wenn keines von beiden. Sie können Deadlocks vermeiden, durch die Auswertung der Abhängigkeiten zwischen dem Aufrufer und dem untergeordneten Prozess.  
+
+Die letzten beiden Beispiele in diesem Abschnitt verwenden die <xref:System.Diagnostics.Process.Start%2A> Methode zum Starten einer ausführbaren Datei mit dem Namen *Write500Lines.exe*. Das folgende Beispiel enthält Quellcode.
+
+[!code-csharp[Executable launched by Process.Start](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/write500lines.cs)]
+[!code-vb[Executable launched by Process.Start](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb)]
+
+Das folgende Beispiel zeigt, wie aus einem Stream umgeleiteten Fehler lesen und warten Sie, bis des untergeordnete Prozess beendet wird. Es wird eine Deadlock-Bedingung vermieden, durch den Aufruf `p.StandardError.ReadToEnd` vor `p.WaitForExit`. Eine Deadlock-Bedingung kann dazu führen, wenn das übergeordnete Element Aufrufe verarbeiten `p.WaitForExit` vor `p.StandardError.ReadToEnd` und der untergeordneten Prozess genug Text zum Ausfüllen des umgeleiteten Streams schreibt. Der übergeordnete Prozess würde für den untergeordneten Prozess zu beenden, unbegrenzt warten. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.   
+
+[!code-csharp[Reading from the error stream](~/samples/snippets/csharp/api/system.diagnostics/process/standarderror/stderror-sync.cs)]
+[!code-vb[Reading from the error stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standarderror/stderror-sync.vb)]  
   
- Der folgende C#-Code zeigt beispielsweise das Lesen aus einem Datenstrom umgeleitet und warten Sie, bis des untergeordnete Prozess zu beenden.  
-  
-```csharp  
-// Start the child process.  
- Process p = new Process();  
- // Redirect the error stream of the child process.  
- p.StartInfo.UseShellExecute = false;  
- p.StartInfo.RedirectStandardError = true;  
- p.StartInfo.FileName = "Write500Lines.exe";  
- p.Start();  
- // Do not wait for the child process to exit before  
- // reading to the end of its redirected error stream.  
- // p.WaitForExit();  
- // Read the error stream first and then wait.  
- string error = p.StandardError.ReadToEnd();  
- p.WaitForExit();  
-```  
-  
- Im Codebeispiel wird eine Deadlockbedingung vermieden, durch den Aufruf `p.StandardError.ReadToEnd` vor `p.WaitForExit`. Eine Deadlock-Bedingung kann dazu führen, wenn das übergeordnete Element Aufrufe verarbeiten `p.WaitForExit` vor `p.StandardError.ReadToEnd` und der untergeordneten Prozess genug Text zum Ausfüllen des umgeleiteten Streams schreibt. Der übergeordnete Prozess würde für den untergeordneten Prozess zu beenden, unbegrenzt warten. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.  
-  
- Es ist ein ähnliches Problem auf, wenn es sich bei Sie gesamten Text sowohl die Standardausgabe und Standardfehlerstreams gelesen werden. Beispielsweise führt der folgende C#-Code einen Lesevorgang für beide Streams.  
-  
-```csharp  
-// Do not perform a synchronous read to the end of both  
-// redirected streams.  
-// string output = p.StandardOutput.ReadToEnd();  
-// string error = p.StandardError.ReadToEnd();  
-// p.WaitForExit();  
-// Use asynchronous read operations on at least one of the streams.  
-p.BeginOutputReadLine();  
-string error = p.StandardError.ReadToEnd();  
-p.WaitForExit();  
-```  
-  
- Im Codebeispiel wird die Deadlockbedingung vermieden, indem asynchrone Lesevorgänge auf dem <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Eine Deadlock-Bedingung führt, wenn das übergeordnete Element Aufrufe verarbeiten `p.StandardOutput.ReadToEnd` gefolgt von `p.StandardError.ReadToEnd` und der untergeordneten Prozess schreibt genug Text zum Fehlerstreams zu füllen. Der übergeordnete Prozess würde auf unbestimmte Zeit warten, für den untergeordneten Prozess zu schließen die <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.  
-  
- Sie können asynchrone Lesevorgänge verwenden, um diese Abhängigkeiten und deren potenzielle Deadlocks zu vermeiden. Alternativ können Sie die Deadlockbedingung vermeiden, durch das Erstellen von zwei Threads, und Lesen der Ausgabe der einzelnen Datenströme in einem separaten Thread.  
+Es ist ein ähnliches Problem auf, wenn es sich bei Sie gesamten Text sowohl die Standardausgabe und Standardfehlerstreams gelesen werden. Der folgende c#-Code führt z. B. einen Lesevorgang für beide Streams. Es werden die Deadlockbedingung vermieden, indem asynchrone Lesevorgänge auf dem <xref:System.Diagnostics.Process.StandardError%2A> Stream. Eine Deadlock-Bedingung führt, wenn das übergeordnete Element Aufrufe verarbeiten `p.StandardOutput.ReadToEnd` gefolgt von `p.StandardError.ReadToEnd` und der untergeordneten Prozess schreibt genug Text zum Fehlerstreams zu füllen. Der übergeordnete Prozess würde auf unbestimmte Zeit warten, für den untergeordneten Prozess zu schließen die <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.  
+[!code-csharp[Reading from both streams](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-async.cs)]
+[!code-vb[Reading from both streams](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-async.vb)]  
+
+Sie können asynchrone Lesevorgänge verwenden, um diese Abhängigkeiten und deren potenzielle Deadlocks zu vermeiden. Alternativ können Sie die Deadlockbedingung vermeiden, durch das Erstellen von zwei Threads, und Lesen der Ausgabe der einzelnen Datenströme in einem separaten Thread.  
   
    
   
@@ -1117,7 +1095,7 @@ p.WaitForExit();
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft einen Wert ab, der angibt, ob die Eingabe für eine Anwendung aus dem <see cref="P:System.Diagnostics.Process.StandardInput" />-Datenstrom gelesen wird, oder legt diesen fest.</summary>
+        <summary>Ruft einen Wert ab, der angibt, ob die Eingabe für eine Anwendung aus dem <see cref="P:System.Diagnostics.Process.StandardInput" />-Stream gelesen wird, oder legt diesen fest.</summary>
         <value><see langword="true" />, wenn die Eingabe von <see cref="P:System.Diagnostics.Process.StandardInput" /> gelesen werden soll; andernfalls <see langword="false" />. Die Standardeinstellung ist <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1214,35 +1192,21 @@ p.WaitForExit();
   
  Synchrone Lesevorgänge verursachen eine Abhängigkeit zwischen dem Aufrufer, die beim Lesen aus der <xref:System.Diagnostics.Process.StandardOutput%2A> Stream und dem untergeordneten Element verarbeitet das Schreiben in den Stream. Diese Abhängigkeiten können dazu führen, dass Deadlock-Bedingungen. Wenn der Aufrufer aus dem umgeleiteten Stream von einem untergeordneten Prozess liest, ist es das untergeordnete Element abhängig. Der Aufrufer wartet den Lesevorgang, bis das untergeordnete Element in den Stream schreibt oder den Stream schließt. Wenn der untergeordnete Prozess genügend Daten zum Füllen von seinen umgeleiteten-Streams schreibt, ist es vom übergeordneten Element abhängig. Der untergeordnete Prozess wartet der nächste Schreibvorgang, bis das übergeordnete Element aus der vollständige Stream gelesen oder den Stream schließt. Die Deadlockbedingung entsteht, wenn es sich bei dem Aufrufer und dem untergeordneten Prozess, der jeweils anderen zum Abschließen eines Vorgangs warten, und wenn keines von beiden. Sie können Deadlocks vermeiden, durch die Auswertung der Abhängigkeiten zwischen dem Aufrufer und dem untergeordneten Prozess.  
   
- Der folgende C#-Code zeigt beispielsweise das Lesen aus einem Datenstrom umgeleitet und warten Sie, bis des untergeordnete Prozess zu beenden.  
-  
-```csharp  
-Process p = new Process();  
-p.StartInfo.UseShellExecute = false;  
-p.StartInfo.RedirectStandardOutput = true;  
-p.StartInfo.FileName = "Write500Lines.exe";  
-p.Start();  
-  
-// To avoid deadlocks, always read the output stream first and then wait.  
-string output = p.StandardOutput.ReadToEnd();  
-p.WaitForExit();  
-```  
-  
- Im Codebeispiel wird eine Deadlockbedingung vermieden, durch den Aufruf `p.StandardOutput.ReadToEnd` vor `p.WaitForExit`. Eine Deadlock-Bedingung kann dazu führen, wenn das übergeordnete Element Aufrufe verarbeiten `p.WaitForExit` vor `p.StandardOutput.ReadToEnd` und der untergeordneten Prozess genug Text zum Ausfüllen des umgeleiteten Streams schreibt. Der übergeordnete Prozess würde für den untergeordneten Prozess zu beenden, unbegrenzt warten. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardOutput%2A> Stream.  
-  
- Es ist ein ähnliches Problem auf, wenn es sich bei Sie gesamten Text sowohl die Standardausgabe und Standardfehlerstreams gelesen werden. Beispielsweise führt der folgende C#-Code einen Lesevorgang für beide Streams.  
-  
-```csharp  
-// To avoid deadlocks, use asynchronous read operations on at least one of the streams.  
-// Do not perform a synchronous read to the end of both redirected streams.  
-p.BeginOutputReadLine();  
-string error = p.StandardError.ReadToEnd();  
-p.WaitForExit();  
-```  
-  
- Im Codebeispiel wird die Deadlockbedingung vermieden, indem asynchrone Lesevorgänge auf dem <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Eine Deadlock-Bedingung führt, wenn das übergeordnete Element Aufrufe verarbeiten `p.StandardOutput.ReadToEnd` gefolgt von `p.StandardError.ReadToEnd` und der untergeordneten Prozess schreibt genug Text zum Fehlerstreams zu füllen. Der übergeordnete Prozess würde auf unbestimmte Zeit warten, für den untergeordneten Prozess zu schließen die <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.  
-  
- Sie können asynchrone Lesevorgänge verwenden, um diese Abhängigkeiten und deren potenzielle Deadlocks zu vermeiden. Alternativ können Sie die Deadlockbedingung vermeiden, durch das Erstellen von zwei Threads, und Lesen der Ausgabe der einzelnen Datenströme in einem separaten Thread.  
+Die letzten beiden Beispiele in diesem Abschnitt verwenden die <xref:System.Diagnostics.Process.Start%2A> Methode zum Starten einer ausführbaren Datei mit dem Namen *Write500Lines.exe*. Das folgende Beispiel enthält Quellcode.
+
+[!code-csharp[Executable launched by Process.Start](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/write500lines.cs)]
+[!code-vb[Executable launched by Process.Start](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb)]
+
+Das folgende Beispiel zeigt, wie aus einem umgeleiteten Stream zu lesen und zu warten, bis der untergeordnete Prozess beendet wird. Im Beispiel wird eine Deadlockbedingung vermieden, durch den Aufruf `p.StandardOutput.ReadToEnd` vor `p.WaitForExit`. Eine Deadlock-Bedingung kann dazu führen, wenn das übergeordnete Element Aufrufe verarbeiten `p.WaitForExit` vor `p.StandardOutput.ReadToEnd` und der untergeordneten Prozess genug Text zum Ausfüllen des umgeleiteten Streams schreibt. Der übergeordnete Prozess würde für den untergeordneten Prozess zu beenden, unbegrenzt warten. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardOutput%2A> Stream.  
+
+[!code-csharp[Reading synchronously from a redirected output stream](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-sync.cs)]  
+[!code-vb[Reading synchronously from a redirected output stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-sync.vb)] 
+
+Es ist ein ähnliches Problem auf, wenn es sich bei Sie gesamten Text sowohl die Standardausgabe und Standardfehlerstreams gelesen werden. Im folgenden Beispiel wird einen Lesevorgang für beide Streams. Es werden die Deadlockbedingung vermieden, indem asynchrone Lesevorgänge auf dem <xref:System.Diagnostics.Process.StandardError%2A> Stream. Eine Deadlock-Bedingung führt, wenn das übergeordnete Element Aufrufe verarbeiten `p.StandardOutput.ReadToEnd` gefolgt von `p.StandardError.ReadToEnd` und der untergeordneten Prozess schreibt genug Text zum Fehlerstreams zu füllen. Der übergeordnete Prozess würde auf unbestimmte Zeit warten, für den untergeordneten Prozess zu schließen die <xref:System.Diagnostics.Process.StandardOutput%2A> Stream. Der untergeordnete Prozess würde auf unbestimmte Zeit warten, für das übergeordnete Element zum Lesen aus der vollständigen <xref:System.Diagnostics.Process.StandardError%2A> Stream.   
+[!code-csharp[Reading from a redirected output and error stream](~/samples/snippets/csharp/api/system.diagnostics/process/standardoutput/stdoutput-async.cs)]  
+[!code-vb[Reading from a redirected output and error stream](~/samples/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-async.vb)]    
+
+Sie können asynchrone Lesevorgänge verwenden, um diese Abhängigkeiten und deren potenzielle Deadlocks zu vermeiden. Alternativ können Sie die Deadlockbedingung vermeiden, durch das Erstellen von zwei Threads, und Lesen der Ausgabe der einzelnen Datenströme in einem separaten Thread.  
   
    
   
@@ -1801,8 +1765,8 @@ Wenn <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> ist `false`, <xr
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft das Arbeitsverzeichnis für den zu startenden Prozess ab oder legt es fest, wenn die <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> Eigenschaft <see langword="false" /> ist. Ruft das Verzeichnis ab, das den zu startenden Prozess enthält, oder legt es fest, wenn <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /><see langword="true" /> ist.</summary>
-        <value>Wenn <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> <see langword="true" /> ist, der voll gekennzeichnete Name des Verzeichnisses, das den zu startenden Prozess enthält. Wenn die <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> Eigenschaft <see langword="false" /> ist, das Arbeitsverzeichnis für den zu startenden Prozess. Der Standardwert ist eine leere Zeichenfolge ("").</value>
+        <summary>Wenn die <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> Eigenschaft <see langword="false" /> ist, ruft das Arbeitsverzeichnis für den zu startenden Prozess ab oder legt ihn fest,. Wenn <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /><see langword="true" /> ist, ruft das Verzeichnis ab, das den zu startenden Prozess enthält oder legt ihn fest.</summary>
+        <value>Wenn <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> ist <see langword="true" />, der voll gekennzeichnete Name des Verzeichnisses, das den zu startenden Prozess enthält. Wenn die <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> Eigenschaft <see langword="false" /> ist, das Arbeitsverzeichnis für den zu startenden Prozess. Der Standardwert ist eine leere Zeichenfolge ("").</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
