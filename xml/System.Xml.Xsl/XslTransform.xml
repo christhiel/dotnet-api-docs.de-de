@@ -1,5 +1,5 @@
 <Type Name="XslTransform" FullName="System.Xml.Xsl.XslTransform">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="4afbddceffc87860ef4d77470b0756b765447efc" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58736738" /></Metadata><TypeSignature Language="C#" Value="public sealed class XslTransform" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="56c2b4ff793499c653610da3b24ae254bfe9e9b3" /><Meta Name="ms.sourcegitcommit" Value="3efce15f3841385ee3ba24bd71ff0c0cf9a47815" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/03/2019" /><Meta Name="ms.locfileid" Value="58875371" /></Metadata><TypeSignature Language="C#" Value="public sealed class XslTransform" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit XslTransform extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Xml.Xsl.XslTransform" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class XslTransform" />
@@ -85,13 +85,52 @@
   
 -   Die `msxsl:script` -Element muss enthalten eine `implements-prefix` Attribut mit dem Präfix, das den Skriptblock zugeordneten Namespace darstellt. Dieser Namespace muss innerhalb der im Stylesheet definiert werden. Ein Stylesheet kann mehrere Skriptblöcke enthalten, die vom Namespace gruppiert werden. Sie können keine Skriptblöcke mit mehreren Sprachen in den gleichen Namespace haben. Skriptblöcke können eine in einen anderen Skriptblock definierte Funktion aufrufen, die Skriptblöcke in den gleichen Namespace befinden. Der Inhalt eines Skriptblocks wird anhand der Regeln und die Syntax der Skriptsprache analysiert (angegeben durch die `language` Attribut). Z. B. Wenn Sie einen C#-Skriptblock hatten, Kommentare würde das Präfix der `//` Zeichen. Die Kommentare muss ein gültiger XML-Inhalt.  
   
- `Note` Es wird empfohlen, dass Sie in einem CDATA-Abschnitt Skriptblöcke umschließen.  
+> [!NOTE]
+> Es wird empfohlen, dass Sie in einem CDATA-Abschnitt Skriptblöcke umschließen.
   
-```  
-<msxsl:script implements-prefix='xy' language='C#'>  
-  <![CDATA[  
-  // Add code here.  
-  ]]]></format>
+ [!INCLUDE [xsltransform-script](~/includes/xsltransform-script.md)] 
+   
+ Funktionen können innerhalb des `msxsl:script`-Elements deklariert werden. In der folgenden Tabelle werden die Namespaces angezeigt, die standardmäßig unterstützt werden.  
+  
+|Unterstützte Namespaces|Beschreibung |  
+|--------------------------|-----------------|  
+|`System`|Systemklassen.|  
+|`System.Collection`|Auflistungsklassen.|  
+|`System.Text`|Behandlung von Textklassen.|  
+|`System.Xml`|Kern-XML-Klassen.|  
+|`System.Xml.Xsl`|XSLT-Klassen.|  
+|`System.Xml.XPath`|XPath-Klassen (XML Path Language).|  
+  
+ Die bereitgestellten Argumente und Rückgabewerte, die durch die Skriptfunktionen definierten müssen einen der unten aufgeführten Typen World Wide Web Consortium (W3C) sein. Die folgende Tabelle enthält die Zuordnung zwischen den W3C-Typen, entweder XPath- oder XSLT, und die entsprechenden .NET Framework-Klassen.  
+  
+|W3C-Typ|Entsprechende.|  
+|--------------|---------------------------|  
+|Zeichenfolge (XPath)|`System.String`|  
+|Boolescher Wert (XPath)|`System.Boolean`|  
+|Anzahl (XPath)|`System.Double`|  
+|Ergebnisstrukturfragment (XSLT)|`System.Xml.XPath.XPathNavigator`|  
+|Gruppe von Knoten (XPath)|`System.Xml.XPath.XPathNodeIterator`|  
+  
+ Wenn die Skriptfunktion einen der numerischen Typen Int16, UInt16, Int32, UInt32, Int64, UInt64, Single oder Decimal, diese Typen sind, umgewandelt in Double, das W3C XPath-Typnummer des zugeordnet.  
+  
+ Wenn eine Funktion, die aufgerufen wird, wird eine Ausnahme ausgelöst. das Ergebnis des Arguments in einer der erforderlichen Typen konvertiert werden kann.  
+  
+> [!NOTE]
+>  `msxsl:script` und `msxsl:node-list` sind die einzigen Funktionen aus der `urn:schemas-microsoft-com:xslt` Namespace, der von Microsoft Intune die <xref:System.Xml.Xsl.XslTransform> Klasse.  
+  
+ <xref:System.Xml.Xsl.XslTransform> kann die common Language Runtime (CLR)-Code als Erweiterungsmechanismus verwenden. Dies erfolgt durch Übergabe einer Instanz einer Klasse, die <xref:System.Xml.Xsl.XslTransform> -Klasse und Aufrufen ihrer öffentlichen Methoden in einem XSLT-Stylesheet. Mit definierten Methoden den `params` -Schlüsselwort, das eine nicht definierte Anzahl von Parametern übergeben werden kann, in diesem Szenario nicht korrekt funktionieren. Finden Sie unter [Params](~/docs/csharp/language-reference/keywords/params.md) Weitere Details.  
+  
+ Weitere Informationen finden Sie unter [XSLT-Transformationen mit der XslTransform-Klasse](~/docs/standard/data/xml/xslt-transformations-with-the-xsltransform-class.md).  
+  
+   
+  
+## Examples  
+ Im folgenden Beispiel transformiert das angegebene XML-Dokument und gibt das Ergebnis an die Konsole.  
+  
+ [!code-csharp[Classic WebData XslTransform Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XslTransform Example/CS/source.cs#1)]
+ [!code-vb[Classic WebData XslTransform Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XslTransform Example/VB/source.vb#1)]  
+  
+ ]]></format>
     </remarks>
     <threadsafe><see cref="T:System.Xml.Xsl.XslTransform" /> Objekte sind nur für Transformationsvorgänge threadsicher. Andere Vorgänge sind nicht unbedingt threadsicher sein. Sie müssen sicherstellen, dass keine anderen Methoden für das Objekt während des Ladevorgangs aufgerufen werden.</threadsafe>
   </Docs>
