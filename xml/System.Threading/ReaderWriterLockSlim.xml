@@ -1,5 +1,5 @@
 <Type Name="ReaderWriterLockSlim" FullName="System.Threading.ReaderWriterLockSlim">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="3464038fcf06fcd6ab722a9c4b6f82b812141c99" /><Meta Name="ms.sourcegitcommit" Value="84c54c0c7d64827a5637d1f05e74e1f0598606a1" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="08/27/2018" /><Meta Name="ms.locfileid" Value="42942852" /></Metadata><TypeSignature Language="C#" Value="public class ReaderWriterLockSlim : IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="0fee7c4885e8d1b579011bb73bd7952ec0ae6dc1" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58696267" /></Metadata><TypeSignature Language="C#" Value="public class ReaderWriterLockSlim : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ReaderWriterLockSlim extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Threading.ReaderWriterLockSlim" />
   <TypeSignature Language="VB.NET" Value="Public Class ReaderWriterLockSlim&#xA;Implements IDisposable" />
@@ -21,6 +21,7 @@
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -31,7 +32,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Stellt eine Sperre dar, mit der der Zugriff auf eine Ressource verwaltet wird. Mehrere Threads können damit Lesezugriff oder exklusiven Schreibzugriff erhalten.</summary>
+    <summary>Stellt eine Sperre dar, mit der der Zugriff auf eine Ressource verwaltet wird. Mehrere Threads können hierbei Lesezugriff oder exklusiven Schreibzugriff erhalten.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
@@ -48,7 +49,7 @@
  Unabhängig von die Rekursionsrichtlinie für die kann nur ein Thread im Schreibmodus zu einem beliebigen Zeitpunkt sein. Wenn ein Thread im Schreibmodus befindet, kann kein anderer Thread die Sperre in einem anderen Modus eingeben. Nur ein Thread kann jederzeit im erweiterbaren Modus sein. Eine beliebige Anzahl von Threads kann im Lesemodus befindet, und kann es möglicherweise ein Thread im erweiterbaren Modus befindet, während andere Threads befinden sich im Lesemodus.  
   
 > [!IMPORTANT]
->  Dieser Typ implementiert die <xref:System.IDisposable> Schnittstelle. Wenn Sie mit dem Typ haben, sollten Sie es entweder direkt oder indirekt freigeben. Damit des Typs direkt freigegeben werden, rufen Sie die <xref:System.IDisposable.Dispose%2A> -Methode in einer `try` / `catch` Block. Um sie indirekt löschen, verwenden Sie ein Sprachkonstrukt wie `using` (in c#) oder `Using` (in Visual Basic). Weitere Informationen finden Sie im Abschnitt "mithilfe von ein-Objekt, das implementiert" IDisposable "" in der <xref:System.IDisposable> schnittstellenthema.  
+>  Dieser Typ implementiert die <xref:System.IDisposable>-Schnittstelle. Nach Abschluss der Verwendung sollten Sie den Typ entweder direkt oder indirekt löschen. Zum direkten Löschen des Typs rufen Sie seine <xref:System.IDisposable.Dispose%2A>-Methode in einem `try`/`catch`-Block auf. Zum indirekten Löschen verwenden Sie ein Sprachkonstrukt wie `using` (in C#) oder `Using` (in Visual Basic). Weitere Informationen finden Sie im Abschnitt „Verwenden eines Objekts, das IDisposable implementiert“ des Themas „Die <xref:System.IDisposable>-Schnittstelle“.  
   
  <xref:System.Threading.ReaderWriterLockSlim> Thread-Affinität ist verwaltet werden. Das heißt, jedes <xref:System.Threading.Thread> Objekt muss eine eigene Methodenaufrufen zu aktivieren und Deaktivieren des Sperrmodi zu machen. Kein Thread kann es sich um den Modus eines anderen Threads ändern.  
   
@@ -101,16 +102,16 @@
 ## <a name="lock-states"></a>Status der Sperre  
  Möglicherweise finden Sie es nützlich, um die Sperre bezüglich ihrer Status vorstellen. Ein <xref:System.Threading.ReaderWriterLockSlim> einen von vier Status: nicht zugewiesen werden, lesen, aktualisieren und zu schreiben.  
   
--   Nicht eingegeben: In diesem Status keine Threads die Sperre eingegeben haben (oder alle Threads, die Sperre beendet haben).  
+-   Nicht eingegeben wird: In diesem Status keine Threads die Sperre eingegeben haben (oder alle Threads, die Sperre beendet haben).  
   
 -   Lesen: In diesem Zustand haben einen oder mehrere Threads die Sperre für den Lesezugriff auf die geschützte Ressource eingegeben.  
   
     > [!NOTE]
     >  Ein Thread kann die Sperre im Lesemodus Lesemodus, mithilfe der <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> oder <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> Methoden oder ein Downgrade von erweiterbaren Modus erhalten hat.  
   
--   Upgrade: In diesem Fall ein Thread verfügt über die Sperre für den Lesezugriff mit der Option, um Schreibzugriff aktualisieren (d. h. im erweiterbaren Modus), und NULL oder mehr Threads die Sperre für den Lesezugriff eingegeben haben. Nicht mehr als einem Thread zu einem Zeitpunkt kann die Sperre mit der Option zum Aktualisieren; Es werden zusätzliche Threads, die versuchen, die Zuweisung des erweiterbaren Modus blockiert.  
+-   Upgrade: In diesem Fall wurde ein Thread die Sperre für Lesezugriff mit der Option zum Aktualisieren, um Schreibzugriff eingegeben (d. h. im erweiterbaren Modus), und NULL oder mehr Threads die Sperre für den Lesezugriff eingegeben haben. Nicht mehr als einem Thread zu einem Zeitpunkt kann die Sperre mit der Option zum Aktualisieren; Es werden zusätzliche Threads, die versuchen, die Zuweisung des erweiterbaren Modus blockiert.  
   
--   Schreiben: In diesem Fall hat ein Thread die Sperre für den Schreibzugriff auf die geschützte Ressource zugewiesen. Dieser Thread befindet sich exklusiven Besitz der Sperre. Es wird keinem anderen Thread, der versucht, die Sperre aus irgendeinem Grund blockiert.  
+-   Schreiben: In diesem Fall wurde ein Thread die Sperre für den Schreibzugriff auf die geschützte Ressource zugewiesen. Dieser Thread befindet sich exklusiven Besitz der Sperre. Es wird keinem anderen Thread, der versucht, die Sperre aus irgendeinem Grund blockiert.  
   
  Die folgende Tabelle beschreibt die Übergänge zwischen Zuständen der Sperre, sperren, die keine Rekursion, wenn ein Thread zulassen `t` führt die Aktion, die in der linken Spalte beschrieben. Zum Zeitpunkt die Aktion dauert `t` Modus "keine" hat. (Besonderen Fall, in denen `t` befindet sich im erweiterbaren Modus wird in die Fußnoten zur Tabelle beschrieben.) Die oberste Zeile gibt den ursprünglichen Status der Sperre. Die Zellen beschreiben, was geschieht mit den Thread, und Änderungen an den Sperrzustand in Klammern angezeigt.  
   
@@ -200,6 +201,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -271,6 +273,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="recursionPolicy" Type="System.Threading.LockRecursionPolicy" />
@@ -342,6 +345,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -400,6 +404,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -425,10 +430,10 @@
         </remarks>
         <exception cref="T:System.Threading.SynchronizationLockException"><see cref="P:System.Threading.ReaderWriterLockSlim.WaitingReadCount" /> ist größer als 0 (null).  
   
-- oder -  
+- oder - 
  <see cref="P:System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount" /> ist größer als 0 (null).  
   
-- oder -  
+- oder - 
  <see cref="P:System.Threading.ReaderWriterLockSlim.WaitingWriteCount" /> ist größer als 0 (null).</exception>
       </Docs>
     </Member>
@@ -456,6 +461,7 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -494,11 +500,11 @@
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist gleich <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat versucht, die Lesesperre zu erlangen, obwohl er die Lesesperre bereits besitzt.  
   
-- oder -  
+- oder - 
 Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist gleich <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat versucht, die Lesesperre zu erlangen, obwohl er die Schreibsperre bereits besitzt.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Dieser Grenzwert ist so groß, dass diese Ausnahme nie für Anwendungen auftreten sollte.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Dieser Grenzwert ist so groß, dass diese Ausnahme nie für Anwendungen auftreten sollte.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
     </Member>
@@ -526,6 +532,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -570,11 +577,11 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und dem aktuellen Thread wurde die Sperre bereits in einem der Modi zugewiesen.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich im Lesemodus, sodass durch eine Zuweisung des erweiterbaren Modus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
     </Member>
@@ -602,6 +609,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -636,11 +644,11 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und dem aktuellen Thread wurde die Sperre bereits in einem der Modi zugewiesen.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich im Lesemodus und besitzt noch keine Schreibsperre, sodass durch eine Zuweisung des Schreibmodus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
     </Member>
@@ -668,13 +676,14 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Verringert die Rekursionszahl für den Lesemodus und beendet den Lesemodus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
+        <summary>Verringert die Rekursionszahl für den Lesemodus oder beendet den Lesemodus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -724,13 +733,14 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Verringert die Rekursionszahl für den erweiterbaren Modus und beendet den erweiterbaren Modus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
+        <summary>Verringert die Rekursionszahl für den erweiterbaren Modus oder beendet den erweiterbaren Modus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -786,13 +796,14 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Verringert die Rekursionszahl für den Schreibmodus und beendet den Schreibmodus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
+        <summary>Verringert die Rekursionszahl für den Schreibmodus oder beendet den Schreibmodus, wenn das Rekursionsergebnis 0 (null) ist.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -842,6 +853,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -893,6 +905,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -944,6 +957,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -995,6 +1009,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.LockRecursionPolicy</ReturnType>
@@ -1044,6 +1059,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1085,6 +1101,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1126,6 +1143,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -1178,6 +1196,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1208,8 +1227,8 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="millisecondsTimeout" /> ist negativ, aber ungleich <see cref="F:System.Threading.Timeout.Infinite" /> (-1), der den einzigen zulässigen negativen Wert darstellt.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1238,6 +1257,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1246,7 +1266,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="timeout">Das Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
+        <param name="timeout">Der Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
         <summary>Versucht, die Sperre im Lesemodus zu erhalten. Optional wird ein Timeout berücksichtigt.</summary>
         <returns><see langword="true" />, wenn der aufrufende Thread den Lesemodus erhalten hat, andernfalls <see langword="false" />.</returns>
         <remarks>
@@ -1268,11 +1288,11 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> ist negativ, aber ungleich -1 Millisekunden. (Dies ist der einzige zulässige negative Wert.)  
   
-- oder -  
+- oder - 
 Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.Int32.MaxValue" /> Millisekunden.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1312,6 +1332,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1342,11 +1363,11 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich bereits im Lesemodus, sodass durch eine Zuweisung des erweiterbaren Modus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="millisecondsTimeout" /> ist negativ, aber ungleich <see cref="F:System.Threading.Timeout.Infinite" /> (-1), der den einzigen zulässigen negativen Wert darstellt.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1375,6 +1396,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1383,7 +1405,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="timeout">Das Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
+        <param name="timeout">Der Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
         <summary>Versucht, die Sperre im erweiterbaren Modus zu erhalten. Optional wird ein Timeout berücksichtigt.</summary>
         <returns><see langword="true" />, wenn der aufrufende Thread den erweiterbaren Modus erhalten hat, andernfalls <see langword="false" />.</returns>
         <remarks>
@@ -1405,14 +1427,14 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich bereits im Lesemodus, sodass durch eine Zuweisung des erweiterbaren Modus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> ist negativ, aber ungleich -1 Millisekunden. (Dies ist der einzige zulässige negative Wert.)  
   
-- oder -  
+- oder - 
 Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.Int32.MaxValue" /> Millisekunden.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1452,6 +1474,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1492,11 +1515,11 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich bereits im Lesemodus, sodass durch eine Zuweisung des Schreibmodus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="millisecondsTimeout" /> ist negativ, aber ungleich <see cref="F:System.Threading.Timeout.Infinite" /> (-1), der den einzigen zulässigen negativen Wert darstellt.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1525,6 +1548,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1533,7 +1557,7 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="timeout">Das Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
+        <param name="timeout">Der Zeitintervall bis zum Timeout, oder -1 Millisekunden, um unbegrenzt zu warten.</param>
         <summary>Versucht, die Sperre im Schreibmodus zu erhalten. Optional wird ein Timeout berücksichtigt.</summary>
         <returns><see langword="true" />, wenn der aufrufende Thread den Schreibmodus erhalten hat, andernfalls <see langword="false" />.</returns>
         <remarks>
@@ -1551,14 +1575,14 @@ Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Di
         </remarks>
         <exception cref="T:System.Threading.LockRecursionException">Die <see cref="P:System.Threading.ReaderWriterLockSlim.RecursionPolicy" />-Eigenschaft ist <see cref="F:System.Threading.LockRecursionPolicy.NoRecursion" />, und der aktuelle Thread hat die Sperre bereits erhalten.  
   
-- oder -  
+- oder - 
 Der aktuelle Thread befindet sich bereits im Lesemodus, sodass durch eine Zuweisung des Schreibmodus die Möglichkeit eines Deadlocks entstehen würde.  
   
-- oder -  
-Die Anzahl von Rekursionen würde die Kapazität des Zählers überschreiten. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
+- oder - 
+Die Rekursionszahl würde die Kapazität des Zählers übersteigen. Die Kapazität ist so groß, dass Anwendungen diese Grenze niemals erreichen dürften.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Der Wert von <paramref name="timeout" /> ist negativ, aber ungleich -1 Millisekunden. (Dies ist der einzige zulässige negative Wert.)  
   
-- oder -  
+- oder - 
 Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.Int32.MaxValue" /> Millisekunden.</exception>
         <exception cref="T:System.ObjectDisposedException">Das <see cref="T:System.Threading.ReaderWriterLockSlim" />-Objekt wurde verworfen.</exception>
       </Docs>
@@ -1587,6 +1611,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1597,7 +1622,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung der Sperre im Lesemodus warten.</summary>
+        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung des Lesemodus warten.</summary>
         <value>Die Gesamtzahl von Threads, die auf eine Zuweisung des Lesemodus warten.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1643,6 +1668,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1653,7 +1679,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung der Sperre im erweiterbaren Modus warten.</summary>
+        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung des erweiterbaren Modus warten.</summary>
         <value>Die Gesamtzahl von Threads, die auf eine Zuweisung des erweiterbaren Modus warten.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -1699,6 +1725,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -1709,7 +1736,7 @@ Der Wert von <paramref name="timeout" /> ist größer als <see cref="F:System.In
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung der Sperre im Schreibmodus warten.</summary>
+        <summary>Ruft die Gesamtzahl von Threads ab, die auf eine Zuweisung des Schreibmodus warten.</summary>
         <value>Die Gesamtzahl von Threads, die auf eine Zuweisung des Schreibmodus warten.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
