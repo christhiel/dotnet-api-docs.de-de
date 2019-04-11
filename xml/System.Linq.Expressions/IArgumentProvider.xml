@@ -1,5 +1,5 @@
 <Type Name="IArgumentProvider" FullName="System.Linq.Expressions.IArgumentProvider">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="c1987bffe3d2cba01471534c9b3fac3e0c152c07" /><Meta Name="ms.sourcegitcommit" Value="434f60616a9793fa8436744549fc856e94f7a648" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="08/24/2018" /><Meta Name="ms.locfileid" Value="36555647" /></Metadata><TypeSignature Language="C#" Value="public interface IArgumentProvider" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="18b622ce78fe8295b4aac908d2b2687c5ed1f01f" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58715516" /></Metadata><TypeSignature Language="C#" Value="public interface IArgumentProvider" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IArgumentProvider" />
   <TypeSignature Language="DocId" Value="T:System.Linq.Expressions.IArgumentProvider" />
   <TypeSignature Language="VB.NET" Value="Public Interface IArgumentProvider" />
@@ -20,20 +20,21 @@
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>Stellt eine interne Schnittstelle für den Zugriff auf die Argumente von mehreren Strukturknoten (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression und InexExpression) bereit.  Sie sollten diese API nicht verwenden.  Sie ist nur aufgrund von DLL-Umgestaltung öffentlich und nur für interne Leistungsoptimierungen vorhanden.  
+    <summary>Stellt eine interne Schnittstelle für den Zugriff auf die Argumente von mehreren Strukturknoten (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression und IndexExpression) bereit.  Sie sollten diese API nicht verwenden.  Sie ist nur aufgrund von DLL-Refactoring öffentlich und nur für interne Leistungsoptimierungen vorhanden.  
   
-Dadurch werden zwei Optimierungen ermöglicht, bei denen Ausdrucksbaumstrukturen verkleinert werden.  Die erste Optimierung ermöglicht für die Strukturknoten, dass sie IList&lt;T&gt; statt ReadOnlyCollection enthalten.  IList&lt;T&gt; spart die Kosten für das Zuordnen der ReadOnlyCollection für jeden Knoten.  Die zweite Optimierung ermöglicht das Erstellen spezialisierter Unterklassen, die eine bestimmte Anzahl von Argumenten (z. B. Block2, Block3, Block4) enthalten.  Daher wird für diese Knoten vermieden, dass für sie sowohl eine ReadOnlyCollection als auch ein Array zum Speichern von deren Elementen zugeordnet wird, wodurch 32 Bytes pro Knoten gespart werden.  
+Dadurch werden zwei Optimierungen ermöglicht, mit denen Ausdrucksbäume verkleinert werden.  Die erste Optimierung ermöglicht für die Strukturknoten, dass sie IList&lt;T&gt; statt ReadOnlyCollection enthalten.  IList&lt;T&gt; spart die Kosten für das Zuordnen der ReadOnlyCollection für jeden Knoten.  Die zweite Optimierung ermöglicht das Erstellen spezialisierter Unterklassen, die eine bestimmte Anzahl von Argumenten (z.B. Block2, Block3, Block4) enthalten.  Daher verhindern diese Knoten die Zuordnung eines ReadOnlyCollection-Elements und eines Arrays zum Speichern ihrer Elemente, wodurch 32 Bytes pro Knoten gespart werden.  
   
-Die Knoten der Ausdrucksbaumstruktur machen weiterhin die ursprünglichen LINQ-Eigenschaften von ReadOnlyCollections verfügbar.  Dies geschieht, indem für die Knoten erneut ein Feld verwendet wird, in dem das Array oder ein Element gespeichert wird, das normalerweise im Array gespeichert würde.  
+Die Knoten des Ausdrucksbaums machen weiterhin die ursprünglichen LINQ-Eigenschaften von ReadOnlyCollections verfügbar.  Dies geschieht durch die erneute Verwendung eines Felds, in dem das Array sowie ein Element gespeichert wird, das normalerweise im Array gespeichert werden würde.  
   
-Für den Fall, dass es sich um ein Array handelt, erhält die Auflistung den Typ IList&lt;T&gt; anstelle von ReadOnlyCollection&lt;T&gt;.  Wenn der Knoten erstmalig erstellt wird, ist er ein Array.  Wenn der Compiler auf die Member zugreift, verwendet er diese Schnittstelle.  Durch Zugreifen auf Arrayelemente wird das Array in eine ReadOnlyCollection hochgestuft.  
+Für den Fall, dass es sich um ein Array handelt, erhält die Auflistung den Typ IList&lt;T&gt; anstelle von ReadOnlyCollection&lt;T&gt;.  Beim erstmaligen Erstellen ist der Knoten ein Array.  Der Compiler verwendet beim Zugreifen auf die Member diese Schnittstelle.  Durch Zugreifen auf Arrayelemente wird das Array auf ein ReadOnlyCollection-Element hochgestuft.  
   
-Für den Objektfall wir das erste Argument in einem Feld mit dem Objekttyp gespeichert.  Wenn der Knoten erstmalig erstellt wird, enthält das Feld den Ausdruck (Expression).  Der Compiler greift über diese Schnittstelle auf Argumente zu, und der Accessor für das erste Argument verwendet Expression.ReturnObject, um das Objekt zurückzugeben, das den Expression- oder ReadOnlyCollection-Fall verarbeitet.  Wenn der Benutzer auf die ReadOnlyCollection zugreift, wird das Objekt-Feld aktualisiert, sodass es direkt auf die ReadOnlyCollection verweist.  
+Für den Objektfall wird das erste Argument in einem Feld des Objekttyps gespeichert.  Beim erstmaligen Erstellen des Knotens enthält das Feld den Ausdruck.  Der Compiler greift über diese Schnittstelle auf Argumente zu, und der Accessor für das erste Argument verwendet Expression.ReturnObject, um das Objekt zurückzugeben, das den Expression- oder ReadOnlyCollection-Fall verarbeitet.  Wenn der Benutzer auf das ReadOnlyCollection-Element zugreift, wird das Objektfeld aktualisiert, sodass es direkt ReadOnlyCollection enthält.  
   
-Es ist unverzichtbar, dass die Ausdrücke stets dieselbe ReadOnlyCollection zurückgeben.  Andernfalls wird der Rewriter-Strukturdurchlauf abgebrochen.  Es ist eine bedeutende Änderung von LINQ v1, dass unterschiedliche ReadOnlyCollections aus demselben Ausdrucksknoten zurückgegeben werden.  Derzeit können sich Benutzer auf die Objektidentität verlassen, um zu erkennen, ob der Knoten geändert wurde.  Ein Speichern der ReadOnlyCollection in einem überladenen Feld reduziert die Speicherauslastung und erhält die Kompatibilität für die öffentliche API.</summary>
+Es ist unverzichtbar, dass die Ausdrücke stets dasselbe ReadOnlyCollection-Objekt zurückgeben.  Andernfalls wird der Rewriter-Strukturdurchlauf abgebrochen.  Es ist eine bedeutende Änderung von LINQ v1, dass unterschiedliche ReadOnlyCollection-Objekte vom selben Ausdrucksknoten zurückgegeben werden.  Derzeit können sich Benutzer auf die Objektidentität verlassen, um zu erkennen, ob der Knoten geändert wurde.  Ein Speichern des ReadOnlyCollection-Objekts in einem überladenen Feld reduziert die Speicherauslastung und erhält die Kompatibilität für die öffentliche API.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -60,13 +61,14 @@ Es ist unverzichtbar, dass die Ausdrücke stets dieselbe ReadOnlyCollection zur�
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gibt die Anzahl der Argumente für den Ausdrucksbaumstrukturknoten zurück.  Sie sollten diesen Typ nicht verwenden.  Es ist nur aufgrund der Assemblyumgestaltung öffentlich und wird intern zur Leistungsoptimierung verwendet.</summary>
-        <value>Die Anzahl von Argumenten für den Ausdrucksstrukturknoten als <see cref="T:System.Int32" />.</value>
+        <summary>Gibt die Anzahl der Argumente an den Ausdrucksbaumstrukturknoten zurück.  Sie sollten diesen Typ nicht verwenden.  Es ist nur aufgrund der Assemblyumgestaltung öffentlich und wird intern zur Leistungsoptimierung verwendet.</summary>
+        <value>Die Anzahl der Argumente für den Ausdrucksbaumstrukturknoten als <see cref="T:System.Int32" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -93,6 +95,7 @@ Es ist unverzichtbar, dass die Ausdrücke stets dieselbe ReadOnlyCollection zur�
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Linq.Expressions.Expression</ReturnType>

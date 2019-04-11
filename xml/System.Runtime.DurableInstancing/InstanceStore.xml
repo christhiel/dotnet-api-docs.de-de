@@ -1,5 +1,5 @@
 <Type Name="InstanceStore" FullName="System.Runtime.DurableInstancing.InstanceStore">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="1e1c307c5d88796df0bd407c00fa925981bc8079" /><Meta Name="ms.sourcegitcommit" Value="9e3550fb2088d4faf2043f0acb29da4555519937" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="12/12/2018" /><Meta Name="ms.locfileid" Value="53292327" /></Metadata><TypeSignature Language="C#" Value="public abstract class InstanceStore" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="c2b12f4e5d58ec2076b24cd5a49c59b380186a2e" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58710050" /></Metadata><TypeSignature Language="C#" Value="public abstract class InstanceStore" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit InstanceStore extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.DurableInstancing.InstanceStore" />
   <TypeSignature Language="VB.NET" Value="Public MustInherit Class InstanceStore" />
@@ -19,9 +19,9 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein Dauerhaftigkeitsanbieter ermöglicht den Zugriff auf einen Instanzspeicher, und zwar durch die konkrete Impelementierung der <xref:System.Runtime.DurableInstancing.InstanceStore>-Klasse.  
+ Ein Dauerhaftigkeitsanbieter ermöglicht den Zugriff auf einen Instanzspeicher über eine konkrete Implementierung der der <xref:System.Runtime.DurableInstancing.InstanceStore> Klasse.  
   
- Dauerhaftigkeitsanbieter dürfen "InstanceHandle.Free" für an "TryCommand" übergebene Handles auch nach Abschluss der Befehlsausführung aufrufen. Starke Verweise auf InstanceHandle- bzw. InstanceOwner-Objekte dürfen von Dauerhaftigkeitsanbietern jedoch nicht verwaltet werden, da so möglicherweise verhindert wird, dass die Garbage Collection für "InstanceStore" durchgeführt wird.  
+ Persistenz-Provider können InstanceHandle.Free aufrufen, Handles, die an die TryCommand, übergeben werden, auch nachdem der Befehl beendet wurde. Aber Persistenz, die Anbieter keine starke gespeichert werden müssen Verweise auf InstanceHandle- bzw. InstanceOwner-Objekte, auf, wie diese InstanceStore verhindern kann, von der Garbage collection.  
   
 > [!WARNING]
 >  Workflowdefinitionen für beibehaltene Workflows können nicht geändert werden. Wenn eine Workflowdefinition geändert wird, nachdem es gespeichert wird, stürzt die Workflowlaufzeit beim erneuten des Workflows laden.  
@@ -81,7 +81,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein Host ruft die <xref:System.Runtime.DurableInstancing.InstanceStore.BeginExecute%2A>-Methode auf, um asynchron einen Dauerhaftigkeitsbefehl für einen Instanzhandle auszuführen. Der Host erhält den Instanzhandle, indem er die <xref:System.Runtime.DurableInstancing.InstanceStore.CreateInstanceHandle%2A>-Methode aufruft. Der Instanzhandle ist möglicherweise an Entitäten gebunden, die den Kontext und das Subjekt des Befehls darstellen, beispielsweise eine Instanz, einen Instanzbesitzer oder eine Instanzsperre.  Es kann nur jeweils ein Befehl für einen Instanzhandle ausgegeben werden.  
+ Ein Host Ruft die <xref:System.Runtime.DurableInstancing.InstanceStore.BeginExecute%2A> Methode, um asynchron einen dauerhaftigkeitsbefehl für einen Instanzhandle ausgeführt werden. Der Host erhält den Instanzhandle durch Aufrufen der <xref:System.Runtime.DurableInstancing.InstanceStore.CreateInstanceHandle%2A> Methode. Das Instanzhandle möglicherweise an Entitäten gebunden werden, die den Kontext und das Subjekt des Befehls, z. B. eine Instanz, eine instanzbesitzer oder eine Instanzsperre darstellen.  Nur ein Befehl kann zu einem Zeitpunkt für einen Instanzhandle ausgegeben werden.  
   
  ]]></format>
         </remarks>
@@ -121,7 +121,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Befehl ausgeführt werden kann, ruft der Dauerhaftigkeitsanbieter relevante Methoden für "InstancePersistenceContext" auf, um die Ergebnisse des Befehls bereitzustellen.  
+ Wenn der Befehl ausgeführt werden kann, ruft der Dauerhaftigkeitsanbieter relevante Methoden für "instancepersistencecontext" auf, um die Ergebnisse des Befehls bereitzustellen.  
   
 > [!WARNING]
 >  Auch wenn diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
@@ -299,9 +299,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Einige Hosts leiten den zu verwendenden Instanzbesitzer ab, indem sie diese Eigenschaft lesen. "WorkflowApplication" kann diese Eigenschaft verwenden. "WorkflowServiceHost" verwendet diese Eigenschaft nicht.  
+ Einige Hosts leiten den zu verwendenden instanzbesitzer durch diese Eigenschaft lesen. WorkflowApplication kann diese Eigenschaft verwenden. WorkflowServiceHost wird diese Eigenschaft nicht verwendet werden.  
   
- Für die DefaultInstanceOwner-Eigenschaft muss NULL festgelegt werden, wenn sie nicht mehr benötigt wird. Für InstanceStore-Objekte wird möglicherweise keine Garbage Collection durchgeführt, wenn "DefaultInstanceOwner" nicht NULL ist.  
+ Auf null, wenn es nicht mehr erforderlich ist, muss die Eigenschaft "defaultinstanceowner" festgelegt werden. InstanceStore-Objekte möglicherweise nicht die Garbage Collection, wenn "defaultinstanceowner" nicht null ist.  
   
 > [!WARNING]
 >  Auch wenn diese Methode, als deklariert wird `virtual` statt `abstract`, es ist keine Implementierung. Diese Methode muss überschrieben werden, um Funktionen bereitzustellen.  
@@ -336,7 +336,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn "BeginExecute" im Rahmen einer Transaktion aufgerufen wurde, enthält dieser Status möglicherweise Daten, für die kein Commit ausgeführt wurde. Sobald der erfolgreiche Commit der Transaktion erfolgt ist, können die Daten im InstanceView-Objekt als übernommen angesehen werden.  
+ Wenn BeginExecute im Rahmen einer Transaktion aufgerufen wurde, kann dieser Zustand nicht gespeicherte Daten enthalten. Nachdem die Transaktion erfolgreich ein Commit ausgeführt wird, ein Commit ausgeführt die Daten in die "instanceview" Objekt betrachtet werden kann.  
   
  ]]></format>
         </remarks>
@@ -426,12 +426,12 @@
         <param name="command">Der Befehl, der ausgeführt werden soll.</param>
         <param name="timeout">Der Timeoutwert für den Vorgang.</param>
         <summary>Führt einen Dauerhaftigkeitsbefehl synchron aus. <see cref="T:System.Activities.DurableInstancing.LoadWorkflowCommand" /> und <see cref="T:System.Activities.DurableInstancing.SaveWorkflowCommand" /> sind Beispiele für Dauerhaftigkeitsbefehle.</summary>
-        <returns>Ein InstanceView-Objekt, das nach erfolgreicher Beendigung des Befehls den bekannten Zustand der Instanz darstellt.  Wenn „Execute“ im Rahmen einer Transaktion aufgerufen wurde, enthält dieser Status möglicherweise Daten, für die kein Commit ausgeführt wurde. Sobald der erfolgreiche Commit der Transaktion erfolgt ist, können die Daten im InstanceView-Objekt als übernommen angesehen werden.</returns>
+        <returns>Ein InstanceView-Objekt, das nach erfolgreicher Beendigung des Befehls den bekannten Zustand der Instanz darstellt.  Wenn "Execute" im Rahmen einer Transaktion aufgerufen wurde, enthält dieser Status möglicherweise Daten, für die kein Commit ausgeführt wurde. Sobald der erfolgreiche Commit der Transaktion erfolgt ist, können die Daten im InstanceView-Objekt als übernommen angesehen werden.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Ein Host ruft die <xref:System.Runtime.DurableInstancing.InstanceStore.Execute%2A>-Methode auf, um asynchron einen Dauerhaftigkeitsbefehl für einen Instanzhandle auszuführen, den der Host durch Aufruf der <xref:System.Runtime.DurableInstancing.InstanceStore.CreateInstanceHandle%2A>-Methode erhält. Der Instanzhandle ist möglicherweise an Entitäten gebunden, die den Kontext und das Subjekt des Befehls darstellen, beispielsweise eine Instanz, einen Instanzbesitzer oder eine Instanzsperre.  Es kann nur jeweils ein Befehl für einen Instanzhandle ausgegeben werden.  
+ Ein Host Ruft die <xref:System.Runtime.DurableInstancing.InstanceStore.Execute%2A> Methode, um einen dauerhaftigkeitsbefehl für einen Instanzhandle auszuführen, die durch den Aufruf der Host erhält den <xref:System.Runtime.DurableInstancing.InstanceStore.CreateInstanceHandle%2A> Methode. Das Instanzhandle möglicherweise an Entitäten gebunden werden, die den Kontext und das Subjekt des Befehls, z. B. eine Instanz, eine instanzbesitzer oder eine Instanzsperre darstellen.  Nur ein Befehl kann zu einem Zeitpunkt für einen Instanzhandle ausgegeben werden.  
   
 > [!WARNING]
 >  Wenn diese Methode mit ausgeführt wird ein <xref:System.Activities.DurableInstancing.CreateWorkflowOwnerCommand>, wird ein <xref:System.Runtime.DurableInstancing.InstanceOwner> und an die Instanz zu binden. Dies bedeutet, dass kein anderer Prozess auf diesen Workflow zugreifen kann; Wenn der Prozess beendet wird, kann nicht der Workflow wiederhergestellt oder ausgeführt werden. Wenn ein solcher Workflow, das in diesem Fall ausgeführt wird eine <xref:System.Runtime.DurableInstancing.InstanceLockedException> ausgelöst.  
@@ -490,7 +490,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Gibt ein Array von InstanceOwner-Objekten zurück.  
+ Gibt ein Array von InstanceOwner-Objekten.  
   
  ]]></format>
         </remarks>
@@ -627,7 +627,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Wenn der Befehl ausgeführt werden kann, ruft der Dauerhaftigkeitsanbieter relevante Methoden für den  <xref:System.Runtime.DurableInstancing.InstancePersistenceContext> auf, um die Ergebnisse des Befehls bereitzustellen.  
+ Wenn der Befehl ausgeführt werden kann, ruft der Dauerhaftigkeitsanbieter relevante Methoden für die <xref:System.Runtime.DurableInstancing.InstancePersistenceContext> um die Ergebnisse des Befehls bereitzustellen.  
   
  ]]></format>
         </remarks>
