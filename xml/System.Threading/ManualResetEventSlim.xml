@@ -1,5 +1,5 @@
 <Type Name="ManualResetEventSlim" FullName="System.Threading.ManualResetEventSlim">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="6bfe1fac458d712458e423e75ec417d0b0331f40" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58710042" /></Metadata><TypeSignature Language="C#" Value="public class ManualResetEventSlim : IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="b5248c3c063a15c2bc461ce02f6e57a727c1eff7" /><Meta Name="ms.sourcegitcommit" Value="3efce15f3841385ee3ba24bd71ff0c0cf9a47815" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/03/2019" /><Meta Name="ms.locfileid" Value="58874630" /></Metadata><TypeSignature Language="C#" Value="public class ManualResetEventSlim : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ManualResetEventSlim extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Threading.ManualResetEventSlim" />
   <TypeSignature Language="VB.NET" Value="Public Class ManualResetEventSlim&#xA;Implements IDisposable" />
@@ -44,7 +44,7 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Sie können diese Klasse verwenden, für eine bessere Leistung als <xref:System.Threading.ManualResetEvent> Wenn die Wartezeiten voraussichtlich sehr kurz eingeschätzt werden und wenn das Ereignis nicht prozessübergreifend ist. <xref:System.Threading.ManualResetEventSlim> verwendet während des Wartens auf die Signalisierung des Ereignisses für kurze Zeit ausgelastete Spinvorgänge. Bei kurzen Wartezeiten können Spinvorgänge sehr viel weniger ressourcenintensiv sein als das Warten mit Wait-Handles. Wenn das Ereignis jedoch nicht innerhalb eines bestimmten Zeitraums signalisiert wird, greift <xref:System.Threading.ManualResetEventSlim> auf einen normalen Wartevorgang mit Ereignishandle zurück.  
+ Sie können diese Klasse verwenden, für eine bessere Leistung als <xref:System.Threading.ManualResetEvent> Wenn die Wartezeiten voraussichtlich sehr kurz eingeschätzt werden und wenn das Ereignis nicht prozessübergreifend ist. <xref:System.Threading.ManualResetEventSlim> verwendet ausgelastete Spinvorgänge für kurze Zeit, während er darauf wartet, dass das Ereignis signalisiert wird. Bei kurzen Wartezeiten können Spinvorgänge sehr viel weniger ressourcenintensiv sein als das Warten mit Wait-Handles. Wenn das Ereignis jedoch nicht innerhalb eines bestimmten Zeitraums signalisiert wird, greift <xref:System.Threading.ManualResetEventSlim> auf einen normalen Wartevorgang mit Ereignishandle zurück.  
   
    
   
@@ -133,7 +133,7 @@
       </Parameters>
       <Docs>
         <param name="initialState">True, um den Anfangszustand auf „signalisiert“ festzulegen, false um den Anfangszustand auf „nicht signalisiert“ festzulegen.</param>
-        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Threading.ManualResetEventSlim" />-Klasse mit einem booleschen Wert, der angibt, ob der Anfangszustand auf "signalisiert" festgelegt werden soll.</summary>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Threading.ManualResetEventSlim" />-Klasse mit einem booleschen Wert, der angibt, ob der anfängliche Zustand auf signalisiert festgelegt werden soll.</summary>
         <remarks>To be added.</remarks>
         <related type="Article" href="~/docs/standard/threading/overview-of-synchronization-primitives.md">Übersicht über Synchronisierungsprimitive</related>
       </Docs>
@@ -170,7 +170,7 @@
       <Docs>
         <param name="initialState">True, um den Anfangszustand auf "signalisiert" festzulegen, false um den Anfangszustand auf "nicht signalisiert" festzulegen.</param>
         <param name="spinCount">Die Anzahl von Spin-Wartevorgängen, die vor dem Fallback auf einen kernelbasierten Wartevorgang stattfinden.</param>
-        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Threading.ManualResetEventSlim" />-Klasse mit einem booleschen Wert, der angibt, ob der Anfangszustand auf "signalisiert" festgelegt werden soll, und einer festgelegten Spin-Anzahl.</summary>
+        <summary>Initialisiert eine neue Instanz der <see cref="T:System.Threading.ManualResetEventSlim" />-Klasse mit einem booleschen Wert, der angibt, ob der Anfangszustand auf „signalisiert“ festgelegt werden soll, und einer festgelegten Spin-Anzahl.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="spinCount" /> ist kleiner als 0 oder größer als der maximal zulässige Wert.</exception>
         <related type="Article" href="~/docs/standard/threading/overview-of-synchronization-primitives.md">Übersicht über Synchronisierungsprimitive</related>
@@ -521,9 +521,9 @@
       <Docs>
         <param name="millisecondsTimeout">Die Anzahl von Millisekunden, die gewartet wird, oder <see cref="F:System.Threading.Timeout.Infinite" /> (-1) für Warten ohne Timeout.</param>
         <summary>Blockiert den aktuellen Thread, bis das aktuelle <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt wird, wobei eine 32-Bit-Ganzzahl mit Vorzeichen zum Messen des Zeitintervalls verwendet wird.</summary>
-        <returns><see langword="true" />, wenn <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war; andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn die <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout" /> ist eine negative Zahl, jedoch nicht -1, was einen unbeschränkten Timeout darstellt.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout" /> ist eine negative Zahl, aber nicht -1. Der Wert -1 stellt ein Endlos-Timeout dar.</exception>
         <exception cref="T:System.InvalidOperationException">Die maximale Waiteranzahl wurde überschritten.</exception>
         <exception cref="T:System.ObjectDisposedException">Das Objekt wurde bereits verworfen.</exception>
         <related type="Article" href="~/docs/standard/threading/overview-of-synchronization-primitives.md">Übersicht über Synchronisierungsprimitive</related>
@@ -610,9 +610,9 @@
       <Docs>
         <param name="timeout">Eine <see cref="T:System.TimeSpan" />-Struktur, die die Anzahl der zu wartenden Millisekunden angibt, oder eine <see cref="T:System.TimeSpan" />-Struktur, die -1 Millisekunden zum unendlichen Warten angibt.</param>
         <summary>Blockiert den aktuellen Thread, bis das aktuelle <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt wird, wobei ein <see cref="T:System.TimeSpan" /> zum Messen des Zeitintervalls verwendet wird.</summary>
-        <returns><see langword="true" />, wenn <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war; andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn die <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="timeout" /> ist eine negative Zahl ungleich -1 Millisekunden, die ein unendliches Timeout darstellt. 
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="timeout" /> ist eine negative Zahl, jedoch nicht -1 Millisekunden, was ein Endlos-Timeout darstellt. 
 - oder - 
 Die Anzahl der Millisekunden in <paramref name="timeout" /> ist größer als in <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die maximale Waiteranzahl wurde überschritten.</exception>
@@ -655,10 +655,10 @@ Die Anzahl der Millisekunden in <paramref name="timeout" /> ist größer als in 
         <param name="millisecondsTimeout">Die Anzahl von Millisekunden, die gewartet wird, oder <see cref="F:System.Threading.Timeout.Infinite" /> (-1) für Warten ohne Timeout.</param>
         <param name="cancellationToken">Das zu überwachende <see cref="T:System.Threading.CancellationToken" />.</param>
         <summary>Blockiert den aktuellen Thread, bis das aktuelle <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt wird, wobei eine 32-Bit-Ganzzahl mit Vorzeichen zum Messen des Zeitintervalls verwendet und ein <see cref="T:System.Threading.CancellationToken" /> überwacht wird.</summary>
-        <returns><see langword="true" />, wenn <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war; andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn die <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.OperationCanceledException"><paramref name="cancellationToken" /> wurde abgebrochen.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout" /> ist eine negative Zahl, jedoch nicht -1, was einen unbeschränkten Timeout darstellt.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout" /> ist eine negative Zahl, aber nicht -1. Der Wert -1 stellt ein Endlos-Timeout dar.</exception>
         <exception cref="T:System.InvalidOperationException">Die maximale Waiteranzahl wurde überschritten.</exception>
         <exception cref="T:System.ObjectDisposedException">Das Objekt wurde bereits freigegeben oder das <see cref="T:System.Threading.CancellationTokenSource" />-Element, das <paramref name="cancellationToken" /> erstellt hat, wurde freigegeben.</exception>
         <related type="Article" href="~/docs/standard/threading/overview-of-synchronization-primitives.md">Übersicht über Synchronisierungsprimitive</related>
@@ -699,10 +699,10 @@ Die Anzahl der Millisekunden in <paramref name="timeout" /> ist größer als in 
         <param name="timeout">Eine <see cref="T:System.TimeSpan" />-Struktur, die die Anzahl der zu wartenden Millisekunden angibt, oder eine <see cref="T:System.TimeSpan" />-Struktur, die -1 Millisekunden zum unendlichen Warten angibt.</param>
         <param name="cancellationToken">Das zu überwachende <see cref="T:System.Threading.CancellationToken" />.</param>
         <summary>Blockiert den aktuellen Thread, bis das aktuelle <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt wird, wobei ein <see cref="T:System.TimeSpan" /> zum Messen des Zeitintervalls verwendet und ein <see cref="T:System.Threading.CancellationToken" /> überwacht wird.</summary>
-        <returns><see langword="true" />, wenn <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war; andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn die <see cref="T:System.Threading.ManualResetEventSlim" /> festgelegt war, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.OperationCanceledException"><paramref name="cancellationToken" /> wurde abgebrochen.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="timeout" /> ist eine negative Zahl ungleich -1 Millisekunden, die ein unendliches Timeout darstellt. 
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="timeout" /> ist eine negative Zahl, jedoch nicht -1 Millisekunden, was ein Endlos-Timeout darstellt. 
 - oder - 
 Die Anzahl der Millisekunden in <paramref name="timeout" /> ist größer als in <see cref="F:System.Int32.MaxValue" />.</exception>
         <exception cref="T:System.InvalidOperationException">Die maximale Waiteranzahl wurde überschritten.</exception>

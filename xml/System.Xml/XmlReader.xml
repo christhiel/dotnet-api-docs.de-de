@@ -1,5 +1,5 @@
 <Type Name="XmlReader" FullName="System.Xml.XmlReader">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="2fe814537e9f03817975516ef86aaf6ae51e22e7" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58723580" /></Metadata><TypeSignature Language="C#" Value="public abstract class XmlReader : IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="90a6a0facff37d5e17e797e128971423207eeb48" /><Meta Name="ms.sourcegitcommit" Value="2982b8c4cce02c2542285fcaf172f7544d6b80bc" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/09/2019" /><Meta Name="ms.locfileid" Value="59355136" /></Metadata><TypeSignature Language="C#" Value="public abstract class XmlReader : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit XmlReader extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Xml.XmlReader" />
   <TypeSignature Language="VB.NET" Value="Public MustInherit Class XmlReader&#xA;Implements IDisposable" />
@@ -69,7 +69,7 @@
  [Lesen der XML-Inhalt](#xmlreader_content)   
  [Konvertieren CLR-Typen](#xmlreader_clr)   
  [Asynchrone Programmierung](#xmlreader_async)   
- [Überlegungen zur Sicherheit](#xmlreader_security)  
+ [Sicherheitsüberlegungen](#xmlreader_security)  
   
 <a name="xmlreader_create"></a>   
 ## <a name="creating-an-xml-reader"></a>Erstellen einen XML-reader  
@@ -89,7 +89,7 @@
   
 <a name="xmlreader_validate"></a>   
 ## <a name="validating-xml-data"></a>Validieren von XML-Daten  
- Um die Struktur von XML-Dokument und dessen elementbeziehungen, Datentypen und inhaltseinschränkungen anzugeben, verwenden Sie eine Dokumenttypdefinition (DTD) oder das Schema für XML Schema Definition Language (XSD). Ein XML-Dokument gilt als wohlgeformt sein, wenn es alle syntaktischen Anforderungen von definierten erfüllt die [W3C XML 1.0 Recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/). Es ist gültig, wenn es sowohl wohlgeformt ist und auch die Einschränkungen der DTD oder Schema entspricht. (Finden Sie unter den [W3C XML Schema Part 1: Strukturen](https://www.w3.org/TR/xmlschema-1/) und [W3C XML Schema Part 2: Datentypen](https://www.w3.org/TR/xmlschema-2/) Empfehlungen.) Das heißt, dass alle gültigen XML-Dokumente wohlgeformt sind, jedoch nicht alle wohlgeformten XML-Dokumente gültig sein müssen.  
+ Um die Struktur von XML-Dokument und dessen elementbeziehungen, Datentypen und inhaltseinschränkungen anzugeben, verwenden Sie eine Dokumenttypdefinition (DTD) oder das Schema für XML Schema Definition Language (XSD). Ein XML-Dokument gilt als wohlgeformt sein, wenn es alle syntaktischen Anforderungen von definierten erfüllt die [W3C XML 1.0 Recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/). Es ist gültig, wenn es sowohl wohlgeformt ist und auch die Einschränkungen der DTD oder Schema entspricht. (Finden Sie unter den [W3C XML Schema Part 1: Strukturen](https://www.w3.org/TR/xmlschema-1/) und [W3C XML Schema Part 2: Datatypes](https://www.w3.org/TR/xmlschema-2/) Empfehlungen.) Obwohl alle gültigen XML-Dokumente wohlgeformt sind, sind daher nicht alle wohlgeformten XML-Dokumente gültig.  
   
  Sie können überprüfen, dass die Daten anhand einer DTD, die eine Inline-XSD-Schema oder ein XSD-Schema in ein <xref:System.Xml.Schema.XmlSchemaSet> Objekt (einen Cache); diese Szenarien werden beschrieben, auf die <xref:System.Xml.XmlReader.Create%2A> Referenzseite. <xref:System.Xml.XmlReader> Schema-Validierung von XML-Data Reduced (XDR) nicht unterstützt werden.  
   
@@ -97,12 +97,12 @@
   
 |Verwenden Sie diese Option <xref:System.Xml.XmlReaderSettings> Member|Angabe von|  
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|  
-|<xref:System.Xml.XmlReaderSettings.DtdProcessing%2A>-Eigenschaft|Ob die DTD-Verarbeitung zu ermöglichen. In der Standardeinstellung ist die DTD-Verarbeitung nicht zulässig.|  
-|<xref:System.Xml.XmlReaderSettings.ValidationType%2A>-Eigenschaft|Gibt an, ob der Reader die Daten überprüfen soll, und welche Art der Überprüfung (DTD oder Schema) durchgeführt. In der Standardeinstellung erfolgt keine Validierung.|  
-|<xref:System.Xml.XmlReaderSettings.ValidationEventHandler> -Ereignis|Ein Ereignishandler für das Informationen über Validierungsereignisse empfangen. Wenn kein Ereignishandler bereitgestellt wird, wird beim ersten Validierungsfehler eine <xref:System.Xml.XmlException> ausgelöst.|  
-|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A>-Eigenschaft|Zusätzlicher Validierung "Optionen" über die <xref:System.Xml.Schema.XmlSchemaValidationFlags> Enumerationsmember:<br /><br /> -   `AllowXmlAttributes`– Lassen XML-Attribute (`xml:*`) in Instanzdokumenten auch, wenn sie nicht im Schema definiert sind. Die Attribute werden anhand ihres Datentyps validiert. Finden Sie unter den <xref:System.Xml.Schema.XmlSchemaValidationFlags> Referenzseite für die Einstellung für die Verwendung in bestimmten Szenarien. (Standardmäßig deaktiviert).<br />-   `ProcessIdentityConstraints` --Prozessidentitätsconstraints (`xs:ID`, `xs:IDREF`, `xs:key`, `xs:keyref`, `xs:unique`) während der Validierung gefunden. (Standardmäßig aktiviert).<br />-   `ProcessSchemaLocation` – Verarbeiten Sie anhand des Schemas der `xsi:schemaLocation` oder `xsi:noNamespaceSchemaLocation` Attribut. (Standardmäßig aktiviert).<br />-   `ProcessInlineSchema`– Verarbeiten von Inline-XML-Schemas während der Überprüfung. (Standardmäßig deaktiviert).<br />-   `ReportValidationWarnings`--Melden Sie Ereignisse, wenn eine überprüfungswarnung auftritt. Eine Warnung wird normalerweise ausgegeben, wenn keine DTD oder kein XML-Schema vorhanden ist, anhand derer bzw. dessen ein bestimmtes Attribut oder Element validiert werden kann. <xref:System.Xml.XmlReaderSettings.ValidationEventHandler> wird zur Benachrichtigung verwendet. (Standardmäßig deaktiviert).|  
+|<xref:System.Xml.XmlReaderSettings.DtdProcessing%2A> property|Ob die DTD-Verarbeitung zu ermöglichen. Standardmäßig werden DTD-Verarbeitung nicht zugelassen.|  
+|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> property|Gibt an, ob der Reader die Daten überprüfen soll, und welche Art der Überprüfung (DTD oder Schema) durchgeführt. Der Standardwert ist keine Validierung.|  
+|<xref:System.Xml.XmlReaderSettings.ValidationEventHandler> event|Ein Ereignishandler für das Informationen über Validierungsereignisse empfangen. Wenn ein Ereignishandler nicht angegeben wird, eine <xref:System.Xml.XmlException> beim ersten Validierungsfehler ausgelöst wird.|  
+|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A> property|Zusätzlicher Validierung "Optionen" über die <xref:System.Xml.Schema.XmlSchemaValidationFlags> Enumerationsmember:<br /><br /> -   `AllowXmlAttributes`– Lassen XML-Attribute (`xml:*`) in Instanzdokumenten auch, wenn sie nicht im Schema definiert sind. Die Attribute werden anhand ihres Datentyps validiert. Finden Sie unter den <xref:System.Xml.Schema.XmlSchemaValidationFlags> Referenzseite für die Einstellung für die Verwendung in bestimmten Szenarien. (Standardmäßig deaktiviert).<br />-   `ProcessIdentityConstraints` --Prozessidentitätsconstraints (`xs:ID`, `xs:IDREF`, `xs:key`, `xs:keyref`, `xs:unique`) während der Validierung gefunden. (Standardmäßig aktiviert).<br />-   `ProcessSchemaLocation` – Verarbeiten Sie anhand des Schemas der `xsi:schemaLocation` oder `xsi:noNamespaceSchemaLocation` Attribut. (Standardmäßig aktiviert).<br />-   `ProcessInlineSchema`– Verarbeiten von Inline-XML-Schemas während der Überprüfung. (Standardmäßig deaktiviert).<br />-   `ReportValidationWarnings`--Melden Sie Ereignisse, wenn eine überprüfungswarnung auftritt. In der Regel wird eine Warnung ausgegeben, wenn keine DTD oder XML-Schema überprüft ein bestimmtes Element oder Attribut, für. Die <xref:System.Xml.XmlReaderSettings.ValidationEventHandler> wird zur Benachrichtigung verwendet. (Standardmäßig deaktiviert).|  
 |<xref:System.Xml.XmlReaderSettings.Schemas%2A>|Die für die Validierung zu verwendende <xref:System.Xml.Schema.XmlSchemaSet>.|  
-|<xref:System.Xml.XmlReaderSettings.XmlResolver%2A>-Eigenschaft|Die <xref:System.Xml.XmlResolver> zum Auflösen von und Zugreifen auf externe Ressourcen. Dies kann externe Entitäten wie z. B. DTD und Schemas sowie alle umfassen `xs:include` oder `xs:import` in das XML-Schema enthaltenen Elemente. Wenn Sie nicht angeben einer <xref:System.Xml.XmlResolver>, <xref:System.Xml.XmlReader> verwendet einen Standard- <xref:System.Xml.XmlUrlResolver> ohne Benutzeranmeldeinformationen.|  
+|<xref:System.Xml.XmlReaderSettings.XmlResolver%2A> property|Die <xref:System.Xml.XmlResolver> zum Auflösen von und Zugreifen auf externe Ressourcen. Dies kann externe Entitäten wie z. B. DTD und Schemas sowie alle umfassen `xs:include` oder `xs:import` in das XML-Schema enthaltenen Elemente. Wenn Sie nicht angeben einer <xref:System.Xml.XmlResolver>, <xref:System.Xml.XmlReader> verwendet einen Standard- <xref:System.Xml.XmlUrlResolver> ohne Benutzeranmeldeinformationen.|  
   
 <a name="xmlreader_data"></a>   
 ## <a name="data-conformance"></a>Datenübereinstimmung  
@@ -120,10 +120,10 @@
   
  Verwenden Sie diese <xref:System.Xml.XmlReaderSettings> Eigenschaften, die angeben, die Typen der übereinstimmungsprüfungen überprüft Sie aktivieren möchten:  
   
-|Verwenden Sie diese Option <xref:System.Xml.XmlReaderSettings> Eigenschaft|Beschreibung|Standardwert|  
+|Verwenden Sie diese Option <xref:System.Xml.XmlReaderSettings> Eigenschaft|Beschreibung|Standard|  
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|-------------|  
-|<xref:System.Xml.XmlReaderSettings.CheckCharacters%2A>-Eigenschaft|Aktivieren oder Deaktivieren von Überprüfungen für Folgendes:<br /><br /> -Zeichen werden innerhalb des Bereichs zulässiger XML-Zeichen gemäß der [2.2 Characters](https://www.w3.org/TR/2006/REC-xml-20060816/#charsets) Abschnitt der W3C-Empfehlung für XML 1.0.<br />-Alle XML-Namen sind gültig, gemäß der [2.3 Common Syntactic Constructs](https://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name) Abschnitt der W3C-Empfehlung für XML 1.0.<br /><br /> Wenn diese Eigenschaft auf festgelegt ist `true` (Standard), ein <xref:System.Xml.XmlException> Ausnahme wird ausgelöst, die XML-Datei enthält unzulässige Zeichen oder eine ungültige XML-Namen (z. B. ein Elementname mit einer Zahl beginnt).|Zeichen- und namensüberprüfung ist aktiviert.<br /><br /> Durch Festlegen von <xref:System.Xml.XmlReaderSettings.CheckCharacters%2A> auf `false` wird die Zeichenüberprüfung für Zeichenentitätsverweise deaktiviert. Wenn der Reader Textdaten verarbeitet wird, überprüft, dass die XML-Namen gültig ist, unabhängig von dieser Einstellung sind. **Hinweis**:  Gemäß XML 1.0-Empfehlung muss bei vorhandener DTD eine Übereinstimmung auf Dokumentebene vorliegen. Aus diesem Grund, wenn der Reader für die Unterstützung konfiguriert ist <xref:System.Xml.ConformanceLevel.Fragment?displayProperty=nameWithType>, aber die XML-Daten enthält, eine Dokumenttypdefinition (DTD), ein <xref:System.Xml.XmlException> ausgelöst.|  
-|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A>-Eigenschaft|Wählen Sie die Ebene der Übereinstimmung mit Standards, um zu erzwingen:<br /><br /> -   <xref:System.Xml.ConformanceLevel.Document>. Entsprechen die Regeln für eine [wohlgeformtes XML 1.0-Dokument](https://www.w3.org/TR/2006/REC-xml-20060816/#sec-well-formed).<br />-   <xref:System.Xml.ConformanceLevel.Fragment>. Entsprechen den Regeln für ein wohlgeformtes Dokument-Fragment, das als genutzt werden, kann ein [extern analysierte Entität](https://www.w3.org/TR/2006/REC-xml-20060816/#wf-entities).<br />-   <xref:System.Xml.ConformanceLevel.Auto>. Entspricht der Ebene, die vom Reader entschieden.<br /><br /> Wenn die Daten in Übereinstimmung mit Standards, ist ein <xref:System.Xml.XmlException> Ausnahme ausgelöst.|<xref:System.Xml.ConformanceLevel.Document>|  
+|<xref:System.Xml.XmlReaderSettings.CheckCharacters%2A> property|Aktivieren oder Deaktivieren von Überprüfungen für Folgendes:<br /><br /> -Zeichen werden innerhalb des Bereichs zulässiger XML-Zeichen gemäß der [2.2 Characters](https://www.w3.org/TR/2006/REC-xml-20060816/#charsets) Abschnitt der W3C-Empfehlung für XML 1.0.<br />-Alle XML-Namen sind gültig, gemäß der [2.3 Common Syntactic Constructs](https://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name) Abschnitt der W3C-Empfehlung für XML 1.0.<br /><br /> Wenn diese Eigenschaft auf festgelegt ist `true` (Standard), ein <xref:System.Xml.XmlException> Ausnahme wird ausgelöst, die XML-Datei enthält unzulässige Zeichen oder eine ungültige XML-Namen (z. B. ein Elementname mit einer Zahl beginnt).|Zeichen- und namensüberprüfung ist aktiviert.<br /><br /> Durch Festlegen von <xref:System.Xml.XmlReaderSettings.CheckCharacters%2A> auf `false` wird die Zeichenüberprüfung für Zeichenentitätsverweise deaktiviert. Wenn der Reader Textdaten verarbeitet wird, überprüft, dass die XML-Namen gültig ist, unabhängig von dieser Einstellung sind. **Hinweis:** die Empfehlung XML 1.0-Konformität auf Dokumentebene erfordert, wenn eine DTD vorhanden ist. Aus diesem Grund, wenn der Reader für die Unterstützung konfiguriert ist <xref:System.Xml.ConformanceLevel.Fragment?displayProperty=nameWithType>, aber die XML-Daten enthält, eine Dokumenttypdefinition (DTD), ein <xref:System.Xml.XmlException> ausgelöst.|  
+|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> property|Wählen Sie die Ebene der Übereinstimmung mit Standards, um zu erzwingen:<br /><br /> -   <xref:System.Xml.ConformanceLevel.Document>. Entsprechen die Regeln für eine [wohlgeformtes XML 1.0-Dokument](https://www.w3.org/TR/2006/REC-xml-20060816/#sec-well-formed).<br />-   <xref:System.Xml.ConformanceLevel.Fragment>. Entsprechen den Regeln für ein wohlgeformtes Dokument-Fragment, das als genutzt werden, kann ein [extern analysierte Entität](https://www.w3.org/TR/2006/REC-xml-20060816/#wf-entities).<br />-   <xref:System.Xml.ConformanceLevel.Auto>. Entspricht der Ebene, die vom Reader entschieden.<br /><br /> Wenn die Daten in Übereinstimmung mit Standards, ist ein <xref:System.Xml.XmlException> Ausnahme ausgelöst.|<xref:System.Xml.ConformanceLevel.Document>|  
   
 <a name="xmlreader_nodes"></a>   
 ## <a name="navigating-through-nodes"></a>Navigieren durch die Knoten  
@@ -144,20 +144,20 @@
   
 <a name="xmlreader_elements"></a>   
 ## <a name="reading-xml-elements"></a>Lesen der XML-Elemente  
- Die folgende Tabelle enthält die Methoden und Eigenschaften, die die <xref:System.Xml.XmlReader> -Klasse für Verarbeitungselemente bereitstellt. Nachdem der <xref:System.Xml.XmlReader> auf einem Element platziert wurde, spiegeln die Knoteneigenschaften, z. B. <xref:System.Xml.XmlReader.Name%2A>, die Elementwerte wider. Zusätzlich zu den unten beschriebenen Membern können auch alle allgemeinen Methoden und Eigenschaften der <xref:System.Xml.XmlReader>-Klasse zum Verarbeiten von Elementen verwendet werden. Sie können beispielsweise mit der <xref:System.Xml.XmlReader.ReadInnerXml%2A>-Methode den Inhalt eines Elements lesen.  
+ Die folgende Tabelle enthält die Methoden und Eigenschaften, die die <xref:System.Xml.XmlReader> -Klasse für Verarbeitungselemente bereitstellt. Nach der <xref:System.Xml.XmlReader> befindet sich auf ein Element, das die Eigenschaften des Knotens, z. B. <xref:System.Xml.XmlReader.Name%2A>, die Elementwerte wider. Zusätzlich zu den Mitgliedern unten, alle allgemeinen Methoden und Eigenschaften der <xref:System.Xml.XmlReader> Klasse kann auch verwendet werden, um Elemente zu verarbeiten. Beispielsweise können Sie die <xref:System.Xml.XmlReader.ReadInnerXml%2A> Methode, um den Inhalt eines Elements lesen.  
   
 > [!NOTE]
 >  Finden Sie im Abschnitt 3.1 die [W3C XML 1.0 Recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/#sec-starttags) Definitionen von Starttags, Tags und leeres Element-Tags zu beenden.  
   
 |Verwenden Sie diese Option <xref:System.Xml.XmlReader> Member|Beschreibung|  
 |---------------------------------------------------------------------------------------------------------------------------------------------------|--------|  
-|<xref:System.Xml.XmlReader.IsStartElement%2A>-Methode|Überprüfen Sie, ob der aktuelle Knoten ein Anfangstag oder ein leeres Elementtag ist.|  
-|<xref:System.Xml.XmlReader.ReadStartElement%2A>-Methode|Überprüfen Sie, ob der aktuelle Knoten ein Element, und treiben Sie den Reader auf den nächsten Knoten (Aufrufe <xref:System.Xml.XmlReader.IsStartElement%2A> gefolgt von <xref:System.Xml.XmlReader.Read%2A>).|  
-|<xref:System.Xml.XmlReader.ReadEndElement%2A>-Methode|Überprüfen Sie, dass der aktuelle Knoten ein Endtag ist, und fahren Sie fort, des Readers auf den nächsten Knoten.|  
-|<xref:System.Xml.XmlReader.ReadElementString%2A>-Methode|Lesen eines nur-Text-Elements.|  
-|<xref:System.Xml.XmlReader.ReadToDescendant%2A>-Methode|Fahren Sie fort, des XML-Readers zum nächsten Element Nachfolger (untergeordnete), die dem angegebenen Namen ab.|  
-|<xref:System.Xml.XmlReader.ReadToNextSibling%2A>-Methode|Fahren Sie fort, des XML-Readers auf die nächste nebengeordnete Element mit dem angegebenen Namen ab.|  
-|<xref:System.Xml.XmlReader.IsEmptyElement%2A>-Eigenschaft|Überprüfen Sie, ob das aktuelle Element ein Endtag aufweist. Beispiel:<br /><br /> -   `<item num="123"/>` (<xref:System.Xml.XmlReader.IsEmptyElement%2A> is `true`.)<br />-   `<item num="123"> </item>` (<xref:System.Xml.XmlReader.IsEmptyElement%2A> ist `false`, obwohl der Inhalt des Elements leer ist.)|  
+|<xref:System.Xml.XmlReader.IsStartElement%2A> Methode|Überprüfen Sie, ob der aktuelle Knoten ein Anfangstag oder ein leeres Elementtag ist.|  
+|<xref:System.Xml.XmlReader.ReadStartElement%2A> Methode|Überprüfen Sie, ob der aktuelle Knoten ein Element, und treiben Sie den Reader auf den nächsten Knoten (Aufrufe <xref:System.Xml.XmlReader.IsStartElement%2A> gefolgt von <xref:System.Xml.XmlReader.Read%2A>).|  
+|<xref:System.Xml.XmlReader.ReadEndElement%2A> Methode|Überprüfen Sie, dass der aktuelle Knoten ein Endtag ist, und fahren Sie fort, des Readers auf den nächsten Knoten.|  
+|<xref:System.Xml.XmlReader.ReadElementString%2A> Methode|Lesen eines nur-Text-Elements.|  
+|<xref:System.Xml.XmlReader.ReadToDescendant%2A> Methode|Fahren Sie fort, des XML-Readers zum nächsten Element Nachfolger (untergeordnete), die dem angegebenen Namen ab.|  
+|<xref:System.Xml.XmlReader.ReadToNextSibling%2A> Methode|Fahren Sie fort, des XML-Readers auf die nächste nebengeordnete Element mit dem angegebenen Namen ab.|  
+|<xref:System.Xml.XmlReader.IsEmptyElement%2A> property|Überprüfen Sie, ob das aktuelle Element ein Endtag aufweist. Beispiel:<br /><br /> -   `<item num="123"/>` (<xref:System.Xml.XmlReader.IsEmptyElement%2A> ist `true`.)<br />-   `<item num="123"> </item>` (<xref:System.Xml.XmlReader.IsEmptyElement%2A> ist `false`, obwohl der Inhalt des Elements leer ist.)|  
   
  Ein Beispiel für das Lesen des Textinhalts von Elementen, finden Sie unter den <xref:System.Xml.XmlReader.ReadString%2A> Methode. Im folgende Beispiel verarbeitet Elemente mithilfe einer `while` Schleife.  
   
@@ -174,17 +174,17 @@
   
 |Verwenden Sie diese Option <xref:System.Xml.XmlReader> Member|Beschreibung|  
 |---------------------------------------------------------------------------------------------------------------------------------------------------|--------|  
-|<xref:System.Xml.XmlReader.HasAttributes%2A>-Eigenschaft|Überprüfen Sie, ob der aktuelle Knoten über Attribute verfügt.|  
-|<xref:System.Xml.XmlReader.AttributeCount%2A>-Eigenschaft|Die Anzahl der Attribute für das aktuelle Element zu erhalten.|  
-|<xref:System.Xml.XmlReader.MoveToFirstAttribute%2A>-Methode|Verschieben Sie auf das erste Attribut in einem Element.|  
-|<xref:System.Xml.XmlReader.MoveToNextAttribute%2A>-Methode|Verschieben Sie auf das nächste Attribut in einem Element.|  
-|<xref:System.Xml.XmlReader.MoveToAttribute%2A>-Methode|Verschieben Sie in einem angegebenen Attribut.|  
+|<xref:System.Xml.XmlReader.HasAttributes%2A> property|Überprüfen Sie, ob der aktuelle Knoten über Attribute verfügt.|  
+|<xref:System.Xml.XmlReader.AttributeCount%2A> property|Die Anzahl der Attribute für das aktuelle Element zu erhalten.|  
+|<xref:System.Xml.XmlReader.MoveToFirstAttribute%2A> Methode|Verschieben Sie auf das erste Attribut in einem Element.|  
+|<xref:System.Xml.XmlReader.MoveToNextAttribute%2A> Methode|Verschieben Sie auf das nächste Attribut in einem Element.|  
+|<xref:System.Xml.XmlReader.MoveToAttribute%2A> Methode|Verschieben Sie in einem angegebenen Attribut.|  
 |<xref:System.Xml.XmlReader.GetAttribute%2A> Methode oder <xref:System.Xml.XmlReader.Item%2A> Eigenschaft|Ruft den Wert eines angegebenen Attributs.|  
-|<xref:System.Xml.XmlReader.IsDefault%2A>-Eigenschaft|Überprüfen Sie, ob der aktuelle Knoten ein Attribut ist, die von den in der DTD oder Schema definierten Standardwert generiert wurde.|  
-|<xref:System.Xml.XmlReader.MoveToElement%2A>-Methode|Verschieben Sie in das Element, das das aktuelle Attribut besitzt. Verwenden Sie diese Methode, um auf ein Element zurückzugeben, nach der Navigation durch die Attribute.|  
-|<xref:System.Xml.XmlReader.ReadAttributeValue%2A>-Methode|Analysieren Sie den Wert des Attributs in einen oder mehrere `Text`, `EntityReference`, oder `EndEntity` Knoten.|  
+|<xref:System.Xml.XmlReader.IsDefault%2A> property|Überprüfen Sie, ob der aktuelle Knoten ein Attribut ist, die von den in der DTD oder Schema definierten Standardwert generiert wurde.|  
+|<xref:System.Xml.XmlReader.MoveToElement%2A> Methode|Verschieben Sie in das Element, das das aktuelle Attribut besitzt. Verwenden Sie diese Methode, um auf ein Element zurückzugeben, nach der Navigation durch die Attribute.|  
+|<xref:System.Xml.XmlReader.ReadAttributeValue%2A> Methode|Analysieren Sie den Wert des Attributs in einen oder mehrere `Text`, `EntityReference`, oder `EndEntity` Knoten.|  
   
- Alle allgemeinen Methoden und Eigenschaften von <xref:System.Xml.XmlReader> können auch für die Verarbeitung von Attributen verwendet werden. Beispielsweise reflektieren die <xref:System.Xml.XmlReader>-Eigenschaft und die <xref:System.Xml.XmlReader.Name%2A>-Eigenschaft nach dem Positionieren von <xref:System.Xml.XmlReader.Value%2A> auf einem Attribut die Werte des Attributs. Sie können den Wert des Attributs auch mit einer beliebigen `Read`-Methode für den Inhalt abrufen.  
+ Alle allgemeinen <xref:System.Xml.XmlReader> Methoden und Eigenschaften können auch zum Verarbeiten von Attributen verwendet werden. Z. B. nach der <xref:System.Xml.XmlReader> auf einem Attribut positioniert ist die <xref:System.Xml.XmlReader.Name%2A> und <xref:System.Xml.XmlReader.Value%2A> Eigenschaften stellen die Werte des Attributs. Sie können auch Inhalte `Read` Methoden, um den Wert des Attributs zu erhalten.  
   
  Dieses Beispiel verwendet die <xref:System.Xml.XmlReader.AttributeCount%2A> Eigenschaft, um alle Attribute für ein Element zu navigieren.  
   
@@ -202,11 +202,11 @@
   
  **Lesen von Attributen in Dokumenttypknoten**  
   
- Wenn der XML-Reader auf einem Dokumenttypknoten positioniert ist die <xref:System.Xml.XmlReader.GetAttribute%2A> Methode und <xref:System.Xml.XmlReader.Item%2A> Eigenschaft kann verwendet werden, um die Werte für die Literale SYSTEM und PUBLIC zurückzugeben. Durch das Aufrufen von `reader.GetAttribute("PUBLIC")` wird beispielsweise der Wert PUBLIC zurückgegeben.  
+ Wenn der XML-Reader auf einem Dokumenttypknoten positioniert ist die <xref:System.Xml.XmlReader.GetAttribute%2A> Methode und <xref:System.Xml.XmlReader.Item%2A> Eigenschaft kann verwendet werden, um die Werte für die Literale SYSTEM und PUBLIC zurückzugeben. Zum Beispiel der Aufruf `reader.GetAttribute("PUBLIC")` der Wert PUBLIC zurückgegeben.  
   
  **Lesen von Attributen auf die Verarbeitungsanweisungsknoten**  
   
- Wenn der <xref:System.Xml.XmlReader> auf einem Verarbeitungsanweisungsknoten positioniert ist, gibt die <xref:System.Xml.XmlReader.Value%2A>-Eigenschaft den gesamten Textinhalt zurück. Elemente im Verarbeitungsanweisungsknoten werden nicht als Attribute behandelt. Sie können nicht gelesen werden, mit der <xref:System.Xml.XmlReader.GetAttribute%2A> oder <xref:System.Xml.XmlReader.MoveToAttribute%2A> Methode.  
+ Wenn die <xref:System.Xml.XmlReader> auf einem Verarbeitungsanweisungsknoten positioniert ist die <xref:System.Xml.XmlReader.Value%2A> Eigenschaft gibt den gesamten Textinhalt zurück. Elemente im Verarbeitungsanweisungsknoten werden nicht als Attribute behandelt. Sie können nicht gelesen werden, mit der <xref:System.Xml.XmlReader.GetAttribute%2A> oder <xref:System.Xml.XmlReader.MoveToAttribute%2A> Methode.  
   
 <a name="xmlreader_content"></a>   
 ## <a name="reading-xml-content"></a>Lesen der XML-Inhalt  
@@ -214,20 +214,20 @@
   
 |Verwenden Sie diese Option <xref:System.Xml.XmlReader> Member|Beschreibung|  
 |---------------------------------------------------------------------------------------------------------------------------------------------------|--------|  
-|<xref:System.Xml.XmlReader.Value%2A>-Eigenschaft|Rufen Sie den Textinhalt des aktuellen Knotens. Der zurückgegebene Wert hängt von Knotentyp ab. finden Sie unter den <xref:System.Xml.XmlReader.Value%2A> Referenzseite für Details.|  
-|<xref:System.Xml.XmlReader.ReadString%2A>-Methode|Abrufen des Inhalts einer Element- oder Textknotens als Zeichenfolge an. Diese Methode wird bei verarbeitungsanweisungen und Kommentare beendet.<br /><br /> Weitere Informationen zur Behandlung von bestimmten Knotentypen aufgeführt, die in dieser Methode finden Sie unter den <xref:System.Xml.XmlReader.ReadString%2A> Referenzseite.|  
-|Die Methoden <xref:System.Xml.XmlReader.ReadInnerXml%2A> und <xref:System.Xml.XmlReader.ReadInnerXmlAsync%2A>|Rufen Sie alle Inhalte des aktuellen Knotens einschließlich Markup, aber ausschließlich Start- und Endtags. Z. B. für:<br /><br /> `<node>this<child id="123"/></node>`<br /><br /> <xref:System.Xml.XmlReader.ReadInnerXml%2A> Gibt zurück:<br /><br /> `this<child id="123"/>`|  
-|Die Methoden <xref:System.Xml.XmlReader.ReadOuterXml%2A> und <xref:System.Xml.XmlReader.ReadOuterXmlAsync%2A>|Gesamten Inhalt der den aktuellen Knoten und seine untergeordneten Elemente, einschließlich Markup und Start-/Endtags zu erhalten. Z. B. für:<br /><br /> `<node>this<child id="123"/></node>`<br /><br /> <xref:System.Xml.XmlReader.ReadOuterXml%2A> Gibt zurück:<br /><br /> `<node>this<child id="123"/></node>`|  
+|<xref:System.Xml.XmlReader.Value%2A> property|Rufen Sie den Textinhalt des aktuellen Knotens. Der zurückgegebene Wert hängt von Knotentyp ab. finden Sie unter den <xref:System.Xml.XmlReader.Value%2A> Referenzseite für Details.|  
+|<xref:System.Xml.XmlReader.ReadString%2A> Methode|Abrufen des Inhalts einer Element- oder Textknotens als Zeichenfolge an. Diese Methode wird bei verarbeitungsanweisungen und Kommentare beendet.<br /><br /> Weitere Informationen zur Behandlung von bestimmten Knotentypen aufgeführt, die in dieser Methode finden Sie unter den <xref:System.Xml.XmlReader.ReadString%2A> Referenzseite.|  
+|<xref:System.Xml.XmlReader.ReadInnerXml%2A> und <xref:System.Xml.XmlReader.ReadInnerXmlAsync%2A> Methoden|Rufen Sie alle Inhalte des aktuellen Knotens einschließlich Markup, aber ausschließlich Start- und Endtags. Z. B. für:<br /><br /> `<node>this<child id="123"/></node>`<br /><br /> <xref:System.Xml.XmlReader.ReadInnerXml%2A> Gibt zurück:<br /><br /> `this<child id="123"/>`|  
+|<xref:System.Xml.XmlReader.ReadOuterXml%2A> und <xref:System.Xml.XmlReader.ReadOuterXmlAsync%2A> Methoden|Gesamten Inhalt der den aktuellen Knoten und seine untergeordneten Elemente, einschließlich Markup und Start-/Endtags zu erhalten. Z. B. für:<br /><br /> `<node>this<child id="123"/></node>`<br /><br /> <xref:System.Xml.XmlReader.ReadOuterXml%2A> Gibt zurück:<br /><br /> `<node>this<child id="123"/></node>`|  
   
 <a name="xmlreader_clr"></a>   
 ## <a name="converting-to-clr-types"></a>Konvertieren CLR-Typen  
  Können Sie die Mitglieder der <xref:System.Xml.XmlReader> Klasse (in der folgenden Tabelle aufgeführt) XML-Daten zu lesen und die Rückgabewerte als common Language Runtime (CLR)-Typen anstelle von Zeichenfolgen. Diese Member können Sie Werte in der Darstellung zu erhalten, die für die Codierung Aufgabe am besten geeignet ist, ohne manuell analysieren oder konvertieren Zeichenfolgenwerte.  
   
--   Die **ReadElementContentAs** Methoden können nur für Elementknotentypen aufgerufen werden. Diese Methoden können nur für Elemente verwendet werden, die untergeordnete Elemente oder gemischten Inhalt enthalten. Bei einem Aufruf liest das <xref:System.Xml.XmlReader>-Objekt das Anfangstag und den Elementinhalt und wird hinter das Endelementtag verschoben. Verarbeitungsanweisungen und Kommentare werden ignoriert und Entitäten erweitert.  
+-   Die **ReadElementContentAs** Methoden können nur für Elementknotentypen aufgerufen werden. Diese Methoden können nicht auf Elemente verwendet werden, die untergeordnete Elemente oder gemischten Inhalt enthalten. Beim Aufruf der <xref:System.Xml.XmlReader> Objekt liest das Anfangstag und liest den Elementinhalt, und klicken Sie dann direkt hinter das Endelementtag verschoben. Verarbeitungsanweisungen und Kommentare werden ignoriert und Entitäten erweitert.  
   
 -   Die **ReadContentAs** Methoden lesen den Textinhalt an der aktuellen Readerposition ab, und wenn die XML-Daten keine Schema- oder Typinformationen zugeordnet, Daten, konvertieren Sie den Textinhalt in den angeforderten Rückgabetyp. Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte sind verkettet. Kommentare und verarbeitungsanweisungen werden übersprungen und Entitätsverweise automatisch aufgelöst werden.  
   
- Die <xref:System.Xml.XmlReader> Klasse verwendet die Regeln der [W3C XML Schema Part 2: Datentypen](https://www.w3.org/TR/xmlschema-2/) Empfehlung.  
+ Die <xref:System.Xml.XmlReader> Klasse verwendet die Regeln der [W3C XML Schema Part 2: Datatypes](https://www.w3.org/TR/xmlschema-2/) Empfehlung.  
   
 |Verwenden Sie diese Option <xref:System.Xml.XmlReader> Methode|Um diese CLR-Typ zurückzugeben.|  
 |--------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|  
@@ -320,13 +320,13 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
   
      Wenn die DTD-Verarbeitung aktiviert ist, können die Ressourcen, auf die der <xref:System.Xml.XmlSecureResolver> Zugriff hat, mit dem <xref:System.Xml.XmlReader> eingeschränkt werden. Sie können auch Ihre app entwerfen, sodass die XML-Verarbeitung bezüglich Arbeitsspeicher und Zeit eingeschränkt. Beispielsweise können Sie die Timeouts in Ihrer ASP.NET-App konfigurieren.  
   
--   XML-Daten können Verweise auf externe Ressourcen (z. B. eine Schemadatei) enthalten. Standardmäßig werden externe Ressourcen aufgelöst, mit einem <xref:System.Xml.XmlUrlResolver> Objekt ohne Benutzeranmeldeinformationen. Durch die folgenden Aktionen können Sie die Sicherheit weiter erhöhen:  
+-   XML-Daten können Verweise auf externe Ressourcen wie z. B. eine Schemadatei enthalten. Standardmäßig werden externe Ressourcen aufgelöst, mit einem <xref:System.Xml.XmlUrlResolver> Objekt ohne Benutzeranmeldeinformationen. Durch die folgenden Aktionen können Sie die Sicherheit weiter erhöhen:  
   
     -   Beschränken Sie die Ressourcen, auf die der <xref:System.Xml.XmlReader> zugreifen kann, indem Sie die <xref:System.Xml.XmlReaderSettings.XmlResolver%2A?displayProperty=nameWithType>-Eigenschaft auf ein <xref:System.Xml.XmlSecureResolver>-Objekt festlegen.  
   
     -   Wenn Sie die <xref:System.Xml.XmlReader>-Eigenschaft auf <xref:System.Xml.XmlReaderSettings.XmlResolver%2A?displayProperty=nameWithType> festlegen, kann der `null` keine externen Ressourcen öffnen.  
   
--   Die <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> und <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> Validierungsflag eines ein <xref:System.Xml.XmlReaderSettings> Objekt werden nicht standardmäßig festgelegt. Dadurch wird der <xref:System.Xml.XmlReader> bei der Verbarbeitung von XML-Daten aus einer nicht vertrauenswürdigen Quelle vor schemabasierten Angriffen geschützt. Wenn diese Flags festgelegt sind, wird der <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> des <xref:System.Xml.XmlReaderSettings>-Objekts verwendet, um die im Instanzdokument des <xref:System.Xml.XmlReader> erkannten Schemaspeicherorte aufzulösen. Wenn die <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> -Eigenschaftensatz auf `null`, Schemaspeicherorte nicht aufgelöst sind. auch wenn die <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> und <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> Validierungsflag festgelegt sind.  
+-   Die <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> und <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> Validierungsflag eines ein <xref:System.Xml.XmlReaderSettings> Objekt werden nicht standardmäßig festgelegt. Dies trägt zum Schutz der <xref:System.Xml.XmlReader> vor schemabasierten Angriffen, bei der XML-Daten aus einer nicht vertrauenswürdigen Quelle verarbeitet wird. Wenn diese Flags festgelegt sind, wird der <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> des <xref:System.Xml.XmlReaderSettings>-Objekts verwendet, um die im Instanzdokument des <xref:System.Xml.XmlReader> erkannten Schemaspeicherorte aufzulösen. Wenn die <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> -Eigenschaftensatz auf `null`, Schemaspeicherorte nicht aufgelöst sind. auch wenn die <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> und <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> Validierungsflag festgelegt sind.  
   
      Durch während der Validierung hinzugefügte Schemas werden neue Typen hinzugefügt, sodass das Validierungsergebnis des überprüften Dokuments möglicherweise geändert wird. Daher sollten externe Schemata nur von vertrauenswürdigen Quellen aufgelöst werden.  
   
@@ -344,7 +344,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
   
 -   Beim Lesen eines XML-Dokuments mit einer großen Anzahl von eindeutigen lokalen Namen, Namespaces oder Präfixen kann ein Problem auftreten. Bei Verwendung eine Klasse, die von abgeleitet <xref:System.Xml.XmlReader>, und rufen Sie die <xref:System.Xml.XmlReader.LocalName%2A>, <xref:System.Xml.XmlReader.Prefix%2A>, oder <xref:System.Xml.XmlReader.NamespaceURI%2A> Eigenschaft für die einzelnen Elemente, die zurückgegebene Zeichenfolge hinzugefügt wird eine <xref:System.Xml.NameTable>. Die Auflistung frei, die die <xref:System.Xml.NameTable> nimmt Größe der in ein virtueller Speicherverlust Zeichenfolgenhandles nie ab. Eine Lösung hierfür ist eine Ableitung der <xref:System.Xml.NameTable> Klasse und ein maximales Größenkontingent zu erzwingen. (Es gibt keine Möglichkeit, um zu verhindern, dass die Verwendung von einer <xref:System.Xml.NameTable>, oder Wechseln der <xref:System.Xml.NameTable> vollen). Eine andere Lösung ist, verwenden Sie die Eigenschaften, die bereits erwähnt, und verwenden Sie stattdessen die <xref:System.Xml.XmlReader.MoveToAttribute%2A> -Methode mit dem <xref:System.Xml.XmlReader.IsStartElement%2A> Methode möglichst; diese Methoden nicht Zeichenfolgen zurück und umgehen somit das Problem eines Überlaufs der <xref:System.Xml.NameTable> Auflistung.  
   
--   <xref:System.Xml.XmlReaderSettings>-Objekte können vertrauliche Informationen (z. B. Anmeldeinformationen des Benutzers) enthalten. Eine nicht vertrauenswürdige Komponente könnte mithilfe des <xref:System.Xml.XmlReaderSettings>-Objekts und den Anmeldeinformationen des Benutzers <xref:System.Xml.XmlReader>-Objekte erstellen, mit denen Daten gelesen werden können. Seien Sie vorsichtig beim Zwischenspeichern von <xref:System.Xml.XmlReaderSettings> Objekte oder bei der Übergabe der <xref:System.Xml.XmlReaderSettings> Objekt von einer Komponente zu einem anderen.  
+-   <xref:System.Xml.XmlReaderSettings> -Objekte können vertraulichen Informationen wie z. B. die Anmeldeinformationen des Benutzers enthalten. Eine nicht vertrauenswürdige Komponente könnte mithilfe der <xref:System.Xml.XmlReaderSettings> -Objekt und den Anmeldeinformationen des Benutzers erstellen <xref:System.Xml.XmlReader> Objekte zum Lesen von Daten. Seien Sie vorsichtig beim Zwischenspeichern von <xref:System.Xml.XmlReaderSettings> Objekte oder bei der Übergabe der <xref:System.Xml.XmlReaderSettings> Objekt von einer Komponente zu einem anderen.  
   
 -   Achten Sie darauf, keine Unterstützung für Komponenten aus einer nicht vertrauenswürdigen Quelle zu gewähren (z. B. den Objekten <xref:System.Xml.NameTable>, <xref:System.Xml.XmlNamespaceManager> und <xref:System.Xml.XmlResolver>).  
   
@@ -536,7 +536,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der <see cref="T:System.Xml.XmlReader" /> die Methoden für das Lesen von Inhalt im Binärformat implementiert.</summary>
-        <value><see langword="true" />, wenn die Methoden für das Lesen von Inhalt im Binärformat implementiert werden, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn der binäre Inhalt read-Methode implementiert werden; andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -582,7 +582,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der <see cref="T:System.Xml.XmlReader" /> die angegebene <see cref="M:System.Xml.XmlReader.ReadValueChunk(System.Char[],System.Int32,System.Int32)" />-Methode implementiert.</summary>
-        <value><see langword="true" />, wenn der <see cref="T:System.Xml.XmlReader" /> die <see cref="M:System.Xml.XmlReader.ReadValueChunk(System.Char[],System.Int32,System.Int32)" />-Methode implementiert, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn die <see cref="T:System.Xml.XmlReader" /> implementiert die <see cref="M:System.Xml.XmlReader.ReadValueChunk(System.Char[],System.Int32,System.Int32)" /> Methode; andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -629,7 +629,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob dieser Reader Entitäten analysieren und auflösen kann.</summary>
-        <value><see langword="true" />, wenn der Reader Entitäten analysieren und auflösen kann, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn der Reader kann Entitäten analysieren und Auflösen; andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -700,7 +700,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
   
 -   Angeben, welche Funktionen unterstützt werden soll die <xref:System.Xml.XmlReader> Objekt.  
   
--   Wiederverwenden der <xref:System.Xml.XmlReaderSettings> Objekt, das mehrere Leser zu erstellen. Sie können dieselben Einstellungen verwenden, um mehrere Reader mit denselben Funktionen zu erstellen. Oder Sie können die Einstellungen ändern, auf eine <xref:System.Xml.XmlReaderSettings> -Instanz, und erstellen Sie einen neuen Reader mit einem anderen Satz von Features.  
+-   Wiederverwenden der <xref:System.Xml.XmlReaderSettings> Objekt, das mehrere Leser zu erstellen. Sie können die gleichen Einstellungen verwenden, um mehrere Reader mit denselben Funktionen zu erstellen. Oder Sie können die Einstellungen ändern, auf eine <xref:System.Xml.XmlReaderSettings> -Instanz, und erstellen Sie einen neuen Reader mit einem anderen Satz von Features.  
   
 -   Hinzufügen von Funktionen zu einer vorhandenen XML-Reader. Die <xref:System.Xml.XmlReader.Create%2A>-Methode kann ein anderes <xref:System.Xml.XmlReader>-Objekt annehmen. Die zugrunde liegende <xref:System.Xml.XmlReader> Objekt kann es sich um einen benutzerdefinierten Reader, ein <xref:System.Xml.XmlTextReader> Objekt oder einen anderen <xref:System.Xml.XmlReader> -Instanz, die Sie zusätzliche Funktionen hinzufügen möchten.  
   
@@ -712,7 +712,7 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
 ## <a name="default-settings"></a>Standardeinstellungen  
  Bei Verwendung einer <xref:System.Xml.XmlReader.Create%2A> Überladung, die akzeptiert eine <xref:System.Xml.XmlReaderSettings> Objekt ist, werden die folgenden Standardeinstellungen Reader verwendet:  
   
-|Einstellung|Standardwert|  
+|Einstellung|Standard|  
 |-------------|-------------|  
 |<xref:System.Xml.XmlReaderSettings.CheckCharacters%2A>|`true`|  
 |<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A>|<xref:System.Xml.ConformanceLevel.Document?displayProperty=nameWithType>|  
@@ -723,8 +723,8 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
 |<xref:System.Xml.XmlReaderSettings.LinePositionOffset%2A>|0|  
 |<xref:System.Xml.XmlReaderSettings.NameTable%2A>|`null`|  
 |<xref:System.Xml.XmlReaderSettings.DtdProcessing%2A>|<xref:System.Xml.DtdProcessing.Prohibit>|  
-|<xref:System.Xml.XmlReaderSettings.Schemas%2A>|Ein leeres <xref:System.Xml.Schema.XmlSchemaSet>-Objekt.|  
-|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A>|<xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints> aktiviert|  
+|<xref:System.Xml.XmlReaderSettings.Schemas%2A>|Ein leeres <xref:System.Xml.Schema.XmlSchemaSet> Objekt|  
+|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A>|<xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints> enabled|  
 |<xref:System.Xml.XmlReaderSettings.ValidationType%2A>|<xref:System.Xml.ValidationType.None>|  
 |<xref:System.Xml.XmlReaderSettings.XmlResolver%2A>|Ein neues <xref:System.Xml.XmlUrlResolver>-Objekt.  Ab der .NET Framework-Version 4.5.2 hat diese Einstellung den Standardwert `null`.|  
   
@@ -733,12 +733,12 @@ Six Month Review Date:  7/8/2003 12:00:00 AM
   
 |Anforderung|Set|  
 |-----------------|---------|  
-|Daten müssen es sich um ein wohlgeformtes XML-Dokument sein.|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> um <xref:System.Xml.ConformanceLevel.Document>.|  
-|Daten müssen eine wohlgeformte analysierte XML-Entität sein.|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> um <xref:System.Xml.ConformanceLevel.Fragment>.|  
-|Daten müssen anhand einer DTD validiert werden.|<xref:System.Xml.XmlReaderSettings.DtdProcessing%2A> bis <xref:System.Xml.DtdProcessing.Parse><br /><xref:System.Xml.XmlReaderSettings.ValidationType%2A> um <xref:System.Xml.ValidationType.DTD>.|  
-|Daten müssen anhand eines XML-Schemas überprüft werden.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> bis <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.Schemas%2A> um die <xref:System.Xml.Schema.XmlSchemaSet> zur Validierung verwendet. Beachten Sie, dass <xref:System.Xml.XmlReader> unterstützt keine XML-Data Reduced (XDR)-Schema-Validierung.|  
-|Daten müssen anhand eines XML-Inlineschemas überprüft werden.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> bis <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.ValidationFlags%2A> um <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema>.|  
-|Geben Sie die Unterstützung.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> bis <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.Schemas%2A> um die <xref:System.Xml.Schema.XmlSchemaSet> verwenden.|  
+|Daten müssen es sich um ein wohlgeformtes XML-Dokument sein.|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> an <xref:System.Xml.ConformanceLevel.Document>.|  
+|Daten müssen eine wohlgeformte analysierte XML-Entität sein.|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> an <xref:System.Xml.ConformanceLevel.Fragment>.|  
+|Daten müssen anhand einer DTD validiert werden.|<xref:System.Xml.XmlReaderSettings.DtdProcessing%2A> auf <xref:System.Xml.DtdProcessing.Parse><br /><xref:System.Xml.XmlReaderSettings.ValidationType%2A> an <xref:System.Xml.ValidationType.DTD>.|  
+|Daten müssen anhand eines XML-Schemas überprüft werden.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> auf <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.Schemas%2A> um die <xref:System.Xml.Schema.XmlSchemaSet> zur Validierung verwendet. Beachten Sie, dass <xref:System.Xml.XmlReader> unterstützt keine XML-Data Reduced (XDR)-Schema-Validierung.|  
+|Daten müssen anhand eines XML-Inlineschemas überprüft werden.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> auf <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.ValidationFlags%2A> an <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema>.|  
+|Geben Sie die Unterstützung.|<xref:System.Xml.XmlReaderSettings.ValidationType%2A> auf <xref:System.Xml.ValidationType.Schema><br /><xref:System.Xml.XmlReaderSettings.Schemas%2A> um die <xref:System.Xml.Schema.XmlSchemaSet> verwenden.|  
   
  <xref:System.Xml.XmlReader> Schema-Validierung von XML-Data Reduced (XDR) nicht unterstützt werden.  
   
@@ -851,7 +851,7 @@ Der <see cref="T:System.Xml.XmlReader" /> überprüft die ersten Bytes des Strea
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="input" />-Wert ist <see langword="null" />.</exception>
-        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> verfügt nicht über ausreichende Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
+        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> besitzt keine ausreichenden Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -987,8 +987,8 @@ Der <see cref="T:System.Xml.XmlReader" /> überprüft die ersten Bytes des Strea
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="inputUri" />-Wert ist <see langword="null" />.</exception>
-        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> verfügt nicht über ausreichende Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">Die durch den URI angegebene Datei ist nicht vorhanden.</exception>
+        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> besitzt keine ausreichenden Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">Die durch den URI bezeichnete Datei ist nicht vorhanden.</exception>
         <exception cref="T:System.UriFormatException"><block subset="none" type="note">
             <para>  
  Fangen Sie in <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET für Windows Store-Apps</see> oder der <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">portablen Klassenbibliothek</see> stattdessen die Basisklassenausnahme <see cref="T:System.FormatException" /> ab.  
@@ -996,7 +996,7 @@ Der <see cref="T:System.Xml.XmlReader" /> überprüft die ersten Bytes des Strea
 </para>
           </block>  
   
- Das URI-Format ist nicht korrekt.</exception>
+ Das URI-Format ist falsch.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -1212,7 +1212,7 @@ Der <see cref="T:System.Xml.XmlReader" /> überprüft die ersten Bytes des Strea
 </para>
           </block>  
   
- Das URI-Format ist nicht korrekt.</exception>
+ Das URI-Format ist falsch.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -1294,7 +1294,7 @@ Der Konformitätsgrad des <see cref="T:System.Xml.XmlReaderSettings" />-Objekts 
         <exception cref="T:System.InvalidOperationException">Wenn das <see cref="T:System.Xml.XmlReaderSettings" />-Objekt einen Konformitätsgrad angibt, der mit dem Konformitätsgrad des zugrunde liegenden Readers nicht übereinstimmt.  
   
 - oder - 
-Der zugrunde liegende <see cref="T:System.Xml.XmlReader" /> befindet sich in einem <see cref="F:System.Xml.ReadState.Error" />-Zustand oder einem <see cref="F:System.Xml.ReadState.Closed" />-Zustand.</exception>
+Der zugrunde liegende <see cref="T:System.Xml.XmlReader" /> befindet im Zustand <see cref="F:System.Xml.ReadState.Error" /> oder <see cref="F:System.Xml.ReadState.Closed" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -1581,7 +1581,7 @@ Dieser Wert kann <see langword="null" /> sein.</param>
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="input" />-Wert ist <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">Die <see cref="P:System.Xml.XmlReaderSettings.NameTable" /> und die <see cref="P:System.Xml.XmlParserContext.NameTable" />-Eigenschaften enthalten Werte. (Nur eine dieser <see langword="NameTable" />-Eigenschaften kann festgelegt und verwendet werden).</exception>
+        <exception cref="T:System.ArgumentException">Die <see cref="P:System.Xml.XmlReaderSettings.NameTable" /> und die <see cref="P:System.Xml.XmlParserContext.NameTable" />-Eigenschaften enthalten Werte. (Nur eine dieser <see langword="NameTable" />-Eigenschaften kann festgelegt sein und verwendet werden.)</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -1643,10 +1643,10 @@ Dieser Wert kann <see langword="null" /> sein.</param>
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <see langword="inputUri" />-Wert ist <see langword="null" />.</exception>
-        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> verfügt nicht über ausreichende Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
-        <exception cref="T:System.ArgumentException">Die <see cref="P:System.Xml.XmlReaderSettings.NameTable" /> und die <see cref="P:System.Xml.XmlParserContext.NameTable" />-Eigenschaften enthalten Werte. (Nur eine dieser <see langword="NameTable" />-Eigenschaften kann festgelegt und verwendet werden).</exception>
+        <exception cref="T:System.Security.SecurityException">Der <see cref="T:System.Xml.XmlReader" /> besitzt keine ausreichenden Berechtigungen für den Zugriff auf den Speicherort der XML-Daten.</exception>
+        <exception cref="T:System.ArgumentException">Die <see cref="P:System.Xml.XmlReaderSettings.NameTable" /> und die <see cref="P:System.Xml.XmlParserContext.NameTable" />-Eigenschaften enthalten Werte. (Nur eine dieser <see langword="NameTable" />-Eigenschaften kann festgelegt sein und verwendet werden.)</exception>
         <exception cref="T:System.IO.FileNotFoundException">Die durch den URI angegebene Datei kann nicht gefunden werden.</exception>
-        <exception cref="T:System.UriFormatException">Das URI-Format ist nicht korrekt.</exception>
+        <exception cref="T:System.UriFormatException">Das URI-Format ist falsch.</exception>
       </Docs>
     </Member>
     <Member MemberName="Depth">
@@ -1780,7 +1780,7 @@ Dieser Wert kann <see langword="null" /> sein.</param>
         <Parameter Name="disposing" Type="System.Boolean" Index="0" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="disposing"><see langword="true" />, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben, <see langword="false" />, um ausschließlich nicht verwaltete Ressourcen freizugeben.</param>
+        <param name="disposing"><see langword="true" /> , um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben. <see langword="false" />, wenn ausschließlich nicht verwaltete Ressourcen freigegeben werden sollen.</param>
         <summary>Gibt die von <see cref="T:System.Xml.XmlReader" /> verwendeten nicht verwalteten Ressourcen und optional die verwalteten Ressourcen frei.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
@@ -1819,7 +1819,7 @@ Dieser Wert kann <see langword="null" /> sein.</param>
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse einen Wert ab, der angibt, ob sich der Reader am Ende des Streams befindet.</summary>
-        <value><see langword="true" />, wenn der Reader am Ende des Streams positioniert ist, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn der Reader am Ende des Streams positioniert ist; andernfalls <see langword="false" />.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
       </Docs>
@@ -2067,7 +2067,7 @@ String dt4 = reader.GetAttribute("dt",http://www.w3.org/2000/xmlns/);
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -2104,7 +2104,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       </ReturnValue>
       <Docs>
         <summary>Ruft einen Wert ab, der angibt, ob der aktuelle Knoten über Attribute verfügt.</summary>
-        <value><see langword="true" />, wenn der aktuelle Knoten über Attribute verfügt, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn der aktuelle Knoten über Attribute verfügt; andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2152,7 +2152,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse einen Wert ab, der angibt, ob der aktuelle Knoten einen <see cref="P:System.Xml.XmlReader.Value" /> aufweisen kann.</summary>
-        <value><see langword="true" />, wenn der Knoten, auf dem der Reader derzeit positioniert ist, einen <see langword="Value" /> aufweisen darf, andernfalls <see langword="false" />. Wenn <see langword="false" />, weist der Knoten den Wert <see langword="String.Empty" /> auf.</value>
+        <value><see langword="true" /> Wenn der Knoten, auf dem der Reader derzeit positioniert ist, kann eine <see langword="Value" />ist, andernfalls <see langword="false" />. Wenn <see langword="false" />, weist der Knoten den Wert <see langword="String.Empty" /> auf.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2166,9 +2166,9 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 |`Comment`|Der Inhalt des Kommentars.|  
 |`DocumentType`|Die interne Teilmenge.|  
 |`ProcessingInstruction`|Der gesamte Inhalt mit Ausnahme des Ziels.|  
-|`SignificantWhitespace`|Der Leerraum zwischen Markup bei einem Modell für gemischten Inhalt.|  
+|`SignificantWhitespace`|Der Leerraum zwischen Markups bei einem Modell für gemischten Inhalt.|  
 |`Text`|Der Inhalt des Textknotens.|  
-|`Whitespace`|Der Leerraum zwischen Markup.|  
+|`Whitespace`|Der Leerraum zwischen Markups.|  
 |`XmlDeclaration`|Der Inhalt der Deklaration.|  
   
    
@@ -2214,7 +2214,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse einen Wert ab, der angibt, ob der aktuelle Knoten ein Attribut ist, das aus dem in der DTD oder dem Schema definierten Standardwert generiert wurde.</summary>
-        <value><see langword="true" />, wenn der aktuelle Knoten ein Attribut ist, dessen Wert aus dem in der DTD oder dem Schema definierten Standardwert generiert wurde. <see langword="false" />, wenn der Attributwert explizit festgelegt wurde.</value>
+        <value><see langword="true" /> Wenn der aktuelle Knoten ein Attribut ist, dessen Wert aus dem in der DTD oder Schema definierten Standardwert generiert wurde; <see langword="false" /> , wenn der Attributwert explizit festgelegt wurde.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2315,14 +2315,14 @@ public class Sample
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse einen Wert ab, der angibt, ob der aktuelle Knoten ein leeres Element ist (z.B. <c>&lt;MyElement/&gt;</c>).</summary>
-        <value><see langword="true" /> Wenn der aktuelle Knoten ein Element ist (<see cref="P:System.Xml.XmlReader.NodeType" /> gleich <see langword="XmlNodeType.Element" />) endet mit <c>/ &gt;</c>ist, andernfalls <see langword="false" />.</value>
+        <value><see langword="true" /> Wenn der aktuelle Knoten ein Element ist (<see cref="P:System.Xml.XmlReader.NodeType" /> gleich <see langword="XmlNodeType.Element" />) endet mit <c> / &gt; </c>ist, andernfalls <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  Diese Eigenschaft ermöglicht Ihnen, die Unterschiede zwischen den folgenden Elementen zu bestimmen:  
   
- `<item num="123"/>` (`IsEmptyElement` is `true`).  
+ `<item num="123"/>` (`IsEmptyElement` ist `true`).  
   
  `<item num="123"></item>` (`IsEmptyElement` ist `false`, obwohl der Inhalt des Elements leer ist).  
   
@@ -2384,7 +2384,7 @@ public class Sample
       <Docs>
         <param name="str">Der Name, dessen Gültigkeit validiert werden soll.</param>
         <summary>Gibt einen Wert zurück, der angibt, ob das Zeichenfolgenargument ein gültiger XML-Name ist.</summary>
-        <returns><see langword="true" />, wenn der Name gültig ist, andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn der Name gültig ist, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2433,7 +2433,7 @@ public class Sample
       <Docs>
         <param name="str">Das zu validierende Namenstoken.</param>
         <summary>Gibt einen Wert zurück, der angibt, ob das Zeichenfolgenargument ein gültiges XML-Namenstoken ist.</summary>
-        <returns><see langword="true" />, wenn es sich um ein gültiges Namenstoken handelt, andernfalls <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn es sich um ein gültiges Namenstoken handelt, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2492,7 +2492,7 @@ public class Sample
       <Parameters />
       <Docs>
         <summary>Ruft <see cref="M:System.Xml.XmlReader.MoveToContent" /> auf und überprüft, ob der aktuelle Inhaltsknoten ein Starttag oder ein leeres Elementtag ist.</summary>
-        <returns><see langword="true" />, wenn <see cref="M:System.Xml.XmlReader.MoveToContent" /> ein Starttag oder ein leeres Elementtag findet. <see langword="false" />, wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde.</returns>
+        <returns><see langword="true" /> , wenn <see cref="M:System.Xml.XmlReader.MoveToContent" /> ein Starttag oder ein leeres Elementtag findet. <see langword="false" />, wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2555,7 +2555,7 @@ public class Sample
       <Docs>
         <param name="name">Die mit der <see langword="Name" />-Eigenschaft des gefundenen Elements verglichene Zeichenfolge.</param>
         <summary>Ruft <see cref="M:System.Xml.XmlReader.MoveToContent" /> auf und überprüft, ob der aktuelle Inhaltsknoten ein Starttag oder ein leeres Elementtag ist und die <see cref="P:System.Xml.XmlReader.Name" />-Eigenschaft des gefundenen Elements mit dem angegebenen Argument übereinstimmt.</summary>
-        <returns><see langword="true" />, wenn der resultierende Knoten ein Element ist und die <see langword="Name" />-Eigenschaft mit der angegebenen Zeichenfolge übereinstimmt. <see langword="false" />, wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde oder die <see langword="Name" />-Elementeigenschaft nicht mit der angegebenen Zeichenfolge übereinstimmt.</returns>
+        <returns><see langword="true" /> , wenn der resultierende Knoten ein Element ist und die <see langword="Name" />-Eigenschaft mit der angegebenen Zeichenfolge übereinstimmt. <see langword="false" /> , wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde oder die Elementeigenschaft <see langword="Name" /> nicht mit der angegebenen Zeichenfolge übereinstimmt.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2616,7 +2616,7 @@ public class Sample
         <param name="localname">Die mit der <see langword="LocalName" />-Eigenschaft des gefundenen Elements zu vergleichende Zeichenfolge.</param>
         <param name="ns">Die mit der <see langword="NamespaceURI" />-Eigenschaft des gefundenen Elements zu vergleichende Zeichenfolge.</param>
         <summary>Ruft <see cref="M:System.Xml.XmlReader.MoveToContent" /> auf und überprüft, ob der aktuelle Inhaltsknoten ein Starttag oder ein leeres Elementtag ist und ob die <see cref="P:System.Xml.XmlReader.LocalName" />-Eigenschaft und die <see cref="P:System.Xml.XmlReader.NamespaceURI" />-Eigenschaft des gefundenen Elements mit den angegebenen Zeichenfolgen übereinstimmen.</summary>
-        <returns><see langword="true" />, wenn der resultlierende Knoten ein Element ist. <see langword="false" />, wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde oder die <see langword="LocalName" />-Eigenschaft und die <see langword="NamespaceURI" />-Eigenschaft des Elements nicht mit den angegebenen Zeichenfolgen übereinstimmen.</returns>
+        <returns><see langword="true" /> , wenn der resultierende Knoten ein Element ist. <see langword="false" /> , wenn ein anderer Knotentyp als <see langword="XmlNodeType.Element" /> gefunden wurde oder die <see langword="LocalName" />-Eigenschaft und die <see langword="NamespaceURI" />-Eigenschaft des Elements nicht mit den angegebenen Zeichenfolgen übereinstimmen.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2861,7 +2861,7 @@ public class Sample
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse den lokalen Namen des aktuellen Knotens ab.</summary>
-        <value>Der Name des aktuellen Knotens ohne das Präfix. Z. B. <see langword="LocalName" /> ist <see langword="book" /> für das Element <c>&lt;bk: book&gt;</c>.  
+        <value>Der Name des aktuellen Knotens ohne das Präfix. Z. B. <see langword="LocalName" /> ist <see langword="book" /> für das Element <c> &lt;bk: book&gt;</c>.  
   
 Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment" /> usw. gibt diese Eigenschaft <see langword="String.Empty" /> zurück.</value>
         <remarks>
@@ -3042,7 +3042,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
       <Docs>
         <param name="name">Der qualifizierte Name des Attributs.</param>
         <summary>Wechselt beim Überschreiben in einer abgeleiteten Klasse zum Attribut mit dem angegebenen <see cref="P:System.Xml.XmlReader.Name" />.</summary>
-        <returns><see langword="true" />, wenn das Attribut gefunden wurde, andernfalls <see langword="false" />. Bei einem Wert von <see langword="false" /> ändert sich die Position des Readers nicht.</returns>
+        <returns><see langword="true" /> , wenn das Attribut gefunden wurde, andernfalls <see langword="false" />. Bei einem Wert von <see langword="false" /> ändert sich die Position des Readers nicht.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3094,7 +3094,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
         <param name="name">Der lokale Name des Attributs.</param>
         <param name="ns">Der Namespace-URI dieses Attributs.</param>
         <summary>Wechselt beim Überschreiben in einer abgeleiteten Klasse zum Attribut mit dem angegebenen <see cref="P:System.Xml.XmlReader.LocalName" /> und <see cref="P:System.Xml.XmlReader.NamespaceURI" />.</summary>
-        <returns><see langword="true" />, wenn das Attribut gefunden wurde, andernfalls <see langword="false" />. Bei einem Wert von <see langword="false" /> ändert sich die Position des Readers nicht.</returns>
+        <returns><see langword="true" /> , wenn das Attribut gefunden wurde, andernfalls <see langword="false" />. Bei einem Wert von <see langword="false" /> ändert sich die Position des Readers nicht.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3104,7 +3104,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
-        <exception cref="T:System.ArgumentNullException">Beide Parameter-Werte sind <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Beide Parameterwerte sind <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="MoveToContent">
@@ -3176,7 +3176,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
   
 ```xml  
 <?xml version="1.0"><!DOCTYPE price SYSTEM "abc"  
-  [<!ENTTIY p  
+  [<!ENTITY p  
   "123.4">]><price>&p;</price>  
 ```  
   
@@ -3243,7 +3243,7 @@ Bei unbenannten Knotentypen wie <see langword="Text" />, <see langword="Comment"
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -3281,7 +3281,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       <Parameters />
       <Docs>
         <summary>Wechselt beim Überschreiben in einer abgeleiteten Klasse zu dem Element, das den aktuellen Attributknoten enthält.</summary>
-        <returns><see langword="true" />, wenn der Reader auf einem Attribut positioniert ist (der Reader wechselt zu dem Element, das das Attribut besitzt); <see langword="false" />, wenn der Reader nicht auf einem Attribut positioniert ist (die Position des Readers bleibt unverändert).</returns>
+        <returns><see langword="true" /> , wenn der Reader auf einem Attribut positioniert ist (der Reader wechselt zu dem Element, das das Attribut besitzt); <see langword="false" />, wenn der Reader nicht auf einem Attribut positioniert ist (die Position des Readers bleibt unverändert).</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3335,7 +3335,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       <Parameters />
       <Docs>
         <summary>Wechselt beim Überschreiben in einer abgeleiteten Klasse zum ersten Attribut.</summary>
-        <returns><see langword="true" />, wenn ein Attribut vorhanden ist (der Reader wechselt zum ersten Attribut), andernfalls <see langword="false" /> (die Position des Readers bleibt unverändert).</returns>
+        <returns><see langword="true" /> , wenn ein Attribut vorhanden ist (der Reader wechselt zum ersten Attribut), andernfalls <see langword="false" /> (die Position des Readers bleibt unverändert).</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3384,7 +3384,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       <Parameters />
       <Docs>
         <summary>Wechselt beim Überschreiben in einer abgeleiteten Klasse zum nächsten Attribut.</summary>
-        <returns><see langword="true" />, wenn ein nächstes Attribut vorhanden ist; <see langword="false" />, wenn keine weiteren Attribute vorhanden sind.</returns>
+        <returns><see langword="true" /> , wenn ein nächstes Attribut vorhanden ist; <see langword="false" />, wenn keine weiteren Attribute vorhanden sind.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3437,12 +3437,12 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse den gekennzeichneten Namen des aktuellen Knotens ab.</summary>
-        <value>Der gekennzeichnete Name des aktuellen Knotens. Z. B. <see langword="Name" /> ist <see langword="bk:book" /> für das Element <c>&lt;bk: book&gt;</c>.  
+        <value>Der gekennzeichnete Name des aktuellen Knotens. Z. B. <see langword="Name" /> ist <see langword="bk:book" /> für das Element <c> &lt;bk: book&gt;</c>.  
   
 Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlReader.NodeType" /> des Knotens ab. Die folgenden Knotentypen geben die jeweils aufgeführten Werte zurück. Alle anderen Knotentypen geben eine leere Zeichenfolge zurück.  
   
  <list type="table"><listheader><term> Knotentyp 
- </term><description> Name 
+ </term><description> name 
  </description></listheader><item><term><see langword="Attribute" /></term><description> Der Name des Attributs.  
   
  </description></item><item><term><see langword="DocumentType" /></term><description> Der Name des Dokumenttyps.  
@@ -3758,7 +3758,7 @@ Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlReader.NodeType" 
       <Parameters />
       <Docs>
         <summary>Liest beim Überschreiben in einer abgeleiteten Klasse den nächsten Knoten aus dem Stream.</summary>
-        <returns><see langword="true" />, wenn der nächste Knoten erfolgreich gelesen wurde, andernfalls, <see langword="false" />.</returns>
+        <returns><see langword="true" /> , wenn der nächste Knoten erfolgreich gelesen wurde, andernfalls <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3787,7 +3787,7 @@ Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlReader.NodeType" 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.Xml.XmlException">Beim Analysieren der XML-Daten ist ein Fehler aufgetreten.</exception>
+        <exception cref="T:System.Xml.XmlException">Beim Analysieren des XML-Codes ist ein Fehler aufgetreten.</exception>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
       </Docs>
     </Member>
@@ -3823,7 +3823,7 @@ Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlReader.NodeType" 
       <Parameters />
       <Docs>
         <summary>Liest den nächsten Knoten aus dem Stream asynchron.</summary>
-        <returns><see langword="true" />, wenn der nächste Knoten erfolgreich gelesen wurde, <see langword="false" />, wenn keine weiteren zu lesenden Knoten vorhanden sind.</returns>
+        <returns><see langword="true" /> , wenn der nächste Knoten erfolgreich gelesen wurde; <see langword="false" />, wenn keine weiteren zu lesenden Knoten vorhanden sind.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -3836,7 +3836,7 @@ Der zurückgegebene Name hängt vom <see cref="P:System.Xml.XmlReader.NodeType" 
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -3874,9 +3874,9 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
       <Parameters />
       <Docs>
         <summary>Löst beim Überschreiben in einer abgeleiteten Klasse den Attributwert in einen oder mehrere Knoten vom Typ <see langword="Text" />, <see langword="EntityReference" /> oder <see langword="EndEntity" /> auf.</summary>
-        <returns><see langword="true" />, wenn zurückzugebende Knoten vorhanden sind.  
+        <returns><see langword="true" /> , wenn zurückzugebende Knoten vorhanden sind.  
   
- <see langword="false" />, wenn der Reader beim ersten Aufruf nicht auf einem Attributknoten positioniert ist oder alle Attributwerte gelesen wurden.  
+ <see langword="false" /> , wenn der Reader beim ersten Aufruf nicht auf einem Attributknoten positioniert ist oder alle Attributwerte gelesen wurden.  
   
 Ein leeres Attribut, z.B. <c>misc=""</c>, gibt <see langword="true" /> mit einem einzelnen Knoten mit dem Wert <see langword="String.Empty" /> zurück.</returns>
         <remarks>
@@ -3937,9 +3937,9 @@ Dieser Wert kann <see langword="null" /> sein.</param>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode liest den Textinhalt an der aktuellen Readerposition ab und konvertiert sie in den angeforderten Rückgabetyp. Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte sind verkettet. Kommentare und Verarbeitungsanweisungen werden übersprungen und Entitätsverweise automatisch aufgelöst.  
+ Diese Methode liest den Textinhalt an der aktuellen Readerposition ab und konvertiert sie in den angeforderten Rückgabetyp. Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte sind verkettet. Kommentare und verarbeitungsanweisungen werden übersprungen und Entitätsverweise automatisch aufgelöst werden.  
   
- Diese Methode wird verwendet, lesen, die bei Bedarf zu konvertieren und die atomaren Wertelemente aus dem aktuellen Knoten Inhalt zurück. Wenn der Eingabetyp eine gültige Zuordnung für den Typ des aktuellen Knotens klicken Sie dann eine Instanz des Zieltyps, die mit dem Wert des aktuellen Knotens ist wird zurückgegeben. Finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referencepage eine Liste der standardzuordnungen.  
+ Diese Methode wird verwendet, lesen, die bei Bedarf zu konvertieren und die atomaren Wertelemente aus dem aktuellen Knoten Inhalt zurück. Wenn der Eingabetyp eine gültige Zuordnung für den Typ des aktuellen Knotens klicken Sie dann eine Instanz des Zieltyps, die mit dem Wert des aktuellen Knotens ist wird zurückgegeben. Finden Sie im Abschnitt "Hinweise" in der <xref:System.Xml.XmlReader> Referenzseite für das eine Liste der standardzuordnungen.  
   
  Angenommen, mussten Sie den folgenden XML-Text:  
   
@@ -3965,13 +3965,13 @@ Dieser Wert kann <see langword="null" /> sein.</param>
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadContentAsAsync%2A>.  
   
@@ -4055,7 +4055,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -4104,7 +4104,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode gibt den Inhalt, decodiert der `Base64` Inhalt, und gibt die decodierten Binärbytes zurück (z. B. ein Inlineschema `Base64` codiertes GIF-Bild) in den Puffer. Diese Methode kann nacheinander aufgerufen werden, um umfangreiche Streams mit eingebettetem Text zu lesen. Weitere Informationen finden Sie unter RFC 1521, "MIME (Multipurpose Internet Mail Extensions)-Teil einer: Mechanismen für die angeben, und beschreiben das Format der Internetnachrichtentexte". Sie erhalten RFCs auf der [Request for Comments-Website](https://go.microsoft.com/fwlink/?LinkId=37119).  
+ Diese Methode gibt den Inhalt, decodiert der `Base64` Inhalt, und gibt die decodierten Binärbytes zurück (z. B. ein Inlineschema `Base64` codiertes GIF-Bild) in den Puffer. Diese Methode kann nacheinander aufgerufen werden, um umfangreiche Streams mit eingebettetem Text zu lesen. Weitere Informationen finden Sie unter RFC 1521, "MIME (Multipurpose Internet Mail Extensions)-Teil einer: Mechanismen zum angeben, und beschreiben das Format der Internetnachrichtentexte". Sie erhalten RFCs auf der [Request for Comments-Website](https://go.microsoft.com/fwlink/?LinkId=37119).  
   
 > [!NOTE]
 >  Greifen Sie auf keine Leser Eigenschaften zwischen den Aufrufen der <xref:System.Xml.XmlReader.ReadContentAsBase64%2A> Methode, bis die Methode den Wert zurückgibt `0`.  
@@ -4185,7 +4185,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -4315,7 +4315,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -4359,24 +4359,24 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  In der folgende Tabelle wird beschrieben, wie diese Methode für jeden Knotentyp behandelt.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
    
   
 ## Examples  
- Im folgenden Beispiel wird die <xref:System.Xml.XmlReader.ReadContentAsBoolean%2A> Methode zum Lesen des Attributs als B`oolean` Wert.  
+ Im folgenden Beispiel wird die <xref:System.Xml.XmlReader.ReadContentAsBoolean%2A> Methode, um das Attribut als lesen eine `Boolean` Wert.  
   
  [!code-csharp[XmlReader.ReadContentAs#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReader.ReadContentAs/CS/readContentAs.cs#1)]
  [!code-vb[XmlReader.ReadContentAs#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReader.ReadContentAs/VB/readContentAs.vb#1)]  
@@ -4429,7 +4429,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
 > [!NOTE]
 >  Wenn der Inhalt den Typ <xref:System.DateTime.Year%2A?displayProperty=nameWithType> hat, ist der `xsd:gMonthDay`-Wert nicht verlässlich. <xref:System.Xml.XmlReader> Legt die <xref:System.DateTime.Year%2A?displayProperty=nameWithType> in diesem Fall auf 1904 Wert.  
@@ -4438,13 +4438,13 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -4530,19 +4530,19 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:decimal`, gibt der Reader zurück, ein Unboxing <xref:System.Decimal> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:decimal`, versucht der Reader konvertiert eine <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:decimal`, gibt der Reader zurück, ein Unboxing <xref:System.Decimal> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:decimal`, versucht der Reader konvertiert eine <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  In der folgende Tabelle wird beschrieben, wie diese Methode für jeden Knotentyp behandelt.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -4591,19 +4591,19 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  In der folgende Tabelle wird beschrieben, wie diese Methode für jeden Knotentyp behandelt.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie unter den <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -4652,19 +4652,19 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:float`, vom Reader zurückgegeben ein mittels Unboxing konvertiert eine Gleitkommazahl mit einfacher Genauigkeit. Wenn der Inhalt nicht typisiert ist `xsd:float`, versucht der Reader, um ihn in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:float`, vom Reader zurückgegeben ein mittels Unboxing konvertiert eine Gleitkommazahl mit einfacher Genauigkeit. Wenn der Inhalt nicht typisiert ist `xsd:float`, versucht der Reader, um ihn in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  In der folgende Tabelle wird beschrieben, wie diese Methode für jeden Knotentyp behandelt.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -4713,19 +4713,19 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  In der folgende Tabelle wird beschrieben, wie diese Methode für jeden Knotentyp behandelt.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -4774,17 +4774,17 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode verkettet, Text, Leerraum, signifikanter Leerraum und CDATA-Abschnitte und überspringt alle Kommentare und verarbeitungsanweisungen. Entitätsverweise werden automatisch aufgelöst.  
   
- Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die folgende Tabelle zeigt, wie diese Methode behandelt jeden Knotentyp.  
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
 |`Attribute`|Identisch mit `XmlConvert.ToXxx` für den Attributwert.|Der Reader behält die aktuelle Position|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -4846,13 +4846,13 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
 |`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Der Wert des Elements, sofern der Reader befindet sich ein Schema überprüfen Reader (<xref:System.Xml.XmlReaderSettings.ValidationType%2A> nastaven NA hodnotu <xref:System.Xml.ValidationType.Schema>); andernfalls eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Der Wert des Elements, sofern der Reader befindet sich ein Schema überprüfen Reader (<xref:System.Xml.XmlReaderSettings.ValidationType%2A> nastaven NA hodnotu <xref:System.Xml.ValidationType.Schema>); andernfalls eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadContentAsObjectAsync%2A>.  
   
@@ -4913,7 +4913,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -4963,13 +4963,13 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
   
 |XmlNodeType|Rückgabewert|Verhalten des Readers|  
 |-----------------|------------------|---------------------|  
-|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, konvertiert in den angeforderten Typ.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position bei.|  
-|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die Verarbeitungsanweisung oder den Kommentar und liest den verketteten Textinhalt, der auf die Verarbeitungsanweisung oder den Kommentar folgt.|Wird zum nächsten Anfangselement- oder Endelementtag verschoben. Entitätsverweise werden automatisch erweitert.|  
-|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position bei.|  
-|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert, der Reader behält jedoch i. d. R. die aktuelle Position bei.|  
+|`Text`<br /><br /> `CDATA`<br /><br /> `Whitespace`<br /><br /> `SignificantWhitespace`<br /><br /> `EntityReference`<br /><br /> `EndEntity`|Verketteter Inhalt von Text, CDATA, Leerraum und signifikantem Leerraumknoten, die in den angeforderten Typ konvertiert werden.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`Attribute`|Identisch mit Aufrufen `XmlConvert.ToXxx` auf den Wert des Attributs.|Der Reader behält die aktuelle Position.|  
+|`Comment`<br /><br /> `ProcessingInstruction`|Ignoriert die verarbeitungsanweisung (PI) oder einen Kommentar und liest den verketteten Textinhalt, der die Verarbeitungsanweisung oder den Kommentar folgt.|Wechselt zum nächsten start-Element oder Endelementtag. Entitätsverweise werden automatisch erweitert.|  
+|`EndElement`|Eine leere Zeichenfolge.|Der Reader behält die aktuelle Position.|  
+|`Element`<br /><br /> `XmlDeclaration`<br /><br /> `None`<br /><br /> `Document`<br /><br /> `DocumentType`<br /><br /> `Notation`<br /><br /> `Entity`<br /><br /> `DocumentFragment`|Es wird eine <xref:System.InvalidOperationException> ausgelöst.|Nicht definiert ist, auch wenn der Reader in der Regel in der aktuellen Position bleibt.|  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadContentAsStringAsync%2A>.  
   
@@ -5025,7 +5025,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -5089,7 +5089,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadElementContentAsAsync%2A>.  
   
@@ -5171,7 +5171,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -5243,7 +5243,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -5292,7 +5292,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Diese Methode liest den Elementinhalt, decodiert Sie es mit `Base64` Codierungs- und gibt die decodierten Binärbytes zurück (z. B. ein Inlineschema `Base64`-codiertes GIF-Bild) in den Puffer. Weitere Informationen finden Sie unter RFC 1521, "MIME (Multipurpose Internet Mail Extensions)-Teil einer: Mechanismen für die angeben, und beschreiben das Format der Internetnachrichtentexte". Sie erhalten RFCs auf der [Request for Comments-Website](https://go.microsoft.com/fwlink/?LinkId=37119).  
+ Diese Methode liest den Elementinhalt, decodiert Sie es mit `Base64` Codierungs- und gibt die decodierten Binärbytes zurück (z. B. ein Inlineschema `Base64`-codiertes GIF-Bild) in den Puffer. Weitere Informationen finden Sie unter RFC 1521, "MIME (Multipurpose Internet Mail Extensions)-Teil einer: Mechanismen zum angeben, und beschreiben das Format der Internetnachrichtentexte". Sie erhalten RFCs auf der [Request for Comments-Website](https://go.microsoft.com/fwlink/?LinkId=37119).  
   
  <xref:System.Xml.XmlReader.ReadElementContentAsBase64%2A> Elemente mit einfachem Inhalt können nur gelesen werden. Das Element kann es sich um Text, Leerraum, signifikanter Leerraum, CDATA-Abschnitten, Kommentare und verarbeitungsanweisungen enthalten. Es kann auch Entitätsverweise, die automatisch erweitert werden, enthalten. Das Element keine untergeordneten Elemente.  
   
@@ -5379,7 +5379,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -5515,7 +5515,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -5572,7 +5572,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt des Elements typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt des Elements typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -5635,7 +5635,7 @@ Der Elementinhalt kann nicht in ein <see cref="T:System.Boolean" />-Objekt konve
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:boolean`, gibt der Reader zurück, ein Unboxing <xref:System.Boolean> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:boolean`, versucht der Reader konvertiert eine <xref:System.Boolean> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -5702,7 +5702,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
 > [!NOTE]
 >  Wenn der Inhalt den Typ <xref:System.DateTime.Year%2A?displayProperty=nameWithType> hat, ist der `xsd:gMonthDay`-Wert nicht verlässlich. <xref:System.Xml.XmlReader> Legt die <xref:System.DateTime.Year%2A?displayProperty=nameWithType> in diesem Fall auf 1904 Wert.  
@@ -5777,7 +5777,7 @@ Der Elementinhalt kann nicht in ein <see cref="T:System.DateTime" />-Objekt konv
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:dateTime`, gibt der Reader zurück, ein Unboxing <xref:System.DateTime> Objekt. Wenn der Inhalt nicht typisiert ist `xsd:dateTime`, versucht der Reader konvertiert eine <xref:System.DateTime> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
 > [!NOTE]
 >  Wenn der Inhalt den Typ <xref:System.DateTime.Year%2A?displayProperty=nameWithType> hat, ist der `xsd:gMonthDay`-Wert nicht verlässlich. <xref:System.Xml.XmlReader> Legt die <xref:System.DateTime.Year%2A?displayProperty=nameWithType> in diesem Fall auf 1904 Wert.  
@@ -5852,7 +5852,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Konvertieren der Elementinhalt, versucht der Reader ein <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Versucht der Reader der Elementinhalt zu konvertieren eine <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -5915,7 +5915,7 @@ Der Elementinhalt kann nicht in <see cref="T:System.Decimal" /> konvertiert werd
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Konvertieren der Elementinhalt, versucht der Reader ein <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Versucht der Reader der Elementinhalt zu konvertieren eine <xref:System.Decimal> -Objekts gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -5987,7 +5987,7 @@ Der Elementinhalt kann nicht in <see cref="T:System.Decimal" /> konvertiert werd
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6062,7 +6062,7 @@ Der Elementinhalt kann nicht in eine Gleitkommazahl mit doppelter Genauigkeit ko
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:double`, gibt der Reader eine Gleitkommazahl mit doppelter Genauigkeit zurück. Wenn der Inhalt nicht typisiert ist `xsd:double`, versucht der Reader konvertieren in eine Gleitkommazahl mit doppelter Genauigkeit Gleitkommazahl gemäß den Regeln der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6134,7 +6134,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Den Inhalt des Elements in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln konvertiert versucht der Reader die [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Versucht der Reader, den Inhalt des Elements in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6197,7 +6197,7 @@ Der Elementinhalt kann nicht in eine Gleitkommazahl mit einfacher Genauigkeit ko
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Den Inhalt des Elements in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln konvertiert versucht der Reader die [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Versucht der Reader, den Inhalt des Elements in eine Gleitkommazahl mit einfacher Genauigkeit gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6268,7 +6268,7 @@ Der Elementinhalt kann nicht in eine Gleitkommazahl mit einfacher Genauigkeit ko
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6330,7 +6330,7 @@ Der Elementinhalt kann nicht in eine 32-Bit-Ganzzahl mit Vorzeichen konvertiert 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:integer`, gibt der Reader eine Unboxing 32-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:integer`, versucht der Reader, um ihn in eine 32-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6401,7 +6401,7 @@ Der Elementinhalt kann nicht in eine 32-Bit-Ganzzahl mit Vorzeichen konvertiert 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6475,7 +6475,7 @@ Der Elementinhalt kann nicht in eine 64-Bit-Ganzzahl mit Vorzeichen konvertiert 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Wenn der Inhalt typisiert ist `xsd:long`, gibt der Reader eine Unboxing 64-Bit-Ganzzahl mit Vorzeichen zurück. Wenn der Inhalt nicht typisiert ist `xsd:long`, versucht der Reader in eine 64-Bit-Ganzzahl mit Vorzeichen gemäß den Regeln, die definiert, die durch Konvertieren der [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Weitere Informationen finden Sie im Abschnitt Hinweise unter der <xref:System.Xml.XmlReader> Referenzseite.  
   
@@ -6546,7 +6546,7 @@ Der Elementinhalt kann nicht in eine 64-Bit-Ganzzahl mit Vorzeichen konvertiert 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadElementContentAsObjectAsync%2A>.  
   
@@ -6626,7 +6626,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  ]]></format>
         </remarks>
@@ -6692,7 +6692,7 @@ Der Elementinhalt kann nicht in den angeforderten Typ konvertiert werden.</excep
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -6749,7 +6749,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
  Die asynchrone Version dieser Methode finden Sie unter <xref:System.Xml.XmlReader.ReadElementContentAsStringAsync%2A>.  
   
@@ -6824,7 +6824,7 @@ Der Elementinhalt kann nicht in ein <see cref="T:System.String" />-Objekt konver
 ## Remarks  
  Diese Methode liest das Anfangstag und den Inhalt des Elements, und verschiebt den Reader direkt hinter das Endelementtag. Es wird erweitert, Entitäten und verarbeitungsanweisungen und Kommentare werden ignoriert. Das Element kann nur mit einfachen Inhalt enthalten. Es kann nicht, also die untergeordneten Elemente aufweisen.  
   
- Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datentypen](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
+ Weitere Informationen finden Sie im Abschnitt "Hinweise" der <xref:System.Xml.XmlReader> Referenzseite und [W3C XML Schema Part 2: Datatypes](https://go.microsoft.com/fwlink/?LinkId=4871) Empfehlung.  
   
    
   
@@ -6899,7 +6899,7 @@ Der Elementinhalt kann nicht in ein <see cref="T:System.String" />-Objekt konver
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+        <exception cref="T:System.InvalidOperationException">Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -7184,16 +7184,16 @@ Wenn der aktuelle Knoten weder ein Element noch ein Attribut ist, wird eine leer
 </node>  
 ```  
   
- `ReadInnerXml` gibt `this <child id="123"/>` zurück  
+ `ReadInnerXml` gibt `this <child id="123"/>`  
   
  Diese Methode verarbeitet die Element-und Attributknoten auf folgende Weise:  
   
-|Knotentyp|Die Position vor dem Aufruf|XML-Fragment|Rückgabewert|Position nach dem Aufruf|  
+|Knotentyp|Die Position vor dem Aufruf|XML-fragment|Rückgabewert|Position nach dem Aufruf|  
 |---------------|------------------------------|------------------|------------------|-----------------------------|  
-|`Element`|Auf dem `item1`-Starttag.|\<item1>text1\</item1>\<item2>text2\</item2>|text1|Auf dem `item2`-Starttag.|  
-|`Attribute`|Auf dem `attr1`-Attributknoten.|\<item attr1="val1" attr2="val2">text\</item>|val1|Verbleibt auf dem `attr1`-Attributknoten.|  
+|`Element`|Auf der `item1` Starttag.|\<Item1 > text1\</item1 >\<item2 > "Text2"\</item2 >|Text1|Auf der `item2` Starttag.|  
+|`Attribute`|Auf der `attr1` Attributknoten.|\<Element attr1 = "Wert1" attr2 = "Wert2" > Text \< /item >|Wert1|Verbleibt auf dem `attr1` Attributknoten.|  
   
- Wenn der Reader auf einem Endknoten positioniert ist, entspricht das Aufrufen von `ReadInnerXml` dem Aufrufen von <xref:System.Xml.XmlReader.Read%2A>. Gibt die Methode zurück `String.Empty` (außer bei Attributknoten in diesem Fall wird der Wert des Attributs zurückgegeben wird).  
+ Wenn der Reader auf einem Endknoten positioniert ist, wird beim Aufrufen `ReadInnerXml` entspricht dem Aufruf <xref:System.Xml.XmlReader.Read%2A>. Gibt die Methode zurück `String.Empty` (außer bei Attributknoten in diesem Fall wird der Wert des Attributs zurückgegeben wird).  
   
  Diese Methode überprüft für wohlgeformtes XML. Wenn `ReadInnerXml` aufgerufen wird ein <xref:System.Xml.XmlValidatingReader>, diese Methode überprüft auch den Inhalt, der zurückgegeben wird.  
   
@@ -7269,7 +7269,7 @@ Wenn der aktuelle Knoten weder ein Element noch ein Attribut ist, wird eine leer
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -7316,12 +7316,12 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
   
  Diese Methode verarbeitet die Element-und Attributknoten auf folgende Weise:  
   
-|Knotentyp|Die Position vor dem Aufruf|XML-Fragment|Rückgabewert|Position nach dem Aufruf|  
+|Knotentyp|Die Position vor dem Aufruf|XML-fragment|Rückgabewert|Position nach dem Aufruf|  
 |---------------|------------------------------|------------------|------------------|-----------------------------|  
-|`Element`|Auf dem `item1`-Starttag.|\<item1>text1\</item1>\<item2>text2\</item2>|\<item1>text1\</item1>|Auf dem `item2`-Starttag.|  
-|`Attribute`|Auf dem `attr1`-Attributknoten.|\<item attr1="val1" attr2="val2">text\</item>|attr1="val1"|Verbleibt auf dem `attr1`-Attributknoten.|  
+|`Element`|Auf der `item1` Starttag.|\<Item1 > text1\</item1 >\<item2 > "Text2"\</item2 >|\<Item1 > text1\</item1 >|Auf der `item2` Starttag.|  
+|`Attribute`|Auf der `attr1` Attributknoten.|\<Element attr1 = "Wert1" attr2 = "Wert2" > Text \< /item >|attr1 = "Wert1"|Verbleibt auf dem `attr1` Attributknoten.|  
   
- Wenn der Reader auf einem Endknoten positioniert ist, entspricht das Aufrufen von `ReadOuterXml` dem Aufrufen von <xref:System.Xml.XmlReader.Read%2A>. Gibt die Methode zurück `String.Empty` (außer bei Attributknoten in diesem Fall wird das Attributmarkup zurückgegeben wird).  
+ Wenn der Reader auf einem Endknoten positioniert ist, wird beim Aufrufen `ReadOuterXml` entspricht dem Aufruf <xref:System.Xml.XmlReader.Read%2A>. Gibt die Methode zurück `String.Empty` (außer bei Attributknoten in diesem Fall wird das Attributmarkup zurückgegeben wird).  
   
  Diese Methode überprüft für wohlgeformtes XML. Wenn `ReadOuterXml` aufgerufen wird ein <xref:System.Xml.XmlValidatingReader>, diese Methode überprüft auch den zurückgegebenen Inhalt.  
   
@@ -7393,7 +7393,7 @@ Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, 
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+        <exception cref="T:System.InvalidOperationException">Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -7610,7 +7610,7 @@ Die Eigenschaften <see cref="P:System.Xml.XmlReader.LocalName" /> und <see cref=
       </ReturnValue>
       <Docs>
         <summary>Ruft beim Überschreiben in einer abgeleiteten Klasse den Zustand des Readers ab.</summary>
-        <value>Einer der Enumerationswerte, der den Status des Readers angibt.</value>
+        <value>Einer der Enumerationswerte, der den Zustand des Readers angibt.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -7677,7 +7677,7 @@ Die Eigenschaften <see cref="P:System.Xml.XmlReader.LocalName" /> und <see cref=
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.Xml.XmlException">Beim Analysieren der XML-Daten ist ein Fehler aufgetreten.</exception>
+        <exception cref="T:System.Xml.XmlException">Beim Analysieren des XML-Codes ist ein Fehler aufgetreten.</exception>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
       </Docs>
     </Member>
@@ -7719,12 +7719,12 @@ Die Eigenschaften <see cref="P:System.Xml.XmlReader.LocalName" /> und <see cref=
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Xml.XmlReader.ReadSubtree%2A> kann nur auf Knoten "Element" aufgerufen werden. Wenn die gesamte Teilstruktur gelesen wurde, Aufrufe von der <xref:System.Xml.XmlReader.Read%2A> Methodenrückgabe `false`. Wenn der neue XML-Reader geschlossen wurde, die ursprüngliche Readeris positioniert die `EndElement` Knoten der untergeordneten Struktur. Daher bei einem Aufruf der <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode für das Starttag des das Book-Element, nachdem die Teilstruktur lesen und die neue XML-Reader wurde geschlossen wurde, die der ursprüngliche XML-Reader im Endtag des Buchelements positioniert ist.  
+ <xref:System.Xml.XmlReader.ReadSubtree%2A> kann nur auf Knoten "Element" aufgerufen werden. Wenn die gesamte Teilstruktur gelesen wurde, Aufrufe von der <xref:System.Xml.XmlReader.Read%2A> Methodenrückgabe `false`. Wenn der neue XML-Reader geschlossen wurde, befindet sich der ursprüngliche Reader auf den `EndElement` Knoten der untergeordneten Struktur. Daher bei einem Aufruf der <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode für das Starttag des das Book-Element, nachdem die Teilstruktur lesen und die neue XML-Reader wurde geschlossen wurde, die der ursprüngliche XML-Reader im Endtag des Buchelements positioniert ist.  
   
- Es sollten keine Operationen für den ursprünglichen Reader ausgeführt werden, bevor der neue Reader geschlossen wurde. Diese Aktion wird nicht unterstützt und kann unvorhersehbares Verhalten zur Folge haben.  
+ Sie sollten alle Vorgänge für den ursprünglichen Reader nicht ausführen, bis der neue Reader geschlossen wurde. Diese Aktion wird nicht unterstützt und kann zu unvorhersehbarem Verhalten führen.  
   
 > [!NOTE]
->  Die <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode ist nicht vorgesehen, für Creatingcopies der XML-Daten, die Sie unabhängig voneinander arbeiten können. Und es bietet eine Grenze um ein XML-Element zu erstellen. Dies ist nützlich, wenn Daten an eine andere Komponente für die Verarbeitung übergeben werden sollen und wie viele Ihrer Daten zu begrenzen, die die Komponente zugreifen kann sollen. Wenn Sie einen XML-Reader zurückgegeben durch Übergeben der <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode, um eine andere Anwendung, die Anwendung kann nur auf dieses XML-Element, nicht das gesamte XML-Dokument zugreifen.  
+>  Die <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode ist nicht vorgesehen, für die Erstellung der XML-Daten, die Sie unabhängig voneinander arbeiten können. Es wurde entwickelt, um eine Grenze um ein XML-Element zu erstellen. Dies ist nützlich, wenn Daten an eine andere Komponente für die Verarbeitung übergeben werden sollen und wie viele Ihrer Daten zu begrenzen, die die Komponente zugreifen kann sollen. Wenn Sie einen XML-Reader zurückgegeben durch Übergeben der <xref:System.Xml.XmlReader.ReadSubtree%2A> Methode, um eine andere Anwendung, die Anwendung kann nur auf dieses XML-Element, nicht das gesamte XML-Dokument zugreifen.  
   
    
   
@@ -7819,7 +7819,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
       <Docs>
         <param name="name">Der qualifizierte Name des Elements, zu dem Sie wechseln möchten.</param>
         <summary>Verschiebt den <see cref="T:System.Xml.XmlReader" /> auf das nächste Nachfolgerelement mit dem angegebenen qualifizierten Namen.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes Nachfolgerelement gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes untergeordnetes Element gefunden wurde, wird der <see cref="T:System.Xml.XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des Elements positioniert.  
+        <returns><see langword="true" /> , wenn ein übereinstimmendes Nachfolgerelement gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes untergeordnetes Element gefunden wurde, wird der <see cref="T:System.Xml.XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des Elements positioniert.  
   
 Wenn beim Aufruf von <see cref="T:System.Xml.XmlReader" /> der <see cref="M:System.Xml.XmlReader.ReadToDescendant(System.String)" /> nicht in einem Element positioniert wird, gibt diese Methode <see langword="false" /> zurück, und die Position des <see cref="T:System.Xml.XmlReader" /> wird nicht geändert.</returns>
         <remarks>
@@ -7879,12 +7879,12 @@ Wenn beim Aufruf von <see cref="T:System.Xml.XmlReader" /> der <see cref="M:Syst
         <param name="localName">Der lokale Name des Elements, zu dem Sie wechseln möchten.</param>
         <param name="namespaceURI">Der Namespace-URI des Elements, zu dem Sie wechseln möchten.</param>
         <summary>Verschiebt den <see cref="T:System.Xml.XmlReader" /> auf das nächste Nachfolgerelement mit dem angegebenen lokalen Namen und dem angegebenen Namespace-URI.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes Nachfolgerelement gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes untergeordnetes Element gefunden wurde, wird der <see cref="T:System.Xml.XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des Elements positioniert.  
+        <returns><see langword="true" /> , wenn ein übereinstimmendes Nachfolgerelement gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes untergeordnetes Element gefunden wurde, wird der <see cref="T:System.Xml.XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des Elements positioniert.  
   
 Wenn beim Aufruf von <see cref="T:System.Xml.XmlReader" /> der <see cref="M:System.Xml.XmlReader.ReadToDescendant(System.String,System.String)" /> nicht in einem Element positioniert wird, gibt diese Methode <see langword="false" /> zurück, und die Position des <see cref="T:System.Xml.XmlReader" /> wird nicht geändert.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
-        <exception cref="T:System.ArgumentNullException">Beide Parameter-Werte sind <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Beide Parameterwerte sind <see langword="null" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ReadToFollowing">
@@ -7936,7 +7936,7 @@ Wenn beim Aufruf von <see cref="T:System.Xml.XmlReader" /> der <see cref="M:Syst
       <Docs>
         <param name="name">Der qualifizierte Name des Elements.</param>
         <summary>Liest, bis ein Element mit dem angegebenen qualifizierten Namen gefunden wird.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes Element gefunden wird, andernfalls <see langword="false" />, und der <see cref="T:System.Xml.XmlReader" /> in einem Dateiendezustand.</returns>
+        <returns><see langword="true" /> , wenn ein übereinstimmendes Element gefunden wird, andernfalls <see langword="false" />, und der <see cref="T:System.Xml.XmlReader" /> befindet sich in einem Dateiendezustand.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -7945,7 +7945,7 @@ Wenn beim Aufruf von <see cref="T:System.Xml.XmlReader" /> der <see cref="M:Syst
   
 ```xml  
 <!--"sample.xml"-->  
-<?xmlversion="1.0">  
+<?xml version="1.0">  
    <items>  
       <item xmls="urn:1"/>  
    </items>  
@@ -8006,7 +8006,7 @@ reader.ReadToFollowing("item");
         <param name="localName">Der lokale Name des Elements.</param>
         <param name="namespaceURI">Der Namespace-URI des Elements.</param>
         <summary>Liest, bis ein Element mit dem angegebenen lokalen Namen und dem angegebenen Namespace-URI gefunden wird.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes Element gefunden wird, andernfalls <see langword="false" />, und der <see cref="T:System.Xml.XmlReader" /> in einem Dateiendezustand.</returns>
+        <returns><see langword="true" /> , wenn ein übereinstimmendes Element gefunden wird, andernfalls <see langword="false" />, und der <see cref="T:System.Xml.XmlReader" /> befindet sich in einem Dateiendezustand.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -8015,7 +8015,7 @@ reader.ReadToFollowing("item");
   
 ```xml  
 <!--"sample.xml"-->  
-<?xmlversion="1.0">  
+<?xml version="1.0">  
    <items>  
       <item xmls="urn:1"/>  
    </items>  
@@ -8035,7 +8035,7 @@ reader.ReadToFollowing("item", "urn:1");
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
-        <exception cref="T:System.ArgumentNullException">Beide Parameter-Werte sind <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Beide Parameterwerte sind <see langword="null" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ReadToNextSibling">
@@ -8087,7 +8087,7 @@ reader.ReadToFollowing("item", "urn:1");
       <Docs>
         <param name="name">Der qualifizierte Name des nebengeordneten Elements, zu dem Sie wechseln möchten.</param>
         <summary>Verschiebt den <see langword="XmlReader" /> auf das nächste nebengeordnete Element mit dem angegebenen qualifizierten Namen.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes nebengeordnetes Element gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes nebengeordnetes Element gefunden wurde, wird der <see langword="XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des übergeordneten Elements positioniert.</returns>
+        <returns><see langword="true" /> , wenn ein übereinstimmendes nebengeordnetes Element gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes nebengeordnetes Element gefunden wurde, wird der <see langword="XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des übergeordneten Elements positioniert.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -8148,7 +8148,7 @@ reader.ReadToFollowing("item", "urn:1");
         <param name="localName">Der lokale Name des nebengeordneten Elements, zu dem Sie wechseln möchten.</param>
         <param name="namespaceURI">Der Namespace-URI des nebengeordneten Elements, zu dem Sie wechseln möchten.</param>
         <summary>Verschiebt den <see langword="XmlReader" /> auf das nächste nebengeordnete Element mit dem angegebenen lokalen Namen und dem angegebenen Namespace-URI.</summary>
-        <returns><see langword="true" />, wenn ein übereinstimmendes nebengeordnetes Element gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes nebengeordnetes Element gefunden wurde, wird der <see langword="XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des übergeordneten Elements positioniert.</returns>
+        <returns><see langword="true" /> , wenn ein übereinstimmendes nebengeordnetes Element gefunden wurde, andernfalls <see langword="false" />. Wenn kein übereinstimmendes nebengeordnetes Element gefunden wurde, wird der <see langword="XmlReader" /> auf dem Endtag (<see cref="P:System.Xml.XmlReader.NodeType" /> ist <see langword="XmlNodeType.EndElement" />) des übergeordneten Elements positioniert.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -8160,7 +8160,7 @@ reader.ReadToFollowing("item", "urn:1");
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.</exception>
-        <exception cref="T:System.ArgumentNullException">Beide Parameter-Werte sind <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">Beide Parameterwerte sind <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadValueChunk">
@@ -8285,7 +8285,7 @@ Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein v
         <exception cref="T:System.InvalidOperationException">Eine <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, bevor ein vorheriger asynchroner Vorgang abgeschlossen wurde. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Es wird bereits ein asynchroner Vorgang ausgeführt“ ausgelöst.
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -8573,7 +8573,7 @@ Wenn diese Eigenschaft von einem <see cref="T:System.Xml.XmlTextReader" />-Objek
 
 - oder -
 
-Eine <see cref="T:System.Xml.XmlReader" /> asynchrone Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
+Eine asynchrone <see cref="T:System.Xml.XmlReader" />-Methode wurde aufgerufen, ohne das <see cref="P:System.Xml.XmlReaderSettings.Async" />-Flag auf <see langword="true" /> festzulegen. In diesem Fall wird <see cref="T:System.InvalidOperationException" /> mit der Meldung „Legen Sie 'XmlReaderSettings.Async' auf 'true' fest, wenn Sie asynchrone Methoden verwenden möchten.“ ausgelöst.</exception>
         <related type="Article" href="https://msdn.microsoft.com/library/db854f91-ccef-4035-ae4d-0911fde808c7">Asynchrone Programmierung mit Async und Await (C# und Visual Basic)</related>
       </Docs>
     </Member>
@@ -8669,11 +8669,11 @@ Dieser Member verhält sich möglicherweise anders in Verwendung ist ein [Portab
   
  </description></item><item><term><see langword="ProcessingInstruction" /></term><description> Der gesamte Inhalt mit Ausnahme des Ziels.  
   
- </description></item><item><term><see langword="SignificantWhitespace" /></term><description> Der Leerraum zwischen Markup bei einem Modell für gemischten Inhalt.  
+ </description></item><item><term><see langword="SignificantWhitespace" /></term><description> Der Leerraum zwischen Markups bei einem Modell für gemischten Inhalt.  
   
  </description></item><item><term><see langword="Text" /></term><description> Der Inhalt des Textknotens.  
   
- </description></item><item><term><see langword="Whitespace" /></term><description> Der Leerraum zwischen Markup.  
+ </description></item><item><term><see langword="Whitespace" /></term><description> Der Leerraum zwischen Markups.  
   
  </description></item><item><term><see langword="XmlDeclaration" /></term><description> Der Inhalt der Deklaration.  
   
@@ -8733,7 +8733,7 @@ Dieser Member verhält sich möglicherweise anders in Verwendung ist ein [Portab
       </ReturnValue>
       <Docs>
         <summary>Ruft den CLR-Typ (Common Language Runtime) für den aktuellen Knoten ab.</summary>
-        <value>Der CLR-Typ, der dem typisierten Wert des Knotens entspricht. Der Standardwert ist <see langword="System.String" />.</value>
+        <value>Der CLR-Typ, der dem typisierten Wert des Knotens entspricht. Die Standardeinstellung ist <see langword="System.String" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
