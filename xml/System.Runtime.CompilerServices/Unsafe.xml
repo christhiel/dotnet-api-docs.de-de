@@ -1,5 +1,5 @@
 <Type Name="Unsafe" FullName="System.Runtime.CompilerServices.Unsafe">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="25f6f9e753a0c47cbfccc2147725a47353028eab" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58704000" /></Metadata><TypeSignature Language="C#" Value="public static class Unsafe" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="bfce2be5c17299e8735ea4a200426489fb8d145b" /><Meta Name="ms.sourcegitcommit" Value="76fb6534b56e2b5f6aaaac2150d71a43c9133dbd" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/22/2019" /><Meta Name="ms.locfileid" Value="59893412" /></Metadata><TypeSignature Language="C#" Value="public static class Unsafe" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Unsafe extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.CompilerServices.Unsafe" />
   <TypeSignature Language="VB.NET" Value="Public Class Unsafe" />
@@ -1046,11 +1046,38 @@
         <Parameter Name="box" Type="System.Object" Index="0" FrameworkAlternate="dotnet-plat-ext-3.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">Der Typ mittels Unboxing zu konvertieren.</typeparam>
+        <param name="box">Der mittels Unboxing zu konvertierende Wert.</param>
+        <summary>Gibt eine <see langword="mutable ref" /> für einen geschachtelten Wert zurück.</summary>
+        <returns>Die <see langword="mutable ref" /> für den geschachtelten Wert <paramref name="box" />.</returns>
+        <remarks>  
+          <format type="text/markdown"><![CDATA[  
+
+Die `Unbox<T>` Methode ist einfach ein Wrapper für den IL-Code [Unboxing](xref:System.Reflection.Emit.OpCodes.Unbox) Anweisung. Es ist hilfreich zur leistungsoptimierung. Wenn eine API, die akzeptiert eine <xref:System.Object> muss mit unterschiedlichen Werten eines Werttyps, der gleiche wiederholt aufgerufen werden-Objekt wiederverwendet werden anstatt ein neues jedes Mal erstellt.
+
+Die `Unbox<T>` Methode verfügt über eine wichtige Verwendung-Einschränkung, die nicht von den Sprachcompilern erzwungen und der Verantwortung des Aufrufers. Der IL `unbox` Anweisung gibt einen verwalteten gesteuert Veränderlichkeit-Zeiger zurück. Da .NET und .NET Sprachcompiler dieser Einschränkung nicht darstellen kann die `Unbox<T>` Methode gibt einen normalen änderbare `ref T`. Aber Entwickler **darf nicht** geändert wird, es sei denn, sie sicher, dass den zurückgegebenen Verweis `T` ein Strukturtyps des änderbar ist. Z. B. weil die numerischen primitiven wie z. B. <xref:System.Int32> sind nicht änderbar Strukturtypen, der folgende Code wird nicht unterstützt:
+
+```csharp
+Unsafe.Box<int>(obj) = 30;
+```
+
+Im Gegensatz dazu sind einem Typ wie etwa <xref:System.Drawing.Point?<displayProperty=nameWithType> ist eine veränderliche Struktur mit öffentlichen Eigenschaften-Settern, der folgende Code unterstützt wird:
+
+```csharp
+Unsafe.Unbox<System.Drawing.Point>(obj).X = 50;
+```
+
+Weitere Informationen finden Sie in Abschnitten III.1.8.1.2.2 ("Controlled-Muttability verwaltete Zeiger") und III.4.32 ("Unboxing--geschachtelter Werttyp in unformatierter Form konvertieren") in [ECMA-335: Common Language Infrastructure (CLI) ich Partitionen, auf VI](https://www.ecma-international.org/publications/files/ECMA-ST/ECMA-335.pdf).
+
+         ]]></format>
+         </remarks>       
+        <exception cref="T:System.NullReferenceException"><paramref name="box" /> ist <see langword="null" /> und <typeparamref name="T" /> ist ein nicht auf 0 (null) festlegbarer Werttyp.</exception>
+         <exception cref="T:System.InvalidCastException"><paramref name="box" /> ist ein geschachtelter Werttyp.
+         
+- oder -
+
+<paramref name="box" /> ist kein geschachtelter <typeparamref name="T" />.</exception>
+        <exception cref="T:System.TypeLoadException"><typeparamref name="T" /> kann nicht gefunden werden.</exception>
       </Docs>
     </Member>
     <Member MemberName="Write&lt;T&gt;">
