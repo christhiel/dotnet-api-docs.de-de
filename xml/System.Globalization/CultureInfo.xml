@@ -1,5 +1,5 @@
 <Type Name="CultureInfo" FullName="System.Globalization.CultureInfo">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="5d22463ac83363aad9b99f88b9600e59ebd2ac53" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58714278" /></Metadata><TypeSignature Language="C#" Value="public class CultureInfo : ICloneable, IFormatProvider" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="99a9c72622633b0afab49cf0a30001d21c76259e" /><Meta Name="ms.sourcegitcommit" Value="5ebd9691c6f7d50c4730e997fba69e54bdd7cc0c" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/17/2019" /><Meta Name="ms.locfileid" Value="65829765" /></Metadata><TypeSignature Language="C#" Value="public class CultureInfo : ICloneable, IFormatProvider" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi serializable beforefieldinit CultureInfo extends System.Object implements class System.ICloneable, class System.IFormatProvider" />
   <TypeSignature Language="DocId" Value="T:System.Globalization.CultureInfo" />
   <TypeSignature Language="VB.NET" Value="Public Class CultureInfo&#xA;Implements ICloneable, IFormatProvider" />
@@ -60,7 +60,7 @@
  [Invarianten, neutrale und spezifische Kulturen](#Invariant)   
  [Kulturen](#Custom)   
  [Dynamische Kultur](#Dynamic)   
- [Die aktuelle Kultur und die aktuelle UI-Kultur](#Current)   
+ [CultureInfo und kulturellen Daten](#cultureinfo-and-cultural-data) [der aktuellen Kultur und die aktuelle UI-Kultur](#Current)   
  [Abrufen aller Kulturen](#GetAll)   
  [Kultur und threads](#Threads)   
  [Die Kultur und die Anwendung von Domänen](#AppDomain)   
@@ -69,7 +69,7 @@
  [Systemsteuerung überschreibt.](#CPanel)   
  [Alternative Sortierreihenfolgen](#AlternateSort)   
  [Die Kultur und die Windows-apps](#Windows)  
-  
+
 <a name="CultureNames"></a>   
 ## <a name="culture-names-and-identifiers"></a>Culture-Namen und Bezeichner  
  Die <xref:System.Globalization.CultureInfo> Klasse gibt einen eindeutigen Namen für jede Kultur, die basierend auf dem Standard RFC 4646. Der Name ist eine Kombination aus einer ISO 639 zweibuchstabige Kleinbuchstaben den Kulturcode einer Sprache zugeordnet und eine nach ISO 3166 zweibuchstabige Großbuchstaben den unterkulturcode ein Land oder Region zugeordnet. Darüber hinaus für apps, die als Ziel [!INCLUDE[net_v40_short](~/includes/net-v40-short-md.md)] oder höher und werden unter Windows 10 oder höher ausgeführt wird, Kulturnamen ab, die gültigen BCP-47-Sprache entsprechen-Tags werden unterstützt.  
@@ -142,7 +142,27 @@
 -   Denken Sie daran, dass die Kulturen Standardwerte außer Kraft setzen. Sie können nicht aus diesem Grund Kulturdaten stabil, berücksichtigen. Ländernamen, Number und Date-Formate und Schreibweisen, möglicherweise in Zukunft ändern. Wenn Sie kulturabhängige Daten wie Zeichenfolgen für Datum und Zeit, die Datums-und uhrzeitanalyse Funktionen übergeben werden serialisieren möchten, sollten Sie die invariante Kultur oder ein bestimmtes verwenden.  
   
  Der <xref:System.Globalization.CultureInfo.CultureTypes%2A> schließt-Eigenschaftswert von Kulturen, die auf einem System installiert die <xref:System.Globalization.CultureTypes?displayProperty=nameWithType> Flag und Kulturen werden zugewiesen. eine <xref:System.Globalization.CultureInfo.LCID%2A> Eigenschaftswert `LOCALE_CUSTOM_UNSPECIFIED` (4096 oder 0 x 1000). Beachten Sie, dass ab Windows 10, diesen Wert auch systemdefinierte Kulturen zugewiesen wird, die vollständige kulturelle Daten hat.  
-  
+
+## <a name="cultureinfo-and-cultural-data"></a>CultureInfo und kulturellen Daten
+
+.NET wird die kulturellen Daten aus einer Vielzahl von Quellen, je nach Implementierung, Plattform und Version eine abgeleitet:
+
+- In .NET Framework 3.5 und früher werden die kulturelle Daten von sowohl das Windows-Betriebssystem und .NET Framework bereitgestellt.
+
+- In .NET Framework 4 und höher werden die kulturelle Daten durch das Windows-Betriebssystem bereitgestellt.
+
+- In allen Versionen von .NET Core auf Windows ausgeführt wird werden die kulturelle Daten durch das Windows-Betriebssystem bereitgestellt.
+
+- In allen Versionen von .NET Core auf Unix-Plattformen ausgeführt wird, erfolgt die kulturelle Daten über die [International Components for Unicode)-Bibliothek ICU (](http://site.icu-project.org/). Die spezifische Version der ICU-Bibliothek hängt von den einzelnen Betriebssystem ab.
+
+Aus diesem Grund kann eine Kultur, die auf einer bestimmten .NET Implementierung, Plattform oder Version auf eine andere .NET Implementierung, Plattform oder Version nicht verfügbar.
+
+Einige `CultureInfo` Objekte unterscheiden sich abhängig von der zugrunde liegenden Plattform. Vor allem "Zh-CN", "oder" Chinesisch (vereinfacht, China) "und" Zh-TW, oder "Chinesisch (traditionell, Taiwan), werden die verfügbaren Kulturen auf Windows-Systemen, aber sie sind mit einem Alias versehen Kulturen auf Unix-Systemen. "Zh-CN" ist ein Alias für die Kultur "Zh-Hanscn" und "Zh-TW" ist ein Alias für die Kultur "Zh-Hant-TW". Mit einem Alias versehen Kulturen werden durch Aufrufe von nicht zurückgegeben. die <xref:System.Globalization.CultureInfo.GetCultures%2A> Methode und möglicherweise andere Werte, einschließlich der verschiedenen <xref:System.Globalization.CultureInfo.Parent> Kulturen als ihre Gegenstücke Windows. Für die Kulturen Zh-CN und Zh-TW diese Differenes die folgenden:
+
+- Klicken Sie auf Windows-Systemen die übergeordnete Kultur der Kultur "Zh-CN" ist "Zh-Hans", und die übergeordnete Kultur der Kultur "Zh-TW" ist "Zh-Hant". Die übergeordnete Kultur beide dieser Kulturen ist "Zh". Auf Unix-Systemen sind die übergeordneten Elemente der beiden Kulturen "Zh". Dies bedeutet, dass, wenn Sie kulturspezifische Ressourcen für die Kulturen "Zh-CN" oder "Zh-TW" bieten keine Ressourcen für die neutrale "Zh-Hans" oder "Zh-Hant" Kultur bieten, Ihre Anwendung die Ressourcen für die neutrale Kultur, die auf Windows jedoch nicht auf Unix geladen werden . Auf Unix-Systemen müssen Sie explizit festlegen des Threads <xref:System.Globalization.CultureInfo.CurrentUICulture> "Zh-Hans" oder "Zh-Hant". 
+
+- Auf Windows-Systemen Aufrufen <xref:System.Globalization.CultureInfo.Equals%2A?displayProperty=nameWithType> auf einer Instanz darstellt, die die Kultur "Zh-CN" und gibt zurück, und übergeben sie eine Instanz der "Zh-Hanscn" `true`. Auf Unix-Systemen der Methodenaufruf zurückkehrt `false`. Dieses Verhalten gilt auch für Aufrufen <xref:System.Globalization.CultureInfo.Equals%2A> auf eine "Zh-TW" <xref:System.Globalization.CultureInfo> -Instanz und eine Instanz der "Zh-Hant-Tw" übergeben.
+
 <a name="Dynamic"></a>   
 ## <a name="dynamic-culture-data"></a>Dynamische Kultur  
  Mit Ausnahme der invarianten Kultur verwenden ist die Culture-Daten dynamisch. Dies gilt auch für die vordefinierten Kulturen. Z. B. Länder oder Regionen übernehmen die neue Währungen, ändern Sie die Schreibweise der Wörter oder ändern Sie ihre bevorzugte Kalender und Kultur Definitionen ändern, um dies zu verfolgen.  Kulturen können ohne vorherige Ankündigung geändert werden, und bestimmte Kultur eine Ersatzkultur für die benutzerdefinierte überschrieben werden kann. Darüber hinaus kann wie im folgenden erläutert wird, ein einzelner Benutzer kulturelle Einstellungen außer Kraft. Anwendungen sollten immer Kulturdaten zur Laufzeit abrufen.  
@@ -152,7 +172,7 @@
   
 <a name="Current"></a>   
 ## <a name="the-current-culture-and-current-ui-culture"></a>Die aktuelle Kultur und die aktuelle UI-Kultur  
- Jeder Thread in einer .NET Framework-Anwendung verfügt über eine aktuelle Kultur und die aktuelle UI-Kultur. Die aktuelle Kultur bestimmt die Formatierungskonventionen für Datum, Uhrzeit, Zahlen und Währungswerte, die Sortierreihenfolge von Texten, Groß-/ Kleinschreibungskonventionen und die Möglichkeiten, die die Zeichenfolgen verglichen werden. Die aktuelle Kultur wird verwendet, um kulturspezifische Ressourcen zur Laufzeit abzurufen.  
+ Jeder Thread in einer .NET-Anwendung verfügt über eine aktuelle Kultur und die aktuelle UI-Kultur. Die aktuelle Kultur bestimmt die Formatierungskonventionen für Datum, Uhrzeit, Zahlen und Währungswerte, die Sortierreihenfolge von Texten, Groß-/ Kleinschreibungskonventionen und die Möglichkeiten, die die Zeichenfolgen verglichen werden. Die aktuelle Kultur wird verwendet, um kulturspezifische Ressourcen zur Laufzeit abzurufen.  
   
 > [!NOTE]
 >  Weitere Informationen dazu, wie die aktuelle und die aktuelle Benutzeroberflächenkultur auf einer pro-Thread-Basis bestimmt wird, finden Sie unter den [Kultur und Threads](#Threads) Abschnitt. Informationen zur Bestimmung der aktuellen und der aktuellen Benutzeroberflächenkultur für Threads ausgeführt werden, in einer neuen Anwendungsdomäne und in Threads, die überschreiten von Grenzen von Anwendungsdomänen hinweg, finden Sie unter den [Kultur und Anwendungsdomänen](#AppDomain) Abschnitt. Weitere Informationen dazu, wie der aktuellen und der aktuellen richtet sich auf die Threads, die aufgabenbasierte asynchrone Vorgänge ausführen, finden Sie unter den [Kultur und aufgabenbasierte asynchrone Vorgänge](#Async) Abschnitt.  
@@ -187,7 +207,7 @@
   
 1.  Instanziieren einer <xref:System.Globalization.CultureInfo> -Objekt, das die Kultur, durch den Aufruf darstellt einer <xref:System.Globalization.CultureInfo> Klasse, Konstruktor und übergibt den Namen der Kultur. Die <xref:System.Globalization.CultureInfo.%23ctor%28System.String%29> Konstruktor instanziiert ein <xref:System.Globalization.CultureInfo> -Objekt, das Benutzer widerspiegelt wird überschrieben, wenn die neue Kultur der aktuellen Windows-Kultur entspricht.   Die <xref:System.Globalization.CultureInfo.%23ctor%28System.String%2CSystem.Boolean%29> Konstruktor können Sie angeben, ob das neu instanziierte <xref:System.Globalization.CultureInfo> -Objekt gibt Benutzer wird überschrieben, wenn die neue Kultur der aktuellen Windows-Kultur entspricht.  
   
-2.  Weisen Sie die <xref:System.Globalization.CultureInfo> -Objekt an die <xref:System.Threading.Thread.CurrentCulture%2A?displayProperty=nameWithType> oder <xref:System.Threading.Thread.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft. Darüber hinaus für apps, die auf die Version 4.6 oder höher von .NET Framework-Desktopversion ausgeführt wird, können Sie auch Zuweisen der <xref:System.Globalization.CultureInfo> -Objekt an die <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> oder <xref:System.Globalization.CultureInfo.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft.  
+2.  Weisen Sie die <xref:System.Globalization.CultureInfo> -Objekt an die <xref:System.Globalization.CultureInfo.CurrentCulture%2A?displayProperty=nameWithType> oder <xref:System.Globalization.CultureInfo.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft, die auf .NET Core und .NET Framework 4.6 und höher. (Für .NET Framework 4.5.2 und frühere Versionen Youc Zuweisen der `CultureInfo` -Objekt an die <xref:System.Threading.Thread.CurrentCulture%2A?displayProperty=nameWithType> oder <xref:System.Threading.Thread.CurrentUICulture%2A?displayProperty=nameWithType> Eigenschaft.)   
   
  Im folgende Beispiel ruft die aktuelle Kultur ab. Wenn sie etwas anderes als die Kultur Französisch (Frankreich) ist, werden die aktuelle Kultur auf Französisch (Frankreich) ändert. Andernfalls werden die aktuelle Kultur auf Französisch (Luxemburg) ändert.  
   
@@ -277,15 +297,15 @@
  [!code-csharp[System.Globalization.CultureInfo.Class.Async#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.cultureinfo.class.async/cs/asyncculture4.cs#4)]
  [!code-vb[System.Globalization.CultureInfo.Class.Async#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.cultureinfo.class.async/vb/asyncculture4.vb#4)]  
   
-<a name="Serialization"></a>   
+<a name="Serialization"></a>  
 ## <a name="cultureinfo-object-serialization"></a>Serialisierung der CultureInfo-Objekten  
  Wenn eine <xref:System.Globalization.CultureInfo> Objekt serialisiert wird, ist alles, was tatsächlich gespeichert ist <xref:System.Globalization.CultureInfo.Name%2A> und <xref:System.Globalization.CultureInfo.UseUserOverride%2A>. Es ist erfolgreich deserialisiert nur in einer Umgebung, in denen, die <xref:System.Globalization.CultureInfo.Name%2A> hat die gleiche Bedeutung. Die folgenden drei Beispiele zeigen, warum dies nicht ist immer der Fall:  
   
--   Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Eigenschaftswert ist <xref:System.Globalization.CultureTypes?displayProperty=nameWithType>, und diese Kultur zuerst in Windows Vista oder eine höhere Version des Windows-Betriebssystems eingeführt wurde, ist es nicht möglich, es unter Windows XP deserialisiert werden. Wenn die Kultur zuerst in Windows XP Service Pack 2 eingeführt wurde, ist es auf ähnliche Weise nicht möglich, die sie für ein Windows XP-System deserialisiert werden auf dem die Kultur nicht installiert wurde.  
+- Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Eigenschaftswert ist <xref:System.Globalization.CultureTypes.InstalledWin32Cultures?displayProperty=nameWithType>, und wenn die Kultur in einer bestimmten Version des Windows-Betriebssystems eingeführt wurde, es ist nicht möglich, es auf eine frühere Version von Windows zu deserialisieren. Z. B. eine Kultur, die in Windows 10 eingeführt wurde, kann es unter Windows 8 deserialisiert werden.  
   
--   Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Wert <xref:System.Globalization.CultureTypes?displayProperty=nameWithType>, und der Computer, auf die deserialisiert werden, keine installiert benutzerdefinierte Kultur, es ist nicht möglich, sie zu deserialisieren.  
+-   Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Wert <xref:System.Globalization.CultureTypes.UserCustomCulture?displayProperty=nameWithType>, und der Computer, auf die deserialisiert werden, keine installiert benutzerdefinierte Kultur, es ist nicht möglich, zu deserialisieren.  
   
--   Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Wert <xref:System.Globalization.CultureTypes?displayProperty=nameWithType>, und der Computer, auf die deserialisiert werden, verfügt nicht über diese Ersatzkultur, aufheben, die den gleichen Namen, jedoch nicht alle Eigenschaften, die serialisiert. Z. B. En-US ist eine Ersatzkultur auf Computer A, aber nicht auf Computer B, und wenn ein <xref:System.Globalization.CultureInfo> Objekt verweisen auf diese Kultur ist auf Computer A serialisiert und deserialisiert auf Computer B, und klicken Sie dann keine der benutzerdefinierten Eigenschaften der Kultur übertragen. Die Deserialisierung wird erfolgreich, aber eine andere Bedeutung hat.  
+-   Wenn die <xref:System.Globalization.CultureInfo.CultureTypes%2A> Wert <xref:System.Globalization.CultureTypes.ReplacementCultures?displayProperty=nameWithType>, und der Computer, auf die deserialisiert werden, verfügt nicht über diese Ersatzkultur, aufheben, die den gleichen Namen, jedoch nicht alle Eigenschaften, die serialisiert. Z. B. En-US ist eine Ersatzkultur auf Computer A, aber nicht auf Computer B, und wenn ein <xref:System.Globalization.CultureInfo> Objekt verweisen auf diese Kultur ist auf Computer A serialisiert und deserialisiert auf Computer B, und klicken Sie dann keine der benutzerdefinierten Eigenschaften der Kultur übertragen. Die Kultur deserialisiert erfolgreich, aber eine andere Bedeutung hat.  
   
 <a name="CPanel"></a>   
 ## <a name="control-panel-overrides"></a>Systemsteuerung überschreibt.  
@@ -295,7 +315,7 @@
   
 <a name="AlternateSort"></a>   
 ## <a name="alternate-sort-orders"></a>Alternative Sortierreihenfolgen  
- Einige Kulturen unterstützten mehr als eine Sortierreihenfolge. Beispiel:  
+ Einige Kulturen unterstützten mehr als eine Sortierreihenfolge. Zum Beispiel:  
   
 -   Die Kultur Spanisch (Spanien) verfügt über zwei Sortierreihenfolgen: internationaler Standard-Sortierreihenfolge und der herkömmlichen Sortierreihenfolge. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> Objekt mit dem Namen für den es-ES-Kultur, die internationale Sortierreihenfolge wird verwendet. Beim Instanziieren einer <xref:System.Globalization.CultureInfo> Objekt mit dem Kulturnamen Tradnl-es-ES-und die herkömmlichen Sortierreihenfolge wird verwendet.  
   
@@ -305,17 +325,17 @@
   
 |Kulturname|culture|Standardsortierreihenfolge und Bezeichner|Alternative Sortierreihenfolge und Bezeichner|  
 |------------------|-------------|--------------------------------------|----------------------------------------|  
-|es-ES|Spanisch (Spanien)|International: 0x00000C0A|Traditionell: 0x0000040A|  
+|es-ES|Spanisch (Spanien)|International: 0x00000C0A|Traditional: 0x0000040A|  
 |zh-TW|Chinesisch (Taiwan)|Anzahl der Striche: 0x00000404|Bopomofo: 0x00030404|  
 |zh-CN|Chinesisch (VRC)|Aussprache: 0x00000804|Anzahl der Striche: 0x00020804|  
 |zh-HK|Chinesisch (Hongkong SAR)|Anzahl der Striche: 0x00000c04|Anzahl der Striche: 0x00020c04|  
 |zh-SG|Chinesisch (Singapur)|Aussprache: 0x00001004|Anzahl der Striche: 0x00021004|  
 |zh-MO|Chinesisch (Macau SAR)|Aussprache: 0x00001404|Anzahl der Striche: 0x00021404|  
 |ja-JP|Japanisch (Japan)|Standard: 0x00000411|Unicode: 0x00010411|  
-|ko-KR|Koreanisch (Korea)|Standard: 0x00000412|Koreanisch Xwansung – Unicode:  0x00010412|  
+|ko-KR|Koreanisch (Korea)|Standard: 0x00000412|Koreanisch Xwansung – Unicode: 0x00010412|  
 |de-DE|Deutsch (Deutschland)|Wörterbuch: 0x00000407|Telefonbuchsortierung DIN: 0x00010407|  
 |hu-HU|Ungarisch (Ungarn)|Standard: 0x0000040e|Technische Sortierung: 0x0001040e|  
-|ka-GE|Georgisch (Georgien)|Traditionell: 0x00000437|Moderne Sortierung: 0x00010437|  
+|ka-GE|Georgisch (Georgien)|Traditional: 0x00000437|Moderne Sortierung: 0x00010437|  
   
 <a name="Windows"></a>   
 ## <a name="the-current-culture-and-uwp-apps"></a>Die aktuelle Kultur und die UWP-apps  
@@ -938,10 +958,10 @@ In .NET Framework und .NET Core-apps, die aktuelle Kultur ist eine pro-Thread-Ei
         <returns>Ein <see cref="T:System.Globalization.CultureInfo" />-Objekt, das Folgendes darstellt: 
 Die invariante Kultur, wenn <paramref name="name" /> eine leere Zeichenfolge ist ("").  
   
-- oder - 
+- oder -  
 Die spezifische <paramref name="name" /> zugeordnete Kultur, wenn <paramref name="name" /> eine neutrale Kultur ist.  
   
-- oder - 
+- oder -  
 Die von <paramref name="name" /> angegebene Kultur, wenn <paramref name="name" /> bereits eine bestimmte Kultur ist.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
@@ -975,7 +995,7 @@ Die von <paramref name="name" /> angegebene Kultur, wenn <paramref name="name" /
         </remarks>
         <exception cref="T:System.Globalization.CultureNotFoundException"><paramref name="name" /> ist kein gültiger Kulturname.  
   
-- oder - 
+- oder -  
 Der von <paramref name="name" /> angegebenen Kultur ist keine bestimmte Kultur zugeordnet.</exception>
         <exception cref="T:System.NullReferenceException"><paramref name="name" /> ist NULL.</exception>
         <block subset="none" type="usage"><para>Die [!INCLUDE[net_v35_long](~/includes/net-v35-long-md.md)] und frühere Versionen lösen eine <see cref="T:System.ArgumentException" /> Wenn <paramref name="name" /> ist kein gültiger Kulturname. Beginnend mit der [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], löst diese Methode eine <see cref="T:System.Globalization.CultureNotFoundException" />.</para></block>
@@ -1559,7 +1579,7 @@ resgen greetingstrings.ru-RU.txt
 vbc Example1.vb /resource:GreetingStrings.resources  
 ```  
   
- Für den C#-Compiler entspricht der Befehl:  
+ Für den c#-Compiler entspricht der Befehl:  
   
 ```console  
 csc /resource:GreetingStrings.resources Example1.cs  
@@ -2310,10 +2330,10 @@ csc /resource:GreetingStrings.resources Example1.cs
         <summary>Ruft ein Objekt ab, das definiert, wie der angegebene Typ formatiert werden soll.</summary>
         <returns>Der Wert der <see cref="P:System.Globalization.CultureInfo.NumberFormat" />-Eigenschaft, bei der es sich um eine <see cref="T:System.Globalization.NumberFormatInfo" /> mit Informationen über das Standardzahlenformat für die aktuelle <see cref="T:System.Globalization.CultureInfo" /> handelt, wenn <paramref name="formatType" /> das <see cref="T:System.Type" />-Objekt für die <see cref="T:System.Globalization.NumberFormatInfo" />-Klasse ist.  
   
-- oder - 
-Der Wert der <see cref="P:System.Globalization.CultureInfo.DateTimeFormat" />-Eigenschaft, bei der es sich um eine <see cref="T:System.Globalization.DateTimeFormatInfo" /> mit Informationen über das Standardformat für Datums- und Uhrzeitangaben für die aktuelle <see cref="T:System.Globalization.CultureInfo" /> handelt, wenn <paramref name="formatType" /> das <see cref="T:System.Type" />-Objekt für die <see cref="T:System.Globalization.DateTimeFormatInfo" />-Klasse darstellt.  
+- oder -  
+Der Wert der <see cref="P:System.Globalization.CultureInfo.DateTimeFormat" />-Eigenschaft, bei der es sich um eine <see cref="T:System.Globalization.DateTimeFormatInfo" /> mit Informationen über das Standardformat für Datums- und Uhrzeitangaben für die aktuelle <see cref="T:System.Globalization.CultureInfo" /> handelt, wenn <paramref name="formatType" /> das <see cref="T:System.Type" />-Objekt für die <see cref="T:System.Globalization.DateTimeFormatInfo" />-Klasse ist.  
   
-- oder - 
+- oder -  
 NULL, wenn <paramref name="formatType" /> ein beliebiges anderes Objekt ist.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  

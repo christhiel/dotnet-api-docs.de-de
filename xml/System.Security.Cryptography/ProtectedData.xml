@@ -1,5 +1,5 @@
 <Type Name="ProtectedData" FullName="System.Security.Cryptography.ProtectedData">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="bcc571c1b9e91c577a9733b53e867330b9c48f83" /><Meta Name="ms.sourcegitcommit" Value="220917117f9d774aaa482439aa7324e39dc1f5b6" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="02/25/2019" /><Meta Name="ms.locfileid" Value="56771498" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProtectedData" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="38eb090e97e5972009f0065e48a5b55765ceee17" /><Meta Name="ms.sourcegitcommit" Value="3575d47a0ba065e8986f03d99279f478811907b8" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/20/2019" /><Meta Name="ms.locfileid" Value="65922698" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProtectedData" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ProtectedData extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.ProtectedData" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ProtectedData" />
@@ -28,15 +28,17 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Diese Klasse ermöglicht den Zugriff auf die Data Protection API (DPAPI) in Microsoft Windows 2000 und späteren Betriebssystemen verfügbar. Dies ist ein Dienst, der vom Betriebssystem bereitgestellt wird, und erfordert keine zusätzliche Bibliotheken. Er bietet Schutz, die mit der Benutzer oder Computer-Anmeldeinformationen zum Verschlüsseln oder Entschlüsseln der Daten.  
+## Remarks
+
+Diese Klasse ermöglicht den Zugriff auf die Data Protection API (DPAPI) in Windows-Betriebssystemen verfügbar. Dies ist ein Dienst, der vom Betriebssystem bereitgestellt wird, und erfordert keine zusätzliche Bibliotheken. Er bietet Schutz, die mit der Benutzer oder Computer-Anmeldeinformationen zum Verschlüsseln oder Entschlüsseln der Daten.
+
+> [!IMPORTANT]
+> Da diese DPAPI, hängt die `ProtectedData` Klasse wird auf der Windows-Plattform unterstützt. Die Verwendung in .NET Core auf anderen Plattformen als Windows löst eine <xref:System.PlatformNotSupportedException>.
   
- Die Klasse besteht aus zwei Wrapper für die nicht verwaltete DPAPI, <xref:System.Security.Cryptography.ProtectedData.Protect%2A> und <xref:System.Security.Cryptography.ProtectedData.Unprotect%2A>. Diese beiden Methoden können zum Verschlüsseln und Entschlüsseln von Daten wie Kennwörter, Schlüssel und Verbindungszeichenfolgen verwendet werden.  
+Die Klasse besteht aus zwei Wrapper für die nicht verwaltete DPAPI, <xref:System.Security.Cryptography.ProtectedData.Protect%2A> und <xref:System.Security.Cryptography.ProtectedData.Unprotect%2A>. Diese beiden Methoden können zum Verschlüsseln und Entschlüsseln von Daten wie Kennwörter, Schlüssel und Verbindungszeichenfolgen verwendet werden.  
   
- Wenn Sie diese Methoden während des Identitätswechsels verwenden, erhalten Sie den folgenden Fehler: "Key ist ungültig. für die Verwendung im angegebenen Zustand." Dies tritt auf, da die DPAPI die Schlüsseldaten in Benutzerprofilen gespeichert. Wenn das Profil nicht geladen wurde, nicht DPAPI die Entschlüsselung durchführen können. Laden Sie das Profil des Benutzers, die Sie vor dem Aufrufen einer dieser Methoden annehmen möchten, um diesen Fehler zu vermeiden. Mit DPAPI mit Identitätswechsel können erhebliche Komplikation anfallen und erfordert eine sorgfältige Entwurfsoptionen.  
-  
-   
-  
+Wenn Sie diese Methoden während des Identitätswechsels verwenden, erhalten Sie den folgenden Fehler: "Key ist ungültig. für die Verwendung im angegebenen Zustand." Dies tritt auf, da die DPAPI die Schlüsseldaten in Benutzerprofilen gespeichert. Wenn das Profil nicht geladen wurde, nicht DPAPI die Entschlüsselung durchführen können. Laden Sie das Profil des Benutzers, die Sie vor dem Aufrufen einer dieser Methoden annehmen möchten, um diesen Fehler zu vermeiden. Mit DPAPI mit Identitätswechsel können erhebliche Komplikation anfallen und erfordert eine sorgfältige Entwurfsoptionen.  
+
 ## Examples  
  Das folgende Beispiel zeigt, wie Sie den Schutz von Daten verwenden.  
   
@@ -111,8 +113,9 @@
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="userData" />-Parameter ist <see langword="null" />.</exception>
         <exception cref="T:System.Security.Cryptography.CryptographicException">Die Verschlüsselung ist fehlgeschlagen.</exception>
-        <exception cref="T:System.NotSupportedException">Dieses Methode wird vom Betriebssystem nicht unterstützt.</exception>
-        <exception cref="T:System.OutOfMemoryException">Es steht nicht genügend Arbeitsspeicher zum Verschlüsseln der Daten zur Verfügung.</exception>
+        <exception cref="T:System.NotSupportedException">Das Betriebssystem unterstützt diese Methode nicht.</exception>
+        <exception cref="T:System.OutOfMemoryException">Das System war nicht genügend Arbeitsspeicher zum Verschlüsseln der Daten.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">Nur .NET Core: Aufrufe von der <c>schützen</c> Methode werden unter Windows-Betriebssystemen unterstützt.</exception>
         <permission cref="T:System.Security.Permissions.DataProtectionPermission">mit dem zugeordneten <see cref="P:System.Security.Permissions.DataProtectionPermissionAttribute.ProtectData" /> Flag für die Berechtigung, um Daten zu schützen.</permission>
       </Docs>
     </Member>
@@ -179,8 +182,9 @@
         </remarks>
         <exception cref="T:System.ArgumentNullException">Der <paramref name="encryptedData" />-Parameter ist <see langword="null" />.</exception>
         <exception cref="T:System.Security.Cryptography.CryptographicException">Die Entschlüsselung ist fehlgeschlagen.</exception>
-        <exception cref="T:System.NotSupportedException">Dieses Methode wird vom Betriebssystem nicht unterstützt.</exception>
+        <exception cref="T:System.NotSupportedException">Das Betriebssystem unterstützt diese Methode nicht.</exception>
         <exception cref="T:System.OutOfMemoryException">Nicht genügend Arbeitsspeicher.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">Nur .NET Core: Aufrufe von der <c>Unprotect</c> Methode werden unter Windows-Betriebssystemen unterstützt.</exception>
         <permission cref="T:System.Security.Permissions.DataProtectionPermission">mit dem zugeordneten <see cref="P:System.Security.Permissions.DataProtectionPermissionAttribute.UnprotectData" /> Flag für die Berechtigung zum Aufheben des Schutzes von Daten.</permission>
       </Docs>
     </Member>
