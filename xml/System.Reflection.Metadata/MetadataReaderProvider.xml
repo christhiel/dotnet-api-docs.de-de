@@ -1,5 +1,5 @@
 <Type Name="MetadataReaderProvider" FullName="System.Reflection.Metadata.MetadataReaderProvider">
-  <TypeSignature Language="C#" Value="public sealed class MetadataReaderProvider : IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="d4dfe3085010ff41afc30acb0c4089b59447d3f8" /><Meta Name="ms.sourcegitcommit" Value="0de246131f8a87c71d008d055adec7bf72470c4f" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/29/2019" /><Meta Name="ms.locfileid" Value="66301988" /></Metadata><TypeSignature Language="C#" Value="public sealed class MetadataReaderProvider : IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit MetadataReaderProvider extends System.Object implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Reflection.Metadata.MetadataReaderProvider" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class MetadataReaderProvider&#xA;Implements IDisposable" />
@@ -50,7 +50,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gibt alle von der Reader belegten Arbeitsspeicher frei.</summary>
+        <summary>Verwirft den gesamten vom Leser zugewiesenen Speicher.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -77,8 +77,8 @@
         <Parameter Name="image" Type="System.Collections.Immutable.ImmutableArray&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="image">Metadaten-Bild.</param>
-        <summary>Erstellt einen Anbieter über ein Byte-Array.</summary>
+        <param name="image">Metadatenimage.</param>
+        <summary>Erstellt einen Anbieter über einen Bytearray.</summary>
         <returns>Der neue Anbieter.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="image" /> ist <see langword="null" />.</exception>
@@ -107,9 +107,9 @@
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">Zeiger auf den Anfang des Metadaten-BLOBs.</param>
-        <param name="size">Die Größe des BLOBs Metadaten.</param>
-        <summary>Erstellt einen Metadatenanbieter über ein Bild im Arbeitsspeicher gespeichert.</summary>
+        <param name="start">Zeiger auf den Anfang des Metadatenblobs.</param>
+        <param name="size">Die Größe des Metadatenblobs.</param>
+        <summary>Erstellt einen Metadatenanbieter über ein im Arbeitsspeicher gespeichertes Image.</summary>
         <returns>Der neue Metadatenanbieter.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="start" /> ist <see cref="F:System.IntPtr.Zero" />.</exception>
@@ -140,13 +140,12 @@
       </Parameters>
       <Docs>
         <param name="stream">Eine <see cref="T:System.IO.Stream" />-Instanz.</param>
-        <param name="options">Optionen, die angeben, wie Bereiche des Bilds aus dem Stream gelesen werden.</param>
-        <param name="size">Die Größe des BLOBs Metadaten in den Stream. Wenn nicht angegeben, wird angenommen, dass das Blob Metadaten bis zum Ende des Streams umfassen.</param>
-        <summary>Erstellt einen Anbieter für einen Stream, der den Anfang der angegebenen Größe an der aktuellen Position an.</summary>
+        <param name="options">Optionen, die angeben, wie Abschnitte des Images aus dem Stream gelesen werden.</param>
+        <param name="size">Größe des Metadatenblobs im Stream. Ist dieser Wert nicht angegeben, wird angenommen, dass sich der Metadatenblob bis zum Ende des Streams erstreckt.</param>
+        <summary>Erstellt einen Anbieter für einen Stream der angegebenen Größe, beginnend an der aktuellen Position.</summary>
         <returns>Der neue Anbieter.</returns>
         <remarks>
-          <format type="text/markdown">
-        
+          <format type="text/markdown"><![CDATA[
 
 Es sei denn, <xref:F:System.Reflection.Metadata.MetadataStreamOptions.LeaveOpen> angegeben ist, wird der Besitz des Streams zum Übergeben der <xref:T:System.Reflection.Metadata.MetadataReaderProvider> bei der argumentüberprüfung der erfolgreichen. Sie wird verworfen werden, indem die <xref:T:System.Reflection.Metadata.MetadataReaderProvider> und der Aufrufer muss nicht bearbeiten.
             
@@ -157,9 +156,9 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
             ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="stream" /> ist <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException"><paramref name="stream" /> keine Unterstützung für Lese- und Suchvorgänge.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Größe ist negativ oder erstreckt sich über das Ende des Streams.</exception>
-        <exception cref="T:System.IO.IOException">Fehler beim Lesen aus dem Datenstrom (nur, wenn <see cref="F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata" /> angegeben ist).</exception>
+        <exception cref="T:System.ArgumentException"><paramref name="stream" /> unterstützt keine Lese- und Suchvorgänge.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Größe ist negativ oder erstreckt sich über das Ende des Streams hinaus.</exception>
+        <exception cref="T:System.IO.IOException">Fehler beim Lesen aus dem Stream (nur wenn <see cref="F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata" /> angegeben ist).</exception>
       </Docs>
     </Member>
     <Member MemberName="FromPortablePdbImage">
@@ -185,8 +184,8 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
         <Parameter Name="image" Type="System.Collections.Immutable.ImmutableArray&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="image">Ein Bild für portable PDB-Datei.</param>
-        <summary>Erstellt eine portable PDB-Metadatenanbieters ein Byte-Array.</summary>
+        <param name="image">Ein portables PDB-Image.</param>
+        <summary>Erstellt einen portablen PDB-Metadatenanbieter über einen Bytearray.</summary>
         <returns>Der neue portable PDB-Metadatenanbieter.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="image" /> ist <see langword="null" />.</exception>
@@ -215,9 +214,9 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">Zeiger auf den Anfang des BLOBs für portable PDB-Datei.</param>
-        <param name="size">Die Größe des BLOBs für portable PDB-Datei.</param>
-        <summary>Erstellt einen portable PDB-Metadatenanbieter für ein Blob im Arbeitsspeicher gespeichert.</summary>
+        <param name="start">Zeiger auf den Anfang des portablen PDB-Blobs.</param>
+        <param name="size">Die Größe des portablen PDB-Blobs.</param>
+        <summary>Erstellt einen portablen PDB-Metadatenanbieter über einen im Arbeitsspeicher gespeicherten Blob.</summary>
         <returns>Der neue portable PDB-Metadatenanbieter.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="start" /> ist <see cref="F:System.IntPtr.Zero" />.</exception>
@@ -248,13 +247,12 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
       </Parameters>
       <Docs>
         <param name="stream">Der Stream (Datenstrom).</param>
-        <param name="options">Optionen, die angeben, wie Bereiche des Bilds aus dem Stream gelesen werden.</param>
-        <param name="size">Die Größe des BLOBs Metadaten in den Stream. Wenn nicht angegeben, wird angenommen, dass das Blob Metadaten bis zum Ende des Streams umfassen.</param>
-        <summary>Erstellt einen Anbieter für einen Stream, der den Anfang der angegebenen Größe an der aktuellen Position an.</summary>
+        <param name="options">Optionen, die angeben, wie Abschnitte des Images aus dem Stream gelesen werden.</param>
+        <param name="size">Größe des Metadatenblobs im Stream. Ist dieser Wert nicht angegeben, wird angenommen, dass sich der Metadatenblob bis zum Ende des Streams erstreckt.</param>
+        <summary>Erstellt einen Anbieter für einen Stream der angegebenen Größe, beginnend an der aktuellen Position.</summary>
         <returns>Eine <see cref="T:System.Reflection.Metadata.MetadataReaderProvider" />-Instanz.</returns>
         <remarks>
-          <format type="text/markdown">
-        
+          <format type="text/markdown"><![CDATA[
             
 Es sei denn, <xref:F:System.Reflection.Metadata.MetadataStreamOptions.LeaveOpen> angegeben ist, wird der Besitz des Streams zum Übergeben der <xref:T:System.Reflection.Metadata.MetadataReaderProvider> bei der argumentüberprüfung der erfolgreichen. Sie wird verworfen werden, indem die <xref:T:System.Reflection.Metadata.MetadataReaderProvider> und der Aufrufer muss nicht bearbeiten.
             
@@ -265,8 +263,8 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
             ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="stream" /> ist <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException"><paramref name="stream" /> keine Unterstützung für Lese- und Suchvorgänge.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">Größe ist negativ oder erstreckt sich über das Ende des Streams.</exception>
+        <exception cref="T:System.ArgumentException"><paramref name="stream" /> unterstützt keine Lese- und Suchvorgänge.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Größe ist negativ oder erstreckt sich über das Ende des Streams hinaus.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetMetadataReader">
@@ -292,14 +290,14 @@ Wenn <xref:F:System.Reflection.Metadata.MetadataStreamOptions.PrefetchMetadata>,
         <Parameter Name="utf8Decoder" Type="System.Reflection.Metadata.MetadataStringDecoder" />
       </Parameters>
       <Docs>
-        <param name="options">Eine bitweise Kombination der Enumerationswerte, die die Konfiguration, beim Lesen der Metadaten darstellen.</param>
+        <param name="options">Eine bitweise Kombination von Enumerationswerten, die die Konfiguration beim Lesen der Metadaten darstellen.</param>
         <param name="utf8Decoder">Die zu verwendende Codierung.</param>
-        <summary>Ruft eine <see cref="T:System.Reflection.Metadata.MetadataReader" /> aus einem <see cref="T:System.Reflection.Metadata.MetadataReaderProvider" />.</summary>
-        <returns>Ein <see cref="T:System.Reflection.Metadata.MetadataReader" /> Instanz...</returns>
+        <summary>Ruft ein <see cref="T:System.Reflection.Metadata.MetadataReader" /> aus einem <see cref="T:System.Reflection.Metadata.MetadataReaderProvider" /> ab.</summary>
+        <returns>Eine <see cref="T:System.Reflection.Metadata.MetadataReader" />-Instanz.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentException">Die Codierung des <paramref name="utf8Decoder" /> nicht <see cref="T:System.Text.UTF8Encoding" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">Die aktuelle Plattform ist big-Endian.</exception>
-        <exception cref="T:System.IO.IOException">E/a-Fehler beim Lesen aus den zugrunde liegenden Stream.</exception>
+        <exception cref="T:System.ArgumentException">Die Codierung von <paramref name="utf8Decoder" /> ist keine <see cref="T:System.Text.UTF8Encoding" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">Die aktuelle Plattform ist Big-Endian.</exception>
+        <exception cref="T:System.IO.IOException">E/A-Fehler beim Lesen aus den zugrunde liegenden Stream.</exception>
         <exception cref="T:System.ObjectDisposedException">Anbieter wurde verworfen.</exception>
       </Docs>
     </Member>
