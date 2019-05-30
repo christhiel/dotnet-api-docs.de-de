@@ -1,0 +1,10 @@
+---
+ms.openlocfilehash: aebc006f88ebcbe6520e51b8d7b85db18c595c9e
+ms.sourcegitcommit: 9a6da88bd5455e8274257ca7ad259b42f1de114f
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 05/22/2019
+ms.locfileid: "66008814"
+---
+
+<span data-ttu-id="d7ea5-101">Weitere Informationen zur aktuellen Threadkultur finden Sie in den Eigenschaften <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> und <xref:System.Threading.Thread.CurrentCulture%2A?displayProperty=nameWithType>.</span><span class="sxs-lookup"><span data-stu-id="d7ea5-101">For more information about the current thread culture, see the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> and <xref:System.Threading.Thread.CurrentCulture%2A?displayProperty=nameWithType> properties.</span></span> <span data-ttu-id="d7ea5-102">Weiter Informationen zu Formatzeichenfolgen, Formatmustern und zu der von ihnen generierten Ausgabe finden Sie unter [Standardformatzeichenfolgen für Datum und Uhrzeit](~/docs/standard/base-types/standard-date-and-time-format-strings.md) und [Benutzerdefinierte Formatzeichenfolgen für Datum und Uhrzeit](~/docs/standard/base-types/custom-date-and-time-format-strings.md).</span><span class="sxs-lookup"><span data-stu-id="d7ea5-102">For more information about format characters, format patterns, and the output they produce, see [Standard date and time format strings](~/docs/standard/base-types/standard-date-and-time-format-strings.md) and [Custom date and time format strings](~/docs/standard/base-types/custom-date-and-time-format-strings.md).</span></span> <span data-ttu-id="d7ea5-103">Weitere Informationen zum Ändern des einem Formatzeichen zugeordneten Formatmusters finden Sie in der <xref:System.Globalization.DateTimeFormatInfo>-Klasse.</span><span class="sxs-lookup"><span data-stu-id="d7ea5-103">For more information about changing the format pattern associated with a format character, see the <xref:System.Globalization.DateTimeFormatInfo> class.</span></span>  
