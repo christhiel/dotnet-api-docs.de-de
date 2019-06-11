@@ -1,5 +1,5 @@
 <Type Name="ValueTask&lt;TResult&gt;" FullName="System.Threading.Tasks.ValueTask&lt;TResult&gt;">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="b8dcd3b18fa5f95c701d0a7288bc673f2bffac5f" /><Meta Name="ms.sourcegitcommit" Value="2dd0eede6edd6dd3d2aa8f79010848658b967609" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/18/2019" /><Meta Name="ms.locfileid" Value="58874279" /></Metadata><TypeSignature Language="C#" Value="public struct ValueTask&lt;TResult&gt; : IEquatable&lt;System.Threading.Tasks.ValueTask&lt;TResult&gt;&gt;" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="b7517ccc8093036f6b431d4f4fd4360879b7f348" /><Meta Name="ms.sourcegitcommit" Value="ddce15914650a504a7399d539ac1f7cfed3c2caa" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/07/2019" /><Meta Name="ms.locfileid" Value="66759860" /></Metadata><TypeSignature Language="C#" Value="public struct ValueTask&lt;TResult&gt; : IEquatable&lt;System.Threading.Tasks.ValueTask&lt;TResult&gt;&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ValueTask`1&lt;TResult&gt; extends System.ValueType implements class System.IEquatable`1&lt;valuetype System.Threading.Tasks.ValueTask`1&lt;!TResult&gt;&gt;" />
   <TypeSignature Language="DocId" Value="T:System.Threading.Tasks.ValueTask`1" />
   <TypeSignature Language="VB.NET" Value="Public Structure ValueTask(Of TResult)&#xA;Implements IEquatable(Of ValueTask(Of TResult))" />
@@ -45,6 +45,17 @@
       <format type="text/markdown"><![CDATA[ 
 
 ## Remarks  
+Ein <xref:System.Threading.Tasks.ValueTask%601> Instanz kann entweder erwartet oder konvertiert einen <xref:System.Threading.Tasks.Task%601> mit <xref:System.Threading.Tasks.ValueTask%601.AsTask%2A>. Ein <xref:System.Threading.Tasks.ValueTask%601> Instanz kann nur einmal erwartet werden, und Consumer können nicht aufgerufen. <xref:System.Threading.Tasks.ValueTask%601.GetAwaiter> bis die Instanz abgeschlossen ist. Wenn diese Einschränkungen nicht akzeptabel sind, konvertieren Sie die <xref:System.Threading.Tasks.ValueTask%601> auf eine <xref:System.Threading.Tasks.Task%601> durch Aufrufen von <xref:System.Threading.Tasks.ValueTask%601.AsTask%2A>.
+
+Die folgenden Vorgänge sollten nie ausgeführt werden, auf eine <xref:System.Threading.Tasks.ValueTask%601> Instanz:
+
+  - Warten auf die Instanz mehrere Male aus.
+  - Aufrufen von <xref:System.Threading.Tasks.ValueTask%601.AsTask%2A> mehrmals.
+  - Mithilfe von `.Result` oder `.GetAwaiter().GetResult()` Wenn der Vorgang noch abgeschlossen noch nicht, oder verwenden sie mehrere Male.
+  - Verwenden mehr als eine der folgenden Methoden, um die Instanz zu nutzen.
+
+Wenn Sie einen der oben genannten Schritte ausführen, sind die Ergebnisse nicht definiert.
+
 Eine Methode kann eine Instanz dieses Werttyps, wenn es wahrscheinlich, dass das Ergebnis des Vorgangs synchron werden, und wenn sein soll aufgerufen so häufig, die die Kosten für das Zuordnen eines neuen zurückgeben <xref:System.Threading.Tasks.Task%601> für jeden Aufruf unerschwinglich werden.   
 
 Werden mit einem <xref:System.Threading.Tasks.ValueTask%601> statt einer <xref:System.Threading.Tasks.Task%601>. Während beispielsweise ein <xref:System.Threading.Tasks.ValueTask%601> können eine Zuordnung in die Groß-/Kleinschreibung zu vermeiden, in dem das erfolgreiche Ergebnis verfügbar synchron ist, sondern auch zwei Felder, während eine <xref:System.Threading.Tasks.Task%601> als Verweis-Typ ist ein einzelnes Feld. Dies bedeutet, dass der Aufruf einer Methode gibt zwei Felder sollten Daten statt, die mehr Daten zu kopieren. Bedeutet auch, wenn eine Methode, die gibt eine <xref:System.Threading.Tasks.ValueTask%601> erwartet innerhalb einer Async-Methode der Zustandsautomat für diese asynchrone Methode größer, ausgeführt wird, weil eine Struktur mit zwei Feldern anstelle eines einzelnen Verweises gespeichert werden müssen.   
@@ -652,11 +663,10 @@ Daher muss die Standardauswahl für eine asynchrone Methode zum Zurückgeben ein
         <remarks>
           <format type="text/markdown"><![CDATA[  
 ## Remarks  
- Wenn diese <xref:System.Threading.Tasks.ValueTask%601> umschließt, die ein erfolgreiches Ergebnis, diese Eigenschaft gibt es direkt zurück.
+Diese Eigenschaft kann nur einmal, und nur nach <xref:System.Threading.Tasks.ValueTask%601> wurde abgeschlossen.
 
- Wenn er umbrochen wird eine <xref:System.Threading.Tasks.Task%601>, das Verhalten der <xref:System.Threading.Tasks.ValueTask%601.Result%2A> ähnelt das Verhalten für den Zugriff auf <xref:System.Threading.Tasks.Task%601.Result%2A> für den umschlossenen Task: Wenn der Task noch nicht abgeschlossen wurde, Zugriff auf die Eigenschaft blockiert den aufrufenden Thread bis er abgeschlossen ist, wenn die Aufgabe abgeschlossen wurde erfolgreich: die Eigenschaft gibt das Ergebnis zurück; Wenn der Task einen Fehler verursacht hat oder abgebrochen wurde, löst das Zugreifen auf die Eigenschaft eine Ausnahme aus. Die ausgelöste Ausnahme wird nicht umbrochen, eine <xref:System.AggregateException>, unterscheidet sich vom Verhalten des <xref:System.Threading.Tasks.Task%601.Result%2A> in derselben Situation.
-  
- ]]></format>
+Wenn diese <xref:System.Threading.Tasks.ValueTask%601> erfolgreich abgeschlossen wurde, diese Eigenschaft gibt den Ergebniswert zurück. Wenn diese <xref:System.Threading.Tasks.ValueTask%601> hat einen Fehler verursacht, diese Eigenschaft löst eine Ausnahme aus. Die ausgelöste Ausnahme wird nicht umbrochen, eine <xref:System.AggregateException>.
+]]></format>
         </remarks>
       </Docs>
     </Member>
