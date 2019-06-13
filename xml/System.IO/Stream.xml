@@ -1,5 +1,5 @@
 <Type Name="Stream" FullName="System.IO.Stream">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="956be57356bb7f5a84f5cc383e6ca764602d9630" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58730438" /></Metadata><TypeSignature Language="C#" Value="public abstract class Stream : MarshalByRefObject, IDisposable" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="5b93cc73b380dfde6da1e7a45348e42ee6490d29" /><Meta Name="ms.sourcegitcommit" Value="a9b8eb12d69b131f7c0de74d471798e44e863282" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/04/2019" /><Meta Name="ms.locfileid" Value="66502057" /></Metadata><TypeSignature Language="C#" Value="public abstract class Stream : MarshalByRefObject, IDisposable" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract serializable beforefieldinit Stream extends System.MarshalByRefObject implements class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.IO.Stream" />
   <TypeSignature Language="VB.NET" Value="Public MustInherit Class Stream&#xA;Inherits MarshalByRefObject&#xA;Implements IDisposable" />
@@ -880,11 +880,22 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="destination">Der Stream, in den der Inhalt des aktuellen Stream kopiert wird.</param>
+        <param name="cancellationToken">Das Token zum Überwachen von Abbruchanforderungen. Der Standardwert ist <see cref="P:System.Threading.CancellationToken.None" />sein.</param>
+        <summary>Liest die Bytes asynchron aus dem aktuellen Stream und schreibt sie unter Verwendung eines angegebenen Abbruchtokens in einen anderen Stream.</summary>
+        <returns>Eine Aufgabe, die den asynchronen Kopiervorgang darstellt.</returns>
+        <remarks><format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Die <xref:System.IO.Stream.CopyToAsync%2A> Methode können Sie ressourcenintensive e/a-Vorgänge ausführen, ohne den Hauptthread zu blockieren. Diese Überlegungen zur Leistung sind insbesondere in einer [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -App oder [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] -App wichtig, bei der ein zeitaufwendiger Streamvorgang den UI-Thread blockieren kann und es dann den Anschein hat, dass Ihre App nicht funktioniert. Die Async-Methoden werden verwendet, in Verbindung mit der `async` und `await` in Visual Basic und C#-Schlüsselwörter.  
+  
+ Wenn der Vorgang abgebrochen wird, bevor er abgeschlossen wurde, enthält die zurückgegebene Aufgabe der <xref:System.Threading.Tasks.TaskStatus.Canceled> Wert für die <xref:System.Threading.Tasks.Task.Status%2A> Eigenschaft.  
+  
+ Der Kopiervorgang beginnt an der aktuellen Position im aktuellen Stream.  
+  
+ Ein Beispiel für das Kopieren zwischen zwei Datenströmen, finden Sie unter den <xref:System.IO.Stream.CopyToAsync%28System.IO.Stream%29> überladen.  
+  
+ ]]></format></remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyToAsync">
@@ -1162,9 +1173,20 @@ Weitere Informationen zu <see cref="M:System.ComponentModel.Component.Dispose" /
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt die nicht verwalteten Ressourcen, die von der <see cref="T:System.IO.Stream" /> verwendet werden, asynchron frei.</summary>
+        <returns>Eine Aufgabe, die den asynchronen Löschvorgang darstellt.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Die <xref:System.IO.Stream.DisposeAsync%2A> Methode ermöglicht es Ihnen, einen ressourcenintensiven Dispose-Vorgang auszuführen, ohne den Hauptthread zu blockieren. Diese Überlegungen zur Leistung sind insbesondere in einer [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -App oder [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] -App wichtig, bei der ein zeitaufwendiger Streamvorgang den UI-Thread blockieren kann und es dann den Anschein hat, dass Ihre App nicht funktioniert. Die Async-Methoden werden verwendet, in Verbindung mit der `async` und `await` in Visual Basic und C#-Schlüsselwörter. 
+ 
+ Diese Methode verwirft den Datenstrom durch das Schreiben von Änderungen in den Sicherungsspeicher aus, und Schließen des Streams um Ressourcen freizugeben.   
+  
+ Aufrufen von `DisposeAsync` können die Ressourcen, die von verwendet die <xref:System.IO.Stream> , für andere Zwecke verschoben werden. Weitere Informationen finden Sie unter [Bereinigen von nicht verwalteten Ressourcen](~/docs/standard/garbage-collection/unmanaged.md).  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EndRead">
@@ -1689,10 +1711,21 @@ Die anstehende Operation unterstützt keine Schreibvorgänge.</exception>
         <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Ein Bereich im Arbeitsspeicher. Bei der Rückgabe dieser Methode werden die Inhalte dieses Bereichs durch die aus der aktuellen Quelle gelesenen Bytes ersetzt.</param>
+        <summary>Liest beim Überschreiben in einer abgeleiteten Klasse eine Folge von Bytes aus dem aktuellen Stream und erhöht die Position im Stream um die Anzahl der gelesenen Bytes.</summary>
+        <returns>Die Gesamtanzahl der in den Puffer gelesenen Bytes. Dies kann weniger als die Anzahl der im Puffer zugeordneten Bytes sein, wenn diese Anzahl an Bytes derzeit nicht verfügbar ist, oder 0 (null), wenn das Ende des Streams erreicht ist.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Verwenden der <xref:System.IO.Stream.CanRead%2A> Eigenschaft, um zu bestimmen, ob die aktuelle Instanz Lesevorgänge unterstützt. Verwenden der <xref:System.IO.Stream.ReadAsync%2A> Methode zum asynchronen Lesen aus dem aktuellen Stream.  
+  
+ Implementierungen dieser Methode lesen maximal `buffer.Length` Bytes aus dem aktuellen stream und speichert sie in `buffer`. Die aktuelle Position im Stream wird durch die Anzahl der gelesenen Bytes verschoben. Wenn eine Ausnahme auftritt, bleibt die aktuelle Position im Stream jedoch unverändert. Implementierungen werden die Anzahl der gelesenen Bytes zurück. Die Implementierung blockiert, bis mindestens ein Byte an Daten gelesen werden kann, die keine Daten verfügbar sind. <xref:System.IO.Stream.Read%2A> Gibt 0 zurück, nur, wenn keine weitere Daten vorhanden, in den Stream sind und nicht mehr (z. B. ein geschlossener Socket oder ein Dateiende) erwartet wird. Eine Implementierung ist weniger Bytes als angefordert zurückgeben, selbst wenn Sie nicht das Ende des Streams erreicht wurde.  
+  
+ Verwendung <xref:System.IO.BinaryReader> zum Lesen von primitiven Datentypen.    
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -1811,11 +1844,24 @@ Die anstehende Operation unterstützt keine Schreibvorgänge.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Der Bereich im Arbeitsspeicher, in den die Daten geschrieben werden sollen.</param>
+        <param name="cancellationToken">Das Token zum Überwachen von Abbruchanforderungen. Der Standardwert ist <see cref="P:System.Threading.CancellationToken.None" />sein.</param>
+        <summary>Liest eine Folge von Bytes asynchron aus aktuellen Stream, erhöht die Position im Stream um die Anzahl der gelesenen Bytes und überwacht Abbruchanfragen.</summary>
+        <returns>Eine Aufgabe, die den asynchronen Lesevorgang darstellt. Der Wert seiner <see cref="P:System.Threading.Tasks.ValueTask`1.Result" />-Eigenschaft enthält die Gesamtzahl der Bytes, die in den Puffer gelesen werden. Der Ergebniswert kann weniger als die Anzahl der im Puffer zugeordneten Bytes sein, wenn diese Anzahl an Bytes derzeit nicht verfügbar ist, oder er kann 0 (null) sein, wenn das Ende des Streams erreicht ist.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Die <xref:System.IO.Stream.ReadAsync%2A> Methode können Sie ressourcenintensive e/a-Vorgänge ausführen, ohne den Hauptthread zu blockieren. Diese Überlegungen zur Leistung sind insbesondere in einer [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -App oder [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] -App wichtig, bei der ein zeitaufwendiger Streamvorgang den UI-Thread blockieren kann und es dann den Anschein hat, dass Ihre App nicht funktioniert. Die Async-Methoden werden verwendet, in Verbindung mit der `async` und `await` in Visual Basic und C#-Schlüsselwörter.  
+  
+ Verwenden der <xref:System.IO.Stream.CanRead%2A> Eigenschaft, um zu bestimmen, ob die aktuelle Instanz Lesevorgänge unterstützt.  
+  
+ Wenn der Vorgang abgebrochen wird, bevor er abgeschlossen wurde, enthält die zurückgegebene Aufgabe der <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> Wert für die <xref:System.Threading.Tasks.Task.Status> Eigenschaft.  
+  
+ Ein Beispiel finden Sie unter den <xref:System.IO.Stream.ReadAsync%28System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%29> überladen.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadAsync">
@@ -2311,9 +2357,18 @@ Bei diesem Member handelt es sich um eine explizite Schnittstellenmemberimplemen
         <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Ein Bereich im Arbeitsspeicher. Diese Methode kopiert den Inhalt dieses Bereichs in den aktuellen Datenstrom.</param>
+        <summary>Schreibt beim Überschreiben in einer abgeleiteten Klasse eine Folge von Bytes in den aktuellen Stream und erhöht die aktuelle Position im Stream um die Anzahl der geschriebenen Bytes.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Verwenden der <xref:System.IO.Stream.CanWrite%2A> Eigenschaft, um zu bestimmen, ob die aktuelle Instanz Schreibvorgänge unterstützt. Verwenden der <xref:System.IO.Stream.WriteAsync%2A> Methode asynchron in den aktuellen Stream geschrieben.  
+  
+ Wenn der Schreibvorgang erfolgreich ist, setzt sich die Position im Stream um die Anzahl der geschriebenen Bytes. Wenn eine Ausnahme auftritt, bleibt die Position im Stream unverändert.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -2420,11 +2475,24 @@ Bei diesem Member handelt es sich um eine explizite Schnittstellenmemberimplemen
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">Die Region im Arbeitsspeicher, aus der die Daten für das Schreiben gelesen werden sollen.</param>
+        <param name="cancellationToken">Das Token zum Überwachen von Abbruchanforderungen. Der Standardwert ist <see cref="P:System.Threading.CancellationToken.None" />sein.</param>
+        <summary>Schreibt beim Überschreiben in einer abgeleiteten Klasse eine Folge von Bytes asynchron in den aktuellen Stream und erhöht die aktuelle Position im Stream um die Anzahl der geschriebenen Bytes und überwacht Abbruchanforderungen.</summary>
+        <returns>Eine Aufgabe, die den asynchronen Schreibvorgang darstellt.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Die <xref:System.IO.Stream.WriteAsync%2A> Methode können Sie ressourcenintensive e/a-Vorgänge ausführen, ohne den Hauptthread zu blockieren. Diese Überlegungen zur Leistung sind insbesondere in einer [!INCLUDE[win8_appname_long](~/includes/win8-appname-long-md.md)] -App oder [!INCLUDE[desktop_appname](~/includes/desktop-appname-md.md)] -App wichtig, bei der ein zeitaufwendiger Streamvorgang den UI-Thread blockieren kann und es dann den Anschein hat, dass Ihre App nicht funktioniert. Die Async-Methoden werden verwendet, in Verbindung mit der `async` und `await` in Visual Basic und C#-Schlüsselwörter.  
+  
+ Verwenden der <xref:System.IO.Stream.CanWrite%2A> Eigenschaft, um zu bestimmen, ob die aktuelle Instanz Schreibvorgänge unterstützt.  
+  
+ Wenn der Vorgang abgebrochen wird, bevor er abgeschlossen wurde, enthält die zurückgegebene Aufgabe der <xref:System.Threading.Tasks.TaskStatus.Canceled> Wert für die <xref:System.Threading.Tasks.Task.Status%2A> Eigenschaft.  
+  
+ Ein Beispiel finden Sie unter den <xref:System.IO.Stream.WriteAsync%28System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%29> überladen.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">

@@ -1,5 +1,5 @@
 <Type Name="Environment" FullName="System.Environment">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="d38348c989ef499a53e5ed5e296d99c5bcf72043" /><Meta Name="ms.sourcegitcommit" Value="2767b5903996fbd7e2b81eda1114dfc9d0d9db63" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/02/2019" /><Meta Name="ms.locfileid" Value="64996516" /></Metadata><TypeSignature Language="C#" Value="public static class Environment" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="67122888e2d5a12a6b03eff1a12290883e98622f" /><Meta Name="ms.sourcegitcommit" Value="f55040f35c19a83c85beb55243330558f6e369be" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/10/2019" /><Meta Name="ms.locfileid" Value="66818664" /></Metadata><TypeSignature Language="C#" Value="public static class Environment" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Environment extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Environment" />
   <TypeSignature Language="VB.NET" Value="Public Class Environment" />
@@ -760,8 +760,8 @@ Unter MacOS und Linux enthält der Umgebungsblock, der den aktuellen Prozess die
   
  Im folgenden Beispiel wird versucht, den Wert einer Umgebungsvariablen mit dem Namen des abzurufenden `Test1` in dem Umgebungsblock Prozess. Wenn die Variable nicht vorhanden ist, wird das Beispiel erstellt die und seinen Wert abruft. Das Beispiel zeigt den Wert der Variablen. Wenn im Beispiel wird die Variable erstellt, ruft sie auch die <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> -Methode mit dem jedes Element der <xref:System.EnvironmentVariableTarget> Enumeration, die überprüft wird, ob die Variable nur aus der aktuellen Umgebung prozessblock abgerufen werden kann. Schließlich im Beispiel wird die Variable erstellt, löscht sie es.  
   
- [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs#2)]
- [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb#2)]  
+ [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs)]
+ [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb)]  
   
  ]]></format>
         </remarks>
@@ -811,7 +811,7 @@ Unter MacOS und Linux enthält der Umgebungsblock, der den aktuellen Prozess die
       </Parameters>
       <Docs>
         <param name="variable">Der Name einer Umgebungsvariablen.</param>
-        <param name="target">Einer der <see cref="T:System.EnvironmentVariableTarget" />-Werte.</param>
+        <param name="target">Einer der <see cref="T:System.EnvironmentVariableTarget" />-Werte. Nur <see cref="F:System.EnvironmentVariableTarget.Process" /> wird in .NET Core bei der Ausführung auf Unix-basierten Systemen unterstützt.</param>
         <summary>Ruft den Wert einer Umgebungsvariablen vom aktuellen Prozess oder aus dem Registrierungsschlüssel des Windows-Betriebssystems für den aktuellen Benutzer oder den lokalen Computer ab.</summary>
         <returns>Der Wert der von den Parametern <paramref name="variable" /> und <paramref name="target" /> angegebenen Umgebungsvariablen oder <see langword="null" />, wenn die Umgebungsvariable nicht gefunden wird.</returns>
         <remarks>
@@ -837,12 +837,12 @@ Pro-Prozess-Umgebungsvariablen sind:
 
 - Durch Aufrufen von entweder definiert die <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> Methode oder die <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> -Methode mit einer `target` Wert <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>. Diese Umgebungsvariablen nur bis zum Beibehalten der `dotnet` Prozess oder die Anwendung .NET beendet wird.   
   
-## Examples  
- Das folgende Beispiel erstellt die Umgebungsvariablen für den Prozess, Benutzer und Computer-Ziele, überprüft, ob die Registrierung des Betriebssystems die Umgebungsvariablen für Benutzer und Computer enthält, und löscht dann die Umgebungsvariablen.  
-  
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+## Examples
+
+Das folgende Beispiel erstellt die Umgebungsvariablen für die <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, und <xref:System.EnvironmentVariableTarget.Machine> ausgerichtet ist, überprüft, ob die Registrierung des Betriebssystems, die Benutzer und Computer-Umgebungsvariablen enthält, und löscht dann die Umgebung Variablen. Da .NET auf Unix-basierten Systemen nicht Unterstützung pro Benutzer und pro Computer Umgebungsvariablen nur übernimmt <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> und <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> mit einem Wert von <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> erfolgreich eine Umgebungsvariable zu der Process-Block-Umgebung zu speichern.
+
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
@@ -915,7 +915,7 @@ für vollständigen Zugriff auf Umgebungsvariablen Wenn <paramref name="target" 
   
 ### <a name="on-windows-systems"></a>Auf Windows-Systemen
 
-Auf Windows-Systemen die `GetEnvironmentVariables` Methode gibt zurück, die folgenden Variablen der Umgebung:
+Auf Windows-Systemen die `GetEnvironmentVariables` Methode gibt zurück, die folgenden Umgebungsvariablen:
   
 - Alle computerspezifischen Umgebungsvariablen, die zum Zeitpunkt der Prozess, die zusammen mit ihren Werten erstellt wird definiert sind.  
   
@@ -927,7 +927,7 @@ Auf Windows-Systemen die `GetEnvironmentVariables` Methode gibt zurück, die fol
 
 Unter MacOS und Linux die `GetEnvironmentVariables` Methode ruft den Namen und Wert, der alle Umgebungsvariablen, die aus dem übergeordneten Prozess geerbt werden, die gestartet der `dotnet` ausgeführt werden oder werden innerhalb des Bereichs definiert die `dotnet` selbst zu verarbeiten. Sobald die `dotnet` Prozess beendet, diese zweite Umgebungsvariablen sind nicht mehr vorhanden. 
 
-.NET Core unterstützt keine Variablen pro Computer oder pro Benutzer.   
+.NET Core unter Unix-basierten Systemen unterstützt keine Umgebungsvariablen pro Computer oder pro Benutzer.   
   
 ## Examples  
  Das folgende Beispiel veranschaulicht die <xref:System.Environment.GetEnvironmentVariables%2A> Methode.  
@@ -980,7 +980,7 @@ Unter MacOS und Linux die `GetEnvironmentVariables` Methode ruft den Namen und W
         <Parameter Name="target" Type="System.EnvironmentVariableTarget" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="target">Einer der <see cref="T:System.EnvironmentVariableTarget" />-Werte.</param>
+        <param name="target">Einer der <see cref="T:System.EnvironmentVariableTarget" />-Werte. Nur <see cxref="F:System.EnvironmentVariableTarget.Process" /> wird in .NET Core bei der Ausführung auf Unix-basierten Systemen unterstützt.</param>
         <summary>Ruft die Namen und Werte aller Umgebungsvariablen vom aktuellen Prozess oder aus dem Registrierungsschlüssel des Windows-Betriebssystems für den aktuellen Benutzer oder den lokalen Computer ab.</summary>
         <returns>Ein Wörterbuch, das die Namen und Werte aller Umgebungsvariablen aus der durch den <paramref name="target" />-Parameter angegebenen Quelle enthält, andernfalls ein leeres Wörterbuch, wenn keine Umgebungsvariablen gefunden werden.</returns>
         <remarks>
@@ -1000,12 +1000,12 @@ Unter MacOS und Linux, nur eine `target` Wert <xref:System.EnvironmentVariableTa
 
 Umgebungsvariablen pro Computer und pro Benutzer werden nicht unterstützt. Ein `target` Wert <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> oder <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> ein leeres Array zurück.
   
-## Examples  
- Das folgende Beispiel erstellt die Umgebungsvariablen für den Prozess, Benutzer und Computer-Ziele, überprüft, ob die Registrierung des Betriebssystems die Umgebungsvariablen für Benutzer und Computer enthält, und löscht dann die Umgebungsvariablen.  
-  
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+## Examples
+
+Das folgende Beispiel erstellt die Umgebungsvariablen für die <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, und <xref:System.EnvironmentVariableTarget.Machine> ausgerichtet ist, überprüft, ob die Registrierung des Betriebssystems, die Benutzer und Computer-Umgebungsvariablen enthält, und löscht dann die Umgebung Variablen. Da .NET auf Unix-basierten Systemen nicht Unterstützung pro Benutzer und pro Computer Umgebungsvariablen nur übernimmt <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> und <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> mit einem Wert von <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> erfolgreich eine Umgebungsvariable zu der Process-Block-Umgebung zu speichern.
+
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
@@ -1069,7 +1069,7 @@ für vollständigen Zugriff auf Umgebungsvariablen Wenn <paramref name="target" 
         <summary>Ruft den Pfad des durch die angegebene Enumeration bezeichneten besonderen Systemordners ab.</summary>
         <returns>Der Pfad zum angegebenen besonderen Systemordner, sofern dieser auf dem Computer physisch vorhanden ist, andernfalls eine leere Zeichenfolge ("").  
   
-Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstellt wurde, wenn der vorhandene Ordner gelöscht wurde oder wenn der Ordner ein virtuelles Verzeichnis ist, z. B. Arbeitsplatz, das keinem physischen Pfad entspricht.</returns>
+ Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstellt wurde, wenn der vorhandene Ordner gelöscht wurde oder wenn der Ordner ein virtuelles Verzeichnis ist, z. B. Arbeitsplatz, das keinem physischen Pfad entspricht.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1137,7 +1137,7 @@ Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstel
         <summary>Ruft den Pfad zum besonderen Systemordner ab, der von der angegebenen Enumeration bezeichnet wird, und verwendet eine angegebene Option zum Zugreifen auf besondere Ordner.</summary>
         <returns>Der Pfad zum angegebenen besonderen Systemordner, sofern dieser auf dem Computer physisch vorhanden ist, andernfalls eine leere Zeichenfolge ("").  
   
-Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstellt wurde, wenn der vorhandene Ordner gelöscht wurde oder wenn der Ordner ein virtuelles Verzeichnis ist, z. B. Arbeitsplatz, das keinem physischen Pfad entspricht.</returns>
+ Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstellt wurde, wenn der vorhandene Ordner gelöscht wurde oder wenn der Ordner ein virtuelles Verzeichnis ist, z. B. Arbeitsplatz, das keinem physischen Pfad entspricht.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1151,7 +1151,7 @@ Ein Ordner ist physisch nicht vorhanden, wenn er nicht vom Betriebssystem erstel
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException"><paramref name="folder" /> ist kein Member von <see cref="T:System.Environment.SpecialFolder" />.
-- oder - 
+- oder -
 
 <paramref name="options" /> ist kein Member von <see cref="T:System.Environment.SpecialFolderOption" />.</exception>
         <exception cref="T:System.PlatformNotSupportedException">Die aktuelle Plattform wird nicht unterstützt.</exception>
@@ -1503,7 +1503,7 @@ Die `Environment.OSVersion` Eigenschaft stellt keine zuverlässige Möglichkeit,
         </remarks>
         <exception cref="T:System.InvalidOperationException">Diese Eigenschaft war nicht in der Lage, die Systemversion abzurufen.  
   
-- oder -  
+- oder - 
 Der abgerufene Plattformbezeichner ist kein Mitglied von <see cref="T:System.PlatformID" />.</exception>
       </Docs>
     </Member>
@@ -1637,34 +1637,22 @@ Der abgerufene Plattformbezeichner ist kein Mitglied von <see cref="T:System.Pla
   
 -   Es besteht aus einem einzelnen Zeichen, dessen Wert U + 0000 ist.  
   
-   
+## Examples
+
+Im folgenden Beispiel wird versucht, den Wert einer Umgebungsvariablen mit dem Namen des abzurufenden `Test1` in dem Umgebungsblock Prozess. Wenn die Variable nicht vorhanden ist, wird im Beispiel wird die Variable erstellt, und ruft den Wert ab. Das Beispiel zeigt den Wert der Variablen. Für .NET-Implementierungen, die auf Windows-Systemen ausgeführt werden, ruft er auch die <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> -Methode mit dem jedes Element der <xref:System.EnvironmentVariableTarget> Enumeration, die überprüft wird, ob die Variable nur aus der aktuellen Umgebung prozessblock abgerufen werden kann. (.NET Implementierungen auf Unix-basierten Systemen unterstützt nur Variablen im prozessblock-Umgebung.) Schließlich im Beispiel wird die Variable erstellt, löscht sie es.  
   
-## Examples  
- Das folgende Beispiel testet, ob eine Umgebungsvariable namens `APPDOMAIN` im aktuellen Prozess vorhanden ist. Wenn dies nicht der Fall ist, wird erstellt, und legt seinen Wert auf "True" fest. Wenn der Wert des der `APPDOMAIN` Umgebungsvariable ist "True", ruft es die `Message.Display` -Methode in einer neuen Anwendungsdomäne. Andernfalls führt es die `Message.Display` -Methode in der aktuellen Anwendungsdomäne.  
-  
- [!code-csharp[System.Environment.SetEnvironmentVariable#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.setenvironmentvariable/cs/setenvironmentvariable1.cs#1)]
- [!code-vb[System.Environment.SetEnvironmentVariable#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.setenvironmentvariable/vb/setenvironmentvariable1.vb#1)]  
-  
- Wenn Sie das Beispiel zum ersten Mal ausführen, zeigt die Meldung "In der Domäne Domäne2 wird ausgeführt" in der Konsole an. Wenn Sie die Umgebungsvariable über die Befehlszeile mit dem Befehl festlegen:  
-  
- `Set AppDomain=False`  
-  
- Im Beispiel wird die Meldung "in der Domäne ausführen *Programmname*.exe", wobei *Programmname* ist der Name der ausführbaren Datei.  
-  
- Im folgenden Beispiel wird versucht, den Wert einer Umgebungsvariablen mit dem Namen des abzurufenden `Test1` in dem Umgebungsblock Prozess. Wenn die Variable nicht vorhanden ist, wird im Beispiel wird die Variable erstellt, und ruft den Wert ab. Das Beispiel zeigt den Wert der Variablen. Wenn im Beispiel wird die Variable erstellt, ruft sie auch die <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> -Methode mit dem jedes Element der <xref:System.EnvironmentVariableTarget> Enumeration, die überprüft wird, ob die Variable nur aus der aktuellen Umgebung prozessblock abgerufen werden kann. Schließlich im Beispiel wird die Variable erstellt, löscht sie es.  
-  
- [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs#2)]
- [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb#2)]  
+ [!code-csharp[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/cs/getenvironmentvariableex1.cs)]
+ [!code-vb[System.Environment.GetEnvironmentVariable#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.environment.getenvironmentvariable/vb/getenvironmentvariableex1.vb)]  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="variable" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException"><paramref name="variable" /> enthält eine leere Zeichenfolge („“), ein anfängliches Hexadezimalzeichen 0 (0x00) oder ein Gleichheitszeichen ("=").  
   
-- oder -  
+- oder - 
 Die Länge von <paramref name="variable" /> oder <paramref name="value" /> ist größer gleich 32.767 Zeichen.  
   
-- oder -  
+- oder - 
 Während der Ausführung dieses Vorgangs ist ein Fehler aufgetreten.</exception>
         <exception cref="T:System.Security.SecurityException">Der Aufrufer hat nicht die erforderliche Berechtigung zum Ausführen dieses Vorgangs.</exception>
         <permission cref="T:System.Security.Permissions.EnvironmentPermission">für vollständigen Zugriff auf Umgebungsvariablen. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.PermissionState.Unrestricted" /></permission>
@@ -1751,31 +1739,31 @@ Wenn `target` ist <xref:System.EnvironmentVariableTarget.User?displayProperty=na
   
  Wenn `target` ist <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> oder <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, es wird empfohlen, die die Länge des `value` weniger als 2048 Zeichen sein.  
   
-## Examples  
- Das folgende Beispiel erstellt die Umgebungsvariablen für die <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, und <xref:System.EnvironmentVariableTarget.Machine> ausgerichtet ist, überprüft, ob die Registrierung des Betriebssystems, die Benutzer und Computer-Umgebungsvariablen enthält, und löscht dann die Umgebung Variablen.  
+## Examples
+
+Das folgende Beispiel erstellt die Umgebungsvariablen für die <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, und <xref:System.EnvironmentVariableTarget.Machine> ausgerichtet ist, überprüft, ob die Registrierung des Betriebssystems, die Benutzer und Computer-Umgebungsvariablen enthält, und löscht dann die Umgebung Variablen. Da .NET auf Unix-basierten Systemen nicht Unterstützung pro Benutzer und pro Computer Umgebungsvariablen nur übernimmt <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> und <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> mit einem Wert von <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> erfolgreich eine Umgebungsvariable zu der Process-Block-Umgebung zu speichern.
   
- [!code-cpp[environment.getsetenvar#1](~/samples/snippets/cpp/VS_Snippets_CLR/environment.getsetenvar/CPP/source.cpp#1)]
- [!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs#1)]
- [!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb#1)]  
+[!code-csharp[environment.getsetenvar#1](~/samples/snippets/csharp/VS_Snippets_CLR/environment.getsetenvar/CS/gsev.cs)]
+[!code-vb[environment.getsetenvar#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/environment.getsetenvar/VB/gsev.vb)]  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException"><paramref name="variable" /> ist <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException"><paramref name="variable" /> enthält eine leere Zeichenfolge („“), ein anfängliches Hexadezimalzeichen 0 (0x00) oder ein Gleichheitszeichen ("=").  
   
-- oder -  
+- oder - 
 Die Länge von <paramref name="variable" /> ist größer gleich 32.767 Zeichen.  
   
-- oder -  
+- oder - 
  <paramref name="target" /> ist kein Member der <see cref="T:System.EnvironmentVariableTarget" />-Enumeration.  
   
-- oder -  
+- oder - 
  <paramref name="target" /> ist gleich <see cref="F:System.EnvironmentVariableTarget.Machine" /> oder gleich <see cref="F:System.EnvironmentVariableTarget.User" />, und die Länge von <paramref name="variable" /> ist größer gleich 255.  
   
-- oder -  
+- oder - 
  <paramref name="target" /> ist gleich <see cref="F:System.EnvironmentVariableTarget.Process" />, und die Länge von <paramref name="value" /> ist größer gleich 32,767.  
   
-- oder -  
+- oder - 
 Während der Ausführung dieses Vorgangs ist ein Fehler aufgetreten.</exception>
         <exception cref="T:System.Security.SecurityException">Der Aufrufer hat nicht die erforderliche Berechtigung zum Ausführen dieses Vorgangs.</exception>
         <permission cref="T:System.Security.Permissions.EnvironmentPermission">für vollständigen Zugriff auf Umgebungsvariablen. Zugeordnete Enumeration: <see cref="F:System.Security.Permissions.PermissionState.Unrestricted" /></permission>
