@@ -1,5 +1,5 @@
 <Type Name="IArgumentProvider" FullName="System.Linq.Expressions.IArgumentProvider">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="18b622ce78fe8295b4aac908d2b2687c5ed1f01f" /><Meta Name="ms.sourcegitcommit" Value="a3e01ec36374fac54a55add0dcc1e754e394abeb" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="03/30/2019" /><Meta Name="ms.locfileid" Value="58715516" /></Metadata><TypeSignature Language="C#" Value="public interface IArgumentProvider" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="4abd0b0508fdc62e37d2117e5823a54dfc7dfdce" /><Meta Name="ms.sourcegitcommit" Value="d3dcd8c426adcf1bbe5ff78a76dee13bd8ad6efd" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/28/2019" /><Meta Name="ms.locfileid" Value="66251523" /></Metadata><TypeSignature Language="C#" Value="public interface IArgumentProvider" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IArgumentProvider" />
   <TypeSignature Language="DocId" Value="T:System.Linq.Expressions.IArgumentProvider" />
   <TypeSignature Language="VB.NET" Value="Public Interface IArgumentProvider" />
@@ -24,18 +24,28 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>Stellt eine interne Schnittstelle für den Zugriff auf die Argumente von mehreren Strukturknoten (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression und IndexExpression) bereit.  Sie sollten diese API nicht verwenden.  Sie ist nur aufgrund von DLL-Refactoring öffentlich und nur für interne Leistungsoptimierungen vorhanden.  
+    <summary>Stellt eine interne Schnittstelle für den Zugriff auf die Argumente von mehreren Strukturknoten (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression und IndexExpression) bereit.  Diese API ist ausschließlich für die interne Verwendung vorgesehen.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+      
+## Remarks
+
+Sie sollten diese API nicht verwenden.  Er ist nur aufgrund der assemblyumgestaltung öffentlich, und sie nur für interne leistungsoptimierungen vorhanden ist. Sie können zwei Optimierungen, die die Größe der Strukturen zu reduzieren:
   
-Dadurch werden zwei Optimierungen ermöglicht, mit denen Ausdrucksbäume verkleinert werden.  Die erste Optimierung ermöglicht für die Strukturknoten, dass sie IList&lt;T&gt; statt ReadOnlyCollection enthalten.  IList&lt;T&gt; spart die Kosten für das Zuordnen der ReadOnlyCollection für jeden Knoten.  Die zweite Optimierung ermöglicht das Erstellen spezialisierter Unterklassen, die eine bestimmte Anzahl von Argumenten (z.B. Block2, Block3, Block4) enthalten.  Daher verhindern diese Knoten die Zuordnung eines ReadOnlyCollection-Elements und eines Arrays zum Speichern ihrer Elemente, wodurch 32 Bytes pro Knoten gespart werden.  
+1. Dadurch werden die Knoten enthalten eine <xref:System.Collections.Generic.IList%601> statt einer <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.  Dies spart die Kosten für die schreibgeschützte Auflistung für jeden Knoten zuordnen.
   
-Die Knoten des Ausdrucksbaums machen weiterhin die ursprünglichen LINQ-Eigenschaften von ReadOnlyCollections verfügbar.  Dies geschieht durch die erneute Verwendung eines Felds, in dem das Array sowie ein Element gespeichert wird, das normalerweise im Array gespeichert werden würde.  
-  
-Für den Fall, dass es sich um ein Array handelt, erhält die Auflistung den Typ IList&lt;T&gt; anstelle von ReadOnlyCollection&lt;T&gt;.  Beim erstmaligen Erstellen ist der Knoten ein Array.  Der Compiler verwendet beim Zugreifen auf die Member diese Schnittstelle.  Durch Zugreifen auf Arrayelemente wird das Array auf ein ReadOnlyCollection-Element hochgestuft.  
-  
-Für den Objektfall wird das erste Argument in einem Feld des Objekttyps gespeichert.  Beim erstmaligen Erstellen des Knotens enthält das Feld den Ausdruck.  Der Compiler greift über diese Schnittstelle auf Argumente zu, und der Accessor für das erste Argument verwendet Expression.ReturnObject, um das Objekt zurückzugeben, das den Expression- oder ReadOnlyCollection-Fall verarbeitet.  Wenn der Benutzer auf das ReadOnlyCollection-Element zugreift, wird das Objektfeld aktualisiert, sodass es direkt ReadOnlyCollection enthält.  
-  
-Es ist unverzichtbar, dass die Ausdrücke stets dasselbe ReadOnlyCollection-Objekt zurückgeben.  Andernfalls wird der Rewriter-Strukturdurchlauf abgebrochen.  Es ist eine bedeutende Änderung von LINQ v1, dass unterschiedliche ReadOnlyCollection-Objekte vom selben Ausdrucksknoten zurückgegeben werden.  Derzeit können sich Benutzer auf die Objektidentität verlassen, um zu erkennen, ob der Knoten geändert wurde.  Ein Speichern des ReadOnlyCollection-Objekts in einem überladenen Feld reduziert die Speicherauslastung und erhält die Kompatibilität für die öffentliche API.</summary>
-    <remarks>To be added.</remarks>
+2. Spezialisierte Unterklassen, halten für auf eine bestimmte Anzahl von Argumenten erstellt werden können (z. B. `Block2`, `Block2`, `Block4`).  Aus diesem Grund diese Knoten zu vermeiden, dass sowohl eine <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> und ein Array zum Speichern ihre Elemente, wodurch 32 Bytes pro Knoten gespart.  Diese Technik wird von verschiedenen Knoten, einschließlich verwendet <xref:System.Linq.Expressions.BlockExpression>, <xref:System.Linq.Expressions.InvocationExpression>, und <xref:System.Linq.Expressions.MethodCallExpression>.
+            
+Die Knoten der Ausdrucksbaumstruktur weiterhin die ursprünglichen LINQ-Eigenschaften des verfügbar zu machen <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> Objekte. Hierfür wird die Wiederverwendung von einem Feld zum Speichern von sowohl das Array oder ein Element aus, die normalerweise im Array gespeichert werden sollen.
+            
+Für den Fall des Arrays, die Auflistung den Typ zu <xref:System.Collections.Generic.IList%601> anstelle von <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>. Wenn der Knoten erstmalig erstellt wird, ist es ein Array.  Der Compiler oder Hilfsprogramme in dieser Bibliothek auf die Elemente über diese Schnittstelle zugreifen. Zugreifen auf Arrayelemente wird das Array, das eine <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.
+            
+Für den Fall Objekt befindet sich das erste Argument in einem Feld <xref:System.Object>. Wenn der Knoten erstmalig erstellt wird, wird dieses Feld enthält den <xref:System.Linq.Expressions.Expression> des ersten Arguments.  Beim Zugriff auf die Argumente, die Compiler und die Dienstprogramme in dieser Bibliothek, sie erneut verwenden Sie diese Schnittstelle und der Accessor für das erste Argument der internen mithilfe `Expression.ReturnObject<T>(System.Object)` Hilfsmethode, um das Objekt zurück, der verarbeitet die <xref:System.Linq.Expressions.Expression> oder <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> Fall. Wenn der Benutzer greift auf die <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>, das Objekt-Feld wird aktualisiert, um direkt auf enthalten die <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.
+            
+Es ist wichtig, <xref:System.Linq.Expressions.Expression> Eigenschaften zurückgeben konsistent die gleichen <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>. Andernfalls wird der Rewriter-Struktur-Walker Ausdrücke ein, die unterbrochen. Es ist eine bedeutende Änderung von LINQ v1, dass andere Daten zurückgeben <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> aus der gleichen <xref:System.Linq.Expressions.Expression> Knoten. Derzeit können Benutzer verlassen sich auf die Objektidentität mitteilen, ob der Knoten geändert wurde.  Speichern der <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> in einem überladenen Feld beide verringert die speicherauslastung und erhält die Kompatibilität für die öffentliche API.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="ArgumentCount">
@@ -67,9 +77,9 @@ Es ist unverzichtbar, dass die Ausdrücke stets dasselbe ReadOnlyCollection-Obje
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gibt die Anzahl der Argumente an den Ausdrucksbaumstrukturknoten zurück.  Sie sollten diesen Typ nicht verwenden.  Es ist nur aufgrund der Assemblyumgestaltung öffentlich und wird intern zur Leistungsoptimierung verwendet.</summary>
+        <summary>Gibt die Anzahl der Argumente an den Ausdrucksbaumstrukturknoten zurück. Diese API ist ausschließlich für die interne Verwendung vorgesehen.</summary>
         <value>Die Anzahl der Argumente für den Ausdrucksbaumstrukturknoten als <see cref="T:System.Int32" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Sie sollten diese API nicht verwenden. Er ist nur aufgrund der assemblyumgestaltung öffentlich, und sie wird intern zur leistungsoptimierung verwendet.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetArgument">
@@ -105,9 +115,9 @@ Es ist unverzichtbar, dass die Ausdrücke stets dasselbe ReadOnlyCollection-Obje
       </Parameters>
       <Docs>
         <param name="index">Der Index des Arguments.</param>
-        <summary>Gibt das Argument bei Index zurück, das ausgelöst wird, wenn der Index außerhalb des gültigen Bereichs liegt.  Sie sollten diesen Typ nicht verwenden.  Es ist nur aufgrund der Assemblyumgestaltung öffentlich und wird intern zur Leistungsoptimierung verwendet.</summary>
-        <returns>Das Argument am Index, das ausgelöst wird, wenn der Index als <see cref="T:System.Linq.Expressions.Expression" /> außerhalb des gültigen Bereichs liegt.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gibt das Argument beim <paramref name="index" /> zurück, das ausgelöst wird, wenn der <paramref name="index" /> außerhalb des gültigen Bereichs liegt. Diese API ist ausschließlich für die interne Verwendung vorgesehen.</summary>
+        <returns>Das Argument beim Index.</returns>
+        <remarks>Sie sollten diese API nicht verwenden.  Es ist nur aufgrund der Assemblyumgestaltung öffentlich und wird intern zur Leistungsoptimierung verwendet.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,5 +1,5 @@
 <Type Name="PipeWriter" FullName="System.IO.Pipelines.PipeWriter">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="e2f146380d236a95e84925bb8544a9b5b326c911" /><Meta Name="ms.sourcegitcommit" Value="2767b5903996fbd7e2b81eda1114dfc9d0d9db63" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/02/2019" /><Meta Name="ms.locfileid" Value="64996758" /></Metadata><TypeSignature Language="C#" Value="public abstract class PipeWriter : System.Buffers.IBufferWriter&lt;byte&gt;" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="0b622dc070ab36dcf6b941c734e30c03d2c0237d" /><Meta Name="ms.sourcegitcommit" Value="0de246131f8a87c71d008d055adec7bf72470c4f" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/29/2019" /><Meta Name="ms.locfileid" Value="66301877" /></Metadata><TypeSignature Language="C#" Value="public abstract class PipeWriter : System.Buffers.IBufferWriter&lt;byte&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit PipeWriter extends System.Object implements class System.Buffers.IBufferWriter`1&lt;unsigned int8&gt;" />
   <TypeSignature Language="DocId" Value="T:System.IO.Pipelines.PipeWriter" />
   <TypeSignature Language="VB.NET" Value="Public MustInherit Class PipeWriter&#xA;Implements IBufferWriter(Of Byte)" />
@@ -67,8 +67,8 @@
         <Parameter Name="bytes" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="bytes">Die Anzahl der geschriebenen Bytes der <see cref="T:System.Span`1" /> oder <see cref="T:System.Memory`1" />.</param>
-        <summary>Benachrichtigt die <see cref="T:System.IO.Pipelines.PipeWriter" /> , <paramref name="bytes" /> Bytes geschrieben wurden, an die Ausgabe <see cref="T:System.Span`1" /> oder <see cref="T:System.Memory`1" />. Sie müssen einen neuen Puffer anfordern, nach dem Aufruf <see cref="M:System.IO.Pipelines.PipeWriter.Advance(System.Int32)" /> um den Vorgang fortzusetzen, weitere Daten schreiben Sie können nicht auf einen Puffer, der zuvor abgerufenen geschrieben werden.</summary>
+        <param name="bytes">Die Anzahl der in die <see cref="T:System.Span`1" /> oder den <see cref="T:System.Memory`1" /> geschriebenen Bytes.</param>
+        <summary>Teilt dem <see cref="T:System.IO.Pipelines.PipeWriter" /> mit, dass <paramref name="bytes" /> Bytes in die Ausgabe <see cref="T:System.Span`1" /> oder <see cref="T:System.Memory`1" /> geschrieben wurden. Sie müssen nach dem Aufruf von <see cref="M:System.IO.Pipelines.PipeWriter.Advance(System.Int32)" /> einen neuen Puffer anfordern, um weitere Daten zu schreiben; Sie können nicht in einen zuvor abgerufenen Puffer schreiben.</summary>
         <remarks>To be added.</remarks>
         <inheritdoc />
       </Docs>
@@ -90,7 +90,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gibt einen lesegeschützten <see cref="T:System.IO.Stream" /> , umschließt die <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
+        <summary>Gibt einen lesegeschützten <see cref="T:System.IO.Stream" /> zurück, der den <see cref="T:System.IO.Pipelines.PipeWriter" /> umschließt.</summary>
         <returns>Die <see cref="T:System.IO.Stream" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -161,8 +161,8 @@
       </Parameters>
       <Docs>
         <param name="source">Der Stream, aus dem der Inhalt kopiert wird.</param>
-        <param name="cancellationToken">Das Token zum Überwachen von Abbruchanforderungen. Der Standardwert ist <see cref="P:System.Threading.CancellationToken.None" />.</param>
-        <summary>Asynchron liest die Bytes aus dem angegebenen Stream und schreibt sie in der <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
+        <param name="cancellationToken">Das Token zum Überwachen von Abbruchanforderungen. Der Standardwert ist <see cref="P:System.Threading.CancellationToken.None" />sein.</param>
+        <summary>Liest die Bytes asynchron aus dem angegebenen Stream und schreibt sie in den <see cref="T:System.IO.Pipelines.PipeWriter" />.</summary>
         <returns>Eine Aufgabe, die den asynchronen Kopiervorgang darstellt.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -185,10 +185,10 @@
         <Parameter Name="writerOptions" Type="System.IO.Pipelines.StreamPipeWriterOptions" Index="1" FrameworkAlternate="dotnet-plat-ext-3.0" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <param name="writerOptions">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="stream">Der Stream, den der Pipewriter umschließt.</param>
+        <param name="writerOptions">Die Optionen zum Konfigurieren des Pipewriters.</param>
+        <summary>Erstellt einen <see cref="T:System.IO.Pipelines.PipeWriter" />, der den angegebenen <see cref="T:System.IO.Stream" /> umschließt.</summary>
+        <returns>Ein <see cref="T:System.IO.Pipelines.PipeWriter" />, der den <see cref="T:System.IO.Stream" /> umschließt.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -240,9 +240,9 @@
         <Parameter Name="sizeHint" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="sizeHint">Die Mindestlänge des zurückgegebenen <see cref="T:System.Memory`1" />-Elements. Wenn 0, wird ein nicht leere Speicherpuffer beliebiger Größe zurückgegeben.</param>
-        <summary>Gibt eine <see cref="T:System.Memory`1" /> zum Schreiben in das ist mindestens die angeforderte Größe, laut der <paramref name="sizeHint" /> Parameter.</summary>
-        <returns>Einen Arbeitsspeicherpuffer, der mindestens <paramref name="sizeHint" /> Bytes. Wenn <paramref name="sizeHint" /> gleich 0 ist, gibt einen nicht leeren Puffer beliebiger Größe zurück.</returns>
+        <param name="sizeHint">Die Mindestlänge des zurückgegebenen <see cref="T:System.Memory`1" />-Elements. Wenn 0, wird ein nicht leerer Speicherpuffer beliebiger Größe zurückgegeben.</param>
+        <summary>Gibt einen <see cref="T:System.Memory`1" /> zum Schreiben zurück, der mindestens die angeforderte, vom <paramref name="sizeHint" />-Parameter angegebene Größe aufweist.</summary>
+        <returns>Ein Arbeitsspeicherpuffer von mindestens <paramref name="sizeHint" /> Bytes. Gibt einen nicht leeren Puffer beliebiger Größe zurück, wenn <paramref name="sizeHint" /> 0 (null) ist.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -281,9 +281,9 @@ Sie müssen einen neuen Puffer anfordern, nach dem Aufruf <xref:System.IO.Pipeli
         <Parameter Name="sizeHint" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="sizeHint">Die Mindestlänge des zurückgegebenen <see cref="T:System.Span`1" />-Elements. Wenn 0, wird ein nicht leere Puffer beliebiger Größe zurückgegeben.</param>
-        <summary>Gibt eine <see cref="T:System.Span`1" /> zum Schreiben in das ist mindestens die angeforderte Größe, laut der <paramref name="sizeHint" /> Parameter.</summary>
-        <returns>Einen Puffer mit mindestens <paramref name="sizeHint" /> Bytes. Wenn <paramref name="sizeHint" /> gleich 0 ist, gibt einen nicht leeren Puffer beliebiger Größe zurück.</returns>
+        <param name="sizeHint">Die Mindestlänge des zurückgegebenen <see cref="T:System.Span`1" />-Elements. Wenn 0, wird ein nicht leerer Puffer beliebiger Größe zurückgegeben.</param>
+        <summary>Gibt eine <see cref="T:System.Span`1" /> zum Schreiben zurück, die mindestens die angeforderte, vom <paramref name="sizeHint" />-Parameter angegebene Größe aufweist.</summary>
+        <returns>Ein Puffer von mindestens <paramref name="sizeHint" /> Bytes. Gibt einen nicht leeren Puffer beliebiger Größe zurück, wenn <paramref name="sizeHint" /> 0 (null) ist.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 

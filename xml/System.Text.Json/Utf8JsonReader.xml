@@ -1,5 +1,5 @@
 <Type Name="Utf8JsonReader" FullName="System.Text.Json.Utf8JsonReader">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="cfe620a074fff1eeb0f7eccb868308146b5c66e4" /><Meta Name="ms.sourcegitcommit" Value="2767b5903996fbd7e2b81eda1114dfc9d0d9db63" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/02/2019" /><Meta Name="ms.locfileid" Value="65006715" /></Metadata><TypeSignature Language="C#" Value="public struct Utf8JsonReader" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="f992d9ddc5811a697ecad197058d154e3b4fbc4c" /><Meta Name="ms.sourcegitcommit" Value="ef1f0c8985003a14413f66c3de381b8f3b6e4436" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="05/30/2019" /><Meta Name="ms.locfileid" Value="66380669" /></Metadata><TypeSignature Language="C#" Value="public struct Utf8JsonReader" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Utf8JsonReader extends System.ValueType" />
   <TypeSignature Language="DocId" Value="T:System.Text.Json.Utf8JsonReader" />
   <TypeSignature Language="VB.NET" Value="Public Structure Utf8JsonReader" />
@@ -28,7 +28,9 @@
 `Utf8JsonReader` Prozesse, die der Text nacheinander mit kein Zwischenspeichern und in der Standardeinstellung entspricht genau zu der [JSON RFC](https://tools.ietf.org/html/rfc8259).
 
 Wenn `Utf8JsonReader` trifft Ungültiges JSON-Format, löst er eine <xref:System.Text.Json.JsonReaderException> mit grundlegenden Informationen wie Anzahl und die Byte-Position der Zeile in der Zeile.
+
 Da dieser Typ eine Verweisstruktur ist, unterstützt nicht direkt asynchronen. Es bietet jedoch Unterstützung für erneutes eintreten, um unvollständige Daten zu lesen, und fahren, sobald weitere Daten dargestellt werden.
+
 In der Lage, legen Sie die maximale Tiefe während des Lesens oder zulassen, wird übersprungen, Kommentare, erstellen Sie eine Instanz des <xref:System.Text.Json.JsonReaderState> und übergeben es an dem Reader.
 
  ]]></format>
@@ -229,9 +231,11 @@ Im Gegensatz zu den <xref:System.Text.Json.Utf8JsonReader>, d.h. ein Ref Struct,
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.DateTime" />-Wert.</summary>
+        <returns>Datum und Uhrzeit, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich analysiert werden kann.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <exception cref="T:System.FormatException">Der Wert des JSON-Tokens liegt in einem nicht unterstützten Format vor. Nur eine Teilmenge der ISO 8601-Formate wird unterstützt.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetDateTimeOffset">
@@ -251,9 +255,11 @@ Im Gegensatz zu den <xref:System.Text.Json.Utf8JsonReader>, d.h. ein Ref Struct,
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.DateTimeOffset" />-Wert.</summary>
+        <returns>Datum und Uhrzeit, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich analysiert werden kann.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <exception cref="T:System.FormatException">Der Wert des JSON-Tokens liegt in einem nicht unterstützten Format vor. Nur eine Teilmenge der ISO 8601-Formate wird unterstützt.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetDecimal">
@@ -339,9 +345,11 @@ Die `GetDouble` Methode löst eine Ausnahme aus, wenn der gesamten UTF-8 codiert
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.Guid" />-Wert.</summary>
+        <returns>Der GUID-Wert, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich analysiert werden kann.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
+        <exception cref="T:System.FormatException">Der Wert des JSON-Tokens liegt in einem für eine GUID nicht unterstützten Format vor.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetInt32">
@@ -373,7 +381,7 @@ Die `GetInt32` Methode löst eine Ausnahme aus, wenn der gesamten UTF-8 codierte
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Der JSON-Tokenwert ist kein <see cref="F:System.Text.Json.JsonTokenType.Number" />-Wert.</exception>
-        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Wenn er z.B. eine Dezimalzahl enthält oder in wissenschaftlicher Schreibweise geschrieben ist.
+        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Er enthält z.B. eine Dezimalzahl oder ist in wissenschaftlicher Schreibweise geschrieben.
             
 - oder -
 
@@ -410,7 +418,7 @@ Die `GetInt64` Methode löst eine Ausnahme aus, wenn der gesamten UTF-8 codierte
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Der JSON-Tokenwert ist kein <see cref="F:System.Text.Json.JsonTokenType.Number" />-Wert.</exception>
-        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Wenn er z.B. eine Dezimalzahl enthält oder in wissenschaftlicher Schreibweise geschrieben ist.
+        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Er enthält z.B. eine Dezimalzahl oder ist in wissenschaftlicher Schreibweise geschrieben.
             
 - oder -
 
@@ -473,7 +481,7 @@ Die `GetSingle` Methode löst eine Ausnahme aus, wenn der gesamten UTF-8 codiert
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Der JSON-Tokenwert ist keine Zeichenfolge (d.h. nicht <see cref="F:System.Text.Json.JsonTokenType.String" /> oder <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).
 
-- oder - 
+- oder -
 
 Die JSON-Zeichenfolge enthält ungültige UTF-8-Bytes oder ungültige UTF-16-Ersatzzeichen.</exception>
         <altmember cref="P:System.Text.Json.Utf8JsonReader.TokenType" />
@@ -505,7 +513,7 @@ Die JSON-Zeichenfolge enthält ungültige UTF-8-Bytes oder ungültige UTF-16-Ers
         <returns>Der in einen <see cref="T:System.UInt32" />-Wert analysierte UTF-8 codierte Tokenwert.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Der JSON-Tokenwert ist kein <see cref="F:System.Text.Json.JsonTokenType.Number" />-Wert.</exception>
-        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Wenn er z.B. eine Dezimalzahl enthält oder in wissenschaftlicher Schreibweise geschrieben ist.
+        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Er enthält z.B. eine Dezimalzahl oder ist in wissenschaftlicher Schreibweise geschrieben.
             
 - oder -
 
@@ -539,7 +547,7 @@ Der JSON-Tokenwert stellt eine Zahl dar, die kleiner als <see cref="F:System.UIn
         <returns>Der in einen <see cref="T:System.UInt64" />-Wert analysierte UTF-8 codierte Tokenwert.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.InvalidOperationException">Der JSON-Tokenwert ist kein <see cref="F:System.Text.Json.JsonTokenType.Number" />-Wert.</exception>
-        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Wenn er z.B. eine Dezimalzahl enthält oder in wissenschaftlicher Schreibweise geschrieben ist.
+        <exception cref="T:System.FormatException">Der JSON-Tokenwert hat das falsche numerische Format. Er enthält z.B. eine Dezimalzahl oder ist in wissenschaftlicher Schreibweise geschrieben.
             
 - oder -
 
@@ -621,7 +629,12 @@ Für die Eingabedaten in einem `ReadOnlySpan<byte>`wird in diesem gibt immer `fa
         <remarks>To be added.</remarks>
         <exception cref="T:System.Text.Json.JsonReaderException">Es wurde ein ungültiges JSON-Token gefunden.
             
-- oder - 
+- oder -
+
+Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale Tiefe festgelegt ist.</exception>
+        <exception cref="T:System.Text.Json.JsonException">Ein gemäß JSON RFC ungültiges JSON-Token wurde festgestellt.
+        
+- oder -
 
 Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale Tiefe festgelegt ist.</exception>
       </Docs>
@@ -645,10 +658,17 @@ Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale 
         <Parameter Name="otherUtf8Text" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="otherUtf8Text">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="otherUtf8Text">Der UTF-8-codierte Text für den Vergleich.</param>
+        <summary>Vergleicht den UTF-8-codierten Text mit dem JSON-Tokenwert ohne Escapezeichen in der Quelle und gibt <see langword="true" /> zurück, wenn sie übereinstimmen.</summary>
+        <returns><see langword="true" />, wenn der JSON-Tokenwert in der Quelle mit dem UTF-8-codierten Suchtext übereinstimmt; andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format><![CDATA[
+          
+Die Methode gibt zurück, wenn die suchen Text ungültige UTF-8-Text ist, `false` da Sie ungültige UTF-8 in der JSON-Nutzlast haben können.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Das JSON-Token ist keine Zeichenfolge (d.h., sein Typ ist nicht <see cref="F:System.Text.Json.JsonTokenType.String" /> oder <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="TextEquals">
@@ -670,10 +690,17 @@ Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale 
         <Parameter Name="otherText" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="otherText">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="otherText">Der UTF-16-codierte Text für den Vergleich.</param>
+        <summary>Vergleicht den UTF-16-codierten Text mit dem JSON-Tokenwert ohne Escapezeichen in der Quelle und gibt „True“ zurück, wenn sie übereinstimmen.</summary>
+        <returns><see langword="true" />, wenn der JSON-Tokenwert in der Quelle mit dem UTF-16-codierten Suchtext übereinstimmt; andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format><![CDATA[
+          
+Die Methode gibt zurück, wenn die suchen Text ungültig oder unvollständig UTF-16-Text (z. B. Ersatzzeichen) ist, `false` da dürfen sich nicht in der JSON-Nutzlast ungültige UTF-16.
+            
+            ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Der JSON-Text ist keine Zeichenfolge (sein Typ ist nicht <see cref="F:System.Text.Json.JsonTokenType.String" /> oder <see cref="F:System.Text.Json.JsonTokenType.PropertyName" />).</exception>
       </Docs>
     </Member>
     <Member MemberName="TokenType">
@@ -716,10 +743,11 @@ Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale 
         <Parameter Name="value" Type="System.DateTime" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">Wenn diese Methode zurückgegeben wird, enthält sie den analysierten Wert.</param>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.DateTime" />-Wert.</summary>
+        <returns><see langword="true" />, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich in einen <see cref="T:System.DateTime" />-Wert analysiert werden kann, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetDateTimeOffset">
@@ -741,10 +769,11 @@ Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale 
         <Parameter Name="value" Type="System.DateTimeOffset" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">Wenn diese Methode zurückgegeben wird, enthält sie den analysierten Wert.</param>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.DateTimeOffset" />-Wert.</summary>
+        <returns><see langword="true" />, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich in einen <see cref="T:System.DateTimeOffset" />-Wert analysiert werden kann, andernfalls <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetDecimal">
@@ -820,10 +849,17 @@ Die aktuelle Tiefe übersteigt den rekursiven Grenzwert, der durch die maximale 
         <Parameter Name="value" Type="System.Guid" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">Wenn diese Methode zurückgegeben wird, enthält sie den analysierten Wert.</param>
+        <summary>Liest den nächsten JSON-Tokenwert aus der Quelle und analysiert ihn in einen <see cref="T:System.Guid" />-Wert.</summary>
+        <returns><see langword="true" />, wenn der gesamte UTF-8-codierte Tokenwert erfolgreich in einen <see cref="T:System.Guid" />-Wert analysiert werden kann, andernfalls <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+Diese Methode nur analysiert <xref:System.Guid> Werte mit Bindestrichen und ohne umgebenden Ergänzungen. 
+
+         ]]></format>
+         </remarks>
+         <exception cref="T:System.InvalidOperationException">Der Wert des JSON-Tokens ist kein <see cref="F:System.Text.Json.JsonTokenType.String" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetInt32">
