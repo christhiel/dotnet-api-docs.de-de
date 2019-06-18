@@ -1,0 +1,90 @@
+<Type Name="IAsyncDisposable" FullName="System.IAsyncDisposable">
+  <Metadata><Meta Name="ms.openlocfilehash" Value="82cd5c9467041839fb2a2b2ffffd03ea382f82f6" /><Meta Name="ms.sourcegitcommit" Value="1bb00d2f4343e73ae8d58668f02297a3cf10a4c1" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/14/2019" /><Meta Name="ms.locfileid" Value="67134671" /></Metadata><TypeSignature Language="C#" Value="public interface IAsyncDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IAsyncDisposable" />
+  <TypeSignature Language="DocId" Value="T:System.IAsyncDisposable" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IAsyncDisposable" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IAsyncDisposable" />
+  <TypeSignature Language="F#" Value="type IAsyncDisposable = interface" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>Stellt einen Mechanismus für die asynchrone Freigabe nicht verwalteter Ressourcen bereit.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+In .NET implementieren Klassen, die nicht verwaltete Ressourcen in der Regel besitzen die <xref:System.IDisposable> Schnittstelle, um einen Mechanismus für die Freigabe von nicht verwalteten Ressourcen synchron. Jedoch in einigen Fällen müssen sie ein asynchrones Verfahren zum Freigeben von nicht verwalteter Ressourcen, die zusätzlich zu (oder instead of) zu den synchronen ein. Bereitstellung mit einem solchen Mechanismus ermöglicht den Consumer Dispose für ressourcenintensive Vorgänge ausführen, ohne den Hauptthread einer GUI-Anwendung für einen langen Zeitraum zu blockieren.
+
+Die <xref:System.IAsyncDisposable.DisposeAsync%2A?displayProperty=nameWithType> -Methode dieser Schnittstelle gibt ein <xref:System.Threading.Tasks.ValueTask> den asynchronen Dispose-Vorgang darstellt. Klassen, die nicht verwaltete Ressourcen besitzen diese Methode implementieren, und der Consumer diese Klassen ruft diese Methode für ein Objekt, wenn es nicht mehr benötigt wird.
+
+Die Async-Methoden werden verwendet, in Verbindung mit der `async` und `await` Schlüsselwörter in C# und Visual Basic. Weitere Insformation, finden Sie unter [asynchrone Programmiermodell in der Task C# ](/dotnet/csharp/programming-guide/concepts/async/index) oder [asynchrone Programmierung mit Async und Await (Visual Basic)](/dotnet/visual-basic/programming-guide/concepts/async/).
+
+### <a name="using-an-object-that-implements-iasyncdisposable"></a>Mithilfe eines Objekts, das IAsyncDisposable implementiert.
+
+Wenn Ihre Anwendung ein Objekt verwendet, die implementiert `IAsyncDisposable`, rufen Sie die Objekteigenschaften <xref:System.IAsyncDisposable.DisposeAsync%2A> Implementierung, wenn Sie mit der sie fertig sind. Aufrufen, um sicherzustellen, dass Ressourcen werden freigegeben, selbst bei einer Ausnahme, die <xref:System.IAsyncDisposable.DisposeAsync%2A> Methode innerhalb einer `finally` -Klausel der `try` / `finally` Anweisung. Weitere Informationen zu den `try` / `finally` Muster, finden Sie unter [Try-finally-](~/docs/csharp/language-reference/keywords/try-finally.md) (C#) oder [testen... Catch... Finally-Anweisung](~/docs/visual-basic/language-reference/statements/try-catch-finally-statement.md) (Visual Basic).
+
+### <a name="implementing-iasyncdisposable"></a>Implementieren von IAsyncDisposable   
+    
+Sie implementiert möglicherweise `IAsyncDisposable` in den folgenden Situationen:
+
+- Wenn Sie einen asynchronen Enumerator zu entwickeln, der nicht verwaltete Ressourcen besitzt. Asynchrone Enumeratoren werden verwendet, mit der C# 8.0 Async-Streams-Funktion. Weitere Informationen zu asynchronen Streams, finden Sie unter [Lernprogramm: Generieren und nutzen Sie asynchrone Datenströme mit C# 8.0 und .NET Core 3.0](/dotnet/csharp/tutorials/generate-consume-asynchronous-stream).
+
+- Wenn Ihre Klasse besitzt, nicht verwaltete Ressourcen und freigegeben werden, erfordert einen ressourcenintensive e/a-Vorgang wie die leeren den Inhalt einer Zwischenpuffer in eine Datei oder das Senden eines Pakets über ein Netzwerk eine Verbindung zu schließen.
+
+Verwenden der <xref:System.IAsyncDisposable.DisposeAsync%2A> Methode, um zu den Cleanup erforderlich ist, nach der Verwendung von nicht verwalteten Ressourcen, z. B. Freigabe, Freigabe oder das Zurücksetzen von nicht verwalteten Ressourcen. Weitere Informationen zu nicht verwalteten Ressourcen in .NET finden Sie unter [Bereinigen von nicht verwalteten Ressourcen](/dotnet/standard/garbage-collection/unmanaged).
+ 
+ ]]></format>
+</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="DisposeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask DisposeAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance valuetype System.Threading.Tasks.ValueTask DisposeAsync() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IAsyncDisposable.DisposeAsync" />
+      <MemberSignature Language="VB.NET" Value="Public Function DisposeAsync () As ValueTask" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::ValueTask DisposeAsync();" />
+      <MemberSignature Language="F#" Value="abstract member DisposeAsync : unit -&gt; System.Threading.Tasks.ValueTask" Usage="iAsyncDisposable.DisposeAsync " />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Führt anwendungsspezifische Aufgaben aus, die mit dem asynchronen Freigeben, Zurückgeben oder Zurücksetzen von nicht verwalteten Ressourcen zusammenhängen.</summary>
+        <returns>Eine Aufgabe, die den asynchronen Löschvorgang darstellt.</returns>
+        <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+Verwenden Sie diese Methode, um asynchron zu schließen oder Freigeben von nicht verwalteten Ressourcen wie z. B. Dateien, Streams und Handles frei, die eine Instanz der Klasse, die diese Schnittstelle implementiert. Mit dieser Methode anstelle von <xref:System.IDisposable.Dispose%2A?displayProperty=nameWithType> ermöglicht es Ihnen, ein ressourcenintensiver Dispose-Vorgang ausgeführt wird, ohne den Hauptthread einer GUI-Anwendung für einen langen Zeitraum zu blockieren.
+
+> [!WARNING]
+>  Wenn Sie eine Klasse verwenden, die implementiert die <xref:System.IAsyncDisposable> -Schnittstelle, rufen Sie die `DisposeAsync` Implementierung Sie abschließend mithilfe der Klasse. Weitere Informationen finden Sie im Abschnitt "Verwenden ein Objekt, das IAsyncDisposable implementiert" in der <xref:System.IAsyncDisposable> Thema.
+
+Wenn Sie diese Methode implementieren, stellen Sie sicher, dass alle Ressourcen freigegeben werden reservierten, indem der Aufruf durch die Kapselungshierarchie. Angenommen, ein Objekt weist ein Objekt B, und Objekt B eines Objekts C, klicken Sie dann ein `DisposeAsync` Implementierung muss Aufrufen `DisposeAsync` auf B die aufrufen muss `DisposeAsync` in C. Ein Objekt muss auch aufrufen, die `DisposeAsync` Methode ihrer Basisklasse, wenn die Basisklasse implementiert <xref:System.IAsyncDisposable>.
+
+Wenn ein Objekt des `DisposeAsync` -Methode mehr als einmal aufgerufen wird, wird das Objekt muss ignorieren Sie alle Aufrufe nach der ersten und synchron Zurückgeben einer erfolgreich abgeschlossenen <xref:System.Threading.Tasks.ValueTask>. Das Objekt muss keine Ausnahme ausgelöst, wenn die `DisposeAsync` Methode mehrmals aufgerufen wird. Instanzmethoden außer `DisposeAsync` Auslösen einer <xref:System.ObjectDisposedException> Wenn Ressourcen bereits freigegeben.
+ 
+ ]]></format>
+</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

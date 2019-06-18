@@ -1,5 +1,5 @@
 <Type Name="SignedXml" FullName="System.Security.Cryptography.Xml.SignedXml">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="c1dedadb74e0944ff24d80b31fa09f5fad2c1816" /><Meta Name="ms.sourcegitcommit" Value="f55040f35c19a83c85beb55243330558f6e369be" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/10/2019" /><Meta Name="ms.locfileid" Value="66818114" /></Metadata><TypeSignature Language="C#" Value="public class SignedXml" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="e630aa2ce3476b00ce50bed3c2270f34369059c5" /><Meta Name="ms.sourcegitcommit" Value="6b9d64332f31de312efea785fbb19e4d80f544d5" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/12/2019" /><Meta Name="ms.locfileid" Value="67027255" /></Metadata><TypeSignature Language="C#" Value="public class SignedXml" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit SignedXml extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.Xml.SignedXml" />
   <TypeSignature Language="VB.NET" Value="Public Class SignedXml" />
@@ -27,25 +27,25 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml> Klasse ist die .NET Framework-Implementierung der Spezifikation des World Wide Web Consortium (W3C) [XML Signature Syntax and Processing-Spezifikation](https://www.w3.org/TR/xmldsig-core/), auch bekannt als XMLDSIG (XML-Digitalsignatur).  XMLDSIG ist eine standardbasierte, interoperable Möglichkeit zum Signieren und überprüfen alle oder Teile eines XML-Dokuments oder anderen Daten, die aus einem Uniform Resource Identifier (URI) adressiert werden.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml> Klasse ist die .NET-Implementierung der Spezifikation des World Wide Web Consortium (W3C) [XML Signature Syntax and Processing-Spezifikation](https://www.w3.org/TR/xmldsig-core/), auch bekannt als XMLDSIG (XML-Digitalsignatur). XMLDSIG ist eine standardbasierte, interoperable Möglichkeit zum Signieren und überprüfen alle oder Teile eines XML-Dokuments oder anderen Daten, die aus einem Uniform Resource Identifier (URI) adressiert werden.
   
- Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml> Klasse, wenn Sie freigeben müssen eine standardisierte Möglichkeit der XML-Daten zwischen Anwendungen oder Unternehmen angemeldet.  Alle Daten, die signiert wird, verwenden diese Klasse können von einer entsprechenden Implementierung der W3C-Spezifikation für XMLDSIG überprüft werden.  
+ Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml> Klasse, wenn Sie freigeben müssen eine standardisierte Möglichkeit der XML-Daten zwischen Anwendungen oder Unternehmen angemeldet. Alle Daten, die signiert wird, verwenden diese Klasse können von einer entsprechenden Implementierung der W3C-Spezifikation für XMLDSIG überprüft werden.
   
  Die <xref:System.Security.Cryptography.Xml.SignedXml> Klasse können Sie die folgenden drei Arten von digitalen Signaturen von XML zu erstellen:  
   
 |Signaturtyp|Beschreibung|  
 |--------------------|-----------------|  
 |Eingeschlossene Signatur|Die Signatur befindet sich in der XML-Element, das signiert wird.|  
-|Signatur-Envelope|Der signierte XML-Code befindet sich in der <`Signature`> Element.|  
+|Signatur-Envelope|Der signierte XML-Code befindet sich innerhalb der `<Signature>` Element.|  
 |Interne getrennten Signatur|Die Signatur und das signierte XML-Code sind, im selben Dokument, aber keines der Elemente enthält, die andere.|  
   
  Es gibt auch eine vierte Art der Signatur, die eine externe getrennte Signatur handelt es sich bei den Daten und die Signatur in separaten XML-Dokumenten werden aufgerufen. Externe getrennte Signaturen werden nicht unterstützt, indem die <xref:System.Security.Cryptography.Xml.SignedXml> Klasse.  
   
-## <a name="the-structure-of-an--xml-signature"></a>Die Struktur einer XML-Signatur  
- XMLDSIG erstellt eine <`Signature`>-Element enthält eine digitale Signatur von einem XML-Dokument oder anderen Daten, die aus einem URI adressiert werden.  Die <`Signature`>-Element kann optional enthalten Informationen dazu, wo sich einen Schlüssel, die die Signatur überprüft wird und welcher Kryptografiealgorithmus zum Signieren verwendet wurde. Die grundlegende Struktur ist wie folgt aus:  
+## <a name="the-structure-of-an-xml-signature"></a>Die Struktur einer XML-Signatur  
+
+XMLDSIG erstellt eine `<Signature>` -Element, das enthält eine digitale Signatur von einem XML-Dokument oder anderen Daten, die aus einem URI adressiert werden. Die `<Signature>` -Element kann optional enthalten Informationen dazu, wo sich einen Schlüssel, die die Signatur überprüft wird und welcher Kryptografiealgorithmus zum Signieren verwendet wurde. Die grundlegende Struktur ist wie folgt aus:  
   
-```xml  
-  
+```xml
 <Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">  
     <SignedInfo>  
       <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>  
@@ -59,56 +59,61 @@
       </Reference>  
     </SignedInfo>  
     <SignatureValue>AnotherBase64EncodedValue===</SignatureValue>  
-  </Signature>  
-  
+</Signature>
 ```  
   
- Die wichtigsten Teile der Struktur sind:  
+Die wichtigsten Teile der Struktur sind:  
   
- Die <`CanonicalizationMethod`>-Element  
- Gibt an, die Regeln zum Umschreiben der `Signature` Element aus einem XML/Text in Bytes für die signaturüberprüfung. Der Standardwert in .NET Framework ist https://www.w3.org/TR/2001/REC-xml-c14n-20010315, einen vertrauenswürdigen Algorithmus identifiziert. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedInfo.CanonicalizationMethod%2A?displayProperty=nameWithType> Eigenschaft.  
+- Das `<CanonicalizationMethod>`-Element
+
+    Gibt an, die Regeln zum Umschreiben der `Signature` Element aus einem XML/Text in Bytes für die signaturüberprüfung. Der Standardwert in .NET ist <http://www.w3.org/TR/2001/REC-xml-c14n-20010315>, einen vertrauenswürdigen Algorithmus identifiziert. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedInfo.CanonicalizationMethod%2A?displayProperty=nameWithType> Eigenschaft.  
   
- Die <`SignatureMethod`>-Element  
- Gibt den Algorithmus, der für Signaturerzeugung und Überprüfung, die auf angewendet wurde, verwendet die <`Signature`>, das den Wert in erstellt <`SignatureValue`>. Im Beispiel oben, den Wert http://www.w3.org/2000/09/xmldsig#rsa-sha1 identifiziert eine RSA-PKCS1-SHA-1-Signatur. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> Eigenschaft.  
+- Das `<SignatureMethod>`-Element
+
+   Gibt den Algorithmus, der für Signaturerzeugung und Überprüfung, die auf angewendet wurde, verwendet der `<Signature>` , das den Wert in erstellt `<SignatureValue>`. Im vorherigen Beispiel den Wert <http://www.w3.org/2000/09/xmldsig#rsa-sha1> identifiziert eine RSA-PKCS1-SHA-1-Signatur. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> Eigenschaft.  
   
- Die <`SignatureValue`>-Element  
- Gibt an, die kryptografische Signatur für die <`Signature`> Element. Wenn diese Signatur überprüft nicht, klicken Sie dann einen Teil der <`Signature`>-Block manipuliert wurde, und das Dokument wird als ungültig angesehen. Solange die <`CanonicalizationMethod`> Wert vertrauenswürdig ist, ist dieser Wert hoch gegen Manipulationen geschützt. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureValue%2A> Eigenschaft.  
+- Das `<SignatureValue>`-Element
+
+   Gibt an, die kryptografische Signatur für die `<Signature>` Element. Wenn Sie diese Signatur überprüft nicht, klicken Sie dann einen Teil der `<Signature>` Block manipuliert wurde, und das Dokument wird als ungültig angesehen. Solange die `<CanonicalizationMethod>` Wert vertrauenswürdig ist, ist dieser Wert hoch gegen Manipulationen geschützt. Dieses Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureValue%2A> Eigenschaft.  
   
- Die `URI` -Attribut der <`Reference`>-Element  
- Gibt ein Objekt mit einem URI-Verweis an. Dieses Attribut wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.Reference.Uri%2A?displayProperty=nameWithType> Eigenschaft.  
+- Die `URI` Attribut der `<Reference>` Element  
+
+   Gibt ein Objekt mit einem URI-Verweis an. Dieses Attribut wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.Reference.Uri%2A?displayProperty=nameWithType> Eigenschaft.  
   
--   Nicht angeben der `URI` -Attribut, d. h. Festlegen der <xref:System.Security.Cryptography.Xml.Reference.Uri%2A?displayProperty=nameWithType> Eigenschaft `null`, bedeutet, dass die empfangende Anwendung wissen, die Identität des Objekts erwartet wird. In den meisten Fällen eine `null` URI führt eine Ausnahme ausgelöst wird. Verwenden Sie keine `null` URI, es sei denn, Ihre Anwendung mit einem Protokoll Interoperiert erforderlich sind.  
+   - Nicht angeben der `URI` -Attribut, d. h. Festlegen der <xref:System.Security.Cryptography.Xml.Reference.Uri%2A?displayProperty=nameWithType> Eigenschaft `null`, bedeutet, dass die empfangende Anwendung wissen, die Identität des Objekts erwartet wird. In den meisten Fällen eine `null` URI führt eine Ausnahme ausgelöst wird. Verwenden Sie keine `null` URI, es sei denn, Ihre Anwendung mit einem Protokoll Interoperiert erforderlich sind.  
   
--   Festlegen der `URI` Attribut auf eine leere Zeichenfolge gibt an, dass das Stammelement des Dokuments signiert wird, eine Form der eingeschlossenen Signatur.  
+   - Festlegen der `URI` Attribut auf eine leere Zeichenfolge gibt an, dass das Stammelement des Dokuments signiert wird, eine Form der eingeschlossenen Signatur.  
   
--   Wenn der Wert des `URI` Attribut mit # beginnt, und klicken Sie dann der Wert muss auf ein Element im aktuellen Dokument aufgelöst. Dieses Formular kann mit den unterstützten Signaturtypen (Signaturtransformation, Verschlüsselungsaufgaben Signatur oder der internen getrennten Signatur) verwendet werden.  
+   - Wenn der Wert des `URI` Attribut mit # beginnt, und klicken Sie dann der Wert muss auf ein Element im aktuellen Dokument aufgelöst. Dieses Formular kann mit den unterstützten Signaturtypen (Signaturtransformation, Verschlüsselungsaufgaben Signatur oder der internen getrennten Signatur) verwendet werden.  
   
--   Sonstige gilt eine Signatur für die externe Ressource, die getrennt, und wird nicht von der <xref:System.Security.Cryptography.Xml.SignedXml> Klasse.  
+   - Sonstige gilt eine Signatur für die externe Ressource, die getrennt, und wird nicht von der <xref:System.Security.Cryptography.Xml.SignedXml> Klasse.  
   
- Die <`Transforms`>-Element  
- Enthält eine geordnete Liste von <`Transform`>-Elemente, die beschreiben, wie der Signaturgeber dem Datenobjekt, das abgerufen wurde Digest angewendet. Ein Transformationsalgorithmus ist ähnlich für die Kanonisierungsmethode, aber anstelle der Umschreiben der <`Signature`>-Element, es schreibt den Inhalt von identifiziert die `URI` Attribut des der <`Reference`> Element. Die <`Transforms`>-Element wird durch dargestellt die <xref:System.Security.Cryptography.Xml.TransformChain> Klasse.  
+- Das `<Transforms>`-Element  
+
+   Enthält eine geordnete Liste von `<Transform>` Elemente, die beschreiben, wie der Signaturgeber dem Datenobjekt, das abgerufen wurde Digest angewendet. Ein Transformationsalgorithmus ist ähnlich für die Kanonisierungsmethode, aber anstelle der Umschreiben der `<Signature>` -Element, es schreibt den Inhalt von identifiziert die `URI` Attribut des der `<Reference>` Element. Die `<Transforms>` Element wird dargestellt, durch die <xref:System.Security.Cryptography.Xml.TransformChain> Klasse.  
   
--   Jeder Transformationsalgorithmus wird definiert, dass Sie XML (ein XPath-Knotensatz) oder Bytes als Eingabe erwartet. Wenn das Format der aktuellen Daten aus der Transformation eingabeanforderungen abweicht, werden Konvertierungsregeln angewendet.  
+   - Jeder Transformationsalgorithmus wird definiert, dass Sie XML (ein XPath-Knotensatz) oder Bytes als Eingabe erwartet. Wenn das Format der aktuellen Daten aus der Transformation eingabeanforderungen abweicht, werden Konvertierungsregeln angewendet.  
   
--   Jeder Transformationsalgorithmus wird definiert, XML oder Bytes als Ausgabe erzeugt.  
+   - Jeder Transformationsalgorithmus wird definiert, XML oder Bytes als Ausgabe erzeugt.  
   
--   Wenn die Ausgabe der letzten Transformationsalgorithmus in Bytes nicht definiert ist (oder keine Transformationen angegeben wurden), die [Canonicalization-Methode](https://www.w3.org/TR/2001/REC-xml-c14n-20010315) als eine implizite-Transformation verwendet wird (selbst wenn in ein anderen Algorithmus angegeben wurde die <`CanonicalizationMethod`> Element).  
+   - Wenn die Ausgabe der letzten Transformationsalgorithmus in Bytes nicht definiert ist (oder keine Transformationen angegeben wurden), und klicken Sie dann die [Canonicalization-Methode](https://www.w3.org/TR/2001/REC-xml-c14n-20010315) als eine implizite-Transformation verwendet wird (selbst wenn ein anderer Algorithmus in der angegebenwurde`<CanonicalizationMethod>`Element).  
   
--   Der Wert http://www.w3.org/2000/09/xmldsig#enveloped-signature für die Transformation Algorithmus eine Regel, die als entfernen interpretiert wird, kodiert die <`Signature`>-Element aus dem Dokument. Andernfalls wird eine Verifizierung einer eingeschlossenen Signatur wird das Dokument, einschließlich der Signatur, digest, aber der Signaturgeber würde haben Digest angewendet das Dokument vor die Signatur angewendet wurde, führt zu unterschiedlichen Antworten.  
-  
- Die <`DigestMethod`>-Element  
- Identifiziert die Digest (kryptografischen Hash)-Methode, die auf den transformierten Inhalt identifizierte Anwenden der `URI` -Attribut der <`Reference`> Element. Wird dies durch die <xref:System.Security.Cryptography.Xml.Reference.DigestMethod%2A?displayProperty=nameWithType> Eigenschaft.  
+   - Der Wert <http://www.w3.org/2000/09/xmldsig#enveloped-signature> für die Transformation Algorithmus eine Regel, die als entfernen interpretiert wird, kodiert die `<Signature>` Element aus dem Dokument. Andernfalls wird eine Verifizierung einer eingeschlossenen Signatur wird das Dokument, einschließlich der Signatur, digest, aber der Signaturgeber würde haben Digest angewendet das Dokument vor die Signatur angewendet wurde, führt zu unterschiedlichen Antworten.  
+
+- Das `<DigestMethod>`-Element
+ 
+   Identifiziert die Digest (kryptografischen Hash)-Methode, die auf den transformierten Inhalt identifizierte Anwenden der `URI` Attribut der `<Reference>` Element. Wird dies durch die <xref:System.Security.Cryptography.Xml.Reference.DigestMethod%2A?displayProperty=nameWithType> Eigenschaft.  
   
 ## <a name="choosing-a-canonicalization-method"></a>Auswählen einer Kanonisierungsmethode  
- Es sei denn, die mit einer Spezifikation zu Interoperabilität erfordert die Verwendung eines anderen Werts, es wird empfohlen, dass Sie die Standardmethode für die Kanonisierung in .NET Framework verwenden, in dem die C14N-XML 1.0-Algorithmus, dessen Wert https://www.w3.org/TR/2001/REC-xml-c14n-20010315. Der C14N-XML 1.0-Algorithmus ist erforderlich, um die von der alle Implementierungen von XMLDSIG, unterstützt werden müssen, besonders, da es sich um eine implizite letzte Transformation angewendet ist.  
+ Es sei denn, die mit einer Spezifikation zu Interoperabilität erfordert die Verwendung eines anderen Werts, wir empfehlen die Verwendung der standardmäßigen .NET Kanonisierung-Methode, in dem die C14N-XML 1.0-Algorithmus, dessen Wert <http://www.w3.org/TR/2001/REC-xml-c14n-20010315>. Der C14N-XML 1.0-Algorithmus ist erforderlich, um die von der alle Implementierungen von XMLDSIG, unterstützt werden müssen, besonders, da es sich um eine implizite letzte Transformation angewendet ist.  
   
- Es gibt Versionen kanonisierungsalgorithmen beibehalten Kommentare unterstützt. Kommentar beibehalten Kanonisierung Methoden werden nicht empfohlen, da sie die "sign" Anzeige "-Prinzip verstoßen. D. h. die Kommentare in einer <`Signature`> Element nicht ändern, in der Verarbeitungslogik für die Signatur wie die ausgeführt wird, lediglich welche ist der Signaturwert. Machen zusammen mit einem schwachen Signatur-Algorithmus, können die Kommentare enthalten können sich ein Angreifer unnötige Freiheit gibt, einen Hashkonflikt erzwingen, dass ein manipulierte Dokument legitime angezeigt werden.  In .NET Framework werden nur integrierte Canonicalizers standardmäßig unterstützt. Um zusätzliche oder benutzerdefinierte Canonicalizers zu unterstützen, finden Sie unter den <xref:System.Security.Cryptography.Xml.SignedXml.SafeCanonicalizationMethods%2A> Eigenschaft. Wenn das Dokument eine Kanonisierungsmethode, die nicht in der Auflistung verwendet, dargestellt durch die <xref:System.Security.Cryptography.Xml.SignedXml.SafeCanonicalizationMethods%2A> -Eigenschaft, die <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> Methode zurück `false`.  
+ Es gibt Versionen kanonisierungsalgorithmen beibehalten Kommentare unterstützt. Kommentar beibehalten Kanonisierung Methoden werden nicht empfohlen, da sie die "sign" Anzeige "-Prinzip verstoßen. D. h. die Kommentare in einer `<Signature>` Element nicht ändern, in der Verarbeitungslogik für die Signatur wie die ausgeführt wird, lediglich welche ist der Signaturwert. Machen zusammen mit einem schwachen Signatur-Algorithmus, können die Kommentare enthalten können sich ein Angreifer unnötige Freiheit gibt, einen Hashkonflikt erzwingen, dass ein manipulierte Dokument legitime angezeigt werden.  In .NET Framework werden nur integrierte Canonicalizers standardmäßig unterstützt. Um zusätzliche oder benutzerdefinierte Canonicalizers zu unterstützen, finden Sie unter den <xref:System.Security.Cryptography.Xml.SignedXml.SafeCanonicalizationMethods%2A> Eigenschaft. Wenn das Dokument eine Kanonisierungsmethode, die nicht in der Auflistung verwendet, dargestellt durch die <xref:System.Security.Cryptography.Xml.SignedXml.SafeCanonicalizationMethods%2A> -Eigenschaft, die <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> Methode zurück `false`.  
   
 > [!NOTE]
 >  Entfernen einer extrem defensive Anwendung kann alle Werte, die es keine Signaturgeber erwartet aus der <xref:System.Security.Cryptography.Xml.SignedXml.SafeCanonicalizationMethods%2A> Auflistung.  
   
 ## <a name="are-the-reference-values-safe-from-tampering"></a>Sind die Referenzwerte vor Manipulation geschützt?  
- Ja, die <`Reference`> Werte gleichzeitig vor Manipulation geschützt sind.  Überprüft, ob .NET Framework die <`SignatureValue`> Berechnung vor der Verarbeitung eines der <`Reference`> Werte und deren zugeordnete transformiert und wird einem frühen Zeitpunkt abgebrochen, um potenziell schädliche verarbeitungsanweisungen zu vermeiden.  
+ Ja, die `<Reference>` Werte gleichzeitig vor Manipulation geschützt sind. Überprüft, ob .NET die `<SignatureValue>` Berechnung vor der Verarbeitung eines der `<Reference>` Werte und deren zugeordnete transformiert und wird einem frühen Zeitpunkt abgebrochen, um potenziell schädliche verarbeitungsanweisungen zu vermeiden.  
   
 ## <a name="choosing-the-elements-to-sign"></a>Auswählen der zu signierende Elemente an  
  Es wird empfohlen, dass Sie den Wert der verwenden "" für die `URI` Attribut (oder legen Sie die <xref:System.Security.Cryptography.Xml.Reference.Uri%2A> Eigenschaft auf eine leere Zeichenfolge), sofern möglich. Dies bedeutet, dass das gesamte Dokument gilt für die Digest-Berechnung, was bedeutet, dass das gesamte Dokument vor Manipulationen geschützt wird.  
@@ -120,20 +125,20 @@
  Wenn Sie Dokumente akzeptieren, die nur teilweise geschützt werden müssen und Sie sicherstellen, dass Sie den gleichen Inhalt lesen möchten, die die Signatur geschützt, verwenden Sie die <xref:System.Security.Cryptography.Xml.SignedXml.GetIdElement%2A> Methode.  
   
 ## <a name="security-considerations-about-the-keyinfo-element"></a>Überlegungen zur Sicherheit über das KeyInfo-element  
- Die Daten in der optionalen <`KeyInfo`> Element (d. h. die <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> Eigenschaft), enthält einen Schlüssel zum Überprüfen der Signatur, sollte nicht als vertrauenswürdig eingestuft.  
+ Die Daten in der optionalen `<KeyInfo>` Element (d. h. die <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> Eigenschaft), enthält einen Schlüssel zum Überprüfen der Signatur, sollte nicht als vertrauenswürdig eingestuft.  
   
  In bestimmten, bei der <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> Wert stellt einen bare RSA, DSA oder ECDSA öffentliche Schlüssel dar, das Dokument konnte manipuliert wurden, trotz der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> Methode, die meldet, dass die Signatur gültig ist.  Dies kann vorkommen, da die Entität, die dies die Manipulationen einfach einen neuen Schlüssel generieren und das manipulierte Dokument mit diesem neuen Schlüssel erneut signieren. Also, es sei denn, Ihre Anwendung überprüft, ob der öffentliche Schlüssel dem erwarteten Wert ist, das Dokument behandelt werden sollen, als ob sie manipuliert wurden. Dies erfordert, dass Ihre Anwendung untersuchen Sie den öffentlichen Schlüssel in das Dokument eingebettet und bestätigen Sie es mit einer Liste mit bekannten Werten für den Dokumentenkontext. Wenn das Dokument so interpretiert werden konnte, von einem bekannten Benutzer ausgestellt werden, würden Sie z. B. den Schlüssel für eine Liste mit bekannten Schlüsseln, die von diesem Benutzer verwendeten überprüfen.  
   
  Sie können auch überprüfen Sie die Schlüssel nach der Verarbeitung des Dokuments mithilfe der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey%2A> Methode anstelle der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> Methode. Aber für die optimale Sicherheit, Sie sollten überprüfen Sie die Schlüssel im voraus.  
   
- Klicken Sie Alternativ sollten Sie versuchen des Benutzers öffentlichen Schlüssel registriert, anstatt lesen, was ist in der <`KeyInfo`> Element.  
+ Klicken Sie Alternativ sollten Sie versuchen des Benutzers öffentlichen Schlüssel registriert, anstatt lesen, was ist in der `<KeyInfo>` Element.  
   
 ## <a name="security-considerations-about-the-x509data-element"></a>Überlegungen zur Sicherheit über das X509Data-element  
- Der optionale <`X509Data`>-Element ist ein untergeordnetes Element eines der <`KeyInfo`> Element und enthält eine oder mehrere X509 Zertifikate oder IDs für X509 Zertifikate. Die Daten in der <`X509Data`>-Element auch sollte nicht grundsätzlich vertrauenswürdig.  
+ Der optionale `<X509Data>` Element ist ein untergeordnetes Element des der `<KeyInfo>` Element und enthält eine oder mehrere X509 Zertifikate oder IDs für X509 Zertifikate. Die Daten in die `<X509Data>` Element sollte auch nicht grundsätzlich vertrauenswürdig.  
   
- Beim Überprüfen eines Dokuments mit den eingebetteten <`X509Data`>-Element, das .NET Framework überprüft lediglich, ob die Daten in eine X509 aufgelöst wird Zertifikat, dessen öffentlicher Schlüssel wurde erfolgreich zum Überprüfen der Signatur des Dokuments verwendet werden kann. Im Gegensatz zum Aufrufen der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> -Methode mit der `verifySignatureOnly` Parametersatz zu `false`, wird keine sperrüberprüfung ausgeführt, wird keine Vertrauenskette überprüft und kein Ablaufdatum wird überprüft. Auch wenn Ihre Anwendung das Zertifikat selbst extrahiert und übergibt es an der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> -Methode mit der `verifySignatureOnly` Parametersatz zu `false`, d. h. immer noch nicht über ausreichende Überprüfung Dokument Manipulationen zu verhindern. Das Zertifikat muss dennoch verifiziert werden, als geeignet für das Dokument, das signiert wird.  
+ Beim Überprüfen eines Dokuments mit den eingebetteten `<X509Data>` Element .NET überprüft lediglich, ob die Daten in eine X509 aufgelöst wird Zertifikat, dessen öffentlicher Schlüssel wurde erfolgreich zum Überprüfen der Signatur des Dokuments verwendet werden kann. Im Gegensatz zum Aufrufen der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> -Methode mit der `verifySignatureOnly` Parametersatz zu `false`, wird keine sperrüberprüfung ausgeführt, wird keine Vertrauenskette überprüft und kein Ablaufdatum wird überprüft. Auch wenn Ihre Anwendung das Zertifikat selbst extrahiert und übergibt es an der <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> -Methode mit der `verifySignatureOnly` Parametersatz zu `false`, d. h. immer noch nicht über ausreichende Überprüfung Dokument Manipulationen zu verhindern. Das Zertifikat muss dennoch verifiziert werden, als geeignet für das Dokument, das signiert wird.  
   
- Verwenden ein eingebettetes Signaturzertifikat bieten nützliche Schlüsselrotation-Strategien, gibt an, ob in der <`X509Data`> Abschnitt oder im Inhalt Dokuments. Bei diesem Ansatz sollte eine Anwendung das Zertifikat manuell zu extrahieren und Überprüfung ähnelt:  
+ Verwenden ein eingebettetes Signaturzertifikat bieten nützliche Schlüsselrotation-Strategien, gibt an, ob in der `<X509Data>` Abschnitt oder im Inhalt Dokuments. Bei diesem Ansatz sollte eine Anwendung das Zertifikat manuell zu extrahieren und Überprüfung ähnelt:  
   
 -   Das Zertifikat wurde direkt oder über eine Kette von einer Zertifizierungsstelle (Certificate Authority, CA) ausgestellt, dessen öffentliches Zertifikat in der Anwendung eingebettet ist.  
   
@@ -146,9 +151,9 @@
 -   Der Betreff des Zertifikats wird geprüft, ob für das aktuelle Dokument.  
   
 ## <a name="choosing-the-transform-algorithm"></a>Der Transformationsalgorithmus auswählen  
- Wenn Sie eine Interaktion mit einer Spezifikation sind die spezifischen Werte (z. B. XrML) vorgegeben ist, müssen Sie die Spezifikation entsprechen.  Wenn Sie eine eingeschlossene Signatur haben (z. B. beim Signieren des gesamten Dokuments), verwenden, müssen Sie http://www.w3.org/2000/09/xmldsig#enveloped-signature (dargestellt durch die <xref:System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform> Klasse). Sie können auch die implizite C14N-XML-Transformation angeben, aber es ist nicht erforderlich.  Für eine Signatur umschließenden oder getrennt sind keine Transformationen erforderlich. Die implizite C14N-XML-Transformation sorgt für alles.  
+ Wenn Sie eine Interaktion mit einer Spezifikation sind die spezifischen Werte (z. B. XrML) vorgegeben ist, müssen Sie die Spezifikation entsprechen. Wenn Sie eine eingeschlossene Signatur haben (z. B. beim Signieren des gesamten Dokuments), verwenden, müssen Sie <http://www.w3.org/2000/09/xmldsig#enveloped-signature> (dargestellt durch die <xref:System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform> Klasse). Sie können auch die implizite C14N-XML-Transformation angeben, aber es ist nicht erforderlich.  Für eine Signatur umschließenden oder getrennt sind keine Transformationen erforderlich. Die implizite C14N-XML-Transformation sorgt für alles.  
   
- Mit der Sicherheit aktualisiert eingeführt, durch die [Microsoft Security Bulletin MS16-035](https://docs.microsoft.com/security-updates/securitybulletins/2016/ms16-035), .NET Framework verfügt über eingeschränkte, was transformiert werden können, das mit nicht vertrauenswürdigen Transformationen verursachtwirdstandardmäßigbeiderÜberprüfungvonDokumentverwendet<xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A>zurückzugebenden immer `false`. Insbesondere werden Transformationen, die zusätzliche Eingabe (angegeben als untergeordnete Elemente in der XML-Code) erfordern nicht mehr aufgrund ihrer Anfälligkeit Missbrauch durch böswillige Benutzer zulässig. Das W3C empfiehlt, vermeiden die XPath und XSLT-Transformationen, die die zwei wichtigsten Transformationen, die diese Einschränkungen betroffen sind.  
+ Mit der Sicherheit aktualisiert eingeführt, durch die [Microsoft Security Bulletin MS16-035](https://docs.microsoft.com/security-updates/securitybulletins/2016/ms16-035), .NET verfügt über eingeschränkte, was transformiert werden können, das mit nicht vertrauenswürdigen Transformationen, wodurch standardmäßig bei der Überprüfung von Dokument verwendet <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature%2A> um immer zurückgeben `false`. Insbesondere werden Transformationen, die zusätzliche Eingabe (angegeben als untergeordnete Elemente in der XML-Code) erfordern nicht mehr aufgrund ihrer Anfälligkeit Missbrauch durch böswillige Benutzer zulässig. Das W3C empfiehlt, vermeiden die XPath und XSLT-Transformationen, die die zwei wichtigsten Transformationen, die diese Einschränkungen betroffen sind.  
   
 ## <a name="the-problem-with-external-references"></a>Das Problem mit externen Referenzen  
  Wenn eine Anwendung, dass externe Verweise für den aktuellen Kontext geeignet scheint nicht überprüft wird, können sie auf Arten missbraucht werden, die für viele Sicherheitsrisiken (einschließlich Informationen zu Denial of Service, Distributed Reflektion Denial of Service, bereitstellen Offenlegung von Signatur umgehen und Codeausführung von Remotestandorten). Selbst würde eine Anwendung auf den externen Verweis URI zu überprüfen, es bleibt ein Problem der Ressource zweimal geladen werden: sobald beim Ihrer Anwendung lesen, und sobald beim <xref:System.Security.Cryptography.Xml.SignedXml> wird gelesen. Da es keine Garantie ist, dass die Anwendung Lese- und Dokument überprüfen, ob Schritte denselben Inhalt aufweisen, bietet die Signatur nicht die Vertrauenswürdigkeit.  
@@ -350,7 +355,7 @@ Der <paramref name="document" />-Parameter enthält eine NULL-<see cref="P:Syste
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.AddObject%2A> Methode fügt ein <`Object`> Element, das ein Objekt, das zu signierende dargestellt die <`Signature`> eine digitale Signatur von XML-Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.AddObject%2A> Methode fügt ein `<Object>` Element, das ein Objekt, das zu signierende dargestellt die `<Signature>` eine digitale Signatur von XML-Element.  
   
  Die <xref:System.Security.Cryptography.Xml.SignedXml.AddObject%2A> Methode ruft intern die <xref:System.Security.Cryptography.Xml.Signature.AddObject%2A> Methode der <xref:System.Security.Cryptography.Xml.Signature> -Objekt gekapselten der <xref:System.Security.Cryptography.Xml.SignedXml> Objekt.  Sie können auch Hinzufügen einer <xref:System.Security.Cryptography.Xml.DataObject> Objekt durch den direkten Aufruf der <xref:System.Security.Cryptography.Xml.Signature.AddObject%2A> Methode aus der <xref:System.Security.Cryptography.Xml.SignedXml.Signature%2A> Eigenschaft.  
   
@@ -401,7 +406,7 @@ Der <paramref name="document" />-Parameter enthält eine NULL-<see cref="P:Syste
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.AddReference%2A> Methode fügt ein <`Reference`>-Element der <xref:System.Security.Cryptography.Xml.SignedXml> -Objekt, das eine Digest-Methode, die Digest-Wert und die Transformation zum Erstellen einer digitalen Signatur beschreibt.  Die <`Reference`>-Element ist ein untergeordnetes Element von der <`SignedInfo`> Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.AddReference%2A> Methode fügt eine `<Reference>` Element, das <xref:System.Security.Cryptography.Xml.SignedXml> -Objekt, das eine Digest-Methode, die Digest-Wert und die Transformation zum Erstellen einer digitalen Signatur beschreibt.  Die `<Reference>` Element ist ein untergeordnetes Element von der `<SignedInfo>` Element.  
   
  Die <xref:System.Security.Cryptography.Xml.SignedXml.AddReference%2A> Methode ruft intern die <xref:System.Security.Cryptography.Xml.SignedInfo.AddReference%2A> Methode der <xref:System.Security.Cryptography.Xml.SignedInfo> -Objekt gekapselten der <xref:System.Security.Cryptography.Xml.SignedXml> Objekt.  Sie können auch Hinzufügen einer <xref:System.Security.Cryptography.Xml.Reference> Objekt durch den direkten Aufruf der <xref:System.Security.Cryptography.Xml.SignedInfo.AddReference%2A> Methode aus der <xref:System.Security.Cryptography.Xml.SignedXml.SignedInfo%2A> Eigenschaft.  
   
@@ -1051,7 +1056,7 @@ Die <see cref="P:System.Security.Cryptography.Xml.SignedXml.SignatureValue" />-E
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> Eigenschaft gibt die <`KeyInfo`> Element eines XML-Signatur mithilfe einer <xref:System.Security.Cryptography.Xml.KeyInfo> Objekt in der Eigenschaft.  Die <`KeyInfo`>-Element ist ein untergeordnetes Element von der <`Signature`> Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> steht die `<KeyInfo>` Element eines XML-Signatur mithilfe einer <xref:System.Security.Cryptography.Xml.KeyInfo> Objekt in der Eigenschaft.  Die `<KeyInfo>` Element ist ein untergeordnetes Element von der `<Signature>` Element.  
   
  Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo%2A> Eigenschaft zum Einbetten für Schlüssel relevante Informationen, die zur Identifizierung den Schlüssel für das Validieren eines XML-Dokuments erforderlichen Verwendung vorgesehen.  
   
@@ -1285,7 +1290,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.Signature%2A> Eigenschaft gibt die <`Signature`> Element eines XML-Signatur mithilfe einer <xref:System.Security.Cryptography.Xml.Signature> Objekt in der Eigenschaft.  Die <`Signature`>-Element ist das Stammelement, das zum Erstellen von XML-Signatur und Überprüfung.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.Signature%2A> steht die `<Signature>` Element eines XML-Signatur mithilfe einer <xref:System.Security.Cryptography.Xml.Signature> Objekt in der Eigenschaft.  Die `<Signature>` Element ist das Stammelement, das zum Erstellen von XML-Signatur und Überprüfung.  
   
  Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.Signature%2A> Eigenschaft zum Abrufen der <xref:System.Security.Cryptography.Xml.Signature> Objekt, das verwendet wird, indem die <xref:System.Security.Cryptography.Xml.SignedXml> Objekt.  
   
@@ -1409,9 +1414,9 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> Eigenschaft gibt die <`SignatureMethod`> Element eine digitale Signatur mit einer Uniform Resource Identifier (URI)-Zeichenfolge, die in der Eigenschaft enthalten. Die <`SignatureMethod`>-Element ist ein untergeordnetes Element von der <`SignedInfo`> Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> steht die `<SignatureMethod>` eine digitale Signatur mit einer Uniform Resource Identifier (URI)-Zeichenfolge, die in der Eigenschaft enthaltenen Element. Die `<SignatureMethod>` Element ist ein untergeordnetes Element von der `<SignedInfo>` Element.  
   
- Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> Eigenschaft zum Abrufen der <`SignatureMethod`> URI verwendet wird, indem die <xref:System.Security.Cryptography.Xml.SignedXml> Objekt. Diese Eigenschaft ist schreibgeschützt. Informationen zum programmgesteuerten Angeben eines URI für die <`SignatureMethod`>-Element finden Sie unter der <xref:System.Security.Cryptography.Xml.SignedInfo.SignatureMethod%2A> Eigenschaft.  
+ Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.SignatureMethod%2A> Eigenschaft zum Abrufen der `<SignatureMethod>` URI verwendet wird, indem die <xref:System.Security.Cryptography.Xml.SignedXml> Objekt. Diese Eigenschaft ist schreibgeschützt. Weitere Informationen zum programmgesteuerten angeben einen URI für die `<SignatureMethod>` Element finden Sie unter der <xref:System.Security.Cryptography.Xml.SignedInfo.SignatureMethod%2A> Eigenschaft.  
   
  Weitere Informationen zu den `<SignatureMethod>` Element finden Sie unter den [XMLDSIG-Spezifikation](https://www.w3.org/TR/xmldsig-core/).  
   
@@ -1449,7 +1454,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureValue%2A> Eigenschaft gibt die <`SignatureValue`> Element eine digitale Signatur mit einem Array von Bytes, die in der Eigenschaft enthalten.  Die <`SignatureValue`>-Element ist ein untergeordnetes Element von der <`Signature>` Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.SignatureValue%2A> steht die `<SignatureValue>` eine digitale Signatur mit einem Array von Bytes, die in der Eigenschaft enthaltenen Element.  Die `<SignatureValue>` Element ist ein untergeordnetes Element von der `<Signature>` Element.  
   
  Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.SignatureValue%2A> Eigenschaft zum Abrufen des Werts der digitalen Signatur.  Diese Eigenschaft wird automatisch aufgefüllt, wenn Sie einen erfolgreichen Aufruf der <xref:System.Security.Cryptography.Xml.SignedXml.ComputeSignature%2A> Methode.  
   
@@ -1489,7 +1494,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Die <xref:System.Security.Cryptography.Xml.SignedXml.SignedInfo%2A> Eigenschaft gibt die <`SignedInfo`> Element eine digitale Signatur mit einem Array von Bytes, die in der Eigenschaft enthalten.  Die <`SignedInfo`>-Element ist ein untergeordnetes Element von der <`Signature>` Element.  
+ Die <xref:System.Security.Cryptography.Xml.SignedXml.SignedInfo%2A> steht die `<SignedInfo>` eine digitale Signatur mit einem Array von Bytes, die in der Eigenschaft enthaltenen Element.  Die `<SignedInfo>` Element ist ein untergeordnetes Element von der `<Signature>` Element.  
   
  Verwenden der <xref:System.Security.Cryptography.Xml.SignedXml.SignedInfo%2A> Eigenschaft zum Abrufen der <xref:System.Security.Cryptography.Xml.SignedInfo> -Objekt, das verwendet wird die <xref:System.Security.Cryptography.Xml.SignedXml> Objekt, um eine digitale Signatur zu erstellen.  
   
@@ -1613,11 +1618,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDecryptionTransformUrl> Feld "http://www.w3.org/2002/07/decrypt#XML".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDecryptionTransformUrl> Feld <http://www.w3.org/2002/07/decrypt#XML>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2002/07/decrypt#XML.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2002/07/decrypt#XML).  
   
  ]]></format>
         </remarks>
@@ -1651,13 +1656,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigBase64TransformUrl> Feld "http://www.w3.org/2000/09/xmldsig#base64".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigBase64TransformUrl> Feld <http://www.w3.org/2000/09/xmldsig#base64>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigBase64Transform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigBase64TransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#base64.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig#base64).  
   
    
   
@@ -1700,7 +1705,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigC14NTransformUrl> Feld `http://www.w3.org/TR/2001/REC-xml-c14n-20010315`.  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigC14NTransformUrl> Feld <http://www.w3.org/TR/2001/REC-xml-c14n-20010315>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
@@ -1751,7 +1756,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigC14NWithCommentsTransformUrl> Feld `http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments`.  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigC14NWithCommentsTransformUrl> Feld <http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
@@ -1794,7 +1799,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigCanonicalizationUrl> Feld `http://www.w3.org/TR/2001/REC-xml-c14n-20010315`.  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigCanonicalizationUrl> Feld <http://www.w3.org/TR/2001/REC-xml-c14n-20010315>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
@@ -1837,7 +1842,7 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigCanonicalizationWithCommentsUrl> Feld `http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments`.  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigCanonicalizationWithCommentsUrl> Feld <http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
@@ -1880,11 +1885,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigDSAUrl> Feld "http://www.w3.org/2000/09/xmldsig#dsa-sha1".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigDSAUrl> Feld <http://www.w3.org/2000/09/xmldsig#dsa-sha1>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#dsa-sha1.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig#dsa-sha1).  
   
  ]]></format>
         </remarks>
@@ -1918,13 +1923,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigEnvelopedSignatureTransformUrl> Feld "http://www.w3.org/2000/09/xmldsig#enveloped-signature".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigEnvelopedSignatureTransformUrl> Feld <http://www.w3.org/2000/09/xmldsig#enveloped-signature>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigEnvelopedSignatureTransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#enveloped-signature.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig#enveloped-signature).  
   
    
   
@@ -1967,13 +1972,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NTransformUrl> Feld "http://www.w3.org/2001/10/xml-exc-c14n#".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NTransformUrl> Feld <http://www.w3.org/2001/10/xml-exc-c14n#>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigExcC14NTransform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NTransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2001/10/xml-exc-c14n#.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/10/xml-exc-c14n).  
   
    
   
@@ -2016,13 +2021,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NWithCommentsTransformUrl> Feld "http://www.w3.org/2001/10/xml-exc-c14n#WithComments".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NWithCommentsTransformUrl> Feld <http://www.w3.org/2001/10/xml-exc-c14n#WithComments>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigExcC14NWithCommentsTransform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NWithCommentsTransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2001/10/xml-exc-c14n#WithComments.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/10/xml-exc-c14n#WithComments).  
   
    
   
@@ -2066,11 +2071,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigHMACSHA1Url> Feld "http://www.w3.org/2000/09/xmldsig#hmac-sha1".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigHMACSHA1Url> Feld <http://www.w3.org/2000/09/xmldsig#hmac-sha1>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#hmac-sha1.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2000/09/xmldsig#hmac-sha1).  
   
  ]]></format>
         </remarks>
@@ -2105,11 +2110,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigMinimalCanonicalizationUrl> Feld "http://www.w3.org/2000/09/xmldsig#minimal".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigMinimalCanonicalizationUrl> Feld <http://www.w3.org/2000/09/xmldsig#minimal>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#minimal.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2000/09/xmldsig#minimal).  
   
  ]]></format>
         </remarks>
@@ -2144,11 +2149,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigNamespaceUrl> Feld "http://www.w3.org/2000/09/xmldsig#".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigNamespaceUrl> Feld <http://www.w3.org/2000/09/xmldsig#>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig).  
   
  ]]></format>
         </remarks>
@@ -2183,11 +2188,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA1Url> Feld "http://www.w3.org/2000/09/xmldsig#rsa-sha1".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA1Url> Feld <http://www.w3.org/2000/09/xmldsig#rsa-sha1>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#rsa-sha1.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig#rsa-sha1).  
   
  ]]></format>
         </remarks>
@@ -2218,11 +2223,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA256Url> Feld "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA256Url> Feld <http://www.w3.org/2001/04/xmldsig-more#rsa-sha256>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ https://www.w3.org/2001/04/xmldsig-more#rsa-sha256 ](https://www.w3.org/2001/04/xmldsig-more#rsa-sha256).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmldsig-more#rsa-sha256).  
   
  ]]></format>
         </remarks>
@@ -2253,11 +2258,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA384Url> Feld "http://www.w3.org/2001/04/xmldsig-more#rsa-sha384".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA384Url> Feld <http://www.w3.org/2001/04/xmldsig-more#rsa-sha384>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ https://www.w3.org/2001/04/xmldsig-more#rsa-sha384 ](https://www.w3.org/2001/04/xmldsig-more#rsa-sha384).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmldsig-more#rsa-sha384).  
   
  ]]></format>
         </remarks>
@@ -2288,11 +2293,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA512Url> Feld "http://www.w3.org/2001/04/xmldsig-more#rsa-sha512".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA512Url> Feld <http://www.w3.org/2001/04/xmldsig-more#rsa-sha512>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ https://www.w3.org/2001/04/xmldsig-more#rsa-sha512 ](https://www.w3.org/2001/04/xmldsig-more#rsa-sha512).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmldsig-more#rsa-sha512).  
   
  ]]></format>
         </remarks>
@@ -2327,11 +2332,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA1Url> Feld "http://www.w3.org/2000/09/xmldsig#sha1".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA1Url> Feld <http://www.w3.org/2000/09/xmldsig#sha1>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/2000/09/xmldsig#sha1.  
+ Weitere Informationen finden Sie unter den [World Wide Web Consortium (W3C) Schema](https://www.w3.org/2000/09/xmldsig#sha1).  
   
  ]]></format>
         </remarks>
@@ -2362,11 +2367,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA256Url> Feld "http://www.w3.org/2001/04/xmlenc#sha256".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA256Url> Feld <http://www.w3.org/2001/04/xmlenc#sha256>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ http://www.w3.org/2001/04/xmlenc#sha256 ](https://www.w3.org/2001/04/xmlenc#sha256).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmlenc#sha256).  
   
  ]]></format>
         </remarks>
@@ -2397,11 +2402,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA384Url> Feld "http://www.w3.org/2001/04/xmldsig-more#sha384".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA384Url> Feld <http://www.w3.org/2001/04/xmldsig-more#sha384>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ https://www.w3.org/2001/04/xmldsig-more#sha384 ](https://www.w3.org/2001/04/xmldsig-more#sha384).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmldsig-more#sha384).  
   
  ]]></format>
         </remarks>
@@ -2432,11 +2437,11 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA512Url> Feld "http://www.w3.org/2001/04/xmlenc#sha512".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA512Url> Feld <http://www.w3.org/2001/04/xmlenc#sha512>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter [ http://www.w3.org/2001/04/xmlenc#sha512 ](https://www.w3.org/2001/04/xmlenc#sha512).  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/2001/04/xmlenc#sha512).  
   
  ]]></format>
         </remarks>
@@ -2470,13 +2475,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXPathTransformUrl> Feld "http://www.w3.org/TR/1999/REC-xpath-19991116".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXPathTransformUrl> Feld <http://www.w3.org/TR/1999/REC-xpath-19991116>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigXPathTransform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXPathTransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/TR/1999/REC-xpath-19991116.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/TR/1999/REC-xpath-19991116).  
   
    
   
@@ -2518,13 +2523,13 @@ Der <paramref name="value" />-Parameter enthält keine gültige <see cref="P:Sys
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXsltTransformUrl> Feld "http://www.w3.org/TR/1999/REC-xslt-19991116".  
+ Der Wert des der <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXsltTransformUrl> Feld <http://www.w3.org/TR/1999/REC-xslt-19991116>.  
   
  Verwenden Sie dieses Feld, um einen Wert für eines der URI-Attribute eines Elements zum XMLDSIG bereit.  
   
  Die <xref:System.Security.Cryptography.Xml.XmlDsigXsltTransform> -Klasse implementiert die Transformation von beschrieben die <xref:System.Security.Cryptography.Xml.SignedXml.XmlDsigXsltTransformUrl> Feld.  
   
- Weitere Informationen finden Sie in der World Wide Web Consortium (W3C)-Spezifikation unter http://www.w3.org/TR/1999/REC-xslt-19991116.  
+ Weitere Informationen finden Sie unter den [Spezifikation des World Wide Web Consortium (W3C)](https://www.w3.org/TR/1999/REC-xslt-19991116).  
   
    
   
