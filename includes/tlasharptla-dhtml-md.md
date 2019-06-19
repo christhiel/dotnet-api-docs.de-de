@@ -1,1 +1,9 @@
-<span data-ttu-id="1a16d-101">Dynamic HTML (DHTML)</span><span class="sxs-lookup"><span data-stu-id="1a16d-101">Dynamic HTML (DHTML)</span></span>
+---
+ms.openlocfilehash: 9214c15b02ef7b3ee3057fc099b5d261d861f118
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63868977"
+---
+<span data-ttu-id="ddd79-101">Dynamic HTML (DHTML)</span><span class="sxs-lookup"><span data-stu-id="ddd79-101">Dynamic HTML (DHTML)</span></span>

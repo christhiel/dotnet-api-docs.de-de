@@ -1,1 +1,9 @@
-<span data-ttu-id="ccc9d-101">Microsoft Annotations Framework</span><span class="sxs-lookup"><span data-stu-id="ccc9d-101">Microsoft Annotations Framework</span></span>
+---
+ms.openlocfilehash: ac30929f9de43d30e0361be0220e05d2cc5658c3
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63871526"
+---
+<span data-ttu-id="e0274-101">Microsoft Annotations Framework</span><span class="sxs-lookup"><span data-stu-id="e0274-101">Microsoft Annotations Framework</span></span>

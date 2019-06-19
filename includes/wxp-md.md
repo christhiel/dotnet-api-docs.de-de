@@ -1,1 +1,9 @@
-<span data-ttu-id="fa06a-101">Windows XP</span><span class="sxs-lookup"><span data-stu-id="fa06a-101">Windows XP</span></span>
+---
+ms.openlocfilehash: 76f20bccfe3512339ad2cea01fc1c7809e7d3d15
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63867800"
+---
+<span data-ttu-id="faea5-101">Windows XP</span><span class="sxs-lookup"><span data-stu-id="faea5-101">Windows XP</span></span>

@@ -1,1 +1,9 @@
-<span data-ttu-id="73edb-101">JPEG</span><span class="sxs-lookup"><span data-stu-id="73edb-101">JPEG</span></span>
+---
+ms.openlocfilehash: a45885aac538290762a4f7f3317abf411bb16059
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63878555"
+---
+<span data-ttu-id="502b0-101">JPEG</span><span class="sxs-lookup"><span data-stu-id="502b0-101">JPEG</span></span>

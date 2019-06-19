@@ -1,1 +1,9 @@
-<span data-ttu-id="ef796-101">.NET Framework 2.0</span><span class="sxs-lookup"><span data-stu-id="ef796-101">.NET Framework 2.0</span></span>
+---
+ms.openlocfilehash: 205f386c09d0915d2d886c80dad1c4c8ca002888
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63871278"
+---
+<span data-ttu-id="f94dc-101">.NET Framework 2.0</span><span class="sxs-lookup"><span data-stu-id="f94dc-101">.NET Framework 2.0</span></span>
