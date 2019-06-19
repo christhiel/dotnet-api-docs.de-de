@@ -1,5 +1,5 @@
 <Type Name="IDataAdapter" FullName="System.Data.IDataAdapter">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="ccfe5816dad413d7b60fcc102b5215bd09c9535b" /><Meta Name="ms.sourcegitcommit" Value="16d2d159872fd213cae4b8f371d7ae9c8b027c89" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="11/17/2018" /><Meta Name="ms.locfileid" Value="51903163" /></Metadata><TypeSignature Language="C#" Value="public interface IDataAdapter" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="06caaef9a586c574d61ee524383ea2abf2caf68a" /><Meta Name="ms.sourcegitcommit" Value="1bb00d2f4343e73ae8d58668f02297a3cf10a4c1" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/15/2019" /><Meta Name="ms.locfileid" Value="63889574" /></Metadata><TypeSignature Language="C#" Value="public interface IDataAdapter" />
   <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IDataAdapter" />
   <TypeSignature Language="DocId" Value="T:System.Data.IDataAdapter" />
   <TypeSignature Language="VB.NET" Value="Public Interface IDataAdapter" />
@@ -15,6 +15,7 @@
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System.Data.Common</AssemblyName>
@@ -50,14 +51,14 @@
   
 Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, implementieren Sie die folgenden Konstruktoren: 
  <list type="table"><listheader><term> Element 
- </term><description> Beschreibung  
+ </term><description> Beschreibung 
  </description></listheader><item><term> PrvDataAdapter() 
  </term><description> Initialisiert eine neue Instanz der PrvDataAdapter-Klasse.  
   
- </description></item><item><term> PrvDataAdapter (PrvCommand SelectCommand) 
+ </description></item><item><term> PrvDataAdapter(PrvCommand selectCommand) 
  </term><description> Initialisiert eine neue Instanz der PrvDataAdapter-Klasse unter Verwendung der angegebenen SQL-SELECT-Anweisung.  
   
- </description></item><item><term> PrvDataAdapter (SelectCommandText der Zeichenfolge, Zeichenfolge SelectConnectionString) 
+ </description></item><item><term> PrvDataAdapter(string selectCommandText, string selectConnectionString) 
  </term><description> Initialisiert eine neue Instanz der PrvDataAdapter-Klasse unter Verwendung einer SQL SELECT-Anweisung und eine Verbindungszeichenfolge an.  
   
  </description></item><item><term> PrvDataAdapter (Zeichenfolge SelectCommandText, PrvConnection SelectConnection) 
@@ -83,6 +84,7 @@ Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, imp
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -140,6 +142,7 @@ Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, imp
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -154,7 +157,7 @@ Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, imp
         <Parameter Name="schemaType" Type="System.Data.SchemaType" />
       </Parameters>
       <Docs>
-        <param name="dataSet">Die <see cref="T:System.Data.DataSet" />, die mit dem Schema aus der Datenquelle gefüllt werden soll.</param>
+        <param name="dataSet">Die mit dem Schema aus der Datenquelle zu füllende <see cref="T:System.Data.DataSet" />.</param>
         <param name="schemaType">Einer der <see cref="T:System.Data.SchemaType" />-Werte.</param>
         <summary>Fügt eine <see cref="T:System.Data.DataTable" /> namens „Tabelle“ zum angegebenen <see cref="T:System.Data.DataSet" /> hinzu und konfiguriert das Schema auf der Grundlage des angegebenen <see cref="T:System.Data.SchemaType" /> so, dass es mit dem Schema in der Datenquelle übereinstimmt.</summary>
         <returns>Ein Array von <see cref="T:System.Data.DataTable" />-Objekten, die aus der Datenquelle zurückgegebene Schemainformationen enthalten.</returns>
@@ -215,6 +218,7 @@ Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, imp
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -234,9 +238,25 @@ Beim Erben von der <see cref="T:System.Data.IDataAdapter" /> -Schnittstelle, imp
 ## Remarks  
   
 ```  
-private static void GetParameters(String connectiongString) {  
-           using (SqlConnection conn = new SqlConnection(connectiongString)) {  
-              String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course] where [Year]=@Year and [Credit]]></format>
+private static void GetParameters(String connectionString) {  
+           using (SqlConnection conn = new SqlConnection(connectionString)) {  
+              String queryString = "Select [CourseID],[Title],[Credits] from [MySchool].[dbo].[Course] where [Year]=@Year and [Credits]>=@Credits";   
+              SqlParameter year = new SqlParameter("@Year", 2012);   
+              SqlParameter credits = new SqlParameter("@Credits", SqlDbType.Int, 4, "Credits");   
+              credits.Value = 4; SqlCommand command = new SqlCommand(queryString, conn);   
+              command.Parameters.Add(year);   
+              command.Parameters.Add(credits);   
+              IDbDataAdapter mySchool = new SqlDataAdapter(command);   
+              IDataParameter[] parameters = mySchool.GetFillParameters();  
+              Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", "ParameterName", "SourceColumn", "Direction", "DbType", "Value");   
+              foreach (IDataParameter parameter in parameters) {   
+                 Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", parameter.ParameterName, parameter.SourceColumn, parameter.Direction, parameter.DbType, parameter.Value);   
+              }  
+           }  
+        }  
+```  
+  
+ ]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -258,6 +278,7 @@ private static void GetParameters(String connectiongString) {
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -269,7 +290,7 @@ private static void GetParameters(String connectiongString) {
       </ReturnValue>
       <Docs>
         <summary>Gibt an, ob nicht zugeordnete Quelltabellen oder Spalten mit ihren Quellnamen zum Filtern übergeben werden, oder ob ein Fehler ausgelöst wird.</summary>
-        <value>Einer der <see cref="T:System.Data.MissingMappingAction" />-Werte. Der Standardwert ist <see langword="Passthrough" />.</value>
+        <value>Einer der <see cref="T:System.Data.MissingMappingAction" />-Werte. Die Standardeinstellung ist <see langword="Passthrough" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -300,6 +321,7 @@ private static void GetParameters(String connectiongString) {
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -311,7 +333,7 @@ private static void GetParameters(String connectiongString) {
       </ReturnValue>
       <Docs>
         <summary>Gibt an, ob fehlende Quelltabellen, Spalten und ihre Beziehungen dem Datasetschema hinzugefügt oder ignoriert werden, oder ob ein Fehler ausgelöst wird.</summary>
-        <value>Einer der <see cref="T:System.Data.MissingSchemaAction" />-Werte. Der Standardwert ist <see langword="Add" />.</value>
+        <value>Einer der <see cref="T:System.Data.MissingSchemaAction" />-Werte. Die Standardeinstellung ist <see langword="Add" />.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">Der festgelegte Wert ist keiner der <see cref="T:System.Data.MissingSchemaAction" />-Werte.</exception>
         <altmember cref="P:System.Data.Common.DataAdapter.MissingMappingAction" />
@@ -335,6 +357,7 @@ private static void GetParameters(String connectiongString) {
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>
@@ -374,6 +397,7 @@ private static void GetParameters(String connectiongString) {
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Data.Common</AssemblyName>

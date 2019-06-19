@@ -1,3 +1,11 @@
+---
+ms.openlocfilehash: 903ac4ecb57e3a8e02a4f65ecfa6f9e77a552f45
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63872206"
+---
 Das Verwenden von zeichenbasierter Indizierung mit der <xref:System.Text.StringBuilder.Chars%2A>-Eigenschaft kann unter folgenden Bedingungen sehr langsam sein:
 
 - Die <xref:System.Text.StringBuilder>-Instanz ist groß, weil sie beispielsweise aus Zehntausenden von Zeichen besteht.
@@ -6,7 +14,7 @@ Das Verwenden von zeichenbasierter Indizierung mit der <xref:System.Text.StringB
 Die Leistung wird erheblich beeinträchtigt, da für jeden Zugriff auf ein Zeichen die gesamte verknüpfte Liste der Blöcke durchlaufen wird, um den richtigen Puffer für die Indizierung zu suchen.
 
 > [!NOTE]
->  Auch für ein „blockweise“ strukturiertes <xref:System.Text.StringBuilder>-Objekt kann das Verwenden der <xref:System.Text.StringBuilder.Chars%2A>-Eigenschaft für den indexbasierten Zugriff auf ein oder wenige Zeichen eine negative Auswirkung auf die Leistung haben. Üblicherweise handelt es sich dabei um eine **0(n)**-Operation. Diese erheblichen Auswirkungen auf die Leistung treten auf, wenn die Zeichen im <xref:System.Text.StringBuilder>-Objekt durchlaufen werden. Dabei handelt es sich um eine **O(n^2)**-Operation. 
+>  Auch für ein „blockweise“ strukturiertes <xref:System.Text.StringBuilder>-Objekt kann das Verwenden der <xref:System.Text.StringBuilder.Chars%2A>-Eigenschaft für den indexbasierten Zugriff auf ein oder wenige Zeichen eine negative Auswirkung auf die Leistung haben. Üblicherweise handelt es sich dabei um eine **0(n)** -Operation. Diese erheblichen Auswirkungen auf die Leistung treten auf, wenn die Zeichen im <xref:System.Text.StringBuilder>-Objekt durchlaufen werden. Dabei handelt es sich um eine **O(n^2)** -Operation. 
 
 Wenn Leistungsprobleme auftreten, wenn Sie die zeichenbasierte Indizierung mit <xref:System.Text.StringBuilder>-Objekten verwenden, können Sie eine der folgenden Problemumgehungen anwenden:
 

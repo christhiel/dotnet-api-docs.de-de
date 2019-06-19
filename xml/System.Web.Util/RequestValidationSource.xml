@@ -1,5 +1,5 @@
 <Type Name="RequestValidationSource" FullName="System.Web.Util.RequestValidationSource">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="7b4df0bf1d9c5aa56baef66d5f5d2fff18e75c52" /><Meta Name="ms.sourcegitcommit" Value="f1d16425528e237257ca3b58eb49217a514849ea" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="04/24/2019" /><Meta Name="ms.locfileid" Value="64061636" /></Metadata><TypeSignature Language="C#" Value="public enum RequestValidationSource" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="ab5b9348d3a2dcde861eeef4c5d9c664588a26d6" /><Meta Name="ms.sourcegitcommit" Value="1bb00d2f4343e73ae8d58668f02297a3cf10a4c1" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/14/2019" /><Meta Name="ms.locfileid" Value="67134723" /></Metadata><TypeSignature Language="C#" Value="public enum RequestValidationSource" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RequestValidationSource extends System.Enum" />
   <TypeSignature Language="DocId" Value="T:System.Web.Util.RequestValidationSource" />
   <TypeSignature Language="VB.NET" Value="Public Enum RequestValidationSource" />
@@ -17,24 +17,32 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- Sie können einen benutzerdefinierte Validierung Anforderungstyp erstellen, durch die Implementierung der <xref:System.Web.Util.RequestValidator> Typ. Wenn ASP.NET aufgerufen, die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode zum Überprüfen einer Anforderung ASP.NET übergibt eine `requestValidationSource` Parameter an die Quelle der Daten überprüft wird. Die <xref:System.Web.Util.RequestValidationSource> Enumeration wird verwendet, um anzugeben, die Quelle oder eine Art von Daten, die überprüft wird. Die Enumeration gibt den Typ des HTTP-Eingabe, die übergeben werden die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode. Sie können die Enumeration verwenden, als eine Möglichkeit, die grundlegende Anforderung Überprüfung-Implementierung für HTTP-Eingaben wieder darauf zurück, wenn Sie nicht, überprüfen Sie die benutzerdefinierte Logik möchten.  
-  
-   
+## Remarks 
+
+Sie können einen benutzerdefinierte Validierung Anforderungstyp erstellen, durch die Implementierung der <xref:System.Web.Util.RequestValidator> Typ. Wenn ASP.NET aufgerufen, die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode zum Überprüfen einer Anforderung ASP.NET übergibt eine `requestValidationSource` Parameter an die Quelle der Daten überprüft wird. Die <xref:System.Web.Util.RequestValidationSource> Enumeration wird verwendet, um anzugeben, die Quelle oder eine Art von Daten, die überprüft wird. Die Enumeration gibt den Typ des HTTP-Eingabe, die übergeben werden die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode. Sie können die Enumeration verwenden, als eine Möglichkeit, die grundlegende Anforderung Überprüfung-Implementierung für HTTP-Eingaben wieder darauf zurück, wenn Sie nicht, überprüfen Sie die benutzerdefinierte Logik möchten.  
+
+Die folgende Tabelle zeigt, wie der Wert des der `collectionKey` und `value` Parameter der <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A?displayProperty=nameWithType> Methode für jedes Element interpretiert werden die `RequestValidationSource` Enumeration.
+
+|Enumerationsmember|`collectionKey`-Parameter|`value`-Parameter|
+|--|--|--|
+|`Cookies`|Der Name des Cookies in der Auflistung.|Der Wert in der Auflistung.|
+|`Files`|Der Name der hochgeladenen Datei in der Auflistung.|Der Wert der hochgeladenen Datei in der Auflistung.|
+|`Form`|Der Name des Parameters "Formular" in der Auflistung|Der Wert des Parameters "Formular" in der Auflistung.|
+|`Headers`|Der Name der einen HTTP-Header in der Auflistung.|Der Wert des HTTP-Headers in der Auflistung.|
+|`Path`|`null` (`Path` ist keine Auflistung von Werten).|Der Wert des Felds Pfad.|
+|`PathInfo`|`null` (`PathInfo` ist keine Auflistung von Werten).|Der Wert des Felds PathInfo.|
+|`QueryString`|Der Name des Abfragezeichenfolgen-Parameters in der Auflistung.|Der Wert des Abfragezeichenfolgen-Parameters in der Auflistung.|
+|`RawUrl`|`null` (`RawUrl` ist keine Auflistung von Werten.)|Der Wert des Felds RawUrl.|
   
 ## Examples  
  Das folgende Beispiel zeigt, wie Sie eine benutzerdefiniertes Validierungssteuerelement-Klasse erstellen, die nur eine bestimmte Zeichenfolge für Abfragezeichenfolgen-Werte zulässt.  
   
-```vb  
-Imports System  
+```vb
 Imports System.Web  
 Imports System.Web.Util  
   
 Public Class CustomRequestValidation  
     Inherits RequestValidator  
-  
-Public Sub New()  
-End Sub  
   
 Protected Overloads Overrides Function IsValidRequestString( _  
         ByVal context As HttpContext, _  
@@ -156,16 +164,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>2</MemberValue>
       <Docs>
         <summary>Die Anforderungscookies.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode auf den Namen des Cookies in der Auflistung festgelegt ist.  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert in der Auflistung festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Files">
@@ -186,16 +184,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>3</MemberValue>
       <Docs>
         <summary>Die hochgeladene Datei.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode auf den Namen der hochgeladenen Datei in der Auflistung festgelegt ist.  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert der hochgeladenen Datei in der Auflistung festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Form">
@@ -216,16 +204,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>1</MemberValue>
       <Docs>
         <summary>Die Formularwerte.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode auf den Namen des Parameters "Formular" in der Auflistung festgelegt ist.  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des Parameters "Formular" in der Auflistung festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Headers">
@@ -246,16 +224,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>7</MemberValue>
       <Docs>
         <summary>Die Anforderungsheader.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode auf den Namen eines HTTP-Headers in der Auflistung festgelegt ist.  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des HTTP-Headers in der Auflistung festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Path">
@@ -276,16 +244,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>5</MemberValue>
       <Docs>
         <summary>Der virtuelle Pfad.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode nastaven NA hodnotu `null` (`Path` ist keine Auflistung von Werten).  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des Felds Pfad festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PathInfo">
@@ -306,16 +264,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>6</MemberValue>
       <Docs>
         <summary>Eine HTTP-<see cref="P:System.Web.HttpRequest.PathInfo" />-Zeichenfolge, bei der es sich um eine Erweiterung eines URL-Pfads handelt.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode nastaven NA hodnotu `null` (`PathInfo` ist keine Auflistung von Werten).  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des Felds PathInfo festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="QueryString">
@@ -336,16 +284,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>0</MemberValue>
       <Docs>
         <summary>Die Abfragezeichenfolge.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode auf den Namen des dem Abfragezeichenfolgen-Parameter in der Auflistung festgelegt ist.  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des Abfragezeichenfolgen-Parameters in der Auflistung festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RawUrl">
@@ -366,16 +304,6 @@ public class CustomRequestValidation : RequestValidator
       <MemberValue>4</MemberValue>
       <Docs>
         <summary>Die unformatierte URL. (Der Teil einer URL nach der Domäne.)</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Die `collectionKey` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> Methode nastaven NA hodnotu `null`. (`RawUrl` ist keine Auflistung von Werten.)  
-  
- Die `value` Parameter, der die <xref:System.Web.Util.RequestValidator.IsValidRequestString%2A> auf den Wert des Felds RawUrl festgelegt ist.  
-  
- ]]></format>
-        </remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,3 +1,11 @@
+---
+ms.openlocfilehash: 5feab3f469ed6d7017ee0fdc20e78822b5ed4834
+ms.sourcegitcommit: 1bb00d2f4343e73ae8d58668f02297a3cf10a4c1
+ms.translationtype: HT
+ms.contentlocale: de-DE
+ms.lasthandoff: 06/15/2019
+ms.locfileid: "63867682"
+---
  .NET verwaltet eine eigene Tabelle von Zeichen und entsprechenden Kategorien. Dadurch wird sichergestellt, dass eine bestimmte Version einer .NET-Implementierung, die auf unterschiedlichen Plattformen ausgeführt wird, identische Informationen zu Zeichenkategorien zurückgibt. Wenn .NET Core unter Linux und macOS ausgeführt wird, werden Informationen zu Zeichenkategorien von [International Components for Unicode](http://site.icu-project.org/)-Bibliotheken bereitgestellt.
  
  Die folgende Tabelle enthält die .NET-Versionen und die Versionen des Unicode-Standards, auf dem ihre Zeichenkategorien basieren.   
