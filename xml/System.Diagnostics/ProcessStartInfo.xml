@@ -1,5 +1,5 @@
 <Type Name="ProcessStartInfo" FullName="System.Diagnostics.ProcessStartInfo">
-  <Metadata><Meta Name="ms.openlocfilehash" Value="ceb087ee2a19df0fbce2c0e86e86ebada4b3dbd6" /><Meta Name="ms.sourcegitcommit" Value="1bb00d2f4343e73ae8d58668f02297a3cf10a4c1" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/15/2019" /><Meta Name="ms.locfileid" Value="63887564" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProcessStartInfo" />
+  <Metadata><Meta Name="ms.openlocfilehash" Value="6aae3e941442390152c0bfe1dc86dcbf1bc45ead" /><Meta Name="ms.sourcegitcommit" Value="bc24a3ba616ee1df8b858f9400cae4f058ea3a7e" /><Meta Name="ms.translationtype" Value="MT" /><Meta Name="ms.contentlocale" Value="de-DE" /><Meta Name="ms.lasthandoff" Value="06/19/2019" /><Meta Name="ms.locfileid" Value="67239391" /></Metadata><TypeSignature Language="C#" Value="public sealed class ProcessStartInfo" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit ProcessStartInfo extends System.Object" />
   <TypeSignature Language="DocId" Value="T:System.Diagnostics.ProcessStartInfo" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ProcessStartInfo" />
@@ -237,7 +237,24 @@
         <summary>Ruft eine Sammlung von Befehlszeilenargumenten ab, die beim Starten der Anwendung verwendet werden sollen, oder legt diesen fest.</summary>
         <value>Eine Auflistung von Befehlszeilenargumenten.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[Wenn Sie diese Eigenschaft verwenden, Festlegen von Befehlszeilenargumenten, <xref:System.Diagnostics.ProcessStartInfo.Arguments> muss auf eine leere Zeichenfolge festgelegt werden.
+          <format type="text/markdown"><![CDATA[
+          
+`ArgumentList`, die ab .NET Core 2.1 und .NET Standard 2.1 unterstützt und die <xref:System.Diagnostics.ProcessStartInfo.Arguments> Eigenschaft sind voneinander unabhängig. Also die Zeichenfolgen, die zugewiesen der `ArgumentList` Auflistung werden nicht zum Auffüllen der <xref:System.Diagnostics.ProcessStartInfo.Arguments> Eigenschaft und die zugewiesene Zeichenfolge die <xref:System.Diagnostics.ProcessStartInfo.Arguments> Eigenschaft wird nicht in einzelnen Zeichenfolgen, die zugewiesen werden, analysiert `ArgumentList` Auflistung. 
+
+`ArgumentList` ist einfacher zu verwenden als die <xref:System.Diagnostics.ProcessStartInfo.Arguments> Eigenschaft. Da jede Zeichenfolge, die auf einen Member der Auflistung zugewiesen wird, können Sie einzelne-statt dreifach-Zeichenfolgen, die von Anführungszeichen begrenzt werden. Im folgenden Beispiel wird unter anderem `-full "Mary Smith"` als Mitglied der `ArgumentList` Auflistung:
+
+```csharp
+info.ArgumentList.Add("-full \"Mary Smith\"";
+```
+
+Die entsprechende Zuweisung an die <xref:System.Diagnostics.ProcessStartInfo.Arguments> -Eigenschaft ist:
+
+```csharp
+info.Arguments = "-full \"\"\"Mary Smith\"\"\""
+```
+
+Wenn Sie diese Eigenschaft verwenden, Festlegen von Befehlszeilenargumenten, <xref:System.Diagnostics.ProcessStartInfo.Arguments> muss auf eine leere Zeichenfolge festgelegt werden.
+
 ## Examples
 
 In diesem Beispiel wird die StartInfo Prozess zwei Argumente hinzugefügt.
@@ -322,14 +339,19 @@ info.ArgumentList.Add("-last Smith")
       </ReturnValue>
       <Docs>
         <summary>Ruft den Satz von Befehlszeilenargumenten ab, die beim Starten der Anwendung verwendet werden sollen, oder legt diesen fest.</summary>
-        <value>Eine einzelne Zeichenfolge, die die Argumente enthält, die an die in der <see cref="P:System.Diagnostics.ProcessStartInfo.FileName" />-Eigenschaft angegebene Zielanwendung übergeben werden sollen. Der Standardwert ist eine leere Zeichenfolge (""). Unter Windows Vista und früheren Versionen des Windows-Betriebssystems muss die Länge der Argumente, die der Länge des vollständigen Pfads des Prozesses hinzugefügt werden, kleiner sein als 2080. Unter Windows 7 und höheren Versionen muss die Länge kleiner als 32699 sein.  
-  
-Argumente werden von der Zielanwendung analysiert und interpretiert und müssen daher den Erwartungen der betreffenden Anwendung entsprechen. Bei .NET-Anwendungen, wie sie in den Beispielen unten dargestellt sind, werden Leerzeichen als Trennzeichen zwischen Argumenten interpretiert. Ein einzelnes Argument, das Leerzeichen enthält, muss in Anführungszeichen eingeschlossen sein, diese Anführungszeichen werden jedoch nicht an die Zielanwendung übergeben. Eingeschlossene Anführungszeichen, die in das endgültige analysierte Argument aufgenommen werden sollen, müssen dreifach escaped werden.</value>
+        <value>Eine einzelne Zeichenfolge, die die Argumente enthält, die an die in der <see cref="P:System.Diagnostics.ProcessStartInfo.FileName" />-Eigenschaft angegebene Zielanwendung übergeben werden sollen. Der Standardwert ist eine leere Zeichenfolge ("").</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[Wenn Sie diese Eigenschaft verwenden, Festlegen von Befehlszeilenargumenten, <xref:System.Diagnostics.ProcessStartInfo.ArgumentList*> darf keine Elemente enthalten.
+          <format type="text/markdown"><![CDATA[
+
+Die Länge der Zeichenfolge zugewiesen wird, um die `Arguments` -Eigenschaft muss kleiner als 32,699 sein.
   
+Argumente werden von der Zielanwendung analysiert und interpretiert und müssen daher den Erwartungen der betreffenden Anwendung entsprechen. Für .NET-Anwendungen werden wie in den folgenden Beispielen gezeigt Leerzeichen als Trennzeichen zwischen Argumenten interpretiert. Ein einzelnes Argument, das Leerzeichen enthält, muss in Anführungszeichen eingeschlossen sein, diese Anführungszeichen werden jedoch nicht an die Zielanwendung übergeben. Für die Einbeziehung der Anführungszeichen in das endgültige analysierte Argument Triple-Escapesequenz jedes markieren.
+Wenn Sie diese Eigenschaft verwenden, Festlegen von Befehlszeilenargumenten, <xref:System.Diagnostics.ProcessStartInfo.ArgumentList> darf keine Elemente enthalten.
+  
+`Arguments` und <xref:System.Diagnostics.ProcessStartInfo.ArgumentList>, unabhängig voneinander sind beginnend mit .NET Core 2.1 und .NET Standard 2.1, was unterstützt wird. Also die zugewiesene Zeichenfolge die `Arguments` Eigenschaft nicht aufgefüllt der <xref:System.Diagnostics.ProcessStartInfo.ArgumentList> Auflistung und die Mitglieder der der <xref:System.Diagnostics.ProcessStartInfo.ArgumentList> Sammlung nicht zugewiesen sind die `Arguments` Eigenschaft.
+
 ## Examples  
- Das erste Beispiel unten wird eine kleine Anwendung (argsecho.exe) erstellt, ausgegeben sein Argument an die Konsole. Im zweite Beispiel erstellt eine Anwendung, die argsecho.exe zur Veranschaulichung der verschiedenen Varianten für die Eigenschaft Argumente aufruft.  
+ Im erste Beispiel wird eine kleine Anwendung (argsecho.exe) erstellt, ausgegeben sein Argument an die Konsole. Im zweite Beispiel erstellt eine Anwendung, die argsecho.exe zur Veranschaulichung der verschiedenen Varianten von Ruft die `Arguments` Eigenschaft.  
   
  [!code-cpp[Process.Start_static#3](~/samples/snippets/cpp/VS_Snippets_CLR/Process.Start_static/CPP/processstartstatic.cpp#3)]
  [!code-csharp[Process.Start_static#3](~/samples/snippets/csharp/VS_Snippets_CLR/Process.Start_static/CS/processstartstatic.cs#3)]
